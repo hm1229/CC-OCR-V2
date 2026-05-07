@@ -1,0 +1,85 @@
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+
+\begin{document}
+
+\section*{REGISTER DETAILED DESCRIPTION}
+
+\subsection*{Chip ID Register (0x00), default(0x17)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|l|}{Chip ID: "0001 0111"} \\
+\multicolumn{8}{|l|}{Write 55H To Reset All Registers} \\
+\hline
+\end{tabular}
+
+\subsection*{Enable Register (0x01), default(0x00)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+Strobe Type & Strobe & Mode Bits: M1, M0 & RFU & LED3 Enable & LED2 Enable & LED1 Enable \\
+0=Level & Enable & 00=Standby (Default) & & 0=OFF & 0=OFF & 0=OFF \\
+Triggered & 0=Disabled & 01=IR Drive & & (Default) & (Default) & (Default) \\
+(Default) & (Default) & 10=Torch & & 1=ON & 1=ON & 1=ON \\
+1=Edge & 1=Enabled & 11=Flash & & & & \\
+Triggered & & & & & & \\
+\hline
+\end{tabular}
+
+\noindent \textbf{Note:} \\
+In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to ensure proper turn-on of the device.
+
+\subsection*{IVFM Register (0x02), default(0xE1)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+LEDX Enable Setting & LED3 Pin & LED1/2 Pin & UVLO Enable & \multicolumn{3}{|c|}{IVFM Levels} & IVFM Enable \\
+0= if LED1 or LED2 is & Short Fault & Short Fault & 0=Disabled & \multicolumn{3}{|c|}{000=2.9 V (Default)} & 0=Disabled \\
+Enabled, LED3 is & Detect & Detect & (Default) & \multicolumn{3}{|c|}{001=3.0 V} & 1=Enabled \\
+Disabled Internally & 0=Disabled & 0=Disabled & 1=Enabled & \multicolumn{3}{|c|}{010=3.1 V} & (Default) \\
+1=No Limitation & 1=Enabled & 1=Enabled & & \multicolumn{3}{|c|}{011=3.2 V} & \\
+(Default) & (Default) & (Default) & & \multicolumn{3}{|c|}{100=3.3 V} & \\
+& & & & \multicolumn{3}{|c|}{101=3.4 V} & \\
+& & & & \multicolumn{3}{|c|}{110=3.5 V} & \\
+& & & & \multicolumn{3}{|c|}{111=3.6 V} & \\
+\hline
+\end{tabular}
+
+\subsection*{LED1 Flash Brightness Register (0x03), default(0x7F)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|l|}{LED1 Flash Brightness Levels} \\
+\multicolumn{8}{|l|}{$I_{FLASH}(mA) \approx (\text{Brightness Code} * 3.91mA) + 3.91mA$} \\
+\multicolumn{8}{|l|}{00000000 = 3.91 mA} \\
+\multicolumn{8}{|l|}{.......................} \\
+\multicolumn{8}{|l|}{01111111 = 500 mA (Default)} \\
+\multicolumn{8}{|l|}{.......................} \\
+\multicolumn{8}{|l|}{11111111 = 1.0 A} \\
+\hline
+\end{tabular}
+
+\subsection*{LED1 Torch Brightness Register (0x04), default(0x7F)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|l|}{LED1 Torch Brightness Levels} \\
+\multicolumn{8}{|l|}{$I_{TORCH}(mA) \approx (\text{Brightness Code} * 1.46mA) + 1.46mA$} \\
+\multicolumn{8}{|l|}{00000000 = 1.46 mA} \\
+\multicolumn{8}{|l|}{.......................} \\
+\multicolumn{8}{|l|}{01111111 = 187.5 mA (Default)} \\
+\multicolumn{8}{|l|}{.......................} \\
+\multicolumn{8}{|l|}{11111111 = 375 mA} \\
+\hline
+\end{tabular}
+
+\end{document}
+```

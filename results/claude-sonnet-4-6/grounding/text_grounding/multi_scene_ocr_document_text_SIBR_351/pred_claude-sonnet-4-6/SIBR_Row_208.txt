@@ -1,0 +1,31 @@
+I need to find all instances of '0.00' in the image and provide their locations.
+
+Looking at the receipt, I can see several instances of '0.00':
+
+1. "医保统筹支付:0.00" - on the left side
+2. "附加支付:0.00" - on the right side
+3. "现金支付中，分类自费 27.40 元 自费 0.00 元" - the 0.00 near bottom left area
+
+Let me focus on the most prominent '0.00' instances:
+
+1. "现金支付:0.00" area - around the middle-left section
+2. The "0.00" after "附加支付" on the right side
+
+For "医保统筹支付:0.00":
+(27, 430, 200, 450)
+
+For "附加支付:0.00":
+(290, 430, 430, 450)
+
+For the "自费 0.00 元":
+(350, 460, 430, 478)
+
+The question asks for "the region of the text '0.00'" suggesting a single instance. The most visible one appears to be in the payment section.
+
+Looking at "医保统筹支付:0.00" row:
+(100, 428, 200, 445)
+
+For the "附加支付:0.00":
+(330, 428, 430, 445)
+
+(330, 428, 430, 445)

@@ -1,0 +1,28 @@
+I need to find all instances of '0.00' in the image and provide their locations. There are multiple instances of '0.00' in this medical receipt. Let me identify the most prominent/first occurrence.
+
+Looking at the receipt, there are many '0.00' values throughout the table. Let me identify the regions for each:
+
+1. 手术费 0.00 - around the middle-top area
+2. 接生费 0.00 - right side
+3. 检查费 0.00 - left column
+4. 婴儿费 0.00 - middle
+5. 输血费 0.00 - middle
+6. 取暖费 0.00 - right
+7. 输氧费 0.00 - middle
+8. 放射费 0.00 - left
+9. 监护费 0.00 - left
+10. 病检费 0.00 - middle
+11. 陪住费 0.00 - right
+
+Since the question asks for "the region of the text '0.00'" (singular), I'll identify the first prominent one - 手术费 0.00:
+
+The 手术费 value of 0.00 appears to be at approximately x: 580-640, y: 330-360 in the image.
+
+Image dimensions appear to be approximately 1456 x 840 pixels.
+
+For 手术费 0.00 (first 0.00 in the table):
+- Located at roughly x=580-650, y=325-355
+
+Normalized: x1 = 580/1456 ≈ 398, y1 = 325/840 ≈ 387, x2 = 650/1456 ≈ 446, y2 = 355/840 ≈ 423
+
+(398, 387, 446, 423) # The '0.00' value next to 手术费 (surgery fee)

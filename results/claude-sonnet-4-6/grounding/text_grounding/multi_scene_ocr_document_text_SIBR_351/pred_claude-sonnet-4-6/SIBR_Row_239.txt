@@ -1,0 +1,29 @@
+I need to find all instances of '0.00' in the image and provide their locations.
+
+Looking at the receipt, I can see multiple instances of '0.00':
+
+1. 挂号费: 0.00 - around the middle section
+2. 其中自付: 0.00 (next to 挂号费)
+3. 其中自付: 0.00 (next to 一般诊疗费)
+4. 病历本费: 0.00
+5. 其中自付: 0.00 (next to 病历本费)
+6. 就诊卡费: 0.00
+7. 其中自付: 0.00 (next to 就诊卡费)
+
+Let me focus on the most prominent/first instance of '0.00' which appears after 挂号费:
+
+The text '挂号费:0.00' appears at approximately y=490 in the image.
+
+For the first '0.00' after 挂号费:
+(248, 488, 320, 510)
+
+For the '0.00' in '其中自付:0.00' on the same line:
+(530, 488, 600, 510)
+
+Since the question asks for "the region of the text '0.00'" (singular), I'll identify the most visible first occurrence:
+
+The '0.00' after 挂号费 appears at approximately:
+- x position: around 248-320 normalized
+- y position: around 488-510 normalized
+
+(248, 488, 320, 510)

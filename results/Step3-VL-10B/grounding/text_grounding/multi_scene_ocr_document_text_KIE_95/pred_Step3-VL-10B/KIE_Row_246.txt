@@ -1,0 +1,130 @@
+用户现在需要找到文本'156.00'的位置。看发票里的Total Amt Incl. GST那部分，数值是156.00。然后看Total Amt Payable也是156.00。先看第一个出现的156.00在Total Amt Incl. GST @ 6% : 后面。然后确定坐标。先看整个发票的布局，找到对应的数值位置。
+
+首先看Total Amt Incl. GST @ 6% : 后面的156.00，然后Total Amt Payable : 156.00。需要确定哪个是目标。用户问的是文本'156.00'的区域，可能有两个，但看问题中的例子。先看第一个Total Amt Incl. GST那里的156.00。看坐标的话，先分析图像的结构。
+
+发票中的Total Amt Incl. GST @ 6% : 后面的数值是156.00，这个位置在中间偏下的部分。然后看坐标范围。需要把图像的宽度和高度作为1000的基准。假设图像的宽度是w，高度是h。然后找到该文本的位置。
+
+另外，看GST Summary里的Amount是147.17，GST是8.83，总和是156。所以Total Amt Payable是156.00。现在看Total Amt Payable : 后面的156.00。现在要确定这个文本的 bounding box。
+
+先看图像中的元素：
+
+- Total Amt Incl. GST @ 6% : 156.00
+- Rounding Adjustment : 0.00
+- Total Amt Payable : 156.00
+- Total Qty Tender : 5
+
+所以有两个156.00，需要看用户指的是哪个。但问题里是“the text '156.00'”，可能需要看出现的位置。先看Total Amt Payable那里的156.00，因为Total Amt Payable是需要支付的总额，比较关键。或者看Total Amt Incl. GST的。现在需要看图像中的实际位置。
+
+现在看图像中的文字：
+
+在“Total Amt Incl. GST @ 6% :” 后面是“156.00”，然后“Rounding Adjustment : 0.00”，然后“Total Amt Payable : 156.00”。所以这两个156.00。需要确定哪个是目标。可能用户需要的是其中一个，比如Total Amt Payable的。现在看坐标。
+
+假设图像的宽度是整个图片的宽度，高度是高度。现在需要将每个元素的位置转换为归一化坐标（0-1000）。
+
+先看Total Amt Payable : 156.00 这一行。在发票中，这一行的位置大概在中间偏下的位置。现在估计坐标：
+
+比如，Total Amt Payable : 156.00 的x范围大概是从Total Amt Payable的标签到156.00的数值。假设整个发票的宽度是w，那么x1是Total Amt Payable的起始位置，x2是156.00的结束位置。y坐标是该行的垂直位置。
+
+另外，看图像中的文字，Total Amt Payable : 156.00 这一行，其数值156.00的位置。现在需要更准确的分析。
+
+或者，可能用户指的是Total Amt Incl. GST的156.00。现在看图像中的“Total Amt Incl. GST @ 6% : 156.00” 这里的156.00。现在需要确定这个文本的bounding box。
+
+另外，看图像中的其他部分，比如GST Summary里的数值是147.17和8.83，总和是156，所以Total Amt Payable是156.00，正确。
+
+现在，先看Total Amt Payable : 156.00 这个文本的位置。在发票中，这一行的右侧是156.00，所以需要找到这个数值的位置。
+
+现在，假设图像的宽度是1000单位，高度也是1000单位。现在看图像中的各个部分：
+
+- 顶部是公司信息，然后是发票日期、类型、编号。
+- 然后是Cash Sale部分，列出商品。
+- 然后是Total Amt Incl. GST... 这部分在商品列表下方。
+
+现在，Total Amt Payable : 156.00 这一行，其y坐标大概在GST Summary的上方。GST Summary在Total Amt Payable的下方。
+
+现在，先看Total Amt Payable : 156.00 的位置。假设该行的y坐标范围是，比如，从上往下数，商品列表结束后，Total Amt Incl. GST是第一行，然后Rounding Adjustment，然后Total Amt Payable，然后Total Qty Tender。所以Total Amt Payable是第三行（在Total Amt Incl. GST和Rounding Adjustment之后）。
+
+现在，估计Total Amt Payable : 156.00 的x范围：Total Amt Payable的标签在左边，然后冒号，然后是156.00。所以156.00的x范围是从标签的右侧到该数值的结束。假设整个发票的宽度是w，那么x1大约是该行中“156.00”起始的x，x2是结束的x。
+
+另外，看图像中的“Total Amt Payable : 156.00” 这个文本，其数值156.00的宽度。现在，可能更简单的是看图像中的实际位置，然后用归一化坐标。
+
+另外，可能用户需要的是Total Amt Incl. GST的156.00，因为Total Amt Payable的156.00和Total Amt Incl. GST的156.00是同一个数值，总和是156。现在，先看Total Amt Incl. GST @ 6% : 156.00 这里的156.00的位置。
+
+现在，先看图像中的“Total Amt Incl. GST @ 6% :” 后面的156.00，这个文本的位置。在图像中，这一行的右侧是156.00，所以其bounding box的x范围是从该行的右侧开始，y是该行的垂直位置。
+
+现在，假设图像的宽度是1000，高度是1000。现在，将图像中的元素定位：
+
+- 公司信息在顶部，y从0到大约150。
+- 日期、发票类型等在y150到y200。
+- Cash Sale部分的标题在y200到y250。
+- 商品列表从y250到y400左右。
+- Total Amt Incl. GST... 在y400到y450。
+- Rounding Adjustment在y450到y470。
+- Total Amt Payable在y470到y490。
+- Total Qty Tender在y490到y510。
+- GST Summary在y510到y550。
+- POIN在y550到y570。
+- 其他说明在y570到y600。
+- 签名在y600到y650。
+
+现在，Total Amt Payable : 156.00 这一行的y坐标大约是470-490之间。x坐标方面，Total Amt Payable的标签在左边，比如x从200到350（假设），然后冒号，然后156.00在x从500到600左右？不，可能更准确的是看图像中的实际排版。因为发票是横向的，所以文字是左对齐，数值在右侧。
+
+比如，Total Amt Payable : 156.00 这一行，文字是左对齐，所以“Total Amt Payable :” 左对齐，然后数值在右侧，所以156.00的位置是该行的右侧，x范围较大。
+
+现在，可能更有效的方法是看图像中的“156.00”出现的两个位置，然后确定哪个是目标。但用户的问题是“the text '156.00'”，可能指的是Total Amt Payable的，因为这是最终支付金额。现在，看图像中的Total Amt Payable : 156.00，其数值的bounding box。
+
+另外，看图像中的“Total Amt Payable : 156.00” 这个文本，其中“156.00”是关键。现在，用OCR的方式，找到该文本的位置。
+
+另外，可能用户需要的是Total Amt Incl. GST的156.00，因为Total Amt Payable的156.00和Total Amt Incl. GST的156.00是同一个数值，总和是156。现在，先看Total Amt Incl. GST @ 6% : 156.00 这里的156.00的位置。
+
+现在，假设图像中的“Total Amt Incl. GST @ 6% : 156.00” 这一行，156.00的x范围是从该行的中间偏右到右侧，y是该行的垂直位置。现在，将图像的宽度设为1000，高度设为1000，那么需要计算每个点的坐标。
+
+另外，可能更简单的是看图像中的实际像素，然后转换为归一化坐标。比如，图像的宽度是w像素，高度是h像素。然后，对于每个文本，找到其左上角和右下角的像素坐标，然后除以w和h得到归一化坐标（0-1000）。
+
+现在，假设图像的宽度是比如800像素，高度是1200像素（因为是竖直的发票）。然后，Total Amt Payable : 156.00 这一行的y坐标大约是600像素（从顶部开始），x坐标中“156.00”在x=700到x=800像素之间。然后归一化的话，x1=700/800*1000=875，x2=800/800*1000=1000；y1=600/1200*1000=500，y2=620/1200*1000≈516。但这是假设，可能不准确。
+
+另一种方法是看图像中的“Total Amt Payable : 156.00” 这个文本，在图像中的位置。比如，在图像中，Total Amt Payable : 156.00 这一行，其数值156.00位于发票的中下部，右侧。现在，看图像中的其他元素，比如GST Summary在Total Amt Payable的下方，所以Total Amt Payable在GST Summary的上方。
+
+现在，可能更直接的是看图像中的“156.00”在Total Amt Payable处的bounding box。根据图像内容，Total Amt Payable : 156.00 的数值是156.00，所以其位置是：
+
+在图像中，该行的文本是“Total Amt Payable : 156.00”，所以“156.00”是该行的最后一个元素，位于右侧。现在，估计该文本的bounding box的归一化坐标（x1, y1, x2, y2）。
+
+另外，可能用户需要的是Total Amt Incl. GST的156.00，因为Total Amt Payable的156.00和Total Amt Incl. GST的156.00是同一个数值，总和是156。现在，看Total Amt Incl. GST @ 6% : 156.00 这里的156.00，其位置在Total Amt Payable的上方，Rounding Adjustment的上方。
+
+现在，先看Total Amt Incl. GST @ 6% : 156.00 这一行，其中“156.00”是该行的数值。现在，假设图像中的这个数值的x范围是从该行的中间偏右到右侧，y是该行的垂直位置。
+
+另外，可能更简单的是，观察图像中的“156.00”出现两次，分别在Total Amt Incl. GST和Total Amt Payable。现在，需要确定哪个是目标。可能用户的问题中的“the text '156.00'”指的是Total Amt Payable的，因为这是最终要支付的金额，通常更关键。或者可能是Total Amt Incl. GST的，因为这是包含GST的总额。
+
+现在，再看图像中的内容：
+
+- Total Amt Incl. GST @ 6% : 156.00
+- Rounding Adjustment : 0.00
+- Total Amt Payable : 156.00
+- Total Qty Tender : 5
+
+所以，Total Amt Payable的156.00是正确的支付金额，而Total Amt Incl. GST也是156.00，因为Rounding Adjustment是0.00，所以两者相等。现在，需要确定哪个是用户要的。可能用户需要的是Total Amt Payable的156.00，因为问题中的“Total Amt Payable”是需要支付的总额，而“Total Amt Incl. GST”是包含GST的总额，两者在本例中相等，因为四舍五入调整为0。
+
+现在，假设用户需要的是Total Amt Payable : 156.00中的156.00。现在，找到该文本的bounding box。
+
+另外，看图像中的“Total Amt Payable : 156.00” 这一行，在图像中的位置。比如，在图像中，该行的y坐标大约是发票的中下部，x坐标中“156.00”位于右侧。现在，用归一化坐标（0-1000）来表示。
+
+另外，可能更有效的是，看图像中的“156.00”在Total Amt Payable处的坐标。例如，在图像中，该数值的左上角和右下角的像素位置，然后转换为归一化坐标。
+
+假设图像的宽度是w，高度是h。例如，图像的宽度是800像素，高度是1200像素。Total Amt Payable : 156.00 这一行的y坐标是600像素（从顶部开始），x坐标中“156.00”从x=700到x=800像素。那么归一化后的x1=700/800*1000=875，x2=800/800*1000=1000；y1=600/1200*1000=500，y2=620/1200*1000≈516。但这是假设，可能不准确。
+
+另一种方法是，观察图像中的“156.00”在Total Amt Payable处的位置，其在图像中的相对位置。比如，在图像中，Total Amt Payable : 156.00 这一行，位于GST Summary的上方，Total Qty Tender的上方。现在，看图像中的文字，Total Amt Payable : 156.00 的“156.00”是右对齐的，所以其x范围较大，接近图像的右侧。
+
+现在，可能更简单的是，参考图像中的其他元素的位置。例如，Total Amt Incl. GST @ 6% : 156.00 中的156.00，其x范围是从该行的中间到右侧，y是该行的垂直位置。假设该行的y坐标是450（归一化后的y，因为图像高度是1000的话，y=450），x范围是600到800（归一化后的x）。
+
+但可能更准确的是，使用图像中的实际内容。现在，看图像中的“Total Amt Payable : 156.00” 这个文本，在图像中的位置，其“156.00”位于发票的中下部，右侧。现在，假设图像的宽度是1000单位（归一化后），高度是1000单位。那么，Total Amt Payable : 156.00 的y坐标大约是500（因为从顶部到Total Amt Payable大约是发票的1/3到1/2位置？不，发票的总高度可能更大，比如，公司信息在顶部，然后是发票详情，然后是商品列表，然后是总计部分。总计部分大约在发票的下半部分，所以y坐标可能在600-700之间。
+
+现在，可能我需要更仔细地分析图像。看图像中的文字：
+
+- 最上面是公司名称，Co. Reg. No. 等，然后是地址，电话，日期14/04/2018，Tax Invoice，No. CS00233521。
+- 然后是Cash Sale (Ara D'sara) 的标题，Tel和H/P。
+- 然后是商品列表，每个商品的Item, Qty, U.Price, RM。
+- 商品列表结束后，是Total Amt Incl. GST @ 6% : 156.00
+- Rounding Adjustment : 0.00
+- Total Amt Payable : 156.00
+- Total Qty Tender : 5
+- 然后是GST Summary，SR = 6% ，Amount (RM) 147.17，GST (RM) 8.83
+- PO

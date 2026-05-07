@@ -1,0 +1,50 @@
+To transcribe the image's text into LaTeX (preserving all elements, including formatting, footnotes, and structure), here is the result:  
+
+
+```latex
+\documentclass{article}
+\usepackage{footnote} % For footnote support
+\usepackage[utf8]{inputenc} % Ensure special characters (e.g., ð) are supported
+\usepackage{lipsum} % Optional, for spacing; not needed for content but included for context
+
+\begin{document}
+
+\textbf{FRAGMENTS OF NORN} \hfill CXV
+
+\subsection*{A proverbial Phrase.}
+
+Dēa dombvīda võga dśa vidā võga (pōrass) võga. With given following explanation: Easter-Sunday weather will last all the week. More correctly probable: the weather of Passion-week.  
+
+The Congresbyng passage (acc. to Low): “My ūr in Lēca, in Lēca, Tim in a Guest in e geungna” (It’s dark in the Chimney, but it’s light th’ro the Heath, It’s still time for the stranger to be gone).  
+
+In Yell (in “de Hera”) this phrase is still preserved in the following form: Mārka lōra, lessen līga, tāmā gēstra gōngara [myrkt e lōjā], lōjst e līgyn, tim e, at gēst(in) gēngra. With regard to the form gōngara, cf. Fāer. gōngura.  
+
+
+\subsection*{Our Lord’s Prayer\footnote{A man still living in Unast was formerly able, according to his own and others’ statements, to recite Our Lord’s Prayer in Nor, or at least a greater part of it, some time ago, however, he had an illness which gradually enfeebled his memory, and when I looked up he, could only remember the following fragments: — halagat wārta name (hallowed be Thy name) — sae himbilins (as in Heaven).}} from Foulta (reported by Low in his “Tour Th’orckney or Orkney,” and Branned in An alar for norðisk oldkyndigd,” 1860): Fy vōr o e i Chiragem. Halagata vare no. La Kungdomum din cumla. Vīl the din verra ge wurdin i sīrde Chiragemi. Gav vus dagh vago dailt brāuf. Forgive sinnid wāra (sān?) vi- form gēva omi a gānd sinnis. Wīs aume le o vēra tempa, but de- vus flōra au dioldi, for i do for Kungdomum, i pur u, āmin. Amen.  
+
+
+\subsection*{An Incantation.}
+
+This is found in the tale: “Da Tief i’ de Neenan” (Sealt Times 1879). The tale itself, as well as the language used in it, doubtless originates from A. (Wests). The formula, which is mainly in Scoto-English, has Norm words sprinkled throughout, some of which show old grammatical endings, that have lost their significance. It runs as follows:  
+
+\begin{quote}
+Da stuhl es scarp an fīen, \\
+Da sacheles emer a slean, \\
+A dyr vīs e cīsper un pura, \\
+A glīmer i’ mirk–ad–dim hura, \\
+La staul in vyr ad yāgdy, \\
+An prof e anr skyla, an svīrda.
+\end{quote}
+
+\end{document}
+```  
+
+
+### Key Details:  
+- **Header**: “FRAGMENTS OF NORN” is bolded; “CXV” (page number) is right-aligned via `\hfill`.  
+- **Sections**: Titles (“A proverbial Phrase.”, “Our Lord’s Prayer”, “An Incantation.”) use `\subsection*{}` (unnumbered, as in the original).  
+- **Footnote**: The superscript “¹” next to “Our Lord’s Prayer” is implemented with `\footnote{...}`.  
+- **Special Characters**: Characters like ð (thorn), ū, ā, etc., are preserved using UTF-8 encoding (enabled via `\usepackage[utf8]{inputenc}`).  
+- **Poem Formatting**: The incantation’s lines are wrapped in a `quote` environment with line breaks (`\\`) to match the original’s structure.  
+
+This transcription faithfully reproduces the image’s text, structure, and typographic details in LaTeX.

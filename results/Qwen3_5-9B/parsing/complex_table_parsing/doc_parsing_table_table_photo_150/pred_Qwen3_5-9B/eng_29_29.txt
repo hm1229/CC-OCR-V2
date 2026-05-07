@@ -1,0 +1,118 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Income Statement Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .header h2 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .header h3 {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #e0e0e0;
+        }
+        .sub-total-row {
+            font-weight: bold;
+            background-color: #d0d0d0;
+        }
+        .net-income-row {
+            font-weight: bold;
+            background-color: #c0c0c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Randell Limited</h1>
+        <h2>Income Statement</h2>
+        <h3>For the Year ended December 31, 2018</h3>
+    </div>
+    <table>
+        <tr>
+            <th>Sales</th>
+            <td>$ 818,000</td>
+        </tr>
+        <tr>
+            <th>Cost of goods sold</th>
+            <td>$ 438,000</td>
+        </tr>
+        <tr class="total-row">
+            <th>Gross profit</th>
+            <td>$ 380,000</td>
+        </tr>
+        <tr>
+            <th>Less:</th>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Depreciation expense</td>
+            <td>$ 28,000</td>
+        </tr>
+        <tr>
+            <td>Selling, general and other admin expenses</td>
+            <td>$ 298,000</td>
+        </tr>
+        <tr class="sub-total-row">
+            <td>Income from operations</td>
+            <td>$ 54,000</td>
+        </tr>
+        <tr>
+            <td>Loss on equipment sale</td>
+            <td>$ 6,000</td>
+        </tr>
+        <tr class="sub-total-row">
+            <td>Income before income taxes</td>
+            <td>$ 48,000</td>
+        </tr>
+        <tr>
+            <td>Income tax expense</td>
+            <td>$ 24,000</td>
+        </tr>
+        <tr class="net-income-row">
+            <td>Net Income</td>
+            <td>$ 24,000</td>
+        </tr>
+    </table>
+</body>
+</html>
+```

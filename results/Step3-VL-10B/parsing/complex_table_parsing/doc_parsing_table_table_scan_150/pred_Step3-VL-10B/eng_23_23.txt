@@ -1,0 +1,48 @@
+To convert the provided table into HTML, we structure it with rows (`<tr>`) and cells (`<td>` for data, `<th>` for headers). The table has row labels (leftmost column) and column labels (top row), with diagonal cells marked as `-` and the final row showing "Avg ΔF1" values. Here's the transcription:
+
+```html
+<table>
+  <tr>
+    <th></th>
+    <th>Singapore</th>
+    <th>Edinburgh</th>
+    <th>Toronto</th>
+    <th>Pittsburgh</th>
+  </tr>
+  <tr>
+    <th>Singapore</th>
+    <td>-</td>
+    <td>90.0% (-4.4%)</td>
+    <td>84.7% (-6.8%)</td>
+    <td>91.4% (-2.1%)</td>
+  </tr>
+  <tr>
+    <th>Edinburgh</th>
+    <td>76.7% (-9.6%)</td>
+    <th>-</th>
+    <td>83.8% (-7.7%)</td>
+    <td>90.4% (-3.1%)</td>
+  </tr>
+  <tr>
+    <th>Toronto</th>
+    <td>80.4% (-5.9%)</td>
+    <td>91.3% (-3.1%)</td>
+    <th>-</th>
+    <td>93.1% (-0.4%)</td>
+  </tr>
+  <tr>
+    <th>Pittsburgh</th>
+    <td>79.7% (-6.6%)</td>
+    <td>89.3% (-5.1%)</td>
+    <td>86.4% (-5.1%)</td>
+    <th>-</th>
+  </tr>
+  <tr>
+    <th>Avg ΔF1</th>
+    <td>-7.4%</td>
+    <td>-4.2%</td>
+    <td>-6.5%</td>
+    <td>-1.9%</td>
+  </tr>
+</table>
+```

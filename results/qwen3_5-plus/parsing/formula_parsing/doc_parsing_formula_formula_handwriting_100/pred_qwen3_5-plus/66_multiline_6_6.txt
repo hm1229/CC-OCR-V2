@@ -1,0 +1,22 @@
+```latex
+S \leq \sum _ { d | w } \sum _ { b _ { 1 } , \ldots , b _ { k } \in { \mathcal { B } } } \frac { w } { d } \prod _ { p | w / d } \left( 1 - \frac { \gamma _ { p } ( b _ { 1 } , \ldots , b _ { k } ) + 1 } { p } \right)
+$$
+$$
+\leq \sum _ { d | w } \sum _ { b _ { 1 } , \ldots , b _ { k } \in { \mathcal { B } } } \frac { w } { d } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { 1 } { p } \right) \frac { w _ { 2 } } { d _ { 2 } } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { \gamma _ { p } ( b _ { 1 } , \ldots , b _ { k } ) + 1 } { p } \right)
+$$
+$$
+= \sum _ { d | w } \varphi ( w _ { 1 } ) / d _ { 1 } \sum _ { b _ { 1 } , \ldots , b _ { k } \in { \mathcal { B } } } \frac { w _ { 2 } } { d _ { 2 } } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { \gamma _ { p } ( b _ { 1 } , \ldots , b _ { k } ) + 1 } { p } \right)
+$$
+$$
+\leq \sum _ { d | w } \varphi ( w _ { 1 } ) / d _ { 1 } \sum _ { j = - \infty } ^ { \infty } \sum _ { f ( b _ { 1 } , \ldots , b _ { k } ) \in [ 2 ^ { j } , 2 ^ { j + 1 } ) } \frac { w _ { 2 } } { d _ { 2 } } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { 2 ^ { k + 1 } } { p } \right) \prod _ { \gamma _ { p } ( b _ { 1 } , \ldots , b _ { k } ) \leq 2 ^ { k - 1 } } \left( 1 - \frac { 2 ^ { k + 1 } } { p } \right) ^ { - 1 }
+$$
+$$
+\leq \sum _ { d | w } \varphi ( w _ { 1 } ) / d _ { 1 } \frac { w _ { 2 } } { d _ { 2 } } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { 2 ^ { k + 1 } } { p } \right) \sum _ { j = - \infty } ^ { \infty } \sum _ { f ( b _ { 1 } , \ldots , b _ { k } ) \in [ 2 ^ { j } , 2 ^ { j + 1 } ) } e ^ { ( 2 ^ { k + 1 } ) 2 ^ { j + 2 } }
+$$
+$$
+\leq \sum _ { d | w } k ^ { 2 } | { \mathcal { B } } | ^ { k - 2 } \varphi ( w _ { 1 } ) \varphi ( w _ { 1 } ) / d _ { 1 } \frac { w _ { 2 } } { d _ { 2 } } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { 2 ^ { k + 1 } } { p } \right) \sum _ { j = 0 } ^ { \infty } 2 \cdot \exp ( 2 ^ { k } ) e ^ { ( 2 ^ { k + 1 } ) 2 ^ { j + 2 } }
+$$
+$$
+= C _ { k } k ^ { 2 } | { \mathcal { B } } | ^ { k - 2 } \varphi ^ { 2 } ( w _ { 1 } ) \sum _ { d | w } \varphi ( w _ { 1 } ) / d _ { 1 } \frac { w _ { 2 } } { d _ { 2 } } \prod _ { p | w _ { 2 } / d _ { 2 } } \left( 1 - \frac { 2 ^ { k + 1 } } { p } \right) ,
+$$
+```

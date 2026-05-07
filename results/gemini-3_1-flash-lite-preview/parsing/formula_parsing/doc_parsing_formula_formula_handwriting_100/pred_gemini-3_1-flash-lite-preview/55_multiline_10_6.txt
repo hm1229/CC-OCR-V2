@@ -1,0 +1,12 @@
+\begin{aligned}
+&\int_{\mathbb{R}^2} (\mathbf{u} \cdot \nabla \theta) \Lambda^{\frac{2}{3}} \theta \, dx = \int_{\mathbb{R}^2} \Lambda^{\frac{2}{3}} (\mathbf{u} \cdot \nabla \theta) \theta \, dx \\
+&= \int_{\mathbb{R}^2} \Lambda^{\frac{2}{3}} (\mathbf{u} \cdot \nabla \theta) \theta \, dx \\
+&= \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \cdot \nabla \theta \theta \, dx + \int_{\mathbb{R}^2} \mathbf{u} \cdot \nabla \Lambda^{\frac{2}{3}} \theta \theta \, dx \\
+&= \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \cdot \nabla \theta \theta \, dx + \int_{\mathbb{R}^2} \mathbf{u} \cdot \nabla \frac{1}{2} (\Lambda^{\frac{2}{3}} \theta)^2 \, dx \\
+&= \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \cdot \nabla \theta \theta \, dx + \int_{\mathbb{R}^2} \mathbf{u} \cdot \nabla \frac{1}{2} (\Lambda^{\frac{2}{3}} \theta)^2 \, dx \\
+&+ \int_{\mathbb{R}^2} \mathbf{u} \cdot \Lambda^{\frac{2}{3}} \theta \nabla \theta \, dx \\
+&= \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \cdot \nabla \theta \theta \, dx + \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \theta \nabla \theta \, dx \\
+&+ \int_{\mathbb{R}^2} \mathbf{u} \Lambda^{\frac{2}{3}} \theta \nabla \theta \, dx \\
+&= \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \cdot \nabla \theta \theta \, dx + \int_{\mathbb{R}^2} [\Lambda^{\frac{2}{3}}, \mathbf{u}] \theta \nabla \theta \, dx \\
+&\triangleq I_1 + I_2.
+\end{aligned}

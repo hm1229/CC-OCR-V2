@@ -1,0 +1,16 @@
+$$
+\begin{aligned}
+\left( \left( \sum_{i=1}^n \langle |T_i|x, y \rangle^p \right)^{\frac{1}{p}} \left( \sum_{i=1}^n \langle |T_i^*|x, y \rangle^q \right)^{\frac{1}{q}} \right)^n &\le \frac{\pi}{p} \sum_{i=1}^n \langle |T_i|x,y\rangle^p + \frac{\pi}{q} \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \\
+&\quad - \sum_{j=1}^N (-1)^{r_j} 2^{2j-1} \left( \frac{r}{p} + (-1)^{r_j+1} \left\lfloor \frac{r_j+1}{2} \right\rfloor \right) \\
+&\quad \times \left( \sqrt[j]{\left( \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \right)^{2^{j-1}-k_j} \left( \sum_{i=1}^n \langle |T_i|x,y\rangle^p \right)^{k_j}} \right. \\
+&\quad \quad \left. - \sqrt[j]{\left( \sum_{i=1}^n \langle |T_i|x,y\rangle^p \right)^{k_j+1} \left( \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \right)^{2^{j-1}-k_j-1}} \right)^2 \\
+&\le \frac{\pi}{p} \sum_{i,j=1}^n \langle |T_i|^p x,y\rangle + \frac{\pi}{q} \sum_{i,j=1}^n \langle |T_j^*|^q x,y\rangle - \tag{by (???)} \\
+&\quad - \sum_{j=1}^N (-1)^{r_j} 2^{2j-1} \left( \frac{r}{p} + (-1)^{r_j+1} \left\lfloor \frac{r_j+1}{2} \right\rfloor \right) \\
+&\quad \times \left( \sqrt[j]{\left( \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \right)^{2^{j-1}-k_j} \left( \sum_{i=1}^n \langle |T_i|x,y\rangle^p \right)^{k_j}} \right. \\
+&\quad \quad \left. - \sqrt[j]{\left( \sum_{i=1}^n \langle |T_i|x,y\rangle^p \right)^{k_j+1} \left( \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \right)^{2^{j-1}-k_j-1}} \right)^2 \\
+&= \frac{\pi}{p} \left\langle \left( \sum_{i=1}^n |T_i|^p \right) x,y \right\rangle + \frac{\pi}{q} \left\langle \left( \sum_{j=1}^n |T_j^*|^q \right) x,y \right\rangle \tag{by Lemma (??), (a)} \\
+&\quad - \sum_{j=1}^N \left( (-1)^{r_j} 2^{2j-1} \frac{r}{p} + (-1)^{r_j + 1} \left\lfloor \frac{r_j+1}{2} \right\rfloor \right) \\
+&\quad \times \left( \sqrt[j]{\left( \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \right)^{2^{j-1}-k_j} \left( \sum_{i=1}^n \langle |T_i|x,y\rangle^p \right)^{k_j}} \right. \\
+&\quad \quad \left. - \sqrt[j]{\left( \sum_{i=1}^n \langle |T_i|x,y\rangle^p \right)^{k_j+1} \left( \sum_{i=1}^n \langle |T_i^*|x,y\rangle^q \right)^{2^{j-1}-k_j-1}} \right)^2
+\end{aligned}
+$$

@@ -1,0 +1,47 @@
+To determine the coordinates of the text '157.50', we need to identify the bounding box that contains this text. The text '157.50' appears in two places on the receipt:
+
+1. In the column labeled "金额" (Amount) under the row for "西药费" (Western Medicine Fee).
+2. In the column labeled "人民币 (大写)" (Renminbi (in words)).
+
+For the purpose of this task, I will focus on the first occurrence of '157.50' in the "金额" column.
+
+### Steps to Determine the Coordinates:
+
+1. **Identify the Position of the Text:**
+   - The text '157.50' is located in the "金额" column, under the row for "西药费".
+
+2. **Estimate the Bounding Box:**
+   - The bounding box should encompass the text '157.50' and a small margin around it to ensure it captures the entire text.
+
+3. **Normalize the Coordinates:**
+   - The image width and height need to be considered to normalize the coordinates.
+
+### Normalized Coordinates Calculation:
+
+Assuming the image width is approximately 1000 units and the height is approximately 600 units, the normalized coordinates can be estimated as follows:
+
+- **Left-Top Corner (x1, y1):**
+  - x1: The left edge of the text '157.50' relative to the image width.
+  - y1: The top edge of the text '157.50' relative to the image height.
+
+- **Right-Bottom Corner (x2, y2):**
+  - x2: The right edge of the text '157.50' relative to the image width.
+  - y2: The bottom edge of the text '157.50' relative to the image height.
+
+### Approximate Coordinates:
+
+Based on visual inspection:
+
+- **Left-Top Corner (x1, y1):**
+  - x1: 300 (normalized to the left edge of the text)
+  - y1: 300 (normalized to the top edge of the text)
+
+- **Right-Bottom Corner (x2, y2):**
+  - x2: 450 (normalized to the right edge of the text)
+  - y2: 350 (normalized to the bottom edge of the text)
+
+### Final Output:
+
+(x1, y1, x2, y2) = (300, 300, 450, 350)
+
+These coordinates represent the bounding box for the text '157.50' in the "金额" column.

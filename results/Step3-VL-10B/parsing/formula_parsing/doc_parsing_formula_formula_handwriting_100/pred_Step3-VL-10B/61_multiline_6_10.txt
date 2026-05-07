@@ -1,0 +1,9 @@
+$\mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \big| K_3(t, x) - K_3(s, y) \big|^p \, d t \, d x \, d s \, d y$  
+$= \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left| \int_{\mathbb{R}^a} K(t - r, x) g(x - z) \, d z \, d w(r) \right| - \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} K(s - r, z) g(y - z) \, d z \, d w(r) \right| \, d t \, d x \, d s \, d y$  
+$\leq N(P) \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left| \int_{\mathbb{R}^a} \big( K(t - r, z) - K(s - r, z) \big) g(y - z) \, d z \, d w(r) \right|^p \, d t \, d x \, d s \, d y$  
+$+ N(P) \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left| \int_{\mathbb{R}^a} K(t - r, x) \big( g(x - z) - g(y - z) \big) \, d z \, d w(r) \right|^p \, d t \, d x \, d s \, d y$  
+$+ N(P) \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left| \int_{\mathbb{R}^a} K(t - r, z) g(x - z) \, d z \, d w(r) \right|^p \, d t \, d x \, d s \, d y$  
+$\leq N(P) \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left( \int_{\mathbb{R}^s} \int_{\mathbb{R}^a} \big( K(t - r, z) - K(s - r, z) \big) g(y - z) \, d z \, d^2 r \right)^{p/2} \, d t \, d x \, d s \, d y$  
+$+ N(P) \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left( \int_{\mathbb{R}^s} \int_{\mathbb{R}^a} K(t - r, z) \big( g(x - z) - g(y - z) \big) \, d z \, d^2 r \right)^{p/2} \, d t \, d x \, d s \, d y$  
+$+ N(P) \mathbb{E} \int_{\mathbb{R}^a} \int_{\mathbb{R}^a} \left( \int_{\mathbb{R}^s} \int_{\mathbb{R}^a} K(t - r, z) g(x - z) \, d z \, d^2 r \right)^{p/2} \, d t \, d x \, d s \, d y$  
+$= L_1 + L_2 + L_3$

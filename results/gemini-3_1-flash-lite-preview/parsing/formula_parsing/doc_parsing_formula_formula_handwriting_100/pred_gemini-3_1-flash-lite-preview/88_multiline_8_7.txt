@@ -1,0 +1,9 @@
+\begin{aligned}
+&\mathbb{E}[F_B^A(s_t, a_t) | P_t] = \gamma \mathbb{E}[\min\{Q_B^t(s_{t+1}, b^*), Q_A^t(s_{t+1}, b^*)\} - \min\{Q_A^t(s_{t+1}, a^*), Q_B^t(s_{t+1}, b^*)\} | P_t] \\
+&\leq \gamma \mathbb{E}[\min\{Q_B^t(s_{t+1}, b^*), Q_A^t(s_{t+1}, b^*)\} - \min\{Q_A^t(s_{t+1}, b^*), Q_B^t(s_{t+1}, b^*)\} | P_t] \\
+&= \gamma P(Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E}[Q_B^t(s_{t+1}, b^*) - Q_A^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*), P_t] \\
+&+ \gamma P(Q_B^t(s_{t+1}, b^*) < Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E}[Q_B^t(s_{t+1}, b^*) - Q_A^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) < Q_A^t(s_{t+1}, b^*), P_t] \\
+&- \gamma P(Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E}[Q_B^t(s_{t+1}, b^*) - Q_A^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*), P_t] \\
+&= \gamma P(Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*) | P_t) \underbrace{\mathbb{E}[Q_B^t(s_{t+1}, b^*) - Q_A^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*), P_t]}_{\leq \|\Delta_B^A\|} \\
+&\leq \gamma P(Q_B^t(s_{t+1}, a^*) \geq Q_A^t(s_{t+1}, a^*) | P_t) \|\Delta_B^A\| \leq \gamma \|\Delta_B^A\|
+\end{aligned}

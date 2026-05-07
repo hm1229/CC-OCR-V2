@@ -1,0 +1,29 @@
+```latex
+\begin{align*}
+\|TX^R\|_{L_W^r L_{[0,T]}^\infty L_x^2} &\leq |X_0|_{L_W^r L_x^2} + \left| \int_0^t S_\beta(t,s) \theta_R(X^R)(s) |X^R(s)|^{2\sigma} X^R(s) ds \right|_{L_W^r L_{[0,T]}^\infty L_x^2} \\
+&\leq |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} |\theta_R(X^R)| |X^R|^{2\sigma+1}|_{L_W^r L_{[0,T]}^{r'} L_x^{2'}} \\
+&= |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} \left[ \int_0^T \theta_R(X^R)^{r'}(t) \left( \int_I |X^R(t)|^{(2\sigma+1)p'} dx \right)^{\frac{r'}{p'}} dt \right]^{1/r'} |_{L_W^r}
+\end{align*}
+
+Since $p' = \frac{2\sigma+2}{2\sigma+1}$, the right hand side equals
+\begin{equation}
+= |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} \left( \int_0^T \theta_R(X^R)^{r'}(t) |X^R(t)|_{L_x^p}^{(2\sigma+1)r'} dt \right)^{\frac{1}{r'}} |_{L_W^r}
+\end{equation}
+
+Since $r \geq p = 2\sigma+2$, we can apply Hölder's inequality to get
+\begin{equation}
+\leq |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} \left( \int_0^T [\theta_R(X^R)(t)]^{r/(2\sigma+1)} |X^R(t)|_{L_x^p}^r dt \right)^{\frac{2\sigma+1}{r}} T^{\frac{r-r'(2\sigma+1)}{rr'}} |_{L_W^r}
+\end{equation}
+
+Letting $\tilde{t}(\omega) := \inf \{ s : |X^R(\omega)|_{L^r([0,s]; L_x^p)} \geq 2R \}$, from definition of $\theta_R$ in (??), we have
+\begin{equation}
+= |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} \left( \int_0^{\tilde{t}} [\theta_R(X^R)(t)]^{r/(2\sigma+1)} |X^R(t)|_{L_x^p}^r dt \right)^{\frac{2\sigma+1}{r}} |_{L_W^r}
+\end{equation}
+
+where $\tilde{\beta} = \tilde{\beta} + \frac{r-r'(2\sigma+1)}{rr'} > 0$. Furthermore,
+\begin{align*}
+&\leq |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} \left( \int_0^{\tilde{t}} |X^R(t)|_{L_x^p}^r dt \right)^{\frac{2\sigma+1}{r}} |_{L_W^r} \\
+&\leq |X_0|_{L_W^r L_x^2} + C_{r,p} T^{\tilde{\beta}} (2R)^{2\sigma} |X^R|_{L_W^r L_{[0,T]}^{r'} L_x^p},
+\end{align*}
+
+```

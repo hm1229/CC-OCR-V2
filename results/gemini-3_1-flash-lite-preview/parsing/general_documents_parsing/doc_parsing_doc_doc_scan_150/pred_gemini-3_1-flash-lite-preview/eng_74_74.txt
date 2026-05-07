@@ -1,0 +1,45 @@
+```latex
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{graphicx}
+
+\begin{document}
+
+\section*{Original article}
+
+\textbf{Table 2} Number and distribution of varicella cases in children aged <15 years in Uruguayan private healthcare providers between 1997 and 2005
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccccc|cccccccc}
+\toprule
+& \multicolumn{9}{c}{\textbf{Servicio de Urgencia Asistencia y Traslado (SUAT)}} & \multicolumn{8}{c}{\textbf{Servicio de Emergencia Medico Movil (SEMM)}} \\ \cmidrule(lr){2-10} \cmidrule(lr){11-18}
+\textbf{Age (years)} & \textbf{1997} & \textbf{1998} & \textbf{1999} & \textbf{2000} & \textbf{2001} & \textbf{2002} & \textbf{2003} & \textbf{2004} & \textbf{2005} & \textbf{1998} & \textbf{1999} & \textbf{2000} & \textbf{2001} & \textbf{2002} & \textbf{2003} & \textbf{2004} & \textbf{2005} \\ \midrule
+\textbf{<1} & & & & & & & & & & & & & & & & & \\
+\quad Cases & 63 & 86 & 52 & 22 & 31 & 14 & 11 & 7 & 6 & 106 & 39 & 46 & 35 & 17 & 6 & 16 & 10 \\
+\quad Members & 911 & 994 & 1064 & 1317 & 1245 & 2181 & 5446 & 3336 & 2396 & 8743 & 9604 & 8835 & 4409 & 3414 & 3223 & 2475 & 2513 \\
+\quad Cases/1000 & 65.2 & 86.5 & 48.9 & 16.7 & 24.9 & 6.4 & 2.0 & 2.1 & 2.5 & 12.1 & 4.1 & 5.2 & 7.9 & 5.0 & 1.9 & 6.5 & 4.0 \\
+\textbf{1-4} & & & & & & & & & & & & & & & & & \\
+\quad Cases & 723 & 890 & 454 & 217 & 166 & 89 & 44 & 9 & 18 & 1038 & 369 & 271 & 165 & 44 & 23 & 42 & 26 \\
+\quad Members & 3796 & 4227 & 4787 & 5191 & 5633 & 7202 & 7106 & 7809 & 7966 & 20 114 & 20 659 & 19 243 & 17 517 & 14 133 & 13 869 & 9963 & 11 483 \\
+\quad Cases/1000 & 150.5 & 210.6 & 94.8 & 41.8 & 29.5 & 12.4 & 6.2 & 1.2 & 2.3 & 51.6 & 17.9 & 14.1 & 9.4 & 3.1 & 1.7 & 4.2 & 2.3 \\
+\textbf{5-9} & & & & & & & & & & & & & & & & & \\
+\quad Cases & 592 & 705 & 379 & 245 & 299 & 248 & 188 & 79 & 43 & 769 & 300 & 248 & 267 & 138 & 137 & 187 & 123 \\
+\quad Members & 4148 & 4698 & 5238 & 5690 & 6218 & 7660 & 8491 & 7556 & 5950 & 23 383 & 23 826 & 22 490 & 20 725 & 16 913 & 16 715 & 11 854 & 13 894 \\
+\quad Cases/1000 & 142.7 & 150.9 & 72.4 & 43.1 & 48.1 & 32.4 & 22.1 & 10.5 & 7.2 & 32.9 & 12.6 & 11.0 & 12.9 & 8.2 & 8.2 & 15.8 & 8.9 \\
+\textbf{10-14} & & & & & & & & & & & & & & & & & \\
+\quad Cases & 131 & 182 & 99 & 83 & 87 & 73 & 54 & 37 & 30 & 211 & 102 & 74 & 79 & 35 & 53 & 78 & 72 \\
+\quad Members & 3607 & 4074 & 4710 & 5190 & 5599 & 6840 & 7512 & 6430 & 7671 & 18 992 & 20 608 & 20 334 & 19 696 & 16 440 & 13 069 & 13 262 & 13 173 \\
+\quad Cases/1000 & 36.3 & 44.7 & 21.0 & 16.0 & 15.5 & 10.7 & 7.2 & 5.8 & 3.9 & 11.1 & 4.9 & 3.6 & 4.0 & 2.1 & 4.1 & 5.9 & 5.5 \\
+\textbf{Total} & & & & & & & & & & & & & & & & & \\
+\quad Cases & 1509 & 1867 & 984 & 567 & 583 & 424 & 297 & 132 & 97 & 2124 & 810 & 639 & 546 & 234 & 219 & 323 & 231 \\
+\quad Members & 12 462 & 13 993 & 15 799 & 17 388 & 18 695 & 23 883 & 28 555 & 25 131 & 23 983 & 71 232 & 74 697 & 70 902 & 62 347 & 50 900 & 46 876 & 37 554 & 41 064 \\
+\quad Cases/1000 & 121.1 & 133.4 & 62.3 & 32.6 & 31.2 & 17.8 & 10.4 & 5.3 & 4.0 & 29.8 & 10.8 & 9.0 & 8.8 & 4.6 & 4.7 & 8.6 & 5.6 \\ \bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\end{document}
+```

@@ -1,0 +1,92 @@
+Actually, the image you’ve provided does **not** contain a table in the traditional HTML sense (i.e., with `<table>`, `<tr>`, `<td>` elements). Instead, it shows a **traditional income statement** formatted as a structured financial report — using dotted lines for alignment and indentation to show hierarchy.
+
+However, since your instruction is to “convert tables from a synthetic image into HTML” and “transcribe each table using `<tr>` and `<td>` tags”, I will interpret this as:  
+> *Recreate the visual structure of the income statement as an HTML table, preserving layout, alignment, and grouping as closely as possible — even if it’s not a true data table.*
+
+This is a common practice when converting financial statements to HTML for display purposes.
+
+---
+
+Here’s the HTML representation using `<table>`, `<tr>`, and `<td>` tags, mimicking the layout:
+
+```html
+<table border="0" cellpadding="5" cellspacing="0" style="font-family: monospace; width: 100%;">
+  <tr>
+    <td colspan="3"><strong>Exercise 1-15 (20 minutes)</strong></td>
+  </tr>
+  <tr>
+    <td colspan="3"><strong>1. Traditional income statement</strong></td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align: center; font-size: 1.2em;"><strong>The Alpine House, Inc.</strong></td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align: center; font-size: 1.1em;"><strong>Traditional Income Statement</strong></td>
+  </tr>
+  <tr>
+    <td>Sales.........................................................................................</td>
+    <td></td>
+    <td style="text-align: right;">$150,000</td>
+  </tr>
+  <tr>
+    <td>Cost of goods sold<br>($30,000 + $100,000 – $40,000)..........................</td>
+    <td></td>
+    <td style="text-align: right;">90,000</td>
+  </tr>
+  <tr>
+    <td>Gross margin.............................................................................</td>
+    <td></td>
+    <td style="text-align: right; border-top: 1px solid black;">60,000</td>
+  </tr>
+  <tr>
+    <td>Selling and administrative expenses:</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;Selling expenses (($50 per unit × 200 pairs of skis*) + $20,000)...........</td>
+    <td style="text-align: right;">$30,000</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;Administrative expenses (($10 per unit × 200 pairs of skis) + $20,000)....</td>
+    <td style="text-align: right;">22,000</td>
+    <td style="text-align: right; border-top: 1px solid black;">52,000</td>
+  </tr>
+  <tr>
+    <td>Net operating income..................................................................</td>
+    <td></td>
+    <td style="text-align: right; border-top: 2px solid black;">$ 8,000</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="font-size: 0.9em;">
+      *$150,000 sales ÷ $750 per pair of skis = 200 pairs of skis.
+    </td>
+  </tr>
+</table>
+```
+
+---
+
+### Notes on Structure:
+
+- Used `colspan="3"` for headers spanning full width.
+- Right-aligned monetary values using `style="text-align: right;"`.
+- Added horizontal borders (`border-top`) to mimic underlines for subtotals and totals.
+- Indented line items using `&nbsp;&nbsp;` or padding (could also use CSS classes).
+- The footnote is placed in its own row at the bottom.
+- No actual merged cells are needed here — all rows have 3 columns: description, intermediate amount (if any), final amount.
+
+---
+
+### Alternative: If You Want True Merged Cells
+
+If you want to simulate the original layout more precisely (e.g., having “Selling and administrative expenses” span multiple rows vertically), you could use `rowspan`. But in this case, since each expense line has its own value, it’s cleaner to keep them separate.
+
+Let me know if you’d like a version with `rowspan`/`colspan` for merged headers or grouped sections!
+
+---
+
+✅ This HTML will render a clean, readable version of the income statement that mirrors the image’s structure — suitable for web display or further styling with CSS.
+
+Let me know if you want to add interactivity, export to PDF, or convert to another format!

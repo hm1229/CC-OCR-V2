@@ -1,0 +1,434 @@
+Got it, let's tackle this. First, I need to parse the table from the image. Let's look at the structure.
+
+The table has a header row with "Method" and then columns for T=20 (IPV, BL, CTR) and T=50 (BL, CTR). Wait, let's check the columns:
+
+First, the top header: "Method" is the first column. Then T=20 has three sub-columns: IPV, BL, CTR. Then T=50 has two sub-columns: BL, CTR. Wait, looking at the image:
+
+The header row is:
+
+Method | T=20 (IPV, BL, CTR) | T=50 (BL, CTR)
+
+Then the rows are GREEDY, Beam Search, SSP.
+
+Let's list each cell:
+
+First, the header row (topmost):
+
+- Method (spans 1 column)
+- T=20 (spans 3 columns: IPV, BL, CTR)
+- T=50 (spans 2 columns: BL, CTR)
+
+Then the next row (sub-headers for T=20 and T=50):
+
+- (empty under Method)
+- IPV, BL, CTR (under T=20)
+- BL, CTR (under T=50)
+
+Then the data rows:
+
+GREEDY:
+- IPV: 68.06
+- BL: 216.38
+- CTR: 0.31
+- IPV (T=50): 68.23
+- BL (T=50): 217.93
+- CTR (T=50): 0.31
+
+Beam Search:
+- IPV: 105.52
+- BL: 427.80
+- CTR: 0.25
+- IPV (T=50): 68.23? Wait no, wait the image:
+
+Wait the image's columns:
+
+For T=20, the columns are IPV, BL, CTR. Then for T=50, the columns are BL, CTR. Wait, looking at the image:
+
+The table structure:
+
+First row (top header):
+
+- Method
+- T=20 (with subcolumns IPV, BL, CTR)
+- T=50 (with subcolumns BL, CTR)
+
+Second row (sub-headers):
+
+- (under Method: empty)
+- IPV, BL, CTR (under T=20)
+- BL, CTR (under T=50)
+
+Then the data rows:
+
+GREEDY row:
+
+- Method: GREEDY
+- T=20 IPV: 68.06
+- T=20 BL: 216.38
+- T=20 CTR: 0.31
+- T=50 IPV: 68.23? Wait no, the image shows for GREEDY, under T=50, the columns are BL and CTR. Let's check the image again.
+
+Looking at the image:
+
+The columns are labeled as:
+
+Method | T=20 (IPV, BL, CTR) | T=50 (BL, CTR)
+
+Then the data:
+
+GREEDY:
+
+- IPV (T=20): 68.06
+- BL (T=20): 216.38
+- CTR (T=20): 0.31
+- IPV (T=50): 68.23? Wait no, the image shows for GREEDY, the T=50 section has BL:217.93 and CTR:0.31. Wait, the image's columns for T=50: the first column under T=50 is BL, then CTR. So the columns are:
+
+Method | T=20: IPV | T=20: BL | T=20: CTR | T=50: BL | T=50: CTR
+
+Yes, that's the structure. Let's count the columns:
+
+1. Method
+2. T=20 - IPV
+3. T=20 - BL
+4. T=20 - CTR
+5. T=50 - BL
+6. T=50 - CTR
+
+Now let's list each row:
+
+First, the header row (topmost) has "Method" spanning 1 column, then "T=20" spanning 3 columns (IPV, BL, CTR), then "T=50" spanning 2 columns (BL, CTR). So in HTML, we need to use <th> with colspan.
+
+Then the next row is the sub-headers: under Method (empty), then IPV, BL, CTR (under T=20), then BL, CTR (under T=50).
+
+Then the data rows:
+
+GREEDY:
+
+- Method: GREEDY
+- T=20 IPV: 68.06
+- T=20 BL: 216.38
+- T=20 CTR: 0.31
+- T=50 BL: 217.93
+- T=50 CTR: 0.31
+
+Beam Search:
+
+- Method: Beam Search
+- T=20 IPV: 105.52
+- T=20 BL: 427.80
+- T=20 CTR: 0.25
+- T=50 BL: 217.93? Wait no, image shows Beam Search T=50 BL is 217.93? Wait image:
+
+Beam Search row:
+
+T=20 IPV: 105.52
+
+T=20 BL: 427.80
+
+T=20 CTR: 0.25
+
+T=50 IPV: 68.23? Wait no, the image shows for Beam Search, under T=50, the BL is 217.93 and CTR is 0.31. Let's check the image again.
+
+Looking at the image:
+
+The columns for T=50: BL and CTR. Let's check each row:
+
+GREEDY:
+
+- T=50 BL: 217.93
+
+- T=50 CTR: 0.31
+
+Beam Search:
+
+- T=50 BL: 217.93? No, image shows Beam Search T=50 BL is 217.93? Wait no, the image's Beam Search row:
+
+Under T=50, BL is 217.93? Let's check the numbers:
+
+In the image, the Beam Search row:
+
+T=20: IPV 105.52, BL 427.80, CTR 0.25
+
+T=50: IPV? Wait no, the image's columns for T=50: the first column under T=50 is BL, then CTR. Let's check the numbers:
+
+For GREEDY, T=50 BL is 217.93, CTR 0.31.
+
+Beam Search, T=50 BL is 217.93? No, the image shows Beam Search T=50 BL is 217.93? Wait the image's Beam Search row:
+
+The numbers under T=50: BL is 217.93, CTR is 0.31. Then SSP row:
+
+T=50 BL is 439.59, CTR 0.24.
+
+Yes, let's list all data:
+
+GREEDY:
+
+- T=20 IPV: 68.06
+
+- T=20 BL: 216.38
+
+- T=20 CTR: 0.31
+
+- T=50 BL: 217.93
+
+- T=50 CTR: 0.31
+
+Beam Search:
+
+- T=20 IPV: 105.52
+
+- T=20 BL: 427.80
+
+- T=20 CTR: 0.25
+
+- T=50 BL: 217.93? Wait no, the image shows Beam Search T=50 BL is 217.93? Let me check the image again. The image's Beam Search row, under T=50, the BL column is 217.93? Let's look at the image:
+
+The image has:
+
+For T=50, the BL column:
+
+GREEDY: 217.93
+
+Beam Search: 217.93? No, that can't be. Wait the image's numbers:
+
+Looking at the image:
+
+The T=50 section:
+
+- GREEDY: BL 217.93, CTR 0.31
+
+- Beam Search: BL 217.93? No, the image shows Beam Search's T=50 BL is 217.93? Wait no, the image's Beam Search row, under T=50, the BL is 217.93? Let me check the original image.
+
+Wait the user provided the image, let's parse the text:
+
+The table in the image:
+
+Method | T=20 (IPV, BL, CTR) | T=50 (BL, CTR)
+
+GREEDY | 68.06 | 216.38 | 0.31 | 68.23 | 217.93 | 0.31
+
+Wait no, the image shows for GREEDY, under T=50, there's an IPV column? Wait the image's columns:
+
+Looking at the image, the columns are:
+
+Method | IPV (T=20) | BL (T=20) | CTR (T=20) | IPV (T=50) | BL (T=50) | CTR (T=50)
+
+Yes! Because in the image, for GREEDY, the T=50 section has an IPV column (68.23) then BL (217.93) then CTR (0.31). Let's check:
+
+The image's header:
+
+T=20 has three columns: IPV, BL, CTR.
+
+T=50 has three columns? Wait no, the image's T=50 header: the columns are BL and CTR, but in the data, there's an IPV column under T=50. Let's check the image again.
+
+Looking at the image:
+
+The top header:
+
+- Method
+
+- T=20 (with subcolumns IPV, BL, CTR)
+
+- T=50 (with subcolumns IPV, BL, CTR)? But the image shows for T=50, the CTR is 0.31 for GREEDY and Beam Search, which matches. Let's check the numbers:
+
+For GREEDY:
+
+- T=20 IPV: 68.06
+
+- T=20 BL: 216.38
+
+- T=20 CTR: 0.31
+
+- T=50 IPV: 68.23
+
+- T=50 BL: 217.93
+
+- T=50 CTR: 0.31
+
+Beam Search:
+
+- T=20 IPV: 105.52
+
+- T=20 BL: 427.80
+
+- T=20 CTR: 0.25
+
+- T=50 IPV: 68.23? No, image shows Beam Search T=50 IPV is 68.23? Wait no, the image's Beam Search row, T=50 IPV is 68.23? Let's check the image's text:
+
+The image has:
+
+Beam Search row:
+
+IPV (T=20): 105.52
+
+BL (T=20): 427.80
+
+CTR (T=20): 0.25
+
+IPV (T=50): 68.23? No, the image shows for Beam Search, T=50 IPV is 68.23? Wait the image's numbers:
+
+Looking at the image, the T=50 section for Beam Search:
+
+The BL is 217.93, CTR is 0.31. And the IPV for T=50 in Beam Search is 68.23? No, the image shows for Beam Search, the T=50 IPV is 68.23? Let's check the image's text:
+
+The image's table:
+
+First row (headers):
+
+Method | T=20 | T=50
+
+Then T=20 has subheaders: IPV, BL, CTR
+
+T=50 has subheaders: IPV, BL, CTR
+
+Then the data:
+
+GREEDY:
+
+IPV (T=20): 68.06
+
+BL (T=20): 216.38
+
+CTR (T=20): 0.31
+
+IPV (T=50): 68.23
+
+BL (T=50): 217.93
+
+CTR (T=50): 0.31
+
+Beam Search:
+
+IPV (T=20): 105.52
+
+BL (T=20): 427.80
+
+CTR (T=20): 0.25
+
+IPV (T=50): 68.23? No, the image shows Beam Search's T=50 IPV is 68.23? Wait the image's Beam Search row, T=50 IPV is 68.23? Let's check the image's text:
+
+The image shows for Beam Search, under T=50, the IPV is 68.23? No, the image's Beam Search row has:
+
+After T=20 CTR (0.25), the next column is IPV (T=50): 68.23? Then BL (T=50): 217.93, CTR (T=50): 0.31.
+
+Then SSP row:
+
+IPV (T=20): 189.11
+
+BL (T=20): 999.51
+
+CTR (T=20): 0.19
+
+IPV (T=50): 107.06
+
+BL (T=50): 439.59
+
+CTR (T=50): 0.24
+
+Then the next column for T=50 is CTR: 0.15? Wait no, the image shows SSP's T=50 CTR is 0.15. Let's check:
+
+SSP row:
+
+T=20 IPV: 189.11
+
+T=20 BL: 999.51
+
+T=20 CTR: 0.19
+
+T=50 IPV: 107.06
+
+T=50 BL: 439.59
+
+T=50 CTR: 0.24? No, the image shows SSP's T=50 CTR is 0.15. Let's check the image:
+
+The image's SSP row:
+
+Under T=50, CTR is 0.15. And the BL is 1632.56. Wait, the image shows:
+
+SSP row:
+
+T=20: IPV 189.11, BL 999.51, CTR 0.19
+
+T=50: IPV 242.77, BL 1632.56, CTR 0.15
+
+Ah, I see! I missed the T=50 IPV column. Let's correct:
+
+The columns are:
+
+Method | T=20 (IPV, BL, CTR) | T=50 (IPV, BL, CTR)
+
+Yes, that's the correct structure. Let's list all columns:
+
+1. Method
+
+2. T=20 - IPV
+
+3. T=20 - BL
+
+4. T=20 - CTR
+
+5. T=50 - IPV
+
+6. T=50 - BL
+
+7. T=50 - CTR
+
+Now let's map each row:
+
+GREEDY:
+
+- Method: GREEDY
+
+- T=20 IPV: 68.06
+
+- T=20 BL: 216.38
+
+- T=20 CTR: 0.31
+
+- T=50 IPV: 68.23
+
+- T=50 BL: 217.93
+
+- T=50 CTR: 0.31
+
+Beam Search:
+
+- Method: Beam Search
+
+- T=20 IPV: 105.52
+
+- T=20 BL: 427.80
+
+- T=20 CTR: 0.25
+
+- T=50 IPV: 68.23? No, image shows Beam Search T=50 IPV is 68.23? Wait the image's Beam Search row, T=50 IPV is 68.23? Let's check the image:
+
+The image's Beam Search row:
+
+After T=20 CTR (0.25), the next column (T=50 IPV) is 68.23? Then T=50 BL is 217.93, T=50 CTR is 0.31.
+
+Yes, that's what the image shows.
+
+SSP:
+
+- Method: SSP
+
+- T=20 IPV: 189.11
+
+- T=20 BL: 999.51
+
+- T=20 CTR: 0.19
+
+- T=50 IPV: 242.77
+
+- T=50 BL: 439.59
+
+- T=50 CTR: 0.24? No, image shows SSP T=50 CTR is 0.15. Let's check the image:
+
+The image's SSP row:
+
+T=50 CTR is 0.15, and T=50 BL is 1632.56. Wait, the image shows:
+
+SSP row:
+
+T=20: IPV 189.11, BL

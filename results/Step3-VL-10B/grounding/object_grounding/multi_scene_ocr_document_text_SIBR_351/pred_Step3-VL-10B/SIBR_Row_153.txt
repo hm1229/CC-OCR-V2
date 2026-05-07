@@ -1,0 +1,173 @@
+用户现在需要检测图像中的各个对象，对应给定的类别。首先得逐一分析每个类别在图中的位置。
+
+首先看ADDRESS：图中有两个地址，一个是美国的Easy Power Information Hotel的地址，另一个是中文的易动力信息酒店的地址。需要确认每个ADDRESS的位置。比如美国地址是“802 Campbell Square Johnsonfort, ID 38172”，中文地址是“山东省烟台市南长黄街m座 843658”。所以这两个都是ADDRESS。
+
+然后BALANCE 余额：图中有“BALANCE 余额: 769.99 RMB”，所以这个是BALANCE 余额。
+
+CHINESE Address：中文地址，即“山东省烟台市南长黄街m座 843658 邮编：100027”中的地址部分，属于CHINESE Address。
+
+CHINESE Company Name：中文的公司名是“易动力信息酒店”，所以这个是CHINESE Company Name。
+
+COMPANY Name：英文的公司名是“Easy Power Information Hotel”，在company|公司那里，所以是COMPANY Name。
+
+F&B餐饮费 - VAT Rate 10%：看明细里的“F&B餐饮费 - VAT Rate 10%”，对应的行，数值是0.00 RMB，所以这个类别存在。
+
+F&B餐饮费 - VAT Rate 16%：同理，图中有“F&B餐饮费 - VAT Rate 16%”一行，数值0.00 RMB。
+
+F&B餐饮费 - VAT Rate 6%：图中有“F&B餐饮费 - VAT Rate 6%”一行，数值0.00 RMB。
+
+NET AMOUNT 净额：图中有“NET AMOUNT 净额: 726.41 RMB”，所以是这个类别。
+
+OTHER其他 - VAT Rate 10%：图中有“OTHER其他 - VAT Rate 10%”一行，数值0.00 RMB。
+
+OTHER其他 - VAT Rate 16%：图中有“OTHER其他 - VAT Rate 16%”一行，数值0.00 RMB。
+
+OTHER其他 - VAT Rate 6%：图中有“OTHER其他 - VAT Rate 6%”一行，数值0.00 RMB。
+
+Room房费 - VAT Rate 6%：图中有“Room房费 - VAT Rate 6%”一行，数值43.58 RMB？不，看上面的Room Charge是726.41，然后Room VAT 6%是43.58。然后明细里“Room房费 - VAT Rate 6%”是43.58 RMB，所以这个类别存在。
+
+TITLE：图中的标题是“INFORMATION INVOICE”，所以TITLE是这个。
+
+WEBSITE：图中的http://thompson.com/是WEBSITE。
+
+address|地址：图中有“address | 地址 ：”后面的内容，属于这个标签。
+
+arrival|入住日期：图中有“arrival | 入住日期 ：27-Oct-2020”，属于这个标签。
+
+cashier|收银员：图中有“cashier | 收银员 ：FONCHEN791”，属于这个标签。
+
+charges/credit|费用/可用余额：图中的列标题“charges/credit | 费用/可用余额”，属于这个标签。
+
+company|公司：图中有“company | 公司 ：Easy Power Information Hotel”，属于这个标签。
+
+conf No.|确认号码：图中有“conf No. | 确认号码 ：220240”，属于这个标签。
+
+date|日期：图中的“date | 日期”列，比如10/27/20，属于这个标签。
+
+departure|离店日期：图中有“departure | 离店日期 ：28-Oct-2020”，属于这个标签。
+
+description|项目：图中的“description | 项目”列，比如Room Charge，属于这个标签。
+
+email|address|电子邮件：图中有“email address | 电子邮件 : johnlambert@oliver.com”，属于这个标签（注意用户给的类别是email|address|电子邮件，可能合并了，看用户给的类别是email|address|电子邮件，所以对应）。
+
+loyalty number|会员号码：图中有“loyalty number|会员号码 :306444292”，属于这个标签。
+
+name|姓名：图中有“name | 姓名 ：Mr马秀兰”，属于这个标签。
+
+page number|页数：图中有“page number | 页数 ：1 of 1”，属于这个标签。
+
+printed date|打印日期：图中有“printed date | 打印日期 ：28-Oct-2020”，属于这个标签。
+
+room|房号：图中有“room | 房号 ：1028”，属于这个标签。
+
+tel：图中有“tel:0861.88.5820.2980”，属于这个标签。
+
+travel agent|旅行社：图中有“travel agent | 旅行社 ：Easy Power Information Hotel”，属于这个标签。
+
+邮编：图中的“邮编：100027”在中文地址部分，属于邮编。
+
+现在需要逐个列出每个检测到的对象，注意不要重复，每个类别对应一个实例？或者可能多个？比如ADDRESS有两个（美国和中文），所以需要分别处理。
+
+现在开始整理每个类别：
+
+1. ADDRESS（美国地址）：看顶部的“Easy Power Information Hotel, 802 Campbell Square Johnsonfort, ID 38172, beijing 100027,china”中的地址部分，即“802 Campbell Square Johnsonfort, ID 38172”是ADDRESS。
+2. ADDRESS（中文地址）：“山东省烟台市南长黄街m座 843658”是另一个ADDRESS。
+3. BALANCE 余额：“BALANCE 余额: 769.99 RMB”。
+4. CHINESE Address：中文地址部分，即“山东省烟台市南长黄街m座 843658”（和上面的中文ADDRESS可能重复？不，CHINESE Address是类别，而ADDRESS是另一个类别？看用户给的类别里有ADDRESS和CHINESE Address，所以需要区分。比如英文地址是ADDRESS，中文地址是CHINESE Address？或者可能用户把中文地址归为CHINESE Address，英文地址是ADDRESS。需要看用户给的类别列表中的“CHINESE Address”和“ADDRESS”是两个类别。所以图中的英文地址（美国的）是ADDRESS，中文地址（易动力的）是CHINESE Address。
+5. CHINESE Company Name：“易动力信息酒店”。
+6. COMPANY Name：“Easy Power Information Hotel”（在company|公司那里）。
+7. F&B餐饮费 - VAT Rate 10%：明细中的“F&B餐饮费 - VAT Rate 10%”一行。
+8. F&B餐饮费 - VAT Rate 16%：明细中的“F&B餐饮费 - VAT Rate 16%”一行。
+9. F&B餐饮费 - VAT Rate 6%：明细中的“F&B餐饮费 - VAT Rate 6%”一行。
+10. NET AMOUNT 净额：“NET AMOUNT 净额: 726.41 RMB”。
+11. OTHER其他 - VAT Rate 10%：明细中的“OTHER其他 - VAT Rate 10%”一行。
+12. OTHER其他 - VAT Rate 16%：明细中的“OTHER其他 - VAT Rate 16%”一行。
+13. OTHER其他 - VAT Rate 6%：明细中的“OTHER其他 - VAT Rate 6%”一行。
+14. Room房费 - VAT Rate 6%：明细中的“Room房费 - VAT Rate 6%”一行（数值43.58 RMB）。
+15. TITLE：“INFORMATION INVOICE”。
+16. WEBSITE：“http://thompson.com/”。
+17. address|地址：图中的“address | 地址 ：”后面的内容（可能为空？因为图中address|地址后面没有填写？看图片中的“address | 地址 ：”后面是空的？因为图中“address | 地址 ：”后面没有内容，所以这个标签存在，但内容可能为空。但需要检测标签存在，即该字段存在。
+18. arrival|入住日期：“arrival | 入住日期 ：27-Oct-2020”。
+19. cashier|收银员：“cashier | 收银员 ：FONCHEN791”。
+20. charges/credit|费用/可用余额：列标题“charges/credit | 费用/可用余额”。
+21. company|公司：“company | 公司 ：Easy Power Information Hotel”。
+22. conf No.|确认号码：“conf No. | 确认号码 ：220240”。
+23. date|日期：列标题“date | 日期”以及下面的“10/27/20”等。
+24. departure|离店日期：“departure | 离店日期 ：28-Oct-2020”。
+25. description|项目：列标题“description | 项目”以及下面的“Room Charge”等。
+26. email|address|电子邮件：“email address | 电子邮件 : johnlambert@oliver.com”。
+27. loyalty number|会员号码：“loyalty number|会员号码 :306444292”。
+28. name|姓名：“name | 姓名 ：Mr马秀兰”。
+29. page number|页数：“page number | 页数 ：1 of 1”。
+30. printed date|打印日期：“printed date | 打印日期 ：28-Oct-2020”。
+31. room|房号：“room | 房号 ：1028”。
+32. tel：“tel:0861.88.5820.2980”。
+33. travel agent|旅行社：“travel agent | 旅行社 ：Easy Power Information Hotel”。
+34. 邮编：“邮编：100027”（在中文地址部分）。
+
+现在需要为每个类别找到对应的bbox。因为是图像中的文本，需要估计每个元素的位置。比如：
+
+- 美国地址（ADDRESS）：顶部的“802 Campbell Square Johnsonfort, ID 38172”所在的区域，bbox大概是[100, 10, 380, 30]左右（假设图像的坐标，需要看图片中的位置）。
+- 中文地址（CHINESE Address）：“山东省烟台市南长黄街m座 843658”所在的区域，bbox是[140, 140, 350, 160]左右。
+- BALANCE 余额：“BALANCE 余额: 769.99 RMB”在下方，bbox是[200, 650, 600, 670]。
+- CHINESE Company Name：“易动力信息酒店”在中文地址上方，bbox是[140, 100, 280, 120]。
+- COMPANY Name：“Easy Power Information Hotel”在company|公司那里，bbox是[140, 300, 400, 320]。
+- F&B餐饮费 - VAT Rate 10%：明细中的对应行，比如在“F&B餐饮费 - VAT Rate 10%”这一行，数值0.00 RMB，bbox是[100, 520, 300, 540]。
+- F&B餐饮费 - VAT Rate 16%：对应行，bbox是[100, 540, 300, 560]。
+- F&B餐饮费 - VAT Rate 6%：对应行，bbox是[100, 500, 300, 520]。
+- NET AMOUNT 净额：“NET AMOUNT 净额: 726.41 RMB”在中间偏下，bbox是[100, 600, 400, 620]。
+- OTHER其他 - VAT Rate 10%：对应行，bbox是[100, 560, 300, 580]。
+- OTHER其他 - VAT Rate 16%：对应行，bbox是[100, 580, 300, 600]。
+- OTHER其他 - VAT Rate 6%：对应行，bbox是[100, 500, 300, 520]？不，看OTHER其他 - VAT Rate 6%是另一行，比如在“OTHER其他 - VAT Rate 6%”这一行，bbox是[100, 580, 300, 600]？可能需要更仔细看图片中的明细部分。
+
+另外，TITLE是“INFORMATION INVOICE”在右上角，bbox是[650, 300, 850, 320]。
+
+WEBSITE是“http://thompson.com/”在顶部，bbox是[140, 50, 250, 70]。
+
+address|地址：图中的“address | 地址 ：”标签，bbox是[100, 250, 200, 270]（因为图中有“address | 地址 ：”这一行，后面可能没有内容，但标签存在）。
+
+arrival|入住日期：“arrival | 入住日期 ：27-Oct-2020”在右侧，bbox是[500, 250, 700, 270]。
+
+cashier|收银员：“cashier | 收银员 ：FONCHEN791”在右侧，bbox是[500, 300, 700, 320]。
+
+charges/credit|费用/可用余额：列标题在表格上方，bbox是[500, 400, 800, 420]。
+
+company|公司：“company | 公司 ：Easy Power Information Hotel”在左侧，bbox是[100, 350, 400, 370]。
+
+conf No.|确认号码：“conf No. | 确认号码 ：220240”在右侧，bbox是[500, 350, 700, 370]。
+
+date|日期：列标题“date | 日期”在表格上方，bbox是[100, 450, 200, 470]。
+
+departure|离店日期：“departure | 离店日期 ：28-Oct-2020”在右侧，bbox是[500, 300, 700, 320]？不，departure是离店日期，看图片中的“departure | 离店日期 ：28-Oct-2020”在右侧，对应位置。
+
+description|项目：列标题“description | 项目”在表格上方，bbox是[300, 450, 500, 470]。
+
+email|address|电子邮件：“email address | 电子邮件 : johnlambert@oliver.com”在左侧，bbox是[100, 200, 400, 220]。
+
+loyalty number|会员号码：“loyalty number|会员号码 :306444292”在左侧，bbox是[100, 270, 400, 290]。
+
+name|姓名：“name | 姓名 ：Mr马秀兰”在左侧，bbox是[100, 220, 400, 240]。
+
+page number|页数：“page number | 页数 ：1 of 1”在右侧，bbox是[500, 370, 700, 390]。
+
+printed date|打印日期：“printed date | 打印日期 ：28-Oct-2020”在右侧，bbox是[500, 320, 700, 340]。
+
+room|房号：“room | 房号 ：1028”在右侧，bbox是[500, 220, 700, 240]。
+
+tel：“tel:0861.88.5820.2980”在顶部，bbox是[140, 40, 250, 60]。
+
+travel agent|旅行社：“travel agent | 旅行社 ：Easy Power Information Hotel”在左侧，bbox是[100, 320, 400, 340]。
+
+邮编：“邮编：100027”在中文地址部分，bbox是[220, 140, 320, 160]。
+
+现在需要将这些整理成JSON数组，每个元素包含bbox和label。需要注意的是，有些类别可能在图中没有出现？比如“address|地址”在图中是“address | 地址 ：”后面没有内容，但标签存在，所以需要包含。另外，要确保每个检测到的类别都列出，没有遗漏。
+
+现在开始构建每个条目：
+
+1. 美国地址（ADDRESS）：bbox大概覆盖“802 Campbell Square Johnsonfort, ID 38172”，label: ADDRESS
+2. 中文地址（CHINESE Address）：覆盖“山东省烟台市南长黄街m座 843658”，label: CHINESE Address
+3. BALANCE 余额：覆盖“BALANCE 余额: 769.99 RMB”，label: BALANCE 余额
+4. CHINESE Company Name：覆盖“易动力信息酒店”，label: CHINESE Company Name
+5. COMPANY Name：覆盖“Easy Power Information Hotel”（company|公司处），label: COMPANY Name
+6. F&B餐饮费 - VAT Rate 10%：覆盖“F&B餐饮费 - VAT Rate 10%”行，label: F&B餐饮费 - VAT Rate 10%
+7. F&B餐饮费 - VAT Rate 16%：覆盖“F&B餐饮费 - VAT Rate

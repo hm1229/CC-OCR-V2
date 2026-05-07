@@ -1,0 +1,121 @@
+```latex
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{subcaption}
+\usepackage{fancyhdr}
+\pgfplotsset{compat=1.18}
+\renewcommand{\figurename}{图}
+% Header and footer setup
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\raisebox{-0.2em}{\rule{0.8em}{0.8em}} 国海证券 SEALAND SECURITIES}
+\rhead{证券研究报告}
+\cfoot{请务必阅读正文后免责条款部分}
+\rfoot{17}
+\begin{document}
+
+% Figure 19: Transparent fiber performance table
+\begin{figure}[ht]
+\centering
+\caption{机载雷达天线罩常用透波纤维及性能}
+\footnotesize
+\begin{tabular}{lcccccccc}
+\toprule
+\multirow{2}{*}{性能} & E玻璃 & S玻璃 & M玻璃 & D玻璃 & 高硅氧玻璃 & 石英玻璃 & \multirow{2}{*}{Kevlar49} & \multirow{2}{*}{Spectra 1000} \\
+& 纤维 & 纤维 & 纤维 & 纤维 & 纤维 & 纤维 & & \\
+\midrule
+密度$/\mathrm{(g/cm^3)}$ & 2.54 & 2.49 & 2.77 & 2.16 & 2.30 & 2.20 & 1.45 & 0.97 \\
+拉伸强度$/\mathrm{GPa}$ & 3.45 & 4.00 & 3.7 & 2.40 & 2.50 & 1.70 & 3.45 & 3.0 \\
+杨氏模量$/\mathrm{GPa}$ & 72.0 & 85.0 & 91.6 & 52.0 & 52.0 & 72.0 & 137 & 95.3 \\
+$\varepsilon/10\mathrm{GHz}$ & 6.13 & 5.21 & 7.0 & 4.00 & 4.00 & 3.78 & 3.85 & 2.30 \\
+$\tan\delta/10\mathrm{GHz}$ & 0.0038 & 0.0068 & 0.0039 & 0.0026 & 0.0048 & 0.0002 & 0.0010 & 0.0001 \\
+\bottomrule
+\end{tabular}
+\vspace{0.5em}
+\parbox{\linewidth}{\footnotesize 资料来源：机载雷达天线罩常用透波复合材料研究进展（李大进）、国海证券研究所}
+\end{figure}
+
+\vspace{1em}
+当前，我国军机规模与美国相比还存在较大差距，我国全部军机数量约为其1/4；运输机数量约为其1/9；武装直升机数量不到其1/10；教练机数量约为其1/6；战斗机总量约为其3/4，但其中含有超过500架二代战机。在数量和结构方面与美军差距明显，仅战斗机数量提升和老旧装备更新换代需求就超过千架。随着世界一流军队建设目标的提出，以及J-20、Y-20等新一代军机列装进度加快，航空装备产业链景气度有望进一步提升。雷达罩作为军机结构的重要组成部分，其需要将随着军机需求的增长而快速增长。
+\vspace{1em}
+
+% Figure 20 and 21: Side by side bar charts
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+ybar,
+bar width=10pt,
+ymin=0,
+ymax=16000,
+xtick=data,
+xticklabels={全部军机,作战飞机,运输机,武装直升机,教练机},
+x tick label style={font=\small},
+legend pos=north east,
+legend style={font=\small},
+symbolic x coords={total,combat,transport,heli,trainer},
+width=\linewidth,
+height=6cm
+]
+\addplot+[fill=blue!60] coordinates {
+(total,3200) (combat,2200) (transport,100) (heli,300) (trainer,100)
+};
+\addplot+[fill=navy!90] coordinates {
+(total,13700) (combat,3000) (transport,1000) (heli,5200) (trainer,2600)
+};
+\legend{中国（架）,美国（架）}
+\end{axis}
+\end{tikzpicture}
+\caption{中美全部军机数量对比}
+\vspace{0.5em}
+\parbox{\linewidth}{\footnotesize 资料来源：World air forces 2017、国海证券研究所}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+ybar stacked,
+bar width=20pt,
+ymin=0,
+ymax=2000,
+xtick=data,
+xticklabels={中国,美国},
+x tick label style={font=\small},
+legend pos=north east,
+legend style={font=\small,cells={anchor=west}},
+symbolic x coords={cn,us},
+width=\linewidth,
+height=6cm
+]
+\addplot+[fill=yellow!80] coordinates {(cn,400) (us,0)}; % 二代
+\addplot+[fill=teal!70] coordinates {(cn,100) (us,200)}; % 三代
+\addplot+[fill=green!60] coordinates {(cn,350) (us,1400)}; % 四代
+\addplot+[fill=purple!60] coordinates {(cn,20) (us,100)}; % 五代
+\legend{五代,四代,三代,二代}
+\end{axis}
+\end{tikzpicture}
+\caption{中美空军战斗机结构}
+\vspace{0.5em}
+\parbox{\linewidth}{\footnotesize 资料来源：World air forces 2017、维基百科、国海证券研究所}
+\end{subfigure}
+\end{figure}
+
+\vspace{1em}
+在航天领域，公司产品主要用于制作隔热和耐高温材料。根据《2016 中国的航天》白皮书，我国将航天事业作为国家战略的重要组成部分，历来高度重视。未来五年，我国还将继续推进载人航天、月球探测、北斗卫星导航系统、高分辨率对地观测系统、新一代运载火箭等重大工程，并启动一批新的重大科技项目和工程项目。从近年来看，我国航天发射的次数稳步增加，未来有望保持年均20次以上。石英棉、石英布以及石英纱作为航天飞行器隔热、耐高温部件的重要原材料，未来需求有望随着我国航天事业的发展，保持稳定的增长。
+\vspace{1em}
+
+% Figure 22
+\begin{figure}[ht]
+\centering
+\caption{飞船返回大气层}
+% Original image has no illustration content here, only title
+\end{figure}
+
+\end{document}
+```

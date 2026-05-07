@@ -1,0 +1,34 @@
+\[
+\begin{aligned}
+|T X^{R}|_{L_{\omega}^{r} L_{[0,T]}^{\infty} L_{x}^{2}} &\leq |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + \left|\int_{0}^{t} S_{\beta}(t,s) \theta_{R}(X^{R})(s) |X^{R}(s)|^{2\sigma} X^{R}(s) ds\right|_{L_{\omega}^{r} L_{[0,T]}^{\infty} L_{x}^{2}} \\
+&\leq |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\bar{\beta}} |\theta_{R}(X^{R}) |X^{R}|^{2\sigma+1}|_{L_{\omega}^{r} L_{[0,T]}^{r'} L_{x}^{p'}} \\
+&= |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\bar{\beta}} \left|\left[\int_{0}^{T} \theta_{R}(X^{R})^{r'}(t) \left(\int_{\Gamma} |X^{R}(t)|^{(2\sigma+1)p'} dx\right)^{\frac{r'}{p'}} dt\right]^{1/r'}\right|_{L_{\omega}^{r}}
+\end{aligned}
+\]
+
+Since \(p' = \frac{2\sigma+2}{2\sigma+1}\), the right hand side equals
+
+\[
+= |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\bar{\beta}} \left|\left(\int_{0}^{T} \theta_{R}(X^{R})^{r'}(t) |X^{R}(t)|_{L_{x}^{2}}^{(2\sigma+1)r'} dt\right)^{\frac{1}{p'}}\right|_{L_{\omega}^{r}}
+\]
+
+Since \(r \geq p = 2\sigma+2\), we can apply Hölder's inequality to get
+
+\[
+\leq |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\bar{\beta}} \left|\left(\int_{0}^{T} [\theta_{R}(X^{R})(t)]^{r/(2\sigma+1)} |X^{R}(t)|_{L_{x}^{2}}^{r} dt\right)^{\frac{2\sigma+1}{r}} T^{\frac{r-r'(2\sigma+1)}{rr'}}\right|_{L_{\omega}^{r}}
+\]
+
+Letting \(\tilde{t}(\omega) := \inf\{s: |X^{R}(\omega)|_{L^{r}([0,s]; L_{x}^{2})} \geq 2R\}\), from definition of \(\theta_{R}\) in (??), we have
+
+\[
+= |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\tilde{\beta}} \left|\left(\int_{0}^{\tilde{t}} [\theta_{R}(X^{R})(t)]^{r/(2\sigma+1)} |X^{R}(t)|_{L_{x}^{2}}^{r} dt\right)^{\frac{2\sigma+1}{r}}\right|_{L_{\omega}^{r}}
+\]
+
+where \(\tilde{\beta} = \bar{\beta} + \frac{r-r'(2\sigma+1)}{rr'} > 0\). Furthermore,
+
+\[
+\begin{aligned}
+&\leq |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\tilde{\beta}} \left|\left(\int_{0}^{\tilde{t}} |X^{R}(t)|_{L_{x}^{2}}^{r} dt\right)^{\frac{2\sigma+1}{r}}\right|_{L_{\omega}^{r}} \\
+&\leq |X_{0}|_{L_{\omega}^{r} L_{x}^{2}} + C_{r,p} T^{\tilde{\beta}} (2R)^{2\sigma} |X^{R}|_{L_{\omega}^{r} L_{[0,T]}^{r} L_{x}^{2}},
+\end{aligned}
+\]

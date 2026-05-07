@@ -1,0 +1,24 @@
+I need to find all instances of '174.90' in the receipt.
+
+There are multiple instances of '174.90' in the image:
+
+1. In the item line: "174.90" under Amount column
+2. "Total Qty: 10" line with "174.90" 
+3. "Total Sales (Inclusive of GST): 174.90"
+4. "CASH: 174.90"
+
+Let me focus on the first occurrence in the item line (Amount column):
+(588, 555, 700, 580)
+
+For the Total Qty line with 174.90:
+(588, 600, 700, 625)
+
+For "Total Sales (Inclusive of GST): 174.90":
+(588, 770, 700, 795)
+
+For "CASH: 174.90":
+(588, 810, 700, 835)
+
+The question asks for '174.90' - I'll identify the main/first prominent one in the Amount column of the item line:
+
+(588, 553, 700, 578)

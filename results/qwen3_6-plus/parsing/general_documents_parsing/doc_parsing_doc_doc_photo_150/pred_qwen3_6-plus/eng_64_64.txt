@@ -1,0 +1,90 @@
+Here is the complete transcription of the image’s text, diagrams (described where necessary), and equations into LaTeX format. All mathematical expressions are properly formatted using `amsmath`, `amssymb`, and standard LaTeX math environments. Diagrams are described in comments since LaTeX cannot render images directly without external packages or files.
+
+---
+
+```latex
+\documentclass{article}
+\usepackage{amsmath, amssymb, geometry}
+\geometry{margin=1in}
+\usepackage{enumitem}
+\usepackage{tikz} % For diagram description only — not rendered here
+
+\begin{document}
+
+\section*{Requirements for related rate problems}
+
+\begin{enumerate}[label=\alph*)]
+    \item Define ALL the variables used -- either by labeling any diagrams used for the problem or with a description or each variable
+    \item Provide the formula or equation that relates the variables used in the problem. (May require expressing one variable in terms of another)
+    \item Show the Related Rate formula that relates the variables used along with their derivatives with respect to time. (Take the derivative of part b)
+    \item Plug in any given information to solve for the requested value or rate. Include the correct units on the requested value
+\end{enumerate}
+
+\hrulefill
+
+\begin{enumerate}
+    \item A highway patrol drone hovers 300 feet above a level, straight stretch of road. The pilot sees an oncoming car and with radar determines that at the instant the line-of-sight distance from the helicopter to the car is 500 feet, the line-of-sight distance is decreasing at the rate of 74 ft/sec. (10 pts)
+
+    \begin{center}
+        % Diagram description: Right triangle with vertical leg = 300 ft (drone height), hypotenuse = 500 ft (line-of-sight), horizontal leg = x (distance along road from point below drone to car). Angle θ between hypotenuse and horizontal.
+        \begin{tikzpicture}[scale=0.8]
+            \draw (0,0) -- (4,0) node[right] {$x$};
+            \draw (0,0) -- (0,3) node[above] {300 ft};
+            \draw (0,3) -- (4,0) node[midway, above right] {500 ft};
+            \draw (0.5,0) arc (0:36.87:0.5);
+            \node at (0.7,0.3) {$\theta$};
+            \node at (0,-0.5) {Car};
+            \node at (0,3.5) {Drone};
+        \end{tikzpicture}
+    \end{center}
+
+    If the posted speed limit is 65 mph, is the car speeding? If yes, how much over the speed limit is the car? If not, how much below the speed limit is the car?
+
+    \item The drone pilot would like to keep the radar pointed at the car, at what rate is the angle $\theta$ changing at the instant the line-of-sight distance is 500 feet. Give your answer in radians per minute. (10 pts)
+
+    \item[3a)] Water is drained out of an inverted cone, with $r = 5$ ft and $h = 15$ ft. Find the rate at which the water is draining from the tank when the water depth is 6 ft and the water level drops at 8 ft/min (Give an exact value in terms of $\pi$)(10 pts)
+
+    \begin{center}
+        % Diagram description: Inverted cone with radius r at top, height h. Water level at some height y < h, with corresponding radius x. Label r=5, h=15.
+        \begin{tikzpicture}[scale=0.6]
+            \draw (0,0) -- (2.5,5) -- (-2.5,5) -- cycle;
+            \draw[dashed] (0,0) -- (0,5);
+            \draw (0,3) -- (1.5,3);
+            \node at (1.7,3) {$x$};
+            \node at (0,5.5) {$r=5$};
+            \node at (0.5,2.5) {$y$};
+            \node at (0,-0.5) {$h=15$};
+        \end{tikzpicture}
+    \end{center}
+
+    \item[3b)] Find the rate at which the circular surface area of the water level inside the cone is changing when the water depth is 6 ft and dropping at 8 ft/min. (8 pts)
+
+    \item Find the equation of the line tangent to the graph of $x^3 + 8xy + 8y^2 = 32$ at the point $(2, -3)$ (Use DEMOS to check your solution) (12 pts)
+
+    \begin{enumerate}[label=\alph*)]
+        \item Find $dy/dx$
+        \item Find the slope at $(2, -3)$
+        \item Find the equation of the tangent line in slope intercept form
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
+```
+
+---
+
+### Notes:
+
+- **Diagrams**: Since this is a text-based transcription, actual TikZ diagrams are included as *descriptions* within `tikzpicture` environments for illustrative purposes. In a real LaTeX document, you’d compile this with `pdflatex` or similar to see the diagrams.
+  
+- **Mathematical Notation**: All variables, derivatives, and equations are properly typeset using LaTeX math mode (`$...$` or `\[...\]`).
+
+- **Units and Context**: Units (ft, sec, mph, rad/min) are preserved as written.
+
+- **Problem Structure**: Each problem is numbered and subparts labeled as in the original.
+
+- **Assumptions**: No fabricated data was introduced — all content is transcribed verbatim from the image, including typos or ambiguities (e.g., “helicopter” vs “drone” in problem 1 — we kept both as written).
+
+This LaTeX code can be compiled with any standard LaTeX engine (e.g., TeX Live, MiKTeX) to produce a clean, professional-looking document matching the original worksheet.
+
+Let me know if you’d like the solutions worked out next!

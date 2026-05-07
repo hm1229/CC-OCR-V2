@@ -1,0 +1,95 @@
+```latex
+\documentclass[10pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{amsmath}
+
+\begin{document}
+
+\noindent
+\textcolor{cyan}{\Large awinic}\hfill
+\begin{tabular}{r}
+\textbf{AW32905E}\\
+Mar. 2023 V1.0
+\end{tabular}
+
+\vspace{1em}
+
+\noindent
+{\Large\textbf{Ordering Information}}
+
+\vspace{0.75em}
+
+\begin{tabular}{|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2cm}|>{\raggedright\arraybackslash}p{2.1cm}|>{\raggedright\arraybackslash}p{1.3cm}|>{\raggedright\arraybackslash}p{1.7cm}|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2.1cm}|}
+\hline
+\textbf{Part Number} & \textbf{Temperature} & \textbf{Package} & \textbf{Marking} & \textbf{Moisture Sensitivity Level} & \textbf{Environmental Information} & \textbf{Delivery Form} \\
+\hline
+AW32905EFCR & -40\textdegree C -- 85\textdegree C & FCQFN 1.3mm*1.8mm -12L & RZR & MSL1 & ROHS+HF & 3000 units/ Tape and Reel \\
+\hline
+\end{tabular}
+
+\vspace{2em}
+
+\noindent
+{\Large\textbf{Absolute Maximum Ratings}} \textsuperscript{(NOTE 1)}
+
+\vspace{0.75em}
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1.4cm}|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{4.2cm}|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{1cm}|>{\centering\arraybackslash}p{0.9cm}|}
+\hline
+\textbf{Symbol} & \textbf{Parameter} & \textbf{Condition} & \textbf{Min.} & \textbf{Max.} & \textbf{Unit} \\
+\hline
+$V_{\mathrm{IN}}$ & Input voltage &  & -0.3 & 29 & V \\
+\hline
+$V_{\mathrm{OUT}}$ & Output voltage &  & -0.3 & See\textsuperscript{(NOTE 2)} & V \\
+\hline
+$V_{\mathrm{OVLO}}$ & OVLO voltage &  & -0.3 & 6 & V \\
+\hline
+$V_{\mathrm{ACOK}}$ & ACOK voltage &  & -0.3 & 6 & V \\
+\hline
+$V_{\mathrm{EN}}$ & EN voltage &  & -0.3 & 6 & V \\
+\hline
+$I_{\mathrm{SW}}$ & Continuous current of switch IN-OUT\textsuperscript{(NOTE 3)} & Continuous current on IN and OUT pin &  & 5 & A \\
+\hline
+$I_{\mathrm{PEAK}}$ & Peak current & Peak input and output current on IN and OUT pin(10ms) &  & 8 & A \\
+\hline
+$I_{\mathrm{DIODE}}$ & Continuous diode current & Continuous forward current through the nFET body diode &  & 1.5 & A \\
+\hline
+$T_{\mathrm{A}}$ & Ambient temperature &  & -40 & 85 & \textdegree C \\
+\hline
+$T_{\mathrm{J}}$ & Junction temperature &  & -40 & 150 & \textdegree C \\
+\hline
+$T_{\mathrm{STG}}$ & Storage temperature &  & -65 & 150 & \textdegree C \\
+\hline
+$T_{\mathrm{LEAD}}$ & Soldering temperature & At leads, 10 seconds &  & 260 & \textdegree C \\
+\hline
+Surge & Input surge protection & IEC61000-4-5 test with 2$\Omega$ equivalent series resistance & 120 &  & V \\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\noindent
+\textit{NOTE1: Conditions out of those ranges listed in ``absolute maximum ratings'' may cause permanent damages to the device. In spite of the limits above, functional operation conditions of the device should within the ranges listed in ``recommended operating conditions''. Exposure to absolute-maximum-rated conditions for prolonged periods may affect device reliability.}
+
+\vspace{0.5em}
+
+\noindent
+\textit{NOTE2: 29V or $V_{\mathrm{IN}}$+0.3V, whichever is smaller.}
+
+\vspace{0.5em}
+
+\noindent
+\textit{NOTE3: Limited by thermal design.}
+
+\vfill
+
+\noindent
+www.awinic.com \hfill 5 \hfill \textcopyright\ 2023 Shanghai Awinic Technology Co. Ltd All Rights Reserved
+
+\end{document}
+```

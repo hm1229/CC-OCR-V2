@@ -1,0 +1,28 @@
+To determine the coordinates of the text "Accommodation" in the image, we need to identify the bounding box that encloses this text. The text "Accommodation" appears twice in the table under the "DESCRIPTION" column.
+
+Let's focus on the first occurrence of "Accommodation" in the table:
+
+1. **Identify the position of the text "Accommodation"**:
+   - The text "Accommodation" is located in the second row of the table under the "DESCRIPTION" column.
+
+2. **Estimate the bounding box**:
+   - The bounding box should cover the text "Accommodation" and a small margin around it to ensure it captures the entire text.
+
+3. **Normalize the coordinates**:
+   - The image width and height are approximately 1000 pixels each.
+
+Let's calculate the normalized coordinates:
+
+- **Left-top corner (x1, y1)**:
+  - The text starts around the middle of the "DESCRIPTION" column. Estimating visually, it might be around 20% from the left.
+  - The text starts around the middle of the row height. Estimating visually, it might be around 30% from the top of the table.
+
+- **Right-bottom corner (x2, y2)**:
+  - The text ends around the end of the "DESCRIPTION" column. Estimating visually, it might be around 40% from the left.
+  - The text ends around the bottom of the row height. Estimating visually, it might be around 40% from the top of the table.
+
+Thus, the normalized coordinates for the bounding box around the text "Accommodation" might be approximately:
+
+(x1, y1, x2, y2) = (200, 300, 400, 400)
+
+These coordinates are an estimation based on visual inspection. For precise coordinates, one would typically use an OCR tool or image processing software to get exact pixel positions.

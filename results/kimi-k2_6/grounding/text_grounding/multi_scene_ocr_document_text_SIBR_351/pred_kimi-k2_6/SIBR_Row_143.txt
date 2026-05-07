@@ -1,0 +1,26 @@
+I need to find the region of the text '11,979.48' in the image.
+
+Looking at the image, I can see there are three instances of '11,979.48':
+1. In the Credits column for the 29-10-20 row (payment)
+2. In the Total row under Debits column
+3. In the Total row under Credits column
+
+Since the question asks about '11,979.48' without specifying which one, I'll identify the most prominent one or all of them. Looking at the totals row at the bottom, there are two instances in the Total 总计(CNY) row.
+
+Let me focus on the one in the Credits column of the transaction table (the payment entry on 29-10-20), and the two in the total row.
+
+The coordinates for the Credits column total value (rightmost 11,979.48 in the totals section):
+(0.866, 0.506, 0.919, 0.523)
+
+Actually, let me look more carefully. The value 11,979.48 appears in:
+- Row 29-10-20, Credits column: around (0.853, 0.444, 0.919, 0.460)
+- Total row, Debits column: around (0.742, 0.506, 0.808, 0.523)
+- Total row, Credits column: around (0.866, 0.506, 0.919, 0.523)
+
+The most prominent one is likely the one in the Total row. Let me provide the one in the Credits/付款 column of the total row.
+
+(0.866, 0.506, 0.919, 0.523) or for the Debits total: (0.742, 0.506, 0.808, 0.523)
+
+Looking at the image more precisely, the text '11,979.48' in the Credits column (付款) at the total row:
+
+(0.859, 0.503, 0.922, 0.524)

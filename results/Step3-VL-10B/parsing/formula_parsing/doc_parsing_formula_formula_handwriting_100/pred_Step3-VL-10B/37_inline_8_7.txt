@@ -1,0 +1,126 @@
+用户现在需要把图片中的公式提取成LaTeX。首先看每个公式，逐个处理。
+
+首先第一个是Σ₁(ρ, v)的定义：Σ₁(ρ, v) := { ε ∈ Σₙ Bρₙ(φ) : Tρ + Gρ(ε) ∈ (φ + Gρ) ∩ Bρₙ₊₁(φ) }。然后是φ₀(x) = 1（0 ≤ x < 1/2），φ₀(x+1) = φ₀(x)；φ₀(x) = -1（1/2 ≤ x < 1），φₙ(x) = φ₀(2ⁿx)。然后q的定义：q ∈ ∫(3/2, ∞) 当0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) 当1/2 < s；q ∈ ∫(1/2, s) 当1/2 < s？不对，看图片里的q：q ∈ ∫(3/2, ∞) 当0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) 当1/2 < s？不，图片里q的定义是：q ∈ ∫(3/2, ∞) 当0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) 当1/2 < s？不对，看图片中的q部分：“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s”？不，图片里是“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s”？不对，看图片中的q：“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s”？不，原图片中q的定义是：q ∈ ∫(3/2, ∞) 当0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) 当1/2 < s？不，看图片里的q：“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s”？可能我看错了，再看。然后是内积：<I_{ρ_g}^0, x₀ - φ₀> = <I_{ρ_g}^0, x₀> - <I_{ρ_g}^0, φₓ> - 1 - δ(ε, g)。然后v(x, ρ→φ(x+1)) - v(x, ρ̂(t+1)) = Σ_{k=0}^{t-1} [v(x, ρ^{(k+1)}) - v(x, ρ̂^{(k+1)})] = v(x, ρ^{(t)}) - v(x, ρ̂^{(t)})。然后a = 1/2 (||1|| + 1 - 2/√h)？不，图片里a = 1/2 (||1|| + 1 - 2/√h)？看图片中的a：“a = 1/2 (||1|| + 1 - 2/√h)”？然后是G_{α}( (y_{∞0}, x_{01}) ) = |y_{∞0}| # Σ_{ref} Ψ(Q(r(x_{∞0} + i y_{∞0})) = |y_{∞0}| # Σ_{q ∈ O_α} Ψ(Q(q(x_{∞0} + i y_{∞0})))。然后i ⊕ j ≡ (i + j) mod 2。
+
+现在需要逐个把公式用LaTeX写出来，注意符号的准确性，比如下标、上标、积分、集合等。
+
+首先处理第一个公式：
+
+Σ₁(\rho, v) := \left\{ \varepsilon \in \Sigma_n B_{\rho_n}(\phi) : T\rho + G\rho(\varepsilon) \in (\phi + G\rho) \cap B_{\rho_{n+1}}(\phi) \right\}
+
+然后是φ的定义：
+
+\phi_0(x) = \begin{cases} 1 & (0 \leq x < \frac{1}{2}) \\ \phi_0(x+1) = \phi_0(x) \end{cases}？不，原图片中是两部分：φ₀(x)=1（0≤x<1/2），φ₀(x+1)=φ₀(x)；然后φ₀(x)=-1（1/2≤x<1），φₙ(x)=φ₀(2ⁿx)。所以用cases：
+
+\phi_0(x) = \begin{cases} 1 & 0 \leq x < \frac{1}{2} \\ -1 & \frac{1}{2} \leq x < 1 \end{cases}, \quad \phi_0(x+1) = \phi_0(x), \quad \phi_n(x) = \phi_0(2^n x)
+
+然后q的定义：
+
+q \in \int_{3/2, \infty) \text{ if } 0 \leq s \leq \frac{1}{2}; \quad q \in CS(\infty, \infty) \text{ if } \frac{1}{2} < s; \quad q \in \int_{1/2, s} \text{ if } \frac{1}{2} < s？不，原图片中q的定义是：“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s；q ∈ ∫(1/2, s) if 1/2 < s”？不对，看图片里的q部分：“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s；q ∈ ∫(1/2, s) if 1/2 < s”？可能图片中的q是分情况，比如：
+
+q \in \int_{3/2, \infty) \text{ when } 0 \leq s \leq \frac{1}{2}, \quad q \in CS(\infty, \infty) \text{ when } \frac{1}{2} < s, \quad q \in \int_{1/2, s} \text{ when } \frac{1}{2} < s？不，原图片中q的写法是：
+
+q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2
+
+q ∈ CS(∞, ∞) if 1/2 < s
+
+q ∈ ∫(1/2, s) if 1/2 < s？不，看图片中的q部分，原文是：
+
+q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2
+
+q ∈ CS(∞, ∞) if 1/2 < s
+
+q ∈ ∫(1/2, s) if 1/2 < s？可能我记错了，再看图片中的q：“q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2；q ∈ CS(∞, ∞) if 1/2 < s；q ∈ ∫(1/2, s) if 1/2 < s”？不，原图片中q的第三行是“q ∈ ∫(1/2, s) if 1/2 < s”？可能图片中的q是：
+
+q \in \int_{3/2, \infty) \text{ if } 0 \leq s \leq \frac{1}{2}, \quad q \in CS(\infty, \infty) \text{ if } \frac{1}{2} < s, \quad q \in \int_{1/2, s} \text{ if } \frac{1}{2} < s？不，可能图片中的q是分两部分？不，看图片中的q部分，原文是：
+
+q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2
+
+q ∈ CS(∞, ∞) if 1/2 < s
+
+q ∈ ∫(1/2, s) if 1/2 < s？不，可能图片中的q是：
+
+q \in \int_{3/2, \infty) \text{ when } 0 \leq s \leq \frac{1}{2}, \quad q \in CS(\infty, \infty) \text{ when } \frac{1}{2} < s, \quad q \in \int_{1/2, s} \text{ when } \frac{1}{2} < s？这可能不对，先跳过，看下一个公式。
+
+内积：<I_{ρ_g}^0, x₀ - φ₀> = <I_{ρ_g}^0, x₀> - <I_{ρ_g}^0, φₓ> - 1 - δ(ε, g)。注意符号，图片中是<I_{ρ_g}^0, x₀ - φ₀> = <I_{ρ_g}^0, x₀> - <I_{ρ_g}^0, φₓ> - 1 - δ(ε, g)。所以LaTeX：
+
+\langle I_{\rho_g}^0, x_0 - \phi_0 \rangle = \langle I_{\rho_g}^0, x_0 \rangle - \langle I_{\rho_g}^0, \phi_x \rangle - 1 - \delta(\varepsilon, g)
+
+然后v的等式：v(x, \vec{\rho} \to \phi(x+1)) - v(x, \hat{\rho}(t+1)) = \sum_{k=0}^{t-1} \left[ v(x, \rho^{(k+1)}) - v(x, \hat{\rho}^{(k+1)}) \right] = v(x, \rho^{(t)}) - v(x, \hat{\rho}^{(t)})
+
+然后a的定义：a = \frac{1}{2} \left( \|1\| + 1 - \frac{2}{\sqrt{h}} \right)？图片中是a = 1/2 (||1|| + 1 - 2/√h)，所以：
+
+a = \frac{1}{2} \left( \|1\| + 1 - \frac{2}{\sqrt{h}} \right)
+
+然后G_α的定义：G_{\alpha}\left( (y_{\infty 0}, x_{01}) \right) = |y_{\infty 0}| \# \sum_{\text{ref}} \Psi\left( Q(r(x_{\infty 0} + i y_{\infty 0})) \right) = |y_{\infty 0}| \# \sum_{q \in O_{\alpha}} \Psi\left( Q(q(x_{\infty 0} + i y_{\infty 0})) \right)
+
+最后i ⊕ j ≡ (i + j) mod 2：
+
+i \oplus j \equiv (i + j) \mod 2
+
+现在需要把所有公式按顺序整理，注意每个公式的LaTeX表示，确保符号正确，比如下标、上标、积分、求和、内积等。
+
+现在逐个写出：
+
+1. Σ₁(ρ, v)的定义：
+\[
+\Sigma_1(\rho, v) := \left\{ \varepsilon \in \Sigma_n B_{\rho_n}(\phi) : T\rho + G\rho(\varepsilon) \in (\phi + G\rho) \cap B_{\rho_{n+1}}(\phi) \right\}
+\]
+
+2. φ的定义：
+\[
+\phi_0(x) = \begin{cases} 
+1 & 0 \leq x < \frac{1}{2} \\
+-1 & \frac{1}{2} \leq x < 1 
+\end{cases}, \quad \phi_0(x+1) = \phi_0(x), \quad \phi_n(x) = \phi_0(2^n x)
+\]
+
+3. q的定义（根据图片中的内容，可能需要确认，图片中q的三行是：
+q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2
+q ∈ CS(∞, ∞) if 1/2 < s
+q ∈ ∫(1/2, s) if 1/2 < s？不，图片中q的写法是：
+q ∈ ∫(3/2, ∞) if 0 ≤ s ≤ 1/2
+q ∈ CS(∞, ∞) if 1/2 < s
+q ∈ ∫(1/2, s) if 1/2 < s？可能图片中的q是分情况，用cases：
+\[
+q \in \int_{3/2, \infty) \text{ if } 0 \leq s \leq \frac{1}{2}, \quad q \in CS(\infty, \infty) \text{ if } \frac{1}{2} < s, \quad q \in \int_{1/2, s} \text{ if } \frac{1}{2} < s
+\]
+但可能更准确的是图片中的q是：
+q ∈ ∫(3/2, ∞) 当0 ≤ s ≤ 1/2；
+q ∈ CS(∞, ∞) 当1/2 < s；
+q ∈ ∫(1/2, s) 当1/2 < s？不，可能图片中的q是：
+q \in \int_{3/2, \infty) \text{ for } 0 \leq s \leq \frac{1}{2}, \quad q \in CS(\infty, \infty) \text{ for } \frac{1}{2} < s, \quad q \in \int_{1/2, s} \text{ for } \frac{1}{2} < s
+\]
+
+4. 内积等式：
+\[
+\langle I_{\rho_g}^0, x_0 - \phi_0 \rangle = \langle I_{\rho_g}^0, x_0 \rangle - \langle I_{\rho_g}^0, \phi_x \rangle - 1 - \delta(\varepsilon, g)
+\]
+
+5. v的等式：
+\[
+v(x, \vec{\rho} \to \phi(x+1)) - v(x, \hat{\rho}(t+1)) = \sum_{k=0}^{t-1} \left[ v(x, \rho^{(k+1)}) - v(x, \hat{\rho}^{(k+1)}) \right] = v(x, \rho^{(t)}) - v(x, \hat{\rho}^{(t)})
+\]
+
+6. a的定义：
+\[
+a = \frac{1}{2} \left( \|1\| + 1 - \frac{2}{\sqrt{h}} \right)
+\]
+
+7. G_α的定义：
+\[
+G_{\alpha}\left( (y_{\infty 0}, x_{01}) \right) = |y_{\infty 0}| \# \sum_{\text{ref}} \Psi\left( Q(r(x_{\infty 0} + i y_{\infty 0})) \right) = |y_{\infty 0}| \# \sum_{q \in O_{\alpha}} \Psi\left( Q(q(x_{\infty 0} + i y_{\infty 0})) \right)
+\]
+
+8. i ⊕ j的同余：
+\[
+i \oplus j \equiv (i + j) \mod 2
+\]
+
+现在需要检查每个公式的准确性，比如图片中的v(x, ρ→φ(x+1))，图片中是v(x, \vec{\rho} \to \phi(x+1))，然后是v(x, \hat{\rho}(t+1))，然后求和是k从0到t-1，项是v(x, ρ^{(k+1)}) - v(x, \hat{\rho}^{(k+1)})，然后等于v(x, ρ^{(t)}) - v(x, \hat{\rho}^{(t)})。图片中的等式是：v(x, ρ→φ(x+1)) - v(x, \hat{ρ}(t+1)) = Σ_{k=0}^{t-1} [v(x, ρ^{(k+1)}) - v(x, \hat{ρ}^{(k+1)})] = v(x, ρ^{(t)}) - v(x, \hat{ρ}^{(t)})。所以LaTeX中的求和下标是k=0到t-1，正确。
+
+另外，图片中的a是a = 1/2 (||1|| + 1 - 2/√h)，所以LaTeX是a = \frac{1}{2} \left( \|1\| + 1 - \frac{2}{\sqrt{h}} \right)。
+
+G_α的定义中，图片里是G_{α}( (y_{∞0}, x_{01}) ) = |y_{∞0}| # Σ_{ref} Ψ(Q(r(x_{∞0} + i y_{∞0}))) = |y_{∞0}| # Σ_{q ∈ O_α} Ψ(Q(q(x_{∞0} + i y_{∞0})))。注意下标是y_{∞0}，x_{01}，x_{∞0}，这些在LaTeX中用y_{\infty 0}，x_{01}，x_{\infty 0}。
+
+最后

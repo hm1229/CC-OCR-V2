@@ -1,0 +1,58 @@
+### 民法主观题知识点 + 小案例  
+
+#### 2010年问题表格  
+\begin{table}[h]  
+\centering  
+\begin{tabular}{|c|l|l|l|l|}  
+\hline  
+\multicolumn{5}{|c|}{2010年} \\  
+\hline  
+ & 问4：丙公司与戊公司签订房产买卖合同效力如何？为什么？（物权未变动不影响买卖合同效力，多重买卖不影响买卖合同效力） &  &  &  \\  
+\hline  
+ & 问2：甲公司与丁、戊公司签订的转卖大蒜的合同的效力如何？为什么？（多重买卖不影响买卖合同效力） &  &  &  \\  
+\hline  
+ &  & 问6：甲公司与乙公司签订的绿豆买卖合同效力如何？为什么？（被代理人以履行合同的方式追认无权代理） &  &  \\  
+\hline  
+ &  &  & 问7：丙公司将绿豆转卖给己公司的买卖合同的效力如何？为什么？（无权处分不影响买卖合同的效力） &  \\  
+\hline  
+\end{tabular}  
+\end{table}  
+
+
+### 第一节 合同的成立  
+
+#### 民事法律行为成立、有效、生效关系图  
+\begin{figure}[h]  
+\centering  
+\begin{tikzpicture}[node distance=1.2cm, thick]  
+% 核心节点：民事法律行为  
+\node (A) {民事法律行为};  
+
+% 分支1：不成立（事实判断）  
+\node (B) [below=of A] {不成立};  
+\node (B1) [below=of B] {事实判断};  
+\node (B2) [below=of B1] {当事};  
+\node (B3) [below=of B2] {意思表示};  
+\node (B4) [below=of B3] {标的};  
+
+% 分支2：成立（价值判断 + 有效/效力瑕疵）  
+\node (C) [below=of A] {成立};  
+\node (B5) [right=of B] {价值判断};  
+\node (B6) [right=of B5] {1. 民事行为能力};  
+\node (B7) [right=of B6] {2. 意思表示真实、自由};  
+\node (B8) [right=of B7] {3. 不违反强制性规定、不违背公序良俗};  
+
+% 成立 → 有效/效力瑕疵  
+\node (C1) [below=of C] {有效};  
+\node (C2) [below=of C] {效力瑕疵};  
+
+% 有效 → 生效/未生效  
+\node (C11) [below=of C1] {生效};  
+\node (C12) [below=of C1] {未生效};  
+
+% 生效指向：大多数合同、婚姻  
+\node (C111) [below=of C11] {大多数合同、婚姻};  
+
+% 未生效分支：附延缓条件、附期间、需审批、遗嘱  
+\node (C121) [below=of C12] {附延缓条件};  
+\node (C12

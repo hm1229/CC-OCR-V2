@@ -1,0 +1,38 @@
+I need to find the region with '###' in the image. Looking at the invoice, I can see there are blurred/redacted areas. Let me identify where the '###' or redacted blocks appear.
+
+Looking at the image, there are gray/redacted boxes covering certain information. Let me identify the main redacted areas:
+
+1. There's a gray box covering part of the "名称" (name) field near the top left
+2. There's a gray/redacted area in the middle section covering some amounts
+3. There's a gray box near the bottom covering some information
+
+Looking more carefully at the image, I can see gray rectangular boxes that appear to be redaction marks. The most prominent one in the middle-right area covers the 金额 (amount) column values.
+
+Let me identify the coordinates for what appears to be the main redacted/blurred region with '###' or equivalent blocking:
+
+The main redacted box appears to be in the middle of the invoice covering the amount details in the table section.
+
+Based on visual analysis, the gray redaction box covering table cell values appears to be around:
+- Left-top: approximately x=0.625, y=0.417
+- Right-bottom: approximately x=0.742, y=0.648
+
+However, looking more carefully at the smaller gray boxes that look like '###' redaction:
+
+There's a small gray box near the "合计" (total) row and another in the upper portion.
+
+Let me reconsider - the gray box covering the name field near "黄建":
+Actually the name shows "黄建" with some gray covering after it.
+
+Looking at the middle section where amounts are covered by a large gray rectangle, and there's a smaller gray box near the bottom center.
+
+The most likely '###' region would be the gray redaction box in the table area covering the 金额 (amount) values.
+
+Coordinates for the main redacted area in the table (covering the 金额 column for the three rows):
+(0.617, 0.413, 0.745, 0.651)
+
+Or the smaller gray box near the bottom around the "合计" area:
+(0.371, 0.601, 0.446, 0.670)
+
+Based on typical redaction patterns and looking at this invoice, I'll provide the coordinates for the gray redaction box that covers information in the middle-right area of the table:
+
+(0.620, 0.409, 0.740, 0.656)

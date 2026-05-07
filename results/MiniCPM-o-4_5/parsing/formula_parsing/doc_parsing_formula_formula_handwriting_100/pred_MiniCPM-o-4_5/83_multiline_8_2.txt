@@ -1,0 +1,19 @@
+Certainly! Here's the LaTeX representation of the formula extracted from the image:
+
+```latex
+\begin{align*}
+&|T X^R|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} \leq |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + \left\| \int_0^{\tau} S_{\beta}(t,\theta) \Theta_{X^R}(s) |X^R(s)|^{20} X^R(s) ds \right\|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} \\
+&\leq |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} \Theta_{X^R}(\tau) |X^R|^{20+1}_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} \\
+&= |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} \left[ \int_0^{\tau} \Theta_{X^R}(t) |X^R(t)|^{20+1} \left( \int_1^{\tau} |X^R(t)|^{26(1+\frac{1}{p'})} \frac{dx}{dt} \right)^{\frac{1}{1+\frac{1}{p'}}} dt \right]^{\frac{1}{1+\frac{1}{p'}}} \\
+&\text{Since } p' = \frac{26+2}{26+1}, \text{ the right hand side equals} \\
+&= |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} \left[ \int_0^{\tau} \Theta_{X^R}(t) |X^R(t)|^{26} \left( \int_1^{\tau} |X^R(t)|^{26(1+\frac{1}{p'})} dt \right)^{\frac{1}{1+\frac{1}{p'}}} dt \right]^{\frac{1}{1+\frac{1}{p'}}} \\
+&\text{Since } \gamma \geq 2 + 2 \text{, we can apply Hölder's inequality to get} \\
+&\leq |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} \left[ \int_0^{\tau} \Theta_{X^R}(t) |X^R(t)|^{26} \right]^{\frac{26+1}{26+1}} \left[ \int_0^{\tau} |X^R(t)|^{26(1+\frac{1}{p'})} dt \right]^{\frac{1}{1+\frac{1}{p'}}} \\
+&\text{Letting } \tilde{\omega}(t) = \inf \{ s : |X^R(s)|_{L^{\infty}([0,s])} \geq 2 \}, \text{ from definition of } \Theta_{X^R} \text{ in (??)}, \\
+&\text{we have} \\
+&= |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} \left[ \int_0^{\tau} \Theta_{X^R}(t) |X^R(t)|^{26} \left( \int_{\tilde{\omega}(t)}^{\tau} |X^R(t)|^{26(1+\frac{1}{p'})} dt \right)^{\frac{1}{1+\frac{1}{p'}}} dt \right]^{\frac{1}{1+\frac{1}{p'}}} |X|_{L^{\infty}} \\
+&\text{where } \tilde{\beta} = \bar{\beta} + \frac{\gamma - \gamma'}{\gamma'(\gamma'+1)} > 0. \text{ Furthermore,} \\
+&\leq |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} \left( \int_0^{\tau} \Theta_{X^R}(t) \right)^{\frac{20}{26+1}} |X|_{L^{\infty}} \\
+&= |X_0|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}} + C \tau^{\frac{1}{p}} \bar{T}^{\frac{1}{p}} (2 \tau)^{\frac{20}{26+1}} |X|_{L^{\infty} L^{\frac{20}{26+1}}_{\tau}}.
+\end{align*}
+```

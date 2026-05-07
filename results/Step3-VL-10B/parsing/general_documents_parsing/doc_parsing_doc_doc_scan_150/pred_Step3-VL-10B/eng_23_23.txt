@@ -1,0 +1,245 @@
+用户现在需要把简历内容转换成LaTeX格式。首先得分析结构，分为Personal Information、Prizes & Rewards、Associations Experience、Self Description、Personal hobby这些部分。每个部分用表格或者分段处理。
+
+首先看Personal Information部分，是表格形式，两列？不，看原表格的列：Name, Objective, Management Trainee；Gender, Birth, 1993 09；Political affiliation, Nation, Han；Cell no., Origo, Heilongjiang Wuchang；E-mail, School, Harbin Engineering University；Degree, Major, Naval Architecture and Marine Engineering；Cet 4/6, Score, 85.34。然后有个（照片）的位置。所以Personal Information可以用tabular环境，可能跨列？或者用两列？看原表格的结构，原表格是三列吗？看原表格的表头：Name, Objective, Management Trainee？不，原表格第一行是Name, Objective, Management Trainee？不，看原表格的列标题：第一列是Name，第二列Objective，第三列Management Trainee？不，原表格的列应该是：第一列是标签（Name, Gender等），第二列是内容（Songxxxx等），第三列是Objective等？不对，看原表格的结构，原表格是三列吗？看原表格的表头行：Name, Objective, Management Trainee？不，原表格的表头是Name对应Objective？不，看原表格的结构，原表格是两列？不，看原表格的列数：第一列是Personal Information下的各个项（Name, Gender等），第二列是对应的内容（Songxxxx, Male等），第三列是Objective, Birth等？不对，看原表格的布局，原表格是三列，第一列是标签（Name, Gender, Political affiliation等），第二列是内容（Songxxxx, Male, Party Member等），第三列是Objective, Birth, Nation等。比如第一行：Name | Songxxxx | Objective | Management Trainee？不，原表格的表头是Name, Objective, Management Trainee？不，看原表格的第一行（表头）：Name, Objective, Management Trainee？不，原表格的表头应该是：第一列是“Name”，第二列是“Objective”？不，看原表格的结构，原表格是两列？不，看原表格的列数，原表格中“Name”对应“Objective”？不，看原表格的截图，第一行是Name, Objective, Management Trainee？不，原表格的列是：第一列是个人信息的项目（Name, Gender等），第二列是项目对应的内容（Songxxxx, Male等），第三列是Objective, Birth等。比如第一行：Name | Songxxxx | Objective | Management Trainee？不，可能原表格是三列，表头是Name, Objective, Management Trainee？不，看原表格的“Objective”列是“Management Trainee”，所以第一行是Name（Songxxxx）对应Objective（Management Trainee）？不，原表格的结构是：第一列是标签（Name, Gender, Political affiliation, Cell no., E-mail, Degree, Cet 4/6），第二列是对应的内容（Songxxxx, Male, Party Member, 189---7742, xxxx, Bachelor, 545/515），第三列是Objective, Birth, Nation, Origo, School, Major, Score。然后有个（照片）在右侧。所以Personal Information部分可以用一个表格，三列，然后最后一列是（照片）。
+
+然后Prizes & Rewards部分，是分块的，每个大项（Academic Skills, Creative Ability等）是加粗的标题，下面是年份和内容。可以用tabular或者用\section*{}然后分点。
+
+Associations Experience是2013.6-2014.6，College of shipbuilding engineering，Secretary-general of Student union，然后下面有Files arrangement, Accounting, Nerve三个子项，每个子项有描述。
+
+Self Description是段落，Personal hobby是三个爱好：harmonicon, football, photography。
+
+现在开始构建LaTeX代码。首先用documentclass{article}，然后设置合适的格式。注意表格的对齐，可能用tabular环境，列用|c|c|c|之类的，或者用p列来处理长内容。
+
+首先处理Personal Information：
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Label} & \textbf{Content} & \textbf{Additional Info} \\
+\hline
+Name & Songxxxx & Objective: Management Trainee \\
+\hline
+Gender & Male & Birth: 1993 09 \\
+\hline
+Political affiliation & Party Member & Nation: Han \\
+\hline
+Cell no. & 189---7742 & Origo: Heilongjiang Wuchang \\
+\hline
+E--mail & xxxx & School: Harbin Engineering University \\
+\hline
+Degree & Bachelor & Major: Naval Architecture and Marine Engineering \\
+\hline
+Cet 4/6 & 545/515 & Score: 85.34 \\
+\hline
+\multicolumn{2}{|c|}{(照片)} & \\
+\hline
+\end{tabular}
+\end{table}
+
+不过原表格中“Objective”是单独的列，可能原表格的结构是三列，第一列是Name, Gender等，第二列是Objective, Birth等，第三列是对应的内容？不，看原表格的截图，第一行是Name, Objective, Management Trainee？不，原表格的表头是：第一列是“Name”，第二列是“Objective”，第三列是“Management Trainee”？不，原表格的“Objective”是标题，对应的内容是“Management Trainee”，所以可能原表格是两列：第一列是项目（Name, Gender, ...），第二列是内容（Songxxxx, Male, ...），而Objective是另一个列？可能原表格的结构是：
+
+第一列：Name | Gender | Political affiliation | Cell no. | E--mail | Degree | Cet 4/6
+
+第二列：Objective | Birth | Nation | Origo | School | Major | Score
+
+第三列：Management Trainee | 1993 09 | Han | Heilongjiang Wuchang | Harbin Engineering University | Naval Architecture and Marine Engineering | 85.34
+
+然后（照片）在右侧。所以更准确的是，Personal Information的表格是三列，第一列是标签（Name, Gender等），第二列是Objective, Birth等（即每个标签对应一个“类别”列？不，可能原表格是两列，标签在左，内容在右，而Objective是标题，对应Management Trainee是内容。比如：
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Name} & \textbf{Objective} \\
+\hline
+Songxxxx & Management Trainee \\
+\hline
+\textbf{Gender} & \textbf{Birth} \\
+\hline
+Male & 1993 09 \\
+\hline
+\textbf{Political affiliation} & \textbf{Nation} \\
+\hline
+Party Member & Han \\
+\hline
+\textbf{Cell no.} & \textbf{Origo} \\
+\hline
+189---7742 & Heilongjiang Wuchang \\
+\hline
+\textbf{E--mail} & \textbf{School} \\
+\hline
+xxxx & Harbin Engineering University \\
+\hline
+\textbf{Degree} & \textbf{Major} \\
+\hline
+Bachelor & Naval Architecture and Marine Engineering \\
+\hline
+\textbf{Cet 4/6} & \textbf{Score} \\
+\hline
+545/515 & 85.34 \\
+\hline
+\multicolumn{2}{|c|}{(照片)} \\
+\hline
+\end{tabular}
+
+这样更符合原表格的结构，因为原表格中“Objective”是列标题，对应“Management Trainee”是内容，所以是两列，每个标签（Name, Gender等）对应一个类别（Objective, Birth等）。这样表格的结构是两列，每行两个项目：标签和类别，然后内容。比如第一行是Name（标签）和Objective（类别），内容是Songxxxx和Management Trainee。这样更准确。
+
+接下来Prizes & Rewards部分，每个大项是加粗的，比如Academic Skills，下面是年份和内容。可以用\section*{Prizes \& Rewards}，然后用tabular或者itemize。
+
+比如：
+
+\section*{Prizes \& Rewards}
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Academic Skills} & 2011-2014 Awarded second-grade scholarship 4 times \\
+ & 2013.10 Awarded third-grade scholarship \\
+\hline
+\textbf{Creative Ability} & 2013.04 Accomplish two University's scientific research projects \\
+ & 2012.10 The second prize of "WuSi" Science competition \\
+\hline
+\textbf{Ideological Morality} & 2012.10 "Merit Student" \\
+ & 2013.10 "Excellent Student Cadre" \\
+ & 2014.05 "Excellent League Member" \\
+\hline
+\textbf{Communicational Ability} & 2013.05 "Top Ten Hoster" in campus(4/230) \\
+ & 2012.05 The First prize of "student cadres Speech Contest" \\
+ & 2013.04 The First prize of "Presentation Contest" \\
+\hline
+\textbf{Working attitude} & 2013.09 Outstanding worker in anniversary of the founding of school \\
+ & 2012.12 Volunteer of national "TRIZ" Science competition \\
+ & 2013.09 Outstanding worker of college \\
+\hline
+\end{tabular}
+
+不过原表格中Prizes & Rewards的结构是每个大项（Academic Skills等）是行标题，右边是内容。所以可能用两列，第一列是大项（加粗），第二列是内容列表。
+
+然后Associations Experience：
+
+\section*{Associations Experience}
+
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Time} & \textbf{Organization} & \textbf{Position} \\
+\hline
+2013.6-2014.6 & College of shipbuilding engineering & Secretary-general of Student union \\
+\hline
+\multicolumn{3}{|l|}{\textbf{Files arrangement:}} In the charge of plans of activities and arrangement of files in student union. Familiar with the use of OFFICE and PHOTOSHOP software.Had accomplished plans of 22 activities,and arranged 135 files of 16 sections in student union,besides, organized 4 events as the leader. \\
+\hline
+\multicolumn{3}{|l|}{\textbf{Accounting:}} In charge of accounting and applying for reimbursement of cost for student union, which is about 25,000 yuan totally. \\
+\hline
+\multicolumn{3}{|l|}{\textbf{Nerve:}} In charge of communicating with various sections,and coordinate their work. Under my coordinating,the student union had accomplished 3 large-scale events. \\
+\hline
+\end{tabular}
+
+Self Description：
+
+\section*{Self Description}
+
+“opportunities always favor the prepared mind”,I regard it as my motto,And One of key words of my character is plan,I am used to making a gernal plan before i start my work,there is no doubt that a good plan can always save much precious time.
+
+I had a colorful college life. i was the Secretary-general of Student union, in three years work, i learned how to communicate and cooperate with others and come to realized how important personal sense of responsibility is to the whole teams success.
+
+Personal hobby：
+
+\section*{Personal hobby}
+
+harmonicon \quad football \quad photography
+
+现在需要检查每个部分的格式，确保和原图一致。比如Personal Information中的（照片）位置，原图在右侧，所以表格最后一行可以是\multicolumn{2}{c}{(照片)}。
+
+另外，注意原图中的“Cet 4/6”对应“545/515”，“Score”是85.34。还有“Objective”是“Management Trainee”，“Birth”是“1993 09”（注意是1993年09月？），“Nation”是“Han”，“Origo”是“Heilongjiang Wuchang”，“School”是“Harbin Engineering University”，“Major”是“Naval Architecture and Marine Engineering”，“Score”是“85.34”。
+
+现在整合所有部分，用LaTeX的article文档类，设置合适的字体和间距。
+
+另外，注意原图中的“2013.09 Outstanding worker in anniversary of the founding of school”等，要准确转录。
+
+现在编写完整的LaTeX代码：
+
+\documentclass{article}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\begin{document}
+
+\section*{Personal Information}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Label} & \textbf{Category} & \textbf{Content} \\
+\hline
+Name & Objective & Songxxxx \\
+\hline
+Gender & Birth & Male \quad 1993 09 \\
+\hline
+Political affiliation & Nation & Party Member \quad Han \\
+\hline
+Cell no. & Origo & 189---7742 \quad Heilongjiang Wuchang \\
+\hline
+E--mail & School & xxxx \quad Harbin Engineering University \\
+\hline
+Degree & Major & Bachelor \quad Naval Architecture and Marine Engineering \\
+\hline
+Cet 4/6 & Score & 545/515 \quad 85.34 \\
+\hline
+\multicolumn{3}{|c|}{(照片)} \\
+\hline
+\end{tabular}
+
+\section*{Prizes \& Rewards}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Academic Skills} & 2011-2014 Awarded second-grade scholarship 4 times \\
+ & 2013.10 Awarded third-grade scholarship \\
+\hline
+\textbf{Creative Ability} & 2013.04 Accomplish two University's scientific research projects \\
+ & 2012.10 The second prize of "WuSi" Science competition \\
+\hline
+\textbf{Ideological Morality} & 2012.10 "Merit Student" \\
+ & 2013.10 "Excellent Student Cadre" \\
+ & 2014.05 "Excellent League Member" \\
+\hline
+\textbf{Communicational Ability} & 2013.05 "Top Ten Hoster" in campus(4/230) \\
+ & 2012.05 The First prize of "student cadres Speech Contest" \\
+ & 2013.04 The First prize of "Presentation Contest" \\
+\hline
+\textbf{Working attitude} & 2013.09 Outstanding worker in anniversary of the founding of school \\
+ & 2012.12 Volunteer of national "TRIZ" Science competition \\
+ & 2013.09 Outstanding worker of college \\
+\hline
+\end{tabular}
+
+\section*{Associations Experience}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Time} & \textbf{Organization} & \textbf{Position} \\
+\hline
+2013.6-2014.6 & College of shipbuilding engineering & Secretary-general of Student union \\
+\hline
+\multicolumn{3}{|l|}{\textbf{Files arrangement:}} In the charge of plans of activities and arrangement of files in student union. Familiar with the use of OFFICE and PHOTOSHOP software. Had accomplished plans of 22 activities, and arranged 135 files of 16 sections in student union, besides, organized 4 events as the leader. \\
+\hline
+\multicolumn{3}{|l|}{\textbf{Accounting:}} In charge of accounting and applying for reimbursement of cost for student union, which is about 25,000 yuan totally. \\
+\hline
+\multicolumn{3}{|l|}{\textbf{Nerve:}} In charge of communicating with various sections, and coordinate their work. Under my coordinating, the student union had accomplished 3 large-scale events. \\
+\hline
+\end{tabular}
+
+\section*{Self Description}
+“opportunities always favor the prepared mind”, I regard it as my motto. And one of key words of my character is plan; I am used to making a general plan before I start my work, and there is no doubt that a good plan can always save much precious time.
+
+I had a colorful college life. I was the Secretary-general of Student union; in three years of work, I learned how to communicate and cooperate with others and came to realize how important personal sense of responsibility is to the whole team's success.
+
+\section*{Personal hobby}
+harmonicon \quad football \quad photography
+
+\end{document}
+
+现在检查是否有错误：
+
+- Personal Information中的“Birth”是1993 09，原图是1993 09，正确。
+- “Origo”是Heilongjiang Wuchang，正确。
+- “School”是Harbin Engineering University，正确。
+- “Major”是Naval Architecture and Marine Engineering，正确。
+- “Cet 4/6”是545/515，正确。
+- “Score”是85.34，正确。
+- Prizes & Rewards中的每个项目，比如Academic Skills的2011-2014 Awarded second-grade scholarship 4 times，正确。
+- Associations Experience中的时间2013.6-2014.6，组织是College of ship

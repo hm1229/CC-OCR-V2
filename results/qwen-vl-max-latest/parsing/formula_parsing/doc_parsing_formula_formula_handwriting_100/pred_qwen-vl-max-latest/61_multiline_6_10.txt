@@ -1,0 +1,14 @@
+```latex
+\begin{aligned}
+&\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}|K_{g}(t,x)-K_{g}(s,y)|^{p}dtdxdsdy\\
+&=\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left|\int_{0}^{t}\int_{\mathbb{R}^{d}}K(t-r,z)g(x-z)dzdW(r)\right.\\
+&\quad\left.-\int_{0}^{s}\int_{\mathbb{R}^{d}}K(s-r,z)g(y-z)dzdW(r)\right|^{p}dtdxdsdy\\
+&\leq N(p)\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left|\int_{0}^{s}\int_{\mathbb{R}^{d}}(K(t-r,z)-K(s-r,z))g(y-z)dzdw(r)\right|^{p}\\
+&\quad+N(p)\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left|\int_{0}^{s}\int_{\mathbb{R}^{d}}K(t-r,z)(g(x-z)-g(y-z))dzdW(r)\right|^{p}\\
+&\quad+N(p)\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left|\int_{s}^{t}\int_{\mathbb{R}^{d}}K(t-r,z)g(x-z)dzdW(r)\right|^{p}dtdxdsdy\\
+&\leq N(p)\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left(\int_{0}^{s}|\int_{\mathbb{R}^{d}}(K(t-r,z)-K(s-r,z))g(y-z)dz|^{2}dr\right)^{\frac{p}{2}}\\
+&\quad+N(p)\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left(\int_{0}^{s}|\int_{\mathbb{R}^{d}}K(t-r,z)(g(x-z)-g(y-z))dz|^{2}dr\right)^{\frac{p}{2}}\\
+&\quad+N(p)\mathbb{E}\int_{\mathcal{O}}\int_{\mathcal{O}}\left(\int_{s}^{t}|\int_{\mathbb{R}^{d}}K(t-r,z)g(x-z)dz|^{2}dr\right)^{\frac{p}{2}}\\
+&=:I_{1}+I_{2}+I_{3}.
+\end{aligned}
+```

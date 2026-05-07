@@ -1,0 +1,61 @@
+Certainly! Below is the transcription of the image's text, tables, and equations into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{url}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{image.png}
+\caption{AW32905E Datasheet Excerpt}
+\label{fig:datasheet}
+\end{figure}
+
+\section*{Ordering Information}
+
+\begin{table}[htbp]
+\centering
+\caption{Ordering Information}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Part Number} & \textbf{Temperature} & \textbf{Package} & \textbf{Marking} & \textbf{Moisture Sensitivity Level} & \textbf{Environmental Information} & \textbf{Delivery Form} \\ \hline
+AW32905EFCR & $-40^{\circ}\text{C} - 85^{\circ}\text{C}$ & FCQFN 1.3mm×1.8mm -12L & RZR & MSL1 & ROHS+HF & 3000 units/ Tape and Reel \\ \hline
+\end{tabular}
+\end{table}
+
+\section*{Absolute Maximum Ratings}
+\footnote{NOTE 1: Conditions out of those ranges listed in “absolute maximum ratings” may cause permanent damages to the device. In spite of the limits above, functional operation conditions of the device should within the ranges listed in “recommended operating conditions”. Exposure to absolute-maximum-rated conditions for prolonged periods may affect device reliability. NOTE2: 29V or $V_{IN}+0.3\text{V}$, whichever is smaller. NOTE3: Limited by thermal design.}
+
+\begin{table}[htbp]
+\centering
+\caption{Absolute Maximum Ratings}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{Symbol} & \textbf{Parameter} & \textbf{Condition} & \textbf{Min.} & \textbf{Max.} & \textbf{Unit} \\ \hline
+$V_{IN}$ & Input voltage & & -0.3 & 29 & V \\ \hline
+$V_{OUT}$ & Output voltage & & -0.3 & \multicolumn{2}{c|}{See\textsuperscript{(NOTE 2)}} \\ \hline
+$V_{OVL}$ & OVL voltage & & -0.3 & 6 & V \\ \hline
+$V_{ACOK}$ & ACOK voltage & & -0.3 & 6 & V \\ \hline
+$V_{EN}$ & EN voltage & & -0.3 & 6 & V \\ \hline
+$I_{SW}$ & Continuous current of switch IN-OUT\textsuperscript{(NOTE 3)} & Continuous current on IN and OUT pins & & 5 & A \\ \hline
+$I_{PEAK}$ & Peak current & Peak input and output current on IN and OUT pin(10ms) & & 8 & A \\ \hline
+$I_{DIODE}$ & Continuous diode current & Continuous forward current through the nFET body diode & & 1.5 & A \\ \hline
+$T_A$ & Ambient temperature & & $-40$ & 85 & $^{\circ}\text{C}$ \\ \hline
+$T_J$ & Junction temperature & & $-40$ & 150 & $^{\circ}\text{C}$ \\ \hline
+$T_{STG}$ & Storage temperature & & $-65$ & 150 & $^{\circ}\text{C}$ \\ \hline
+$T_{LEAD}$ & Soldering temperature & At leads, 10 seconds & & 260 & $^{\circ}\text{C}$ \\ \hline
+\textbf{Surge} & Input surge protection & IEC61000-4-5 test with 2$\Omega$ equivalent series resistance & & 120 & V \\ \hline
+\end{tabular}
+\end{table}
+
+\end{document}
+```
+
+This LaTeX code accurately transcribes the text, tables, and notes from the image into a structured document.

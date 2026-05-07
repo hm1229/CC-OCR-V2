@@ -1,0 +1,116 @@
+Here is the HTML representation of the table from the provided image, using `<tr>` and `<td>` tags with appropriate `colspan` and `rowspan` attributes to reflect merged cells. The layout follows the visual structure from top-left to bottom-right.
+
+```html
+<table border="1" cellpadding="5" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+  <!-- Header Row -->
+  <tr>
+    <td colspan="8" style="text-align: center; font-size: 24px; font-weight: bold;">员工调动申请单</td>
+  </tr>
+  <tr>
+    <td colspan="8" style="text-align: right;">2021 年 9 月 26 日</td>
+  </tr>
+
+  <!-- Personal Info Row -->
+  <tr>
+    <td>姓名</td>
+    <td>李杨</td>
+    <td>部门</td>
+    <td>物业部</td>
+    <td>入职日期</td>
+    <td>2020.10.19</td>
+    <td>调动执行日期</td>
+    <td>2021.10.1</td>
+  </tr>
+
+  <!-- Transfer Type Row -->
+  <tr>
+    <td>调动类型</td>
+    <td colspan="7">
+      □调动 &nbsp;&nbsp; □借调 &nbsp;&nbsp; □公司调动 &nbsp;&nbsp; ☑岗位调动 &nbsp;&nbsp; □其他
+    </td>
+  </tr>
+
+  <!-- Before/After Transfer Section -->
+  <tr>
+    <td rowspan="4" style="text-align: center; vertical-align: middle;">异动前</td>
+    <td>部门</td>
+    <td colspan="2">物业部</td>
+    <td rowspan="4" style="text-align: center; vertical-align: middle;">异动后</td>
+    <td>部门</td>
+    <td colspan="2">物业部</td>
+  </tr>
+  <tr>
+    <td>岗位</td>
+    <td colspan="2">勤杂工</td>
+    <td>岗位</td>
+    <td colspan="2">水电工</td>
+  </tr>
+  <tr>
+    <td>薪资</td>
+    <td colspan="2">3000 + 500</td>
+    <td>薪资</td>
+    <td colspan="2">3500 + 500</td>
+  </tr>
+  <tr>
+    <td>调出日期</td>
+    <td colspan="2">2021年9月26日</td>
+    <td>调入日期</td>
+    <td colspan="2">2021年10月1日</td>
+  </tr>
+
+  <!-- Adjustment Opinion Header -->
+  <tr>
+    <td colspan="8" style="text-align: center;">调整意见</td>
+  </tr>
+
+  <!-- Department Opinion Section -->
+  <tr>
+    <td rowspan="3" style="text-align: center; vertical-align: middle;">部门意见</td>
+    <td colspan="7">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <div style="flex: 1;">
+          □职务调整 &nbsp;&nbsp; □不同意 &nbsp;&nbsp; ☑同意并调整为 <u>水电工</u><br><br>
+          □工资调整 &nbsp;&nbsp; □不同意 &nbsp;&nbsp; ☑同意并调整为 <u>叁仟伍佰</u> 拾元整<br><br>
+          □岗位调整 &nbsp;&nbsp; □不同意 &nbsp;&nbsp; ☑同意 原岗位 <u>勤杂工</u> 调整为现岗位 <u>水电工</u>
+        </div>
+      </div>
+    </td>
+  </tr>
+
+  <!-- Approval Sections -->
+  <tr>
+    <td>转出部门意见</td>
+    <td colspan="3" style="text-align: center;">同意</td>
+    <td>转入部门意见</td>
+    <td colspan="3" style="text-align: center;">同意</td>
+  </tr>
+  <tr>
+    <td>部门负责人意见</td>
+    <td colspan="3" style="text-align: center; height: 60px;">（签名）</td>
+    <td>综合办人事处意见</td>
+    <td colspan="3" style="text-align: center; height: 60px;">（签名）</td>
+  </tr>
+  <tr>
+    <td>商管公司意见</td>
+    <td colspan="3" style="text-align: center; height: 60px;">（签名）</td>
+    <td>总经理意见</td>
+    <td colspan="3" style="text-align: center; height: 60px;">（签名）</td>
+  </tr>
+</table>
+```
+
+---
+
+### Notes:
+
+- **Merged Cells**: 
+  - “异动前” and “异动后” span 4 rows vertically (`rowspan="4"`).
+  - “调动类型”, “调整意见”, and approval rows use `colspan` to span multiple columns as needed.
+- **Checkboxes**: Represented as `□` (unchecked) and `☑` (checked) for visual fidelity.
+- **Handwritten Content**: Transcribed as plain text within `<u>` tags or directly in cells where underlining was present (e.g., “水电工”, “叁仟伍佰”, etc.).
+- **Signatures**: Left as placeholder text “（签名）” since actual signatures are graphical and not transcribable as text.
+- **Layout**: Uses inline styles for basic formatting (centering, spacing) to mimic the original form’s appearance without external CSS.
+
+This HTML can be rendered in any browser or sandbox environment to visually approximate the original document’s table structure.
+
+Let me know if you’d like to add interactive elements, export to PDF, or convert to another format!

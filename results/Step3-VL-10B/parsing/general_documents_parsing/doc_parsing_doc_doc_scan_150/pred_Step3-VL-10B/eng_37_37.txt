@@ -1,0 +1,64 @@
+```latex
+\documentclass{article}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\begin{center}
+\textbf{awinic} \quad 上海艾为电子技术股份有限公司 \\
+\textbf{AW36526} \quad July 2019 V1.3
+\end{center}
+
+\section*{REGISTER DETAILED DESCRIPTION}
+
+\subsection*{Chip ID Register (0x00), default(0x17)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+\hline
+ & & & & & & & \\
+\hline
+\end{tabular}
+\textit{Chip ID: ``0001 0111''} \\
+Write 55H To Reset All Registers
+
+\subsection*{Enable Register (0x01), default(0x00)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+\hline
+\textbf{Strobe Type} & \textbf{Strobe Enable} & \textbf{Mode Bits: M1, M0} & \textbf{RFU} & \textbf{LED3 Enable} & \textbf{LED2 Enable} & \textbf{LED1 Enable} & \\
+\hline
+0=Level Triggered (Default) & 0=Disabled (Default) & 00=Standby (Default) & & 0=OFF (Default) & 0=OFF (Default) & 0=OFF (Default) & \\
+1=Edge Triggered & 1=Enabled (Default) & 01=IR Drive & & 1=ON & 1=ON & 1=ON & \\
+ & & 10=Torch & & & & & \\
+ & & 11=Flash & & & & & \\
+\hline
+\end{tabular}
+\textit{Note:} In Edge or Level Strobe Mode, it is recommended that the trigger pulse be set greater than 1ms to ensure proper turn-on of the device.
+
+\subsection*{IVFM Register (0x02), default(0xE1)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+\hline
+\textbf{LEDX Enable Setting} & \textbf{LED3 Pin Short Fault Detect} & \textbf{LED1/2 Pin Short Fault Detect} & \textbf{UVLO Enable} & \textbf{IVFM Levels} & & & \textbf{IVFM Enable} \\
+\hline
+0=If LED1 or LED2 is Enabled, LED3 is Disabled Internally; 1=No Limitation (Default) & 0=Disabled (Default) & 0=Disabled (Default); 1=Enabled (Default) & 0=Disabled (Default); 1=Enabled & 000=2.9 V (Default) \\
+ & 1=Enabled & 1=Enabled (Default) & & 010=3.1 V & & & 0=Disabled (Default) \\
+ & & & & 100=3.3 V & & & 1=Enabled (Default) \\
+ & & & & 101=3.4 V & & & \\
+ & & & & 110=3.5 V & & & \\
+ & & & & 111=3.6 V & & & \\
+\hline
+\end{tabular}
+
+\subsection*{LED1 Flash Brightness Register (0x03), default(0x7F)}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf

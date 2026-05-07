@@ -1,0 +1,179 @@
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\geometry{a4paper, margin=0.5in}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \huge \textbf{Physics Formula Sheet}
+\end{center}
+
+\section*{Mechanics}
+\begin{multicols}{3}
+    \noindent
+    $x = x_0 + v_{x0}t + \frac{1}{2}a_xt^2$ \\[1ex]
+    $v = v_0 + at$ \\[1ex]
+    $v^2 - v_0^2 = 2a(x - x_0)$ \\[1ex]
+    $\bar{a} = \frac{\sum \vec{F}}{m} = \frac{\vec{F}_{net}}{m}$ \\[1ex]
+    $|\vec{F}_{friction}| \le \mu |\vec{F}_{Normal}|$ \\[1ex]
+    $\vec{p} = m\vec{v}$ \\[1ex]
+    $\Delta \vec{p} = \vec{F} \Delta t$ \\[1ex]
+    $KE = \frac{1}{2}mv^2$ \\[1ex]
+    $\Delta PE = mg\Delta y$ \\[1ex]
+    $\Delta E = W = Fd\cos\theta$
+
+    \columnbreak
+
+    \noindent
+    $a_c = \frac{v^2}{r}$ \\[1ex]
+    $\theta = \theta_0 + \omega_0t + \frac{1}{2}\alpha t^2$ \\[1ex]
+    $\omega = \omega_0 + \alpha t$ \\[1ex]
+    $T = \frac{2\pi}{\omega} = \frac{1}{f}$ \\[1ex]
+    $v = f\lambda$ \\[1ex]
+    $x = A\cos(2\pi ft)$ \\[1ex]
+    $\vec{\alpha} = \frac{\sum \vec{\tau}}{I} = \frac{\vec{\tau}_{net}}{I}$ \\[1ex]
+    $\vec{\tau} = r \times F$ \\[1ex]
+    $L = I\omega$ \\[1ex]
+    $\Delta L = \tau \Delta t$
+
+    \columnbreak
+
+    \noindent
+    $|\vec{F}_{spring}| = k|\vec{x}|$ \\[1ex]
+    $PE_{spring} = \frac{1}{2}kx^2$ \\[1ex]
+    $T_{spring} = 2\pi \sqrt{\frac{m}{k}}$ \\[1ex]
+    $T_{pendulum} = 2\pi \sqrt{\frac{\ell}{g}}$ \\[1ex]
+    $|\vec{F}_{gravity}| = G \frac{m_1m_2}{r^2}$ \\[1ex]
+    $|\vec{F}_{gravity}| = m\vec{g}$ \\[1ex]
+    $PE_{gravity} = -G \frac{m_1m_2}{r}$ \\[1ex]
+    $\rho = \frac{m}{V}$ \\[1ex]
+    $KE = \frac{1}{2}I\omega^2$
+\end{multicols}
+
+\section*{Electricity}
+\begin{multicols}{2}
+    \noindent
+    $|\vec{F}_E| = k \left| \frac{q_1q_2}{r^2} \right|$ \\[2ex]
+    $I = \frac{\Delta q}{\Delta t}$ \\[2ex]
+    $R_{series} = R_1 + R_2 + \dots + R_n$
+
+    \columnbreak
+
+    \noindent
+    $\Delta V = IR$ \hfill $R = \frac{\rho \ell}{A}$ \\[2ex]
+    $P = I\Delta V$ \\[2ex]
+    $\frac{1}{R_{parallel}} = \frac{1}{R_1} + \frac{1}{R_2} + \dots + \frac{1}{R_n}$
+\end{multicols}
+
+\section*{Geometry}
+\begin{multicols}{3}
+    \noindent
+    \textbf{Rectangle} \quad $A = bh$ \\[1ex]
+    \textbf{Circle} \quad $A = \pi r^2$ \\
+    \phantom{\textbf{Circle}} \quad $C = 2\pi r$
+
+    \columnbreak
+
+    \noindent
+    \textbf{Rectangular Solid} \quad $V = \ell wh$ \\[1ex]
+    \textbf{Cylinder} \quad $V = \pi r^2 \ell$ \\
+    \phantom{\textbf{Cylinder}} \quad $S = 2\pi r \ell + 2\pi r^2$
+
+    \columnbreak
+
+    \noindent
+    \textbf{Triangle} \quad $A = \frac{1}{2}bh$ \\[1ex]
+    \textbf{Sphere} \quad $V = \frac{4}{3}\pi r^3$ \\
+    \phantom{\textbf{Sphere}} \quad $S = 4\pi r^2$
+\end{multicols}
+
+\section*{Trigonometry}
+\begin{minipage}{0.3\textwidth}
+    \begin{tikzpicture}[scale=0.8]
+        \draw (0,0) -- (3,0) node[midway, below] {b} -- (3,2) node[midway, right] {a} -- cycle node[midway, above left] {c};
+        \draw (0.5,0) arc (0:33.69:0.5);
+        \node at (0.7,0.2) {$\theta$};
+        \draw (2.8,0) -- (2.8,0.2) -- (3,0.2);
+    \end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.65\textwidth}
+    $c^2 = a^2 + b^2 \quad \sin\theta = \frac{a}{c} \quad \cos\theta = \frac{b}{c} \quad \tan\theta = \frac{a}{b}$
+\end{minipage}
+
+\vspace{1em}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        $\theta$ & $0^\circ$ & $30^\circ$ & $37^\circ$ & $45^\circ$ & $53^\circ$ & $60^\circ$ & $90^\circ$ \\ \hline
+        $\sin\theta$ & $0$ & $1/2$ & $3/5$ & $\sqrt{2}/2$ & $4/5$ & $\sqrt{3}/2$ & $1$ \\ \hline
+        $\cos\theta$ & $1$ & $\sqrt{3}/2$ & $4/5$ & $\sqrt{2}/2$ & $3/5$ & $1/2$ & $0$ \\ \hline
+        $\tan\theta$ & $0$ & $\sqrt{3}/3$ & $3/4$ & $1$ & $4/3$ & $\sqrt{3}$ & $\infty$ \\ \hline
+    \end{tabular}
+\end{center}
+
+\begin{center}
+    \section*{Variables}
+\end{center}
+\begin{multicols}{2}
+    \noindent
+    $a = \text{acceleration}$ \\
+    $A = \text{amplitude}$ \\
+    $A = \text{Area}$ \\
+    $b = \text{base length}$ \\
+    $C = \text{circumference}$ \\
+    $d = \text{distance}$ \\
+    $E = \text{energy}$ \\
+    $f = \text{frequency}$ \\
+    $F = \text{force}$ \\
+    $h = \text{height}$ \\
+    $I = \text{current}$ \\
+    $I = \text{rotational inertia}$ \\
+    $KE = \text{kinetic energy}$ \\
+    $k = \text{spring constant}$ \\
+    $L = \text{angular momentum}$ \\
+    $\ell = \text{length}$ \\
+    $m = \text{mass}$ \\
+    $P = \text{power}$ \\
+    $p = \text{momentum}$ \\
+    $q = \text{charge}$ \\
+    $r = \text{radius}$
+
+    \columnbreak
+
+    \noindent
+    $R = \text{resistance}$ \\
+    $S = \text{surface area}$ \\
+    $T = \text{period}$ \\
+    $t = \text{time}$ \\
+    $PE = \text{potential energy}$ \\
+    $V = \text{electric potential}$ \\
+    $V = \text{volume}$ \\
+    $v = \text{velocity}$ \\
+    $w = \text{width}$ \\
+    $W = \text{work}$ \\
+    $x = \text{position}$ \\
+    $y = \text{height}$ \\
+    $\alpha = \text{angular acceleration}$ \\
+    $\lambda = \text{wavelength}$ \\
+    $\mu = \text{coefficient of friction}$ \\
+    $v = \text{wave speed}$ \\
+    $\theta = \text{angle}$ \\
+    $\rho = \text{density}$ \\
+    $\rho = \text{resistivity}$ \\
+    $\tau = \text{torque}$ \\
+    $\omega = \text{angular speed}$
+\end{multicols}
+
+\end{document}
+```

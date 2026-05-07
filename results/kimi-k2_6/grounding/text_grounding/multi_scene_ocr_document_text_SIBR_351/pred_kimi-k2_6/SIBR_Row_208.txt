@@ -1,0 +1,17 @@
+I need to find all instances of '0.00' in the image and provide their coordinates.
+
+Looking at the receipt, I can identify multiple '0.00' text regions:
+
+1. First '0.00' - next to "医保统筹支付" (medical insurance pooled payment): (0.296, 0.734, 0.343, 0.762)
+2. Second '0.00' - next to "附加支付" (additional payment): (0.670, 0.731, 0.720, 0.759)
+3. Third '0.00' - next to "自费" (self-pay): (0.174, 0.796, 0.224, 0.823)
+4. Fourth '0.00' - next to another "自费" or similar field: (0.612, 0.793, 0.662, 0.821)
+5. Fifth '0.00' - at the bottom "四舍五入" (rounding): (0.171, 0.925, 0.224, 0.950)
+
+Let me refine these based on careful examination of the receipt layout:
+
+(0.296, 0.734, 0.343, 0.762)
+(0.670, 0.731, 0.720, 0.759)
+(0.174, 0.796, 0.224, 0.823)
+(0.612, 0.793, 0.662, 0.821)
+(0.171, 0.925, 0.224, 0.950)

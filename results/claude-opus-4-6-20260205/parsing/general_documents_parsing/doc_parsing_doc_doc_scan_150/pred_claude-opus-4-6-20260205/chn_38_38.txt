@@ -1,0 +1,137 @@
+```latex
+\documentclass[a4paper,12pt]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\geometry{left=2cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\begin{document}
+
+% Header
+\noindent\textcolor{red}{\large\textbf{东方证券}} \hfill 石头科技首次报告 —— 专注研发的扫地机器人新贵，产品端全球竞争力逐步展现
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+% Figure 45 Title
+\noindent\textbf{图45：以美国市场为例，公司扫地机器人产品可比型号美国亚马逊零售价较国内市场售价高出15\%以上}
+
+\vspace{0.5em}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{cccc}
+\toprule
+\textbf{中国型号} & \textbf{中国售价（元/台）} & \textbf{美国可比型号} & \textbf{美国售价（美元/台）} & \textbf{美国售价（元/台）} \\
+\midrule
+P5 & 2,499 & S6 Pure & 519.99 & 3,341 \\
+T6 & 2,799 & S6 & 599.99 & 3,855 \\
+T7Pro & 3,899 & S6 MaxV & 699.99 & 4,497 \\
+T7S & 2,499 & S7 & 649.99 & 4,176 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\small 注：此处中国市场售价为参考天猫旗舰店到手价格；美国市场售价为参考亚马逊 prime 会员价格；汇率采用 2021/5/19 数据计算
+
+\vspace{0.3em}
+\noindent\small 资料来源：iRobot，东方证券研究所
+
+\vspace{1em}
+
+% Figure 46 Title
+\noindent\textbf{图46：公司境外业务毛利率整体高于境内业务毛利率}
+
+\vspace{0.5em}
+
+% Bar chart description
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=20pt,
+    ylabel={毛利率},
+    ymin=0, ymax=70,
+    ytick={0,10,20,30,40,50,60,70},
+    yticklabel={\pgfmathprintnumber{\tick}\%},
+    symbolic x coords={2019, 2020},
+    xtick=data,
+    legend style={at={(0.5,1.05)}, anchor=south, legend columns=2},
+    nodes near coords,
+    nodes near coords align={vertical},
+    every node near coord/.append style={font=\small},
+]
+\addplot[fill=gray!60] coordinates {(2019, 33) (2020, 46)};
+\addplot[fill=red!60] coordinates {(2019, 55) (2020, 58)};
+\legend{境内, 境外}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\noindent\small 资料来源：公司公告，东方证券研究所
+
+\vspace{2em}
+
+% Section: 盈利预测与投资建议
+{\Large\textcolor{red}{\textbf{盈利预测与投资建议}}}
+
+\vspace{1em}
+
+{\large\textbf{盈利预测}}
+
+\vspace{0.5em}
+
+我们对公司2021-2023年盈利预测做如下假设：
+
+\begin{enumerate}[label=\arabic{})]
+    \item 伴随米家ODM占比逐步下降，未来公司收入的大幅增长主要来自于自主品牌扫地机器人内外销共同驱动：①自主品牌内销：国内扫地机器人渗透率提升驱动行业规模增长，公司有望依托产品优势实现市占率稳步提升，假设2021-2023年公司自主品牌内销收入同比增速将分别达60.13\%、42.15\%、32.75\%；②自主品牌外销：受益于亚马逊、海外自建渠道逐步完善，假设2021-2023年公司自主品牌海外自建渠道收入（即直接境外收入）同比增速将分别达54.11\%、46.30\%、41.46\%；假设国内线下经销商收入（即间接境外收入）同比增速将分别达15.00\%、10.00\%、10.00\%。③米家ODM：假设2021-2023年米家品牌扫地机器人收入将分别下降50.00\%、20.00\%、10.00\%。
+
+    \item 伴随技术创新推动产品价格中枢上行，以及公司收入结构中自有品牌占比快速提升，预计2021-2023年公司毛利率将分别达52.59\%、53.03\%、53.34\%。
+
+    \item 公司国内、海外市场自主品牌广告投入力度将稳步提升，假设2021-2023年销售费用率分别为14.47\%、14.63\%、14.63\%；管理费用率均为1.84\%；研发费用率2021-2023年为6.20\%、6.50\%、6.70\%。
+
+    \item 公司2021-2023年的所得税率维持15.00\%
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{盈利预测核心假设}
+
+\vspace{0.5em}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lccccc}
+\toprule
+ & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+\midrule
+\textbf{智能扫地机器人-米家} & & & & & \\
+销售收入（百万元） & 1,194.6 & 308.6 & 154.3 & 123.4 & 111.1 \\
+增长率 & -17.0\% & -74.2\% & -50.0\% & -20.0\% & -10.0\% \\
+毛利率 & 15.0\% & 15.0\% & 15.0\% & 15.0\% & 15.0\% \\
+\textbf{智能扫地机器人-石头} & & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{1em}
+
+\noindent\small 有关分析师的申明，见本报告最后部分。其他重要信息披露见分析师申明之后部分，或请与您的投资代表联系。并请阅读本证券研究报告最后一页的免责申明。
+
+\begin{center}
+24
+\end{center}
+
+\end{document}
+```

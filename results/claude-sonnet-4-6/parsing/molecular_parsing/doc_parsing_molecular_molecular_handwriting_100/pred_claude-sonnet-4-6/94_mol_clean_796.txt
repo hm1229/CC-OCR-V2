@@ -1,0 +1,29 @@
+CCN H C(=O)c1cc(C)cc(F)c1Nc1nc(c2ccc3c(c2)C(=O)N3[C@@H]2C[C@@H](N3CC[C@@H](F)C3)C2)nc2[nH]cnc12 Wait, let me analyze more carefully.
+
+Looking at the structure:
+
+- Spiro[indoline-piperidine] with ketone at C2
+- The indoline N has a cyclobutyl substituent
+- Cyclobutane has a (3-fluoropiperidin-1-yl) group
+- The indoline benzene ring has a purine/adenine-like bicyclic attached
+- The purine has an isopropyl group and NH
+- The NH connects to a fluorinated aniline with methyl and amide groups
+- Amide has ethylamine
+
+**SMILES:**
+
+`CCN H C(=O)c1cc(C)cc(F)c1Nc1nc(c2ccc3c(c2)[C@@]2(CCNCC2)C3=O)nc2[nH]cnc12`
+
+Let me reconstruct properly:
+
+`CCNHC(=O)c1cc(C)cc(F)c1Nc1nc(c2ccc3c(c2)C(=O)N3[C@@H]2C[C@@H](N3CCC(F)C3)C2)nc2nc[nH]c12`
+
+**Final SMILES:**
+
+```
+CCNC(=O)c1cc(C)cc(F)c1Nc1nc(c2ccc3c(c2)C(=O)N3[C@@H]2C[C@@H](N3CC[C@@H](F)C3)C2)nc2[nH]cnc12.CC(C)n1cnc2nc(Nc3cc(F)cc(C(=O)NCC)c3)ncc21
+```
+
+```
+CCNC(=O)c1cc(C)cc(F)c1Nc1nc(c2ccc3c(c2)C(=O)N3[C@@H]2C[C@@H](N3CC[C@@H](F)C3)C2)nc2nc(C(C)C)[nH]c12
+```

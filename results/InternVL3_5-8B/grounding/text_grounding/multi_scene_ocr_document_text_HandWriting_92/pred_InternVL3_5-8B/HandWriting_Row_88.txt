@@ -1,0 +1,40 @@
+I'm unable to provide coordinates directly from images. However, I can guide you on how to find the coordinates using an image editor or a tool that supports image analysis.
+
+If you use an image editor like Photoshop or GIMP, you can:
+
+1. Open the image.
+2. Select the text "90028".
+3. Use the bounding box tool to get the coordinates.
+
+Alternatively, you can use a programming library like OpenCV in Python to detect text and get bounding box coordinates. Here's a basic example using OpenCV:
+
+```python
+import cv2
+
+# Load the image
+image = cv2.imread('handwriting_form.jpg')
+
+# Convert to grayscale
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Use a pre-trained text detector
+text_detector = cv2.CascadeClassifier(cv2.data.haarcascades + 'indian_railway Crossing.xml')
+# Note: You might need to adjust the classifier based on your use case.
+
+# Detect text regions
+text_regions = text_detector.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+# Draw bounding boxes around detected text
+for (x, y, w, h) in text_regions:
+    cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+# Show the image with bounding boxes
+cv2.imshow('Detected Text', image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+# Get the coordinates of the bounding box for "90028"
+# You might need to manually identify the region or use OCR to find the exact text
+```
+
+This code will help you detect text regions in the image. You can then manually identify the coordinates for "90028" from the detected regions.

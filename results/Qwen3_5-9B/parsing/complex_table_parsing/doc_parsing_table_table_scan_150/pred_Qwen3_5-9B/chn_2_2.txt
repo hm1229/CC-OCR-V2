@@ -1,0 +1,129 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        }
+        thead tr th {
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        padding: 8px;
+        background: #f6f6f6;
+        }
+        tbody td {
+        border-bottom: 1px solid #aaa;
+        padding: 8px;
+        text-align: center;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <thead><tr><th rowspan="2">林地类型</th>
+     <th colspan="3">1985年林地分类面积</th>
+     <th colspan="3">1995年林地分类面积</th>
+     <th colspan="3">2000年林地分类面积</th>
+     <th colspan="2">变化量</th>
+    </tr>
+    <tr>
+     <th>分类面积</th>
+     <th>占总林地比例 / %</th>
+     <th>分类面积</th>
+     <th>占总林地比例 / %</th>
+     <th>分类面积</th>
+     <th>占总林地比例 / %</th>
+     <th>1985—1995年<br/>各类型变化</th>
+     <th>1995—2000年<br/>各类型变化</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td>有林地</td>
+     <td>13 743.28</td>
+     <td>60.94</td>
+     <td>13 566.23</td>
+     <td>59.57</td>
+     <td>13 650.79</td>
+     <td>60.85</td>
+     <td>- 177.05</td>
+     <td>84.56</td>
+    </tr>
+    <tr>
+     <td>灌木林</td>
+     <td>4 834.12</td>
+     <td>21.43</td>
+     <td>4 987.31</td>
+     <td>21.90</td>
+     <td>4 886.00</td>
+     <td>21.78</td>
+     <td>153.19</td>
+     <td>- 101.31</td>
+    </tr>
+    <tr>
+     <td>疏林地</td>
+     <td>3 527.77</td>
+     <td>15.64</td>
+     <td>3 838.49</td>
+     <td>16.85</td>
+     <td>3 498.41</td>
+     <td>15.60</td>
+     <td>310.72</td>
+     <td>- 340.08</td>
+    </tr>
+    <tr>
+     <td>其他林地</td>
+     <td>447.49</td>
+     <td>1.98</td>
+     <td>383.26</td>
+     <td>1.68</td>
+     <td>396.90</td>
+     <td>1.77</td>
+     <td>- 64.23</td>
+     <td>13.64</td>
+    </tr>
+    <tr>
+     <td><b>合 计</b></td>
+     <td><b>22 552.66</b></td>
+     <td><b>100</b></td>
+     <td><b>22 775.29</b></td>
+     <td><b>100</b></td>
+     <td><b>22 432.10</b></td>
+     <td><b>100</b></td>
+     <td><b>222.63</b></td>
+     <td><b>- 343.19</b></td>
+    </tr>
+   </tbody>
+  </table>
+ </body>
+</html>
+
+```

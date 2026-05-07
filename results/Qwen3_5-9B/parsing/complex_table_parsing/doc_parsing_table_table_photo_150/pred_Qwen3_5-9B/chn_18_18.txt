@@ -1,0 +1,129 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        }
+        th, td {
+        border: 1px solid #646464;
+        padding: 8px;
+        text-align: center;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <tr>
+    <th colspan="8" style="font-size: 24px; padding: 10px;">员工调动申请单</th>
+   </tr>
+   <tr>
+    <td colspan="8" style="text-align: right; font-size: 18px;">2021年9月26日</td>
+   </tr>
+   <tr>
+    <th>姓名</th>
+    <td>李杨</td>
+    <th>部门</th>
+    <td>物业部</td>
+    <th>入职日期</th>
+    <td>2020.10.19</td>
+    <th>调动执行日期</th>
+    <td>2021.10.1</td>
+   </tr>
+   <tr>
+    <th>调动类型</th>
+    <td colspan="7">□调动<br/>□借调<br/>□公司调动<br/>☑岗位调动<br/>□其他</td>
+   </tr>
+   <tr>
+    <th rowspan="4">异动前</th>
+    <th>部门</th>
+    <td colspan="2">物业部</td>
+    <th rowspan="4">异动后</th>
+    <th>部门</th>
+    <td colspan="2">物业部</td>
+   </tr>
+   <tr>
+    <th>岗位</th>
+    <td colspan="2">勤杂工</td>
+    <th>岗位</th>
+    <td colspan="2">水电工</td>
+   </tr>
+   <tr>
+    <th>薪资</th>
+    <td colspan="2">3000 + 500</td>
+    <th>薪资</th>
+    <td colspan="2">3500 + 500</td>
+   </tr>
+   <tr>
+    <th>调出日期</th>
+    <td colspan="2">2021年9月26日</td>
+    <th>调入日期</th>
+    <td colspan="2">2021年10月1日</td>
+   </tr>
+   <tr>
+    <th colspan="8">调整意见</th>
+   </tr>
+   <tr>
+    <th rowspan="4">部门意见</th>
+    <td colspan="7">□职务调整<br/>□不同意<br/>☑同意并调整为<span style="text-decoration: underline;">水电工</span></td>
+   </tr>
+   <tr>
+    <td colspan="7">□工资调整<br/>□不同意<br/>☑同意并调整为<span style="text-decoration: underline;">叁仟伍佰</span>拾元整</td>
+   </tr>
+   <tr>
+    <td colspan="7">□岗位调整<br/>□不同意<br/>☑同意 原岗位<span style="text-decoration: underline;">勤杂工</span>调整为现岗位<span style="text-decoration: underline;">水电工</span></td>
+   </tr>
+   <tr>
+    <td colspan="7"></td>
+   </tr>
+   <tr>
+    <th>转出部门意见</th>
+    <td colspan="3"><i>同意</i></td>
+    <th>转入部门意见</th>
+    <td colspan="3"><i>同意</i></td>
+   </tr>
+   <tr>
+    <th>部门负责人意见</th>
+    <td colspan="3" style="height: 50px; text-align: center; vertical-align: middle;">签字</td>
+    <th>综合办人事处意见</th>
+    <td colspan="3" style="height: 50px; text-align: center; vertical-align: middle;">签字</td>
+   </tr>
+   <tr>
+    <th>商管公司意见</th>
+    <td colspan="3" style="height: 50px; text-align: center; vertical-align: middle;">签字</td>
+    <th>总经理意见</th>
+    <td colspan="3" style="height: 50px; text-align: center; vertical-align: middle;">签字</td>
+   </tr>
+  </table>
+ </body>
+</html>
+
+```

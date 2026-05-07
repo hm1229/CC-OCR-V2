@@ -1,0 +1,16 @@
+```latex
+\begin{align*}
+&\angle(x,\hat{s},\lambda, Q_r, z, \tau_k, p_k, P_k, \forall k \in \mathcal{K}) \\
+&= s + \gamma_2 \tau_k \cdot Q_r + \sqrt{\gamma_1 \gamma_2} \cdot \left( \sum_{j=1}^2 (\Delta x_j) + \frac{\frac{1}{2} \left[ \frac{\tau_k}{p_k} \frac{p_k}{P_k} \right]}{} \right) \cdot \\
+&\left[ s - y_k^T(x) - \lambda x - b - \lambda x_k^T(x) + \lambda x \lambda A u + \frac{1}{2} \left( \frac{\tau_k}{p_k} + (U \lambda^T B)^T (A \lambda^T x - y_k(x))^T \right) \right] \\
+&\quad \sqrt{\frac{1}{2} (Q_r + (U \lambda^T B)^T (A \lambda^T x - y_k(x))^T)} \quad Q_r \\
+&= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (\lambda x - (A u - b)^T + p_k^T (U \lambda^T B)^T A) \lambda x + \sqrt{\gamma_1 \gamma_2} - \sum_{k=1}^K p_k^T \rho_r \\
+&\quad + (\gamma_2 \tau_k - p_k^T) \cdot Q_r - \sum_{k=1}^K \lambda x (\Delta x_j + y_k^T(x)) + \sum_{k=1}^K (\tau_k y_k^T(x) + (\tau_k^T U + p_k^T (U \lambda^T B)^T y_k(x)) \\
+&= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (\lambda x - (A u - b)^T + p_k^T (U \lambda^T B)^T A) \lambda x + \sqrt{\gamma_1 \gamma_2} - \sum_{k=1}^K p_k^T \rho_r \\
+&\quad + (\gamma_2 \tau_k - p_k^T) \cdot Q_r - \sum_{j=1}^2 \sum_{k=1}^K z_{ij} a_{ij} x - \sum_{j=1}^2 \sum_{k=1}^K z_{ij} a_{ij} y_k + \sum_{k=1}^K (\tau_k^T W + p_k^T (U \lambda^T B)^T W_k) \cdot z_{ij} a_{ij} \\
+&\quad + \sum_{k=1}^K (\tau_k d_k^T + (\tau_k^T U + p_k^T (U \lambda^T B)^T) d_k) \\
+&= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (\lambda x - (A u - b)^T + p_k^T (U \lambda^T B)^T A) \lambda x + \sqrt{\gamma_1 \gamma_2} - \sum_{k=1}^K p_k^T \rho_r \\
+&\quad + (\gamma_2 \tau_k - p_k^T) \cdot Q_r + (\sum_{k=1}^K (\tau_k^T W + (\tau_k^T U + p_k^T (U \lambda^T B)^T) W_k) - \sum_{k=1}^K z_{ij} a_{ij}) \cdot x \\
+&\quad + \sum_{k=1}^K (\tau_k d_k^T + (\tau_k^T U + p_k^T (U \lambda^T B)^T) d_k) - \sum_{j=1}^2 \sum_{k=1}^K z_{ij} a_{ij} y_k.
+\end{align*}
+```

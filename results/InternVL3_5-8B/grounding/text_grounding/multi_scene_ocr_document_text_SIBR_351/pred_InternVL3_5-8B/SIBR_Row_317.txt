@@ -1,0 +1,41 @@
+To determine the coordinates of the region containing the text '5', we need to identify the bounding box that encloses the text '5' in the image. Let's break down the process step-by-step:
+
+1. **Identify the Text '5':**
+   The text '5' appears in the section where the total amount is listed, specifically in the amount "伍圆叁角贰分 (5.32)" and also in the individual payment section "个人支付金额: 5.32".
+
+2. **Locate the Bounding Box:**
+   We'll focus on the text '5' in the larger amount section "伍圆叁角贰分 (5.32)" as it is more prominent.
+
+3. **Estimate Coordinates:**
+   By visually inspecting the image, we can estimate the coordinates of the bounding box around the text '5' in "伍圆叁角贰分 (5.32)".
+
+4. **Normalize Coordinates:**
+   Normalize these coordinates based on the image's width and height.
+
+### Detailed Steps:
+
+1. **Bounding Box for '5' in "伍圆叁角贰分 (5.32)":**
+   - The text '5' is part of the larger numeral "5.32".
+
+2. **Approximate Coordinates:**
+   - The left-top corner of the text '5' is approximately at (x1, y1).
+   - The right-bottom corner of the text '5' is approximately at (x2, y2).
+
+3. **Normalization:**
+   - Assume the image width is approximately 1000 units and the height is approximately 600 units (these are typical values for such documents).
+
+### Coordinates Calculation:
+
+- **Left-Top Corner (x1, y1):**
+  - x1 ≈ 30% of the image width = 0.3 * 1000 = 300
+  - y1 ≈ 40% of the image height = 0.4 * 600 = 240
+
+- **Right-Bottom Corner (x2, y2):**
+  - x2 ≈ 40% of the image width = 0.4 * 1000 = 400
+  - y2 ≈ 50% of the image height = 0.5 * 600 = 300
+
+### Final Bounding Box Coordinates:
+
+(x1, y1, x2, y2) = (300, 240, 400, 300)
+
+These coordinates represent the normalized bounding box around the text '5' in the section "伍圆叁角贰分 (5.32)".

@@ -1,0 +1,45 @@
+I need to find the region of the text '0.00' in the image. Looking at the medical receipt, there are multiple instances of '0.00'. Let me identify one of them.
+
+Looking at the table, I can see '0.00' appears in several places. Let me pick a clear one - for example, the "手术费" (surgery fee) which shows 0.00.
+
+The coordinates for one instance of '0.00' in the middle section of the receipt would be approximately:
+
+(0.438, 0.381, 0.475, 0.408)
+
+Or another instance - the "检查费" (examination fee) showing 0.00:
+
+(0.247, 0.425, 0.282, 0.452)
+
+Let me provide a more precise coordinate for a clearly visible '0.00'. Looking at the "婴儿费" (baby fee) field:
+
+(0.637, 0.425, 0.672, 0.452)
+
+Or the "取暖费" (heating fee):
+
+(0.637, 0.473, 0.672, 0.500)
+
+I'll go with the surgery fee (手术费) '0.00' which is located at approximately:
+
+(0.438, 0.381, 0.475, 0.408)
+
+(438, 381, 475, 408) # normalized to 0-1000 range would be approximately (0.438, 0.381, 0.475, 0.408)
+
+Actually, let me be more careful. Looking at the image, the '0.00' for 手术费 (surgery fee) appears to be around:
+
+(0.438, 0.378, 0.475, 0.408)
+
+Or in the 检查费 (examination fee) row:
+
+(0.247, 0.422, 0.282, 0.455)
+
+Let me provide coordinates for the 检查费 '0.00':
+
+(0.247, 0.422, 0.282, 0.455)
+
+Or more precisely in normalized format:
+
+(247, 422, 282, 455) -> normalized: (0.247, 0.422, 0.282, 0.455)
+
+I'll provide: (0.438, 0.378, 0.475, 0.408) for the surgery fee 0.00
+
+(0.438, 0.378, 0.475, 0.408)

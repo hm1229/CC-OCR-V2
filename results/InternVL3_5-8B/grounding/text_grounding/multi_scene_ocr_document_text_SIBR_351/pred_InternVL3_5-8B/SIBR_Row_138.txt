@@ -1,0 +1,34 @@
+To determine the coordinates of the region containing the text '380.00', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the Text Location:**
+   The text '380.00' appears in two places:
+   - Under "Total 总计: CNY" on the right side of the receipt.
+   - Under "Balance 余额: CNY" on the right side of the receipt.
+
+2. **Select the Relevant Instance:**
+   Since the question does not specify which instance of '380.00' to use, we will consider the first instance under "Total 总计: CNY".
+
+3. **Estimate the Coordinates:**
+   - The receipt is positioned in the upper half of the image.
+   - The text '380.00' is aligned to the right side of the receipt.
+
+4. **Normalize the Coordinates:**
+   - The image width and height should be considered to normalize the coordinates.
+
+Let's assume the image width is approximately 1000 units and the height is approximately 700 units.
+
+### Bounding Box Coordinates for '380.00' under "Total 总计: CNY":
+
+- **Left-Top Corner (x1, y1):**
+  - x1 is approximately 75% from the left (since it's on the right side but not at the very edge).
+  - y1 is approximately 30% from the top (since it's in the upper half of the receipt).
+
+- **Right-Bottom Corner (x2, y2):**
+  - x2 is approximately 85% from the left.
+  - y2 is approximately 40% from the top.
+
+### Normalized Coordinates:
+
+(x1, y1, x2, y2) = (750, 300, 850, 400)
+
+These coordinates are normalized based on the assumed dimensions of the image. Adjustments may be needed based on the actual image dimensions.

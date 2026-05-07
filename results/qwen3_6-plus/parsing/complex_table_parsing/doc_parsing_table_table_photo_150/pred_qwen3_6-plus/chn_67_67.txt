@@ -1,0 +1,215 @@
+Looking at the image, I can see a spreadsheet-like table with data spanning multiple rows and columns. The table appears to start from row 3 (with headers) and goes down to row 28, with columns from J to W (though not all columns are fully visible or labeled).
+
+Let me analyze the structure:
+
+- Row 3: Main headers (e.g., "35kVSVG", "柳风1线", etc.)
+- Row 4: Sub-headers (mostly "正向有功", except last two which are "正向有功" and "反向有功")
+- Rows 5–28: Data rows
+
+Columns (based on visible labels):
+- J: 35kVSVG
+- K: 柳风1线
+- L: 柳风2线
+- M: 柳风3线
+- N: 柳风4线
+- O: 柳风5线
+- P: 柳风6线
+- Q: SVG1馈线
+- R: 所用变1
+- S: 1#主变高压侧
+- T: #1主变低压侧
+- U: 二期主变高压测副表 → split into two sub-columns? Actually, looking closely, column U is “二期主变高压测副表” but then it has two sub-columns under it? Wait — no.
+
+Actually, looking again:
+
+In row 3, column U is labeled “二期主变高压测副表”, but in row 4, under that same column area, we have two entries: “正向有功” and “反向有功”. That suggests that column U and V together form a merged header in row 3, and then split in row 4.
+
+Wait — let’s count columns carefully.
+
+From left to right, visible column headers in row 3:
+
+J: 35kVSVG  
+K: 柳风1线  
+L: 柳风2线  
+M: 柳风3线  
+N: 柳风4线  
+O: 柳风5线  
+P: 柳风6线  
+Q: SVG1馈线  
+R: 所用变1  
+S: 1#主变高压侧  
+T: #1主变低压侧  
+U: 二期主变高压测副表 ← this seems to span two columns? But in row 4, under U and V, we have “正向有功” and “反向有功”.
+
+Actually, looking at the grid lines:
+
+- Column U: header in row 3 is “二期主变高压测副表”
+- Then in row 4, column U is “正向有功”, column V is “反向有功”
+
+So likely, in row 3, column U spans two columns (U and V), and then in row 4, they are split.
+
+But in the image, the cell for “二期主变高压测副表” appears to be only over column U, and column V is empty in row 3? Or perhaps it's merged.
+
+Looking at the visual layout:
+
+In row 3, the last labeled column is U: “二期主变高压测副表”
+
+Then in row 4, under that, we have two cells: U4 = “正向有功”, V4 = “反向有功”
+
+And then data starts from row 5, with values in both U and V columns.
+
+Also, note that columns W and X are present but empty in the data rows shown.
+
+Moreover, rows 1 and 2 are empty or contain UI elements (like date pickers), so we’ll ignore them for the table content.
+
+So, the actual data table starts at row 3.
+
+Structure:
+
+- Row 3: Headers (some may span)
+- Row 4: Sub-headers
+- Rows 5–28: Data
+
+Now, for merging:
+
+In row 3, column U (“二期主变高压测副表”) should span columns U and V, because in row 4, those two columns have separate sub-headers.
+
+Similarly, other columns don’t appear to be merged vertically or horizontally beyond that.
+
+Also, note that the first column (J) has “35kVSVG” in row 3, and then “正向有功” in row 4 — so no merge there.
+
+Let me list the columns as they appear in the data:
+
+We have 14 data columns from J to W? Let’s count:
+
+J, K, L, M, N, O, P, Q, R, S, T, U, V, W → 14 columns.
+
+But in row 3, only up to U is labeled, and V, W are blank? Actually, in row 3, column V and W are empty, but in row 4, V has “反向有功”, and W is empty.
+
+In data rows (5–28), we have values in J through V, and W and X are empty.
+
+Specifically:
+
+- Columns J to T: 11 columns
+- Column U: “正向有功” (sub-header)
+- Column V: “反向有功” (sub-header)
+- Columns W, X: empty in data
+
+But in row 3, column U is “二期主变高压测副表”, which should cover both U and V.
+
+So, for HTML table:
+
+- Row 3: 
+  - J3: 35kVSVG
+  - K3: 柳风1线
+  - ...
+  - T3: #1主变低压侧
+  - U3: 二期主变高压测副表 (colspan=2)
+  - V3: (covered by colspan)
+  - W3, X3: empty or not part of table? Since data doesn't use them, we can omit or include as empty.
+
+But in the image, columns W and X are present but empty in data rows. To be faithful, we should include them if they are part of the grid.
+
+However, since the task is to reflect the image's layout, and the image shows columns up to X, but only J to V have data, we'll include all columns from J to X, but most will be empty.
+
+But that might be messy. Alternatively, since the meaningful data is from J to V, and W,X are blank, we can stop at V.
+
+Looking back at the image: the last column with data is V (e.g., row 5, V5 = 2039.661). Columns W and X are completely empty in all data rows.
+
+Also, in row 3, only up to U is labeled, and V is unlabeled in row 3, but has sub-header in row 4.
+
+To simplify, I'll assume the table has columns J to V (13 columns), with U spanning two in row 3.
+
+Let me define the columns:
+
+Index: 0 to 12 for J to V.
+
+But in HTML, we need to map to actual column letters or just use td order.
+
+Since it's a simulation, I'll create a table with the exact structure as seen.
+
+Steps:
+
+1. Create table with border for clarity (though not required, but helps visualize).
+2. Row 3: headers
+   - J3: 35kVSVG
+   - K3: 柳风1线
+   - L3: 柳风2线
+   - M3: 柳风3线
+   - N3: 柳风4线
+   - O3: 柳风5线
+   - P3: 柳风6线
+   - Q3: SVG1馈线
+   - R3: 所用变1
+   - S3: 1#主变高压侧
+   - T3: #1主变低压侧
+   - U3: 二期主变高压测副表 (colspan="2")
+   - Then V3 is covered, so no separate cell.
+   - But we need to account for the colspan, so after T3, we have one cell for U3-V3.
+
+Then row 4:
+   - J4: 正向有功
+   - K4: 正向有功
+   - ... up to T4: 正向有功
+   - U4: 正向有功
+   - V4: 反向有功
+
+Then rows 5 to 28: data.
+
+Also, note that in row 3, the first cell is "35kVSVG", which is under column J, and so on.
+
+Now, for the data, I need to transcribe each cell.
+
+This is a lot of data, but since it's a simulation, I'll do a few rows to show the pattern, but the instruction says "transcribe each table", implying all data.
+
+But that would be very long. However, the user said "reflecting the image's layout", so I should include all visible data.
+
+Looking at the image, rows 5 to 28 are visible, that's 24 data rows.
+
+Each row has 13 data points (J to V).
+
+But to save space in response, perhaps I can do a representative sample, but the instruction says "transcribe each table", so I think I need to do all.
+
+However, in practice, for such a large table, it might be acceptable to show the structure and a few rows, but let's see.
+
+The user said: "Transcribe each table using <tr> and <td> tags", so I should provide the full HTML for the table as seen.
+
+But given the constraints, I'll provide the full table.
+
+First, let's list the headers:
+
+Row 3 (index 0 in table body, but we'll start from row 3):
+
+Actually, in HTML, we can start the table from row 3, ignoring rows 1-2 as they are UI.
+
+So:
+
+<table>
+  <tr>
+    <td>35kVSVG</td>
+    <td>柳风1线</td>
+    <td>柳风2线</td>
+    <td>柳风3线</td>
+    <td>柳风4线</td>
+    <td>柳风5线</td>
+    <td>柳风6线</td>
+    <td>SVG1馈线</td>
+    <td>所用变1</td>
+    <td>1#主变高压侧</td>
+    <td>#1主变低压侧</td>
+    <td colspan="2">二期主变高压测副表</td>
+  </tr>
+  <tr>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td>正向有功</td>
+    <td

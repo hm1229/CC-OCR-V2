@@ -1,0 +1,44 @@
+To determine the coordinates of the region containing the text '11', we need to analyze the image and identify the bounding box that encloses the text '11'. Let's break down the process step-by-step:
+
+1. **Identify the Text '11':**
+   The text '11' appears in the date section at the bottom right of the receipt, specifically in the format "2021 年 11 月 27 日".
+
+2. **Locate the Bounding Box:**
+   We need to find the exact position of the text '11' within the image. This involves identifying the top-left and bottom-right corners of the text.
+
+3. **Normalize the Coordinates:**
+   The coordinates should be normalized based on the image's width and height. The image width and height are assumed to be 1000 units each for normalization purposes.
+
+### Detailed Steps:
+
+1. **Image Analysis:**
+   - The text '11' is located near the bottom right of the receipt.
+   - The receipt's date is written as "2021 年 11 月 27 日".
+
+2. **Bounding Box Coordinates:**
+   - **Top-Left Corner (x1, y1):** This is the starting point of the text '11'.
+   - **Bottom-Right Corner (x2, y2):** This is the endpoint of the text '11'.
+
+3. **Estimate Coordinates:**
+   - Assume the receipt's width and height are approximately 1000 units each.
+   - The text '11' is positioned roughly at the bottom right section.
+
+### Coordinates Calculation:
+
+- **Top-Left Corner (x1, y1):**
+  - x1: Approximately 850 (near the right edge but not at the very end)
+  - y1: Approximately 750 (near the bottom but not at the very end)
+
+- **Bottom-Right Corner (x2, y2):**
+  - x2: Approximately 900 (slightly to the right of '11')
+  - y2: Approximately 800 (slightly below '11')
+
+### Normalized Coordinates:
+
+- **Top-Left Corner (x1, y1):** (850, 750)
+- **Bottom-Right Corner (x2, y2):** (900, 800)
+
+### Final Output:
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+(850, 750, 900, 800)

@@ -1,0 +1,43 @@
+Here is the HTML transcription of the table from the image, using `<tr>` and `<td>` tags to reflect the layout. Since there are no merged cells in this table, each row and cell is represented individually.
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Parametric form</th>
+      <th>Parameter range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Power exponential</td>
+      <td>$C(t) = \exp(-\beta t^\alpha)$</td>
+      <td>$0 < \alpha \leq 1, \beta > 0$.</td>
+    </tr>
+    <tr>
+      <td>Matérn</td>
+      <td>$C(t) = (\beta t)^\alpha K_\alpha(\beta t)$</td>
+      <td>$0 < \alpha \leq \frac{1}{2}, \beta > 0$.</td>
+    </tr>
+    <tr>
+      <td>Generalized Cauchy</td>
+      <td>$C(t) = (\beta t^\alpha + 1)^{-\xi/\alpha}$</td>
+      <td>$0 < \alpha \leq 1, \beta, \xi > 0$.</td>
+    </tr>
+    <tr>
+      <td>Dagum</td>
+      <td>$C(t) = \left[1 - \left(\frac{\beta t^\alpha}{1 + \beta t^\alpha}\right)^{\xi/\alpha}\right]$</td>
+      <td>$0 < \alpha \leq 1, 0 < \xi \leq 1, \beta > 0$.</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- The mathematical expressions are rendered using LaTeX-style notation within `$...$` for inline math (as commonly used in HTML with MathJax or similar libraries). If you need plain text or specific formatting (e.g., `<sup>`, `<sub>`), let me know.
+- The table structure mirrors the image: three columns (`Type`, `Parametric form`, `Parameter range`) and four data rows.
+- No merged cells are present — all cells are single-row, single-column.
+- The header row uses `<th>` for semantic clarity; if strict `<td>`-only is required, replace `<th>` with `<td>` and add `style="font-weight:bold;"` or similar.
+
+Let me know if you’d like this adapted for a specific rendering engine (e.g., pure HTML without LaTeX, or with explicit superscripts/subscripts).

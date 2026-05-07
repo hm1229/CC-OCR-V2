@@ -1,0 +1,139 @@
+Here is the LaTeX transcription of the provided image content. This includes text, headings, and two bar charts (using `pgfplots` for accurate rendering). Note: The image contains a chairman’s letter from Minerals Technologies Inc., page 5, with financial and operational highlights for 2013.
+
+---
+
+```latex
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{booktabs}
+
+\geometry{margin=1in}
+\pgfplotsset{compat=1.18}
+
+% Custom colors
+\definecolor{mti-orange}{RGB}{255, 193, 7}
+\definecolor{mti-blue}{RGB}{44, 62, 80}
+\definecolor{mti-gray}{RGB}{128, 128, 128}
+
+% Title formatting
+\titleformat{\section}{\normalfont\Large\bfseries\color{mti-orange}}{}{0em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{}{0em}{}
+
+\begin{document}
+
+\begin{center}
+    \small
+    \textbf{CHAIRMAN'S LETTER} \hfill MINERALS TECHNOLOGIES INC. \hfill 5
+\end{center}
+
+\hrule height 2pt
+
+\vspace{1cm}
+
+\section*{BOTH BUSINESS SEGMENTS—}
+
+\subsection*{Specialty Minerals and Refractories—contributed to this outstanding performance through record-breaking financial results.}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.32\textwidth}
+Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+The company’s safety performance continued on a strong track in 2013. We achieved our lowest lost workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+MTI’s Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated \$138 million in cash from operations and we repurchased \$52 million of our shares during the year.
+
+\subsection*{Accomplishments}
+Let’s take a look at what drove our outstanding 2013 performance. Our two major strategies—geographic expansion and new product innovation—continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.32\textwidth}
+the second in Europe. The plant in China is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper’s papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wished to remain unnamed for competitive reasons.
+
+More recently, in early January, we announced an agreement with UPM-Kymmene Corporation to build a satellite PCC plant on site at UPM’s paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will provide PCC for paper filling and will have an initial capacity of 100,000 tons.
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.32\textwidth}
+In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability through added resources to further expand in this growing market.
+
+During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to be contributing volume in 2014.
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{minipage}[t]{0.48\textwidth}
+\subsection*{Return on Capital*}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.6cm,
+    ymin=0, ymax=11,
+    xtick={2010,2011,2012,2013},
+    xticklabels={2010,2011,2012,2013},
+    ylabel={ROC \%},
+    nodes near coords,
+    every node near coord/.append style={font=\footnotesize},
+    axis lines=left,
+    enlarge x limits=0.2,
+    legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1},
+]
+\addplot[fill=mti-orange] coordinates {(2010,8.4) (2011,8.8) (2012,9.2)};
+\addplot[fill=mti-blue] coordinates {(2013,9.5)};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\footnotesize * Bloomberg Method
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\subsection*{Quarterly Underlying Sales Growth}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.4cm,
+    ymin=-3, ymax=8,
+    xtick={1,2,3,4},
+    xticklabels={Q1,Q2,Q3,Q4},
+    ylabel={},
+    nodes near coords,
+    every node near coord/.append style={font=\footnotesize},
+    axis lines=left,
+    enlarge x limits=0.3,
+    legend style={at={(0.5,-0.15)}, anchor=north, legend columns=2},
+]
+\addplot[fill=mti-blue] coordinates {(1,-1) (2,2) (3,2) (4,6)};
+\addplot[mark=*, draw=mti-orange, fill=mti-orange, dashed] coordinates {(1,-2) (2,4) (3,4) (4,7)};
+\legend{Reported Sales Growth, Underlying Sales Growth}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+
+\end{document}
+```
+
+---
+
+### Notes:
+
+- **Layout**: Used `minipage` environments to replicate the three-column text layout and two-chart side-by-side layout.
+- **Colors**: Defined custom colors (`mti-orange`, `mti-blue`) to match the visual design.
+- **Charts**: 
+  - “Return on Capital” uses solid bars with values labeled above.
+  - “Quarterly Underlying Sales Growth” uses dual-series: blue bars for reported growth, orange dashed line with markers for underlying growth.
+- **Typography**: Headings styled to match the original — large orange title, bold subsections.
+- **Footnote**: Added asterisk note for “Bloomberg Method” under ROC chart.
+- **Page Header**: Simulated as centered small text with horizontal rule below.
+
+This LaTeX code compiles cleanly with `pdflatex` or `lualatex` and requires the `pgfplots` package (version 1.18+ recommended).
+
+Let me know if you’d like to add logos, adjust spacing, or export to PDF directly!

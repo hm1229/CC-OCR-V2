@@ -1,0 +1,110 @@
+```latex
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{array}
+
+% Define the blue color used in the headers
+\definecolor{headerblue}{RGB}{200, 220, 240}
+
+% Set up a custom column type for the tables
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+\begin{document}
+
+% --- Personal Information Table ---
+\begin{tabularx}{\textwidth}{|l|X|l|X|c|}
+\hline
+\rowcolor{headerblue}
+\multicolumn{5}{|l|}{\textbf{Personal Information}} \\
+\hline
+\textbf{Name} & Songxxxx & \textbf{Objective} & Management Trainee & \multirow{7}{*}{(照片)} \\
+\cline{1-4}
+\textbf{Gender} & Male & \textbf{Birth} & 1993 09 & \\
+\cline{1-4}
+\textbf{Political affiliation} & Party Member & \textbf{Nation} & Han & \\
+\cline{1-4}
+\textbf{Cell no.} & 189----7742 & \textbf{Origo} & Heilongjiang Wuchang & \\
+\cline{1-4}
+\textbf{E--mail} & xxxxx & \textbf{School} & Harbin Engineering University & \\
+\cline{1-4}
+\textbf{Degree} & Bachelor & \textbf{Major} & Naval Architecture and Marine Engineering & \\
+\cline{1-4}
+\textbf{Cet 4/6} & 545/515 & \textbf{Score} & 85.34 & \\
+\hline
+\end{tabularx}
+
+% --- Prizes & Rewards Table ---
+\begin{tabularx}{\textwidth}{|l|L|}
+\hline
+\rowcolor{headerblue}
+\multicolumn{2}{|l|}{\textbf{Prizes \& Rewards}} \\
+\hline
+\textbf{Academic Skills} & 
+    2011- 2014 Awarded second-grade scholarship 4 times \newline
+    2013.10 \quad Awarded third-grade scholarship \\
+\hline
+\textbf{Creative Ability} & 
+    2013.04 \quad Accomplish two University's scientific research projects \newline
+    2012.10 \quad The second prize of “WuSi” Science competition \\
+\hline
+\textbf{Ideological Morality} & 
+    2012.10 \quad “Merit Student” \newline
+    2013.10 \quad “Excellent Student Cadre” \newline
+    2014.05 \quad “Excellent League Member” \\
+\hline
+\textbf{Communicational Ability} & 
+    2013.05 \quad “Top Ten Hoster” in campus(4/230) \newline
+    2012.05 \quad The First Prize of “student cadres Speech Contest” \newline
+    2013.04 \quad The First Prize of “Presentation Contest” \\
+\hline
+\textbf{Working attitude} & 
+    2013.09 \quad Outstanding worker in anniversary of the founding of school \newline
+    2012.12 \quad Outstanding Volunteer of national “TRIZ” Science competition \newline
+    2013.09 \quad Outstanding worker of college \\
+\hline
+\end{tabularx}
+
+% --- Associations Experience ---
+\begin{tabularx}{\textwidth}{|L|}
+\hline
+\rowcolor{headerblue}
+\textbf{Associations Experience:} \\
+\hline
+\textbf{2013.6-2014.6 \quad College of shipbuilding engineering \quad Secretary-general of Student union} \\
+\begin{itemize}[leftmargin=*, nosep, topsep=2pt, itemsep=2pt]
+    \item \textbf{Files arrangement:} In charge of the plans of activities and arrangement of files in student union. Familiar with the use of OFFICE and PHOTOSHOP software.Had accomplished plans of 22 activities,and arranged 135 files of 16 sections in student union.besides, organized 4 events as the leader.
+    \item \textbf{Accounting:} In charge of accounting and applying for reimbursement for cost of student union,which is about 25,000 yuan totally.
+    \item \textbf{Nerve:} In charge of communicating with various sections,and coordinate their work. Under my coordinating,the student union had accomplished 3 large-scale events.
+\end{itemize} \\
+\hline
+\end{tabularx}
+
+% --- Self Description ---
+\begin{tabularx}{\textwidth}{|L|}
+\hline
+\rowcolor{headerblue}
+\textbf{Self Description:} \\
+\hline
+“opportunities always favor the prepared mind”.I regard it as my motto,and One of key words of my character is plan,I am used to makeing a gengral plan before i start my work,there is no doubt taht a good plan could always save much precious time. \par
+I had a colorful colloege life.i was the Secretary-general of Student union,in three years work,i learned how to communicate and cooperation with others and come to realized how important personal sense of responsbility is to the whole teams success. \\
+\hline
+\end{tabularx}
+
+% --- Personal hobby ---
+\begin{tabularx}{\textwidth}{|L|}
+\hline
+\rowcolor{headerblue}
+\textbf{Personal hobby} \\
+\hline
+harmonicon \quad football \quad photography \\
+\hline
+\end{tabularx}
+
+\end{document}
+```

@@ -1,0 +1,16 @@
+Certainly! Here's the LaTeX representation of the formula from the image:
+
+```latex
+\begin{align*}
+\int_0^\infty x^n \tilde{h}(x) dx &= c \int_0^\infty dx \, x^{n+1} h(x) + \int_0^\infty dxx^n \int_x^\infty dy \, \overline{\Pi} \left( \log(y/x) \right) h(y) \\
+&\quad + q \int_0^\infty dxx^n \int_0^\infty h(xey) \chi_y(dy) \\
+&= \frac{n!(n+1)c}{\prod_{i=1}^{n+1} (q + \phi_i)} + \int_0^\infty dy h(y) \int_0^y dx \, x^n \overline{\Pi} \left( \log(y/x) \right) \\
+&\quad + q \int_0^\infty U_q(dy) \int_0^\infty dx x^n h(xe^y) \\
+&= \frac{n!(n+1)c}{\prod_{i=1}^{n+1} (q + \phi_i)} + \int_0^\infty dy h(y) y^{n+1} \int_0^\infty dz e^{-(n+1)z} \overline{\Pi}(z) \\
+&\quad + q \int_0^\infty U_q(dy) e^{-(n+1)y} \int_0^\infty dz z^n h(z) \\
+&= \frac{n!(n+1)c}{\prod_{i=1}^{n+1} (q + \phi_i)} + \frac{(n+1)!}{\prod_{i=1}^{n+1} (q + \phi_i)} \frac{\int_0^\infty (1 - e^{-(n+1)z}) \overline{\Pi}(dz)}{n+1} \\
+&\quad + q \frac{n!}{\prod_{i=1}^{n} (q + \phi_i)} \int_0^\infty U_q(dy) e^{-(n+1)y} \\
+&= \frac{n!}{\prod_{i=1}^{n} (q + \phi_i)} \left[ (n+1)c + \int_0^\infty (1 - e^{-(n+1)z}) \overline{\Pi}(dz) + q \right] \\
+&= \frac{n!}{\prod_{i=1}^{n} (q + \phi_i)}
+\end{align*}
+```

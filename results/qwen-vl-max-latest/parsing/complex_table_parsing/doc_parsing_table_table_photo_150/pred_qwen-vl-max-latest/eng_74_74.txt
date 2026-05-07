@@ -1,0 +1,44 @@
+Here is the HTML representation of the table from the image, accurately transcribing the layout with `<tr>` and `<td>` tags:
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Parametric form</th>
+      <th>Parameter range</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Power exponential</td>
+      <td>C(t) = exp(−βt<sup>α</sup>)</td>
+      <td>0 &lt; α ≤ 1, β &gt; 0.</td>
+    </tr>
+    <tr>
+      <td>Matérn</td>
+      <td>C(t) = (βt)<sup>α</sup>K<sub>α</sub>(βt)</td>
+      <td>0 &lt; α ≤ ½, β &gt; 0.</td>
+    </tr>
+    <tr>
+      <td>Generalized Cauchy</td>
+      <td>C(t) = (βt<sup>α</sup> + 1)<sup>−ξ/α</sup></td>
+      <td>0 &lt; α ≤ 1, β, ξ &gt; 0.</td>
+    </tr>
+    <tr>
+      <td>Dagum</td>
+      <td>C(t) = [1 − (βt<sup>α</sup> / (1 + βt<sup>α</sup>))<sup>ξ/α</sup>]</td>
+      <td>0 &lt; α ≤ 1, 0 &lt; ξ ≤ 1, β &gt; 0.</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- The table has three columns: **Type**, **Parametric form**, and **Parameter range**.
+- Superscripts (`^`) are rendered using `<sup>` tags.
+- Subscripts (e.g., `K_α`) are rendered using `<sub>` tags.
+- Mathematical symbols like `≤`, `≥`, `∈`, etc., are represented using HTML entities where needed (e.g., `&lt;` for `<`, `&gt;` for `>`, `½` for `½`).
+- The Dagum row includes a complex expression in brackets, which is preserved as per the original.
+
+This HTML can be used in any web environment to display the table faithfully.

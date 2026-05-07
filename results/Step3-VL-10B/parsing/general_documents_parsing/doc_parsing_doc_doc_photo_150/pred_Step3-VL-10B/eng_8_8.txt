@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{enumitem}
+\begin{document}
+
+\section*{Phil 109: Modern Logic}
+\subsection*{Problem set}
+
+\subsubsection*{Problem 1}
+In the lecture on ``syntax'' I develop a toy language Little English. It has the following lexicon (each expression belongs to one grammatical category: names, predicates, or connectives).
+
+\textbf{Predicates:} sleeps, smokes, sleeps \\[0.5em]
+\textbf{Connectives:} and, or
+
+I define well--formed formula in Little English as follows:
+\begin{enumerate}[label=\arabic*.]
+    \item If $\Phi$ is a name, and $\Phi$ is a predicate, then ``$\Phi$'' is a well--formed formula.
+    \item If $\Phi$ and $\Psi$ are well--formed formulas, and $\Omega$ is a connective, then $\Phi \,\Omega\, \Psi$ is a wff.
+    \item Nothing else is a wff.
+\end{enumerate}
+
+I pointed out that the expression ``Kate sleeps and smokes'' is not a wff.
+
+This was counterintuitive, because ``Kate sleeps and smokes'' is a perfectly grammatical sentence of English. Fortunately, there is an easy way to fix this. We can add the following condition to the definition of wff.
+
+\textbf{(C)} If $\Phi$ is a well--formed formula, $\Phi$ is a predicate, and $\Omega$ is a connective, then $\Phi \,\Omega\, \Psi$ is a wff.
+
+which yields the revised definition of wff:
+\begin{enumerate}[label=\arabic*.]
+    \item If $\Phi$ is a name, and $\Psi$ is a predicate, then ``$\Phi \,\Psi$'' is a wff.
+    \item If $\Phi$ and $\Psi$ are well--formed formulas, and $\Omega$ is a connective, then $\Phi \,\Omega\, \Psi$ is a wff.
+    \item If $\Phi$ is a well--formed formula, $\Phi$ is a predicate, and $\Omega$ is a connective, then $\Phi \,\Omega\, \Psi$ is a wff.
+    \item Nothing else is a wff.
+\end{enumerate}
+
+\textbf{Names:} Kate, Billy
+
+\subsubsection*{Questions}
+\begin{enumerate}[label=\alph*.]
+    \item Using the revised definition, show that ``Kate sleeps and smokes'' is a wff.
+    \item Using the revised definition, show that ``Kate sleeps or smokes'' is a wff.
+    \item Explain why ``Bill or Kate sleeps and smokes'' is not a wff under the revised definition.
+    \item Further revise the revised definition, so that ``Bill or Kate sleeps and smokes'' is a wff. (You have to add a new condition, like I did with (b).)
+    \item Using your new definition, show that ``Bill or Kate sleeps'' is a wff.
+\end{enumerate}
+
+\end{document}

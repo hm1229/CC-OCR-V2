@@ -1,0 +1,127 @@
+用户现在需要识别发票中的各个指定类别。首先得逐个看每个类别在图中的位置。
+
+首先看Company Name：发票顶部的Liangnuo Media Co., Ltd. 是公司名，还有Consignee的NISHIKIN CO.,LTD也是公司名？不过先看主要的。然后Invoice是Invoice HLYY20220507-1，Date是2022-5-7。On or About是2022-5-7。Vessels是SHIPPING BY SEA。From是USS Stone FPO AP 13432。Payment terms是T/T。Quantity是各产品的数量，比如62000 pcs等。Unit Price CIF是CIF列的数值。Amount USD是金额列。Description of Goods MATERIAL是下面的三个产品描述。ATTN在多个地方，比如Notify的ATTN:SunJingYang，Consignee的ATTN:Kevin Hill，还有NANAMI的ATTN:Kyle Hall。Address是各个公司的地址，比如NANAMI的地址，NISHIKIN的地址。FAX是各个公司的传真，比如NANAMI的FAX:00-825-6452，NISHIKIN的FAX:43-3663-7510。GROSS WEIGHT是GROSS WEIGHT: KG。NET WEIGHT是NET WEIGHT: KG。Origin是MADE IN CHINA。Title可能是指Invoice的标题？不过看标签里的Title可能对应Invoice的标题？或者看其他。另外Marks & Nos.里的OSAKA是Origin？因为MADE IN CHINA是产地，OSAKA可能是目的地？不过Origin这里可能对应MADE IN CHINA？需要再核对。
+
+现在逐个处理：
+
+1. Company Name：Liangnuo Media Co., Ltd. 的位置是顶部，bbox大概[37, 2, 547, 60]左右。另外Consignee的NISHIKIN CO.,LTD也是Company Name，不过可能主要的是发件公司。先记第一个。
+
+2. Invoice：Invoice HLYY20220507-1，位置在右上角，Date旁边。
+
+3. Date：2022-5-7，在Invoice号右边。
+
+4. On or About：2022-5-7，在Consignee部分的On or About栏。
+
+5. Vessels：SHIPPING BY SEA，在Vessels栏。
+
+6. From：USS Stone FPO AP 13432，在From栏。
+
+7. Payment terms：T/T，在Payment terms栏。
+
+8. Quantity：比如62000 pcs，164000 pcs，56400 pcs，还有总数量282400 PCS。
+
+9. Unit Price CIF：0.0510，0.0400，0.0730这些数值，对应CIF列。
+
+10. Amount USD：3162.00，6560.00，4117.20，总金额13,839.20。
+
+11. Description of Goods MATERIAL：三个产品的描述，比如1 NISHIKIN BRILLIANT MASK...等。
+
+12. ATTN：多个地方，比如Notify的ATTN:SunJingYang（在Notify部分），Consignee的ATTN:Kevin Hill（在Consignee的ATTN），NANAMI的ATTN:Kyle Hall（在NANAMI的ATTN）。
+
+13. Address：NANAMI的地址是〒104-0032 3-5-8,KYOBASHI SECOND NAGAOKA 414 Rachel Stravvenue Lake Dawn, NE 06973；NISHIKIN的地址是3-3-2 JUNGMAE SIBUYA-KU, TEL53-3781-6055等，还有发件公司的地址57824 Morgan Field Suite 962 Port Alexandriashire, IN 64692。
+
+14. FAX：NANAMI的FAX:00-825-6452；NISHIKIN的FAX:43-3663-7510。
+
+15. GROSS WEIGHT：GROSS WEIGHT: KG（在Marks & Nos.部分）。
+
+16. NET WEIGHT：NET WEIGHT: KG（在Marks & Nos.部分）。
+
+17. Origin：MADE IN CHINA（在Marks & Nos.部分）。
+
+18. Title：可能是指Invoice的标题“INVOICE”在顶部中间。
+
+现在需要把每个类别对应到图中的位置，生成bbox。需要注意每个元素的准确位置。
+
+现在开始列每个检测项：
+
+- Company Name：Liangnuo Media Co., Ltd. 的bbox是[37, 2, 547, 60]（因为顶部公司信息）。
+- Invoice：Invoice HLYY20220507-1，位置在右上角，Invoice标签下的内容，bbox大概[692, 24, 825, 36]。
+- Date：2022-5-7，在Invoice号右边，Date: 2022-5-7，bbox[792, 26, 857, 38]。
+- On or About：2022-5-7，在Consignee部分的On or About栏，bbox[545, 325, 602, 342]（看表格里的On or About列）。
+- Vessels：SHIPPING BY SEA，在Vessels栏，bbox[37, 445, 152, 462]。
+- From：USS Stone FPO AP 13432，在From栏，bbox[37, 475, 162, 492]。
+- Payment terms：T/T，在Payment terms栏，bbox[37, 525, 62, 542]。
+- Quantity：比如第一个产品的数量62000 pcs，对应Quantity列，bbox在表格中，比如第一行Quantity是62000 pcs，位置在Description右边，Quantity列，bbox大概[250, 620, 350, 640]（需要看表格结构，表格的Quantity列是第二列？看表格的表头：Description of Goods, Quantity, Unit Price, Amount。所以Quantity列的单元格，比如第一行是62000 pcs，bbox对应位置。
+- Unit Price CIF：CIF列的数值，比如0.0510，对应Unit Price列，CIF是列标题，所以Unit Price CIF是列的标识，数值在下面。比如第一行Unit Price是0.0510，CIF是列，所以Unit Price CIF的标签是列，bbox是列标题“Unit Price”和“CIF”？看表格表头：Unit Price下面有CIF，所以Unit Price CIF是Unit Price列下的CIF，所以列标题是“Unit Price”和“CIF”？可能需要看表头，表格的表头是Description of Goods, Quantity, Unit Price, Amount。其中Unit Price列下面有CIF，所以Unit Price CIF是Unit Price列的说明是CIF。所以Unit Price CIF的标签对应列，bbox是表头的Unit Price列，包含CIF。
+- Amount USD：Amount列，USD是列标题，所以Amount USD是Amount列，数值在下面，比如3162.00等。
+- Description of Goods MATERIAL：三个产品的描述，每个产品行的Description of Goods，比如第一行是1 NISHIKIN BRILLIANT MASK...，所以Description of Goods MATERIAL是这些描述，bbox是每个产品的Description单元格。
+- ATTN：多个ATTN，比如Notify部分的ATTN:SunJingYang，位置在Notify的ATTN行，bbox[102, 102, 182, 118]（Notify的ATTN:SunJingYang）；Consignee的ATTN:Kevin Hill，在Consignee的ATTN行，bbox[102, 225, 182, 241]；NANAMI的ATTN:Kyle Hall，在NANAMI的ATTN行，bbox[102, 152, 182, 168]。
+- Address：NANAMI的地址是〒104-0032...，bbox[102, 162, 475, 198]；NISHIKIN的地址是3-3-2 JUNGMAE SIBUYA-KU...，bbox[102, 235, 375, 251]；发件公司的地址是57824 Morgan Field Suite 962 Port Alexandriashire, IN 64692，bbox[37, 15, 547, 32]（因为顶部公司信息包含地址）。
+- FAX：NANAMI的FAX:00-825-6452，bbox[102, 198, 325, 214]；NISHIKIN的FAX:43-3663-7510，bbox[102, 251, 325, 267]。
+- GROSS WEIGHT：GROSS WEIGHT: KG，在Marks & Nos.部分，bbox[602, 225, 725, 241]（看Marks & Nos.的GROSS WEIGHT行）。
+- NET WEIGHT：NET WEIGHT: KG，在Marks & Nos.部分，bbox[602, 241, 725, 257]。
+- Origin：MADE IN CHINA，在Marks & Nos.部分，bbox[602, 257, 725, 273]。
+- Title：INVOICE在顶部中间，bbox[457, 52, 607, 74]（因为INVOICE是大标题）。
+
+现在需要把所有这些类别都列出来，每个对应一个bbox和label。需要注意不要重复，比如Description of Goods MATERIAL出现两次？不，用户给的类别列表里有-Description of Goods MATERIAL, ATTN, Address, Amount USD, Company Name, Date, Description of Goods MATERIAL, FAX, From, GROSS WEIGHT, Invoice, NET WEIGHT, On or About, Origin, Payment terms, Quantity, TEL, Title, Unit Price CIF, Vessels。注意这里Description of Goods MATERIAL重复了？可能是输入时的重复，实际是同一个类别。所以需要处理每个唯一类别。
+
+现在整理所有类别：
+
+- Company Name
+- Invoice
+- Date
+- On or About
+- Vessels
+- From
+- Payment terms
+- Quantity
+- Unit Price CIF
+- Amount USD
+- Description of Goods MATERIAL
+- ATTN
+- Address
+- FAX
+- GROSS WEIGHT
+- NET WEIGHT
+- Origin
+- Title
+- TEL（需要找TEL，比如发件公司的TEL:1032-25558365，NANAMI的TEL:05-6085-4320，NISHIKIN的TEL:53-3781-6055。所以TEL是这些电话号码，比如发件公司的TEL在顶部，bbox[62, 32, 142, 48]（TEL:1032-25558365）；NANAMI的TEL:05-6085-4320，bbox[102, 172, 225, 188]；NISHIKIN的TEL:53-3781-6055，bbox[102, 244, 225, 260]。所以TEL是这些电话，需要检测。
+
+现在补充TEL：
+
+- TEL：比如发件公司的TEL，NANAMI的TEL，NISHIKIN的TEL。
+
+现在把所有类别列全，然后为每个类别找一个实例（因为有些类别有多个实例，比如ATTN有三个，选其中一个？但用户要求“detect all objects matching these categories”，所以每个匹配的实例都要列？不，可能是指每个类别在图中出现的所有实例？但通常这种任务是每个类别至少一个实例，或者所有出现的。但根据问题描述，“For each detected object, provide: 1. bbox_2d... 2. label: one of (...)”。所以需要列出所有属于这些类别的对象，每个对象一个条目。
+
+现在开始逐个处理：
+
+1. Company Name：Liangnuo Media Co., Ltd. → bbox [37, 2, 547, 60], label "Company Name"
+2. Invoice：Invoice HLYY20220507-1 → bbox [692, 24, 825, 36], label "Invoice"
+3. Date：2022-5-7 → bbox [792, 26, 857, 38], label "Date"
+4. On or About：2022-5-7 → bbox [545, 325, 602, 342], label "On or About"
+5. Vessels：SHIPPING BY SEA → bbox [37, 445, 152, 462], label "Vessels"
+6. From：USS Stone FPO AP 13432 → bbox [37, 475, 162, 492], label "From"
+7. Payment terms：T/T → bbox [37, 525, 62, 542], label "Payment terms"
+8. Quantity：62000 pcs（第一个产品）→ bbox [250, 620, 350, 640], label "Quantity"
+9. Unit Price CIF：0.0510（第一个产品的Unit Price）→ bbox [350, 620, 420, 640], label "Unit Price CIF"
+10. Amount USD：3162.00（第一个产品的Amount）→ bbox [420, 620, 500, 640], label "Amount USD"
+11. Description of Goods MATERIAL：1 NISHIKIN BRILLIANT MASK... → bbox [102, 630, 250, 650], label "Description of Goods MATERIAL"
+12. ATTN：Notify的ATTN:SunJingYang → bbox [102, 102, 182, 118], label "ATTN"
+13. Address：NANAMI的地址（〒104-0032...）→ bbox [102, 162, 475, 198], label "Address"
+14. FAX：NANAMI的FAX:00-825-6452 → bbox [102, 198, 325, 214], label "FAX"
+15. GROSS WEIGHT：GROSS WEIGHT: KG → bbox [602, 225, 725, 241], label "GROSS WEIGHT"
+16. NET WEIGHT：NET WEIGHT: KG → bbox [602, 241, 725, 257], label "NET WEIGHT"
+17. Origin：MADE IN CHINA → bbox [602, 257, 725, 273], label "Origin"
+18. Title：INVOICE → bbox [457, 52, 607, 74], label "Title"
+19. TEL：发件公司的TEL:1032-25558365 → bbox [62, 32, 142, 48], label "TEL"
+20. TEL：NANAMI的TEL:05-6085-4320 → bbox [102, 172, 225, 188], label "TEL"
+21. TEL：NISHIKIN的TEL:53-3781-6055 → bbox [102, 244, 225, 260], label "TEL"
+22. Description of Goods MATERIAL：2 NISHIKIN RAKU RAKU COOL MASK... → bbox [102, 650, 250, 670], label "Description of Goods MATERIAL"
+23. Description of Goods MATERIAL：3 NISHIKIN BRILLIANT MAKE UP MASK... → bbox [102, 670, 250, 690], label "Description of Goods MATERIAL"
+24. Quantity：164000 pcs（第二个产品）→ bbox [250, 650, 350, 670], label "Quantity"
+25. Quantity：56400 pcs（第三个产品）→ bbox [250, 690, 350, 710], label "Quantity"
+26. Unit Price CIF：0.0400（第二个产品）→ bbox [350, 650, 420, 670], label "Unit Price CIF"
+27. Unit Price CIF：0.0730（第三个产品）→ bbox [350, 690, 420, 710], label "Unit Price CIF"
+28. Amount USD：6560.00（第二个产品）→ bbox [420, 650, 500, 670], label "Amount USD"
+29. Amount USD：4117.20（第三个产品）→ bbox [420, 690, 500, 710], label "Amount USD"
+30. Amount

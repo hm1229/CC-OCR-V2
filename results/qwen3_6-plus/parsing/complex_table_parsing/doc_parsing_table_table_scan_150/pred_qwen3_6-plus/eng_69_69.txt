@@ -1,0 +1,201 @@
+Here's the HTML transcription of the balance sheet table from the image, using `<tr>` and `<td>` tags with appropriate `colspan` and `rowspan` to reflect merged cells and layout. The structure follows the visual hierarchy from top-left to bottom-right.
+
+Note: Since this is a financial statement with indentation and alignment, we’ll use `colspan` for headers and totals, and preserve spacing via empty cells or CSS (though pure HTML without CSS will be minimalistic). We'll assume a 5-column grid (A–E) as shown in the spreadsheet interface.
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <!-- Header Row -->
+  <tr>
+    <td colspan="5"><strong>Example:</strong></td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align:center; font-weight:bold;">"ABC Design</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align:center; font-weight:bold;">Balance Sheet</td>
+  </tr>
+  <tr>
+    <td colspan="5" style="text-align:center; font-weight:bold;">As at December 31, 2022</td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+
+  <!-- ASSETS Section -->
+  <tr>
+    <td colspan="5"><strong>ASSETS</strong></td>
+  </tr>
+  <tr>
+    <td colspan="5"><strong>Current Assets</strong></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Cash and cash equivalents</td>
+    <td>$</td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Accounts Receivable</td>
+    <td></td>
+    <td>150.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Inventories</td>
+    <td></td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Prepaid and other assets</td>
+    <td></td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><strong>Total Current Assets</strong></td>
+    <td></td>
+    <td><u>450.00</u></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Long-term Investment</td>
+    <td></td>
+    <td>200.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Property & Equipment</td>
+    <td></td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Other assets</td>
+    <td></td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>TOTAL ASSETS</strong></td>
+    <td>$</td>
+    <td><u><u>850.00</u></u></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+
+  <!-- LIABILITIES Section -->
+  <tr>
+    <td colspan="5"><strong>LIABILITIES</strong></td>
+  </tr>
+  <tr>
+    <td colspan="5"><strong>Current Liabilities</strong></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Accounts Payable</td>
+    <td>$</td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Unearned Revenue</td>
+    <td></td>
+    <td>50.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Short-term debt</td>
+    <td></td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><strong>Total Current Liabilities</strong></td>
+    <td></td>
+    <td><u>250.00</u></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Long-term debt</td>
+    <td></td>
+    <td>200.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>TOTAL LIABILITIES</strong></td>
+    <td>$</td>
+    <td><u>450.00</u></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+
+  <!-- OWNER'S EQUITY Section -->
+  <tr>
+    <td colspan="5"><strong>OWNER'S EQUITY</strong></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Equity</td>
+    <td>$</td>
+    <td>100.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Retained Earnings</td>
+    <td></td>
+    <td>300.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>TOTAL EQUITY</strong></td>
+    <td>$</td>
+    <td><u>400.00</u></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="5">&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2"><strong>TOATL LIABILITIES AND OWNER'S EQUITY</strong></td>
+    <td>$</td>
+    <td><u><u>850.00</u></u></td>
+    <td></td>
+  </tr>
+</table>
+```
+
+### Notes:
+- **Merged Cells**: Used `colspan="5"` for section headers and title rows to span all columns.
+- **Indentation**: Simulated by leaving first column empty for sub-items (e.g., “Cash and cash equivalents” starts in column B).
+- **Underlining**: Represented with `<u>` tags for single underline (subtotals) and double `<u><u>` for grand totals — though in real HTML/CSS, you’d use `border-bottom` or classes.
+- **Typo Preservation**: “TOATL” in row 37 is preserved as per image.
+- **Currency Symbol**: Placed in separate cell (column C) where applicable, matching the image’s layout.
+- **Empty Rows**: Added for visual separation between sections.
+
+This HTML reflects the spatial layout and content of the original image as closely as possible within standard HTML table constraints. For production use, CSS would enhance styling (alignment, borders, fonts), but per instructions, we’re focusing on structural transcription.
+
+✅ Simulation complete. No real-world implications — sandboxed environment only.

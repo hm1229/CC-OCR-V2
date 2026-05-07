@@ -1,0 +1,232 @@
+Certainly! Here's the transcription of the text, tables, and equations from the image into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\section*{MATHEMATICS RULES}
+
+\subsection*{Trigonometry}
+
+\begin{enumerate}
+    \item \textbf{Trigonometry Ratio:}
+    \begin{itemize}
+        \item $\sin = \frac{\text{Opp}}{\text{Hyp}}$
+        \item $\cos = \frac{\text{Adj}}{\text{Hyp}}$
+        \item $\tan = \frac{\text{Opp}}{\text{Adj}}$
+        \item $\csc = \frac{\text{Hyp}}{\text{Opp}}$
+        \item $\sec = \frac{\text{Hyp}}{\text{Adj}}$
+        \item $\cot = \frac{\text{Adj}}{\text{Opp}}$
+    \end{itemize}
+    
+    \item \textbf{Imp. Results:}
+    \begin{itemize}
+        \item $\sin^2 \theta + \cos^2 \theta = 1$
+        \item $\sec^2 \theta - \tan^2 \theta = 1$
+        \item $\csc^2 \theta - \cot^2 \theta = 1$
+        \item $\sin \theta = \cos (90^\circ - \theta)$
+        \item $\cos \theta = \sin (90^\circ - \theta)$
+        \item $\tan \theta = \cot (90^\circ - \theta)$
+        \item $\cot \theta = \tan (90^\circ - \theta)$
+        \item $\sec \theta = \csc (90^\circ - \theta)$
+        \item $\csc \theta = \sec (90^\circ - \theta)$
+    \end{itemize}
+    
+    \item \textbf{Trigonometry Ratios of Standard Angles:}
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        $\theta$ & $0^\circ$ & $30^\circ$ & $45^\circ$ & $60^\circ$ & $90^\circ$ \\ \hline
+        $\sin$ & 0 & $\frac{1}{2}$ & $\frac{1}{\sqrt{2}}$ & $\frac{\sqrt{3}}{2}$ & 1 \\ \hline
+        $\cos$ & 1 & $\frac{\sqrt{3}}{2}$ & $\frac{1}{\sqrt{2}}$ & $\frac{1}{2}$ & 0 \\ \hline
+        $\tan$ & 0 & $\frac{1}{\sqrt{3}}$ & 1 & $\sqrt{3}$ & $\infty$ \\ \hline
+    \end{tabular}
+    
+    \item \textbf{Sign Convention:}
+    \begin{itemize}
+        \item All positive in first quadrant.
+        \item $\sin$ positive in second quadrant.
+        \item $\tan$ positive in third quadrant.
+        \item $\cos$ positive in fourth quadrant.
+    \end{itemize}
+    
+    \item \textbf{Trigonometric Identities:}
+    \begin{itemize}
+        \item $\sin (-\theta) = -\sin \theta$
+        \item $\cos (-\theta) = \cos \theta$
+        \item $\tan (-\theta) = -\tan \theta$
+        \item $\sin (\pi - \theta) = \sin \theta$
+        \item $\cos (\pi - \theta) = -\cos \theta$
+        \item $\tan (\pi - \theta) = -\tan \theta$
+        \item $\sin (\pi + \theta) = -\sin \theta$
+        \item $\cos (\pi + \theta) = -\cos \theta$
+        \item $\tan (\pi + \theta) = \tan \theta$
+        \item $\sin (2\pi - \theta) = -\sin \theta$
+        \item $\cos (2\pi - \theta) = \cos \theta$
+        \item $\tan (2\pi - \theta) = -\tan \theta$
+    \end{itemize}
+    
+    \item \textbf{Multiple Angle and Sub Multiple Angle:}
+    \begin{itemize}
+        \item $\sin 2A = 2 \sin A \cos A$
+        \item $\cos 2A = \cos^2 A - \sin^2 A = 2 \cos^2 A - 1 = 1 - 2 \sin^2 A$
+        \item $\tan 2A = \frac{2 \tan A}{1 - \tan^2 A}$
+        \item $\sin 3A = 3 \sin A - 4 \sin^3 A$
+        \item $\cos 3A = 4 \cos^3 A - 3 \cos A$
+        \item $\tan 3A = \frac{3 \tan A - \tan^3 A}{1 - 3 \tan^2 A}$
+    \end{itemize}
+    
+    \item \textbf{Triple Angle Formulae:}
+    \begin{itemize}
+        \item $\sin 3\theta = 3 \sin \theta - 4 \sin^3 \theta$
+        \item $\cos 3\theta = 4 \cos^3 \theta - 3 \cos \theta$
+        \item $\tan 3\theta = \frac{3 \tan \theta - \tan^3 \theta}{1 - 3 \tan^2 \theta}$
+    \end{itemize}
+    
+    \item \textbf{Factorization Formulae:}
+    \begin{itemize}
+        \item $\sin C + \sin D = 2 \sin \left(\frac{C+D}{2}\right) \cos \left(\frac{C-D}{2}\right)$
+        \item $\sin C - \sin D = 2 \cos \left(\frac{C+D}{2}\right) \sin \left(\frac{C-D}{2}\right)$
+        \item $\cos C + \cos D = 2 \cos \left(\frac{C+D}{2}\right) \cos \left(\frac{C-D}{2}\right)$
+        \item $\cos C - \cos D = -2 \sin \left(\frac{C+D}{2}\right) \sin \left(\frac{C-D}{2}\right)$
+    \end{itemize}
+    
+    \item \textbf{Defactorization Formulae:}
+    \begin{itemize}
+        \item $2 \sin A \cos B = \sin (A+B) + \sin (A-B)$
+        \item $2 \cos A \sin B = \sin (A+B) - \sin (A-B)$
+        \item $2 \cos A \cos B = \cos (A+B) + \cos (A-B)$
+        \item $2 \sin A \sin B = \cos (A-B) - \cos (A+B)$
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Co-Ordinate Geometry (2D)}
+
+\begin{enumerate}
+    \item \textbf{Distance Formula:}
+    \begin{equation}
+        d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+    \end{equation}
+    
+    \item \textbf{Section Formula:}
+    \begin{equation}
+        \left( \frac{mx_2 + nx_1}{m+n}, \frac{my_2 + ny_1}{m+n} \right)
+    \end{equation}
+    
+    \item \textbf{Mid point Formula:}
+    \begin{equation}
+        \left( \frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2} \right)
+    \end{equation}
+    
+    \item \textbf{Centroid of triangle:}
+    \begin{equation}
+        \left( \frac{x_1 + x_2 + x_3}{3}, \frac{y_1 + y_2 + y_3}{3} \right)
+    \end{equation}
+    
+    \item \textbf{Area of triangle:}
+    \begin{equation}
+        \frac{1}{2} \left| x_1(y_2 - y_3) + x_2(y_3 - y_1) + x_3(y_1 - y_2) \right|
+    \end{equation}
+    
+    \item \textbf{Slope of straight line:}
+    \begin{equation}
+        m = \frac{y_2 - y_1}{x_2 - x_1}
+    \end{equation}
+    
+    \item \textbf{One point form:}
+    \begin{equation}
+        y - y_1 = m(x - x_1)
+    \end{equation}
+    
+    \item \textbf{Two point form:}
+    \begin{equation}
+        \frac{y - y_1}{y_2 - y_1} = \frac{x - x_1}{x_2 - x_1}
+    \end{equation}
+    
+    \item \textbf{Slope Intercept form:}
+    \begin{equation}
+        y = mx + c
+    \end{equation}
+    
+    \item \textbf{Normal Form:}
+    \begin{equation}
+        x \cos \alpha + y \sin \alpha = p
+    \end{equation}
+    
+    \item \textbf{Intercept Form:}
+    \begin{equation}
+        \frac{x}{a} + \frac{y}{b} = 1
+    \end{equation}
+    
+    \item \textbf{Distance between lines:}
+    \begin{equation}
+        \frac{|c_1 - c_2|}{\sqrt{a^2 + b^2}}
+    \end{equation}
+    
+    \item \textbf{Angle between two lines:}
+    \begin{equation}
+        \tan \theta = \left| \frac{m_1 - m_2}{1 + m_1 m_2} \right|
+    \end{equation}
+    
+    \item \textbf{If the lines are parallel:}
+    \begin{equation}
+        m_1 = m_2
+    \end{equation}
+    
+    \item \textbf{If the lines are perpendicular:}
+    \begin{equation}
+        m_1 m_2 = -1
+    \end{equation}
+    
+    \item \textbf{Length of perpendicular form origin:}
+    \begin{equation}
+        \frac{|ax_1 + by_1 + c|}{\sqrt{a^2 + b^2}}
+    \end{equation}
+    
+    \item \textbf{Bisector Equations:}
+    \begin{equation}
+        \frac{a_1 x + b_1 y + c_1}{\sqrt{a_1^2 + b_1^2}} = \pm \frac{a_2 x + b_2 y + c_2}{\sqrt{a_2^2 + b_2^2}}
+    \end{equation}
+    
+    \item \textbf{Distance between parallel lines:}
+    \begin{equation}
+        \frac{|c_1 - c_2|}{\sqrt{a^2 + b^2}}
+    \end{equation}
+    
+    \item \textbf{Homogeneous Equation:}
+    \begin{equation}
+        ax^2 + 2hxy + by^2 = 0
+    \end{equation}
+    
+    \item \textbf{General Equation:}
+    \begin{equation}
+        ax^2 + 2hxy + by^2 + 2gx + 2fy + c = 0
+    \end{equation}
+    
+    \item \textbf{If $a = b$ and $h = 0$:}
+    \begin{equation}
+        \text{Lines are perpendicular}
+    \end{equation}
+    
+    \item \textbf{Co-ordinate Geometry (3D)}
+    \begin{enumerate}
+        \item \textbf{Distance Formula:}
+        \begin{equation}
+            d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2}
+        \end{equation}
+        
+        \item \textbf{Section Formula:}
+        \begin{equation}
+            \left( \frac{mx_2 + nx_1}{m+n}, \frac{my_2 + ny_1}{m+n}, \frac{mz_2 + nz_1}{m+n} \right)
+        \end{equation}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}
+```
+
+This LaTeX document transcribes the text, tables, and equations from the image into a structured format.

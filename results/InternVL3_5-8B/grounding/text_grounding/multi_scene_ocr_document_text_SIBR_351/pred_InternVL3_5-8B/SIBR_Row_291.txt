@@ -1,0 +1,44 @@
+To determine the coordinates of the region containing the text '06', we need to carefully analyze the image and identify the bounding box that encloses the text '06'. Let's break down the process step-by-step:
+
+1. **Identify the Text '06'**: The text '06' appears at the bottom right of the image, near the date "2020-06".
+
+2. **Determine the Bounding Box**: We need to find the exact coordinates of the top-left and bottom-right corners of the bounding box that encloses the text '06'.
+
+3. **Normalize the Coordinates**: Convert the pixel coordinates to normalized coordinates based on the image's width and height.
+
+### Step-by-Step Analysis
+
+1. **Image Dimensions**: Assume the image width is \( W \) and the height is \( H \).
+
+2. **Bounding Box Coordinates**:
+   - **Top-Left Corner (x1, y1)**: The top-left corner of the text '06'.
+   - **Bottom-Right Corner (x2, y2)**: The bottom-right corner of the text '06'.
+
+3. **Normalization**:
+   - Normalize the x-coordinates by dividing by the image width \( W \).
+   - Normalize the y-coordinates by dividing by the image height \( H \).
+
+### Estimation Based on Visual Inspection
+
+By visually inspecting the image, we can estimate the coordinates:
+
+- **Top-Left Corner (x1, y1)**: Approximately at (850, 750) pixels.
+- **Bottom-Right Corner (x2, y2)**: Approximately at (900, 800) pixels.
+
+### Normalization
+
+Assuming the image width \( W \) is 1000 pixels and the height \( H \) is 1000 pixels (for simplicity):
+
+- **Normalized Coordinates**:
+  - \( x1 = \frac{850}{1000} = 0.85 \)
+  - \( y1 = \frac{750}{1000} = 0.75 \)
+  - \( x2 = \frac{900}{1000} = 0.90 \)
+  - \( y2 = \frac{800}{1000} = 0.80 \)
+
+### Final Output
+
+Thus, the normalized coordinates of the bounding box are:
+
+\[ (0.85, 0.75, 0.90, 0.80) \]
+
+This represents the region containing the text '06' in the image.

@@ -1,0 +1,56 @@
+Here is the HTML transcription of the table from the provided image, using `<tr>` and `<td>` tags with appropriate `colspan` for merged cells where needed. The layout reflects the structure from top-left to bottom-right as shown.
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Gold Labels</th>
+      <th>Gold</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>abstract l<br>rating summary</td>
+      <td>[this work adapts cycle GAN to the problem of decipherment with some success.]←ABSTRACT [it’s still an early result, but all the reviewers have found it to be interesting and worthwhile for publication.]←RATING SUMMARY</td>
+    </tr>
+    <tr>
+      <th colspan="3">Control Sequence &nbsp;&nbsp;&nbsp;&nbsp; Generated Passage</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>abstract l<br>rating summary</td>
+      <td>[This paper proposes a method for using cycle GANs to decipher text encrypted with historical ciphers.]←ABSTRACT<br>[The reviewers were unanimous in their vote to accept.]←RATING SUMMARY</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>abstract l abstract l<br>rating summary</td>
+      <td>[This paper proposes a method for using cycle GANs to decipher text encrypted with historical ciphers.]←ABSTRACT<br>[The proposed method is based on replacing the log loss of the GAN with a quadratic loss and regularizing the Jacobian of the discriminator.]←ABSTRACT<br>[The reviewers were unanimous in their vote to accept.]←RATING SUMMARY</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>strength l decision</td>
+      <td>[The reviewers agree that the paper is well-written, the problem is interesting, and the proposed method is novel.]←STRENGTH [The paper should be accepted.]←DECISION</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>misc l abstract l<br>strength l decision</td>
+      <td>[Thanks for your submission to ICLR.]←MISC<br>[This paper proposes a method for using cycle GANs to decipher text encrypted with historical ciphers.]←ABSTRACT<br>[This is an interesting and fairly original problem, and the proposed method is shown to be very effective.]←STRENGTH<br>[All reviewers agree that the paper is well written, and I’m happy to recommend acceptance.]←DECISION</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>weakness l<br>rebuttal process</td>
+      <td>[ The reviewers raised a number of concerns including the correctness of the proof, the lack of a simple baseline, and the presentation of the paper.]←WEAKNESS [The authors’ rebuttal addressed some of these concerns, but not to the degree that the reviewers felt it should be.]←REBUTTAL PROCESS</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- The header row “Control Sequence Generated Passage” spans all three columns — hence `colspan="3"`.
+- Each data row has 3 cells: index (e.g., "0", "1"), Gold Labels (multi-line), and Gold/Generated Passage (multi-line with control tokens).
+- Line breaks within cells are represented by `<br>`.
+- Control tokens like `←ABSTRACT`, `←RATING SUMMARY`, etc., are preserved as plain text with arrows as shown.
+- No actual merging of rows or complex colspan beyond the header is needed — each row is independent except for the section header.
+
+This HTML will render a table matching the visual structure of the original image when styled appropriately (borders, padding, etc.).

@@ -1,0 +1,31 @@
+To determine the coordinates of the region containing the text '05', we need to analyze the image and identify the bounding box that encloses the text '05'. Let's break down the process step-by-step:
+
+1. **Identify the Text '05'**: The text '05' is located near the top center of the document, just below the header.
+
+2. **Estimate the Bounding Box**: We need to estimate the position of the bounding box that encloses the text '05'. This involves identifying the top-left and bottom-right corners of the box.
+
+3. **Normalize the Coordinates**: Convert the pixel coordinates to normalized coordinates based on the image's width and height.
+
+### Step-by-Step Analysis
+
+1. **Image Dimensions**: Assume the image width is 1000 units and the height is 1000 units for normalization purposes.
+
+2. **Bounding Box Coordinates**:
+   - **Top-Left Corner (x1, y1)**: The text '05' starts slightly to the right of the center and a bit down from the top. Let's approximate this to (400, 100).
+   - **Bottom-Right Corner (x2, y2)**: The text '05' is a small portion, so the box might extend to (450, 150).
+
+### Normalized Coordinates Calculation
+
+- **Top-Left Corner (x1, y1)**:
+  - x1 = 400 (normalized to the image width)
+  - y1 = 100 (normalized to the image height)
+
+- **Bottom-Right Corner (x2, y2)**:
+  - x2 = 450 (normalized to the image width)
+  - y2 = 150 (normalized to the image height)
+
+### Final Output
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+
+(400, 100, 450, 150)

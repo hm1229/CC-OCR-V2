@@ -1,0 +1,14 @@
+```latex
+\begin{align*}
+E[\psi_3(X,\hat{A},Z,M,Y)S_o(0)] &= E[\psi_3(X,A,Z,M,Y)(S_o(X)+S_o(Z|X,A)+S_o(M|X,A,Z)+S_o(Y|X,A,Z,M)] \\
+&= E[S_o(X)+S_o(A|X)+S_o(Z|X,A)+S_o(M|X,A,Z)]E[\psi_3(X,A,Z,M,Y)|X,A,Z,M] \\
+&+ E[\psi_3(X,A,Z,M,Y)S_o(Y|X,A,Z,M)] \\
+&= E[\psi_3(X,A,Z,M,Y)S_o(Y|X,A,Z,M)] \\
+&= E\left[\mathbb{I}(A=a)\mathbb{I}(M=m)S_o(Y|X,A,Z,M)\right] \\
+&= E\left[\frac{P[A=a|X]P[M=m|X,A=a,Z]}{P[A=a|X]P[M=m|X,A=a,Z]} E[S_o(Y|X,A,Z,M)|X,A,Z,M] \right] \\
+&= E\left\{ \mathbb{I}(A=a)\mathbb{I}(M=m)S_o(Y|X,A,Z,M) \right\} \\
+&= E_{X,A}E\left[ \frac{P[A=a|X]P[M=m|X,A=a,Z]}{P[A=a|X]P[M=m|X,A=a,Z]} \mathbb{I}(X,A,Z,M,X,A,Z,M= m|X,A) \right] \\
+&= E_{X}\{E[\mathbb{I}(A=a)\mathbb{I}(M=m)S_o(Y|X,A,Z,M)|X,A,Z,M=m|X,A=a]\} \\
+&= \phi_3
+\end{align*}
+```

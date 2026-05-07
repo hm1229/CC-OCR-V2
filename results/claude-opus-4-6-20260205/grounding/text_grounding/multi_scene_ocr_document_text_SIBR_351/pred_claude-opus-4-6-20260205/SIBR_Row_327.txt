@@ -1,0 +1,30 @@
+I need to find the text '0' in the image. There are multiple instances of '0' in this receipt. Let me identify the most prominent standalone '0' characters.
+
+Looking at the receipt, I can see several instances of '0' in the payment section:
+
+- 支付宝：0
+- 微信：0
+- 其他记帐：0
+- 银行存款：0
+- POS支付：0
+- 省内异地医保POS：0
+- 现金卡支付：0
+- 就诊卡账户支付：0
+
+The first standalone '0' appears after "支付宝:" near the bottom left of the receipt.
+
+Looking at the "支付宝:0" text, the '0' after 支付宝 appears to be located at approximately:
+
+Left-top corner and right-bottom corner of the '0' after 支付宝:
+
+The 支付宝:0 is located in the lower portion of the receipt. The '0' after 支付宝 appears at roughly:
+- x position: around 145-160 out of the image width
+- y position: around 680-720 area
+
+Let me normalize these coordinates more carefully. The image appears to be approximately 1400 pixels wide and 850 pixels tall based on typical receipt dimensions.
+
+The '0' after 支付宝: is at approximately:
+- x1: ~145/1400 ≈ 103, y1: ~590/850 ≈ 694
+- x2: ~165/1400 ≈ 118, y2: ~620/850 ≈ 729
+
+(103, 694, 118, 729)

@@ -1,0 +1,13 @@
+\begin{align*}
+E[\psi_3(X,A,Z,M,Y)S_0(Y)] &= E[\psi_3(X,A,Z,M,Y)(S_0(X) + S_0(Z|X,A) + S_0(M|X,A,Z) + S_0(Y|X,A,Z,M)) \\
+&= E[S_0(X) + S_0(A|X) + S_0(Z|X,A) + S_0(M|X,A,Z)]E[\psi_3(X,A,Z,M,Y)|X,A,Z,M] \\
+&+ E[\psi_3(X,A,Z,M,Y)S_0(Y|X,A,Z,M)] \\
+&= E[\psi_3(X,A,Z,M,Y)S_0(Y|X,A,Z,M)] \\
+&= E[\prod(A=a)\prod(M=m)S_0(Y|X,A,Z,M)] \\
+&= E\left[\frac{\prod(A=a)\prod(M=m)S_0(Y|X,A,Z,M)}{P(A=a|X)P(M=m|X,A=a,Z)}\right] \\
+&= E\left[\frac{\prod(A=a)\prod(M=m)S_0(Y|X,A,Z,M)}{P(A=a|X)P(M=m|X,A=a,Z)}\right] \\
+&= E_{X,A}\left[\prod(A=a)P(M=m|X,A,Z)\prod(Y|X,A,Z,M)S_0(Y|X,A,Z,M)|X,A,Z,M=m|X,A,Z\right] \\
+&= E_{X,A}\left[\prod(A=a)P(M=m|X,A,Z)\prod(Y|X,A,Z,M)S_0(Y|X,A,Z,M)|X,A,Z,M=m|X,A\right] \\
+&= E_{X}\left[E\left[\prod(A=a)P(M=m|X,A,Z)\prod(Y|X,A,Z,M)S_0(Y|X,A,Z,M)|X,A,Z,M=m|X,A\right]\right] \\
+&= \phi_3
+\end{align*}

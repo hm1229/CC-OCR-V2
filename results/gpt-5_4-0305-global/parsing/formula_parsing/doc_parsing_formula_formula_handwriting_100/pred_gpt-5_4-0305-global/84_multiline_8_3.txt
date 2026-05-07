@@ -1,0 +1,16 @@
+\[
+\begin{aligned}
+E[\psi_3(X,A,Z,M,Y)S_o(O)]
+&= E[\psi_3(X,A,Z,M,Y)\{S_o(X)+S_o(A\mid X)+S_o(Z\mid X,A)+S_o(M\mid X,A,Z)+S_o(Y\mid X,A,Z,M)\}]\\
+&= E[\{S_o(X)+S_o(A\mid X)+S_o(Z\mid X,A)+S_o(M\mid X,A,Z)\}E\{\psi_3(X,A,Z,M,Y)\mid X,A,Z,M\}]\\
+&\qquad + E[\psi_3(X,A,Z,M,Y)S_o(Y\mid X,A,Z,M)]\\
+&= E[\psi_3(X,A,Z,M,Y)S_o(Y\mid X,A,Z,M)]\\
+&= E\!\left[\frac{\mathbb{I}(A=a)\mathbb{I}(M=m)Y\,S_o(Y\mid X,A,Z,M)}{\Pr(A=a\mid X)\Pr(M=m\mid X,A=a,Z)}\right]\\
+&= E\!\left[\frac{\mathbb{I}(A=a)\mathbb{I}(M=m)E[Y\mid X,A=a,Z,M=m]}{\Pr(A=a\mid X)\Pr(M=m\mid X,A=a,Z)}\,E\{S_o(Y\mid X,A,Z,M)\mid X,A,Z,M\}\right]\\
+&= E\!\left\{E\!\left[\left.\frac{\mathbb{I}(A=a)\mathbb{I}(M=m)Y\,S_o(Y\mid X,A,Z,M)}{\Pr(A=a\mid X)\Pr(M=m\mid X,A=a,Z)}\right|X,A,Z,M=m\right]\Pr(M=m\mid X,A,Z)\right\}\\
+&= E_X\!\left[E\!\left[\left.\frac{\mathbb{I}(A=a)\Pr(M=m\mid X,A,Z)\,E[Y S_o(Y\mid X,A,Z,M)\mid X,A,Z,M=m]}{\Pr(A=a\mid X)\Pr(M=m\mid X,A=a,Z)}\right|X,A\right]\right]\\
+&= E_X\!\left\{E\!\left[\left.\frac{\mathbb{I}(A=a)\Pr(M=m\mid X,A,Z)}{\Pr(A=a\mid X)\Pr(M=m\mid X,A=a,Z)}\,E\{Y S_o(Y\mid X,A,Z,M)\mid X,A,Z,M=m\}\right|X,A=a\right]\Pr(A=a\mid X)\right\}\\
+&= E_X\!\left\{E\!\left[E\{Y S_o(Y\mid X,A,Z,M)\mid X,A,Z,M=m\}\mid X,A=a\right]\right\}\\
+&= \phi_3.
+\end{aligned}
+\]

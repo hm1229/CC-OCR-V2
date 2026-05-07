@@ -1,0 +1,63 @@
+I need to find all the regions containing the text '0' in the image.
+
+Looking at the image, I can identify the following '0' characters:
+
+1. In "20.92" - the '0' after '2'
+2. In "0" (personal payment amount for first item)
+3. In "15.30" - the '0' at the end
+4. In "0" (personal payment amount for second item)
+5. In "59.60" - the '0' at the end
+6. In "0" (personal payment amount for third item)
+7. In "10.00" - two '0's
+8. In "0" (personal payment amount for fourth item)
+
+Let me identify the bounding boxes for each '0':
+
+For the '0' in "20.92" (first row, amount column):
+(0.660, 0.395, 0.675, 0.435)
+
+For the '0' in personal payment first row:
+(0.730, 0.395, 0.745, 0.435)
+
+For the '0' in "15.30" (second row, amount column):
+(0.660, 0.450, 0.675, 0.490)
+
+For the '0' in personal payment second row:
+(0.730, 0.450, 0.745, 0.490)
+
+For the '0' in "59.60" (third row, amount column):
+(0.660, 0.505, 0.675, 0.545)
+
+For the '0' in personal payment third row:
+(0.730, 0.505, 0.745, 0.545)
+
+For the first '0' in "10.00" (fourth row, amount column):
+(0.650, 0.560, 0.665, 0.600)
+
+For the second '0' in "10.00":
+(0.660, 0.560, 0.675, 0.600)
+
+For the '0' in personal payment fourth row:
+(0.730, 0.560, 0.745, 0.600)
+
+Let me refine these to be more accurate:
+
+(0.657, 0.398, 0.672, 0.432) # 0 in 20.92
+(0.733, 0.398, 0.748, 0.432) # 0 first personal payment
+(0.657, 0.453, 0.672, 0.487) # 0 in 15.30
+(0.733, 0.453, 0.748, 0.487) # 0 second personal payment
+(0.657, 0.508, 0.672, 0.542) # 0 in 59.60
+(0.733, 0.508, 0.748, 0.542) # 0 third personal payment
+(0.650, 0.563, 0.665, 0.597) # first 0 in 10.00
+(0.662, 0.563, 0.677, 0.597) # second 0 in 10.00
+(0.733, 0.563, 0.748, 0.597) # 0 fourth personal payment
+
+(0.657, 0.398, 0.672, 0.432)
+(0.733, 0.398, 0.748, 0.432)
+(0.657, 0.453, 0.672, 0.487)
+(0.733, 0.453, 0.748, 0.487)
+(0.657, 0.508, 0.672, 0.542)
+(0.733, 0.508, 0.748, 0.542)
+(0.650, 0.563, 0.665, 0.597)
+(0.662, 0.563, 0.677, 0.597)
+(0.733, 0.563, 0.748, 0.597)

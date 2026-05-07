@@ -1,0 +1,18 @@
+I need to find the text '001492992000' in the receipt image.
+
+Looking at the receipt, I can see "(GST Reg No. 001492992000)" near the top of the receipt, on the second line after the company number.
+
+The text appears to be located in the upper portion of the receipt, roughly centered.
+
+Estimating the coordinates:
+- The receipt image appears to be approximately 554px wide and 1400px tall based on proportions
+- The GST Reg No line is approximately at y=130-155 pixels from top
+- The '001492992000' portion starts roughly at x=270 and ends at x=450
+
+Normalizing (0-1000 scale):
+- x1: ~270/554 * 1000 ≈ 487
+- y1: ~130/1400 * 1000 ≈ 93
+- x2: ~450/554 * 1000 ≈ 812
+- y2: ~155/1400 * 1000 ≈ 111
+
+(487, 93, 812, 111)

@@ -1,0 +1,135 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        }
+        thead tr th {
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        padding: 8px;
+        background: #f6f6f6;
+        }
+        tbody td {
+        border-bottom: 1px solid #aaa;
+        padding: 8px;
+        text-align: center;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <thead><tr><th rowspan="2">Model</th>
+     <th colspan="2">XNLI</th>
+     <th colspan="2">PAWS-X</th>
+     <th colspan="2">POS</th>
+     <th colspan="2">NER</th>
+     <th colspan="2">XQuAD</th>
+     <th colspan="2">MLQA</th>
+     <th colspan="2">TyDiQA-GoldP</th>
+     <th colspan="1">BUCC</th>
+     <th colspan="1">Tatoeba</th>
+     <th colspan="1">Avg.</th>
+    </tr>
+    <tr>
+     <th>Acc.</th>
+     <th>Acc.</th>
+     <th>F1</th>
+     <th>F1</th>
+     <th>F1 / EM</th>
+     <th>F1 / EM</th>
+     <th>F1 / EM</th>
+     <th>F1 / EM</th>
+     <th>F1 / EM</th>
+     <th>F1</th>
+     <th>Acc.</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><b>FULL MODEL</b></td>
+     <td><b>84.7</b></td>
+     <td><b>92.8</b></td>
+     <td><b>77.2</b></td>
+     <td><b>69.0</b></td>
+     <td><b>82.9 / 67.4</b></td>
+     <td><b>74.8 / 57.3</b></td>
+     <td><b>71.1 / 53.2</b></td>
+     <td><b>77.6</b></td>
+     <td><b>69.1</b></td>
+     <td><b>74.8</b></td>
+    </tr>
+    <tr>
+     <td>w/o Sentence-CTL</td>
+     <td>82.9</td>
+     <td>90.5</td>
+     <td>75.9</td>
+     <td>67.8</td>
+     <td>82.3 / 66.7</td>
+     <td>74.3 / 56.5</td>
+     <td>69.7 / 52.3</td>
+     <td>71.4</td>
+     <td>62.6</td>
+     <td>72.4</td>
+    </tr>
+    <tr>
+     <td>w/o Word-CTL</td>
+     <td>84.3</td>
+     <td>92.1</td>
+     <td>76.3</td>
+     <td>68.4</td>
+     <td>82.5 / 66.9</td>
+     <td>74.1 / 56.7</td>
+     <td>70.2 / 52.5</td>
+     <td>76.8</td>
+     <td>68.4</td>
+     <td>74.2</td>
+    </tr>
+    <tr>
+     <td>w/o MT data</td>
+     <td>84.2</td>
+     <td>92.4</td>
+     <td>76.6</td>
+     <td>68.2</td>
+     <td>82.6 / 67.0</td>
+     <td>74.5 / 56.8</td>
+     <td>70.1 / 52.3</td>
+     <td>74.7</td>
+     <td>66.8</td>
+     <td>73.8</td>
+    </tr>
+   </tbody>
+  </table>
+ </body>
+</html>
+
+```

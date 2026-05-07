@@ -1,0 +1,340 @@
+Got it, let's tackle this. First, I need to transcribe the image's text, tables, and equations into LaTeX. Let's start by identifying each part.
+
+First, the top part has a number 2, then question 4: Complete the table. Let's parse that table.
+
+Question 4 table:
+
+Who/What | Event/Achievement | Place/Country | Time/Year
+--- | --- | --- | ---
+Cricket | the first one | (i)– | 
+Second One Day Tournament | Day |  | 
+World Cup | trophy | England | (ii)–
+| | | in 1975
+Bangladesh | (iii)– | Malaysia | in 1996
+Mini World Cup | | | (iv)–
+| | | held
+| | | in 1998
+Mini World Cup | | | (v)–
+| | | Malaysia
+
+Wait, let's check the original image. The table in question 4:
+
+First row: Cricket, the first one, (i)–, (empty time)
+Second row: (empty who), Day, (empty place), (empty time)
+Third row: Second One Day Tournament, World Cup, England, (ii)–
+Fourth row: (empty who), trophy, England, in 1975
+Fifth row: Bangladesh, (iii)–, Malaysia, in 1996
+Sixth row: (empty who), held, (empty place), (iv)–
+Seventh row: Mini World Cup, (empty event), (empty place), in 1998
+Eighth row: (empty who), (empty event), (v)–, Malaysia
+
+Wait, maybe better to transcribe as per the image. Let's look at the image:
+
+Question 4 table:
+
+Who/What | Event/Achievement | Place/Country | Time/Year
+--- | --- | --- | ---
+Cricket | the first one | (i)– | 
+| | Day | | 
+Second One Day Tournament | World Cup | England | (ii)–
+| | trophy | England | in 1975
+Bangladesh | (iii)– | Malaysia | in 1996
+| | | (iv)–
+| | | held
+Mini World Cup | | | in 1998
+| | | (v)–
+| | | Malaysia
+
+Wait, the image shows:
+
+First column (Who/What):
+- Cricket
+- (blank)
+- Second One Day Tournament
+- (blank)
+- Bangladesh
+- (blank)
+- Mini World Cup
+- (blank)
+- (blank)
+
+Second column (Event/Achievement):
+- the first one
+- Day
+- World Cup
+- trophy
+- (iii)–
+- (blank)
+- (blank)
+- (blank)
+- (v)–
+
+Third column (Place/Country):
+- (i)–
+- (blank)
+- England
+- England
+- Malaysia
+- (iv)–
+- (blank)
+- (blank)
+- Malaysia
+
+Fourth column (Time/Year):
+- (blank)
+- (blank)
+- (ii)–
+- in 1975
+- in 1996
+- held
+- in 1998
+- (v)–? Wait no, the image's fourth column:
+
+For Bangladesh row: in 1996
+
+Then next row: (iv)– (time)
+
+Then next row: held (event? No, time? Wait the image's table:
+
+Let me check the original image's question 4:
+
+The table has columns: Who/What, Event/Achievement, Place/Country, Time/Year.
+
+Rows:
+
+1. Cricket | the first one | (i)– | 
+2. | Day | | 
+3. Second One Day Tournament | World Cup | England | (ii)–
+4. | trophy | England | in 1975
+5. Bangladesh | (iii)– | Malaysia | in 1996
+6. | | | (iv)–
+7. | | held | 
+8. Mini World Cup | | | in 1998
+9. | | | (v)–
+10. | | Malaysia | 
+
+Wait, maybe the image's table is structured as:
+
+- Cricket: Event is "the first one", Place is (i), Time empty.
+- Then a row with Event "Day" (so Who/What is "Second One Day Tournament"? Wait no, the second row under Who/What is blank, Event is "Day", so that's the "Second One Day Tournament" row? Wait the image shows:
+
+"Second One Day Tournament" is in the Who/What column, Event is "World Cup"? No, let's look at the image text:
+
+In the image, question 4:
+
+Who/What | Event/Achievement | Place/Country | Time/Year
+
+Cricket | the first one | (i)– | 
+
+| | Day | | 
+
+Second One Day Tournament | World Cup | England | (ii)– 
+
+| | trophy | England | in 1975 
+
+Bangladesh | (iii)– | Malaysia | in 1996 
+
+| | | (iv)– 
+
+| | held | 
+
+Mini World Cup | | | in 1998 
+
+| | | (v)– 
+
+| | Malaysia | 
+
+Yes, that's how it's laid out. So transcribing that into LaTeX table.
+
+Then question 5: Read the passage... statements (a) to (e). The passage is about cricket, but the image doesn't show the passage, but the statements are given. So we need to transcribe the statements.
+
+Question 5:
+
+5. Read the passage again and write true or false beside the following statements. Give answers for the false statements.
+
+(a) The first Asian Test Final Match was held in Pakistan in 1890. (b) Bangladesh became runners up in ICC in 1996 in Malaysia. (c) The World Cup Cricket Tournament of 1999 was held in Australia. (d) Mini World Cup Competition was held in Bangladesh in 1998. (e) Pakistan, India and Sri Lanka okay arranged jointly Mini World Cup Competition in 1996.
+
+Then question 6: Fill in the gaps with appropriate words:
+
+Independent Bangladesh is my birth (a)–. It is the duty of (b)– to (c)– to our country. Our student's role is (d)–. They have to bear in (e)– that they are responsible citizens of this country. Their duty is to keep away the country from bad study and study well.
+
+Question 7: Rearrange the sentences in correct order. The sentences are labeled (a) to (g):
+
+(a) He rose to a high position in the army by his courage and good work. (b) Under him France was very powerful. (c) More than 170 years ago, there lived in France one of the greatest soldiers called Napoleon Bonaparte. (d) When he was young, he joined the French Army as an ordinary soldier. (e) He was born in 1769. (f) He won victories over them. (g) He died in 1821. (h) In 1804 he proclaimed himself to be the Emperor. (i) He grew very powerful and soon became the greatest man in the country.
+
+Wait, the image shows:
+
+(He rose to a high position in the army by his courage and good work.) (Under him France was very powerful.) (More than 170 years ago, there lived in France one of the greatest soldiers called Napoleon Bonaparte.) (When he was the young, he joined the French Army as an ordinary soldier.) (He was born in 1769.) (He fought several wars with the neighbouring countries and won victories over them.) (Yet the Frenchmen remember him with due respect.) (He died in 1821.) (In 1804 he proclaimed himself to be the Emperor.) (He grew very powerful and soon became the greatest man in the country.)
+
+Wait, the image has labels (a) to (i) maybe. Let's check:
+
+The image says: "Rearrange the following sentences in correct order. (a) He rose to a high position... (a) Under him... (a) More than 170 years ago... (a) When he was the young... (a) He was born in 1769. (a) He fought several wars... (a) Yet the Frenchmen... (a) He died in 1821. (a) In 1804 he proclaimed... (a) He grew very powerful..."
+
+Wait, the image has multiple (a) labels, probably a typo, but we need to transcribe as is.
+
+Question 8: Fill in the gaps using clues from the boxes. The boxes have words: remove, field, limited, outcome, easily, use, difficulties, made, education, result.
+
+Computer is an (a)– of modern science. Computers (b)– used in very (c)– of life. The wouse of computer has (d)– our work easy and (e)–. But we have (f)– to scope learn to computer. As a (g)– they are creating numbers (h)–. We should (i)– the problem through real (j)–.
+
+Wait, "wouse" is probably "use" typo. So:
+
+Computer is an (a)– of modern science. Computers (b)– used in very (c)– of life. The use of computer has (d)– our work easy and (e)–. But we have (f)– to scope learn to computer. As a (g)– they are creating numbers (h)–. We should (i)– the problem through real (j)–.
+
+Question 9: Match column A beginnings with column B endings.
+
+Column A:
+(i) A teacher plays a vital role in
+(ii) He works hard
+(iii) He has a great duty
+(iv) A country suffers a lot
+(v) So every body should respect
+
+Column B:
+(a) without him
+(b) him and evaluate his service
+(c) to show his students the right direction
+(d) forming an educated nation
+(e) to make a developed nation
+
+Question 10: Suppose you are Sharif/Sharifa. Your friend is Rana/Runa. Write a dialogue between you about the importance of reading news paper.
+
+Question 11: Write a paragraph on "A Tea-Stall" by answering questions: (a) What is a tea-stall? (b) Where is it found? (c) How is it furnished? (d) What things are sold here? (e) What do the customers do in tea-stall?
+
+Question 12: Read the beginning of a story. Complete it in 150 words.
+
+Once a hot summer day, a crow flew very thirsty. It flew to and fro in search of water. But it could not find water anywhere where……
+
+Question 13: Suppose you are Nabil/Nabil you have a friend named Pollab/Srizon. Write a letter to your friend congratulating him/her on the brilliant success.
+
+Also, there's a note at the bottom: "বাংলা – ইংরেজি ১৫ম পাতা-2" which is Bengali for "Bengali - English page 15".
+
+Now, let's structure each part in LaTeX.
+
+First, the document structure. Since it's a transcription, we can use a LaTeX document with sections for each question.
+
+Let's start:
+
+\documentclass{article}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\noindent\textbf{2}
+
+\section*{4. Complete the following table with the information given in the passage.} \hfill $1\times5=5$
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Who/What} & \textbf{Event/Achievement} & \textbf{Place/Country} & \textbf{Time/Year} \\
+\hline
+Cricket & the first one & (i)– & \\
+\hline
+ & Day & & \\
+\hline
+Second One Day Tournament & World Cup & England & (ii)– \\
+\hline
+ & trophy & England & in 1975 \\
+\hline
+Bangladesh & (iii)– & Malaysia & in 1996 \\
+\hline
+ & & & (iv)– \\
+\hline
+ & & held & \\
+\hline
+Mini World Cup & & & in 1998 \\
+\hline
+ & & & (v)– \\
+\hline
+ & & Malaysia & \\
+\hline
+\end{tabular}
+
+\section*{5. Read the passage again and write true or false beside the following statements. Give answers for the false statements.} \hfill $1\times5=5$
+
+(a) The first Asian Test Final Match was held in Pakistan in 1890. \\
+(b) Bangladesh became runners up in ICC in 1996 in Malaysia. \\
+(c) The World Cup Cricket Tournament of 1999 was held in Australia. \\
+(d) Mini World Cup Competition was held in Bangladesh in 1998. \\
+(e) Pakistan, India and Sri Lanka okay arranged jointly Mini World Cup Competition in 1996.
+
+\section*{6. Fill in the gaps with appropriate words:} \hfill $1\times5=5$
+
+Independent Bangladesh is my birth \textbf{(a)}–. It is the duty of \textbf{(b)}– to \textbf{(c)}– to our country. Our student's role is \textbf{(d)}–. They have to bear in \textbf{(e)}– that they are responsible citizens of this country. Their duty is to keep away the country from bad study and study well.
+
+\section*{7. Rearrange the following sentences in correct order.} \hfill $1\times10=10$
+
+(a) He rose to a high position in the army by his courage and good work. \\
+(b) Under him France was very powerful. \\
+(c) More than 170 years ago, there lived in France one of the greatest soldiers called Napoleon Bonaparte. \\
+(d) When he was young, he joined the French Army as an ordinary soldier. \\
+(e) He was born in 1769. \\
+(f) He fought several wars with the neighbouring countries and won victories over them. \\
+(g) Yet the Frenchmen remember him with due respect. \\
+(h) He died in 1821. \\
+(i) In 1804 he proclaimed himself to be the Emperor. \\
+(j) He grew very powerful and soon became the greatest man in the country.
+
+\section*{8. Fill in the gaps using clues from the boxes. There are more words than necessary.} \hfill $1\times5=5$
+
+Computer is an \textbf{(a)}– of modern science. Computers \textbf{(b)}– used in very \textbf{(c)}– of life. The use of computer has \textbf{(d)}– our work easy and \textbf{(e)}–. But we have \textbf{(f)}– to scope learn to computer. As a \textbf{(g)}– they are creating numbers \textbf{(h)}–. We should \textbf{(i)}– the problem through real \textbf{(j)}–.
+
+\textit{Clues: remove, field, limited, outcome, easily, use, difficulties, made, education, result}
+
+\section*{9. The phrases in column A are the beginnings of some sentences. The phrases in column B are the endings. Match the phrases in column A with the phrases in column B to make complete sentences:} \hfill $1\times5=5$
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Column A} & \textbf{Column B} \\
+\hline
+(i) A teacher plays a vital role in & (a) without him \\
+\hline
+(ii) He works hard & (b) him and evaluate his service \\
+\hline
+(iii) He has a great duty & (c) to show his students the right direction \\
+\hline
+(iv) A country suffers a lot & (d) forming an educated nation \\
+\hline
+(v) So every body should respect & (e) to make a developed nation \\
+\hline
+\end{tabular}
+
+\section*{Section B – Writing Test (40 Marks)}
+
+\section*{10. Suppose you are Sharif/Sharifa. Your friend is Rana/Runa. Now, write a dialogue between you about your friend and about yourself. The importance of reading news paper.} \hfill 10
+
+\section*{11. Write a paragraph on "A Tea-Stall" by answering the following questions.} \hfill 10
+
+(a) What is a tea-stall? \\
+(b) Where is it found? \\
+(c) How is it furnished? \\
+(d) What things are sold here? \\
+(e) What do the customers do in tea-stall?
+
+\section*{12. Read the beginning of a story. Complete it in 150 words.} \hfill 10
+
+Once a hot summer day, a crow flew very thirsty. It flew to and fro in search of water. But it could not find water anywhere where……
+
+\section*{13. Suppose you are Nabil/Nabil you have a friend named Pollab/Srizon. Now write a letter to your friend congratulating him/her on the brilliant success.} \hfill 10
+
+\noindent\textit{বাংলা – ইংরেজি ১৫ম পাতা-2}
+
+\end{document}
+
+Wait, need to check if all elements are transcribed. Let's verify:
+
+- Question 4 table: transcribed with columns and rows as per image.
+- Question 5: statements (a)-(e) transcribed.
+- Question 6: gap fill with (a)-(e) placeholders.
+- Question 7: sentences labeled (a)-(j) (the image had multiple (a) but we transcribed the content).
+- Question 8: gap fill with (a)-(j) and clues listed.
+- Question 9: table matching column A and B.
+- Section B: questions 10-13 with instructions.
+- The bottom note in Bengali: included.
+
+Also, check the marks: each question has the mark notation like $1\times5=5$

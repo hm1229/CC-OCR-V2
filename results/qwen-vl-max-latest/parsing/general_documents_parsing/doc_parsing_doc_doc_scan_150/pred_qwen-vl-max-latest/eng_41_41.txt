@@ -1,0 +1,86 @@
+```latex
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage{float}
+
+% Set page margins
+\geometry{margin=1in}
+
+% Custom header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{AW32905E \\ Mar. 2023 V1.0}
+\lfoot{www.awinic.com}
+\cfoot{\thepage}
+\rfoot{\copyright~2023 Shanghai Awinic Technology Co. Ltd All Rights Reserved}
+
+% Title formatting
+\titleformat{\section}{\large\bfseries\color{blue}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}
+
+% Adjust spacing
+\setstretch{1.15}
+
+\begin{document}
+
+% Header with company logo and name
+\begin{center}
+    \includegraphics[width=0.4\textwidth]{awinic_logo.png} % Placeholder for logo
+    \textcolor{teal}{上海艾为电子技术股份有限公司} \\
+    \textcolor{teal}{shanghai awinic technology co., ltd.}
+\end{center}
+
+\hrule
+
+\section*{Ordering Information}
+
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+\textbf{Part Number} & \textbf{Temperature} & \textbf{Package} & \textbf{Marking} & \textbf{Moisture Sensitivity Level} & \textbf{Environmental Information} & \textbf{Delivery Form} \\ \hline
+AW32905EFCR          & -40°C – 85°C         & FCQFN 1.3mm×1.8mm -12L & RZR              & MSL1                               & ROHS+HF                            & 3000 units/ Tape and Reel        \\ \hline
+\end{tabular}
+
+\vspace{1cm}
+
+\section*{Absolute Maximum Ratings \textnormal{(NOTE 1)}}
+
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Parameter} & \textbf{Condition} & \textbf{Min.} & \textbf{Max.} & \textbf{Unit} \\ \hline
+$V_{IN}$        & Input voltage      &                    & -0.3          & 29            & V             \\ \hline
+$V_{OUT}$       & Output voltage     &                    & -0.3          & See(NOTE 2)   & V             \\ \hline
+$V_{OVLO}$      & OVLO voltage       &                    & -0.3          & 6             & V             \\ \hline
+$V_{ACOK}$      & ACOK voltage       &                    & -0.3          & 6             & V             \\ \hline
+$V_{EN}$        & EN voltage         &                    & -0.3          & 6             & V             \\ \hline
+$I_{SW}$        & Continuous current of switch IN-OUT(NOTE 3) & Continuous current on IN and OUT pin &           & 5             & A             \\ \hline
+$I_{PEAK}$      & Peak current       & Peak input and output current on IN and OUT pin(10ms) &           & 8             & A             \\ \hline
+$I_{DIODE}$     & Continuous diode current & Continuous forward current through the nFET body diode &           & 1.5           & A             \\ \hline
+$T_A$           & Ambient temperature &                    & -40           & 85            & $^\circ$C     \\ \hline
+$T_J$           & Junction temperature &                    & -40           & 150           & $^\circ$C     \\ \hline
+$T_{STG}$       & Storage temperature &                    & -65           & 150           & $^\circ$C     \\ \hline
+$T_{LEAD}$      & Soldering temperature & At leads, 10 seconds &           & 260           & $^\circ$C     \\ \hline
+Surge           & Input surge protection & IEC61000-4-5 test with 2$\Omega$ equivalent series resistance & 120 &           & V             \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\noindent\textbf{NOTE1:} Conditions out of those ranges listed in ``absolute maximum ratings'' may cause permanent damages to the device. In spite of the limits above, functional operation conditions of the device should within the ranges listed in ``recommended operating conditions''. Exposure to absolute-maximum-rated conditions for prolonged periods may affect device reliability.
+
+\vspace{0.3cm}
+
+\noindent\textbf{NOTE2:} 29V or $V_{IN}$+0.3V, whichever is smaller.
+
+\vspace{0.3cm}
+
+\noindent\textbf{NOTE3:} Limited by thermal design.
+
+\end{document}
+```

@@ -1,0 +1,17 @@
+### Fourier Transform Pairs
+($n, t, \omega, a, \omega_o, t_o$ are Real numbers ; $j =$ complex number ; $n =$ integer ; $\omega =$ angular frequency)
+
+| Time Domain | Fourier Transform | Time Domain | Fourier Transform |
+| :--- | :--- | :--- | :--- |
+| $f(t)$ | $\int_{-\infty}^{+\infty} f(t)e^{-j\omega t} dt$ | $\frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega)e^{j\omega t} d\omega$ | $F(\omega)$ |
+| $a_1f_1(t) + a_2f_2(t)$ | $a_1F(\omega) + a_2F(\omega)$ | $f(a \cdot t)$ <br> $a \neq 0$ | $\frac{1}{|a|} F\left(\frac{\omega}{a}\right)$ |
+| $e^{j\omega_o t} f(t)$ | $F(\omega - \omega_o)$ | $f(t - t_o)$ | $e^{-j\omega t_o} F(\omega)$ |
+| $\frac{d^n [f(t)]}{dt^n}$ <br> $(n > 0)$ | $(j\omega)^n F(\omega)$ | $(-jt)^n f(t)$ <br> $(n > 0)$ | $\frac{d^n [F(\omega)]}{d\omega^n}$ |
+| $e^{-at}u(t)$ <br> $a > 0$ | $\frac{1}{a + j\omega}$ | $e^{at}u(-t)$ <br> $a > 0$ | $\frac{1}{a - j\omega}$ |
+| $\cos(\omega_o t)$ | $\pi[\delta(\omega - \omega_o) + \delta(\omega + \omega_o)]$ | $\sin(\omega_o t)$ | $\frac{\pi}{j}[\delta(\omega - \omega_o) - \delta(\omega + \omega_o)]$ |
+| $\delta(t)$ | $1$ | $\delta(t - t_o)$ | $e^{-j\omega t_o}$ |
+| $1$ | $2\pi \cdot \delta(\omega)$ | $e^{j\omega_o t}$ | $2\pi \cdot \delta(\omega - \omega_o)$ |
+| $u(t)$ | $\pi \cdot \delta(\omega) + \frac{1}{j\omega}$ | $u(-t)$ | $\pi \cdot \delta(\omega) - \frac{1}{j\omega}$ |
+| $u(t) - u(-t)$ | $\frac{2}{j\omega}$ | $u(t) + u(-t)$ | $2\pi\delta(\omega)$ |
+| $t^{(n-1)} \cdot e^{-at} \cdot u(t)$ <br> $a > 0 ; n > 0$ | $\frac{(n-1)!}{(a + j\omega)^n}$ | $t^{(n-1)} \cdot e^{at} \cdot u(-t)$ <br> $a > 0 ; n > 0$ | $\frac{(n-1)!}{(a - j\omega)^n} \cdot (-1)^{n-1}$ |
+| $\cos(\omega_o t) \cdot f(t)$ | $\frac{1}{2}[F(\omega - \omega_o) + F(\omega + \omega_o)]$ | $\sin(\omega_o t) \cdot f(t)$ | $\frac{1}{2j}[F(\omega - \omega_o) - F(\omega + \omega_o)]$ |

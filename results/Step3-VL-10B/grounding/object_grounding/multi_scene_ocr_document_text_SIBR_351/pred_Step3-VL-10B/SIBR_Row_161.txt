@@ -1,0 +1,169 @@
+用户现在需要检测图像中的各个指定对象，先逐个看。首先标题是“住店结帐单 BILL OF HOUSING”，所以标题的bbox。然后客户名称GUEST NAME，看对应位置。入住日期CHECK IN，离店日期CHECK OUT，房号ROOM NUMBER，账号ACCOUNT NUMBER，协议单位AGENT，日期DATE，摘要DESCRIPTION，金额AMOUNT（这里合计金额是AMOUNT，还有表格里的AMOUNT列？不过用户要的是“合计金额 AMOUNT”这个标签。已收定金DEPOSIT RECEIVED，退补差额BALANCE COMPENSATION，收款员CASHIER，第一联The first，第二联The second。
+
+现在逐个分析：
+
+1. 标题：住店结帐单 BILL OF HOUSING，位置在上方，黄色单据的顶部。bbox大概是[333, 33, 666, 83]左右？看图像里的标题文字。
+
+2. 客户名称GUEST NAME：对应“客户名称:”下面的GUEST NAME，位置在左上方，客户名称那一行。
+
+3. 入住日期CHECK IN：“入住日期:”和CHECK IN，位置在客户名称右边。
+
+4. 离店日期CHECK OUT：“离店日期:”和CHECK OUT，还有日期2020-10-19等。
+
+5. 房号ROOM NUMBER：“房号: 耿瑞”对应ROOM NUMBER。
+
+6. 账号ACCOUNT NUMBER：“帐号: 611”对应ACCOUNT NUMBER。
+
+7. 协议单位AGENT：“协议单位: 226050”对应AGENT。
+
+8. 日期DATE：表格里的“日期 DATE”列，表头。
+
+9. 摘要DESCRIPTION：表格里的“摘要 DESCRIPTION”列，表头。
+
+10. 合计金额AMOUNT：“合计金额:”和AMOUNT，下面的数值。
+
+11. 已收定金DEPOSIT RECEIVED：“已收定金:”和DEPOSIT RECEIVED，数值1,516.00。
+
+12. 退补差额BALANCE COMPENSATION：“退补差额:”和BALANCE COMPENSATION。
+
+13. 收款员CASHIER：“收款员:”和CASHIER，右边的框。
+
+14. 第一联The first：底部“第一联 财务(白) The first Finance”。
+
+15. 第二联The second：底部“第二联 宾客(黄) The second Guest”。
+
+现在需要确定每个的bbox。先看图像中的元素：
+
+标题：住店结帐单 BILL OF HOUSING，位于单据上方，居中。bbox大概[330, 30, 669, 80]（因为单据是黄色，标题在顶部）。
+
+客户名称GUEST NAME：在“客户名称:”右边，GUEST NAME，位置是左上方，对应文字。bbox：看“客户名称:”的行，GUEST NAME在右侧，所以坐标大概是[100, 120, 230, 140]左右？需要看图像中的位置。
+
+入住日期CHECK IN：“入住日期:”在客户名称右边，CHECK IN在入住日期下面。所以“入住日期:”和CHECK IN的位置，比如入住日期: CHECK IN，对应的bbox是[500, 120, 680, 145]左右？
+
+离店日期CHECK OUT：“离店日期:”在入住日期右边，CHECK OUT在下面，还有日期2020-10-19等。所以离店日期: CHECK OUT的bbox是[500, 150, 700, 175]左右？
+
+房号ROOM NUMBER：“房号: 耿瑞”中，ROOM NUMBER是英文，对应房号的标签。所以“房号:”右边是ROOM NUMBER？不，原文是“房号: 耿瑞 ROOM NUMBER”？看图像中的文字：“房号: 耿瑞 ROOM NUMBER”？不，看图像里的内容：“房号: 耿瑞 ROOM NUMBER”？原图像中“房号: 耿瑞”下面是ROOM NUMBER？看用户提供的图像描述，原文是“房号: 耿瑞 ROOM NUMBER”？不，看用户给的图像中的文字：
+
+“房号: 耿瑞 ROOM NUMBER”？不，看用户提供的图像里的内容：
+
+在图像中，“房号: 耿瑞”然后是“ROOM NUMBER”？是的，因为原文是“房号: 耿瑞 ROOM NUMBER”？不，看用户提供的图像中的文字：
+
+看用户给出的图像里的内容：
+
+“房号: 耿瑞 ROOM NUMBER”？不，看用户提供的图像中的文字部分：
+
+“房号: 耿瑞 ROOM NUMBER”？不，原图像中的“房号:”后面是“耿瑞”，然后是“ROOM NUMBER”？是的，因为英文是ROOM NUMBER，所以“房号: 耿瑞”对应ROOM NUMBER的标签。所以房号ROOM NUMBER的bbox是包含“房号:”和ROOM NUMBER的位置，比如“房号: 耿瑞”所在的行，ROOM NUMBER在右侧。所以bbox是[100, 170, 350, 195]左右？
+
+账号ACCOUNT NUMBER：“帐号: 611 ACCOUNT NUMBER”，所以帐号ACCOUNT NUMBER的bbox是“帐号: 611”所在的行，ACCOUNT NUMBER在右侧。比如[100, 200, 350, 225]左右？
+
+协议单位AGENT：“协议单位: 226050 AGENT”，所以协议单位AGENT的bbox是“协议单位:”所在的行，AGENT在右侧。比如[100, 230, 350, 255]左右？
+
+日期DATE：表格的表头“日期 DATE”，在表格的最上面一行，左边是“日期 DATE”，然后是支付守权，摘要DESCRIPTION，金额AMOUNT。所以日期DATE的bbox是表格表头的“日期 DATE”列，比如[80, 320, 150, 345]左右？
+
+摘要DESCRIPTION：表格表头的“摘要 DESCRIPTION”列，比如[250, 320, 400, 345]左右？
+
+合计金额AMOUNT：“合计金额: AMOUNT”，在表格下面，比如“合计金额:”和AMOUNT，数值是16.00？不，看图像中的“合计金额:”后面是16.00？不，图像中“合计金额:”后面是“16.00”？不，看用户提供的图像中的“合计金额:”是“16.00”？不，看图像中的“合计金额:”下面的数值是“16.00”？不，看用户提供的图像中的“合计金额:”是“379*4=1516？因为下面已收定金是1,516.00，所以合计金额应该是1516.00？可能图像中的“合计金额:”是“1516.00”？看用户提供的图像中的“合计金额:”后面是“16.00”？不，看用户提供的图像中的文字：“合计金额: 16.00”？不对，看用户提供的图像中的“合计金额:”下面的数值是“16.00”？不，看用户提供的图像中的“合计金额:”是“1516.00”？因为已收定金是1,516.00，而房费是4天，每天379，4*379=1516，所以合计金额应该是1516.00。可能图像中的“合计金额:”是“1516.00”，而用户提供的图像中的“合计金额:”后面是“16.00”是输入错误？不管，先找“合计金额 AMOUNT”这个标签，即“合计金额:”和“AMOUNT”对应的位置。比如“合计金额:”在左侧，“AMOUNT”在右侧，所以bbox是[80, 450, 200, 475]左右？
+
+已收定金DEPOSIT RECEIVED：“已收定金: DEPOSIT RECEIVED”，数值是1,516.00。所以bbox是“已收定金:”所在的行，DEPOSIT RECEIVED在右侧。比如[80, 480, 300, 505]左右？
+
+退补差额BALANCE COMPENSATION：“退补差额: BALANCE COMPENSATION”，在已收定金下面。比如[80, 510, 300, 535]左右？
+
+收款员CASHIER：“收款员: CASHIER”，在客户签名右边的框。比如“收款员:”在右侧框的上方，CASHIER是标签。所以bbox是[550, 550, 750, 575]左右？
+
+第一联The first：底部“第一联 财务(白) The first Finance”，所以bbox是底部左侧，比如[250, 950, 450, 975]左右？
+
+第二联The second：底部“第二联 宾客(黄) The second Guest”，底部右侧，比如[550, 950, 750, 975]左右？
+
+现在需要把每个对象的bbox和label对应起来。需要确保每个指定的类别都被检测到。
+
+现在列出所有需要检测的类别：
+
+- 入住日期 CHECK IN
+- 协议单位 AGENT
+- 合计金额 AMOUNT
+- 客户名称 GUEST NAME
+- 已收定金 DEPOSIT RECEIVED
+- 房号 ROOM NUMBER
+- 摘要 DESCRIPTION
+- 收款员 CASHIER
+- 日期 DATE
+- 标题
+- 离店日期 CHECK OUT
+- 第一联 The first
+- 账号 ACCOUNT NUMBER
+- 退补差额 BALANCE COMPENSATION
+
+现在逐个确认：
+
+1. 标题：住店结帐单 BILL OF HOUSING → label: 标题
+2. 客户名称 GUEST NAME → label: 客户名称 GUEST NAME
+3. 入住日期 CHECK IN → label: 入住日期 CHECK IN
+4. 离店日期 CHECK OUT → label: 离店日期 CHECK OUT
+5. 房号 ROOM NUMBER → label: 房号 ROOM NUMBER
+6. 账号 ACCOUNT NUMBER → label: 账号 ACCOUNT NUMBER
+7. 协议单位 AGENT → label: 协议单位 AGENT
+8. 日期 DATE → label: 日期 DATE
+9. 摘要 DESCRIPTION → label: 摘要 DESCRIPTION
+10. 合计金额 AMOUNT → label: 合计金额 AMOUNT
+11. 已收定金 DEPOSIT RECEIVED → label: 已收定金 DEPOSIT RECEIVED
+12. 退补差额 BALANCE COMPENSATION → label: 退补差额 BALANCE COMPENSATION
+13. 收款员 CASHIER → label: 收款员 CASHIER
+14. 第一联 The first → label: 第一联 The first
+15. 第二联 The second → label: 第二联 The second
+
+现在需要为每个确定bbox。由于是图像，需要估计坐标。假设图像的宽度是单据的宽度，高度是单据的高度。单据是黄色，位于图像中央。
+
+例如：
+
+标题：在单据的最上方，文字“住店结帐单 BILL OF HOUSING”，所以bbox的x1大约是330（因为单据宽度可能对应图像的中间部分），y1大约是30（图像的上方），x2大约是666，y2大约是80。所以[330, 30, 666, 80]，label: 标题。
+
+客户名称 GUEST NAME：在“客户名称:”右边，GUEST NAME，位置在单据的左上方，比如x1=100, y1=120, x2=230, y2=140。label: 客户名称 GUEST NAME。
+
+入住日期 CHECK IN：“入住日期:”在客户名称右边，CHECK IN在入住日期下面。比如x1=500, y1=120, x2=680, y2=145。label: 入住日期 CHECK IN。
+
+离店日期 CHECK OUT：“离店日期:”在入住日期右边，CHECK OUT在下面，还有日期2020-10-19等。比如x1=500, y1=150, x2=700, y2=175。label: 离店日期 CHECK OUT。
+
+房号 ROOM NUMBER：“房号: 耿瑞”对应的ROOM NUMBER，比如x1=100, y1=170, x2=350, y2=195。label: 房号 ROOM NUMBER。
+
+账号 ACCOUNT NUMBER：“帐号: 611”对应的ACCOUNT NUMBER，比如x1=100, y1=200, x2=350, y2=225。label: 账号 ACCOUNT NUMBER。
+
+协议单位 AGENT：“协议单位: 226050”对应的AGENT，比如x1=100, y1=230, x2=350, y2=255。label: 协议单位 AGENT。
+
+日期 DATE：表格表头的“日期 DATE”，比如x1=80, y1=320, x2=150, y2=345。label: 日期 DATE。
+
+摘要 DESCRIPTION：表格表头的“摘要 DESCRIPTION”，比如x1=250, y1=320, x2=400, y2=345。label: 摘要 DESCRIPTION。
+
+合计金额 AMOUNT：“合计金额: AMOUNT”，比如x1=80, y1=450, x2=200, y2=475。label: 合计金额 AMOUNT。
+
+已收定金 DEPOSIT RECEIVED：“已收定金: DEPOSIT RECEIVED”，比如x1=80, y1=480, x2=300, y2=505。label: 已收定金 DEPOSIT RECEIVED。
+
+退补差额 BALANCE COMPENSATION：“退补差额: BALANCE COMPENSATION”，比如x1=80, y1=510, x2=300, y2=535。label: 退补差额 BALANCE COMPENSATION。
+
+收款员 CASHIER：“收款员: CASHIER”，在客户签名右边的框，比如x1=550, y1=550, x2=750, y2=575。label: 收款员 CASHIER。
+
+第一联 The first：“第一联 财务(白) The first Finance”，比如x1=250, y1=950, x2=450, y2=975。label: 第一联 The first。
+
+第二联 The second：“第二联 宾客(黄) The second Guest”，比如x1=550, y1=950, x2=750, y2=975。label: 第二联 The second。
+
+现在需要检查是否所有类别都覆盖了。用户要求的类别是：
+
+入住日期 CHECK IN, 协议单位 AGENT, 合计金额 AMOUNT, 客户名称 GUEST NAME, 已收定金 DEPOSIT RECEIVED, 房号 ROOM NUMBER, 摘要 DESCRIPTION, 收款员 CASHIER, 日期 DATE, 标题, 离店日期 CHECK OUT, 第一联 The first, 第二联 The second, 账号 ACCOUNT NUMBER, 退补差额 BALANCE COMPENSATION。共15个，上面列了15个，所以都覆盖了。
+
+现在将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意的是，bbox的坐标是相对图像的，因为图像中单据的位置，可能需要更准确的估计。但根据常规的OCR任务，这里给出合理的估计。
+
+现在编写每个的条目：
+
+1. 标题：[330, 30, 666, 80], label: 标题
+2. 客户名称 GUEST NAME：[100, 120, 230, 140], label: 客户名称 GUEST NAME
+3. 入住日期 CHECK IN：[500, 120, 680, 145], label: 入住日期 CHECK IN
+4. 离店日期 CHECK OUT：[500, 150, 700, 175], label: 离店日期 CHECK OUT
+5. 房号 ROOM NUMBER：[100, 170, 350, 195], label: 房号 ROOM NUMBER
+6. 账号 ACCOUNT NUMBER：[100, 200, 350, 225], label: 账号 ACCOUNT NUMBER
+7. 协议单位 AGENT：[100, 230, 350, 255], label: 协议单位 AGENT
+8. 日期 DATE：[80, 320, 150, 345], label: 日期 DATE
+9. 摘要 DESCRIPTION：[250, 320, 400, 345], label: 摘要 DESCRIPTION
+10. 合计金额 AMOUNT：[80, 450, 200, 475], label: 合计金额 AMOUNT
+11. 已收定金 DEPOSIT RECEIVED：[80, 480, 300, 505], label: 已收定金 DEPOSIT RECEIVED
+12. 退

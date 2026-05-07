@@ -1,0 +1,35 @@
+[{"box_2d": [135, 374, 146, 811], "label": "Address"}, {"box_2d": [327, 91, 340, 619], "label": "Address"}, {"box_2d": [438, 829, 449, 899], "label": "Amount USD"}, {"box_2d": [468, 821, 479, 899], "label": "Amount USD"}, {"box_2d": [236, 765, 247, 823], "label": "Bestally Contract No."}, {"box_2d": [547, 760, 578, 858], "label": "Company Name"}, {"box_2d": [253, 239, 264, 300], "label": "Customer No."}, {"box_2d": [253, 767, 264, 896], "label": "Customer Order No."}, {"box_2d": [220, 765, 231, 856], "label": "Date"}, {"box_2d": [484, 240, 495, 398], "label": "Delivery Term"}, {"box_2d": [501, 239, 512, 320], "label": "Delivery Time"}, {"box_2d": [438, 239, 463, 425], "label": "Description"}, {"box_2d": [149, 785, 159, 872], "label": "Fax"}, {"box_2d": [438, 145, 449, 200], "label": "Item code"}, {"box_2d": [438, 113, 449, 121], "label": "POS"}, {"box_2d": [438, 553, 449, 676], "label": "Packaging"}, {"box_2d": [529, 239, 540, 263], "label": "Payment Mode"}, {"box_2d": [515, 239, 526, 429], "label": "Payment Term"}, {"box_2d": [438, 730, 449, 762], "label": "Price USD/Kg"}, {"box_2d": [438, 487, 449, 547], "label": "Quantity Kg"}, {"box_2d": [149, 560, 159, 710], "label": "Tel"}, {"box_2d": [344, 121, 355, 254], "label": "Tel"}, {"box_2d": [358, 93, 369, 225], "label": "Tel"}, {"box_2d": [178, 365, 197, 626], "label": "Title"}, {"box_2d": [164, 763, 172, 869], "label": "Website"}]<|top|>说明：
+1. bbox_2d：[x1, y1, x2, y2] 格式的 0-1000 相对坐标。
+2. label：(Address, Amount USD, Bestally Contract No., Company Name, Customer No., Customer Order No., Date, Delivery Term, Delivery Time, Description, Fax, Item code, POS, Packaging, Payment Mode, Payment Term, Price USD/Kg, Quantity Kg, Tel, Title, Website) 之一。
+
+仅返回此格式的 JSON 数组：[{"bbox_2d": [x1, y1, x2, y2], "category_name": "category_name"}]
+
+```json
+[
+  {"bbox_2d": [374, 374, 146, 811], "category_name": "Address"},
+  {"bbox_2d": [327, 91, 340, 619], "category_name": "Address"},
+  {"bbox_2d": [438, 829, 449, 899], "category_name": "Amount USD"},
+  {"bbox_2d": [468, 821, 479, 899], "category_name": "Amount USD"},
+  {"bbox_2d": [236, 765, 247, 823], "category_name": "Bestally Contract No."},
+  {"bbox_2d": [547, 760, 578, 858], "category_name": "Company Name"},
+  {"bbox_2d": [253, 239, 264, 300], "category_name": "Customer No."},
+  {"bbox_2d": [253, 767, 264, 896], "category_name": "Customer Order No."},
+  {"bbox_2d": [220, 765, 231, 856], "category_name": "Date"},
+  {"bbox_2d": [484, 240, 495, 398], "category_name": "Delivery Term"},
+  {"bbox_2d": [501, 239, 512, 320], "category_name": "Delivery Time"},
+  {"bbox_2d": [438, 239, 463, 425], "category_name": "Description"},
+  {"bbox_2d": [149, 785, 159, 872], "category_name": "Fax"},
+  {"bbox_2d": [438, 145, 449, 200], "category_name": "Item code"},
+  {"bbox_2d": [438, 113, 449, 121], "category_name": "POS"},
+  {"bbox_2d": [438, 553, 449, 676], "category_name": "Packaging"},
+  {"bbox_2d": [529, 239, 540, 263], "category_name": "Payment Mode"},
+  {"bbox_2d": [515, 239, 526, 429], "category_name": "Payment Term"},
+  {"bbox_2d": [438, 730, 449, 762], "category_name": "Price USD/Kg"},
+  {"bbox_2d": [438, 487, 449, 547], "category_name": "Quantity Kg"},
+  {"bbox_2d": [149, 560, 159, 710], "category_name": "Tel"},
+  {"bbox_2d": [344, 121, 355, 254], "category_name": "Tel"},
+  {"bbox_2d": [358, 93, 369, 225], "category_name": "Tel"},
+  {"bbox_2d": [178, 365, 197, 626], "category_name": "Title"},
+  {"bbox_2d": [164, 763, 172, 869], "category_name": "Website"}
+]
+```

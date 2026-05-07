@@ -1,0 +1,19 @@
+I need to find the text "2.00" in the image. Looking at the receipt, I can see "¥2.00" in the total amount (合计) row near the bottom of the receipt.
+
+The "¥2.00" text appears to be located in the right portion of the合计(大写) row, approximately at around x: 720-780, y: 665-685 in the image.
+
+Let me estimate the normalized coordinates based on the image dimensions:
+
+The image appears to be approximately 1512 x 800 pixels based on typical aspect ratios.
+
+The "2.00" text (part of ¥2.00) is located at roughly:
+- Horizontally: around x=730 to x=790 out of ~1512 width
+- Vertically: around y=660 to y=685 out of ~800 height
+
+Normalizing to 0-1000:
+- x1: 730/1512 * 1000 ≈ 483
+- y1: 660/800 * 1000 ≈ 825
+- x2: 790/1512 * 1000 ≈ 523
+- y2: 685/800 * 1000 ≈ 856
+
+(483, 825, 523, 856)

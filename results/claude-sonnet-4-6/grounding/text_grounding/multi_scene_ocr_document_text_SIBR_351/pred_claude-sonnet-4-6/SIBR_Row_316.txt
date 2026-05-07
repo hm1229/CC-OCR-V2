@@ -1,0 +1,21 @@
+I need to find the text '人次' in the image.
+
+Looking at the receipt, I can see '人次' appears in the line with '医事服务费(急诊)' - specifically in '1/人次' column.
+
+The text '人次' appears to be located in the middle-left portion of the receipt, in the row showing medical service fees.
+
+Looking at the line: "医事服务费(急诊)    70    1/人次    70    有自付"
+
+The '人次' text appears to be around x: 430-470, y: 440-460 in the image dimensions.
+
+The image is approximately 1400 x 840 pixels.
+
+The '人次' in '1/人次' appears at roughly x=440-480, y=440-460 pixels.
+
+Normalized (out of 1000):
+- x1: 440/1400 * 1000 ≈ 314
+- y1: 438/840 * 1000 ≈ 521
+- x2: 480/1400 * 1000 ≈ 343
+- y2: 458/840 * 1000 ≈ 545
+
+(314, 521, 343, 545)

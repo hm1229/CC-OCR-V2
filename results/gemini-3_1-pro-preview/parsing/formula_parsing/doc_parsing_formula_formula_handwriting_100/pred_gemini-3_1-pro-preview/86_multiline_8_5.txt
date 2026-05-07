@@ -1,0 +1,15 @@
+Based on the handwritten notes in the image, here is the mathematical derivation transcribed into LaTeX:
+
+$$
+\begin{aligned}
+\frac{1}{2} \frac{d}{dt} &\|\partial_x^\alpha \partial_v^\beta (I-P)g^{n+1}\|_{L^2_{x,v}}^2 + \frac{\delta_0}{\epsilon^2} \|\partial_x^\alpha \partial_v^\beta (I-P)g^{n+1}\|_{L^2_{x,v}(\nu)}^2 \\
+&\le \frac{\delta_0}{2\epsilon^2} \|\partial_x^\alpha \partial_v^\beta (I-P)g^{n+1}\|_{L^2_{x,v}(\nu)}^2 \\
+&+ \underbrace{\frac{1}{\epsilon} \sum_{\substack{\beta_1 \le \beta \\ |\beta_1|=1}} C_\beta^{\beta_1} \langle \partial_v^{\beta_1} v \cdot \nabla_x \partial_x^\alpha \partial_v^{\beta-\beta_1} (I-P)g^{n+1}, \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_1} \\
+&\underbrace{- \langle \partial_x^\alpha \partial_v^\beta (I-P) (\nabla_x \phi^n \cdot \nabla_v (I-P)g^{n+1}), \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_2} \\
+&\underbrace{+ \langle \partial_x^\alpha \partial_v^\beta (I-P) (v \cdot \nabla_x \phi^n (I-P)g^{n+1}), \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_3} \\
+&\underbrace{+ \frac{1}{\epsilon} \langle \partial_x^\alpha \partial_v^\beta Q(g^n, g^n), \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_4} \\
+&\underbrace{+ \langle \partial_x^\alpha \partial_v^\beta (I-P) (v \cdot \nabla_x \phi^n P g^{n+1}), \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_5} \\
+&\underbrace{- \frac{1}{\epsilon} \langle \partial_x^\alpha \partial_v^\beta (I-P) (v \cdot \nabla_x P g^{n+1}), \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_6} \\
+&\underbrace{+ \frac{1}{\epsilon} \langle \partial_x^\alpha \partial_v^\beta P (v \cdot \nabla_x (I-P)g^{n+1}), \partial_x^\alpha \partial_v^\beta (I-P)g^{n+1} \rangle_{L^2_{x,v}}}_{S_7}
+\end{aligned}
+$$

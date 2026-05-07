@@ -1,0 +1,61 @@
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Algorithm</th>
+      <th>Convergence Rate</th>
+      <th>Compression<sup>a</sup></th>
+      <th>Trans. Compl.<sup>b</sup></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">LB</td>
+      <td>Ω(σ/√nT + 1/δT)</td>
+      <td>Uni/Bidirectional Contractive</td>
+      <td>O(n/δ²)</td>
+    </tr>
+    <tr>
+      <td>Ω(σ/√nT + (1+ω)/T)</td>
+      <td>Uni/Bidirectional Unbiased</td>
+      <td>O(n(1+ω)²)</td>
+    </tr>
+    <tr>
+      <td rowspan="8">UB</td>
+      <td>Õ(σ/√nT + 1/δT)</td>
+      <td>Uni/Bidirectional Contractive</td>
+      <td>Õ(n/δ²)</td>
+    </tr>
+    <tr>
+      <td>Õ(σ/√nT + (1+ω)/T)</td>
+      <td>Uni/Bidirectional Unbiased</td>
+      <td>Õ(n(1+ω)²)</td>
+    </tr>
+    <tr>
+      <td>O((1+ω)σ + ωb²/σ / √nT)<sup>†</sup></td>
+      <td>Unidirectional i.i.d, Unbiased</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td>O(σ/√nT + G²/³/(δ²/³T²/³) + 1/T)</td>
+      <td>Unidirectional Contractive</td>
+      <td>O(n³/δ⁴)</td>
+    </tr>
+    <tr>
+      <td>O(σ/√nT + G²/³/(δ⁴/³T²/³) + 1/T)</td>
+      <td>Bidirectional<sup>c</sup></td>
+      <td>O(n³/δ⁸)</td>
+    </tr>
+    <tr>
+      <td>O(σ/√nT + G²/³/(δ²/³T²/³) + 1/T)</td>
+      <td>Unidirectional Contractive</td>
+      <td>O(n³/δ⁴)</td>
+    </tr>
+    <tr>
+      <td>O(σ/√δ³T + 1/δT)<sup>*</sup></td>
+      <td>Unidirectional Contractive</td>
+      <td>-</td>
+    </tr>
+  </tbody>
+</table>
+```

@@ -1,0 +1,332 @@
+Looking at the image, it appears to be a transaction receipt or statement with multiple rows of data. The header row is partially visible and seems to have columns for:
+
+- Transaction Type (交易类型) — though only “NAME” is clearly visible under it
+- Card Number (卡号) — labeled as “CARD NUMBER”
+- Authorization Code (授权码) — labeled as “AUTH NO”
+
+But note: In the body, the first column contains what looks like transaction IDs (e.g., 000121), followed by transaction type (e.g., POS通消费), then date/time, then amount.
+
+Actually, re-examining the layout:
+
+The top line says:
+> 交易类型        卡号         授权码  
+> NAME          CARD NUMBER   AUTH NO
+
+But in the actual data rows, we see:
+
+Row example:
+```
+000121        2022-03-11 14:38:25     18124.00
+POS通消费
+```
+
+So it seems the table has **three main columns**, but each transaction occupies **two physical lines**:
+
+- Line 1: Transaction ID | Date/Time | Amount
+- Line 2: Transaction Type (and sometimes card number if present)
+
+Also, for transactions 000116 and 000115, there’s an extra line showing the masked card number: `622848********7172`
+
+This suggests that the table structure is not strictly tabular per row — some entries span multiple lines.
+
+However, since you asked to convert into HTML using `<tr>` and `<td>`, reflecting the image’s layout from top-left to bottom-right, and ensuring merged cells are accurately represented — I will interpret this as creating a table where each *visual row* in the image becomes a `<tr>`, and within each row, we place the content as it appears horizontally.
+
+But note: The image does not show clear vertical alignment across all rows — for example, the “POS通消费” text is left-aligned under the transaction ID, while the date/time and amount are on the same line as the ID.
+
+Let me reconstruct based on visual positioning:
+
+We can treat each horizontal line of text as a row. Some rows have 3 fields, some have 1 or 2.
+
+Alternatively, perhaps the intended structure is:
+
+Each transaction is represented by two rows:
+
+Row A: [Transaction ID] [Date Time] [Amount]
+Row B: [Transaction Type] [Card Number if any] [empty or merged]
+
+But looking again — for most rows, Row B only has the transaction type, and nothing else.
+
+For rows 000116 and 000115, Row B has both transaction type AND card number? Actually no — let's look:
+
+For 000116:
+Line 1: 000116        2022-03-09 15:50:36     7462.00
+Line 2: 消费           622848********7172
+
+Wait — actually, “消费” is the transaction type, and the card number is on the same line? Or is the card number on a third line?
+
+Looking closely at the image:
+
+For 000116:
+- First line: `000116        2022-03-09 15:50:36     7462.00`
+- Second line: `消费`
+- Third line: `622848********7172`
+
+Similarly for 000115:
+- First line: `000115        2022-03-09 15:49:39     7462.00`
+- Second line: `消费`
+- Third line: `622848********7172`
+
+Whereas for others, like 000121:
+- First line: `000121        2022-03-11 14:38:25     18124.00`
+- Second line: `POS通消费`
+
+So actually, the structure varies.
+
+To faithfully represent the image layout in HTML table form, I’ll create a table where each visual line of text is a `<tr>`, and within each row, I’ll use `<td>` for each distinct piece of text, preserving spacing via empty `<td>` or colspan if needed.
+
+But since the image doesn’t have explicit grid lines, and text is positioned with spaces, I’ll assume three columns:
+
+Column 1: Leftmost text (transaction ID or type or card number)
+Column 2: Middle text (date/time or card number)
+Column 3: Rightmost text (amount)
+
+And for rows that don’t have all three, I’ll leave cells empty or use rowspan/colspan appropriately.
+
+However, given the complexity and ambiguity, and since you said “reflecting the image's layout from top-left to bottom-right”, I think the safest approach is to create a table with 3 columns, and for each visual line in the image, create a row with up to 3 cells, placing the text where it visually appears.
+
+Let me list all the lines as they appear in the image, from top to bottom:
+
+Header:
+Line 1: 交易类型        卡号         授权码
+Line 2: NAME          CARD NUMBER   AUTH NO
+Line 3: .................................................. (dotted line)
+
+Then data:
+
+Line 4: 000121        2022-03-11 14:38:25     18124.00
+Line 5: POS通消费
+Line 6: 
+Line 7: 000120        2022-03-11 14:24:29     4978.00
+Line 8: POS通消费
+Line 9: 
+Line 10: 000118        2022-03-10 14:30:57     14034.00
+Line 11: POS通消费
+Line 12: 
+Line 13: 000117        2022-03-10 14:24:22     13430.00
+Line 14: POS通消费
+Line 15: 
+Line 16: 000116        2022-03-09 15:50:36     7462.00
+Line 17: 消费
+Line 18: 622848********7172
+Line 19: 
+Line 20: 000115        2022-03-09 15:49:39     7462.00
+Line 21: 消费
+Line 22: 622848********7172
+Line 23: 
+Line 24: 000113        2022-03-09 09:43:17     13505.00
+Line 25: POS通消费
+Line 26: 
+Line 27: 000112        2022-03-09 09:02:38     4978.00
+Line 28: POS通消费
+
+Note: There are blank lines between transactions (lines 6,9,12,15,19,23,26). Should we include them? Probably yes, to reflect the image.
+
+Now, for each line, how many columns?
+
+In the header, 3 columns.
+
+In data lines like line 4: 3 items → 3 columns.
+
+Line 5: only one item → should it be in column 1? Yes.
+
+Line 18: card number — where is it positioned? Visually, it’s under the date/time column? Or under the transaction type?
+
+Looking at the image:
+
+For 000116:
+- Line 16: 000116 (col1), 2022-03-09 15:50:36 (col2), 7462.00 (col3)
+- Line 17: 消费 (col1)
+- Line 18: 622848********7172 — this is aligned under the date/time, so probably col2.
+
+Similarly for 000115.
+
+So for consistency, I'll define 3 columns:
+
+Col1: Left-aligned text (transaction ID, type, or card number if on its own line)
+Col2: Middle text (date/time or card number)
+Col3: Right-aligned amount
+
+And for rows with fewer than 3 items, leave other cells empty.
+
+Also, for the dotted line, I can put "..." in all three cells or use a single cell with colspan=3.
+
+Let me build the HTML table accordingly.
+
+I’ll also add a border for clarity, though the image doesn’t have borders.
+
+Final decision: Create a table with 3 columns. Each visual line in the image becomes a <tr>. For each line, split the text into up to 3 parts based on visual alignment, and put them in <td> elements. If a line has only one item, put it in the first <td> and leave others empty. If a line has two items, put them in first and second, etc.
+
+But for the card number lines (like 622848...), they are centered under the date/time, so I’ll put them in col2.
+
+Let’s code it.
+
+Note: The header has Chinese and English. I’ll keep as is.
+
+Also, the dotted line — I’ll represent as three dots in each cell or use a single cell with colspan. Since it’s a separator, I’ll use a row with three cells containing "..." or just one cell with colspan=3 and "...".
+
+I think for simplicity, I’ll use:
+
+<tr><td colspan="3">..................................................</td></tr>
+
+But the image shows dots spanning the width, so colspan=3 is appropriate.
+
+Now, writing the HTML:
+
+```html
+<table border="1">
+  <tr>
+    <td>交易类型</td>
+    <td>卡号</td>
+    <td>授权码</td>
+  </tr>
+  <tr>
+    <td>NAME</td>
+    <td>CARD NUMBER</td>
+    <td>AUTH NO</td>
+  </tr>
+  <tr>
+    <td colspan="3">..................................................</td>
+  </tr>
+  <tr>
+    <td>000121</td>
+    <td>2022-03-11 14:38:25</td>
+    <td>18124.00</td>
+  </tr>
+  <tr>
+    <td>POS通消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000120</td>
+    <td>2022-03-11 14:24:29</td>
+    <td>4978.00</td>
+  </tr>
+  <tr>
+    <td>POS通消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000118</td>
+    <td>2022-03-10 14:30:57</td>
+    <td>14034.00</td>
+  </tr>
+  <tr>
+    <td>POS通消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000117</td>
+    <td>2022-03-10 14:24:22</td>
+    <td>13430.00</td>
+  </tr>
+  <tr>
+    <td>POS通消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000116</td>
+    <td>2022-03-09 15:50:36</td>
+    <td>7462.00</td>
+  </tr>
+  <tr>
+    <td>消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>622848********7172</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000115</td>
+    <td>2022-03-09 15:49:39</td>
+    <td>7462.00</td>
+  </tr>
+  <tr>
+    <td>消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>622848********7172</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000113</td>
+    <td>2022-03-09 09:43:17</td>
+    <td>13505.00</td>
+  </tr>
+  <tr>
+    <td>POS通消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>000112</td>
+    <td>2022-03-09 09:02:38</td>
+    <td>4978.00</td>
+  </tr>
+  <tr>
+    <td>POS通消费</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+```
+
+This should reflect the image layout as closely as possible in HTML table form.
+
+Note: I added empty rows (with three empty <td>) to represent the blank lines between transactions, as seen in the image.
+
+Also, for the card number lines, I placed the card number in the middle column (col2) to match its visual position under the date/time.
+
+I think this meets the requirement.
+
+Let me double-check the last few rows — yes, 000113 and 000112 follow the same pattern as the first few.
+
+One thing: in the image, after 000112, there might be more, but the image cuts off, so I stop at 000112.
+
+Also, the green clip at the bottom is not part of the table, so ignored.
+
+Final HTML table as above.

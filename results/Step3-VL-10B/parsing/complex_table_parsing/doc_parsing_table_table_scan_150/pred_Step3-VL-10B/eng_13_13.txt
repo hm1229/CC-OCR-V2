@@ -1,0 +1,271 @@
+Got it, let's convert the table from the image into HTML. First, I need to identify the columns and rows. Let's list out the headers and each row.
+
+First, the table has columns: Methods, then the sub-methods (like DLSF, Taubin, etc.), then AD(̂x₀, ̂y₀), A(̂a), A(̂b), A(̂γ). Let's check the structure.
+
+The first column is "Methods" which has categories: Algebaric, Geometric, Robust. Then under each category, there are specific methods. Let's list each row.
+
+Let's start with the header row. The first header is "Methods", then the next columns are the metrics: AD(̂x₀, ̂y₀), A(̂a), A(̂b), A(̂γ). Wait, looking at the image, the first column is "Methods", and the second column is the specific method (like DLSF [19], Taubin [23], etc.). Then the next columns are the metrics.
+
+So the table structure:
+
+- First column: Methods (with subcategories Algebaric, Geometric, Robust)
+- Second column: Specific method (with references)
+- Then columns for AD(̂x₀, ̂y₀), A(̂a), A(̂b), A(̂γ)
+
+Now, let's list each row:
+
+1. Algebaric category:
+   - DLSF [19]
+   - Taubin [23]
+
+2. Geometric category:
+   - Ahn [20]
+   - Prasad [24]
+   - Wu [25]
+
+3. Robust category:
+   - RANSAC [15]
+   - LMS [27]
+   - GMM [17]
+   - HGMM(Ours)
+
+Now, let's map each row to the columns.
+
+First, the header row:
+
+<tr>
+  <th>Methods</th>
+  <th></th> <!-- Wait, no. Wait the first column is "Methods" which includes the category, and the second column is the specific method. Let's check the image. The first column is "Methods" (the category), and the second column is the method name with reference. Then the next columns are the metrics. So the table has 6 columns: Methods (category), Method (specific), AD(...), A(̂a), A(̂b), A(̂γ). Let's count the columns in the image:
+
+Looking at the image, the columns are:
+
+- Methods (the category: Algebaric, Geometric, Robust)
+- Then the method (DLSF [19], Taubin [23], etc.)
+- Then AD(̂x₀, ̂y₀)
+- A(̂a)
+- A(̂b)
+- A(̂γ)
+
+So total 6 columns. Let's confirm the number of columns in the image. The header row has "Methods", then the next columns are the metrics. Let's count the headers:
+
+Methods | (method column) | AD(̂x₀, ̂y₀) | A(̂a) | A(̂b) | A(̂γ) → that's 6 columns.
+
+Now, let's create the header row:
+
+<tr>
+  <th>Methods</th>
+  <th>Method</th>
+  <th>AD(̂x₀, ̂y₀)</th>
+  <th>A(̂a)</th>
+  <th>A(̂b)</th>
+  <th>A(̂γ)</th>
+</tr>
+
+Then the data rows. Let's go row by row.
+
+First, Algebaric category:
+
+1. DLSF [19]:
+   - Methods: Algebaric
+   - Method: DLSF [19]
+   - AD: 1.035
+   - A(̂a): 14.746
+   - A(̂b): 19.280
+   - A(̂γ): 0.684
+
+2. Taubin [23]:
+   - Methods: Algebaric
+   - Method: Taubin [23]
+   - AD: 1.329
+   - A(̂a): 14.697
+   - A(̂b): 20.430
+   - A(̂γ): 0.783
+
+Next, Geometric category:
+
+3. Ahn [20]:
+   - Methods: Geometric
+   - Method: Ahn [20]
+   - AD: 1.445
+   - A(̂a): 13.911
+   - A(̂b): 20.362
+   - A(̂γ): 0.681
+
+4. Prasad [24]:
+   - Methods: Geometric
+   - Method: Prasad [24]
+   - AD: 1.693
+   - A(̂a): 14.961
+   - A(̂b): 21.711
+   - A(̂γ): 0.997
+
+5. Wu [25]:
+   - Methods: Geometric
+   - Method: Wu [25]
+   - AD: 1.229
+   - A(̂a): 13.969
+   - A(̂b): 19.818
+   - A(̂γ): 0.676
+
+Then, Robust category:
+
+6. RANSAC [15]:
+   - Methods: Robust
+   - Method: RANSAC [15]
+   - AD: 0.707
+   - A(̂a): 15.203
+   - A(̂b): 19.719
+   - A(̂γ): 0.783
+
+7. LMS [27]:
+   - Methods: Robust
+   - Method: LMS [27]
+   - AD: 0.791
+   - A(̂a): 14.539
+   - A(̂b): 19.652
+   - A(̂γ): 0.684
+
+8. GMM [17]:
+   - Methods: Robust
+   - Method: GMM [17]
+   - AD: 0.217
+   - A(̂a): 14.717
+   - A(̂b): 19.748
+   - A(̂γ): 0.788
+
+9. HGMM(Ours):
+   - Methods: Robust
+   - Method: HGMM(Ours)
+   - AD: 0.147
+   - A(̂a): 14.756
+   - A(̂b): 19.812
+   - A(̂γ): 0.793
+
+Now, let's check if any cells are merged. In the image, the "Methods" column has the category (Algebaric, Geometric, Robust) spanning multiple rows. For example, Algebaric has two methods (DLSF, Taubin), so the "Methods" cell for Algebaric should span 2 rows. Similarly, Geometric has 3 methods, so spans 3 rows. Robust has 4 methods, spans 4 rows.
+
+Ah, right! In the image, the first column "Methods" has merged cells. Let's check:
+
+- Algebaric: two rows (DLSF, Taubin) → so the "Methods" cell for Algebaric is a merged cell (rowspan=2)
+- Geometric: three rows (Ahn, Prasad, Wu) → rowspan=3
+- Robust: four rows (RANSAC, LMS, GMM, HGMM) → rowspan=4
+
+So we need to represent those merged cells in HTML with rowspan.
+
+Let's adjust the rows:
+
+First, Algebaric row (rowspan=2):
+
+<tr>
+  <th rowspan="2">Algebaric</th>
+  <td>DLSF [19]</td>
+  <td>1.035</td>
+  <td>14.746</td>
+  <td>19.280</td>
+  <td>0.684</td>
+</tr>
+<tr>
+  <th></th> <!-- No, wait, the first column is "Methods" which is the category. So the first cell in the row is the category, with rowspan. Then the second cell is the method. So for Algebaric, the first cell (Methods) has rowspan=2, and the second cell is DLSF [19] for the first row, and Taubin [23] for the second row. Then the other columns repeat for each row. -->
+
+Wait, let's structure each row properly.
+
+For the header row, the first column is "Methods" (the category header), but in the data rows, the first column is the category (Algebaric, Geometric, Robust) with rowspan. Let's clarify:
+
+The table's first column (leftmost) is the category (Algebaric, Geometric, Robust), each spanning multiple rows. The second column is the specific method (DLSF [19], etc.). Then the remaining columns are the metrics.
+
+So the header row should have:
+
+- First header cell: "Methods" (spanning all rows? No, the header for the category column is "Methods", and the method column is the second header. Let's check the image's header:
+
+The image's header row is:
+
+Methods | (then the method column, which is the second column) | AD(...) | A(̂a) | A(̂b) | A(̂γ)
+
+So the header row has six columns. The first column's header is "Methods" (the category), the second column's header is the method name (but in the image, the second column doesn't have a header label, it's just the method names. So in HTML, the header row can have the first cell as "Methods", the second cell as empty (or maybe "Method"), then the metrics.
+
+But in the image, the first column is labeled "Methods" (the category), and the second column is the specific method (like DLSF [19]). So the header row is:
+
+<th>Methods</th>
+<th>Method</th>
+<th>AD(̂x₀, ̂y₀)</th>
+<th>A(̂a)</th>
+<th>A(̂b)</th>
+<th>A(̂γ)</th>
+
+Then, in the data rows, the "Methods" cell (first column) has rowspan equal to the number of methods in that category.
+
+Let's list the categories and their row counts:
+
+- Algebaric: 2 methods → rowspan=2
+- Geometric: 3 methods → rowspan=3
+- Robust: 4 methods → rowspan=4
+
+Now, let's build each row:
+
+1. Algebaric, DLSF [19]:
+   <tr>
+     <th rowspan="2">Algebaric</th>
+     <td>DLSF [19]</td>
+     <td>1.035</td>
+     <td>14.746</td>
+     <td>19.280</td>
+     <td>0.684</td>
+   </tr>
+
+2. Algebaric, Taubin [23]:
+   <tr>
+     <th></th> <!-- No, the first cell is already merged with rowspan=2, so the second row in Algebaric doesn't need a new th. So the second row's first cell is empty (since it's merged). So the second row's first cell is just a td with empty? No, in HTML, when you use rowspan, the subsequent rows in that column don't have a cell for that column. So for the second row of Algebaric, the first cell is not present (since it's merged in the first row). So the second row's first cell is omitted, and the other cells are filled.
+
+Wait, let's recall: in HTML, a <th> with rowspan="n" occupies n rows in that column. So for the first row of Algebaric, the first cell is <th rowspan="2">Algebaric</th>. Then the second row of Algebaric, the first column (Methods) has no cell (since it's already spanned by the first row's th). So the second row's first cell is not present; the row starts with the second column (Method) and the rest.
+
+So let's correct:
+
+Row 1 (Algebaric, DLSF [19]):
+<tr>
+  <th rowspan="2">Algebaric</th>
+  <td>DLSF [19]</td>
+  <td>1.035</td>
+  <td>14.746</td>
+  <td>19.280</td>
+  <td>0.684</td>
+</tr>
+
+Row 2 (Algebaric, Taubin [23]):
+<tr>
+  <td>Taubin [23]</td>
+  <td>1.329</td>
+  <td>14.697</td>
+  <td>20.430</td>
+  <td>0.783</td>
+</tr>
+
+Wait, no, the number of columns must match. Each row must have the same number of cells as the header. The header has 6 columns. So each data row must have 6 cells. For the first row of Algebaric, the first cell is the merged th (rowspan=2), then the next five cells (since total 6 columns: Methods, Method, AD, A(̂a), A(̂b), A(̂γ)). Wait, no: the header has 6 columns. Let's count the header cells:
+
+1. Methods
+2. Method (the specific method column)
+3. AD(̂x₀, ̂y₀)
+4. A(̂a)
+5. A(̂b)
+6. A(̂γ)
+
+So 6 columns. Each data row must have 6 cells. For the Algebaric category, which has 2 methods, the first column (Methods) is a merged cell spanning 2 rows. So in the first row of Algebaric, the first cell is <th rowspan="2">Algebaric</th>, and the remaining 5 cells are for Method, AD, A(̂a), A(̂b), A(̂γ). Then in the second row of Algebaric, the first cell is not present (since it's merged), so the row starts with the Method cell, then AD, A(̂a), A(̂b), A(̂γ). But that would make the second row have 5 cells, which doesn't match the header's 6 columns. Wait, no—actually, the first column is the "Methods" (category), which is a column. So each row must have a cell for the category column, even if it's merged. So the first row of Algebaric has a cell in the category column (rowspan=2), and the second row of Algebaric also has a cell in the category column, but it's empty because it's merged. But in HTML, you can't have an empty cell in a merged column; the rowspan takes care of that. Let's check an example.
+
+Suppose a table with a header row, then a data row with a rowspan=2 in the first column. The first data row has <th rowspan="2">A</th>, then other cells. The second data row has <td></td> for the first column? No, that's not correct. Actually, when you use rowspan, the subsequent rows in that column do not have a cell for that column. So the second data row will have cells starting from the second column. But then the number of columns in the second row is one less than the header. That can't be right. Wait, no—the header row has a cell for each column. The data rows must have the same number of cells as the header row. So if a column in the header is a <th> with rowspan, then in the data rows, that column is represented by a <td> (or <th>) that is part of the rowspan. So for example:
+
+Header row:
+<th>Col1</th>
+<th>Col2</th>
+<th>Col3</th>
+
+Data row 1:
+<th rowspan="2">Col1</th>
+<td>Val1</td>
+<td>Val2</td>
+
+Data row 2:
+<td>Val3</td>
+<td>Val4</td>
+<td>Val5</td>
+
+But this is invalid because data row 2 has 3 cells, while the header has 3 columns. Wait, no—data row 1 has 3 cells (Col1 merged, Col2, Col3). Data row 2 has 2 cells (Col2, Col3), which is less than the header's 3 columns. That's a problem. So actually, the correct way is that the rowspan in the header affects the number of rows, not the number of columns. Wait, no—rowspan is for rows in a column. So each column can have cells that span multiple rows. So the header row is a row, and data rows are subsequent rows. For a column, a cell in the header row can have rowspan="n", meaning that column has n rows occupied by that cell, so the next n-1 rows in that column do not have a cell (they are part of the rowspan).
+
+But in terms of the number of columns per row, each row (including the header) must have the same number of columns. So for the header row, there are 6 columns. For each data row, there must be 6 columns. So if a column (say column 1) has a cell in the first data row with rowspan="2", then in the second data row, column 1 still exists, but it's part of the rowspan, so the cell in column 1 of the second data row is empty (or not present, but in HTML, you need to have a cell for each column in each row, even if it's empty

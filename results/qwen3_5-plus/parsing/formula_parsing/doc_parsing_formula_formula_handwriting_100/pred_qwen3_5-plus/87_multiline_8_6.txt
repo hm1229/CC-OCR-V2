@@ -1,0 +1,15 @@
+```latex
+\begin{align*}
+&L(x, s, \hat{\lambda}, q_r, Q_r; Z, t_k, p_k, P_k, \forall k \in [K]) \\
+&= s + \gamma_2 I_{m_1} \cdot Q_r + \sqrt{r_1} \|q_r\|_2 - Z \cdot \left( \sum_{i=1}^I (\Delta_2 x_i) + \Delta_0 \right) - \sum_{k=1}^K \begin{bmatrix} t_k & p_k^T \\ p_k & P_k \end{bmatrix} \cdot \\
+&\quad \begin{bmatrix} s - y_k^0(x) - \lambda_k^T b - y_k(x)^T u + \lambda_k^T A u & \frac{1}{2}(q_r + (U \Lambda^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x)))^T \\ \frac{1}{2}(q_r + (U \Lambda^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x))) & Q_r \end{bmatrix} \\
+&= \left(1 - \sum_{k=1}^K t_k\right) s - \sum_{k=1}^K (t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+&\quad + \left(\gamma_2 I_{m_1} - \sum_{k=1}^K P_k\right) \cdot Q_r - \sum_{i=1}^I \sum_{j=1}^I z_{ij} (a_{ij} x + a_{ij}^0) + \sum_{k=1}^K (t_k y_k^0(x) + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) y_k(x)) \\
+&= \left(1 - \sum_{k=1}^K t_k\right) s - \sum_{k=1}^K (t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+&\quad + \left(\gamma_2 I_{m_g} - \sum_{k=1}^K P_k\right) \cdot Q_r - \sum_{i=1}^I \sum_{j=1}^I z_{ij} a_{ij} x - \sum_{i=1}^I \sum_{j=1}^I z_{ij} a_{ij}^0 + \sum_{k=1}^K (t_k W_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) W_k) : \\
+&\quad + \sum_{k=1}^K (t_k d_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) d_k) \\
+&= \left(1 - \sum_{k=1}^K t_k\right) s - \sum_{k=1}^K (t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+&\quad + \left(\gamma_2 I_{m_1} - \sum_{k=1}^K P_k\right) \cdot Q_r + \left( \sum_{k=1}^K (t_k W_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) W_k) - \sum_{i=1}^I \sum_{j=1}^I z_{ij} a_{ij} \right) x \\
+&\quad + \sum_{k=1}^K (t_k d_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) d_k) - \sum_{i=1}^I \sum_{j=1}^I z_{ij} a_{ij}^0.
+\end{align*}
+```

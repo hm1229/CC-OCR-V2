@@ -1,0 +1,175 @@
+用户现在需要把图片中的文字、图表等转换成LaTeX格式。首先得仔细看图片内容，分部分处理：标题、正文、图表（包括Return on Capital和Quarterly Underlying Sales Growth的图）。
+
+首先看页面顶部：CHAIRMAN'S LETTER，MINERALS TECHNOLOGIES INC.，5。然后大标题BOTH BUSINESS SEGMENTS——，下面副标题Specialty Minerals and Refractories——contributed to this outstanding performance through record-breaking financial results.
+
+然后正文部分，分段落。需要逐段转录，注意细节，比如公司名称、数据、项目等。然后是Accomplishments部分，还有Return on Capital的图，Quarterly Underlying Sales Growth的图，以及图例。
+
+先处理文字部分：
+
+首先页面顶部：
+
+\textbf{CHAIRMAN'S LETTER} \qquad \textbf{MINERALS TECHNOLOGIES INC.} \qquad 5
+
+然后大标题：
+
+\textbf{BOTH BUSINESS SEGMENTS——} \\
+\textit{Specialty Minerals and Refractories——contributed to this outstanding performance through record-breaking financial results.}
+
+接下来正文第一段：
+
+Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+然后下一段关于安全表现：
+
+The company’s safety performance continued on a strong track in 2013: We achieved our lowest workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+然后MTI's Return on Capital部分：
+
+MTI’s Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated $138 million in cash from operations and we repurchased $52 million of our shares during the year.
+
+Accomplishments部分：
+
+Accomplishments \\
+Let’s take a look at what drove our outstanding 2013 performance. Our two major strategies—geographic expansion and new product innovation—continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and
+
+然后接下来的段落（关于欧洲的joint venture）：
+
+the second in Europe. The plant is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper’s papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wishes to remain unnamed for competitive reasons.
+
+然后关于Kymmeann UPM的PCC plant：
+
+More recently, in early January, we announced an agreement with UPM-Kymmeann to build a UPM PCC plant on site at UPM’s paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will have an initial capacity of 100,000 tons.
+
+然后关于In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability with added resources to further expand in this growing market.
+
+然后关于卫星数量：
+
+During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to contribute volume in 2014.
+
+接下来是图表部分：Return on Capital*，图例是Bloomberg Market，x轴是2010-2013，y轴是RO%。数据点：2010是？看图片里的图，2010对应的是？图片中Return on Capital的图，2010的点是？看图片里的数值：2010可能是？看图片中的图，Return on Capital的图里，2010的点是？图片中显示的数值：2010对应的是？看图片中的图，Return on Capital的图，y轴是RO%，x轴是年份。图中的点：2010是？看图片里的图，Return on Capital的图中，2010的点是？图片里的图中，2010的点是？看图片中的图，Return on Capital的图，数据点是2010（可能没有？不，看图片中的图，Return on Capital的图里，2010、2011、2012、2013的点。图中的数值：2011是8.8，2012是9.2，2013是9.5，2010是8.4？因为图中2010的点是8.4，2011是8.8，2012是9.2，2013是9.5。所以图的LaTeX可以用tikz或者直接描述，或者用表格？不过可能用tikzpicture来画，或者用简单的图表示。
+
+然后Quarterly Underlying Sales Growth的图，x轴是Q2、Q3、Q4（因为图中Q1是-1%？看图片中的图，Quarterly Underlying Sales Growth的图，x轴是Q1、Q2、Q3、Q4？不，看图片中的图，Quarterly Underlying Sales Growth的图，x轴是Q2、Q3、Q4？因为图中显示的是Q2（2%）、Q3（2%）、Q4（6%），而Reported Sales Growth是Q2（4%）、Q3（4%）、Q4（7%），Underlying是Q2（2%）、Q3（2%）、Q4（6%），还有Q1是-1%？看图片中的图，Quarterly Underlying Sales Growth的图，y轴是百分比，x轴是季度。图中的点：Q1是-1%（Reported？不，图例是Reported Sales Growth（实线）和Underlying Sales Growth（虚线）。看图片中的图，Quarterly Underlying Sales Growth的图，Q1的Reported是-2%？不，看图片中的图，Quarterly Underlying Sales Growth的图，x轴是Q1、Q2、Q3、Q4？图中显示的是Q2、Q3、Q4的柱子？不，是折线图。图中的数据：Reported Sales Growth在Q2是4%，Q3是4%，Q4是7%；Underlying Sales Growth在Q2是2%，Q3是2%，Q4是6%；Q1的Reported是-1%？不，看图片中的图，Quarterly Underlying Sales Growth的图，y轴左边是百分比，x轴是季度。图中Q1的Underlying是-2%？不，看图片中的图，Quarterly Underlying Sales Growth的图，图例是Reported（实线）和Underlying（虚线）。图中Q2的Reported是4%，Underlying是2%；Q3的Reported是4%，Underlying是2%；Q4的Reported是7%，Underlying是6%；Q1的Reported是-1%？不，图中Q1的Reported是-1%？看图片中的图，Quarterly Underlying Sales Growth的图，Q1的Reported是-1%（实线），Underlying是-2%（虚线）？因为图中Q1的标注是-1%（Reported）和-2%（Underlying）？然后Q2是2%（Underlying）和4%（Reported），Q3是2%（Underlying）和4%（Reported），Q4是6%（Underlying）和7%（Reported）。
+
+现在需要把这些内容转换成LaTeX。首先，文字部分用\section或者\paragraph，图表用tikzpicture或者直接描述，或者用表格。不过可能更简单的是用文字描述图表，或者用tikz画图。
+
+首先，处理Return on Capital的图：
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+% Return on Capital chart
+\draw[->] (0,0) -- (6,0) node[right] {Year};
+\draw[->] (0,0) -- (0,10) node[above] {RO \%};
+\foreach \x/\y in {2010/8.4, 2011/8.8, 2012/9.2, 2013/9.5} {
+    \draw (\x,0) -- (\x,\y) node[below] {\x};
+    \draw (\x,\y) -- (\x+0.2,\y) node[right] {\y};
+}
+\node at (2,5) {Return on Capital*};
+\end{tikzpicture}
+\caption{Return on Capital}
+\label{fig:ro}
+\end{figure}
+
+然后Quarterly Underlying Sales Growth的图：
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+% Quarterly Underlying Sales Growth chart
+\draw[->] (0,0) -- (5,0) node[right] {Quarter};
+\draw[->] (0,0) -- (0,8) node[above] {Growth \%};
+% Q1
+\draw (1,0) -- (1,-2) node[below] {Q1};
+\draw[thick] (1,-1) -- (1,0) node[above] {-1\%}; % Reported
+\draw[dashed] (1,-2) -- (1,-1) node[below] {-2\%}; % Underlying
+% Q2
+\draw (2,0) -- (2,2) node[below] {Q2};
+\draw[thick] (2,2) -- (2,4) node[above] {4\%}; % Reported
+\draw[dashed] (2,2) -- (2,0) node[below] {2\%}; % Underlying
+% Q3
+\draw (3,0) -- (3,2) node[below] {Q3};
+\draw[thick] (3,2) -- (3,4) node[above] {4\%}; % Reported
+\draw[dashed] (3,2) -- (3,0) node[below] {2\%}; % Underlying
+% Q4
+\draw (4,0) -- (4,6) node[below] {Q4};
+\draw[thick] (4,6) -- (4,7) node[above] {7\%}; % Reported
+\draw[dashed] (4,6) -- (4,0) node[below] {6\%}; % Underlying
+\node at (2.5,3) {Quarterly Underlying Sales Growth};
+\end{tikzpicture}
+\caption{Quarterly Underlying Sales Growth}
+\label{fig:qg}
+\end{figure}
+
+不过可能更简单的是用文字描述图表，或者用表格。另外，注意图中的*是Bloomberg Market，所以Return on Capital的图下面有* Bloomberg Market。
+
+现在把所有文字部分整理，注意段落之间的换行，以及项目符号等。
+
+另外，Accomplishments部分是小标题，可能用\subsection*{Accomplishments}。
+
+现在开始逐部分转录：
+
+首先页面顶部：
+
+\textbf{CHAIRMAN'S LETTER} \qquad \textbf{MINERALS TECHNOLOGIES INC.} \qquad 5
+
+\textbf{BOTH BUSINESS SEGMENTS——} \\
+\textit{Specialty Minerals and Refractories——contributed to this outstanding performance through record-breaking financial results.}
+
+Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+The company’s safety performance continued on a strong track in 2013: We achieved our lowest workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+MTI’s Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated \$138 million in cash from operations and we repurchased \$52 million of our shares during the year.
+
+\subsection*{Accomplishments}
+Let’s take a look at what drove our outstanding 2013 performance. Our two major strategies—geographic expansion and new product innovation—continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and
+
+the second in Europe. The plant is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper’s papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wishes to remain unnamed for competitive reasons.
+
+More recently, in early January, we announced an agreement with UPM-Kymmeann to build a UPM PCC plant on site at UPM’s paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will have an initial capacity of 100,000 tons.
+
+In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability with added resources to further expand in this growing market.
+
+During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to contribute volume in 2014.
+
+然后是图表部分，Return on Capital*，下面标注*Bloomberg Market。
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+% Return on Capital chart
+\draw[->] (0,0) -- (6,0) node[right] {Year};
+\draw[->] (0,0) -- (0,10) node[above] {RO \%};
+\foreach \x/\y in {2010/8.4, 2011/8.8, 2012/9.2, 2013/9.5} {
+    \draw (\x,0) -- (\x,\y) node[below] {\x};
+    \draw (\x,\y) -- (\x+0.2,\y) node[right] {\y};
+}
+\node at (2,5) {Return on Capital*};
+\end{tikzpicture}
+\caption{Return on Capital}
+\label{fig:ro}
+\end{figure}
+\textit{* Bloomberg Market}
+
+然后Quarterly Underlying Sales Growth的图：
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+% Quarterly Underlying Sales Growth chart
+\draw[->] (0,0) -- (5,0) node[right] {Quarter};
+\draw[->] (0,0) -- (0,8) node[above] {Growth \%};
+% Q1
+\draw (1,0) -- (1,-2) node[below] {Q1};
+\draw[thick] (1,-1) -- (1,0) node[above] {-1\%}; % Reported Sales Growth
+\draw[dashed] (1,-2) -- (1,-1) node[below] {-2\%}; % Underlying Sales Growth
+% Q2
+\draw (2,0) -- (2,2) node[below] {Q2};
+\draw[thick] (2,2) -- (2,4) node[above] {4\%}; % Reported
+\draw[dashed] (2,2) -- (2,0) node[below] {2\%}; % Underlying
+% Q3
+\draw (3,0) -- (3,2) node[below] {Q3};
+\draw[thick] (3,2) -- (3,4) node[above] {4\%}; % Reported
+\draw[dashed] (3,2) -- (3,0) node[below] {2\%}; % Underlying
+% Q4
+\draw (4,0) -- (4,6) node[below

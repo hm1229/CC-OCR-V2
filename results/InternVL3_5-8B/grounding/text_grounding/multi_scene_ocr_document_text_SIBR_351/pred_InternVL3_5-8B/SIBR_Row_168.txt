@@ -1,0 +1,34 @@
+To determine the coordinates of the region containing the text '0.00', we need to carefully analyze the image and identify the bounding box around the text.
+
+Here are the steps to find the coordinates:
+
+1. **Identify the text '0.00'**: The text '0.00' appears in the section detailing the payment breakdown, specifically under "自费" (self-pay).
+
+2. **Estimate the bounding box**: We need to estimate the left-top and right-bottom corners of the bounding box that encloses the text '0.00'.
+
+3. **Normalize the coordinates**: Convert the pixel coordinates to normalized coordinates based on the image dimensions.
+
+Let's assume the image dimensions are approximately 1000 pixels wide and 600 pixels tall.
+
+### Bounding Box Coordinates
+
+- **Left-top corner (x1, y1)**: The text '0.00' starts around the middle of the line, slightly to the right of the previous text. Let's estimate this at approximately (450, 350).
+- **Right-bottom corner (x2, y2)**: The text '0.00' ends shortly after, so we can estimate this at approximately (480, 380).
+
+### Normalized Coordinates
+
+To normalize these coordinates, we use the formula:
+\[ \text{Normalized Coordinate} = \left( \frac{\text{Pixel Coordinate}}{\text{Image Dimension}} \right) \times 1000 \]
+
+- **x1**: \( \frac{450}{1000} \times 1000 = 450 \)
+- **y1**: \( \frac{350}{600} \times 1000 \approx 583 \)
+- **x2**: \( \frac{480}{1000} \times 1000 = 480 \)
+- **y2**: \( \frac{380}{600} \times 1000 \approx 633 \)
+
+### Final Coordinates
+
+Thus, the normalized coordinates of the bounding box are:
+\[ (450, 583, 480, 633) \]
+
+So, the coordinates are:
+(x1, y1, x2, y2) = (450, 583, 480, 633)

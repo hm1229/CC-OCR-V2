@@ -1,0 +1,227 @@
+用户现在需要把图片中的文字、表格、方程转换成LaTeX格式。首先得仔细看图片里的内容，分部分处理。先看标题和各个题目。
+
+首先标题是“Secondary 3 Mathematics Set 1”，然后是PART 1: Multiple-choice questions。然后是1到13题，每题有分值（括号里的数字）和解答过程。另外右边还有其他题目的解答，比如第10题、11题、12题、13题。需要把所有内容都转成LaTeX，注意方程、分数、比例等的格式。
+
+先处理左边的题目：
+
+1. 第一题（4分）：
+解方程组2x + 3y = 7，然后2x = 7 - 3y，x = (7 - 3y)/2，然后x = -3/2 y + 7/2。要写成LaTeX的步骤，用align或者逐行。
+
+2. 第二题（2分）：3x + 4y = 15，然后6x + 8y = 2(3x + 4y) = 30，15x + 20y = 5(3x + 4y) = 75。
+
+3. 第三题（3分）：4x ≥ 1/2，两边除以4，得到x ≥ (1/2)/4 = 1/8。
+
+4. 第四题（3分）：6 - 8x < -2x，移项得6 -8x +8x < -2x +8x，即6 < 6x，x > 1。
+
+5. 第五题（2分）：矩形P的宽度是120/15=8cm，周长Q=2(28+15)=46cm（因为周长P和Q相等？看原文“Perimeter of Q = Perimeter of P = 2(28 + 15) = 46 cm”）。
+
+6. 第六题（4分）：圆Y的周长=圆X的周长=10π，所以2πr=10π→r=5cm；面积Y=πr²=π(5²)=25π cm²。
+
+7. 第七题（3分）：边长比例1:10，面积比例1:100（因为面积是边长平方）。
+
+8. 第八题（3分）：边长比例1:5，周长比例1:5（周长是边长线性）。
+
+9. 第九题（3分）：设H和h是两根蜡烛的高度。燃烧量：H的燃烧是(120/180)H=2/3 H，h的燃烧是(120/300)h=2/5 h。剩余：H - 2/3 H = 1/3 H；h - 2/5 h = 3/5 h。然后可能后面还有，但图片里到这里。
+
+然后右边的题目：
+
+第10题（1分）：高度问题。第1次n分钟后高度是n/180，第2次是n/240。剩余高度：1 - n/180 和 1 - n/240。比例是1:2，所以(1 - n/180)/(1 - n/240) = 1/2。解这个方程：交叉相乘得2(1 - n/180) = 1 - n/240 → 2 - n/90 = 1 - n/240 → n/90 - n/240 = 1 - 2 → 通分，分母720，8n - 3n = 720 → 5n=720 → n=144分钟=2小时24分钟。然后working backwards是14小时36分钟？可能图片里的步骤。
+
+第11题（2分）：图中有A到B，Town X到Town Y。当B遇到C时，距离是(50+70)*2=240km。速度差是60-50=10km/h，所以时间h=240/10=24小时。然后(60+70)*24=3120km。需要看题目描述，可能图中的A、B、C是车辆？比如A从Town X出发，B从某地，C从Town Y？需要准确转图中的文字：“When B meets C, the distance between A and C is (50 + 70) × 2 = 240 km Difference in speed → 60 − 50 = 10 km/h 240 ÷ 10 = 24 : h (60 + 70) × 24 = 3120 km”
+
+第12题（4分）：15 - 5 = 10h。考虑站点S和Town Q。时间轴：05:00h到09:00h，S在05:00h之后，Q在09:00h之前。比例3:2=6:4，5+4=9。答案是09:00h。
+
+第13题（1分）：总面数。原立方体18个面，4个立方体是6×4=24个面，重叠了24-18=6个面，所以总面数24-6=18？不对，图片里写的是“Original cuboid → 18 faces 4 cubes → 6 × 4 = 24 faces 24 − 18 = 6 faces 6 faces → 216 cm²” 可能是每个面6×6？因为216是6³，所以每个小立方体边长6cm？原立方体可能是边长6cm？然后4个小立方体拼起来，面的计算：原立方体18面，4个立方体24面，重叠了6个面（因为每两个立方体拼接减少2个面，4个立方体有3个拼接，减少6个面？24-6=18？但图片里写24-18=6，然后6 faces →216？可能图片中的步骤是总表面积：原立方体表面积是6×(6×6)=216？然后4个小立方体每个表面积6×(6×6)=216？不，可能原立方体是边长6cm，表面积6×6×6=216。4个小立方体每个边长3cm？不，可能图片中的“6 faces →216 cm²”是指每个小立方体的面是6×6，6个面是216？可能需要按图片中的文字转，不管逻辑，只转内容。
+
+现在开始组织LaTeX代码，注意分节、题目编号、分值、方程、分数、比例等。
+
+首先标题：
+
+\section*{Secondary 3 Mathematics Set 1}
+
+\subsection*{PART 1: Multiple-choice questions}
+
+然后逐题：
+
+\begin{enumerate}
+    \item \textbf{(4)} Solve the system:
+    \[
+    \begin{aligned}
+    2x + 3y &= 7 \\
+    2x &= 7 - 3y \\
+    x &= \frac{7 - 3y}{2} \\
+    x &= -\frac{3}{2}y + \frac{7}{2}
+    \end{aligned}
+    \]
+    
+    \item \textbf{(2)} Given \(3x + 4y = 15\):
+    \[
+    \begin{aligned}
+    6x + 8y &= 2(3x + 4y) \\
+    &= 2 \times 15 \\
+    &= 30 \\
+    15x + 20y &= 5(3x + 4y) \\
+    &= 5 \times 15 \\
+    &= 75
+    \end{aligned}
+    \]
+    
+    \item \textbf{(3)} Solve \(4x \geq \frac{1}{2}\):
+    \[
+    \frac{4x}{4} \geq \frac{\frac{1}{2}}{4} \implies x \geq \frac{1}{8}
+    \]
+    
+    \item \textbf{(3)} Solve \(6 - 8x < -2x\):
+    \[
+    \begin{aligned}
+    6 - 8x + 8x &< -2x + 8x \\
+    6 &< 6x \\
+    6x &> 6 \\
+    x &> 1
+    \end{aligned}
+    \]
+    
+    \item \textbf{(2)} For rectangle \(P\), breadth \(= \frac{120}{15} = 8\ \text{cm}\). Perimeter of \(Q = \text{Perimeter of } P\):
+    \[
+    \text{Perimeter of } Q = 2(28 + 15) = 46\ \text{cm}
+    \]
+    
+    \item \textbf{(4)} Circumference of \(Y = \text{Circumference of } X = 10\pi\):
+    \[
+    2\pi r = 10\pi \implies r = 5\ \text{cm}
+    \]
+    Area of circle \(Y\):
+    \[
+    \pi r^2 = \pi (5^2) = 25\pi\ \text{cm}^2
+    \]
+    
+    \item \textbf{(3)} Ratio of sides \(1:10\) \(\implies\) Ratio of area \(1:10^2 = 1:100\).
+    
+    \item \textbf{(3)} Ratio of sides \(1:5\) \(\implies\) Ratio of perimeter \(1:5\) (perimeter is linear in side length).
+    
+    \item \textbf{(3)} Let \(H\) and \(h\) be heights of two candles. Burnt amount:
+    \[
+    \begin{aligned}
+    H &: \frac{120}{180} \times H = \frac{2}{3}H \\
+    h &: \frac{120}{300} \times h = \frac{2}{5}h
+    \end{aligned}
+    \]
+    Remaining:
+    \[
+    \begin{aligned}
+    H - \frac{2}{3}H &= \frac{1}{3}H \\
+    h - \frac{2}{5}h &= \frac{3}{5}h
+    \end{aligned}
+    \]
+    
+    \item \textbf{(1)} Height after \(n\) min:
+    \[
+    \begin{aligned}
+    1^\text{st} &: \frac{n}{180} \\
+    2^\text{nd} &: \frac{n}{240}
+    \end{aligned}
+    \]
+    Height remaining:
+    \[
+    \begin{aligned}
+    1^\text{st} &: 1 - \frac{n}{180} \\
+    2^\text{nd} &: 1 - \frac{n}{240}
+    \end{aligned}
+    \]
+    Ratio became \(1:2\):
+    \[
+    \frac{1 - \frac{n}{180}}{1 - \frac{n}{240}} = \frac{1}{2}
+    \]
+    Cross multiply:
+    \[
+    2\left(1 - \frac{n}{180}\right) = 1 - \frac{n}{240}
+    \]
+    Simplify:
+    \[
+    2 - \frac{n}{90} = 1 - \frac{n}{240} \implies \frac{n}{90} - \frac{n}{240} = 1
+    \]
+    Find common denominator (720):
+    \[
+    \frac{8n - 3n}{720} = 1 \implies \frac{5n}{720} = 1 \implies 5n = 720 \implies n = 144\ \text{min} = 2\ \text{h}\ 24\ \text{min}
+    \]
+    Working backwards: 14 h 36 min.
+    
+    \item \textbf{(2)} Diagram: \(A \to B\), Town \(X\) to Town \(Y\). When \(B\) meets \(C\), distance between \(A\) and \(C\):
+    \[
+    (50 + 70) \times 2 = 240\ \text{km}
+    \]
+    Difference in speed:
+    \[
+    60 - 50 = 10\ \text{km/h}
+    \]
+    Time \(h\):
+    \[
+    240 \div 10 = 24\ \text{h}
+    \]
+    Distance when \(B\) meets \(C\):
+    \[
+    (60 + 70) \times 24 = 3120\ \text{km}
+    \]
+    
+    \item \textbf{(4)} \(15 - 5 = 10\ \text{h}\). Consider station \(S\) and Town \(Q\). Time axis: 05:00 h to 09:00 h. Ratio \(3:2 = 6:4\), \(5 + 4 = 9\). Ans: 09:00 h.
+    
+    \item \textbf{(1)} Total number of faces:
+    \[
+    \begin{aligned}
+    \text{Original cuboid} &\to 18\ \text{faces} \\
+    4\ \text{cubes} &\to 6 \times 4 = 24\ \text{faces} \\
+    24 - 18 &= 6\ \text{faces (overlapped)} \\
+    6\ \text{faces} &\to 216\ \text{cm}^2
+    \end{aligned}
+    \]
+\end{enumerate}
+
+然后底部的版权信息：
+
+\begin{center}
+Solutions to AEIS Practice Tests Secondary 3 Mathematics \\
+\copyright Singapore Asia Publishers Pte Ltd \& Starich Education Pte Ltd
+\end{center}
+
+\section*{S1 Set 1}
+
+需要注意图片中的“S1 Set 1”在底部，所以加上。
+
+另外，检查图片中的其他内容，比如第10题右边的“The ratio after 2 h is 1 : 1.” 然后是\(\frac{1/3 H}{3/5 h} = 1/1\)，交叉相乘得到\(\frac{1}{3}H = \frac{3}{5}h\)，然后5H=9h，H:h=9:5。这部分在图片的右上角，可能属于另一题？看图片右上角：
+
+“The ratio after 2 h is 1 : 1. \(\frac{1/3 H}{3/5 h} = 1/1\) Cross multiply: \(\frac{1}{3}H = \frac{3}{5}h\) Cross multiply: 5H = 9h H : h = 9 : 5” 这部分可能是第9题的后续？因为第9题是关于蜡烛，可能H和h是蜡烛，2小时后的剩余比例是1:1，所以需要把这部分也包含进去。
+
+看图片中第9题的解答在左边，然后右边上方有这部分内容，可能是第9题的继续。所以需要把第9题的后续加上：
+
+在第9题的“Remaining:”之后，可能还有时间相关的，比如2小时后剩余比例1:1，所以：
+
+\item \textbf{(3)} Let \(H\) and \(h\) be heights of two candles. Burnt amount at any time:
+\[
+\begin{aligned}
+H &: \frac{120}{180} \times H = \frac{2}{3}H \\
+h &: \frac{120}{300} \times h = \frac{2}{5}h
+\end{aligned}
+\]
+Remaining:
+\[
+\begin{aligned}
+H - \frac{2}{3}H &= \frac{1}{3}H \\
+h - \frac{2}{5}h &= \frac{3}{5}h
+\end{aligned}
+\]
+The ratio after 2 h is 1 : 1:
+\[
+\frac{\frac{1}{3}H}{\frac{3}{5}h} = \frac{1}{1}
+\]
+Cross multiply:
+\[
+\frac{1}{3}H = \frac{3}{5}h
+\]
+Cross multiply:
+\[
+5H = 9h \implies H : h = 9 : 5
+\]
+
+这样就把右上角的内容整合到第9题了。
+
+另外，检查图片中的其他部分，比如第12题的图，时间轴是05:00h到09:00h，S在05:00h之后，Q在09:00h之前，比例3:2=6:4，5+4=9，所以S的位置是第5个单位？因为3:2=6:4，总长度是6+4=10？不，图片中“3 : 2 = 6 : 4” 可能是分段，然后“5 + 4 = 9” 对应时间从05:00到09:00是4小时，分成9段？每段是4/9小时？然后S的位置是5段，对应时间是05:00 + 5*(4/9)？不，图片中答案是09:00h，可能S在05:00到09:00之间的某个点，而Town Q在09:00h，所以当时间到09:00h时到达Q。可能图片中的“5 + 4 = 9” 是指S到05:

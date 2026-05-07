@@ -1,0 +1,124 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Table Transcription</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .row-header {
+            text-align: left;
+            vertical-align: middle;
+        }
+        .sub-header {
+            text-align: center;
+            font-weight: bold;
+        }
+        .merged-cell {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 15%;">Index</th>
+                <th rowspan="2" style="width: 20%;">Ablation</th>
+                <th rowspan="2" style="width: 15%;">Ori</th>
+                <th colspan="2" style="width: 30%;">$\mathcal{L}_{cis}$</th>
+                <th colspan="2" style="width: 30%;">$\mathcal{L}_{loop}$</th>
+            </tr>
+            <tr>
+                <th>GHM-C<br>→ CE</th>
+                <th>CE →<br>GHM-C</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="6" class="row-header"><b>Vessel Classification</b></td>
+                <td colspan="2">Accuracy</td>
+                <td>97.49</td>
+                <td>96.59</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Precision</td>
+                <td><i>Healthy</i></td>
+                <td>98.55</td>
+                <td>97.37</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><i>MVI</i></td>
+                <td>92.44</td>
+                <td>92.13</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Recall</td>
+                <td><i>Healthy</i></td>
+                <td>98.43</td>
+                <td>98.67</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td><i>MVI</i></td>
+                <td>92.98</td>
+                <td>87.13</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height: 10px;"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td rowspan="3" class="row-header"><b>Cell locating</b></td>
+                <td colspan="2">Precision</td>
+                <td>71.26</td>
+                <td>-</td>
+                <td>-</td>
+                <td>63.26</td>
+            </tr>
+            <tr>
+                <td colspan="2">Recall</td>
+                <td>94.52</td>
+                <td>-</td>
+                <td>-</td>
+                <td>98.95</td>
+            </tr>
+            <tr>
+                <td colspan="2">Dice</td>
+                <td>79.58</td>
+                <td>-</td>
+                <td>-</td>
+                <td>75.97</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+```

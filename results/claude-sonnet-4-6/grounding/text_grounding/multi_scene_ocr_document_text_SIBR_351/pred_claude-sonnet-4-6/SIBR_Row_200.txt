@@ -1,0 +1,21 @@
+I need to find the text '0元' in the image.
+
+Looking at the bottom portion of the receipt, I can see the line with "精准扶贫：0元 扫码支付：0元"
+
+The '0元' appears twice. Looking at "扫码支付：0元" which is the last '0元' on that line.
+
+For "精准扶贫：0元", the '0元' appears to be around the middle-right area of that line.
+
+For "扫码支付：0元", the '0元' is near the right end of that line.
+
+The line with these values is near the bottom of the receipt, approximately at y position 730-760 out of the image height.
+
+Looking at "精准扶贫：0元":
+- The '0元' after 精准扶贫 appears to be around x: 620-660, y: 730-760
+
+For "扫码支付：0元":
+- The '0元' appears to be around x: 830-880, y: 730-760
+
+Given the question asks for '0元' (singular), I'll identify the most prominent one. Looking at "扫码支付：0元":
+
+(820, 725, 880, 755)

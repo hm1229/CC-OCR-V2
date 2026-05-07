@@ -1,0 +1,50 @@
+Looking at the provided document, we can find the **EST COST** row under the summary section:
+
+```
+EST COST:   160727.22    128438.02    32289.20
+```
+
+This line corresponds to the columns above it:
+
+- **ORDER TOTAL** → 160727.22
+- **TOTAL QTY** → 128438.02
+- **AVAILABLE QTY** → (not directly labeled here, but implied by context)
+- **BO QTY** → 32289.20
+
+The question asks: **“What is the Est Cost for Total Qty?”**
+
+That means: What is the estimated cost associated with the **TOTAL QTY** column?
+
+From the alignment:
+
+> EST COST:   160727.22    **128438.02**    32289.20  
+>             ↑            ↑              ↑  
+>         ORDER TOTAL   TOTAL QTY      BO QTY
+
+Wait — this seems misaligned in interpretation.
+
+Actually, looking more carefully at the structure:
+
+The header row is:
+
+```
+ORDER TOTAL   TOTAL QTY   AVAILABLE QTY   BO QTY   SHIPPED QTY
+CASES...:        9547         9293          254
+WEIGHT..:     9016.6400    3266.6400     5750.0000
+SIZE.....:      701.2920     261.2920      440.0000
+EST COST:    160727.22    128438.02     32289.20
+```
+
+So each row corresponds to a metric across those columns.
+
+Therefore:
+
+- **EST COST for ORDER TOTAL** = 160727.22
+- **EST COST for TOTAL QTY** = **128438.02**
+- **EST COST for BO QTY** = 32289.20
+
+✅ So, the **Est Cost for Total Qty** is **128438.02**
+
+---
+
+**Final Answer: `128438.02`**

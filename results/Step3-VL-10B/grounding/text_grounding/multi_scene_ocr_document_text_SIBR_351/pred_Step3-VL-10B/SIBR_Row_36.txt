@@ -1,0 +1,154 @@
+用户现在需要找到文本'803476581 10 JAN 2022'的区域。看发票里的Delivery部分，每个项目下面的Delivery信息。先看第一个项目（Item 2）的Delivery是803476581 10 JAN 2022，然后Item3和Item4也有类似的。需要确定每个出现的位置？不过先看问题中的文本，先找其中一个。比如Item2的Delivery：看坐标。先看图像中的位置，Item2的Delivery行是“Delivery: 803476581 10 JAN 2022”。现在要确定这个文本的 bounding box。
+
+先分析图像结构。整个发票的布局，Item2的Delivery部分在对应的位置。现在需要计算归一化坐标（0-1000）。先看图像的宽度和高度，然后确定每个元素的位置。不过可能更简单的是看每个Delivery的文本。比如第一个Delivery（Item2）的文本是“803476581 10 JAN 2022”，对应的区域。现在要确定这个文本的位置。
+
+看图像中的内容，Item2的Delivery行：在Order和Purchase Order之后，Delivery: 后面的内容。现在看坐标，假设图像的宽度是W，高度是H。然后每个元素的位置。不过可能更直接的是看三个项目（Item2、3、4）的Delivery都有这个日期，但需要看问题中的文本是哪一个。问题中的文本是'803476581 10 JAN 2022'，在Item2、3、4中都有吗？看Item2的Delivery是803476581 10 JAN 2022；Item3的Delivery是803476581 10 JAN 2022；Item4的Delivery也是803476581 10 JAN 2022？看Item3的Delivery是“803476581 10 JAN 2022”吗？看原文：
+
+Item2的Delivery: 803476581 10 JAN 2022
+
+Item3的Delivery: 803476581 10 JAN 2022
+
+Item4的Delivery: 803476581 10 JAN 2022？看原文中Item4的Delivery部分：“Delivery: 803476581 10 JAN 2022”？看原文中的Item4的Delivery行：“Delivery: 803476581 10 JAN 2022”？是的，三个项目的Delivery都是这个日期吗？看原文：
+
+Item2的Delivery: 803476581 10 JAN 2022
+
+Item3的Delivery: 803476581 10 JAN 2022
+
+Item4的Delivery: 803476581 10 JAN 2022？看原文中Item3的Delivery是“803476581 10 JAN 2022”吗？看原文：
+
+Item3的Delivery: 803476581 10 JAN 2022？原文中Item3的Delivery是“803476581 10 JAN 2022”？看原文中的Item3部分：
+
+Delivery: 803476581 10 JAN 2022
+
+是的。Item4的Delivery也是。现在问题是要找这个文本的区域，可能每个出现的位置？但问题中的文本是哪一个？可能需要看哪个项目。不过先看第一个出现的，比如Item2的Delivery中的该文本。
+
+现在需要确定该文本在图像中的位置。假设图像的宽度是整个页面的宽度，高度是页面的高度。现在将图像分成坐标，x从左到右0-1000，y从上到下0-1000。
+
+看Item2的Delivery部分，在Item2的下方，Order、Purchase Order之后。Item2的行是：
+
+Item 2 | 10088475 | 70 | 3A | 43.81 | 3,066.70
+
+然后下面是Commodity Code等，然后Order: 4503039410，Purchase Order: 4503039410 000002，Delivery: 803476581 10 JAN 2022。
+
+现在要找到“803476581 10 JAN 2022”这个文本的位置。在图像中，这个文本位于Delivery: 后面，所以需要确定其左上角和右下角的坐标。
+
+另外，可能需要看三个项目中的该文本，但问题没有指定是哪一个，但可能每个项目的Delivery都有，所以需要看哪个。不过可能用户需要的是其中一个，比如Item2的。
+
+现在，先估计坐标。整个发票的布局，Page 2 of 8，所以内容在中间部分。底部是公司信息。现在看Delivery的文本在每个项目块的下方，属于该项目的详细信息。
+
+假设图像的宽度是1000单位，高度也是1000单位。现在看Item2的Delivery文本的位置，大概在x方向上，从左到右，Delivery: 后面的文本，所以x大约在中间偏右？不，Material是10088475，Qty是70，UM是3A，然后Unit Price是43.81，Net Price是3,066.70。然后下面的Commodity Code等是该行的详细信息，所以Delivery: 的文本在这些详细信息的最下面。
+
+现在，可能更简单的是看OCR后的文本位置，或者根据图像中的相对位置。比如，Item2的Delivery文本的bounding box：
+
+先看图像中的Item2部分，从上到下的结构：
+
+Item: 2
+
+Material: 10088475
+
+Qty: 70
+
+UM: 3A
+
+Unit Price: 43.81
+
+Net Price USD: 3,066.70
+
+然后是：
+
+motionalSCOUT R [manual alarm reset]
+
+Commodity Code: 8531100000
+
+Country of Origin: CN
+
+Order: 4503039410
+
+Purchase Order: 4503039410 000002
+
+Delivery: 803476581 10 JAN 2022
+
+所以，Delivery: 后面的文本是“803476581 10 JAN 2022”，这个文本在“Delivery: ”的右边，所以需要确定这个文本的起始和结束位置。
+
+现在，假设整个图像的宽度是W，高度是H。将图像的x轴从左到右0到W，y轴从上到下0到H。然后将坐标归一化到0-1000。
+
+现在，观察图像中的各个元素，比如公司名称在底部，银行信息在底部右侧。Invoice Number在顶部。Page 2 of 8在Invoice Number下面。
+
+现在，Item2的Delivery文本位于图像的中上部，偏左还是偏右？Material列是左数第二列，然后Qty、UM等。Delivery是该项目的详细信息，所以在Material列的下方，即x坐标大约在Material列的x范围的下方，也就是x大约在100到200之间？不，Material是第二列（Item是第一列，Material是第二列），所以Material的x范围是比如从200到400（假设列宽），然后Qty是第三列，UM第四列，Unit Price第五列，Net Price第六列。然后下面的详细信息（Commodity Code等）是在这些列的下方，所以Delivery: 的文本在这些列的下方，x范围可能和Material列对齐，即x大约在200到400之间？不，可能更宽，因为Delivery: 是一行，可能跨列。
+
+或者，可能更简单的是看每个Delivery文本的位置，比如Item2的Delivery文本的bounding box的x1, y1, x2, y2。
+
+另外，可能需要使用图像中的实际像素来计算，但这里没有实际像素，只能根据布局估计。
+
+另一种方法是，看三个项目（Item2、3、4）的Delivery文本，每个的y坐标不同，因为每个项目在不同的行。Item2在最上面，Item3在中间，Item4在下面。所以每个Delivery文本的y坐标不同，x坐标可能相同（因为每个项目的Delivery在各自的块内，x范围可能相似）。
+
+现在，问题中的文本是'803476581 10 JAN 2022'，需要确定其在图像中的位置。比如，Item2的Delivery中的该文本，其y坐标在Item2的详细信息部分，即在Item2的Net Price下方。
+
+现在，假设图像的高度是H，Page 2 of 8，所以内容从顶部（Invoice标题）到公司信息。顶部是Invoice Number等，然后是Item表格，然后是三个Item的详细信息，然后是公司信息。
+
+现在，估计Item2的Delivery文本的y坐标大约在图像的1/3到1/2之间，x坐标大约在中间偏左（因为Material列在左边，详细信息在Material列的下方，所以x范围和Material列对齐，即x从大约200到600？不，可能更宽，因为Delivery: 是一行，可能从左到右覆盖多个列。
+
+或者，可能更直接的是，看OCR后的文本位置，比如在图像中，每个Delivery的文本是“803476581 10 JAN 2022”，在Item2中，该文本的bounding box可以大致确定为：
+
+x1：大约在“Delivery: ”的右边，所以“Delivery: ”的x大约是某个值，然后文本从x1开始。比如，“Delivery: ”的x是大约400，然后文本从x=450开始，y坐标是Item2详细信息的底部，即y大约是300（假设图像高度是1000，顶部是y=0，底部是y=1000）。
+
+不过可能更准确的是，看图像中的实际内容，比如Item2的Delivery行：
+
+在图像中，Item2的Delivery是“803476581 10 JAN 2022”，位于“Purchase Order: 4503039410 000002”下面，所以y坐标在Purchase Order的y坐标下方。
+
+现在，可能需要给出一个合理的估计。比如，对于Item2的Delivery文本，其bounding box的坐标是（x1, y1, x2, y2）= (400, 350, 650, 370) 左右？但需要归一化到0-1000。
+
+或者，可能更简单的是，观察图像中的三个Delivery文本，每个的x范围大致相同，y范围不同。比如，Item2的Delivery在y=300-350，Item3在y=400-450，Item4在y=500-550。x范围都是从大约350到600（因为Delivery: 后面的文本长度适中）。
+
+现在，问题中的文本是'803476581 10 JAN 2022'，可能需要确定其中一个，比如Item2的。所以，假设Item2的Delivery文本的bounding box是：
+
+x1: 420（因为“Delivery: ”在x=350左右，然后文本从x=400开始）
+
+y1: 320（Item2的详细信息的y位置，比如Commodity Code在y=250，Order在y=280，Purchase Order在y=300，Delivery在y=320）
+
+x2: 620（文本的宽度，大约200单位）
+
+y2: 340（文本的高度，大约20单位）
+
+但需要归一化到0-1000，所以可能需要更精确。
+
+另一种方法是，看图像中的文字，比如“803476581 10 JAN 2022”在Item2中，位于“Delivery: ”之后，所以整个“Delivery: 803476581 10 JAN 2022”是一行。现在，测量该行的x和y范围。
+
+另外，可能可以参考图像中的其他元素，比如Invoice Number在顶部，x范围是中间，y=50。Page 2 of 8在y=70。然后Item表格的表头（Item, Material, Qty, UM, Unit Price, Net Price USD）在y=100到y=150。然后Item2的行（Item 2, 10088475, 70, 3A, 43.81, 3,066.70）在y=150到y=200。然后下面的详细信息（motionalSCOUT R...）在y=200到y=250。Commodity Code在y=250到y=270。Country of Origin在y=270到y=290。Order在y=290到y=310。Purchase Order在y=310到y=330。Delivery在y=330到y=350。所以Delivery的文本“803476581 10 JAN 2022”在y=330到y=350之间，x范围是从“Delivery: ”的x（比如x=300）到x=600（因为文本长度）。
+
+现在，将y=330归一化到0-1000的话，假设图像总高度是H，比如H=1000，那么y=330就是330。x的范围，假设图像总宽度是W=1000，那么“Delivery: ”的x大约是300（因为Material列在x=200到x=350，所以Delivery的x可能从x=300开始，到x=600结束）。
+
+所以，对于Item2的Delivery文本“803476581 10 JAN 2022”，其bounding box的x1=350，y1=330，x2=600，y2=350。这样归一化后的坐标是（350, 330, 600, 350）。
+
+但需要确认是否是这个。另外，检查Item3和Item4的Delivery是否也有这个文本，是的，每个项目的Delivery都是这个日期，所以可能有三个这样的文本。但问题中没有指定是哪一个，可能需要看哪个最明显，或者可能用户需要的是其中一个。但根据问题，可能只需要找到其中一个的区域，因为文本内容相同，可能在不同位置。
+
+现在，再检查图像中的Item3的Delivery：在Item3的详细信息中，Delivery也是“803476581 10 JAN 2022”，其y坐标在Item3的详细信息部分，即y=400到y=450左右。Item4的Delivery在y=470到y=520左右。
+
+现在，问题中的文本是'803476581 10 JAN 2022'，需要确定其区域。可能需要选择其中一个，比如Item2的，因为它是第一个项目。
+
+另外，可能需要验证OCR的准确性，图像中的Delivery确实是这个文本。看原文中的Item2的Delivery：“Delivery: 803476581 10 JAN 2022”——是的。Item3的Delivery：“Delivery: 803476581 10 JAN 2022”——是的。Item4的Delivery：“Delivery: 803476581 10 JAN 2022”——是的。
+
+现在，假设要找的是Item2中的该文本，其bounding box的坐标。现在，将图像的宽度和高度视为1000，那么：
+
+- 顶部（Invoice标题）的y范围是0-100。
+- Item表头（Item, Material等）的y范围是100-150。
+- Item2的行（Item 2...）的y范围是150-200。
+- Item2的详细信息（motionalSCOUT R...）的y范围是200-250。
+- Commodity Code: ...的y范围是250-270。
+- Country of Origin: ...的y范围是270-290。
+- Order: ...的y范围是290-310。
+- Purchase Order: ...的y范围是310-330。
+- Delivery: ...的y范围是330-350。
+
+在x方向上，Material列的x范围是200-350（因为Item是100-150，Material是150-300？可能需要更准确的列宽。假设每列的宽度是100，那么：
+
+- Item列：x=100-200
+- Material列：x=200-300
+- Qty列：x=300-400
+- UM列：x=400-500
+- Unit Price列：x=500-650
+- Net Price USD列：x=650-800
+
+然后，详细信息（Commodity Code等）是在这些列的下方，所以x范围可能覆盖Material列到Net Price列，即x=200-800。
+
+所以，Delivery: 的文本在x=200-600（因为“Delivery: ”可能

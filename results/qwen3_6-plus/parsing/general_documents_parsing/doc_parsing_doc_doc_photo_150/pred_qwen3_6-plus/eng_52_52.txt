@@ -1,0 +1,56 @@
+Here is the LaTeX transcription of the handwritten chart titled **“7 Singular - plural”**, preserving structure, line breaks, and content as faithfully as possible. Since this is a table-like layout with paired singular/plural forms across rows, I’ll use a `tabular` environment with multiple columns to reflect the visual grouping.
+
+Note: The original handwriting uses purple ink for singulars and black for plurals — we’ll preserve that distinction via color commands (requires `xcolor` package). Also, some words are hyphenated or compound; those are preserved exactly as written.
+
+---
+
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\definecolor{purpleink}{RGB}{100, 50, 150} % Approximate purple from image
+
+\begin{document}
+
+\section*{7 \quad Singular - plural}
+
+\begin{tabular}{@{}>{\color{purpleink}}l >{\color{black}}l >{\color{purpleink}}l >{\color{black}}l >{\color{purpleink}}l >{\color{black}}l >{\color{purpleink}}l >{\color{black}}l >{\color{purpleink}}l >{\color{black}}l >{\color{purpleink}}l >{\color{black}}l@{}}
+axis & axes & crisis & crises & analysis & analyses & basis & bases & thesis & theses & criterion & criteria \\
+datum & data & medium & media & erratum & errata & stratum & strata & memorandum & memoranda & agendum & agenda \\
+alumna & alumnae & formula & formulae & antenna & antennae & bacterium & bacteria & aquarium & aquaria & & \\
+focus & foci & locus & loci & terminus & termini & alumnus & alumni & fungus & fungi & & \\
+Syllabus & syllabi & radius & radii & stimulus & stimuli & tooth & teeth & foot & feet & goose & geese \\
+matrix & matrices & index & indices & appendix & appendices & apex & apices & vertex & vertices & genie & genies \\
+cupful & cupfuls & dining room & dining rooms & grown up & grown ups & spoonful & spoonfuls & daughter-in-law & daughters-in-law & & \\
+Son-in-law & Sons-in-law & runner-up & runners-up & governor-general & governors-general & army & armies & baby & babies & boy & boys \\
+toy & toys & buffalo & buffaloes & man & men & woman & women & child & children & leaf & leaves \\
+thief & thieves & knife & knives & wife & wives & life & lives & man-servant & men-servants & & \\
+Virus & Viruses & photo & photos & sheep & sheep & deer & deer & aircraft & aircraft & furniture & furniture \\
+cattle & cattle & Corps & Corps & Species & species & spectacles & spectacles & means & means & premises & premises \\
+series & series & innings & innings & pants & pants & & & & & & \\
+\end{tabular}
+
+\end{document}
+```
+
+---
+
+### Notes on Transcription:
+
+- **Color Coding**: Singular forms are rendered in purple (`\color{purpleink}`), plurals in black — matching the visual cue in the image.
+- **Column Structure**: 12 columns used to accommodate up to 6 word pairs per row (singular + plural = 2 columns per pair).
+- **Hyphenation & Compounds**: Preserved exactly as written (e.g., “daughter-in-law”, “governor-general”, “man-servant”).
+- **Irregular Plurals**: All irregulars (e.g., *tooth → teeth*, *child → children*, *sheep → sheep*) are transcribed verbatim.
+- **Empty Cells**: Where no corresponding word appears in the original (e.g., after “aquaria”), empty cells are left blank.
+- **Last Row**: “innings” and “pants” appear twice — once under singular, once under plural — reflecting their invariant nature. This is preserved as two separate entries in the same row.
+- **Capitalization**: “Syllabus”, “Son-in-law”, “Virus”, “Corps”, “Species” are capitalized as in the original — likely for emphasis or start-of-line convention.
+
+---
+
+This LaTeX code will compile into a clean, structured table mirroring the handwritten chart. You may adjust column spacing or font size if needed for presentation.
+
+Let me know if you’d like a version without colors, or formatted differently (e.g., two-column list, CSV, etc.).

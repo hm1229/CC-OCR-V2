@@ -1,0 +1,13 @@
+Absolutely, here is the LaTeX representation of the formula from the image:
+
+```latex
+\|(\alpha_k k_i) \times (w_0^n - w_0^m)\|_{L^2}^2 = \int_{\mathbb{R}^2} \left| \int_{\mathbb{R}^2} B_{2\epsilon}(x-y) k_i(x-y) (w_0^n(y) - w_0^m(y))^2 \right| dx
+\\ \leq \int_{\mathbb{R}^2} \left( \int_{\mathbb{R}^2} B_{2\epsilon}(x-y) |x-y| \left| (w_0^n(y) - w_0^m(y))^2 \right| dy \right)^2 dx
+\\ = \int_{\mathbb{R}^2} \left( \int_{\mathbb{R}^2} B_{2\epsilon}(x-y) |x-y| \left| \log(1/x-y) \right| \left| w_0^n(y) - w_0^m(y) \right| \right)^2 dy \right)^2 dx
+\\ \times \left( \log \left( \frac{|x-y|}{(x-y)^2} \right) \right)^2 \left( \frac{\log(e + |w_0^n(y) - w_0^m(y)|)}{\log(e + |w_0^n(y) - w_0^m(y)|)} \right)^2 dy \right)^2 dx
+\\ \leq \int_{\mathbb{R}^2} \int_{\mathbb{R}^2} B_{2\epsilon}(x-y) |x-y|^p \left( 10g \left( \frac{|x-y|}{(x-y)^2} \right) \right)^{2p} \left( \log(e + |w_0^n(y) - w_0^m(y)|) \right)^{2p} dy dx
+\\ \times \int_{\mathbb{R}^2} B_{2\epsilon}(x) \left( \log \left( \frac{10g(x-y)}{(x-y)^2} \right) \right)^{2p} \left( \log(e + |w_0^n(y) - w_0^m(y)|) \right)^{2p} dy
+\\ \leq \sup_{x} \int_{\mathbb{R}^2} B_{2\epsilon}(x) \left( \log \left( \frac{10g(x-y)}{(x-y)^2} \right) \right)^{2p} \left( \log(e + |w_0^n(y) - w_0^m(y)|) \right)^{2p} dy
+\\ \times \int_{\mathbb{R}^2} \int_{\mathbb{R}^2} B_{2\epsilon}(x-y) |x-y|^p \left( \log \left( \frac{|x-y|}{(x-y)^2} \right) \right)^{2p} \left| w_0^n(y) - w_0^m(y) \right| \left( \log(e + |w_0^n(y) - w_0^m(y)|) \right)^{2p} dy dx
+\\ (II *)
+```

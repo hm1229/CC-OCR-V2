@@ -1,0 +1,13 @@
+\[
+\begin{aligned}
+&|\mathbb{E}[F_{t}^{A}(s_{t}, a_{t})|P_{t}]| = \gamma \mathbb{E}\left[\min\{Q_{t}^{B}(s_{t+1}, a_{t}^{*}), Q_{t}^{A}(s_{t+1}, a^{*})\} - \min\{Q_{t}^{A}(s_{t+1}, b_{t}^{*}), Q_{t}^{B}(s_{t+1}, b^{*})\} \mid P_{t}\right] \\
+&\leq \gamma \mathbb{E}\left[\min\{Q_{t}^{B}(s_{t+1}, b^{*}), Q_{t}^{A}(s_{t+1}, a^{*})\} - \min\{Q_{t}^{A}(s_{t+1}, b^{*}), Q_{t}^{B}(s_{t+1}, b^{*})\} \mid P_{t}\right] \\
+&\leq \gamma \mathbb{E}\left[Q_{t}^{B}(s_{t+1}, b^{*}) \mid P_{t}\right] - \gamma \mathbb{E}\left[\min\{Q_{t}^{A}(s_{t+1}, b^{*}), Q_{t}^{B}(s_{t+1}, b^{*})\} \mid P_{t}\right] \\
+&= \gamma P(Q_{t}^{B}(s_{t+1}, b^{*}) \geq Q_{t}^{A}(s_{t+1}, b^{*})|P_{t}) \mathbb{E}\left[Q_{t}^{B}(s_{t+1}, b^{*})|Q_{t}^{B}(s_{t+1}, b^{*}) \geq Q_{t}^{A}(s_{t+1}, b^{*}), P_{t}\right] \\
+&+ \gamma P(Q_{t}^{B}(s_{t+1}, b^{*}) < Q_{t}^{A}(s_{t+1}, b^{*})|P_{t}) \mathbb{E}\left[Q_{t}^{B}(s_{t+1}, b^{*})|Q_{t}^{B}(s_{t+1}, b^{*}) < Q_{t}^{A}(s_{t+1}, b^{*}), P_{t}\right] \\
+&- \gamma P(Q_{t}^{B}(s_{t+1}, b^{*}) \geq Q_{t}^{A}(s_{t+1}, b^{*})|P_{t}) \mathbb{E}\left[Q_{t}^{A}(s_{t+1}, b^{*})|Q_{t}^{B}(s_{t+1}, b^{*}) \geq Q_{t}^{A}(s_{t+1}, b^{*}), P_{t}\right] \\
+&- \gamma P(Q_{t}^{B}(s_{t+1}, b^{*}) < Q_{t}^{A}(s_{t+1}, b^{*})|P_{t}) \mathbb{E}\left[Q_{t}^{B}(s_{t+1}, b^{*})|Q_{t}^{B}(s_{t+1}, b^{*}) < Q_{t}^{A}(s_{t+1}, b^{*}), P_{t}\right] \\
+&= \gamma P(Q_{t}^{B}(s_{t+1}, b^{*}) \geq Q_{t}^{A}(s_{t+1}, b^{*})|P_{t}) \mathbb{E}\left[Q_{t}^{B}(s_{t+1}, b^{*}) - Q_{t}^{A}(s_{t+1}, b^{*})|Q_{t}^{B}(s_{t+1}, b^{*}) \geq Q_{t}^{A}(s_{t+1}, b^{*}), P_{t}\right] \\
+&\leq \gamma P(Q_{t}^{B}(s_{t+1}, a^{*}) \geq Q_{t}^{A}(s_{t+1}, a^{*})|P_{t}) \| \Delta_{t}^{BA} \| \leq \gamma \| \Delta_{t}^{BA} \|.
+\end{aligned}
+\]

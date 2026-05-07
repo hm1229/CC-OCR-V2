@@ -1,0 +1,117 @@
+The provided image contains a study guide for Chinese civil law, specifically focusing on contract formation and validity. Here is the transcription of the text and diagrams into LaTeX format.
+
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{CJKutf8}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows, positioning, calc}
+
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+% Header section
+\noindent
+\begin{minipage}{0.2\textwidth}
+    \fbox{\shortstack{KEEP AWAKE \\ 觉晓教育}}
+\end{minipage}
+\begin{minipage}{0.8\textwidth}
+    \large \textbf{民法主观题知识点 + 小案例}
+\end{minipage}
+
+\vspace{1em}
+
+% Table section
+\noindent
+\begin{tabular}{|c|p{11cm}|}
+\hline
+2010 年 & 问 4：丙公司与戊公司签订房产买卖合同效力如何？为什么？（物权未变动不影响买卖合同效力、多重买卖不影响买卖合同效力） \\ \cline{2-2}
+& 问 2：甲公司与丁、戊公司签定的转卖大蒜的合同的效力如何？为什么？（多重买卖不影响买卖合同效力） \\ \cline{2-2}
+& 问 6：甲公司与乙公司签订的绿豆买卖合同效力如何？为什么？（被代理人以履行合同的方式追认无权代理） \\ \cline{2-2}
+& 问 7：丙公司将绿豆转卖给己公司的买卖合同的效力如何？为什么？（无权处分不影响买卖合同的效力） \\ \hline
+\end{tabular}
+
+\vspace{2em}
+
+% Section Title
+\begin{center}
+    \Large \textbf{第一节 合同的成立}
+\end{center}
+
+\vspace{2em}
+
+% Flowchart section using TikZ
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={rectangle, draw, text width=2.5cm, align=left, minimum height=1.5cm},
+    smallbox/.style={rectangle, draw, align=center, minimum width=1.5cm},
+    arrow/.style={-stealth, thick}
+]
+
+% Top boxes
+\node[box] (fact) {事实判断 \\ 1.当事人 \\ 2.意思表示 \\ 3.标的};
+\node[box, right=1cm of fact] (value) {价值判断 \\ 1.民事行为能力 \\ 2.意思表示真实、自由 \\ 3.不违反强制性规定、不违背公序良俗};
+
+% Arrows from top boxes
+\draw[arrow] (fact.south) -- ++(0,-0.8);
+\draw[arrow] (value.south) -- ++(0,-0.8);
+
+% Main structure
+\node[draw, rounded corners, left=1cm of fact, yshift=-3.5cm] (legal) {民事法律行为};
+
+% Brackets and nodes for "成立"
+\draw (legal.east) -- ++(0.3,0) -- ++(0,0.8) -- ++(0.3,0) node[right, draw, rounded corners] (not_est) {不成立};
+\draw (legal.east) -- ++(0.3,0) -- ++(0,-0.8) -- ++(0.3,0) node[right, draw, rounded corners] (est) {成立};
+
+% Brackets and nodes for "有效"
+\draw (est.east) -- ++(0.3,0) -- ++(0,0.8) -- ++(0.3,0) node[right, draw, rounded corners] (valid) {有效};
+\draw (est.east) -- ++(0.3,0) -- ++(0,-0.8) -- ++(0.3,0) node[right, draw, rounded corners] (defect) {效力瑕疵};
+
+% Sub-nodes for "有效"
+\draw (valid.east) -- ++(0.3,0) -- ++(0,0.8) -- ++(0.3,0) node[right, draw, rounded corners] (effective) {生效};
+\draw (valid.east) -- ++(0.3,0) -- ++(0,-0.8) -- ++(0.3,0) node[right, draw, rounded corners] (not_effective) {未生效};
+
+% Final details
+\node[right=0.5cm of effective, draw, rounded corners] {大多数合同、婚姻};
+\node[right=0.5cm of not_effective, align=left] {附延缓条件 \\ 附始期 \\ 需要审批 \\ 遗嘱};
+\node[right=0.5cm of defect, align=left] {无效 \\ 可撤销 \\ 效力待定};
+
+% Dashed vertical line
+\draw[dashed] ($(fact.east)!0.5!(value.west)$) -- ++(0,-6);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+    【民事法律行为成立、有效、生效关系图】
+\end{center}
+
+\vspace{1em}
+
+% Text content
+\noindent
+合同的订立，通常要经过要约与承诺的过程。一方当事人的要约与另一方当事人的承诺达成一致，意味着双方当事人形成合意，合同即告成立。
+
+\vspace{1em}
+
+\noindent
+\textbf{一、合同的订立：要约与承诺}
+
+\vspace{0.5em}
+
+\noindent
+\textbf{（一）要约}
+
+\noindent
+要约，是希望与他人订立合同的意思表示，需满足以下构成要件：
+\begin{enumerate}
+    \item 向希望与之订立合同的受要约人作出。
+    \item 内容具体且确定：受要约人只要表示接受即可成立合同，所以要约的内容必须包含合同的必备内容。
+    \item 具有订立合同的目的并表明一经承诺即受拘束的意思。
+\end{enumerate}
+
+\end{CJK*}
+\end{document}
+```

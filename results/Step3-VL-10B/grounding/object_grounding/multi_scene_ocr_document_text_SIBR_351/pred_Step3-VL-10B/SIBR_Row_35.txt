@@ -1,0 +1,220 @@
+用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看C/I No：图中左上角C/I No对应TAI20210706632，所以找到这个位置的bbox。
+
+然后Date：2021-07-16，对应Date字段。
+
+Sold to：Haichuang Information Co., Ltd.，看Sold to部分。
+
+Delivery Address：Unit 1833 Box 9772 DPO AA 91750，这个是Delivery Address的内容。
+
+Destination：Perris, CA，对应Destination字段。
+
+ETD：2021-12-07，ETD字段。
+
+FAX：有两个FAX，卖家的FAX是92-82-66969191，制造商的FAX是69-61-29681929。需要分别找吗？看题目中的FAX类别，可能两个都要？不过先看每个出现的FAX。
+
+PO NO.：PO-0002731781，PO NO.字段。
+
+Terms of Delivery：FOB Shanghai，对应Terms of Delivery。
+
+Terms of Payment：TT30SHIP，对应Terms of Payment。
+
+Type of Container：1*40HC，对应Type of Container。
+
+Your Cont.：tf5597，对应Your Cont.。
+
+Cust NO.：71500，Cust NO.字段。
+
+Currency：USD，Currency字段。
+
+Company Name：卖家是Haichuang Information Co., Ltd.（SOLD TO也是这个？不，SOLD TO是买方，Seller是卖方，Manufacturer是制造商。Company Name应该包括Seller、Sold to、Manufacturer的公司名？比如Seller的Company Name是Haichuang Information Co., Ltd.，Sold to也是这个，Manufacturer也是Haichuang Information Co., Ltd.。所以需要看每个Company Name的出现。
+
+Title是Commercial Invoice，标题。
+
+现在逐个处理：
+
+1. C/I No：TAI20210706632，位置在左上角，C/I No标签下的内容。bbox大概是[39, 73, 152, 88]左右？看原图结构，C/I No行是“C/I No TAI20210706632”，所以bbox是包含这个文本的区域。
+
+2. Date：2021-07-16，Date行，对应bbox。
+
+3. Sold to：Haichuang Information Co., Ltd.，Sold to: 后面的内容，bbox是Sold to部分的文本。
+
+4. Delivery Address：Unit 1833 Box 9772 DPO AA 91750，Delivery Address: 后面的内容。
+
+5. Destination：Perris, CA，Destination字段对应的内容。
+
+6. ETD：2021-12-07，ETD字段。
+
+7. FAX：卖家的FAX是92-82-66969191（在Seller部分），制造商的FAX是69-61-29681929（在Manufacturer部分）。所以两个FAX都要吗？题目中的FAX类别，所以每个FAX实例都要检测。
+
+8. PO NO.：PO-0002731781，PO NO.字段。
+
+9. Terms of Delivery：FOB Shanghai，对应Terms of Delivery。
+
+10. Terms of Payment：TT30SHIP，对应Terms of Payment。
+
+11. Type of Container：1*40HC，对应Type of Container。
+
+12. Your Cont.：tf5597，对应Your Cont.。
+
+13. Cust NO.：71500，Cust NO.字段。
+
+14. Currency：USD，Currency字段。
+
+15. Company Name：Seller的Company Name是Haichuang Information Co., Ltd.（Seller部分），Sold to的Company Name也是Haichuang Information Co., Ltd.，Manufacturer的Company Name是Haichuang Information Co., Ltd.。所以这三个都是Company Name吗？需要看每个Company Name的出现。比如Seller的Company Name是“Haichuang Information Co., Ltd.”，Sold to的Company Name也是这个，Manufacturer的也是。所以三个Company Name实例？
+
+16. Title：Commercial Invoice，标题部分。
+
+现在需要确定每个元素的bbox。因为是图片，需要估计每个文本的位置。
+
+现在开始列每个类别：
+
+- C/I No: 文本是TAI20210706632，对应位置在左上方，C/I No标签右侧。bbox大概[101, 75, 234, 92]（假设坐标是基于图片的，需要看原图布局。原图中C/I No行是“C/I No TAI20210706632”，所以x范围是C/I No的列，y是对应行。
+
+- Date: 2021-07-16，Date行，对应bbox[45, 112, 146, 130]左右。
+
+- Sold to: Haichuang Information Co., Ltd.，Sold to: 后面的内容，bbox是Sold to: 行的文本，比如x从Sold to: 开始，y是对应行。
+
+- Delivery Address: Unit 1833 Box 9772 DPO AA 91750，Delivery Address: 后面的内容，bbox是该行的文本。
+
+- Destination: Perris, CA，Destination字段对应的内容，看右侧Destination列下的Perris, CA。
+
+- ETD: 2021-12-07，ETD字段对应的内容，在右侧ETD行。
+
+- FAX（Seller）: 92-82-66969191，在Seller部分的FAX: 后面的内容。
+
+- FAX（Manufacturer）: 69-61-29681929，在Manufacturer部分的FAX: 后面的内容。
+
+- PO NO.: PO-0002731781，PO NO.字段对应的内容。
+
+- Terms of Delivery: FOB Shanghai，在Terms of Delivery行。
+
+- Terms of Payment: TT30SHIP，在Terms of Payment行。
+
+- Type of Container: 1*40HC，在Type of Container列下的内容。
+
+- Your Cont.: tf5597，在Your Cont.列下的内容。
+
+- Cust NO.: 71500，在Cust NO.列下的内容。
+
+- Currency: USD，在Currency字段下的内容。
+
+- Company Name（Seller）: Haichuang Information Co., Ltd.（Seller部分的公司名）。
+
+- Company Name（Sold to）: Haichuang Information Co., Ltd.（Sold to部分的公司名）。
+
+- Company Name（Manufacturer）: Haichuang Information Co., Ltd.（Manufacturer部分的公司名）。
+
+- Title: Commercial Invoice，标题在最上方。
+
+现在需要将这些都列出来，每个作为一个对象。注意有些可能重复，比如Company Name出现三次，FAX出现两次等。
+
+现在开始构建JSON数组：
+
+1. C/I No: bbox对应C/I No的值，label是C/I No。
+2. Date: 对应Date的值，label Date。
+3. Sold to: 对应Sold to的公司名，label Sold to。
+4. Delivery Address: 对应Delivery Address的地址，label Delivery Address。
+5. Destination: 对应Destination的Perris, CA，label Destination。
+6. ETD: 对应ETD的2021-12-07，label ETD。
+7. FAX（Seller）: 92-82-66969191，label FAX。
+8. FAX（Manufacturer）: 69-61-29681929，label FAX。
+9. PO NO.: PO-0002731781，label PO NO.。
+10. Terms of Delivery: FOB Shanghai，label Terms of Delivery。
+11. Terms of Payment: TT30SHIP，label Terms of Payment。
+12. Type of Container: 1*40HC，label Type of Container。
+13. Your Cont.: tf5597，label Your Cont.。
+14. Cust NO.: 71500，label Cust NO.。
+15. Currency: USD，label Currency。
+16. Company Name（Seller）: Haichuang Information Co., Ltd.（Seller部分），label Company Name。
+17. Company Name（Sold to）: Haichuang Information Co., Ltd.（Sold to部分），label Company Name。
+18. Company Name（Manufacturer）: Haichuang Information Co., Ltd.（Manufacturer部分），label Company Name。
+19. Title: Commercial Invoice，label Title。
+
+现在需要确定每个的bbox。因为是图片，需要大致估计。例如：
+
+- Title: "Commercial Invoice" 在最上方，所以bbox是[39, 33, 834, 60]左右（假设页面布局）。
+
+- C/I No: "C/I No TAI20210706632"，bbox是[39, 75, 234, 95]。
+
+- Date: "Date 2021-07-16"，bbox是[39, 112, 152, 132]。
+
+- SELLER部分的Company Name: "Haichuang Information Co., Ltd."，在Seller标题下的公司名，bbox是[334, 135, 600, 155]（大概）。
+
+- MANUFACTURER部分的Company Name: "Haichuang Information Co., Ltd."，在Manufacturer标题下的公司名，bbox是[634, 135, 826, 155]。
+
+- Sold to: "Sold to: Haichuang Information Co., Ltd."，bbox是[39, 155, 326, 175]。
+
+- Delivery Address: "Delivery Address: Unit 1833 Box 9772 DPO AA 91750"，bbox是[39, 200, 234, 220]（地址部分）。
+
+- Terms of Delivery: "FOB Shanghai"，在Terms of Delivery行，bbox是[334, 200, 456, 220]。
+
+- Port of Loading: 这里可能没有内容，但Terms of Delivery是FOB Shanghai，所以对应位置。
+
+- Terms of Payment: "TT30SHIP"，在Terms of Payment行，bbox是[334, 225, 456, 245]。
+
+- Port of Discharge: 可能没有内容，但ETD是2021-12-07，在ETD行，bbox是[634, 225, 756, 245]。
+
+- Type of Container: "1*40HC"，在Type of Container列，bbox是[634, 200, 756, 220]。
+
+- Cust NO.: "71500"，在Cust NO.列，bbox是[756, 200, 878, 220]。
+
+- Our Cont.: 可能没有内容，Your Cont.: "tf5597"，在Your Cont.列，bbox是[756, 225, 878, 245]。
+
+- Destination: "Perris, CA"，在Destination列，bbox是[634, 250, 756, 270]。
+
+- Currency: "USD"，在Currency列，bbox是[334, 250, 456, 270]。
+
+- PO NO.: "PO-0002731781"，在PO NO.列，bbox是[756, 225, 878, 245]？不，PO NO.是PO-0002731781，在PO NO.行，对应右侧PO NO.列，所以bbox是[756, 245, 878, 265]。
+
+- FAX（Seller）: "FAX: 92-82-66969191"，在Seller部分的FAX行，bbox是[334, 155, 600, 175]。
+
+- FAX（Manufacturer）: "FAX: 69-61-29681929"，在Manufacturer部分的FAX行，bbox是[634, 155, 826, 175]。
+
+现在需要将这些都整理成JSON数组，每个元素包含bbox和label。注意有些可能在图中没有显示完整，但根据提供的图片内容，尽量提取。
+
+现在开始编写每个条目：
+
+1. {"bbox_2d": [39, 33, 834, 60], "label": "Title"}
+2. {"bbox_2d": [39, 75, 234, 95], "label": "C/I No"}
+3. {"bbox_2d": [39, 112, 152, 132], "label": "Date"}
+4. {"bbox_2d": [334, 135, 600, 155], "label": "Company Name"}
+5. {"bbox_2d": [634, 135, 826, 155], "label": "Company Name"}
+6. {"bbox_2d": [39, 155, 326, 175], "label": "Sold to"}
+7. {"bbox_2d": [39, 200, 234, 220], "label": "Delivery Address"}
+8. {"bbox_2d": [334, 200, 456, 220], "label": "Terms of Delivery"}
+9. {"bbox_2d": [334, 225, 456, 245], "label": "Terms of Payment"}
+10. {"bbox_2d": [634, 225, 756, 245], "label": "ETD"}
+11. {"bbox_2d": [634, 200, 756, 220], "label": "Type of Container"}
+12. {"bbox_2d": [756, 200, 878, 220], "label": "Cust NO."}
+13. {"bbox_2d": [756, 225, 878, 245], "label": "Your Cont."}
+14. {"bbox_2d": [634, 250, 756, 270], "label": "Destination"}
+15. {"bbox_2d": [334, 250, 456, 270], "label": "Currency"}
+16. {"bbox_2d": [756, 245, 878, 265], "label": "PO NO."}
+17. {"bbox_2d": [334, 155, 600, 175], "label": "FAX"}
+18. {"bbox_2d": [634, 155, 826, 175], "label": "FAX"}
+
+现在检查是否有遗漏的类别：Address（Delivery Address属于Address？不，Delivery Address是单独的类别，Address可能指其他地址？但题目中的Address类别，可能Delivery Address是Address的一种？不，题目中的类别有Address，所以需要看是否有其他Address。比如Seller的地址是1333 Brent Streets New Larry, HI 25769，Manufacturer的地址是3060 Cox Inlet New Johnfort, WA 40495。这些是否属于Address类别？
+
+哦，用户要求的类别中有Address，所以需要检查是否有Address类别。之前的分析可能漏了。题目中的类别列表：Address, C/I No, Company Name, Currency, Cust NO., Date, Delivery Address, Destination, ETD, FAX, PO NO., Sold to, TEL, Terms of Delivery, Terms of Payment, Title, Type of Container, Your Cont..
+
+所以Address是单独的类别，而Delivery Address是另一个类别。所以Seller的地址（1333 Brent Streets New Larry, HI 25769）属于Address类别，Manufacturer的地址（3060 Cox Inlet New Johnfort, WA 40495）也属于Address类别。Sold to的地址？不，Sold to是公司名，其地址可能没有在图中显示？看Sold to部分，Sold to: Haichuang Information Co., Ltd.，没有地址，而Delivery Address是另一个地址。所以Address类别应该包括Seller和Manufacturer的地址。
+
+现在补充：
+
+- Seller的Address: 1333 Brent Streets New Larry, HI 25769，在Seller部分的地址，label Address。
+- Manufacturer的Address: 3060 Cox Inlet New Johnfort, WA 40495，在Manufacturer部分的地址，label Address。
+
+另外，TEL也有两个：Seller的TEL: 69-19-29166829，Manufacturer的TEL: 66-29-18969192，这些属于TEL类别，需要添加。
+
+现在重新检查类别列表中的TEL，需要包含这两个TEL。
+
+所以现在需要添加：
+
+- TEL（Seller）: 69-19-29166829，label TEL。
+- TEL（Manufacturer）: 66-29-18969192，label TEL。
+
+现在修正之前的遗漏：
+
+之前的步骤中，FAX有两个，TEL也有两个，Address有两个（Seller和Manufacturer的地址），Company Name有三个（Seller、Sold to、

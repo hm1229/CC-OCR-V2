@@ -1,0 +1,70 @@
+\[
+\left(\left(\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}\right)^{\frac{1}{p}}
+\left(\sum_{i=1}^{n}\langle T_i^{*},|x,y\rangle\rangle^{q}\right)^{\frac{1}{q}}\right)^{r}
+\le \frac{r}{q}\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}
++\frac{r}{q}\sum_{i=1}^{n}\langle T_i^{*},|x,y\rangle\rangle^{q}
+\]
+
+\[
+-\sum_{j=1}^{N}(-1)^{j}2^{j}
+\left(
+\frac{
+\left(\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}\right)^{2^{-j-k}}
++\left(\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{q}\right)^{2^{-j-k}}(-1)
+}{2}
+\right)^{2}
+\]
+
+\[
+\le \frac{r}{q}\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}
++\frac{r}{q}\sum_{i=1}^{n}\langle T_i^{*},|x,y\rangle\rangle^{q}
+-\sum_{j=1}^{N}(-1)^{j}2^{j}
+\left(
+\frac{r^{j}+1}{2}
+\right)
+\]
+
+\[
+\times
+\left(
+\frac{
+\left(\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}\right)^{2^{1-j-k}}
+-\left(\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}\right)^{k_j}
+}{2j}
+\right)
+\]
+
+\[
+-\frac{r}{p}
+\left(
+\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle
++\frac{r}{q}
+\left(\sum_{i=1}^{n}\langle T_i^{*},|x,y\rangle\rangle\right)
+\right)
+\qquad \text{(by Lemma (??), (a))}
+\]
+
+\[
+-\sum_{j=1}^{N}(-1)^{j}2^{j}
+\left(
+\frac{r^{j}+1}{2}
+\right)
+\]
+
+\[
+\times
+\left(
+\frac{
+\left(\sum_{i=1}^{n}\langle T_i^{*},|x,y\rangle\rangle^{q}\right)^{2^{1-j-k}}
+-\left(\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}\right)^{k_j}
+}{2j}
+\right)
+\]
+
+\[
+-2j
+\left(
+\sum_{i=1}^{n}\langle T_i,|x,y\rangle\rangle^{p}
++\left(\sum_{i=1}^{n}\langle T_i^{*},|x,y\rangle\rangle^{q}\right)^{2^{3-j-k_j-1}}
+\right)^{2}
+\]

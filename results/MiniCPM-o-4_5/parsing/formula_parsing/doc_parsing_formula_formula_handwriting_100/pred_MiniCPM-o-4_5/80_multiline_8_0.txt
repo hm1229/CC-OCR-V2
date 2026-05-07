@@ -1,0 +1,18 @@
+Certainly! Here's the LaTeX representation of the formula extracted from the image:
+
+```latex
+\begin{align*}
+&\int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} |u(S\sigma)|^p d\sigma dr \\
+&= \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} \frac{|u(S\sigma)|}{r} \cdot r |u(S\sigma)|^{p-1} d\sigma dr \\
+&\le \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \left( \int_{S^{n-1}} |u(S\sigma)|^p d\sigma \right)^{\frac{1}{p}} \left( \int_{S^{n-1}} r^{\frac{p}{p-1}} |u(S\sigma)|^{p\frac{p-1}{p}} d\sigma \right)^{\frac{p-1}{p}} dr \\
+&\le \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \left( \int_{S^{n-1}} \frac{|u(S\sigma)|^p}{r^p} d\sigma \right)^{\frac{1}{p}} \sup_{0 \le s \le r} \left( \int_{S^{n-1}} r^{\frac{p}{p-1}} |u(S\sigma)|^{p\frac{p-1}{p}} d\sigma \right)^{\frac{p-1}{p}} dr \\
+&= \int_0^\infty r^{\frac{N-1}{p}} \sup_{0 \le s \le r} \left( \int_{S^{n-1}} \frac{|u(S\sigma)|^p}{r^p} d\sigma \right)^{\frac{1}{p}} \times \\
+&\quad \left\{ r^{\frac{(N-1)(p-1)}{p}} \sup_{0 \le s \le r} \left( \int_{S^{n-1}} r^{\frac{p}{p-1}} |u(S\sigma)|^{p\frac{p-1}{p}} d\sigma \right)^{\frac{p-1}{p}} dr \right\} \\
+&\le \left( \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} \frac{|u(S\sigma)|^p}{r^p} d\sigma dr \right)^{\frac{1}{p}} \times \\
+&\quad \left( \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} r^{\frac{p}{p-1}} |u(S\sigma)|^{p\frac{p-1}{p}} d\sigma dr \right)^{\frac{p-1}{p}} \\
+&\le \left( \max \left\{ \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} \frac{|u(S\sigma)|^p}{r^p} d\sigma dr, \right. \right. \\
+&\quad \left. \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} \frac{|u(S\sigma)|^p}{r^p} d\sigma dr \right\} \times \\
+&\quad \left( \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} r^{\frac{p}{p-1}} |u(S\sigma)|^{p\frac{p-1}{p}} d\sigma dr \right)^{\frac{p-1}{p}} \\
+&\le \left| \frac{p}{N-p} \left( \int_{S^{n-1}} \cdot \Delta u(x) \right)^p dx \right|^{\frac{1}{p}} \left( \int_0^\infty r^{N-1} \sup_{0 \le s \le r} \int_{S^{n-1}} r^{\frac{p}{p-1}} |u(S\sigma)|^{p\frac{p-1}{p}} d\sigma dr \right)^{\frac{p-1}{p}}
+\end{align*}
+```

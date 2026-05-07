@@ -1,0 +1,90 @@
+To transcribe the image's content into LaTeX, we structure the problem statement, initial enrollment table, and method-specific tables (Jefferson’s, Hamilton’s, Webster’s) with proper formatting:  
+
+
+```latex
+\documentclass{article}
+\usepackage{table}
+\begin{document}
+
+\section*{Problem 4}
+
+The given table shows the number of students enrolled in history, liberal arts math, and English during the fall and Spring semesters. If there are 197 full time teaching positions available for apportionment among the three departments based on course enrollment, answer each of the following questions.
+
+\begin{table}[h]
+\centering
+\caption{Student enrollments by subject and semester}
+\begin{tabular}{lcc}
+\hline
+Subject & Fall & Spring \\
+\hline
+History & 1902 & 1922 \\
+Liberal Arts Math & 14200 & 14200 \\
+English & 3898 & 3938 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection*{a. Jefferson’s Method}
+
+Find the number of teaching positions that should be apportioned to each department in the fall using Jefferson’s Method.
+
+\begin{table}[h]
+\centering
+\caption{Jefferson’s Method for apportionment (Fall)}
+\begin{tabular}{lccccc}
+\hline
+Subject & Standard Quota & Lower Quota & Modified Quota (if needed) & New Lower Quota & Modified Quota (if needed) & New Lower Quota \\
+\hline
+History & 18.08 & 18 & 18.99 & 18 &  &  \\
+Liberal Arts Math & 139.66 & 139 & 141.08 & 141 &  &  \\
+English & 38.53 & 38 & 38.92 & 38 &  &  \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection*{b. Hamilton’s Method}
+
+Find the number of teaching positions that should be apportioned to each department in the fall using Hamilton’s Method.
+
+\begin{table}[h]
+\centering
+\caption{Hamilton’s Method for apportionment (Fall)}
+\begin{tabular}{lcccc}
+\hline
+Subject & Standard Quota & Lower Quota & Additional (based on decimals) & Final allocation \\
+\hline
+History & 18.08 & 18 & 0 & 18 \\
+Liberal Arts Math & 139.66 & 139 & 1 & 140 \\
+English & 38.53 & 38 & 1 & 39 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection*{c. Webster’s Method}
+
+Find the number of teaching positions that should be apportioned to each department in the fall using Webster’s Method.
+
+\begin{table}[h]
+\centering
+\caption{Webster’s Method for apportionment (Fall)}
+\begin{tabular}{lcccccc}
+\hline
+Subject & Standard Quota & Rounded Quota & Modified Quota (if needed) & New Rounded Quota & Modified Quota (if needed) & New Rounded Quota \\
+\hline
+History & 18.08 & 18 &  &  &  &  \\
+Liberal Arts Math & 139.66 & 140 &  &  &  &  \\
+English & 38.53 & 39 &  &  &  &  \\
+\hline
+\end{tabular}
+\end{table}
+
+\end{document}
+```  
+
+
+### Explanation:  
+- **Initial Enrollment Table**: Captures student counts for History, Liberal Arts Math, and English across Fall/Spring semesters.  
+- **Method Tables**: Each subsection (a, b, c) includes a table specific to the apportionment method (Jefferson’s, Hamilton’s, Webster’s), with columns matching the image’s headers (e.g., “Standard Quota,” “Lower Quota,” “Final allocation”).  
+- **Formatting**: Uses `tabular` environments with `\hline` for table borders, `\centering` for alignment, and `\caption` for table titles. Subsections (`\subsection*`) organize the three method-specific tasks.  
+
+This transcription preserves all text, table structures, and formatting from the original image.

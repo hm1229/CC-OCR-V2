@@ -1,0 +1,100 @@
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{enumitem}
+
+% Set page margins
+\geometry{a4paper, margin=1in}
+
+% Define colors from the image
+\definecolor{headergreen}{RGB}{0, 128, 0}
+\definecolor{rowgreen}{RGB}{200, 255, 200}
+\definecolor{verbred}{RGB}{200, 0, 0}
+
+\begin{document}
+
+% Title
+\begin{center}
+    \fontsize{24}{28}\selectfont
+    \textcolor{red}{T} \textcolor{orange}{h} \textcolor{yellow}{e} \textcolor{green}{p} \textcolor{blue}{a} \textcolor{purple}{s} \textcolor{red}{s} \textcolor{orange}{i} \textcolor{yellow}{v} \textcolor{green}{e} \textcolor{blue}{v} \textcolor{purple}{o} \textcolor{red}{i} \textcolor{orange}{c} \textcolor{yellow}{e}
+\end{center}
+\vspace{1cm}
+
+% Table
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{6pt}
+\noindent
+\begin{tabularx}{\textwidth}{|l|>{\raggedright\arraybackslash}X|>{\raggedright\arraybackslash}X|}
+\hline
+\rowcolor{headergreen}
+\textcolor{white}{\textbf{}} & \textcolor{white}{\textbf{Active Voice}} & \textcolor{white}{\textbf{Passive Voice}} \\
+\hline
+\rowcolor{rowgreen}
+\textbf{Present Simple} & They \textcolor{verbred}{serve} dinner at 6pm & Dinner \textcolor{verbred}{is served} at 6pm \\
+\hline
+\textbf{Present Continuous} & They \textcolor{verbred}{are serving} dinner now. & Dinner \textcolor{verbred}{is being served} now. \\
+\hline
+\textbf{Past Simple} & They \textcolor{verbred}{served} dinner. & Dinner \textcolor{verbred}{was served}. \\
+\hline
+\textbf{Past Continuous} & They \textcolor{verbred}{were serving} dinner. & Dinner \textcolor{verbred}{was being served}. \\
+\hline
+\rowcolor{rowgreen}
+\textbf{Future Simple} & They \textcolor{verbred}{will serve} dinner. & Dinner \textcolor{verbred}{will be served}. \\
+\hline
+\textbf{Present Perfect} & They \textcolor{verbred}{have served} dinner. & Dinner \textcolor{verbred}{has been served}. \\
+\hline
+\textbf{Past Perfect} & They \textcolor{verbred}{had served} dinner. & Dinner \textcolor{verbred}{had been served}. \\
+\hline
+\textbf{Future Perfect} & They \textcolor{verbred}{will have served} dinner. & Dinner \textcolor{verbred}{will have been served}. \\
+\hline
+\rowcolor{rowgreen}
+\textbf{Present Infinitive} & They \textcolor{verbred}{should serve} dinner. & Dinner \textcolor{verbred}{should be served}. \\
+\hline
+\rowcolor{rowgreen}
+\textbf{Perfect Infinitive} & They \textcolor{verbred}{should have served} dinner. & Dinner \textcolor{verbred}{should have been served}. \\
+\hline
+\textbf{-ing form} & He likes people \textcolor{verbred}{serving} his dinner & He likes his dinner \textcolor{verbred}{being served}. \\
+\hline
+\textbf{Perfect-ing form} & \textcolor{verbred}{Having served} dinner,... & Dinner \textcolor{verbred}{having been served}... \\
+\hline
+\textbf{Modals+ be + p.p.} & You \textcolor{verbred}{must serve} dinner. & Dinner \textcolor{verbred}{must be served}. \\
+\hline
+\end{tabularx}
+\vspace{1cm}
+
+% Exercise Section
+\section*{Exercise}
+Karen is writing an article about Vivienne Tam for the school newspaper. Help her to complete the article using the correct passive form of the verbs in brackets. One of the verbs is negative.
+
+\vspace{0.5cm}
+Fashion designer Vivienne Tam $^{(1)}$ \underline{\hspace{5cm}} (name) 'Yin Yok' when she was born. She $^{(2)}$ \underline{\hspace{5cm}} (give) her English name when she started studying in Hong Kong. She $^{(3)}$ \underline{\hspace{5cm}} (teach) English at school but spoke Cantonese at home. She $^{(4)}$ \underline{\hspace{5cm}} (tell) to always remember her Chinese culture. At the same time, western ideas $^{(5)}$ \underline{\hspace{5cm}} (introduce) to her since people from many cultures were living in Hong Kong. This mix of East and West in her life $^{(6)}$ \underline{\hspace{5cm}} (see) in her designs even now.
+
+Vivienne moved to New York when she was twenty-five. Her new and interesting designs $^{(7)}$ \underline{\hspace{5cm}} (like) by important shops there, so a lot of orders for her clothing $^{(8)}$ \underline{\hspace{5cm}} (place). Today her East-meets-West clothes $^{(9)}$ \underline{\hspace{5cm}} (sell) only in New York, but also in cities around the world.
+
+\vspace{2cm}
+
+% Footer image placeholder
+\begin{center}
+    \fbox{\begin{minipage}{0.8\textwidth}
+        \centering
+        \vspace{1cm}
+        \textbf{\Large Try your best!}
+        \vspace{1cm}
+        % Placeholder for the cartoon character
+        \includegraphics[height=3cm]{example-image-a} 
+        \vspace{1cm}
+    \end{minipage}}
+\end{center}
+
+\vfill
+\begin{flushright}
+    iSLCollective.com
+\end{flushright}
+
+\end{document}
+```

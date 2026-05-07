@@ -1,0 +1,102 @@
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+
+\begin{document}
+
+\section*{Statistical Analysis and Probability}
+
+\begin{minipage}[t]{0.48\textwidth}
+\subsection*{Mean}
+\[ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i \]
+
+\subsection*{Standard Error of the Mean*}
+\[ SE_{\bar{x}} = \frac{s}{\sqrt{n}} \]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\subsection*{Standard Deviation*}
+\[ s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n-1}} \]
+
+\subsection*{Chi-Square}
+\[ \chi^2 = \sum \frac{(o-e)^2}{e} \]
+\end{minipage}
+
+\vspace{1em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\subsubsection*{Chi-Square Table}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+$p$ & \multicolumn{8}{c|}{Degrees of Freedom} \\ \cline{2-9}
+value & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+0.05 & 3.84 & 5.99 & 7.82 & 9.49 & 11.07 & 12.59 & 14.07 & 15.51 \\ \hline
+0.01 & 6.64 & 9.21 & 11.34 & 13.28 & 15.09 & 16.81 & 18.48 & 20.09 \\ \hline
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{itemize}
+    \item[] $\bar{x} = \text{sample mean}$
+    \item[] $n = \text{size of the sample}$
+    \item[] $s = \text{sample standard deviation (i.e., the sample-based estimate of the standard deviation of the population)}$
+    \item[] $o = \text{observed results}$
+    \item[] $e = \text{expected results}$
+\end{itemize}
+Degrees of freedom are equal to the number of distinct possible outcomes minus one.
+\end{minipage}
+
+\vspace{2em}
+\hrule
+\vspace{1em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\subsection*{Laws of Probability}
+If A and B are mutually exclusive, then:
+\[ P(\text{A or B}) = P(A) + P(B) \]
+If A and B are independent, then:
+\[ P(\text{A and B}) = P(A) \times P(B) \]
+
+\subsection*{Hardy-Weinberg Equations}
+\[ p^2 + 2pq + q^2 = 1 \]
+\[ p + q = 1 \]
+\begin{itemize}
+    \item[] $p = \text{frequency of the dominant allele in a population}$
+    \item[] $q = \text{frequency of the recessive allele in a population}$
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\subsection*{Metric Prefixes}
+\begin{tabular}{lll}
+\textbf{Factor} & \textbf{Prefix} & \textbf{Symbol} \\
+$10^9$ & giga & G \\
+$10^6$ & mega & M \\
+$10^3$ & kilo & k \\
+$10^{-2}$ & centi & c \\
+$10^{-3}$ & milli & m \\
+$10^{-6}$ & micro & $\mu$ \\
+$10^{-9}$ & nano & n \\
+$10^{-12}$ & pico & p
+\end{tabular}
+\end{minipage}
+
+\vspace{2em}
+\hrule
+\vspace{1em}
+
+\noindent Mode = value that occurs most frequently in a data set \\
+Median = middle value that separates the greater and lesser halves of a data set \\
+Mean = sum of all data points divided by number of data points \\
+Range = value obtained by subtracting the smallest observation (sample minimum) from the greatest (sample maximum)
+
+\vspace{1em}
+\hrule
+\vspace{0.5em}
+\noindent \textit{* For the purposes of the AP Exam, students will not be required to perform calculations using this equation; however, they must understand the underlying concepts and applications.}
+
+\end{document}
+```

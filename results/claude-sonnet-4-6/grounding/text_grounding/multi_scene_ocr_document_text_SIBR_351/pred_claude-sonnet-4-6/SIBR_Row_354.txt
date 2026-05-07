@@ -1,0 +1,33 @@
+I need to find the text '0.00' in the image. I can see it appears twice at the bottom of the document:
+- "统筹减免: 0.00"
+- "(现金) 预存账户支付: 0.00"
+
+For the first "0.00" after "统筹减免:":
+(136, 728, 196, 748)
+
+For the second "0.00" after "(现金) 预存账户支付:":
+(248, 752, 308, 772)
+
+Let me look more carefully at the positions relative to the full image dimensions.
+
+The image appears to be approximately 1344 x 864 pixels based on standard proportions.
+
+First "0.00" (after 统筹减免:):
+- Located at roughly x: 135-195, y: 728-748
+
+Normalized (dividing by width 1344 and height 864):
+(100, 843, 145, 866) - but height max is 1000
+
+Let me reconsider the image dimensions. The image looks like it's about 1344 wide and 952 tall.
+
+First "0.00": approximately at pixel (155, 730) to (200, 748)
+Normalized: (115, 767, 149, 784)
+
+Second "0.00": approximately at pixel (258, 754) to (303, 772)
+Normalized: (192, 792, 225, 810)
+
+For the most prominent "0.00" values:
+
+First 0.00: (115, 767, 149, 784)
+
+Second 0.00: (192, 792, 226, 810)

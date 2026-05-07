@@ -1,0 +1,155 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看COMPANY NAME：SELLER部分的Chuanglian Century Media Co., Ltd. 以及右边的创联世纪传媒有限公司。所以要找这两个？不过看问题里的COMPANY NAME，可能对应SELLER的公司名。看SELLER的标题下的公司名，Chuanglian Century Media Co., Ltd. 是公司名，右边的创联世纪传媒有限公司也是公司名（中文）。需要确认。
+
+然后ADDRESS：比如SELLER的地址，Bill to的地址，CONSIGNEE的地址。比如SELLER的地址是59478 Victor Squares Suite 480 New Aaronstad, CO 34955等；Bill to是USS Howe11 FPO AE 49623；CONSIGNEE的地址是Unit 2063 Box 7040 DPO AP 19379等。这些都属于ADDRESS类别。
+
+Amount(EUR)：表格里的Amount列，比如8972.90，3446.60等，还有总金额€15,265.83。这些是Amount(EUR)。
+
+Bill to：对应Bill to: 下面的内容，USS Howe11 FPO AE 49623，以及Angela Wells 10630712133？不，Bill to: 后面是USS Howe11 FPO AE 49623，所以Bill to的标签对应这个部分。
+
+ID：可能看有没有ID，比如Invoice No是220208-A，可能不是ID。或者看其他ID？可能这里ID可能没有，或者看TEL是电话，不是ID。可能需要再检查。或者可能ID是某些编号？比如Mark & Nos是编号，比如28490286等，可能属于Mark & Nos，不是ID。可能ID类别在图中没有？或者可能我漏了。先继续其他类别。
+
+COUNTRY OF ORIGIN：CHINA，对应这个字段。
+
+Customer P/ONO.：2021-60017，对应这个字段。
+
+DATE：2022/02/09，对应这个字段。
+
+Description：表格中的Description列，比如FRAME-CHROME CJ2等。
+
+INVOICE NO：220208-A，对应这个字段。
+
+Mark & Nos：表格中的Mark & Nos列，比如28490286等。
+
+Ms. Lauren Durham：CONSIGNEE部分的Ms. Lauren Durham，是姓名。
+
+NAME：可能包括Angela Wells（SELLER的联系人？），或者Ms. Lauren Durham，Christopher Terrell等。比如Angela Wells是NAME，Ms. Lauren Durham也是NAME，Christopher Terrell也是NAME。需要看哪些属于NAME类别。比如CONSIGNEE中的Ms. Lauren Durham是NAME，还有可能其他NAME。
+
+PROUnit Price(EUR)：可能用户输入错误？看Unit Price(EUR)是列，比如0.84778等，可能PROUnit Price是笔误？或者看Unit Price(EUR)是正确的，可能用户把Unit Price(EUR)列作为PROUnit Price？或者可能PROUnit Price是另一个？不，看用户给的类别里有PROUnit Price(EUR)和Unit Price(EUR)？不，用户给的类别是“PROUnit Price(EUR)”和“Unit Price(EUR)”？看用户提供的类别列表：PROUnit Price(EUR), Unit Price(EUR)。可能PROUnit Price是笔误，或者可能图中的Unit Price(EUR)是正确的，而PROUnit Price可能不存在？或者可能用户输入错误，比如“Unit Price(EUR)”是正确的，而PROUnit Price可能是其他？需要再看。图中的表格有Unit Price(EUR)列，所以Unit Price(EUR)是存在的。而PROUnit Price(EUR)可能没有，或者可能我搞错了。先处理存在的。
+
+Quantity(PCS)：表格中的Quantity列，比如10584等。
+
+TEL：CONSIGNEE部分的TEL:146194-6234，以及可能其他TEL？比如Bill to没有TEL，SELLER的Angela Wells是10630712133（这是电话吗？10630712133是电话号码，所以SELLER的Angela Wells的10630712133属于TEL？看SELLER部分：Angela Wells 10630712133，所以这也是一个TEL。所以有两个TEL？CONSIGNEE的TEL是146194-6234，SELLER的Angela Wells的10630712133也是TEL。所以需要检查。
+
+TITLE：可能没有，图中没有TITLE类别？比如CONSIGNEE是Ms. Lauren Durham，没有TITLE（比如Mr., Mrs.等？但Ms.是称呼，可能属于NAME的一部分？或者TITLE是职位？图中没有职位，所以可能TITLE没有。
+
+Trading terms：FOB SHANGHAI，对应这个字段。
+
+Unit Price(EUR)：表格中的Unit Price(EUR)列，比如0.84778等。
+
+WEBSITE：CONSIGNEE中的martinlouis@kennedy.com是邮箱，不是WEBSITE。图中没有WEBSITE，所以可能WEBSITE不存在。
+
+现在开始逐个列出：
+
+1. COMPANY NAME：SELLER的Chuanglian Century Media Co., Ltd.，以及右边的创联世纪传媒有限公司。需要看哪个是。图中SELLER: 下面是Chuanglian Century Media Co., Ltd.，右边是创联世纪传媒有限公司（中文），所以这两个都是COMPANY NAME。但可能用户需要的是英文的COMPANY NAME，即Chuanglian Century Media Co., Ltd.。另外，创联世纪传媒有限公司是中文的公司名，也属于COMPANY NAME。需要看是否都算。但先处理英文的。
+
+SELLER的公司名：Chuanglian Century Media Co., Ltd. → bbox是SELLER: 下面的公司名，坐标大概是x从100到490左右，y在顶部。看图像中的SELLER部分：
+
+SELLER:
+Chuanglian Century Media Co., Ltd.
+59478 Victor Squares Suite 480 New Aaronstad, CO 34955
+899 Beth Brooks Huberton, IL 11607
+Angela Wells
+10630712133
+
+所以公司名是第一行，Chuanglian Century Media Co., Ltd.，bbox大概[105, 77, 490, 98]（需要估计坐标，因为是图像，相对位置）。
+
+另外右边的创联世纪传媒有限公司是中文，对应同一公司的中文名，所以也是COMPANY NAME，bbox是右边的“创联世纪传媒有限公司”，位置在SELLER的右边，所以bbox大概[740, 77, 945, 100]。
+
+2. ADDRESS：多个地址。比如SELLER的地址：59478 Victor Squares Suite 480 New Aaronstad, CO 34955；899 Beth Brooks Huberton, IL 11607。这两个都是ADDRESS。Bill to的地址：USS Howe11 FPO AE 49623。CONSIGNEE的地址：Unit 2063 Box 7040 DPO AP 19379；Christopher Terrell的地址？不，CONSIGNEE的地址是Unit 2063 Box 7040 DPO AP 19379，然后是Christopher Terrell，然后是邮箱。所以CONSIGNEE的地址是Unit 2063 Box 7040 DPO AP 19379。另外，Bill to的USS Howe11 FPO AE 49623也是ADDRESS。SELLER的两个地址也是ADDRESS。需要逐个找。
+
+比如SELLER的第一个地址：59478 Victor Squares Suite 480 New Aaronstad, CO 34955 → bbox是对应行。
+
+3. Amount(EUR)：表格中的Amount列，每个行的Amount，比如8972.90，3446.60，2846.33，以及总金额€15,265.83。总金额在TOTAL行的Amount列。所以这些是Amount(EUR)。
+
+4. Bill to：Bill to: 后面的内容，即USS Howe11 FPO AE 49623，以及上面的Angela Wells 10630712133？不，Bill to: 是单独的部分，看图像中Bill to: 下面是USS Howe11 FPO AE 49623，而Angela Wells 10630712133是SELLER的联系人？看图像中：
+
+SELLER:
+Chuanglian Century Media Co., Ltd.
+59478 Victor Squares Suite 480 New Aaronstad, CO 34955
+899 Beth Brooks Huberton, IL 11607
+Angela Wells
+10630712133
+
+然后是Bill to:
+USS Howe11 FPO AE 49623
+
+所以Bill to的内容是USS Howe11 FPO AE 49623，所以Bill to的label对应这个部分，bbox是Bill to: 下面的行。
+
+5. COUNTRY OF ORIGIN：CHINA，对应这个字段，位置在COUNTRY OF ORIGIN: CHINA。
+
+6. Customer P/ONO.：2021-60017，对应Customer P/ONO. : 2021-60017。
+
+7. DATE：2022/02/09，对应DATE : 2022/02/09。
+
+8. Description：表格中的Description列，比如FRAME-CHROME CJ2，RING-CHROME FAN CJ2，RING-CHROME C42/C67。每个行的Description内容。
+
+9. ID：可能没有，或者看Invoice No是220208-A，可能不是ID。或者Mark & Nos是编号，比如28490286等，属于Mark & Nos，不是ID。所以可能ID在图中没有，或者可能我漏了。暂时标记没有ID，或者可能其他地方。比如Angela Wells的10630712133是电话，不是ID。暂时可能ID不存在，或者可能用户输入错误，先跳过。
+
+10. INVOICE NO：220208-A，对应INVOICE NO : 220208-A。
+
+11. Mark & Nos：表格中的Mark & Nos列，比如28490286，28490354，28566553。每个行的Mark & Nos内容。
+
+12. Ms. Lauren Durham：CONSIGNEE部分的Ms. Lauren Durham，是姓名，所以label是Ms. Lauren Durham，bbox是对应行。
+
+13. NAME：比如Angela Wells（SELLER的联系人），Ms. Lauren Durham（CONSIGNEE的姓名），Christopher Terrell（CONSIGNEE的另一个名字），martinlouis@kennedy.com是邮箱，不是NAME。所以Angela Wells是NAME，Christopher Terrell是NAME，Ms. Lauren Durham也是NAME（但Ms. Lauren Durham已经被归为Ms. Lauren Durham类别，可能NAME是更一般的，比如Angela Wells属于NAME，Christopher Terrell属于NAME）。
+
+14. PROUnit Price(EUR)：可能用户输入错误，图中没有PROUnit Price，只有Unit Price(EUR)。可能忽略，或者可能PROUnit Price是笔误，比如Unit Price(EUR)。但用户给的类别有PROUnit Price(EUR)和Unit Price(EUR)，需要检查。图中的Unit Price(EUR)是存在的，比如0.84778等，所以Unit Price(EUR)是存在的。PROUnit Price(EUR)可能不存在，所以可能没有这个类别，或者可能我漏看了。暂时先处理Unit Price(EUR)。
+
+15. Quantity(PCS)：表格中的Quantity列，比如10584，10800，8360，TOTAL 29744。这些是Quantity(PCS)。
+
+16. TEL：CONSIGNEE的TEL:146194-6234，以及SELLER的Angela Wells的10630712133（因为10630712133是电话号码）。所以这两个都是TEL。比如Angela Wells的10630712133是TEL，CONSIGNEE的TEL是146194-6234。
+
+17. TITLE：图中没有TITLE，比如职位名称，所以可能没有。
+
+18. Trading terms：FOB SHANGHAI，对应Trading terms : FOB SHANGHAI。
+
+19. Unit Price(EUR)：表格中的Unit Price(EUR)列，比如0.84778，0.31913，0.34047等。
+
+20. WEBSITE：图中没有WEBSITE，只有邮箱martinlouis@kennedy.com，不是WEBSITE，所以没有。
+
+现在需要将每个检测到的对象列出，注意不要重复，每个对象对应一个bbox和label。
+
+现在开始整理：
+
+- COMPANY NAME（Chuanglian Century Media Co., Ltd.）：SELLER部分的公司名，bbox大概[105, 77, 490, 98]
+- COMPANY NAME（创联世纪传媒有限公司）：右边的中文公司名，bbox大概[740, 77, 945, 100]
+- ADDRESS（SELLER地址1：59478 Victor Squares Suite 480 New Aaronstad, CO 34955）：对应行，bbox大概[105, 98, 540, 115]
+- ADDRESS（SELLER地址2：899 Beth Brooks Huberton, IL 11607）：对应行，bbox大概[105, 115, 420, 132]
+- ADDRESS（Bill to地址：USS Howe11 FPO AE 49623）：Bill to: 下面的行，bbox大概[105, 150, 320, 165]
+- ADDRESS（CONSIGNEE地址：Unit 2063 Box 7040 DPO AP 19379）：CONSIGNEE部分的地址，bbox大概[105, 230, 420, 245]
+- Amount(EUR)（8972.90）：表格中第一行Amount列，bbox对应单元格
+- Amount(EUR)（3446.60）：第二行Amount列
+- Amount(EUR)（2846.33）：第三行Amount列
+- Amount(EUR)（€15,265.83）：TOTAL行的Amount列
+- Bill to（USS Howe11 FPO AE 49623）：Bill to: 标题下的内容，bbox同ADDRESS的Bill to地址
+- COUNTRY OF ORIGIN（CHINA）：COUNTRY OF ORIGIN: CHINA，bbox对应行
+- Customer P/ONO.（2021-60017）：Customer P/ONO. : 2021-60017，bbox对应行
+- DATE（2022/02/09）：DATE : 2022/02/09，bbox对应行
+- Description（FRAME-CHROME CJ2）：表格第一行Description列
+- Description（RING-CHROME FAN CJ2）：第二行Description列
+- Description（RING-CHROME C42/C67）：第三行Description列
+- ID：无（可能没有，暂时不列）
+- INVOICE NO（220208-A）：INVOICE NO : 220208-A，bbox对应行
+- Mark & Nos（28490286）：表格第一行Mark & Nos列
+- Mark & Nos（28490354）：第二行Mark & Nos列
+- Mark & Nos（28566553）：第三行Mark & Nos列
+- Ms. Lauren Durham：CONSIGNEE部分的Ms. Lauren Durham，bbox对应行
+- NAME（Angela Wells）：SELLER部分的Angela Wells，bbox对应行
+- NAME（Christopher Terrell）：CONSIGNEE部分的Christopher Terrell，bbox对应行
+- PROUnit Price(EUR)：无（图中没有，可能用户错误，暂时不列）
+- Quantity(PCS)（10584）：表格第一行Quantity列
+- Quantity(PCS)（10800）：第二行Quantity列
+- Quantity(PCS)（8360）：第三行Quantity列
+- Quantity(PCS)（29744）：TOTAL行Quantity列
+- TEL（10630712133）：SELLER部分的Angela Wells的电话，bbox对应行（10630712133）
+- TEL（146194-6234）：CONSIGNEE部分的TEL:146194-6234，bbox对应行
+- TITLE：无
+- Trading terms（FOB SHANGHAI）：Trading terms : FOB SHANGHAI，bbox对应行
+- Unit Price(EUR)（0.84778）：表格第一行Unit Price列
+- Unit Price(EUR)（0.31913）：第二行Unit Price列
+- Unit Price(EUR)（0.34047）：第三行Unit Price列
+- WEBSITE：无
+
+现在需要将这些整理成JSON数组，每个元素是bbox和label。注意bbox的坐标是相对图像的，需要估计每个部分的位置。由于是图像，坐标是基于图像的像素，但这里用

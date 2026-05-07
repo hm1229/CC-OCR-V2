@@ -1,0 +1,140 @@
+```latex
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% Define colors from the document
+\definecolor{awinic cyan}{RGB}{0, 176, 180}
+\definecolor{header blue}{RGB}{220, 230, 241}
+
+% Set up header and footer
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\lfoot{www.awinic.com.cn}
+\cfoot{20}
+\rfoot{Copyright © 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD}
+
+\begin{document}
+\thispagestyle{fancy}
+
+% --- Header ---
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    \begin{tabular}[b]{@{}l@{}}
+        \fontsize{28}{30}\selectfont \textbf{\textcolor{awinic cyan}{awinic}} \quad \textcolor{awinic cyan}{上海艾为电子技术股份有限公司} \\
+        \small \textcolor{awinic cyan}{shanghai awinic technology co., ltd.}
+    \end{tabular}
+    &
+    \begin{tabular}[b]{@{}r@{}}
+        \textbf{\Large AW36526} \\
+        July 2019 V1.3
+    \end{tabular}
+\end{tabular*}
+\hrule
+\vspace{1cm}
+
+% --- Main Content ---
+\section*{REGISTER DETAILED DESCRIPTION}
+
+\subsection*{\texorpdfstring{$\diamondsuit$}{*} Chip ID Register (0x00), default(0x17)}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|*{8}{C|}}
+    \hline
+    \rowcolor{header blue}
+    \textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+    \hline
+    \multicolumn{8}{|l|}{Chip ID: “0001 0111”} \\
+    \multicolumn{8}{|l|}{Write 55H To Reset All Registers} \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{\texorpdfstring{$\diamondsuit$}{*} Enable Register (0x01), default(0x00)}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|C|C|C|C|C|C|C|C|}
+    \hline
+    \rowcolor{header blue}
+    \textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+    \hline
+    \textbf{Strobe Type} \newline 0=Level Triggered (Default) \newline 1=Edge Triggered & 
+    \textbf{Strobe Enable} \newline 0=Disabled (Default) \newline 1=Enabled & 
+    \textbf{Mode Bits: M1, M0} \newline 00=Standby (Default) \newline 01=IR Drive \newline 10=Torch \newline 11=Flash & 
+    RFU & 
+    \textbf{LED3 Enable} \newline 0=OFF (Default) \newline 1=ON & 
+    \textbf{LED2 Enable} \newline 0=OFF (Default) \newline 1=ON & 
+    \textbf{LED1 Enable} \newline 0=OFF (Default) \newline 1=ON \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\textbf{Note:}
+\begin{quote}
+In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to ensure proper turn-on of the device.
+\end{quote}
+
+\subsection*{\texorpdfstring{$\diamondsuit$}{*} IVFM Register (0x02) , default(0xE1)}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|C|C|C|C|C|C|C|C|}
+    \hline
+    \rowcolor{header blue}
+    \textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+    \hline
+    \textbf{LEDX Enable Setting} \newline 0= if LED1 or LED2 is Enabled, LED3 is Disabled Internally \newline 1=No Limitation (Default) & 
+    \textbf{LED3 Pin Short Fault Detect} \newline 0=Disabled \newline 1=Enabled (Default) & 
+    \textbf{LED1/2 Pin Short Fault Detect} \newline 0=Disabled \newline 1=Enabled (Default) & 
+    \textbf{UVLO Enable} \newline 0=Disabled (Default) \newline 1=Enabled & 
+    \multicolumn{3}{C|}{\textbf{IVFM Levels} \newline 000=2.9 V (Default) \newline 001=3.0 V \newline 010=3.1 V \newline 011=3.2 V \newline 100=3.3 V \newline 101=3.4 V \newline 110=3.5 V \newline 111=3.6 V} & 
+    \textbf{IVFM Enable} \newline 0=Disabled \newline 1=Enabled (Default) \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{\texorpdfstring{$\diamondsuit$}{*} LED1 Flash Brightness Register (0x03) , default(0x7F)}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|*{8}{C|}}
+    \hline
+    \rowcolor{header blue}
+    \textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+    \hline
+    \multicolumn{8}{|l|}{\textbf{LED1 Flash Brightness Levels}} \\
+    \multicolumn{8}{|l|}{I$_{\text{FLASH}}$(mA)$\approx$(Brightness Code*3.91mA)+3.91mA} \\
+    \multicolumn{8}{|l|}{00000000=3.91 mA} \\
+    \multicolumn{8}{|l|}{............} \\
+    \multicolumn{8}{|l|}{01111111=500 mA \quad (Default)} \\
+    \multicolumn{8}{|l|}{............} \\
+    \multicolumn{8}{|l|}{11111111=1.0 A} \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\subsection*{\texorpdfstring{$\diamondsuit$}{*} LED1 Torch Brightness Register (0x04) , default(0x7F)}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabularx}{\textwidth}{|*{8}{C|}}
+    \hline
+    \rowcolor{header blue}
+    \textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\
+    \hline
+    \multicolumn{8}{|l|}{\textbf{LED1 Torch Brightness Levels}} \\
+    \multicolumn{8}{|l|}{I$_{\text{TORCH}}$(mA)$\approx$(Brightness Code*1.46mA)+1.46mA} \\
+    \multicolumn{8}{|l|}{00000000=1.46 mA} \\
+    \multicolumn{8}{|l|}{............} \\
+    \multicolumn{8}{|l|}{01111111=187.5 mA \quad (Default)} \\
+    \multicolumn{8}{|l|}{............} \\
+    \multicolumn{8}{|l|}{11111111=375 mA} \\
+    \hline
+\end{tabularx}
+\end{center}
+
+\end{document}
+```

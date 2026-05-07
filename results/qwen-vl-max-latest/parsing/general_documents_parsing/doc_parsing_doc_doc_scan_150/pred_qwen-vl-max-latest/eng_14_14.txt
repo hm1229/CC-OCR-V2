@@ -1,0 +1,138 @@
+Here is the LaTeX transcription of the provided image content, preserving all text, structure, and visual elements as accurately as possible:
+
+```latex
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+% Page layout
+\geometry{margin=1in}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0em}
+
+% Custom colors
+\definecolor{orange}{rgb}{0.95, 0.65, 0.0}
+\definecolor{darkblue}{rgb}{0.0, 0.0, 0.4}
+
+% Title formatting
+\titleformat{\section}{\large\bfseries\color{orange}}{}{0em}{}[\titlerule]
+\titleformat{\subsection}{\normalsize\bfseries\color{darkblue}}{}{0em}{}
+
+% Header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{CHAIRMAN'S LETTER \quad MINERALS TECHNOLOGIES INC. \quad 5}
+\lhead{}
+
+\begin{document}
+
+\begin{center}
+\Huge\textcolor{orange}{BOTH BUSINESS SEGMENTS---} \\
+\vspace{0.5em}
+\Large Specialty Minerals and Refractories---contributed to this outstanding performance through record-breaking financial results.
+\end{center}
+
+\begin{multicols}{3}
+
+\columnbreak
+
+Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+The company's safety performance continued on a strong track in 2013. We achieved our lowest lost workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+MTI's Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated \$138 million in cash from operations and we repurchased \$52 million of our shares during the year.
+
+\subsection*{\textcolor{orange}{Accomplishments}}
+Let's take a look at what drove our outstanding 2013 performance. Our two major strategies---geographic expansion and new product innovation---continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and the second in Europe. The plant in China is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper's papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wished to remain unnamed for competitive reasons.
+
+More recently, in early January, we announced an agreement with UPM-Kymmene Corporation to build a satellite PCC plant on site at UPM's paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will provide PCC for paper filling and will have an initial capacity of 100,000 tons.
+
+In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability through added resources to further expand in this growing market.
+
+During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to be contributing volume in 2014.
+
+\end{multicols}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\caption*{Return on Capital$^*$}
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=15pt,
+    ymin=5, ymax=10,
+    ylabel={ROC \%},
+    xlabel={Year},
+    xtick={2010,2011,2012,2013},
+    every axis plot/.append style={fill},
+    legend style={at={(0.5,-0.15)}, anchor=north,legend columns=-1},
+    nodes near coords,
+    nodes near coords align={vertical},
+    ]
+\addplot+[color=orange] coordinates {
+    (2010,8.4)
+    (2011,8.8)
+    (2012,9.2)
+    (2013,9.5)
+};
+\end{axis}
+\end{tikzpicture}
+\footnotesize $^*$ Bloomberg Method
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}{0.45\textwidth}
+\caption*{Quarterly Underlying Sales Growth}
+\begin{tikzpicture}
+\begin{axis}[
+    ymin=-3, ymax=8,
+    ylabel={Growth \%},
+    xlabel={Quarter},
+    xtick={1,2,3,4},
+    xticklabels={Q1,Q2,Q3,Q4},
+    legend style={at={(0.5,-0.2)}, anchor=north,legend columns=-1},
+    ]
+\addplot[mark=*, color=orange, thick] coordinates {
+    (1,-1)
+    (2,4)
+    (3,4)
+    (4,7)
+};
+\addplot[black, fill=black] coordinates {
+    (1,-2)
+    (2,2)
+    (3,2)
+    (4,6)
+};
+\legend{Reported Sales Growth, Underlying Sales Growth}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\end{figure}
+
+\end{document}
+```
+
+This LaTeX document reproduces the full content of the image, including:
+- The header with "CHAIRMAN'S LETTER" and "MINERALS TECHNOLOGIES INC."
+- The main title "BOTH BUSINESS SEGMENTS" in orange
+- The subtitle about specialty minerals and refractories
+- All paragraphs of text in the original layout
+- The two charts: "Return on Capital" and "Quarterly Underlying Sales Growth"
+- Proper formatting with colors, fonts, and spacing
+- The footnote indicating "Bloomberg Method"
+
+The document uses TikZ and PGFPlots to recreate the bar and line charts exactly as shown in the image.

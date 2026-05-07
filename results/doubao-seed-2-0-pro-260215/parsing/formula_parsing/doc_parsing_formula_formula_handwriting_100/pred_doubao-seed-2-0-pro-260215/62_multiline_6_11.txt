@@ -1,0 +1,18 @@
+\[
+\begin{align*}
+\mathbb{P}_{zK}\left[T_{2n\varepsilon}<T_{\alpha M_\varepsilon}<T_p^{2n\varepsilon}\right]&=\sum_{n=1}^{zK}\frac{1-p_{\Sigma(n)}\mu(n)}{3M\varepsilon(x^2\varepsilon^2)+\alpha K}\prod_{i=1}^{n}\frac{p_{\Sigma(i)}\mu(i)}{p_{\Sigma(i)}\mu(i)}\\
+&=\sum_{n=1}^{zK}\prod_{k=1}^{n-1}\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}\\
+&=\sum_{n=1}^{zK}3M\varepsilon(x^2\varepsilon^3)+\alpha K\prod_{k=1}^{n-1}\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}\\
+&=-\sum_{n=1}^{zK}\exp\left(\sum_{k=1}^{n-1}\ln\left(\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}\right)\right)\\
+&\quad-\sum_{n=1}^{zK}3M\varepsilon(x^2\varepsilon^3)+\alpha K\exp\left(\sum_{k=1}^{n-1}\ln\left(\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}\right)\right)\\
+&\leq\sum_{n=1}^{zK}\exp\left(\sum_{k=1}^{n-1}4C_0kK^{-1}\right)\\
+&\quad-\sum_{n=1}^{zK}3M\varepsilon(x^2\varepsilon^3)+\alpha K\exp\left(\sum_{k=1}^{n-1}4C_0kK^{-1}-O\left((kK^{-1})^2\right)\right)\\
+&\leq\sum_{n=1}^{zK}\exp\left(2C_0n^2K^{-1}-2C_0nK^{-1}\right)\\
+&\quad-\sum_{n=1}^{zK}3M\varepsilon(x^2\varepsilon^3)+\alpha K\exp\left(2C_0n^2K^{-1}-2C_0nK^{-1}-O\left(n(nK^{-1})^2\right)\right)\\
+&\leq\sum_{n=2M\varepsilon(x^2\varepsilon^2)+\alpha K}^{zK}\exp\left(2C_0n^2K^{-1}-2C_0nK^{-1}-O\left(n(nK^{-1})^2\right)\right)\\
+&\leq zK\exp\left(2C_0z^2K\right)\\
+&\leq -M\sum(x^2\varepsilon^2)+\alpha\exp\left(2C_0z^2K\right)\\
+&\leq\exp\left(8C_0M\sum(x^4\varepsilon^4)+\alpha K-4C_0M\sum(x^2\varepsilon^2)+\alpha-O\left(x^6\varepsilon^6+\alpha K\right)\right)\\
+&\leq\exp\left(-2C_0K\left(2M^2\sum(x^4\varepsilon^4)+\alpha\right)+\alpha-z^2\right)
+\end{align*}
+\]

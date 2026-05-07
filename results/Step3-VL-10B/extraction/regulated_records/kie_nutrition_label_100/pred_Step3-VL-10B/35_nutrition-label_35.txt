@@ -1,0 +1,153 @@
+用户现在需要从营养标签中提取信息到对应的schema字段。首先得理解每个字段可能对应什么。先看标签里的内容：每30g（%*） serving 和每100g的数据。先分析每个CE、TF、CAR、PRO、SS这些缩写可能代表的类别。比如CE可能是Caloric Energy？P1是per 30g？D是per 100g？或者看常见的营养成分分类：Energy（能量）、Fat（脂肪）、Saturates（饱和脂肪）、Carbohydrate（碳水）、Sugars（糖）、Fibre（纤维）、Protein（蛋白质）、Salt（盐）。
+
+现在看schema里的字段：CE-PS, CE-P1, CE-D；TF-PS, TF-D, TF-P1；CAR-PS, CAR-P1；PRO-PS, PRO-P1；SS。需要对应每个营养成分在per 30g（P1？）、per 100g（D？）以及可能的PS是per serving？或者看标签里的列：Per 30g(%*) serving 是每份（30g）的量，Per 100g是每100g的量。所以可能P1是per 30g（serving），D是per 100g，PS可能是per serving的数值？或者需要先明确每个营养项对应到schema的哪些字段。
+
+先列出所有营养项及其在per 30g和per 100g的值：
+
+Energy: per30g是629kJ / 150kcal；per100g是2096kJ / 501kcal
+Fat: per30g是7.9g (11%*)；per100g是26.4g
+of which Saturates: per30g是0.7g (4%*)；per100g是2.4g
+Carbohydrate: per30g是17.1g；per100g是57.1g
+of which Sugars: per30g是0.8g (1%*)；per100g是2.6g
+Fibre: per30g是1.1g；per100g是3.7g
+Protein: per30g是2.1g；per100g是7.1g
+Salt: per30g是0.43g (7%*)；per100g是1.43g
+
+现在看schema的字段：CE-PS, CE-P1, CE-D；TF-PS, TF-D, TF-P1；CAR-PS, CAR-P1；PRO-PS, PRO-P1；SS。需要确定每个缩写对应的内容。比如CE是Caloric Energy（能量），TF是Fat（脂肪），CAR是Carbohydrate（碳水），PRO是Protein（蛋白质），SS是Salt（盐）。
+
+然后看每个的PS、P1、D。可能PS是Per Serving（即per 30g，因为serving是30g），P1可能是？或者可能D是Per 100g（Dense？），P1是Per 30g（Portion 1？），PS是Per Serving？或者可能标签中的“Per 30g(%*) serving”是per serving（PS），而“Per 30g”是P1？不，可能需要更仔细看。或者可能每个营养项在三个维度：PS（per serving，即30g）、P1（per 30g？不，可能重复。或者可能CE-PS是Energy的per serving（30g）的kJ？CE-P1是Energy的per 30g的kcal？CE-D是Energy的per 100g的kJ？这可能不太对。或者可能每个营养项对应三个字段：比如CE（Energy）的PS是per serving（30g）的数值，P1是per 30g的另一个单位？不，可能标签中的列是Per 30g（%*） serving（即每份是30g，所以Per 30g就是per serving），然后Per 100g是每100g。所以可能P1是per serving（30g），D是per 100g，PS可能是？或者可能schema中的PS是Per Serving（即30g），P1是Per 30g（可能重复？不，可能我理解错了。或者看schema中的字段，比如CE-PS对应Energy的per serving（30g）的kJ，CE-P1对应Energy的per 30g的kcal？不，可能每个营养项在三个部分：比如CE（Energy）的PS是per serving（30g）的数值，P1是per 30g的另一个表示？这可能不太对。或者可能每个营养项对应PS（per serving）、P1（per 30g？不，per serving就是30g），D（per 100g）。比如对于Energy，per serving（30g）是629kJ和150kcal；per 100g是2096kJ和501kcal。但schema中CE-PS、CE-P1、CE-D，可能CE-PS是kJ（per serving），CE-P1是kcal（per serving），CE-D是kJ（per 100g）？或者CE-PS是kJ（per serving），CE-D是kJ（per 100g），CE-P1是kcal（per serving）？这可能需要更系统分析。
+
+另一种方法是看每个营养项在标签中的两列：Per 30g（serving）和Per 100g。现在看schema中的字段，比如TF是Fat，那么TF-PS是Fat per serving（30g）的g，TF-P1是Fat per 30g的%？不，标签中Fat per 30g是7.9g (11%*)，所以数值是7.9g，百分比是11%*。而Per 100g是26.4g。所以可能TF-PS是Fat per serving（30g）的g（7.9g），TF-D是Fat per 100g的g（26.4g），TF-P1是Fat per serving的%（11%*）？但schema中的TF-P1可能对应另一个维度。或者可能每个营养项的三个字段是：PS（per serving的数值），P1（per serving的百分比？），D（per 100g的数值）。比如Fat的PS是7.9g（per serving的量），P1是11%*（per serving的占比），D是26.4g（per 100g的量）。这样TF-PS=7.9g，TF-P1=11%*，TF-D=26.4g。同样，Saturates（属于Fat的子项）可能对应其他字段？但schema中没有Saturates的字段，可能Saturates属于TF的子项，但schema中可能没有，所以可能只处理主项：Energy（CE）、Fat（TF）、Carbohydrate（CAR）、Protein（PRO）、Salt（SS）。
+
+现在处理每个主项：
+
+1. Energy（CE）：
+   - Per serving（30g）：629kJ，150kcal
+   - Per 100g：2096kJ，501kcal
+   所以CE-PS可能是629kJ（per serving的kJ），CE-P1是150kcal（per serving的kcal），CE-D是2096kJ（per 100g的kJ）？或者CE-PS是629kJ，CE-D是2096kJ，CE-P1是150kcal？因为schema中有CE-PS, CE-P1, CE-D三个字段，所以需要对应三个值。看标签中Energy行的Per 30g是629kJ (7%*)？不，标签中Energy的Per 30g是629kJ，然后是150kcal (7%*)？看原图中的Energy行：“Energy”对应“Per30g(%*) serving”是629kJ，然后“Per 100g”是2096kJ；然后下面一行“Fat”是150kcal (7%*)？哦，可能我看错了行。重新看图片中的文字：
+
+图片中的行：
+
+Energy
+Fat
+of which Saturates
+Carbohydrate
+of which Sugars
+Fibre
+Protein
+Salt
+
+然后每行对应的Per30g(%*) serving 和 Per100g的值。
+
+看Energy行：Per30g是629kJ，然后Per100g是2096kJ；然后下一行Fat的Per30g是150kcal (7%*)，Per100g是501kcal。哦，原来Energy的单位是kJ，而Fat的单位是kcal？不，可能Energy的两部分是kJ和kcal？比如Energy行的Per30g是629kJ，然后Per30g的kcal是150kcal？因为通常营养标签会同时标注kJ和kcal。看原图中的文字：
+
+“Energy”对应的Per30g是629kJ，然后Per30g的另一个数值是150kcal (7%*)？然后Per100g的Energy是2096kJ，501kcal。所以Energy有两个单位：kJ和kcal。所以可能CE-PS是629kJ（per serving的kJ），CE-P1是150kcal（per serving的kcal），CE-D是2096kJ（per 100g的kJ）和501kcal（per 100g的kcal）？但schema中CE-D只有一个字段，所以可能CE-D是2096kJ（因为kJ是主要能量单位？或者看标签中的排版，可能Energy的Per30g是629kJ，而150kcal是Fat的？不，看原图中的文字：
+
+原图中的文字：
+
+Energy
+Per30g(%*) serving: 629kJ
+Per100g: 2096kJ
+
+然后下一行是Fat:
+Per30g(%*) serving: 150kcal (7%*)
+Per100g: 501kcal
+
+哦，这样Energy的单位是kJ，Fat的单位是kcal？这显然不对，因为能量（Energy）应该包含脂肪的能量，所以可能排版是每行有两个数值：比如Energy行的Per30g是629kJ（对应能量），然后Per30g的另一个数值是150kcal？不，可能图片中的排版是，每个营养项在Per30g列有两个数值？比如Energy的Per30g是629kJ，然后是150kcal？因为通常营养标签会同时显示kJ和kcal。比如看“Fat”行的Per30g是7.9g (11%*)，然后Per100g是26.4g。而“of which Saturates”行的Per30g是0.7g (4%*)，Per100g是2.4g。所以可能Energy行的Per30g是629kJ，然后是150kcal（因为150kcal是能量的另一种表示，而7%*是能量的占比？不，看“Energy”行的Per30g后面是“629kJ”，然后下一行“Fat”是“150kcal (7%*)”，这可能是排版错误，或者我看错了。重新看用户提供的图片描述中的文字：
+
+用户提供的图片中的文字：
+
+Energy
+Fat
+of which Saturates
+Carbohydrate
+of which Sugars
+Fibre
+Protein
+Salt
+
+然后对应的Per30g(%*) serving 和 Per100g的列：
+
+Per30g(%*) serving 列的数值：
+
+629kJ
+
+150kcal (7%*)
+
+7.9g (11%*)
+
+0.7g (4%*)
+
+17.1g
+
+0.8g (1%*)
+
+1.1g
+
+2.1g
+
+0.43g (7%*)
+
+Per100g列的数值：
+
+2096kJ
+
+501kcal
+
+26.4g
+
+2.4g
+
+57.1g
+
+2.6g
+
+3.7g
+
+7.1g
+
+1.43g
+
+现在整理每个营养项的Per30g和Per100g：
+
+- Energy:
+  - Per30g: 629kJ
+  - Per100g: 2096kJ
+  （另外，Fat的Per30g是150kcal (7%*)，这可能是Energy的kcal？因为通常Energy会同时标注kJ和kcal，比如629kJ = 150kcal（因为1kcal=4.184kJ，629/4.184≈150.5kcal）。所以可能Energy的Per30g是629kJ（150kcal），而Per100g是2096kJ（501kcal）。所以Energy的两个单位在Per30g是629kJ和150kcal，Per100g是2096kJ和501kcal。但标签中可能排版是，Energy行的Per30g是629kJ，然后下一行Fat的Per30g是150kcal？这显然不合理，因为Fat是脂肪的含量，不是能量。哦，可能我搞反了行。看“Energy”行的Per30g是629kJ，然后Per30g的另一个数值是150kcal？不，可能图片中的“Energy”行对应的是Per30g的629kJ和150kcal（因为150kcal是能量的kcal值），而“Fat”行是脂肪的克数。比如：
+
+正确的营养标签结构通常是：
+
+Nutrient | Per serving (30g) | %RDI | Per 100g | %RDI
+
+所以可能图片中的列是：Per30g(%*) serving（即per serving的量和%RDI），Per100g（per 100g的量）。
+
+现在重新对应：
+
+- Energy:
+  - Per30g: 629kJ（能量），150kcal（能量的kcal）？不，可能“Energy”行的Per30g是629kJ，然后%RDI是7%*（因为150kcal是能量，而7%*是占每日能量的百分比？比如每日能量是2100kcal，150kcal是7%）。所以“Energy”行的Per30g是629kJ（150kcal），%RDI是7%*；Per100g是2096kJ（501kcal），%RDI是24%*（因为501/2100≈23.8%）。但图片中“Energy”行的Per30g是629kJ，然后下一行“Fat”是150kcal (7%*)，这可能是排版错误，把Energy的kcal和%RDI放在了Fat行？这显然不对，可能用户提供的图片中的文字排版是：
+
+看用户提供的图片中的文字：
+
+“Energy” 对应的Per30g是629kJ，然后Per100g是2096kJ；
+
+“Fat” 对应的Per30g是150kcal (7%*)，Per100g是501kcal；
+
+“of which Saturates” 对应的Per30g是7.9g (11%*)，Per100g是26.4g；
+
+“Carbohydrate” 对应的Per30g是0.7g (4%*)，Per100g是2.4g；
+
+“of which Sugars” 对应的Per30g是17.1g，Per100g是57.1g；
+
+“Fibre” 对应的Per30g是0.8g (1%*)，Per100g是2.6g；
+
+“Protein” 对应的Per30g是1.1g，Per100g是3.7g；
+
+“Salt” 对应的Per30g是2.1g，Per100g是7.1g；
+
+“Salt” 对应的Per30g是0.43g (7%*)，Per100g是1.43g；
+
+这显然混乱了，因为每个营养项的单位不一致。比如Fat的单位是g，而Energy是kcal？这不可能。所以正确的做法是，可能用户提供的图片中的文字是：
+
+正确的营养标签应该是每个营养项在Per30g列有两个数值：比如Energy是629kJ（150kcal），然后%RDI是7%*；Fat是7.9g（11%*）；of which Saturates是0.7g（4%*）；Carbohydrate是17.1g；of which Sugars是0.8g（1%*）；Fibre是1.1g；Protein是2.1g；Salt是0.43g（7%*）。而Per100g列对应的是：Energy是2096kJ（501kcal）；Fat是26.4g；of which Saturates是2.4g；Carbohydrate是57.1g；of which Sugars是2.6g；Fibre是3.7g；Protein是7.1g；Salt是1.43g。
+
+现在，重新整理每个营养项的Per30g（serving）和Per100g的数值（只取主要数值，不取%RDI，因为%RDI

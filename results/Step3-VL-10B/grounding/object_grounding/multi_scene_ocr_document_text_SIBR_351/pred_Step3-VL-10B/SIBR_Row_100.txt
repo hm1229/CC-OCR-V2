@@ -1,0 +1,136 @@
+用户现在需要从发票中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看ADD：图中上方有ADD: 3811 Price Parkways...，所以ADD的位置是那个地址。然后Address可能和ADD是同一个？不过看题目里的类别，ADD是单独的，Address可能也是？不过先看题目给的类别列表。先列每个类别：
+
+1. ADD：图中“ADD: 3811 Price Parkways South Shelly, MD 86175” 这个是ADD。
+2. Address：可能和ADD重复？但看题目里的类别，可能ADD是地址信息，所以先处理。
+3. Amount (JPY)：表格中的Amount列，比如JPY 1,528,416.00等，还有TOTAL的JPY 3,772,166.00。
+4. Company Name：国讯信息有限公司（Guoxun Information Co., Ltd.）是To的公司，而上方的国讯信息有限公司是开票方？看题目里的Company Name，可能开票方是国讯信息有限公司，所以Company Name是“国讯信息有限公司”。
+5. Date：21/May/22。
+6. Description of Goods：表格中的Description of Goods列，比如E GLASS CHOPPED STRAND MA等。
+7. FAX：+7188568583081。
+8. FROM：Transport Detail里的FROM USNV Burke FPO AE 68665。
+9. H/S CODE：图中下方的H/S CODE: 7019110090等。
+10. Marks：表格中的Marks列，比如N/M等。
+11. No.：No.: JSJP 22636。
+12. P/O-No.：P/O No.: JP22836。
+13. PrQuantity (KGS)：可能和Quantity (KGS)是同一个？看表格中的Quantity (KGS)列，比如8640等。PrQuantity可能是笔误？但题目里有PrQuantity (KGS)和Quantity (KGS)，可能PrQuantity是另一个？不过看表格里的Quantity (KGS)是明确的，PrQuantity可能没有，或者可能用户输入错误？但先看Quantity (KGS)。
+14. Quantity (KGS)：表格中的Quantity (KGS)列，数值如8640等。
+15. TEL：+0111858268738。
+16. TO：Transport Detail里的TO USNS Mendoza FPO AE 48472。
+17. Terms of Payment：T/T 15 DAYS AFTER B/L DATE。
+18. Title：INVOICE是标题。
+19. Unit Price (JPY/KG)：表格中的Unit Price (JPY/KG)列，比如JPY 176.90等。
+
+现在需要逐个定位每个元素的bbox。先看图像的结构：
+
+- 标题INVOICE是Title，位置在中间上方。
+- Company Name：开票方是“国讯信息有限公司”，在左上角，logo旁边。
+- ADD：在Company Name右边，ADD: 3811...
+- TEL和FAX在ADD右边，TEL: +0111...，FAX: +7188...
+- To部分是收货方，Guoxun Information Co., Ltd.等。
+- No.是发票号，No.: JSJP 22636。
+- Date是21/May/22。
+- Terms of Payment是T/T 15 DAYS AFTER B/L DATE。
+- Transport Detail里的FROM和TO。
+- 表格部分：Marks, Description of Goods, Quantity (KGS), Unit Price (JPY/KG), Amount (JPY)。
+- TOTAL行的Amount是总金额。
+- P/O No.是JP22836。
+- H/S CODE是下方的几个代码。
+
+现在开始逐个处理：
+
+1. ADD：坐标看图像，ADD: 3811 Price Parkways South Shelly, MD 86175。在图的上方，Company Name右边。bbox大概是从ADD标签到地址的范围。假设图像的坐标系统，左上角是(0,0)，右下角是(1000,1000)左右。需要估计每个元素的位置。
+
+不过可能更简单的是，先列出每个元素的label和对应的bbox。
+
+现在开始构建每个条目：
+
+- Title: "INVOICE"，在图中间上方，大写。bbox是包含INVOICE的区域。
+- Company Name: "国讯信息有限公司"，在左上角，logo右侧。bbox是该文字的位置。
+- ADD: "ADD: 3811 Price Parkways South Shelly, MD 86175"，在Company Name右侧。bbox是该行。
+- TEL: "+0111858268738"，在ADD右侧。bbox是该电话。
+- FAX: "+7188568583081"，在TEL右侧。bbox是该传真。
+- To: "Guoxun Information Co., Ltd. 71738 Kelly Spurs Hannahaton, AL 69007 USNS Mendoza FPO AE 48472"，在INVOICE下方，To: 后面的内容。bbox是这部分。
+- No.: "No.: JSJP 22636"，在To的右侧，No.: 后面的编号。bbox是这部分。
+- Date: "Date: 21/May/22"，在No.的右侧，Date: 后面的日期。bbox是这部分。
+- Terms of Payment: "T/T 15 DAYS AFTER B/L DATE"，在Date下方，Terms of Payment: 后面的内容。bbox是这部分。
+- Transport Detail:FROM "USNV Burke FPO AE 68665"，在Terms of Payment下方，FROM 后面的内容。bbox是这部分。
+- Transport Detail:TO "USNS Mendoza FPO AE 48472"？不，TO是USNS Mendoza FPO AE 48472？看原文Transport Detail:FROM USNV Burke FPO AE 68665 TO USNS Mendoza FPO AE 48472？不，原文中To是USNS Mendoza FPO AE 48472？看原文：
+
+Transport Detail:FROM USNV Burke FPO AE 68665 TO USNS Mendoza FPO AE 48472？不，原文中To的部分是“USNS Mendoza FPO AE 48472”是To吗？看原文：
+
+To: Guoxun Information Co., Ltd. ... USNS Mendoza FPO AE 48472 —— 不，原文中To的地址是Guoxun Information Co., Ltd.的地址，而Transport Detail里的TO是另一个？看原文：
+
+Transport Detail:FROM USNV Burke FPO AE 68665 TO USNS Mendoza FPO AE 48472？不，原文中Transport Detail:FROM USNV Burke FPO AE 68665 TO （后面是BY SEA），而To的地址是USNS Mendoza FPO AE 48472？不，看原文：
+
+原文中Transport Detail:FROM USNV Burke FPO AE 68665 TO （然后是BY SEA），而To的地址在To: 那一行是Guoxun Information Co., Ltd.的地址，包括USNS Mendoza FPO AE 48472。可能Transport Detail的TO是另一个？不，可能我看错了。原文中：
+
+Transport Detail:FROM USNV Burke FPO AE 68665 TO （然后是BY SEA），而To: 后面的是收货方的地址，包括USNS Mendoza FPO AE 48472。所以Transport Detail的TO可能没有明确写出？不，原文中Transport Detail:FROM USNV Burke FPO AE 68665 TO （可能空？不，看原文：
+
+原文中的Transport Detail:FROM USNV Burke FPO AE 68665 TO USNS Mendoza FPO AE 48472？不，看原文中的“TO”后面是“USNS Mendoza FPO AE 48472”吗？不，原文中To: 那一行是：
+
+To: Guoxun Information Co., Ltd.
+71738 Kelly Spurs Hannahaton, AL 69007
+USNS Mendoza FPO AE 48472
+
+而Transport Detail:FROM USNV Burke FPO AE 68665 TO （然后是BY SEA），所以Transport Detail的TO可能没有在图中显示？或者可能我混淆了。不管怎样，TO作为类别，是指Transport Detail中的TO部分，即“USNV Burke FPO AE 68665”是FROM，“TO”对应的是运输的终点，可能图中Transport Detail的TO是另一个，但图中写的是“TO”后面可能没有？不，看原文中的Transport Detail:FROM USNV Burke FPO AE 68665 TO （然后是BY SEA），可能TO的位置是空白？或者可能图中的TO是“USNS Mendoza FPO AE 48472”？不，可能我需要再看原文。
+
+现在回到表格部分：
+
+Marks列：比如第一行是N/M，然后是E GLASS CHOPPED STRAND MA等？不，Marks列是第一列，比如第一行的Marks是N/M，然后第二行是E GLASS CHOPPED STRAND MA（可能Description of Goods是这一行，Marks是N/M？看表格结构：
+
+表格的列是Marks | Description of Goods | Quantity (KGS) | Unit Price (JPY/KG) | Amount (JPY)
+
+所以第一行的Marks是N/M，Description of Goods是E GLASS CHOPPED STRAND MA EMC450-1040-P02，Quantity是8640，Unit Price是JPY 176.90，Amount是JPY 1,528,416.00。
+
+然后第二行的Marks是（空？或者看第二行的Marks列，可能第二行的Marks是空？不，看原文中的第二行：
+
+E GLASS CHOPPED STRAND MA EMC450-1040-P02 对应的Quantity是4320，所以Marks列在第二行可能也是N/M？或者看原文中的第一行Marks是N/M，然后下面的行Marks可能没有，或者看原文中的表格：
+
+原文中的表格行：
+
+N/M E GLASS CHOPPED STRAND MA EMC450-1040-P02 8640 JPY 176.90 JPY 1,528,416.00
+
+然后下一行是E GLASS CHOPPED STRAND MA EMC450-1040-P02 4320 JPY 176.90 JPY 764,208.00 —— 这里的Marks列可能没有内容，或者N/M只在第一行？可能Marks列在第一行是N/M，其他行是空。所以Marks的检测是包含N/M的那个单元格。
+
+Description of Goods是每个商品的描述，比如E GLASS CHOPPED STRAND MA EMC450-1040-P02等。
+
+Quantity (KGS)是每个商品的数量，比如8640, 4320等。
+
+Unit Price (JPY/KG)是每个商品的单价，比如JPY 176.90等。
+
+Amount (JPY)是每个商品的金额，比如JPY 1,528,416.00等，以及TOTAL的JPY 3,772,166.00。
+
+P/O No.是P/O No.: JP22836，位于发票下方。
+
+H/S CODE是H/S CODE: 后面的几个代码，比如7019110090等。
+
+现在开始逐个列出所有需要的类别：
+
+1. ADD: 标签和地址。bbox是包含“ADD: 3811 Price Parkways South Shelly, MD 86175”的区域。
+2. Address: 可能和ADD是同一个？但题目里有ADD和Address，可能Address是To的地址？不，To的地址是收货方地址，而ADD是开票方的地址。所以Address可能指开票方的地址，即ADD的内容。但题目里有ADD和Address两个类别？看题目给的类别列表：ADD, Address, ... 所以需要区分。可能ADD是“ADD: ...”，Address是另一个地址？比如To的地址是Address？但To的地址是“Guoxun Information Co., Ltd. 71738 Kelly Spurs Hannahaton, AL 69007 USNS Mendoza FPO AE 48472”，这可以作为Address（收货方地址）。而ADD是开票方的地址（3811 Price Parkways...）。所以Address是To的地址部分。
+3. Amount (JPY)：所有Amount列的数值，包括每个商品的Amount和TOTAL的Amount。
+4. Company Name：开票方的公司名称“国讯信息有限公司”。
+5. Date：21/May/22。
+6. Description of Goods：表格中Description of Goods列的所有内容。
+7. FAX：+7188568583081。
+8. FROM：Transport Detail中的FROM USNV Burke FPO AE 68665。
+9. H/S CODE：H/S CODE: 后面的代码，如7019110090等。
+10. Marks：表格中Marks列的内容，如N/M。
+11. No.：No.: JSJP 22636。
+12. P/O-No.：P/O No.: JP22836。
+13. PrQuantity (KGS)：可能没有，因为表格中是Quantity (KGS)，可能PrQuantity是笔误，或者可能没有这个元素？但题目里有PrQuantity (KGS)和Quantity (KGS)，需要检查。看表格中的Quantity (KGS)是明确的，PrQuantity可能不存在，或者可能用户输入错误，比如“PrQuantity”是“Quantity”的重复？但先处理Quantity (KGS)。
+14. Quantity (KGS)：表格中Quantity (KGS)列的所有数值，如8640, 4320等。
+15. TEL：+0111858268738。
+16. TO：Transport Detail中的TO部分，即运输的终点，图中Transport Detail:FROM ... TO ...，这里的TO可能是指“USNS Mendoza FPO AE 48472”？不，看原文Transport Detail:FROM USNV Burke FPO AE 68665 TO （然后是BY SEA），可能TO的位置没有明确写出，但图中To: 后面的是收货方地址，而Transport的TO是另一个？可能图中的TO在Transport Detail里是“USNS Mendoza FPO AE 48472”？不，可能我搞混了。看原文中的Transport Detail:FROM USNV Burke FPO AE 68665 TO USNS Mendoza FPO AE 48472？不，原文中To: 那一行的USNS Mendoza FPO AE 48472是收货方的地址，而Transport的FROM是USNV Burke FPO AE 68665，TO是另一个地点？可能图中的Transport Detail的TO是空白，或者可能“TO”在图中是“USNS Mendoza FPO AE 48472”？不，可能图中的Transport Detail的TO是“USNS Mendoza FPO AE 48472”是错误，或者可能我需要看原文中的Transport Detail行：
+
+原文中的Transport Detail:FROM USNV Burke FPO AE 68665 TO （然后是BY SEA），所以TO的位置可能没有显示，或者可能“TO”对应的是收货方的地址？不，可能图中的TO在Transport Detail里是“USNS Mendoza FPO AE 48472”？不，可能我应该看原文中的“TO”在Transport Detail里的内容。原文中：
+
+Transport Detail:FROM USNV Burke FPO AE 68665 TO USNS Mendoza FPO AE 48472？不，原文中“TO”后面是“USNS Mendoza FPO AE 48472”吗？看原文中的“USNS Mendoza FPO AE 48472”是在To: 那一行的第三行，而Transport Detail的TO可能没有，或者可能图中的Transport Detail的TO是“USNS Mendoza FPO AE 48472”？可能我需要接受TO是Transport Detail中的TO部分，即“USNV Burke FPO AE 68665”是FROM，TO是另一个，但图中可能TO是“USNS Mendoza FPO AE 48472”？或者可能图中的TO在Transport Detail里是空白，而“TO”标签存在。不管怎样，TO作为类别，是指Transport Detail中的TO字段，即“TO”后面的内容，可能是“USNS Mendoza FPO AE 48472”？不，可能图中的Transport Detail的TO是“USNS Mendoza FPO AE 48472”是错误，或者可能我需要继续。
+
+17. Terms of Payment：T/T 15 DAYS AFTER B/L DATE。
+18. Title：INVOICE。
+19. Unit Price (JPY/KG)：表格中Unit Price (JPY/KG)列的所有数值，如JPY 176.90等。
+
+现在需要为每个类别生成一个条目，注意有些类别可能有多个实例（比如Amount (JPY)有多个行和TOTAL），但题目要求“detect all objects matching these categories”，所以每个出现的实例都要检测？还是每个类别只要存在就检测一次

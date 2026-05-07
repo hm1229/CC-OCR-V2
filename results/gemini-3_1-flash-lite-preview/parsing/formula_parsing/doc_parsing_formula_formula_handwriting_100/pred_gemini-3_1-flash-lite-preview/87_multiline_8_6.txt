@@ -1,0 +1,13 @@
+\begin{aligned}
+&\mathcal{L}(x, s, \hat{\lambda}, q_r, Q_r; Z, t_k, p_k, P_k, \forall k \in [K]) \\
+&= s + r_2 I_{m_1} \bullet Q_r + \sqrt{r_1} \|q_r\|_2 - Z \cdot \left( \sum_{k=1}^K (\Delta_k x_k + \Delta_0) - \sum_{k=1}^K \begin{bmatrix} t_k & p_k^T \\ p_k & P_k \end{bmatrix} \right) \bullet \\
+&\quad \begin{bmatrix} s - y_k^0(x) - \lambda_k^T b - y_k(x)^T u + \lambda_k^T A u & \frac{1}{2} (q_r + (U \Lambda^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x)))^T \\ \frac{1}{2} (q_r + (U \Lambda^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x))) & Q_r \end{bmatrix} \\
+&= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+&\quad + (r_2 I_{m_1} - \sum_{k=1}^K P_k) \bullet Q_r - \sum_{l=1}^K \sum_{j=1}^K z_{lj} (a_{lj} x + a_{lj}^0) + \sum_{k=1}^K (t_k y_k^0(x) + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) y_k(x)) \\
+&= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+&\quad + (r_2 I_{m_1} - \sum_{k=1}^K P_k) \bullet Q_r - \sum_{l=1}^K \sum_{j=1}^K z_{lj} a_{lj} x - \sum_{l=1}^K \sum_{j=1}^K z_{lj} a_{lj}^0 + \sum_{k=1}^K (t_k W_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) W_k) \\
+&\quad + \sum_{k=1}^K (t_k d_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) d_k) \\
+&= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+&\quad + (r_2 I_{m_1} - \sum_{k=1}^K P_k) \bullet Q_r + (\sum_{k=1}^K (t_k W_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) W_k) - \sum_{l=1}^K \sum_{j=1}^K z_{lj} a_{lj}) x \\
+&\quad + \sum_{k=1}^K (t_k d_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) d_k) - \sum_{l=1}^K \sum_{j=1}^K z_{lj} a_{lj}^0
+\end{aligned}

@@ -1,0 +1,260 @@
+Got it, let's tackle this. First, I need to transcribe all the text, tables, and the image description into LaTeX. Let's start by identifying each part.
+
+First, the table at the top. Let's list the entries:
+
+- 110 – withdrawn socially
+- 460 – can’t not sleep at night (wait, no, original is "460 – can’t not sleep at night"? Wait, no, the image says "460 – can’t not sleep at night"? Wait, no, looking back: "460 – can’t not sleep at night" no, the image has "460 – can’t not sleep at night"? Wait, no, the first table row: "110 – withdrawn socially", "460 – can’t not sleep at night"? Wait, no, the image shows:
+
+First row: 110 – withdrawn socially | 460 – can’t not sleep at night | 43 – become asthmatic
+
+Second row: 20 – become deaf | 21 – become blind | (empty? No, second row: 20 – become deaf, 21 – become blind, then maybe next column? Wait, the image's table is a 3x3 grid? Let's check:
+
+First column: 110 – withdrawn socially; 20 – become deaf; 1,164 – can’t concentrate
+
+Second column: 460 – can’t not sleep at night; 21 – become blind; 117 – refuse to go to school
+
+Third column: 43 – become asthmatic; 566 – have frequent headache and stomach ache; 276 – are in shock
+
+Yes, that's a 3x3 table. Let's structure that in LaTeX.
+
+Then the text section: "2. The natural calamities have tragically affected the lives of about 15000 children in recent years in India. The tsunami waves and earthquakes created havoc on a large scale. About 5430 children became homeless due to the tsunami and 5438 were the victims of the earthquakes. Floods displaced 2602 and droughts affected 2036 children. Epidemics affected 1313 children. Out of these, 1093 children live constantly in general fear; 110 children have withdrawn socially; 20 children have become deaf and 16 of them can’t speak any more. More than 450 children can’t sleep at night while 1164 can’t concentrate on anything. The tragedy is that 21 of them have become blind, 43 asthmatic and 276 are still in shock. 566 suffer from frequent headache and water sound and 117 have refused to go to school."
+
+Then section 3: "3. Disaster management programmes have not proved to the mark and up to the task. The Government and the concerned agencies should provide comprehensive aids and help to the survivors, particularly the children. They must provide nutritious food, clothes, shelters and medical aids to them. The efforts should be made to wipe out the scars left by these disasters."
+
+Then the image: "Number of Children Surviving various Disasters" with a bar chart. The caption: "Children haunted with fear, out of the 16,818 surveyed:"
+
+The chart has labels: Tsunami (dark blue), Earthquake (striped), Floods (dark gray), Drought (light gray), Epidemic (white). The values: Tsunami 5430, 5438; Earthquake 2602; Floods 2035; Drought 1313; Epidemic (the lightest) is the last bar, but the numbers given are 5430, 5438, 2602, 2035, 1313. The total is 16,818.
+
+Then the question part: "Based on your understanding of the passage, answer the following questions. (i) Based on your understanding of the passage, choose the option that lists the statements that are TRUE. 1. Some people are hugely benefited by a natural calamity."
+
+Also, the footer: "CL X/ PB-1 / ENG/PAGE 3 OF"
+
+Now, let's structure this in LaTeX. Let's start with the table.
+
+First, the table:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+110 – withdrawn socially & 460 – can’t not sleep at night & 43 – become asthmatic \\
+\hline
+20 – become deaf & 21 – become blind & \\
+\hline
+1,164 – can’t concentrate & 117 – refuse to go to school & 276 – are in shock \\
+\hline
+\end{tabular}
+\end{table}
+
+Wait, but in the image, the second row's third column: let's check the image again. The image shows:
+
+First column (left):
+- 110 – withdrawn socially
+- 20 – become deaf
+- 1,164 – can’t concentrate
+
+Second column (middle):
+- 460 – can’t not sleep at night (wait, original image: "460 – can’t not sleep at night"? Wait, the image says "460 – can’t not sleep at night"? No, the image has "460 – can’t not sleep at night"? Wait, no, the image's middle top is "460 – can’t not sleep at night"? Wait, the user's image: "460 – can’t not sleep at night" – no, the image shows "460 – can’t not sleep at night"? Wait, the original image text: "460 – can’t not sleep at night" – no, let's check the user's image description. The user provided the image, and in the text, it's "460 – can’t not sleep at night"? Wait, no, the user's image has "460 – can’t not sleep at night"? Wait, the user's image shows:
+
+In the top right of the first table cell: "43 – become asthmatic"
+
+Top middle: "460 – can’t not sleep at night" – no, the user's image says "460 – can’t not sleep at night"? Wait, the user's image has "460 – can’t not sleep at night" – no, the original text in the image is "460 – can’t not sleep at night"? Wait, no, the user's image shows "460 – can’t not sleep at night" – maybe a typo, but let's transcribe as is.
+
+Wait, the user's image has:
+
+First row, first column: 110 – withdrawn socially
+
+First row, second column: 460 – can’t not sleep at night (wait, no, the image says "460 – can’t not sleep at night"? No, the image says "460 – can’t not sleep at night" – no, the image's text is "460 – can’t not sleep at night"? Wait, the user's image shows "460 – can’t not sleep at night" – maybe it's "460 – can’t sleep at night" (the "not" might be a typo, but we transcribe as seen). Let's check the user's image description: the user wrote "460 – can’t not sleep at night" – no, in the user's problem statement, the image has "460 – can’t not sleep at night"? Wait, the user's image shows:
+
+In the table, the middle top cell: "460 – can’t not sleep at night" – no, the user's image has "460 – can’t not sleep at night" – maybe it's a mistake, but we need to transcribe exactly.
+
+Wait, the user's image has:
+
+- 110 – withdrawn socially
+
+- 460 – can’t not sleep at night (probably a typo, should be "can't sleep at night", but we transcribe as is)
+
+- 43 – become asthmatic
+
+Second row:
+
+- 20 – become deaf
+
+- 21 – become blind
+
+- (third column: maybe empty? No, the image shows second row third column: maybe the next entry. Wait, the image's table is:
+
+First column (left column):
+
+110 – withdrawn socially
+
+20 – become deaf
+
+1,164 – can’t concentrate
+
+Second column (middle column):
+
+460 – can’t not sleep at night
+
+21 – become blind
+
+117 – refuse to go to school
+
+Third column (right column):
+
+43 – become asthmatic
+
+566 – have frequent headache and stomach ache
+
+276 – are in shock
+
+Yes, that's correct. So the table is 3 rows, 3 columns. Let's structure that.
+
+Now, the text sections:
+
+2. The natural calamities have tragically affected the lives of about 15000 children in recent years in India. The tsunami waves and earthquakes created havoc on a large scale. About 5430 children became homeless due to the tsunami and 5438 were the victims of the earthquakes. Floods displaced 2602 and droughts affected 2036 children. Epidemics affected 1313 children. Out of these, 1093 children live constantly in general fear; 110 children have withdrawn socially; 20 children have become deaf and 16 of them can’t speak any more. More than 450 children can’t sleep at night while 1164 can’t concentrate on anything. The tragedy is that 21 of them have become blind, 43 asthmatic and 276 are still in shock. 566 suffer from frequent headache and water sound and 117 have refused to go to school.
+
+3. Disaster management programmes have not proved to the mark and up to the task. The Government and the concerned agencies should provide comprehensive aids and help to the survivors, particularly the children. They must provide nutritious food, clothes, shelters and medical aids to them. The efforts should be made to wipe out the scars left by these disasters.
+
+Then the image caption:
+
+\begin{figure}[h]
+\centering
+\caption{Number of Children Surviving various Disasters}
+% The bar chart description: Children haunted with fear, out of the 16,818 surveyed:
+% Legend: Tsunami (dark blue), Earthquake (striped), Floods (dark gray), Drought (light gray), Epidemic (white)
+% Values: Tsunami: 5430, 5438; Earthquake: 2602; Floods: 2035; Drought: 1313; Epidemic: (the lightest bar, but the numbers given are the ones listed)
+% Since it's a simulation, we can describe the chart in text or use a placeholder.
+\end{figure}
+
+But since it's a transcription, maybe describe the chart as per the image. The image has a bar chart with the following:
+
+- Tsunami: two bars? Wait, the image shows "5430 5438" for Tsunami, which might be a typo or two bars for Tsunami (maybe tsunami and another category, but the legend says Tsunami, Earthquake, Floods, Drought, Epidemic. Let's check the legend:
+
+- Tsunami (dark blue)
+
+- Earthquake (striped)
+
+- Floods (dark gray)
+
+- Drought (light gray)
+
+- Epidemic (white)
+
+The bars:
+
+- Tsunami: the tallest bar, labeled 5430 and 5438 (maybe two bars for Tsunami? Unlikely, maybe a mislabel. But the text says "5430 5438" next to the Tsunami bar. Then Earthquake is 2602, Floods 2035, Drought 1313, Epidemic is the smallest bar (white) which is part of the total 16,818.
+
+The caption below the chart: "Children haunted with fear, out of the 16,818 surveyed:"
+
+Now, the question section:
+
+Based on your understanding of the passage, answer the following questions.
+
+(i) Based on your understanding of the passage, choose the option that lists the statements that are TRUE.
+
+1. Some people are hugely benefited by a natural calamity.
+
+Also, the footer: CL X/ PB-1 / ENG/PAGE 3 OF
+
+Now, let's put all together in LaTeX. Let's use sections, tables, text, figure.
+
+First, the table:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+110 – withdrawn socially & 460 – can’t not sleep at night & 43 – become asthmatic \\
+\hline
+20 – become deaf & 21 – become blind & \\
+\hline
+1,164 – can’t concentrate & 117 – refuse to go to school & 276 – are in shock \\
+\hline
+\end{tabular}
+\end{table}
+
+Wait, but in the image, the second row third column: let's check again. The image shows:
+
+First row: three columns: 110, 460, 43
+
+Second row: 20, 21, (empty? No, the image's second row third column is "566 – have frequent headache and stomach ache"? Wait, no, the image's table is:
+
+Looking at the user's image, the table is:
+
+Top row: 110 – withdrawn socially | 460 – can’t not sleep at night | 43 – become asthmatic
+
+Middle row: 20 – become deaf | 21 – become blind | (maybe the middle row third column is empty, but the third column has 566 – have frequent headache and stomach ache in the third row? Wait, no, the image shows:
+
+The table has three columns and three rows. Let's list all entries:
+
+- Row 1, Col 1: 110 – withdrawn socially
+
+- Row 1, Col 2: 460 – can’t not sleep at night
+
+- Row 1, Col 3: 43 – become asthmatic
+
+- Row 2, Col 1: 20 – become deaf
+
+- Row 2, Col 2: 21 – become blind
+
+- Row 2, Col 3: (maybe the image has a third entry here, but in the user's image, the second row third column is not shown? Wait, no, the user's image shows:
+
+The table is:
+
+First column (left):
+
+- 110 – withdrawn socially
+
+- 20 – become deaf
+
+- 1,164 – can’t concentrate
+
+Second column (middle):
+
+- 460 – can’t not sleep at night
+
+- 21 – become blind
+
+- 117 – refuse to go to school
+
+Third column (right):
+
+- 43 – become asthmatic
+
+- 566 – have frequent headache and stomach ache
+
+- 276 – are in shock
+
+Yes, that's correct. So the table is 3 rows, 3 columns. Let's correct the LaTeX table:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+110 – withdrawn socially & 460 – can’t not sleep at night & 43 – become asthmatic \\
+\hline
+20 – become deaf & 21 – become blind & 566 – have frequent headache and stomach ache \\
+\hline
+1,164 – can’t concentrate & 117 – refuse to go to school & 276 – are in shock \\
+\hline
+\end{tabular}
+\end{table}
+
+Ah, that's better. I missed the 566 in the second row third column earlier. Let's check the image again: the user's image has "566 – have frequent headache and stomach ache" in the third column, second row. Yes, that's part of the table.
+
+Now, the text section:
+
+\section*{2. The natural calamities have tragically affected the lives of about 15000 children in recent years in India. The tsunami waves and earthquakes created havoc on a large scale. About 5430 children became homeless due to the tsunami and 5438 were the victims of the earthquakes. Floods displaced 2602 and droughts affected 2036 children. Epidemics affected 1313 children. Out of these, 1093 children live constantly in general fear; 110 children have withdrawn socially; 20 children have become deaf and 16 of them can’t speak any more. More than 450 children can’t sleep at night while 1164 can’t concentrate on anything. The tragedy is that 21 of them have become blind, 43 asthmatic and 276 are still in shock. 566 suffer from frequent headache and water sound and 117 have refused to go to school.}
+
+\section*{3. Disaster management programmes have not proved to the mark and up to the task. The Government and the concerned agencies should provide comprehensive aids and help to the survivors, particularly the children. They must provide nutritious food, clothes, shelters and medical aids to them. The efforts should be made to wipe out the scars left by these disasters.}
+
+Then the figure:
+
+\begin{figure}[h]
+\centering
+\caption{Number of Children Surviving various Disasters}
+% Description of the bar chart: Children haunted with fear, out of the 16,818 surveyed:
+% Legend: Tsunami (dark blue), Earthquake (striped), Floods (dark gray), Drought (light gray), Epidemic (white)
+% Values: Tsunami: 5430, 5438; Earthquake: 2602; Floods: 2035; Drought: 1313; Epidemic: (the remaining value to reach 16,818)
+% Since the total is 16,818, let's calculate: 5430 + 5438 + 2602 + 2035 + 1313 = let's check: 5430+5438=10868; 10868+26

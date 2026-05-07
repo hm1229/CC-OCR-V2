@@ -1,0 +1,37 @@
+Looking at the flowchart under the **“Active in MAILFILE”** branch (left side):
+
+- After “Calculated Active Universe: 1,440” and “Promotion Penetration: 13.9%”, the next box is:
+
+> **Maximum Allowable: 86**
+
+This is the number you’re asking for.
+
+---
+
+✅ **Answer: 86**
+
+*(Note: This value is derived from 13.9% of 1,440 ≈ 200.16 — but wait, that doesn’t match. Let’s double-check the logic.)*
+
+Actually, let’s trace it properly:
+
+The “Active in MAILFILE: 200” leads to “Calculated Active Universe: 1,440”.
+
+Then “Promotion Penetration: 13.9%” — this likely means 13.9% of the *universe* (1,440) = 0.139 × 1,440 ≈ **200.16**, which matches the “Active in MAILFILE: 200” — so that’s consistent.
+
+But then “Maximum Allowable: 86” — where does this come from?
+
+Looking further down:  
+→ “Randomly Suppress 114 Active from mailfile”  
+→ “Active Remaining in Mailfile: 86”
+
+So: 200 (original active in mailfile) - 114 suppressed = **86 remaining**
+
+And then “Promotion Penetration: 6.0%” — which is 6% of 1,440 = 86.4 → rounded to **86**
+
+Ah! So “Maximum Allowable: 86” is actually the target number of active users allowed in the mailfile after suppression, based on the overall promotion penetration rate of 6.0% applied to the calculated active universe (1,440).
+
+Thus, **86** is correct as the “Maximum Allowable” in the active mailfile context.
+
+---
+
+✅ Final Answer: **86**

@@ -1,0 +1,289 @@
+Got it, let's tackle converting this table into HTML. First, I need to analyze the structure. The table has rows and columns. Let's identify the headers and the data.
+
+First, the columns: Base, Model, then STS12, STS13, STS14, STS15, STS16, STS-B, SICK-R, Avg.
+
+Then the rows. Let's check the Base section: RoBERTa_base and RoBERTa_large. Under each Base, there are Model entries.
+
+Also, note the superscripts like 1, [41], etc. Need to include those as they are in the image.
+
+Let's start building the table.
+
+First, the header row. The first row is the top header: Base, Model, STS12, STS13, STS14, STS15, STS16, STS-B, SICK-R, Avg.
+
+Then, the rows under RoBERTa_base. Let's list each row:
+
+1. RoBERTa_base row with SimCSE¹: the Base cell spans? Wait, no. Wait, the Base column has "RoBERTa_base" for several rows. Let's check the image. The first part under Base is RoBERTa_base, then the Model column has SimCSE¹, ESImCSE [41], VaScL [44], Prompt-RoBERTa [20]², then SimCSE (ours)³, +switch-case, +retrieval, CARDs⁴. So the Base cell for these rows is "RoBERTa_base" and it's a single cell spanning multiple rows? Wait, in the image, the Base column for RoBERTa_base has a cell that covers the rows under it. Let's check the image's structure.
+
+Looking at the image:
+
+- The first column is "Base". The first entry is "RoBERTa_base" which spans multiple rows (the rows under it: SimCSE¹, ESImCSE [41], VaScL [44], Prompt-RoBERTa [20]², then SimCSE (ours)³, +switch-case, +retrieval, CARDs⁴). Then after that, the next Base is "RoBERTa_large", which also spans multiple rows (SimCSE¹, ESImCSE [41], VaScL [44], SimCSE (ours)³, +switch-case, +retrieval, CARDs⁴).
+
+So in HTML, we need to use <tr> with <td> for each cell, and for merged cells (rowspan), we need to set the rowspan attribute.
+
+Let's count the rows for RoBERTa_base:
+
+Under RoBERTa_base, the Model entries are:
+
+1. SimCSE¹
+2. ESImCSE [41]
+3. VaScL [44]
+4. Prompt-RoBERTa [20]²
+5. SimCSE (ours)³
+6. +switch-case
+7. +retrieval
+8. CARDs⁴
+
+So that's 8 rows for RoBERTa_base. Then RoBERTa_large has:
+
+1. SimCSE¹
+2. ESImCSE [41]
+3. VaScL [44]
+4. SimCSE (ours)³
+5. +switch-case
+6. +retrieval
+7. CARDs⁴
+
+That's 7 rows. Let's check the image:
+
+For RoBERTa_base:
+
+- First four models: SimCSE¹, ESImCSE [41], VaScL [44], Prompt-RoBERTa [20]² → 4 rows.
+- Then SimCSE (ours)³, +switch-case, +retrieval, CARDs⁴ → 4 rows. Total 8 rows.
+
+For RoBERTa_large:
+
+- SimCSE¹, ESImCSE [41], VaScL [44] → 3 rows.
+- SimCSE (ours)³, +switch-case, +retrieval, CARDs⁴ → 4 rows. Total 7 rows.
+
+Now, the Base column for RoBERTa_base should have a rowspan of 8. Then RoBERTa_large has a rowspan of 7.
+
+Now, let's structure each row.
+
+First, the header row:
+
+<tr>
+  <th>Base</th>
+  <th>Model</th>
+  <th>STS12</th>
+  <th>STS13</th>
+  <th>STS14</th>
+  <th>STS15</th>
+  <th>STS16</th>
+  <th>STS-B</th>
+  <th>SICK-R</th>
+  <th>Avg</th>
+</tr>
+
+Then, the RoBERTa_base section. The first row of RoBERTa_base:
+
+Base cell: "RoBERTa_base" with rowspan=8.
+
+Model: "SimCSE¹"
+
+Then the data cells for STS12 to Avg: 70.16, 81.77, 73.24, 81.36, 80.65, 82.28, 68.56, 76.57 (-0.43)
+
+So:
+
+<tr>
+  <td rowspan="8">RoBERTa_base</td>
+  <td>SimCSE¹</td>
+  <td>70.16</td>
+  <td>81.77</td>
+  <td>73.24</td>
+  <td>81.36</td>
+  <td>80.65</td>
+  <td>82.28</td>
+  <td>68.56</td>
+  <td>76.57 (-0.43)</td>
+</tr>
+
+Next row (ESImCSE [41]):
+
+Model: "ESImCSE [41]"
+
+Data: 69.90, 82.50, 74.68, 83.19, 80.30, 89.09, 70.54, 77.44 (+0.44)
+
+<tr>
+  <td>ESImCSE [41]</td>
+  <td>69.90</td>
+  <td>82.50</td>
+  <td>74.68</td>
+  <td>83.19</td>
+  <td>80.30</td>
+  <td>89.09</td>
+  <td>70.54</td>
+  <td>77.44 (+0.44)</td>
+</tr>
+
+Next row (VaScL [44]):
+
+Model: "VaScL [44]"
+
+Data: 69.08, 81.95, 74.64, 86.24, 80.57, 82.23, 71.19 (+0.19), 77.21 (+0.19) → Wait, check the image: VaScL [44] row: STS12 69.08, STS13 81.95, STS14 74.64, STS15 86.24, STS16 80.57, STS-B 82.23, SICK-R 71.19 (+0.19), Avg 77.21 (+0.19). Let's confirm.
+
+Yes, image shows VaScL [44] row: 69.08, 81.95, 74.64, 86.24, 80.57, 82.23, 71.19 (+0.19), Avg 77.21 (+0.19).
+
+So:
+
+<tr>
+  <td>VaScL [44]</td>
+  <td>69.08</td>
+  <td>81.95</td>
+  <td>74.64</td>
+  <td>86.24</td>
+  <td>80.57</td>
+  <td>82.23</td>
+  <td>71.19 (+0.19)</td>
+  <td>77.21 (+0.19)</td>
+</tr>
+
+Next row (Prompt-RoBERTa [20]²):
+
+Model: "Prompt-RoBERTa [20]²"
+
+Data: 73.94, 84.74, 77.28, 84.99, 81.74, 81.84, 69.50, 79.15 (+2.15)
+
+Check image: Prompt-RoBERTa [20]² row: STS12 73.94, STS13 84.74, STS14 77.28, STS15 84.99, STS16 81.74, STS-B 81.84, SICK-R 69.50, Avg 79.15 (+2.15). Correct.
+
+<tr>
+  <td>Prompt-RoBERTa [20]²</td>
+  <td>73.94</td>
+  <td>84.74</td>
+  <td>77.28</td>
+  <td>84.99</td>
+  <td>81.74</td>
+  <td>81.84</td>
+  <td>69.50</td>
+  <td>79.15 (+2.15)</td>
+</tr>
+
+Next row (SimCSE (ours)³):
+
+Model: "SimCSE (ours)³"
+
+Data: 68.86, 82.21, 73.39, 81.43, 81.80, 81.00, 70.30, 77.00
+
+Check image: SimCSE (ours)³ row under RoBERTa_base: STS12 68.86, STS13 82.21, STS14 73.39, STS15 81.43, STS16 81.80, STS-B 81.00, SICK-R 70.30, Avg 77.00. Correct.
+
+<tr>
+  <td>SimCSE (ours)³</td>
+  <td>68.86</td>
+  <td>82.21</td>
+  <td>73.39</td>
+  <td>81.43</td>
+  <td>81.80</td>
+  <td>81.00</td>
+  <td>70.30</td>
+  <td>77.00</td>
+</tr>
+
+Next row (+switch-case):
+
+Model: "+switch-case"
+
+Data: 70.62, 82.11, 75.00, 81.88, 81.40, 81.92, 71.52, 77.50 (+0.78)
+
+Check image: +switch-case row: STS12 70.62, STS13 82.11, STS14 75.00, STS15 81.88, STS16 81.40, STS-B 81.92, SICK-R 71.52, Avg 77.50 (+0.78). Correct.
+
+<tr>
+  <td>+switch-case</td>
+  <td>70.62</td>
+  <td>82.11</td>
+  <td>75.00</td>
+  <td>81.88</td>
+  <td>81.40</td>
+  <td>81.92</td>
+  <td>71.52</td>
+  <td>77.50 (+0.78)</td>
+</tr>
+
+Next row (+retrieval):
+
+Model: "+retrieval"
+
+Data: 70.33, 82.78, 74.54, 82.64, 81.79, 81.16, 69.26, 77.50 (+0.50)
+
+Check image: +retrieval row: STS12 70.33, STS13 82.78, STS14 74.54, STS15 82.64, STS16 81.79, STS-B 81.16, SICK-R 69.26, Avg 77.50 (+0.50). Correct.
+
+<tr>
+  <td>+retrieval</td>
+  <td>70.33</td>
+  <td>82.78</td>
+  <td>74.54</td>
+  <td>82.64</td>
+  <td>81.79</td>
+  <td>81.16</td>
+  <td>69.26</td>
+  <td>77.50 (+0.50)</td>
+</tr>
+
+Next row (CARDs⁴):
+
+Model: "CARDs⁴"
+
+Data: 72.49, 84.09, 76.19, 82.98, 82.11, 82.25, 70.65, 78.68 (+1.68)
+
+Check image: CARDs⁴ row: STS12 72.49, STS13 84.09, STS14 76.19, STS15 82.98, STS16 82.11, STS-B 82.25, SICK-R 70.65, Avg 78.68 (+1.68). Correct.
+
+<tr>
+  <td>CARDs⁴</td>
+  <td>72.49</td>
+  <td>84.09</td>
+  <td>76.19</td>
+  <td>82.98</td>
+  <td>82.11</td>
+  <td>82.25</td>
+  <td>70.65</td>
+  <td>78.68 (+1.68)</td>
+</tr>
+
+Now, that's all 8 rows for RoBERTa_base (rowspan=8 done in the first row).
+
+Now, the RoBERTa_large section. The Base cell here has rowspan=7.
+
+First row of RoBERTa_large:
+
+Model: "SimCSE¹"
+
+Data: 72.86, 83.99, 75.62, 84.77, 81.88, 81.98, 71.26, 78.90
+
+Check image: SimCSE¹ under RoBERTa_large: STS12 72.86, STS13 83.99, STS14 75.62, STS15 84.77, STS16 81.88, STS-B 81.98, SICK-R 71.26, Avg 78.90. Correct.
+
+<tr>
+  <td rowspan="7">RoBERTa_large</td>
+  <td>SimCSE¹</td>
+  <td>72.86</td>
+  <td>83.99</td>
+  <td>75.62</td>
+  <td>84.77</td>
+  <td>81.88</td>
+  <td>81.98</td>
+  <td>71.26</td>
+  <td>78.90</td>
+</tr>
+
+Next row (ESImCSE [41]):
+
+Model: "ESImCSE [41]"
+
+Data: 73.20, 84.93, 76.88, 84.86, 81.21, 82.79, 72.27, 79.45 (+0.55)
+
+Check image: ESImCSE [41] under RoBERTa_large: STS12 73.20, STS13 84.93, STS14 76.88, STS15 84.86, STS16 81.21, STS-B 82.79, SICK-R 72.27, Avg 79.45 (+0.55). Correct.
+
+<tr>
+  <td>ESImCSE [41]</td>
+  <td>73.20</td>
+  <td>84.93</td>
+  <td>76.88</td>
+  <td>84.86</td>
+  <td>81.21</td>
+  <td>82.79</td>
+  <td>72.27</td>
+  <td>79.45 (+0.55)</td>
+</tr>
+
+Next row (VaScL [44]):
+
+Model: "VaScL [44]"
+
+Data: 74.34, 83.35, 76.79, 84.37, 81.46

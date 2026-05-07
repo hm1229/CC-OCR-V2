@@ -1,0 +1,18 @@
+```latex
+\int_0^T G(\tau-s, z(\tau)-z(s)) \phi(z(s)) z'(s) ds
+$$
+$$
+= \sum_{j=1}^J A_j \int_0^T \frac{1}{\sqrt{4\pi t}} e^{-\frac{[z(\tau)-z(\tau-t)-kt]^2}{4t} - pt + q_j z(\tau-t)} z'(\tau-t) dt
+$$
+$$
+- VK \int_0^T \frac{1}{\sqrt{4\pi t}} e^{-\frac{[z(\tau)-z(\tau-t)-kt]^2}{4t} - pt + z(\tau-t)} z'(\tau-t) dt
+$$
+$$
+= \sum_{j=1}^J A_j \sqrt{\tau} \int_0^1 \frac{1}{\sqrt{4\pi \xi}} e^{-\frac{[z(\tau)-z(\bar{\xi}\tau)-k\xi\tau]^2}{4\xi\tau} - p\xi\tau + q_j z(\bar{\xi}\tau)} z'(\bar{\xi}\tau) d\xi
+$$
+$$
+- VK \sqrt{\tau} \int_0^1 \frac{1}{\sqrt{4\pi \xi}} e^{-\frac{[z(\tau)-z(\bar{\xi}\tau)-k\xi\tau]^2}{4\xi\tau} - p\xi\tau + z(\bar{\xi}\tau)} z'(\bar{\xi}\tau) d\xi
+$$
+$$
+:= (\text{Term } 1) + (\text{Term } 2).
+```

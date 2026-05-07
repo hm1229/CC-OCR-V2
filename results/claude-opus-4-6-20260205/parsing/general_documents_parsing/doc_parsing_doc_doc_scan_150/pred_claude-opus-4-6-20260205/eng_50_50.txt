@@ -1,0 +1,96 @@
+```latex
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Large Fourier Transform Pairs}
+\end{center}
+
+\[
+\left(n, t, \omega, a, \omega_o, t_o \text{ are Real numbers}\ ;\ j = \text{complex number}\ ;\ n = \text{integer}\ ;\ \omega = \text{angular frequency}\right)
+\]
+
+\bigskip
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Time Domain} & \textbf{Fourier Transform} \\
+\hline
+$f(t)$ & $\displaystyle\int_{-\infty}^{+\infty} f(t) e^{-j\omega t}\, dt$ \\[12pt]
+\hline
+$a_1 f_1(t) + a_2 f_2(t)$ & $a_1 F_1(\omega) + a_2 F_2(\omega)$ \\[12pt]
+\hline
+$e^{j\omega_o t} f(t)$ & $F(\omega - \omega_o)$ \\[12pt]
+\hline
+$\displaystyle\frac{d^n\left[f(t)\right]}{dt^n}$ & $\left(j\omega\right)^n F(\omega)$ \\[6pt]
+$(n > 0)$ & \\[6pt]
+\hline
+$e^{-at} u(t)$ & $\displaystyle\frac{1}{a + j\omega}$ \\[6pt]
+$a > 0$ & \\[6pt]
+\hline
+$\cos(\omega_o t)$ & $\pi\left[\delta(\omega - \omega_o) + \delta(\omega + \omega_o)\right]$ \\[12pt]
+\hline
+$\delta(t)$ & $1$ \\[12pt]
+\hline
+$1$ & $2\pi \cdot \delta(\omega)$ \\[12pt]
+\hline
+$u(t)$ & $\displaystyle\pi \cdot \delta(\omega) + \frac{1}{j\omega}$ \\[12pt]
+\hline
+$u(t) - u(-t)$ & $\displaystyle\frac{2}{j\omega}$ \\[12pt]
+\hline
+$t^{(n-1)} \cdot e^{-a \cdot t} \cdot u(t)$ & $\displaystyle\frac{(n-1)!}{(a + j\omega)^n}$ \\[6pt]
+$a > 0\ ;\ n > 0$ & \\[6pt]
+\hline
+$\cos(\omega_o t) \cdot f(t)$ & $\displaystyle\frac{1}{2}\left[F(\omega - \omega_o) + F(\omega + \omega_o)\right]$ \\[12pt]
+\hline
+\end{tabular}
+\end{center}
+
+\bigskip
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Time Domain} & \textbf{Fourier Transform} \\
+\hline
+$\displaystyle\frac{1}{2\pi}\int_{-\infty}^{+\infty} F(\omega) e^{j\omega t}\, d\omega$ & $F(\omega)$ \\[12pt]
+\hline
+$f(a \cdot t)$ & $\displaystyle\frac{1}{|a|} F\left(\frac{\omega}{a}\right)$ \\[6pt]
+$a \neq 0$ & \\[6pt]
+\hline
+$f(t - t_o)$ & $e^{-j\omega t_o} F(\omega)$ \\[12pt]
+\hline
+$(-jt)^n f(t)$ & $\displaystyle\frac{d^n\left[F(\omega)\right]}{d\omega^n}$ \\[6pt]
+$(n > 0)$ & \\[6pt]
+\hline
+$e^{at} u(-t)$ & $\displaystyle\frac{1}{a - j\omega}$ \\[6pt]
+$a > 0$ & \\[6pt]
+\hline
+$\sin(\omega_o t)$ & $\displaystyle\frac{\pi}{j}\left[\delta(\omega - \omega_o) - \delta(\omega + \omega_o)\right]$ \\[12pt]
+\hline
+$\delta(t - t_o)$ & $e^{-j\omega t_o}$ \\[12pt]
+\hline
+$e^{j\omega_o t}$ & $2\pi \cdot \delta(\omega - \omega_o)$ \\[12pt]
+\hline
+$u(-t)$ & $\displaystyle\pi \cdot \delta(\omega) - \frac{1}{j\omega}$ \\[12pt]
+\hline
+$u(t) + u(-t)$ & $2\pi\delta(\omega)$ \\[12pt]
+\hline
+$t^{(n-1)} \cdot e^{a \cdot t} \cdot u(-t)$ & $\displaystyle\frac{(n-1)!}{(a - j\omega)^n} \cdot (-1)^{n-1}$ \\[6pt]
+$a > 0\ ;\ n > 0$ & \\[6pt]
+\hline
+$\sin(\omega_o t) \cdot f(t)$ & $\displaystyle\frac{1}{2j}\left[F(\omega - \omega_o) - F(\omega + \omega_o)\right]$ \\[12pt]
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
+```

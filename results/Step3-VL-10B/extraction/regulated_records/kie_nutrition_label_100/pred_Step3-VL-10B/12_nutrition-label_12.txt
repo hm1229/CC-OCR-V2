@@ -1,0 +1,148 @@
+用户现在需要把营养信息提取到对应的JSON schema里。首先得理解每个字段可能对应什么。先看提供的schema里的键：CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。可能需要先分析每个营养成分的分类。
+
+先看营养标签里的项目：Energy（能量）、Protein（蛋白质）、Fat, Total（总脂肪）、- Saturated（饱和脂肪）、Carbohydrate（碳水化合物）、- Sugars（糖）、Dietary Fibre（膳食纤维）、Sodium（钠）、Thiamin (B1)（硫胺素）、Riboflavin (B2)（核黄素）、Niacin (B3)（烟酸）、Iron（铁）、Folate (B9)（叶酸）。
+
+现在看schema里的缩写可能对应：CE可能是Calories/Energy？D是Daily intake？P是Per serving？比如CE-PS是Energy per serving？CE-D是% Daily intake of Energy？CE-P1可能没有？或者看每个营养成分的分类。比如PRO是Protein，TF是Fat（Total, Saturated），CAR是Carbohydrate（Sugars, Dietary Fibre），SO是Sodium？SS是其他？
+
+现在逐个分析：
+
+首先Serving per package:9；Serving Size:45g (approx. 3/4 cup)。但schema里没有直接对应这个，可能看各个营养项。
+
+先处理Energy：
+- Avg.Qty per serving: 630kJ；% DI per serve:7%；Avg.Qty per 100kg:1400kJ。所以CE-PS可能是Energy per serving（630kJ），CE-D是% DI per serve（7%），CE-P1可能没有？或者看其他。
+
+Protein：
+- Avg.Qty per serving:3.7g；% DI per serve:7%；Avg.Qty per 100kg:8.3g。所以PRO-PS是3.7g，PRO-D是7%，PRO-P1是8.3g？
+
+Fat, Total：
+- Avg.Qty per serving:0.8g；% DI per serve:1%；Avg.Qty per 100kg:1.8g。TF-PS是0.8g，TF-D是1%，TF-P1是1.8g。
+
+- Saturated：
+- Avg.Qty per serving:0.2g；% DI per serve:1%；Avg.Qty per 100kg:0.4g。可能Saturated属于TF的子项？但schema里TF-P1可能对应？或者可能TF是Total Fat，Saturated是另一个？但schema里TF的三个字段是TF-PS, TF-D, TF-P1。可能Total Fat的TF-PS是0.8g，TF-D是1%，TF-P1是1.8g；Saturated可能属于另一个？但看schema里的键，可能每个大类别对应三个字段：PS（per serving量）、D（% daily intake）、P1（per 100g量？因为per 100kg可能是per 100g？看标签里是per 100kg？不，看标签里“Avg.Qty per 100kg”可能是per 100g？因为营养标签通常是per 100g。可能图片里的“per 100kg”是笔误，应该是per 100g。比如Energy per 100g是1400kJ，而per serving是45g，所以1400kJ/100g *45g=630kJ，对的。所以per 100g是正确的。所以每个营养项的三个数据：per serving（PS）、% DI（D）、per 100g（P1）。
+
+现在看各个营养项：
+
+1. Energy：
+   - PS: 630kJ
+   - D: 7%
+   - P1: 1400kJ
+   对应CE-PS, CE-D, CE-P1？
+
+2. Protein：
+   - PS:3.7g
+   - D:7%
+   - P1:8.3g
+   对应PRO-PS, PRO-D, PRO-P1
+
+3. Fat, Total：
+   - PS:0.8g
+   - D:1%
+   - P1:1.8g
+   对应TF-PS, TF-D, TF-P1
+
+4. - Saturated（饱和脂肪）：
+   - PS:0.2g
+   - D:1%
+   - P1:0.4g
+   但schema里没有Saturated的单独字段？看schema里的SO是Sodium？SO-PS是Sodium的per serving？Sodium的PS是140mg，D是6%，P1是310mg。所以SO-PS:140mg，SO-D:6%，SO-P1:310mg。
+
+5. Carbohydrate（碳水化合物）：
+   - PS:29.1g
+   - D:9%
+   - P1:64.6g
+   对应CAR-PS, CAR-D, CAR-P1
+
+6. - Sugars（糖）：
+   - PS:11.9g
+   - D:13%
+   - P1:26.4g
+   但schema里SO是Sodium，Sugars可能属于CAR的子项？但schema里CAR的三个字段可能对应总碳水，而Sugars是子项？但看schema里的CAR-P1是总碳水的per 100g，而Sugars的P1是26.4g。但schema里没有Sugars的单独字段，可能Sugars属于CAR-D？不，看schema里的键：CAR-PS, CAR-D, CAR-P1。总碳水的D是9%，Sugars的D是13%。所以可能CAR-D是总碳水的% DI，而Sugars的D是另一个？但schema里没有Sugars的字段，可能用户提供的schema里的SO是Sugars？不，Sodium是Sodium，Sugars是Sugars。看schema里的SO-PS, SO-D, SO-P1。Sugars的PS是11.9g，D是13%，P1是26.4g。那SO可能是Sugars？因为S是Sugars？可能缩写：SO是Sugars（Sugars的首字母S？或者Sodium是S，Sugars是S？可能需要再看。
+
+另外，Dietary Fibre（膳食纤维）：
+- PS:6.4g
+- D:21%
+- P1:14.2g
+  这个属于CAR的子项？因为膳食纤维是碳水化合物的一部分。所以CAR-PS是总碳水29.1g，CAR-D是总碳水的9%，CAR-P1是总碳水的64.6g。而Dietary Fibre的PS是6.4g，D是21%，P1是14.2g。但schema里没有Dietary Fibre的单独字段，可能属于CAR的某个？或者可能CAR-D是膳食纤维的%？不，总碳水的D是9%，膳食纤维的D是21%。所以可能CAR-D是总碳水的% DI，而Dietary Fibre的D是另一个？但schema里没有，可能用户提供的schema中的CAR对应总碳水，而Dietary Fibre可能没有在schema里？或者可能我理解错了schema的结构。
+
+另外，维生素和矿物质部分：Thiamin (B1)、Riboflavin (B2)、Niacin (B3)、Iron、Folate (B9)。这些可能属于SS（Supplemental？或者Special？）因为schema里有SS字段。比如SS是这些微量营养素的汇总？或者每个微量营养素对应？但schema里SS是一个字段，可能需要看。比如Thiamin (B1)的PS是0.27mg(25% RDI*)，D是25% RDI，P1是0.6mg。但可能SS是这些的某个？或者可能SS是Serving Size？但Serving Size是45g (approx. 3/4 cup)，但schema里SS可能不是。或者可能SS是其他？
+
+现在再整理schema的键：
+
+CE-PS, CE-D, CE-P1 → 可能对应Energy（Caloric Energy）
+
+PRO-PS, PRO-D, PRO-P1 → Protein
+
+TF-PS, TF-D, TF-P1 → Total Fat
+
+CAR-PS, CAR-D, CAR-P1 → Carbohydrate（总碳水）
+
+SO-PS, SO-D, SO-P1 → Sugars（因为Sugars是碳水的子类，或者Sodium？需要看Sodium的数据：Sodium的PS是140mg，D是6%，P1是310mg。如果SO是Sodium，那么SO-PS=140mg，SO-D=6%，SO-P1=310mg。而Sugars的PS=11.9g，D=13%，P1=26.4g。那Sugars可能对应哪个？比如SO是Sugars？因为S是Sugars的首字母？或者可能SO是Sodium，而Sugars属于CAR的子项，没有单独字段。但schema里有SO-PS等，所以需要确定。
+
+另外，Dietary Fibre的PS=6.4g，D=21%，P1=14.2g。如果CAR是总碳水，那么Dietary Fibre是CAR的子项，可能没有单独的CAR-D？不，总碳水的D是9%，Dietary Fibre的D是21%。所以可能CAR-D是总碳水的% DI，而Dietary Fibre的D是另一个，但schema里没有，可能用户提供的schema中的CAR-D是Dietary Fibre的% DI？因为总碳水的D是9%，而Dietary Fibre的D是21%，可能更关注膳食纤维？不太对。或者可能我搞反了，比如CAR-PS是总碳水，CAR-D是膳食纤维的% DI？因为总碳水的D是9%，膳食纤维的D是21%，可能21%更突出。但需要看标签中的% DI per serve列，总碳水是9%，Sugars是13%，Dietary Fibre是21%。所以Dietary Fibre的% DI是21%，是较高的，可能CAR-D对应Dietary Fibre的% DI？而总碳水的% DI是9%，对应CAR-PS？不，PS是per serving的量，所以总碳水的PS是29.1g，D是9%；Sugars的PS是11.9g，D是13%；Dietary Fibre的PS是6.4g，D是21%。所以这三个都是碳水相关的，可能schema中的CAR对应总碳水，而Sugars和Dietary Fibre是子项，但schema里没有子项的字段，所以可能SO是Sugars，而另一个字段？但schema里只有SO-PS等，所以可能SO是Sugars，那么SO-PS=11.9g，SO-D=13%，SO-P1=26.4g。而Dietary Fibre可能没有在schema里？或者可能Dietary Fibre属于CAR-P1？不，P1是per 100g的量，总碳水的P1是64.6g，Sugars的P1是26.4g，Dietary Fibre的P1是14.2g。所以可能Dietary Fibre的P1是14.2g，但schema里没有对应的字段，可能用户提供的schema中的CAR-P1是总碳水的P1，而Dietary Fibre的P1没有被包含？或者可能我漏看了schema中的其他键。
+
+现在再看维生素和矿物质：
+
+Thiamin (B1)：0.27mg(25% RDI*) → PS=0.27mg，D=25% RDI，P1=0.6mg
+
+Riboflavin (B2)：0.18mg(10% RDI*) → PS=0.18mg，D=10% RDI，P1=0.4mg
+
+Niacin (B3)：2.5mg(25% RDI*) → PS=2.5mg，D=25% RDI，P1=5.5mg
+
+Iron：3.0mg(25% RDI*) → PS=3.0mg，D=25% RDI，P1=6.7mg
+
+Folate (B9)：50μg(25% RDI*) → PS=50μg，D=25% RDI，P1=110μg
+
+这些属于微量营养素，可能对应SS（Supplemental or Special）字段，因为schema里有SS。所以SS可能是一个字段，包含这些信息？但SS是一个字段，可能需要看是否是列表。但schema里的SS是空字符串，可能需要把所有微量营养素的信息整合？或者可能SS是Serving Size？但Serving Size是45g (approx. 3/4 cup)，但之前的字段可能已经覆盖。或者可能SS是其他，比如“Serving per package”？Serving per package是9，所以SS=9？但Serving per package是9，Serving Size是45g。但schema里的SS可能对应Serving Size？比如SS=45g (approx. 3/4 cup)。但需要看。
+
+现在再回到各个大类，尝试填充：
+
+CE-PS: Energy per serving → 630kJ
+
+CE-D: % Daily intake of Energy → 7%
+
+CE-P1: Energy per 100g → 1400kJ
+
+PRO-PS: Protein per serving → 3.7g
+
+PRO-D: % Daily intake of Protein → 7%
+
+PRO-P1: Protein per 100g → 8.3g
+
+TF-PS: Total Fat per serving → 0.8g
+
+TF-D: % Daily intake of Total Fat → 1%
+
+TF-P1: Total Fat per 100g → 1.8g
+
+CAR-PS: Carbohydrate (total) per serving → 29.1g
+
+CAR-D: % Daily intake of Carbohydrate (total) → 9%
+
+CAR-P1: Carbohydrate (total) per 100g → 64.6g
+
+SO-PS: Sugars per serving → 11.9g （假设SO是Sugars，因为Sugars是重要的碳水子类，且有% DI）
+
+SO-D: % Daily intake of Sugars → 13%
+
+SO-P1: Sugars per 100g → 26.4g
+
+SS: 这里可能需要处理微量营养素，或者Serving Size？或者Sodium？因为Sodium的% DI是6%，如果SO是Sodium的话，那之前的SO-PS是Sodium的per serving（140mg），SO-D是6%，SO-P1是310mg。那Sugars的字段呢？可能Sugars属于CAR的子项，没有单独字段，而Sodium是SO。那重新考虑：
+
+Sodium的PS=140mg，D=6%，P1=310mg → SO-PS=140mg，SO-D=6%，SO-P1=310mg
+
+Sugars的PS=11.9g，D=13%，P1=26.4g → 可能没有对应的字段？但schema里有SO-PS等，可能Sugars是另一个，比如SO是Sugars，而Sodium是另一个？但schema里只有SO一个组。或者可能我搞错了，Sugars的% DI是13%，而Dietary Fibre是21%，这两个都是重要的，可能Dietary Fibre属于CAR-D？因为总碳水的D是9%，而Dietary Fibre的D是21%，可能更关注膳食纤维的摄入，所以CAR-D=21%（Dietary Fibre的% DI），而总碳水的D是9%可能不重要？但标签中% DI per serve是针对每个营养项的，所以总碳水的% DI是9%，Sugars是13%，Dietary Fibre是21%。所以可能：
+
+CAR-PS: 总碳水 per serving →29.1g
+
+CAR-D: 膳食纤维的% DI →21% （因为膳食纤维是重要的纤维来源，可能更突出）
+
+CAR-P1: 膳食纤维 per 100g →14.2g
+
+而总碳水的P1是64.6g，Sugars的P1是26.4g。但这样可能混淆。或者可能CAR对应总碳水，Dietary Fibre是另一个字段，但schema里没有。可能用户提供的schema中的CAR-D是总碳水的% DI（9%），而Dietary Fibre的% DI是21%，但没有字段，所以可能忽略？或者可能我之前对schema的理解错误，每个大类（CE, PRO, TF, CAR, SO, SS）对应三个字段：PS（per serving量）、D（% DI）、P1（per 100g量）。现在需要确定每个大类对应哪个营养项：
+
+- CE: Energy → 正确，因为Energy是能量，是主要的CE（Caloric Energy）
+- PRO: Protein → 正确
+- TF: Total Fat → 正确
+- CAR: Carbohydrate（总碳水）→ 正确
+- SO: Sugars → 因为Sugars是重要的，且有单独的% DI（13%）
+- SS: 其他，比如微量营养素（B族维生素、铁、叶酸等）或者Serving Size？但Serving Size是45g (approx. 3/4 cup

@@ -1,0 +1,168 @@
+用户现在需要从销售合同里提取指定类别的对象，每个对象要标bbox和label。首先得逐个看每个类别在图中的位置。
+
+先列出来所有要检测的类别：Account No., Address, Amount (USD), Bank Address, Company Name, Consignee, Contact, Contract No., Date, FOB SHANGHAI, Fax, Fax;, Item, Name of Bank, Name&Description of Goods, P/O No., Payment, Price (USD/KG), Quantity (KGS), SWIFT Code, Shipment, Tel, Title。
+
+先看每个部分：
+
+1. Account No.：图中“Account No.: 42014662200229936667”，所以bbox要覆盖这个内容。
+2. Address：卖家地址是“22506 Kyle Spurs Denieshire, CT 11757 Unit 9100 Box 5281 DPO AP 60892”，还有买家地址“035 Mary Locks Molinaburky, IN 52879”等，需要看哪个Address。这里可能卖家的Address是第一个Address字段。
+3. Amount (USD)：表格里的Amount列，比如$30,696，还有Total行的Amount。
+4. Bank Address：图中“Bank Address: JSC 8936, Box 0627 APO AA 76130”
+5. Company Name：卖家是Haojia Technology Co., Ltd.，还有Name of Bank也是这个公司名？不，Name of Bank是Haojia Technology Co., Ltd.，而Company Name应该是Seller的Company Name，即Haojia Technology Co., Ltd.
+6. Consignee：VIA ANTONIO STRADIVARI 120131 MILANO
+7. Contact：Cicle（卖家的Contact）
+8. Contract No.：GR-20211115B
+9. Date：2021/11/15
+10. FOB SHANGHAI：图底部的“FOB SHANGHAI: USD $30,696”
+11. Fax：卖家的Fax是+88-576-5680245，买家的Fax是+517930316802，这里可能需要看哪个Fax。题目里的Fax和Fax;可能重复？看用户给的类别里有Fax和Fax;，可能一个是卖家的Fax，另一个是买家的？需要检查。
+12. Item：表格中的Item列，值是1
+13. Name of Bank：Haojia Technology Co., Ltd.
+14. Name&Description of Goods：2,4,6-Trimethylbenzoyldiphenyl phosphine oxide (PI TPO)
+15. P/O No.：210286
+16. Payment：TTR in advance
+17. Price (USD/KG)：25.58
+18. Quantity (KGS)：1200
+19. SWIFT Code：PCBCCNBJHXPX
+20. Shipment：By sea
+21. Tel：卖家的Tel是+99-682-9824479，买家的Tel是+823223909837，需要看哪个Tel。类别里是Tel，可能两个？但看用户给的类别是Tel，所以可能需要都包含？不过先看每个出现的。
+22. Title：图顶部的“SALES CONTRACT”是Title吗？因为Title是标题，所以“SALES CONTRACT”是Title。
+
+现在逐个处理，先确定每个元素的位置：
+
+- Company Name：Seller的Company Name是Haojia Technology Co., Ltd.，在Seller: 后面。bbox是Seller那一行的公司名。
+- Address（卖家）：Seller: 下面的Address，即“22506 Kyle Spurs Denieshire, CT 11757 Unit 9100 Box 5281 DPO AP 60892”
+- Address（买家）：Buyer: 下面的Address，即“035 Mary Locks Molinaburky, IN 52879”
+- Account No.：在Name of Bank下面，Account No.: 后面的号码
+- Bank Address：Name of Bank下面的Bank Address: 后面的地址
+- Contract No.：Contract No.: 后面的GR-20211115B
+- Date：Date: 后面的2021/11/15
+- Name of Bank：Name of Bank: 后面的Haojia Technology Co., Ltd.
+- Consignee：Consignee: 后面的VIA ANTONIO STRADIVARI 120131 MILANO
+- Contact：Contact: 后面的Cicle
+- Origin：可能不是需要的，因为类别里没有Origin，所以忽略。
+- Buyer的Tel：Tel: +823223909837（在Buyer的Tel字段）
+- Buyer的Fax：Fax: +517930316802（在Buyer的Fax字段）
+- Seller的Tel：Tel: +99-682-9824479（在Seller的Tel字段）
+- Seller的Fax：Fax: +88-576-5680245（在Seller的Fax字段）
+- P/O No.：P/O No.: 后面的210286
+- Port of Shipment等可能不是需要的，因为类别里没有。
+- Item：表格中Item列的1
+- Name&Description of Goods：表格中的内容“2, 4, 6-Trimethylbenzoyldiphenyl phosphine oxide (PI TPO)”
+- Quantity (KGS)：表格中的1200
+- Price (USD/KG)：表格中的25.58
+- Amount (USD)：表格中的$30,696，以及Total行的$30,696
+- SWIFT Code：SWIFT Code: 后面的PCBCCNBJHXPX
+- Payment：Payment: 后面的TTR in advance
+- Shipment：Shipment: 后面的By sea
+- FOB SHANGHAI：底部的“FOB SHANGHAI: USD $30,696”
+- Title：顶部的“SALES CONTRACT”是标题，所以Title是这个。
+
+现在需要把每个类别对应到图中的位置，注意有些类别可能有多个实例，比如Tel有两个（卖家和买家），Fax也有两个（卖家和买家）。但用户给的类别里有Fax和Fax;，可能Fax是卖家的，Fax;是买家的？或者可能输入时的重复，需要看。
+
+现在开始构建每个条目：
+
+1. Account No.：对应“42014662200229936667”，位置在Bank Address下面，Account No.: 后面。bbox需要覆盖这个号码。
+2. Address（卖家）：Seller的Address，即“22506 Kyle Spurs Denieshire, CT 11757 Unit 9100 Box 5281 DPO AP 60892”
+3. Amount (USD)：表格中第一行的Amount是$30,696，Total行的Amount也是$30,696。需要看哪个，可能两个都算？但类别是Amount (USD)，所以每个出现的Amount都算？不过可能取主要的，比如表格中的Amount列。
+4. Bank Address：JSC 8936, Box 0627 APO AA 76130
+5. Company Name：Haojia Technology Co., Ltd.（Seller的公司名）
+6. Consignee：VIA ANTONIO STRADIVARI 120131 MILANO
+7. Contact：Cicle（Seller的Contact）
+8. Contract No.：GR-20211115B
+9. Date：2021/11/15
+10. FOB SHANGHAI：FOB SHANGHAI: USD $30,696
+11. Fax（卖家）：+88-576-5680245
+12. Fax;（买家）：+517930316802（因为类别里有Fax和Fax;，可能区分卖家和买家的Fax）
+13. Item：1（表格中的Item列）
+14. Name of Bank：Haojia Technology Co., Ltd.
+15. Name&Description of Goods：2, 4, 6-Trimethylbenzoyldiphenyl phosphine oxide (PI TPO)
+16. P/O No.：210286
+17. Payment：TTR in advance
+18. Price (USD/KG)：25.58
+19. Quantity (KGS)：1200
+20. SWIFT Code：PCBCCNBJHXPX
+21. Shipment：By sea
+22. Tel（卖家）：+99-682-9824479
+23. Tel（买家）：+823223909837（类别里是Tel，可能两个都算？但用户给的类别是Tel，所以可能需要都包含？或者看是否有其他Tel。另外还有Buyer的Tel是+823223909837，Seller的Tel是+99-682-9824479，所以两个Tel实例。）
+24. Title：SALES CONTRACT（顶部的标题）
+
+现在需要确定每个的bbox。因为是图片，需要估计坐标。假设图片的布局，每个字段的位置：
+
+- Title: “SALES CONTRACT”在上方，所以bbox是包含这个文字的区域。
+- Company Name: Seller: 后面的Haojia Technology Co., Ltd.，在左上方。
+- Address（卖家）: 在Seller: 下面的地址行。
+- Tel（卖家）: 在Address下面的Tel行。
+- Fax（卖家）: Tel下面的Fax行。
+- Contact: Fax下面的Contact行。
+- Origin: Contact下面的Origin（可能没有内容，忽略）。
+- Date: 右侧的Date: 2021/11/15。
+- Contract No.: Date下面的Contract No.: GR-20211115B。
+- Name of Bank: Contract No.下面的Name of Bank: Haojia Technology Co., Ltd.
+- Bank Address: Name of Bank下面的Bank Address: JSC 8936, Box 0627 APO AA 76130。
+- Account No.: Bank Address下面的Account No.: 42014662200229936667。
+- SWIFT Code: Account No.下面的SWIFT Code: PCBCCNBJHXPX。
+- Payment: SWIFT Code下面的Payment: TTR in advance。
+- Buyer: 右侧的Buyer: 035 Mary Locks Molinaburky, IN 52879。
+- Consignee: Buyer下面的Consignee: VIA ANTONIO STRADIVARI 120131 MILANO。
+- Tel（买家）: Consignee下面的Tel: +823223909837。
+- Fax;（买家）: Tel下面的Fax: +517930316802。
+- P/O No.: 左侧的P/O No.: 210286。
+- Port of Shipment: P/O No.下面的Port of Shipment: （可能空，忽略）。
+- Shipment: 右侧的Shipment: By sea。
+- Port of Destination: （可能空，忽略）。
+- Country of Origin: （可能空，忽略）。
+- Item: 表格的Item列，值为1。
+- Name&Description of Goods: 表格的对应列，内容是2,4,6-Trimethylbenzoyldiphenyl phosphine oxide (PI TPO)。
+- Quantity (KGS): 表格的Quantity列，1200。
+- Price (USD/KG): 表格的Price列，25.58。
+- Amount (USD): 表格的Amount列，$30,696；Total行的Amount也是$30,696。
+- FOB SHANGHAI: 底部的FOB SHANGHAI: USD $30,696。
+
+现在需要将每个类别对应到这些元素，然后生成JSON。注意有些类别可能在图中没有，比如“Fax;”可能是指买家的Fax，而“Fax”是卖家的Fax。另外“Title”是“SALES CONTRACT”。
+
+现在开始逐个列出：
+
+1. Account No.：对应“42014662200229936667”，bbox需要覆盖这个文本。假设在图中的位置是右侧银行信息部分，Account No.行。
+2. Address（卖家）：Seller的地址，即“22506 Kyle Spurs Denieshire, CT 11757 Unit 9100 Box 5281 DPO AP 60892”
+3. Amount (USD)：表格中第一行的Amount是$30,696，Total行的Amount也是$30,696。这里可能取表格中的Amount列，比如第一行的Amount。
+4. Bank Address：JSC 8936, Box 0627 APO AA 76130
+5. Company Name：Haojia Technology Co., Ltd.（Seller的公司名）
+6. Consignee：VIA ANTONIO STRADIVARI 120131 MILANO
+7. Contact：Cicle
+8. Contract No.：GR-20211115B
+9. Date：2021/11/15
+10. FOB SHANGHAI：FOB SHANGHAI: USD $30,696
+11. Fax（卖家）：+88-576-5680245
+12. Fax;（买家）：+517930316802
+13. Item：1
+14. Name of Bank：Haojia Technology Co., Ltd.
+15. Name&Description of Goods：2, 4, 6-Trimethylbenzoyldiphenyl phosphine oxide (PI TPO)
+16. P/O No.：210286
+17. Payment：TTR in advance
+18. Price (USD/KG)：25.58
+19. Quantity (KGS)：1200
+20. SWIFT Code：PCBCCNBJHXPX
+21. Shipment：By sea
+22. Tel（卖家）：+99-682-9824479
+23. Tel（买家）：+823223909837
+24. Title：SALES CONTRACT
+
+现在需要为每个确定bbox。由于是示意图，假设每个字段的bbox大致范围。例如：
+
+- Title: 顶部的“SALES CONTRACT”，bbox是[333, 125, 666, 148]（假设）
+- Company Name: Seller: 后面的公司名，bbox是[145, 105, 495, 125]
+- Address（卖家）: 下一行，bbox是[145, 128, 495, 148]
+- Tel（卖家）: 再下一行，bbox是[145, 151, 305, 170]
+- Fax（卖家）: 再下一行，bbox是[145, 174, 305, 193]
+- Contact: 再下一行，bbox是[145, 197, 205, 216]
+- Origin: 可能没有内容，忽略
+- Date: 右侧Date: 2021/11/15，bbox是[505, 105, 625, 125]
+- Contract No.: 右侧Contract No.: GR-20211115B，bbox是[505, 128, 685, 148]
+- Name of Bank: 右侧Name of Bank: Haojia Technology Co., Ltd.，bbox是[505, 151, 775, 170]
+- Bank Address: 右侧Bank Address: JSC 8936, Box 0627 APO AA 76130，bbox是[505, 174, 775, 193]
+- Account No.: 右侧Account No.: 42014662200229936667，bbox是[505, 197, 775, 216]
+- SWIFT Code: 右侧SWIFT Code: PCBCCNBJHXPX，bbox是[505, 220, 685, 240]
+- Payment: 右侧Payment: TTR in advance，bbox是[505, 243, 685, 262]
+- Buyer: 右侧Buyer: 035 Mary Locks Molinaburky, IN 52879，bbox是[305, 220, 505, 240]
+- Consignee: 右侧Consignee: VIA ANTONIO STRADIVARI 120131 MILANO，bbox是[305, 243, 505, 262]
+- Tel（买家）:

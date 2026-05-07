@@ -1,0 +1,14 @@
+```latex
+\begin{aligned}
+&\frac{1}{2\epsilon}\|\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\|_{L_{x,v}^2}^2+\frac{\delta_1}{2}\|\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\|_{L_{x,v}^2}^2\\
+&\leq\frac{\delta_0}{\epsilon}\sum_{|\beta_1|=1}\|\partial_x^{\alpha}\partial_v^{\beta_1}(I-P)g^{n+1}\|_{L_{x,v}^2}\|\partial_x^{\alpha}\partial_v^{\beta-\beta_1}(I-P)g^{n+1}\|_{L_{x,v}^2}\\
+&\quad+\frac{1}{\epsilon}\sum_{|\beta_1|=1}C_{\beta}^{\beta_1}\langle\partial_v^{\beta_1}v\cdot\nabla_x\partial_x^{\alpha}\partial_v^{\beta-\beta_1}(I-P)g^{n+1},\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&=2\langle\partial_x^{\alpha}\partial_v^{\beta}(I-P)(\nabla_x\phi^n,\nabla_v(I-P)g^{n+1}),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&\quad+2\langle\partial_x^{\alpha}\partial_v^{\beta}(I-P)(v\cdot\nabla_x\phi^n(I-P)g^{n+1}),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&\quad+\frac{1}{\epsilon}\langle\partial_x^{\alpha}\partial_v^{\beta}(\partial_t\phi^n,g^n),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&\quad+2\langle\partial_x^{\alpha}\partial_v^{\beta}(I-P)(v\cdot\nabla_x\phi^nP_g^{n+1}),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&\quad=\frac{1}{\epsilon}\langle\partial_x^{\alpha}\partial_v^{\beta}(I-P)(v\cdot\nabla_x\phi^nP_g^{n+1}),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&\quad+2\langle\partial_x^{\alpha}\partial_v^{\beta}(I-P)(v\cdot\nabla_x\phi^n(I-P)g^{n+1}),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}\\
+&\quad+\frac{1}{\epsilon}\langle\partial_x^{\alpha}\partial_v^{\beta}(I-P)(\partial_t\phi^n,g^n),\partial_x^{\alpha}\partial_v^{\beta}(I-P)g^{n+1}\rangle_{L_{x,v}^2}
+\end{aligned}
+```

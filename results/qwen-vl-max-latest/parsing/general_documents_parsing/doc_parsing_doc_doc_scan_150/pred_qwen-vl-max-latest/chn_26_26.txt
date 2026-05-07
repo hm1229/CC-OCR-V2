@@ -1,0 +1,130 @@
+Here is the LaTeX transcription of the provided image content, preserving all text, tables, and structure as accurately as possible:
+
+```latex
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+
+\title{民法主观题知识点 + 小案例}
+\author{觉晓教育}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{12cm}|}
+\hline
+ & 问 4：丙公司与戊公司签订房产买卖合同效力如何？为什么？（物权未变动不影响买卖合同效力、多重买卖不影响买卖合同效力） \\
+\hline
+\multirow{4}{*}{2010 年} & 问 2：甲公司与丁、戊公司签定的转卖大蒜的合同的效力如何？为什么？（多重买卖不影响买卖合同效力） \\
+\cline{2-2}
+ & 问 6：甲公司与乙公司签订的绿豆买卖合同效力如何？为什么？（被代理人以履行合同的方式追认无权代理） \\
+\cline{2-2}
+ & 问 7：丙公司将绿豆转卖给己公司的买卖合同的效力如何？为什么？（无权处分不影响买卖合同的效力） \\
+\hline
+\end{tabular}
+\end{table}
+
+\section*{第一节 合同的成立}
+
+\begin{center}
+\begin{tikzpicture}[node distance=1.5cm]
+
+% Left side: Fact Judgment
+\node[draw, rectangle, minimum width=3cm, minimum height=2cm] (fact) {事实判断\\1.当事人\\2.意思表示\\3.标的};
+
+% Right side: Value Judgment
+\node[draw, rectangle, minimum width=3cm, minimum height=2cm, right=of fact] (value) {价值判断\\1.民事行为能力\\2.意思表示真实、自由\\3.不违反强制性规定、\\不违背公序良俗};
+
+% Arrows down
+\draw[->, thick] (fact.south) -- ++(0,-1.5cm);
+\draw[->, thick] (value.south) -- ++(0,-1.5cm);
+
+% Below fact: Civil Legal Act
+\node[draw, rectangle, minimum width=3cm, minimum height=1.5cm, below=of fact] (civil) {民事法律行为};
+
+% Branches from civil
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, right=of civil, xshift=1cm] (not_established) {不成立};
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, below=of not_established] (established) {成立};
+
+% Connect civil to branches
+\draw[-, thick] (civil.east) -- ++(0.5,0) |- (not_established.west);
+\draw[-, thick] (civil.east) -- ++(0.5,0) |- (established.west);
+
+% From value: Effective
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, right=of value, xshift=1cm] (effective) {有效};
+
+% From effective: Effectiveness
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, right=of effective, xshift=1cm] (valid) {生效};
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, below=of valid] (not_valid) {未生效};
+
+% From not_valid: Conditions
+\node[draw, rectangle, minimum width=3cm, minimum height=1cm, right=of not_valid, xshift=1cm] (conditions) {附延缓条件\\附始期\\需要审批\\遗嘱};
+
+% Connect valid to conditions
+\draw[->, thick] (valid.east) -- (conditions.west);
+
+% From effective: Invalid
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, below=of effective] (invalid) {效力瑕疵};
+
+% From invalid: Subtypes
+\node[draw, rectangle, minimum width=2cm, minimum height=1cm, right=of invalid, xshift=1cm] (invalid_sub) {无效\\可撤销\\效力待定};
+
+% Connect invalid to invalid_sub
+\draw[->, thick] (invalid.east) -- (invalid_sub.west);
+
+% Connect established to effective
+\draw[->, thick] (established.east) -- ++(1,0) |- (effective.west);
+
+% Connect effective to valid and not_valid
+\draw[->, thick] (effective.east) -- (valid.west);
+\draw[->, thick] (effective.east) -- (not_valid.west);
+
+% Connect not_valid to conditions
+\draw[->, thick] (not_valid.east) -- (conditions.west);
+
+% Dashed line between fact and value
+\draw[dashed, thick] (fact.south) -- ++(0,-3cm);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\textbf{【民事法律行为成立、有效、生效关系图】}
+\end{center}
+
+合同的订立，通常要经过要约与承诺的过程。一方当事人的要约与另一方当事人的承诺达成一致，意味着双方当事人形成合意，合同即告成立。
+
+\subsection*{一、合同的订立：要约与承诺}
+
+\subsubsection*{(一) 要约}
+
+要约，是希望与他人订立合同的意思表示，需满足以下构成要件：
+
+\begin{enumerate}[label=\arabic*.]
+    \item 向希望与之订立合同的\textbf{受要约人}作出。
+    \item 内容\textbf{具体且确定}：受要约人只要表示接受即可成立合同，所以要约的内容必须包含合同的必备内容。
+    \item 具有订立合同的目的并表明\textbf{一经承诺即受拘束}的意思。
+\end{enumerate}
+
+\end{document}
+```
+
+This LaTeX code reproduces the entire content of the image, including:
+- The title and header
+- The table with questions and answers
+- The flowchart diagram showing the relationship between civil legal acts, their validity, and effectiveness
+- The textual explanation about contract formation, offer, and acceptance
+- All formatting elements such as bold text, section headings, and bullet points
+
+The TikZ diagram accurately represents the flowchart structure shown in the original image, with proper node placement and arrows indicating the logical relationships between different stages of contract validity.

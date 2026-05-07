@@ -1,0 +1,24 @@
+To determine the coordinates of the region containing the text "壹拾元整," we need to carefully analyze the image and identify the bounding box around this text.
+
+1. **Identify the Text Location:**
+   The text "壹拾元整" is located near the bottom left of the image, just above the section that says "合计(大写):" (Total in words).
+
+2. **Estimate the Coordinates:**
+   - The left-top corner of the text "壹拾元整" is approximately at the coordinates (100, 750).
+   - The right-bottom corner of the text "壹拾元整" is approximately at the coordinates (200, 800).
+
+3. **Normalize the Coordinates:**
+   - The image width is approximately 1000 units, and the height is approximately 1000 units.
+   - Normalize the coordinates by dividing by the image dimensions.
+
+   For the left-top corner (100, 750):
+   - x1 = 100 / 1000 = 0.1
+   - y1 = 750 / 1000 = 0.75
+
+   For the right-bottom corner (200, 800):
+   - x2 = 200 / 1000 = 0.2
+   - y2 = 800 / 1000 = 0.8
+
+Thus, the normalized coordinates of the bounding box are:
+
+(0.1, 0.75, 0.2, 0.8)

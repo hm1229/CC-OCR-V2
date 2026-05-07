@@ -1,0 +1,153 @@
+用户现在需要从商业发票中检测指定类别。首先得逐个看每个类别对应的位置。
+
+首先看1.Shipper/Exporter：在左上角，地址是58880 John Avenue Doyleton, TX 76702。所以bbox是包含这个地址的区域。
+
+然后11.No & Date Of Contract or P/O：看对应部分是POJ B007570&PO00007149，位置在右侧栏。
+
+14.Description of Goods：看货物描述部分，比如A-D FSU...那行。
+
+15.Quantiy/Unit：对应数量单位，比如10EA。
+
+16.Unit Price：单价，比如3.4700USD。
+
+17.Amount：金额，比如34.70USD，还有总金额2,055.55USD。
+
+4.Port of loading：上海，SHANGHAI。
+
+5.Final Destination：SELANGOR,MALAYSIA。
+
+7.Sailing on or about：16-AUG-21。
+
+8.No.&Date of Invoice：LH D210819013 380005479 20210819。
+
+ADDRESS：比如Shipper/Exporter的地址，Sold To的地址，Ship To的地址等，需要找所有地址字段。
+
+ATTN：比如Sold To里的ATTN: Mary Cox (CHU)，Ship To里的ATTN: /，Consignee里的ATTN: CHU / NAWI等。
+
+COMPANY NAME：比如R-LOGIC SDN BHD在多个地方出现，是公司名。
+
+CONTAINER：在Remarks里的CONTAINER : OEA。
+
+CUSTOMER NAME：Remarks里的CUSTOMER NAME : R-LOGIC SDN BHD。
+
+PAGE NUMBER：右上角3/3。
+
+TEL：比如Shipper/Exporter没有TEL？看Sold To的TEL:7610807288 (CHU)，Ship To的TEL:6188770028 (CHU)，Consignee的TEL:0177608882 (CHU)等。
+
+TITLE：可能看有没有标题，比如“COMMERICAL INVOICE”是标题？不过用户给的类别里有TITLE，需要确认。另外可能其他标题？比如“1.Shipper/Exporter”是标题？但可能这里的TITLE是指公司名称的标题？或者看是否有其他标题。不过先处理明确的。
+
+现在逐个整理：
+
+1. Shipper/Exporter：区域是左上方，内容58880 John Avenue Doyleton, TX 76702。bbox大概[25, 107, 242, 140]左右（看图片中的位置）。
+
+2. 11.No & Date Of Contract or P/O：右侧栏，内容POJ B007570&PO00007149。bbox是[820, 300, 925, 315]左右。
+
+3. 14.Description of Goods：在表格部分，描述货物的行，比如A-D FSU...那部分。bbox是[140, 685, 790, 730]左右（因为描述在14列，对应内容）。
+
+4. 15.Quantiy/Unit：对应数量单位，比如10EA，在描述行的右侧。bbox是[500, 685, 620, 700]左右（看表格列）。
+
+5. 16.Unit Price：单价列，比如3.4700USD。bbox是[630, 685, 750, 700]左右。
+
+6. 17.Amount：金额列，比如34.70USD，还有总金额。bbox是[760, 685, 880, 700]左右（单个商品的金额）和总金额的2,055.55USD在下方。
+
+7. 4.Port of loading：SHANGHAI，位置在4栏。bbox是[25, 440, 140, 455]左右（Port of Loading是SHANGHAI）。
+
+8. 5.Final Destination：SELANGOR,MALAYSIA，在5栏。bbox是[380, 460, 540, 475]左右。
+
+9. 7.Sailing on or about：16-AUG-21，在7栏。bbox是[25, 590, 140, 605]左右（Sailing on or about是16-AUG-21）。
+
+10. 8.No.&Date of Invoice：LH D210819013 380005479 20210819，在8栏。bbox是[820, 130, 925, 155]左右。
+
+11. ADDRESS：多个地址，比如Shipper/Exporter的地址，Sold To的地址（PSC 6061...等），Ship To的地址（90779 Judith Path Apt...等），Consignee的地址（NO.1-B, JALAN INDAH...等）。需要分别找。比如Shipper/Exporter的ADDRESS是[25, 110, 242, 135]；Sold To的ADDRESS是[25, 210, 350, 260]；Ship To的ADDRESS是[25, 310, 450, 370]；Consignee的ADDRESS是[25, 750, 550, 790]等。这里可能需要选其中一个或多个，但用户要求检测所有匹配的，所以每个ADDRESS实例都要列？不过可能先选主要的，比如Shipper/Exporter的ADDRESS。
+
+12. ATTN：比如Sold To的ATTN: Mary Cox (CHU)；Ship To的ATTN: /；Consignee的ATTN: CHU / NAWI等。比如Sold To的ATTN是[25, 260, 350, 275]；Ship To的ATTN是[25, 370, 450, 385]；Consignee的ATTN是[25, 790, 550, 805]等。
+
+13. COMPANY NAME：R-LOGIC SDN BHD在多个地方，比如Sold To的公司名，Ship To的公司名，Consignee的公司名。比如Sold To的COMPANY NAME是[25, 200, 150, 215]（R-LOGIC SDN BHD）；Ship To的COMPANY NAME是[25, 300, 150, 315]（R-LOGIC SDN BHD）；Consignee的COMPANY NAME是[25, 755, 150, 770]（R-LOGIC SDN BHD）。
+
+14. CONTAINER：在Remarks里的CONTAINER : OEA。bbox是[820, 240, 925, 255]左右（Remarks部分）。
+
+15. CUSTOMER NAME：在Remarks里的CUSTOMER NAME : R-LOGIC SDN BHD。bbox是[820, 220, 925, 235]左右。
+
+16. PAGE NUMBER：右上角3/3。bbox是[960, 20, 980, 35]左右。
+
+17. TEL：比如Sold To的TEL:7610807288 (CHU)；Ship To的TEL:6188770028 (CHU)；Consignee的TEL:0177608882 (CHU)等。比如Sold To的TEL是[25, 275, 350, 290]；Ship To的TEL是[25, 385, 450, 400]；Consignee的TEL是[25, 805, 550, 820]等。
+
+18. TITLE：比如“COMMERICAL INVOICE”是标题，位于顶部。bbox是[380, 30, 620, 55]左右（标题部分）。
+
+现在需要把每个检测到的类别对应上，确保每个类别都覆盖。然后整理成JSON数组，每个元素是bbox和label。
+
+现在开始逐个处理：
+
+1. Shipper/Exporter：看图片中1.Shipper/Exporter部分，地址是58880 John Avenue Doyleton, TX 76702。bbox大概是从x=25, y=105到x=240, y=135左右。label是"1.Shipper/Exporter"。
+
+2. 11.No & Date Of Contract or P/O：在右侧栏，内容是POJ B007570&PO00007149。看位置在11.的栏，bbox是x=820, y=300到x=925, y=315。label是"11.No & Date Of Contract or P/O"。
+
+3. 14.Description of Goods：在表格的14列，内容是A-D FSU...等。bbox是x=140, y=680到x=790, y=730（因为描述在该列）。label是"14.Description of Goods"。
+
+4. 15.Quantiy/Unit：对应数量，比如10EA。在描述行的15列，bbox是x=500, y=680到x=620, y=700。label是"15.Quantiy/Unit"。
+
+5. 16.Unit Price：单价列，比如3.4700USD。bbox是x=630, y=680到x=750, y=700。label是"16.Unit Price"。
+
+6. 17.Amount：金额列，比如34.70USD，还有总金额2,055.55USD。先看单个商品的金额，bbox是x=760, y=680到x=880, y=700。另外总金额在下方，比如505EA对应的2,055.55USD，bbox是x=500, y=730到x=880, y=745。label是"17.Amount"。
+
+7. 4.Port of loading：SHANGHAI，在4栏。bbox是x=25, y=440到x=140, y=455。label是"4.Port of loading"。
+
+8. 5.Final Destination：SELANGOR,MALAYSIA，在5栏。bbox是x=380, y=460到x=540, y=475。label是"5.Final Destination"。
+
+9. 7.Sailing on or about：16-AUG-21，在7栏。bbox是x=25, y=590到x=140, y=605。label是"7.Sailing on or about"。
+
+10. 8.No.&Date of Invoice：LH D210819013 380005479 20210819，在8栏。bbox是x=820, y=130到x=925, y=155。label是"8.No.&Date of Invoice"。
+
+11. ADDRESS：比如Shipper/Exporter的地址，bbox是x=25, y=110到x=240, y=135。label是"ADDRESS"。
+
+12. ATTN：比如Sold To的ATTN: Mary Cox (CHU)，在Sold To部分，bbox是x=25, y=260到x=350, y=275。label是"ATTN"。
+
+13. COMPANY NAME：比如Sold To的R-LOGIC SDN BHD，bbox是x=25, y=200到x=150, y=215。label是"COMPANY NAME"。
+
+14. CONTAINER：在Remarks里的CONTAINER : OEA，bbox是x=820, y=240到x=925, y=255。label是"CONTAINER"。
+
+15. CUSTOMER NAME：在Remarks里的CUSTOMER NAME : R-LOGIC SDN BHD，bbox是x=820, y=220到x=925, y=235。label是"CUSTOMER NAME"。
+
+16. PAGE NUMBER：右上角3/3，bbox是x=960, y=20到x=980, y=35。label是"PAGE NUMBER"。
+
+17. TEL：比如Sold To的TEL:7610807288 (CHU)，bbox是x=25, y=275到x=350, y=290。label是"TEL"。
+
+18. TITLE：COMMERICAL INVOICE，bbox是x=380, y=30到x=620, y=55。label是"TITLE"。
+
+现在需要检查是否有遗漏的类别，比如还有Ship To的ADDRESS，Consignee的ADDRESS等，但可能用户需要所有出现的，不过先确保每个类别至少有一个实例。另外，比如15.Quantiy/Unit还有505EA（总数量），所以可能有两个实例，但先处理主要的。
+
+现在将这些整理成JSON数组。注意bbox的坐标是相对图片的，需要大致估计。比如图片中的元素位置：
+
+- COMMERICAL INVOICE标题在顶部中间，所以TITLE的bbox是[360, 25, 640, 50]（因为标题在上方，居中）。
+
+- PAGE NUMBER是右上角3/3，所以[955, 22, 975, 37]。
+
+- 8.No.&Date of Invoice在右上方，内容LH D210819013 380005479 20210819，所以bbox是[815, 125, 925, 150]。
+
+- 11.No & Date Of Contract or P/O在右侧，内容POJ B007570&PO00007149，bbox是[815, 300, 925, 325]。
+
+- REMARKS部分的CUSTOMER NAME和CONTAINER：CUSTOMER NAME是R-LOGIC SDN BHD，CONTAINER是OEA，所以CUSTOMER NAME的bbox是[815, 215, 925, 235]，CONTAINER是[815, 235, 925, 255]。
+
+- 4.Port of Loading是SHANGHAI，在左侧4栏，bbox是[25, 435, 140, 455]。
+
+- 5.Final Destination是SELANGOR,MALAYSIA，在右侧5栏，bbox是[375, 455, 545, 475]。
+
+- 7.Sailing on or about是16-AUG-21，在左侧7栏，bbox是[25, 585, 140, 605]。
+
+- 14.Description of Goods：在表格中，描述行的内容，比如A-D FSU...，bbox是[135, 675, 785, 725]（因为描述在14列，跨列）。
+
+- 15.Quantiy/Unit：对应10EA和505EA，比如10EA在描述行的15列，bbox是[500, 675, 620, 695]；505EA在下方，bbox是[500, 725, 550, 745]。
+
+- 16.Unit Price：3.4700USD在10EA对应的列，bbox是[630, 675, 750, 695]；总金额没有单价，所以主要是单个商品的单价。
+
+- 17.Amount：34.70USD在10EA对应的列，bbox是[760, 675, 880, 695]；总金额2,055.55USD在505EA对应的列，bbox是[760, 725, 880, 745]。
+
+- 1.Shipper/Exporter：地址58880 John Avenue Doyleton, TX 76702，bbox是[25, 105, 240, 130]。
+
+- 2.Sold To的公司名R-LOGIC SDN BHD，bbox是[25, 200, 150, 215]（COMPANY NAME）。
+
+- 2.Sold To的ADDRESS：PSC 6061, Box 7420 APO AA 82630等，bbox是[25, 215, 350, 260]（ADDRESS）。
+
+- 2.Sold To的ATTN: Mary Cox, TEL:7610807288 (CHU)，bbox是[25, 265, 350, 285]（ATTN和TEL）。
+
+- 3.Ship To的公司名R-LOGIC SDN BHD，bbox是[25, 30

@@ -1,0 +1,33 @@
+To determine the coordinates of the region containing the text '379.00', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the text '379.00'**: The text '379.00' appears in multiple places on the receipt, specifically under the "合计金额" (Total Amount), "已收定金" (Deposit Received), and "房费" (Room Fee) sections.
+
+2. **Select the appropriate instance**: For this task, we will consider the instance of '379.00' under the "合计金额" (Total Amount) section, as it is a primary amount and clearly stands out.
+
+3. **Determine the bounding box**:
+   - **Left-top corner (x1, y1)**: This is the top-left corner of the text '379.00'.
+   - **Right-bottom corner (x2, y2)**: This is the bottom-right corner of the text '379.00'.
+
+4. **Normalize the coordinates**: Normalize these coordinates based on the image's width and height.
+
+### Detailed Steps:
+
+1. **Estimate the position**:
+   - The text '379.00' under "合计金额" is located roughly in the middle-bottom section of the receipt.
+
+2. **Approximate coordinates**:
+   - Assume the image width is approximately 1000 units and the height is approximately 700 units.
+   - The text '379.00' under "合计金额" is positioned roughly around:
+     - x1 (left): 200 units from the left edge.
+     - y1 (top): 500 units from the top edge.
+     - x2 (right): 300 units from the left edge.
+     - y2 (bottom): 550 units from the top edge.
+
+3. **Normalized coordinates**:
+   - x1 = 200 / 1000 = 0.2
+   - y1 = 500 / 700 ≈ 0.714
+   - x2 = 300 / 1000 = 0.3
+   - y2 = 550 / 700 ≈ 0.786
+
+### Final Answer:
+(0.2, 0.714, 0.3, 0.786)

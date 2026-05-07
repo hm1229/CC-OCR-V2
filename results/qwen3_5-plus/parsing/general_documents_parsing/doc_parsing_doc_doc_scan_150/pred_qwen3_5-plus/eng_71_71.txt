@@ -1,0 +1,124 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{tabular}{c c c c c}
+& 1 & 8 & 9 & 16 \dots \\
+A & 1 & 8 & 9 & 16 \dots \\
+B & 2 & 7 & 10 & 15 \dots \\
+C & 3 & 6 & 11 & 14 \dots \\
+D & 4 & 5 & 12 & 13 \dots \\
+\end{tabular}
+
+\begin{enumerate}
+\setcounter{enumi}{6}
+\item In which row is the number 600?
+\begin{enumerate}
+    \item[(1)] 1st row
+    \item[(2)] 2nd row
+    \item[(3)] 3rd row
+    \item[(4)] 4th row
+\end{enumerate}
+
+\item How many columns are there in Row A if 200 is the last number?
+\begin{enumerate}
+    \item[(1)] 48
+    \item[(2)] 50
+    \item[(3)] 52
+    \item[(4)] 54
+\end{enumerate}
+
+\item Compute the following.
+\[ 37 + 397 + 3997 + 39\,997 \]
+\begin{enumerate}
+    \item[(1)] 42 284
+    \item[(2)] 42 482
+    \item[(3)] 44 248
+    \item[(4)] 44 428
+\end{enumerate}
+
+\item Compute the following.
+\[ 298 + 2998 + 29\,998 + 299\,998 \]
+\begin{enumerate}
+    \item[(1)] 333 292
+    \item[(2)] 334 222
+    \item[(3)] 334 292
+    \item[(4)] 335 222
+\end{enumerate}
+
+\item Compute the following.
+\[ 9 + 99 + 999 + 9999 + 99\,999 \]
+\begin{enumerate}
+    \item[(1)] 110 215
+    \item[(2)] 110 745
+    \item[(3)] 110 995
+    \item[(4)] 111 105
+\end{enumerate}
+
+\item A farmer has 45 chickens and rabbits. There are 140 legs altogether. How many chickens does the farmer have? How many rabbits does the farmer have?
+\begin{enumerate}
+    \item[(1)] 24
+    \item[(2)] 25
+    \item[(3)] 26
+    \item[(4)] 27
+\end{enumerate}
+
+\item A spider has 8 legs. A dragonfly has 6 legs. 28 spiders and dragonflies have 200 legs altogether. How many spiders are there? How many dragonflies are there?
+\begin{enumerate}
+    \item[(1)] 10
+    \item[(2)] 11
+    \item[(3)] 12
+    \item[(4)] 13
+\end{enumerate}
+
+\item Find the values of A and B in the following.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8, every node/.style={font=\small}]
+% Triangle 1
+\draw (0,0) -- (2,0) -- (1,{sqrt(3)}) -- cycle;
+\draw (1,0) -- (0.5,{sqrt(3)/2}) -- (1.5,{sqrt(3)/2}) -- cycle;
+\node at (1,{sqrt(3)*0.75}) {18};
+\node at (0.5,0.3) {12};
+\node at (1.5,0.3) {16};
+\node at (1,{sqrt(3)/3}) {10};
+
+% Triangle 2
+\begin{scope}[xshift=3.5cm]
+\draw (0,0) -- (2,0) -- (1,{sqrt(3)}) -- cycle;
+\draw (1,0) -- (0.5,{sqrt(3)/2}) -- (1.5,{sqrt(3)/2}) -- cycle;
+\fill[gray!30] (1,0) -- (0.5,{sqrt(3)/2}) -- (1.5,{sqrt(3)/2}) -- cycle;
+\node at (1,{sqrt(3)*0.75}) {34};
+\node at (0.5,0.3) {25};
+\node at (1.5,0.3) {15};
+\node at (1,{sqrt(3)/3}) {A};
+\end{scope}
+
+% Triangle 3
+\begin{scope}[xshift=7cm]
+\draw (0,0) -- (2,0) -- (1,{sqrt(3)}) -- cycle;
+\draw (1,0) -- (0.5,{sqrt(3)/2}) -- (1.5,{sqrt(3)/2}) -- cycle;
+\fill[gray!30] (1,0) -- (0.5,{sqrt(3)/2}) -- (1.5,{sqrt(3)/2}) -- cycle;
+\node at (1,{sqrt(3)*0.75}) {20};
+\node at (0.5,0.3) {B};
+\node at (1.5,0.3) {18};
+\node at (1,{sqrt(3)/3}) {22};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+    \item[(1)] A = 6, B = 18
+    \item[(2)] A = 6, B = 24
+    \item[(3)] A = 8, B = 20
+    \item[(4)] A = 8, B = 22
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
+```

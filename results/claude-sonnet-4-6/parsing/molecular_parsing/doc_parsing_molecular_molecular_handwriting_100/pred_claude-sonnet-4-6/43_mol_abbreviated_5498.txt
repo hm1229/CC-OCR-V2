@@ -1,0 +1,25 @@
+O=C1CN(C)c2ncc(C#N)cc2-c2cc(=O)[nH]c(=O)c2-1
+
+Let me re-analyze this structure carefully.
+
+**SMILES:**
+
+`O=C1CN(C)c2ncc(C#N)cc2-c2c1CN([C@@H](C)C[N@@]2COC)C(=O)OC(C)(C)C`
+
+Let me trace more carefully:
+
+`CN1C(=O)C[c]2cc(C#N)cnc2-c2cc1N([C@@H](C)C[N@@](COC)C(=O)OC(C)(C)C)`
+
+**Final SMILES:**
+
+`CN1C(=O)Cc2cc(C#N)cnc2-c2cc1[N@@]([C@@H](C)C)[N@](COC)C(=O)OC(C)(C)C`
+
+After careful analysis:
+
+`O=C1CN(C)c2ncc(C#N)cc2C3CC(=O)N([C@@H](C)C[N@]3COC)C(=O)OC(C)(C)C`
+
+**SMILES:**
+
+```
+CN1C(=O)Cc2cc(C#N)cnc2-c2c1CN([C@@H](C)C[N@@]2COC)C(=O)OC(C)(C)C
+```

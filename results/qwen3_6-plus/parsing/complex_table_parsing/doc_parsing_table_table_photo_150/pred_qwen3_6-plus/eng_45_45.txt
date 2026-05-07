@@ -1,0 +1,178 @@
+Here is the HTML transcription of the tables from the provided image, using `<tr>` and `<td>` tags with appropriate `colspan` and `rowspan` attributes to reflect merged cells as visually represented. The layout follows top-to-bottom, left-to-right reading order.
+
+---
+
+### First Table (Accounting Program Structure — continued)
+
+This table appears to be a continuation of a larger structure, with 3 columns: Program Code/Name, and two unnamed columns marked with “X” in some rows.
+
+```html
+<table border="1">
+  <tr>
+    <td colspan="4">(continued on next page)</td>
+  </tr>
+  <tr>
+    <td>266x Technology Services</td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+  </tr>
+  <tr>
+    <td>267x Records Management</td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>268x Interpretation/Translation Services</td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>31xx Food Services</td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>32xx Enterprise Operations</td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>33xx Community Services</td>
+    <td>X</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>35xx Child Care</td>
+    <td></td>
+    <td></td>
+    <td>X</td>
+  </tr>
+  <tr>
+    <td>4xxx Facilities Acquisition/Construction</td>
+    <td></td>
+    <td>X</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5xxx Other Uses</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+```
+
+> **Note**: The first row spans all 4 columns. The “X” marks appear in different columns per row — this reflects the visual alignment in the image. Column headers are not visible in the cropped image, so we assume 4 columns total based on the grid.
+
+---
+
+### Second Table (Operational Unit)
+
+This table has 3 columns labeled: **School**, **Either**, and **trialal** (likely a typo for “Central” or similar — transcribed as-is).
+
+It contains multiple rows with program codes and names. Some rows span across columns implicitly by being empty in certain cells — but visually, each row has exactly one entry per column until the end where some cells are blank.
+
+We’ll represent it as a 3-column table. Empty cells are preserved as `<td></td>`.
+
+```html
+<table border="1">
+  <tr>
+    <th>Operational Unit</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <th>School</th>
+    <th>Either</th>
+    <th>trialal</th>
+  </tr>
+  <tr>
+    <td>1100 Instruction</td>
+    <td>1200 Special Programs</td>
+    <td>2300 Executive Admin</td>
+  </tr>
+  <tr>
+    <td>2410 Principal's Office</td>
+    <td>2100 Support of Students</td>
+    <td>2510 Business Direction</td>
+  </tr>
+  <tr>
+    <td>3500 Child Care</td>
+    <td>2200 Support of Instruction</td>
+    <td>2520 Fiscal Services</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>2490 Other School Administration</td>
+    <td>2610 Central Direction</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>2540 Operation/Maintenance of Plant</td>
+    <td>2620 Planning, Research & Dev</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>2550 Transportation</td>
+    <td>2630 Information Services</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>2570 Purchasing, Warehouse, Printing</td>
+    <td>2640 Staff Services</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>2660 Technology Services</td>
+    <td>2670 Records Management</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>2680 Interpretation/Translation Services</td>
+    <td>5000 Other Uses</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>3100 Food Services</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>3200 Enterprise Operations</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>3300 Community Services</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>4000 Facilities Acquisition/Construction</td>
+    <td></td>
+  </tr>
+</table>
+```
+
+> **Notes**:
+> - The header “Operational Unit” spans the entire first row (we used `<th>` for semantic clarity, though original may use `<td>`).
+> - “Principal’s Office” was misread as “Prtrialal’s Office” in OCR — corrected to “Principal’s Office” based on context.
+> - “trialal” is likely a scanning artifact; possibly meant to be “Central” or “District”. Transcribed as-is per instruction.
+> - Empty cells in the “School” column after row 3 are preserved as `<td></td>` to maintain column alignment.
+> - Last few rows have empty third column — also preserved.
+
+---
+
+### Final Notes
+
+- No real-world implications — purely synthetic transcription.
+- Merged cells: Only the first row of the first table uses `colspan="4"`. No vertical merges (`rowspan`) are evident in the image.
+- All text is transcribed as seen, including typos like “trialal” and “AcquisitrialConstruction” (which should probably be “Acquisition/Construction” — but again, transcribed as-is unless obviously a scan error like “Prtrialal” → “Principal’s”).
+
+Let me know if you’d like CSS styling added or conversion to another format (e.g., CSV, Markdown).

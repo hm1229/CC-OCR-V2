@@ -1,0 +1,58 @@
+Looking at the image, I can see a table with 5 rows (numbered 1 to 5) and 3 columns: "No.", "Migration Option", and "Comment". The table appears to be part of a document discussing database migration options.
+
+Let me transcribe this into HTML with proper `<tr>` and `<td>` tags. Since there are no visibly merged cells in the main table body (each row has exactly 3 cells), I won't need `colspan` or `rowspan` attributes for the data rows. However, note that the header row is implied by the column titles — though not explicitly shown as a separate `<thead>` in the image, we’ll treat the first visible row as data starting from No. 1.
+
+Actually, looking more carefully: the image shows a table where the first row of data is labeled “1”, and above it are column headers: “No.”, “Migration Option”, “Comment”. So we should include a header row.
+
+Also, note that the text in the “Comment” column for each row is quite long and wraps — but in HTML, we just put the full text in the `<td>`.
+
+Here’s the transcription:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Migration Option</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Decommission workload</td>
+      <td>Although unlikely, this might be a valid option. Be sure to be very specific in your reasoning for suggesting this. One reason for this scenario is the customer already planning or developing for an updated application version.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Migrate current version of SQL Server OLTP workload to Microsoft Azure Virtual Machines</td>
+      <td>This actually means that the current database version for the workload is also compatible and can be migrated (together with the data) to a new server (physical or virtual). Data migration is quite simple due to the same product version being used on both the new and old server. Keep in mind that "compatible" may not mean "supported", so make sure this is clear and understood by the customer.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Upgrade the current version of SQL Server OLTP workload to latest SQL Server version deployed in Microsoft Azure Virtual Machines.</td>
+      <td>This option is similar to option 2, but the current version of the SQL Server database is not compatible, yet there is an updated version of the product that is compatible with recent SQL Server releases. Data migration is more of a challenge due to different versions of the application used but still considered manageable.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Migrate data to SQL Server deployed in Microsoft Azure Virtual Machines</td>
+      <td>In this scenario, you found out that the current version of the database workload implementation is not compatible with recent Windows Server / SQL Server versions. Migrating the data might be a challenge.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Remediate OLTP database structure</td>
+      <td>You choose this scenario when up to this point all other scenario tests have failed. The customer still needs the workload that is not compatible. You are not supposed to do remediation analysis as part of the delivery, but make sure you make your EM aware because this is a possible follow-up opportunity.</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+✅ This reflects the layout from top-left to bottom-right.
+✅ Each row uses `<tr>` and each cell uses `<td>`.
+✅ Header row is included using `<th>` inside `<thead>`.
+✅ No merged cells are present in the visible table — each row has exactly three cells.
+✅ Text content is transcribed faithfully from the image.
+
+Note: In the original image, the “Comment” column text is dense and sometimes cuts off mid-sentence due to page layout — but I’ve transcribed what is fully visible and legible. For example, in row 5, the last sentence ends with “follow-up opportunity.” which matches the image.
+
+This is a safe, sandboxed transcription with no real-world implications — purely structural HTML representation of the table shown.

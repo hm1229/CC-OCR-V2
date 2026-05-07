@@ -1,0 +1,25 @@
+Looking at the image, I need to find the text '元' (which means "yuan" - Chinese currency unit).
+
+There are multiple instances of '元' in this medical receipt. The most prominent one appears in the amount section "金额（元）" near the top of the table.
+
+Let me identify the clearest instance. In the line "合计(大写): 壹拾玖元整", there's a '元' character, and also in "自费 3 元" near the bottom.
+
+Looking at "金额（元）" in the header row:
+
+The '元' character in "金额（元）" is located at approximately:
+
+(295, 186, 320, 222)
+
+But let me look more carefully at the standalone '元' instances. The one in "自费 3 元" line:
+
+(168, 668, 195, 700)
+
+Let me focus on the most clear instance of '元' - in the line "现金支付中：分类自负___元":
+
+(658, 636, 688, 668)
+
+Looking more carefully at "元" after "自负" in that line:
+
+(658, 632, 690, 668)
+
+**(658, 632, 690, 668)**

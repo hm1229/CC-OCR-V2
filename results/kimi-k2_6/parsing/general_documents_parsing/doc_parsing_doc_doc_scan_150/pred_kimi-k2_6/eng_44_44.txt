@@ -1,0 +1,259 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, positioning}
+
+\begin{document}
+
+\begin{center}
+\colorbox{cyan}{\parbox{0.9\textwidth}{\centering \textbf{Secondary 3 Mathematics Set 1}}}
+\end{center}
+
+\section*{PART 1: Multiple-choice questions}
+
+\begin{enumerate}
+\item \textbf{(4)}
+\begin{align*}
+2x + 3y &= 7\\
+2x &= 7 - 3y\\
+x &= \frac{7}{2} - \frac{3}{2}y\\
+x &= -\frac{3}{2}y + \frac{7}{2}
+\end{align*}
+
+\item \textbf{(2)}
+\begin{align*}
+3x + 4y &= 15\\
+6x + 8y &= 2(3x + 4y)\\
+&= 30\\
+15x + 20y &= 5(3x + 4y)\\
+&= 75
+\end{align*}
+
+\item \textbf{(3)}
+\begin{align*}
+4x &\geq \frac{1}{2}\\
+\frac{4x}{4} &\geq \frac{\left(\frac{1}{2}\right)}{4}\\
+x &\geq \frac{1}{8}
+\end{align*}
+
+\item \textbf{(3)}
+\begin{align*}
+6 - 8x &< -2x\\
+6 - 8x + 8x &< -2x + 8x\\
+6 &< 6x\\
+6x &> 6\\
+x &> 1
+\end{align*}
+
+\item \textbf{(2)}
+
+For rectangle $P$, breadth $= \dfrac{120}{15}$
+
+$= 8$ cm
+
+Perimeter of $Q$ = Perimeter of $P$
+
+$= 2(8 + 15)$
+
+$= 46$ cm
+
+\item \textbf{(4)}
+
+Circumference of $Y$ = Circumference of $X$
+
+$= 10\pi$
+
+$2\pi r = 10\pi$
+
+$r = 5$ cm
+
+Area of circle $Y = \pi(5^2)$
+
+$= 25\pi$ cm$^2$
+
+\item \textbf{(3)}
+
+ratio of sides $1:10$
+
+ratio of area $1:100$
+
+\item \textbf{(3)}
+
+ratio of sides $1:5$
+
+ratio of perimeter $1:5$
+
+\item \textbf{(3)}
+
+Let H and h be the heights of the 2 candles.
+
+Burnt amount at any time:
+
+H: $\dfrac{120}{180} \times H = \dfrac{2}{3}H$
+
+h: $\dfrac{120}{300} \times h = \dfrac{2}{5}h$
+
+Remaining:
+
+H: $H - \dfrac{2}{3}H = \dfrac{1}{3}H$
+
+h: $h - \dfrac{2}{5}h = \dfrac{3}{5}h$
+
+The ratio after 2 h is $1:1$.
+
+$\dfrac{\frac{1}{3}H}{\frac{3}{5}h} = \dfrac{1}{1}$
+
+Cross multiply:
+
+$\dfrac{1}{3}H = \dfrac{3}{5}h$
+
+Cross multiply:
+
+$5H = 9h$
+
+$\dfrac{H}{h} = \dfrac{9}{5}$
+
+$H : h = 9 : 5$
+
+\item \textbf{(1)}
+
+Height after $n$ min:
+
+1$^{\text{st}}$ : $\dfrac{n}{180}$
+
+2$^{\text{nd}}$ : $\dfrac{n}{240}$
+
+Height remaining:
+
+1$^{\text{st}}$ : $1 - \dfrac{n}{180}$
+
+2$^{\text{nd}}$ : $1 - \dfrac{n}{240}$
+
+The ratio became $1:2$.
+
+$\dfrac{1 - \dfrac{n}{180}}{1 - \dfrac{n}{240}} = \dfrac{1}{2}$
+
+Cross multiply:
+
+$2 - \dfrac{n}{90} = 1 - \dfrac{n}{240}$
+
+$\dfrac{n}{90} - \dfrac{n}{240} = 2 - 1$
+
+$\dfrac{8n - 3n}{720} = 1$
+
+$5n = 720$
+
+$n = 144$ min $= 2$ h 24 min
+
+Working backwards: 14 36 h
+
+\item \textbf{(2)}
+
+\begin{center}
+\begin{tikzpicture}
+% Town X and Y
+\draw[thick] (0,0) -- (8,0);
+\node[below] at (0,0) {Town X};
+\node[below] at (8,0) {Town Y};
+
+% Markers
+\foreach \x in {2,3.5,6} {\draw (\x,-0.15) -- (\x,0.15);}
+
+% A arrow
+\draw[-{Stealth}, thick] (0.5,0.5) -- (1.5,0.5);
+\node[above] at (1,0.5) {A};
+
+% B arrows
+\draw[-{Stealth}, thick] (3,0.5) -- (2,0.5);
+\draw[-{Stealth}, thick] (4,0.5) -- (3,0.5);
+\node[above] at (3.5,0.5) {B};
+
+% d bracket
+\draw[decorate, decoration={brace, mirror, amplitude=5pt}] (2,-0.5) -- (3.5,-0.5);
+\node[below] at (2.75,-0.7) {$d$};
+\end{tikzpicture}
+\end{center}
+
+When $B$ meets $C$, the distance between A and C is
+
+$(50 + 70) \times 2 = 240$ km
+
+Difference in speed $\rightarrow 60 - 50 = 10$ km/h
+
+$240 \div 10 = 24$ : h
+
+$(60 + 70) \times 24 = 3120$ km
+
+\item \textbf{(4)}
+
+$15 - 5 = 10$ h
+
+Consider station S and Town Q
+
+\begin{center}
+\begin{tikzpicture}
+\draw[thick] (0,0) -- (10,0);
+\node[above] at (0,0.3) {$P$};
+\node[above] at (3,0.3) {$S$};
+\node[above] at (10,0.3) {$Q$};
+
+% Time markers
+\draw (3,-0.15) -- (3,0.15);
+\node[above] at (3,0.5) {05 00 h};
+
+\draw (7,-0.15) -- (7,0.15);
+\node[above] at (7,0.5) {09 00 h};
+
+\node[above] at (9,0.5) {05 00 h};
+
+% Arrow for P
+\draw[-{Stealth}, thick] (3,0.3) -- (4,0.3);
+
+% Arrows for Q
+\draw[-{Stealth}, thick] (7,0.3) -- (6,0.3);
+\draw[-{Stealth}, thick] (9,0.3) -- (8,0.3);
+
+% Tick marks
+\foreach \x in {3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9} {
+    \draw (\x,-0.1) -- (\x,0.1);
+}
+\end{tikzpicture}
+\end{center}
+
+$3:2 = 6:4$
+
+$5 + 4 = 9$
+
+Ans: 09 00 h
+
+\item \textbf{(1)}
+
+Total number of faces:
+
+Original cuboid $\rightarrow 18$ faces
+
+4 cubes $\rightarrow 6 \times 4 = 24$ faces
+
+$24 - 18 = 6$ faces
+
+6 faces $\rightarrow 216$ cm$^2$
+
+\end{enumerate}
+
+\vfill
+
+\noindent Solutions to AEIS Practice Tests Secondary 3 Mathematics
+
+\noindent \copyright{} Singapore Asia Publishers Pte Ltd \& Starich Education Pte Ltd
+
+\begin{flushright}
+\textbf{S1}
+
+\textcolor{cyan}{Set 1}
+\end{flushright}
+
+\end{document}
+```

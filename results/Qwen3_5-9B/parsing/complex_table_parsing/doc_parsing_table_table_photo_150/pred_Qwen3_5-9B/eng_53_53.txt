@@ -1,0 +1,140 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Table Transcription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e6f7ff;
+        }
+        .algorithm-col {
+            width: 15%;
+            font-weight: bold;
+        }
+        .convergence-col {
+            width: 30%;
+            text-align: center;
+        }
+        .compression-col {
+            width: 25%;
+        }
+        .trans-compl-col {
+            width: 20%;
+            text-align: center;
+        }
+        .footer-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Table Transcription</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="algorithm-col">Algorithm</th>
+                <th class="convergence-col">Convergence Rate</th>
+                <th class="compression-col">Compression<sup>a</sup></th>
+                <th class="trans-compl-col">Trans. Compl.<sup>b</sup></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td rowspan="2" class="algorithm-col">LB</td>
+                <td>Theorem 1+Corollary 1</td>
+                <td class="convergence-col">Ω(σ/√nT + 1/δT)</td>
+                <td class="compression-col">Uni/Bidirectional<br>Contractive</td>
+                <td class="trans-compl-col">O(n/δ²)</td>
+            </tr>
+            <tr>
+                <td>Theorem 2+Corollary 2</td>
+                <td class="convergence-col">Ω(σ/√nT + (1+ω)/T)</td>
+                <td class="compression-col">Uni/Bidirectional<br>Unbiased</td>
+                <td class="trans-compl-col">O(n(1+ω)²)</td>
+            </tr>
+            <tr>
+                <td rowspan="6" class="algorithm-col">UB</td>
+                <td>Theorem 3</td>
+                <td class="convergence-col">Õ(σ/√nT + 1/δT)</td>
+                <td class="compression-col">Uni/Bidirectional<br>Contractive</td>
+                <td class="trans-compl-col">Õ(n/δ²)</td>
+            </tr>
+            <tr>
+                <td>Corollary 3</td>
+                <td class="convergence-col">Õ(σ/√nT + (1+ω)/T)</td>
+                <td class="compression-col">Uni/Bidirectional<br>Unbiased</td>
+                <td class="trans-compl-col">Õ(n(1+ω)²)</td>
+            </tr>
+            <tr>
+                <td>Q-SGD [31]</td>
+                <td class="convergence-col">O(((1+ω)σ+ωb²/σ)/√nT)<sup>†</sup></td>
+                <td class="compression-col">Unidirectional<br>i.i.d, Unbiased</td>
+                <td class="trans-compl-col">-</td>
+            </tr>
+            <tr>
+                <td>MEM-SGD [52]</td>
+                <td class="convergence-col">O(σ/√nT + G²/³/δ²/³T²/³ + 1/T)</td>
+                <td class="compression-col">Unidirectional<br>Contractive</td>
+                <td class="trans-compl-col">O(n³/δ⁴)</td>
+            </tr>
+            <tr>
+                <td>Double Squeeze [56]</td>
+                <td class="convergence-col">O(1/√nT + G²/³/δ⁴/³T²/³ + 1/T)</td>
+                <td class="compression-col">Bidirectional<sup>∘</sup></td>
+                <td class="trans-compl-col">O(n³/δ⁸)</td>
+            </tr>
+            <tr>
+                <td>CSER [61]</td>
+                <td class="convergence-col">O(σ/√nT + G²/³/δ²/³T²/³ + 1/T)</td>
+                <td class="compression-col">Unidirectional<br>Contractive</td>
+                <td class="trans-compl-col">O(n³/δ⁴)</td>
+            </tr>
+            <tr>
+                <td>EF21-SGD [24]</td>
+                <td class="convergence-col">O(σ/√δ³T + 1/δT)<sup>*</sup></td>
+                <td class="compression-col">Unidirectional<br>Contractive</td>
+                <td class="trans-compl-col">-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-note">
+        <p><sup>a</sup> Compression type: Uni/Bidirectional, Contractive/Unbiased.</p>
+        <p><sup>b</sup> Communication complexity per iteration.</p>
+        <p><sup>†</sup> Assumes bounded gradient norm.</p>
+        <p><sup>∘</sup> Requires bidirectional communication.</p>
+        <p><sup>*</sup> Assumes bounded gradient norm.</p>
+    </div>
+
+</body>
+</html>
+```

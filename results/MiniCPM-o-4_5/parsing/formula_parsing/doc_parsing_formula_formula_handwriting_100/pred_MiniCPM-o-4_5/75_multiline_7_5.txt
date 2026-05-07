@@ -1,0 +1,14 @@
+Certainly! Here's the LaTeX representation of the formula from the image:
+
+```latex
+\begin{align*}
+\Sigma_1 &= (N-N_{de})! \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \Gamma_{ij} \Gamma_{ji} \\
+&= \frac{(N-N_{de})!}{N!} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \left( \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \Gamma_{ij} \Gamma_{ji} + \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \Gamma_{\alpha_1 \alpha_2} \Gamma_{\alpha_2 \alpha_1} + \ldots \right) \\
+&= N_{de} \frac{(N-N_{de})!}{N!} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \Gamma_{ij} \Gamma_{ji} \left( \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \ldots \right) \\
+\Sigma_2 &= (N-N_{de})! \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \Gamma_{ij} \Gamma_{ji} \\
+&= \frac{(N-N_{de})!}{N!} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \left( \Gamma_{\alpha_1 \alpha_2} \Gamma_{\alpha_2 \alpha_1} + \Gamma_{\alpha_1 \alpha_3} \Gamma_{\alpha_3 \alpha_1} + \ldots \right) \\
+&= N_{de} (N_{de}-1) \sum_{\substack{\alpha_1 \neq \alpha_2}} \sum_{\substack{\alpha_1 \neq \alpha_2}} \Gamma_{ij} \Gamma_{ji} \left( \sum_{\substack{\alpha_1 \neq \alpha_2, \ldots, \alpha_{N_{de}}}} \ldots \right)
+\end{align*}
+```
+
+Note: The handwritten content contains some ambiguities and shorthand notations (like “...” and implied summations), so the LaTeX above reflects a best-effort reconstruction based on visible structure and common mathematical notation. Some parts may require contextual interpretation or clarification from the original derivation.

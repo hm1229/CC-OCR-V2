@@ -1,0 +1,215 @@
+Got it, let's go through the document and identify each category. First, let's list all the required categories and find their instances.
+
+1. ###: Not sure, maybe a placeholder. Let's check the document. There's a line with "###" maybe? Wait, the document has "###" in the order section? Let me check. The order lines have numbers like 4503039410, but maybe "###" is not present. Wait, maybe the "###" is a typo, but let's check the labels.
+
+Wait, the user provided categories: ###, Address, Bank Name, Commodity Code, Company Name, Country of Origin, Delivery, Invoice Number, Item, Net Price USD, Order, Page Number, Product Name, Purchase Order, Qty, Specification, Swift Code, Title, UM, USD Account, Unit Price.
+
+Let's go step by step.
+
+- Invoice Number: "Invoice Number: 962287017" → label Invoice Number.
+- Page Number: "Page 2 ot 8" → Page Number.
+- Title: "INTER-COMPANY INVOICE" → Title.
+- Company Name: "Jinan Yijiyuan Network Co., Ltd." (appears twice, once at bottom left and bank info).
+- Address: The addresses are "PSC 7377, Box 7382 APO AA 83429" and "PSC 0581, Box 0767 APO AA 44150" → these are Address.
+- Bank Name: In the bank info section, "Bank Name: Jinan Yijiyuan Network Co., Ltd." → Bank Name.
+- Swift Code: "Swift Code: CHAUNINBES" → Swift Code.
+- USD Account: "USD Account: 2700025530" → USD Account.
+- Commodity Code: For each item, there's "Commodity Code: 8531100000" (appears three times, for items 2,3,4) → Commodity Code.
+- Country of Origin: "Country of Origin: CN" (three times) → Country of Origin.
+- Order: "Order: 4503039410" (three times, different purchase order numbers) → Order.
+- Purchase Order: "Purchase Order: 4503039410 000002" (item 2), "4503039410 000003" (item3), "4503039410 000004" (item4) → Purchase Order.
+- Delivery: "Delivery: 803476581 10 JAN 2022" (three times, different maybe? Let's check: item2 delivery is 803476581 10 JAN 2022; item3 is 803476531 10 JAN 2022; item4 is 803476581 10 JAN 2022) → Delivery.
+- Item: The items are 2,3,4 → Item.
+- Material: The material is "10088475" for each, but the category is Product Name? Wait, Product Name: the description is "motionSCOUT R [manual alarm reset]" for each item → Product Name.
+- Qty: For each item, Qty is 70 → Qty.
+- UM: Unit of Measure, like 3A, EA, EA → UM.
+- Unit Price: Each item has Unit Price 43.81 → Unit Price.
+- Net Price USD: Each item has Net Price USD 3,066.70 (item2), 3,066.70 (item3), 3,066.70 (item4) → Net Price USD.
+- Specification: Maybe the description like "manual alarm reset" is part of Product Name, but Specification? Let's check. The material line has a description, maybe that's Specification. Wait, the first line under Material has "motionSCOUT R [manual alarm reset]" which is the product description, so Product Name. Maybe Specification is the same as Product Name? Or maybe the "material" field is part of it. Let's check the categories: Specification is a category. Let's see if there's a specification. The document has "material" column, but maybe the description in the item is the product name. Let's proceed.
+
+Now, let's list each occurrence:
+
+1. Invoice Number: "Invoice Number: 962287017" → bbox around that line.
+2. Page Number: "Page 2 ot 8" → bbox.
+3. Title: "INTER-COMPANY INVOICE" → bbox.
+4. Company Name: "Jinan Yijiyuan Network Co., Ltd." (bottom left) and in bank info. Let's take the first occurrence.
+5. Address: The two PSC addresses.
+6. Bank Name: "Bank Name: Jinan Yijiyuan Network Co., Ltd." in the bank info section.
+7. Swift Code: "Swift Code: CHAUNINBES"
+8. USD Account: "USD Account: 2700025530"
+9. Commodity Code: Each of the three instances (item2, item3, item4) have Commodity Code: 8531100000.
+10. Country of Origin: Each item's Country of Origin: CN (three times).
+11. Order: Each item's Order: 4503039410 (three times).
+12. Purchase Order: Each item's Purchase Order (three different numbers: 000002, 000003, 000004).
+13. Delivery: Each item's Delivery line (three times, different numbers).
+14. Item: The numbers 2,3,4 in the Item column.
+15. Product Name: The description "motionSCOUT R [manual alarm reset]" for each item (three times).
+16. Qty: The quantity 70 for each item (three times).
+17. UM: The unit measures 3A, EA, EA (three times).
+18. Unit Price: 43.81 for each item (three times).
+19. Net Price USD: 3,066.70 for each item (three times).
+20. ###: Not sure, maybe there's no ###, but let's check the document. The user included ### as a category. Maybe it's a placeholder, but in the document, maybe the "###" is not present. Let's check the original document. The image shows "###" in the order section? Let me check the image again. The image has "Order: 4503039410" etc. No ###. Maybe the ### is a mistake, but since the user listed it, perhaps there's a part. Alternatively, maybe the "###" is the separator, but maybe not. Let's proceed, maybe there's no ###, but the user included it, so if not found, maybe skip. But the problem says "detect all objects matching these categories", so if a category has no instance, maybe not include. But let's check again.
+
+Wait, the user's categories include ###. Let's check the document for ###. Looking at the image, in the "Order:" section, maybe there's a ###? Let me check the text:
+
+For item 2:
+Order: 4503039410
+Purchase Order: 4503039410 000002
+Delivery: 803476581 10 JAN 2022
+
+No ###. Maybe the ### is a typo, but perhaps in the bank info or elsewhere. Alternatively, maybe the "###" is the line between sections, but not an object. Since the problem says "detect all objects", if there's no ###, then maybe it's not present. Let's proceed without ### if not found.
+
+Now, let's map each category to their bounding boxes.
+
+Let's start with the top part:
+
+- Title: "INTER-COMPANY INVOICE" → coordinates: top center. Let's estimate the bounding box. The text is at the top, so x1, y1, x2, y2. Let's say the title is from left to right, top part.
+
+- Invoice Number: "Invoice Number: 962287017" → below title.
+
+- Page Number: "Page 2 ot 8" → below invoice number.
+
+Then the table:
+
+Item column: values 2,3,4.
+
+Material: 10088475 for each.
+
+Qty: 70 for each.
+
+UM: 3A, EA, EA.
+
+Unit Price: 43.81.
+
+Net Price USD: 3,066.70.
+
+Then for each item, the details:
+
+Commodity Code: 8531100000 (three times).
+
+Country of Origin: CN (three times).
+
+Order: 4503039410 (three times).
+
+Purchase Order: different numbers (000002, 000003, 000004).
+
+Delivery: different delivery numbers.
+
+Product Name: "motionSCOUT R [manual alarm reset]" (three times).
+
+Then the bottom section:
+
+Company Name: "Jinan Yijiyuan Network Co., Ltd." (left side).
+
+Address: two addresses: "PSC 7377, Box 7382 APO AA 83429" and "PSC 0581, Box 0767 APO AA 44150".
+
+Bank Name: "Bank Name: Jinan Yijiyuan Network Co., Ltd." (right side of bank info).
+
+Swift Code: "Swift Code: CHAUNINBES".
+
+USD Account: "USD Account: 2700025530".
+
+Now, let's list each entry with bbox. Since this is a text-based analysis, we need to approximate the coordinates. Let's assume the image is a standard layout.
+
+For example:
+
+- Title: "INTER-COMPANY INVOICE" → bbox [120, 50, 880, 80] (approximate, top center).
+
+- Invoice Number: "Invoice Number: 962287017" → [120, 85, 420, 105].
+
+- Page Number: "Page 2 ot 8" → [120, 108, 240, 125].
+
+- Item (value 2): in the table, first row, Item column. Let's say the table starts below page number. The Item for row 2 is "2" → [120, 150, 140, 170].
+
+- Material for row 2: "10088475" → [200, 150, 300, 170].
+
+- Qty for row 2: "70" → [350, 150, 380, 170].
+
+- UM for row 2: "3A" → [400, 150, 430, 170].
+
+- Unit Price for row 2: "43.81" → [550, 150, 600, 170].
+
+- Net Price USD for row 2: "3,066.70" → [650, 150, 750, 170].
+
+- Commodity Code for row 2: "8531100000" → in the details below row 2, so maybe [200, 200, 350, 220].
+
+- Country of Origin for row 2: "CN" → [300, 210, 320, 230].
+
+- Order for row 2: "4503039410" → [300, 230, 450, 250].
+
+- Purchase Order for row 2: "4503039410 000002" → [300, 255, 500, 275].
+
+- Delivery for row 2: "803476581 10 JAN 2022" → [300, 280, 550, 295].
+
+- Product Name for row 2: "motionSCOUT R [manual alarm reset]" → below Material, so [200, 175, 500, 195].
+
+Similarly for rows 3 and 4.
+
+Then the bottom section:
+
+- Company Name (left): "Jinan Yijiyuan Network Co., Ltd." → [120, 850, 450, 870].
+
+- Address (first): "PSC 7377, Box 7382 APO AA 83429" → [120, 875, 420, 895].
+
+- Address (second): "PSC 0581, Box 0767 APO AA 44150" → [120, 900, 420, 920].
+
+- Bank Name: "Bank Name: Jinan Yijiyuan Network Co., Ltd." → [550, 850, 900, 870].
+
+- Swift Code: "Swift Code: CHAUNINBES" → [550, 875, 750, 895].
+
+- USD Account: "USD Account: 2700025530" → [550, 900, 750, 920].
+
+Now, let's compile all these into the JSON array. We need to make sure each entry is a separate object with bbox and label.
+
+Let's list all categories and their instances:
+
+1. Title: "INTER-COMPANY INVOICE" → one instance.
+2. Invoice Number: "962287017" → one.
+3. Page Number: "Page 2 ot 8" → one.
+4. Item: three instances (2,3,4).
+5. Material: three instances (10088475 each, but maybe Material is not a category; the categories include Product Name, so Material might be part of Product Name? Wait, the categories given are: ###, Address, Bank Name, Commodity Code, Company Name, Country of Origin, Delivery, Invoice Number, Item, Net Price USD, Order, Page Number, Product Name, Purchase Order, Qty, Specification, Swift Code, Title, UM, USD Account, Unit Price.
+
+So Material is not a category, but Product Name is. The description "motionSCOUT R [manual alarm reset]" is Product Name.
+
+6. Product Name: three instances.
+7. Qty: three instances (70 each).
+8. UM: three instances (3A, EA, EA).
+9. Unit Price: three instances (43.81 each).
+10. Net Price USD: three instances (3,066.70 each).
+11. Commodity Code: three instances (8531100000 each).
+12. Country of Origin: three instances (CN each).
+13. Order: three instances (4503039410 each).
+14. Purchase Order: three instances (different numbers).
+15. Delivery: three instances (different delivery numbers).
+16. Address: two instances.
+17. Company Name: two instances (left and bank info, but same company, so maybe one, but the document has two mentions: left and bank info. Let's check: "Jinan Yijiyuan Network Co., Ltd." appears in the left address block and in the bank info. So two instances.
+18. Bank Name: one instance.
+19. Swift Code: one instance.
+20. USD Account: one instance.
+21. ###: none, so skip.
+
+Now, let's create the JSON entries. For brevity, we'll list key entries, but need to cover all.
+
+Let's start with the top:
+
+- Title: [110, 55, 890, 85], label "Title"
+- Invoice Number: [115, 88, 425, 108], label "Invoice Number"
+- Page Number: [115, 110, 240, 128], label "Page Number"
+
+Item 2:
+
+- Item: [120, 155, 140, 175], label "Item"
+- Material (but not a category, so Product Name: [205, 178, 500, 198], label "Product Name"
+- Qty: [355, 155, 380, 175], label "Qty"
+- UM: [405, 155, 430, 175], label "UM"
+- Unit Price: [555, 155, 600, 175], label "Unit Price"
+- Net Price USD: [655, 155, 750, 175], label "Net Price USD"
+- Commodity Code: [205, 202, 350, 222], label "Commodity Code"
+- Country of Origin: [305, 212, 325, 232], label "Country of Origin"
+- Order: [305, 235, 450, 255], label "Order"
+- Purchase Order: [305, 258, 500, 278], label "Purchase Order"
+- Delivery: [305, 282, 550, 298], label "Delivery"
+
+Item 3:
+
+- Item: [120, 300, 140, 

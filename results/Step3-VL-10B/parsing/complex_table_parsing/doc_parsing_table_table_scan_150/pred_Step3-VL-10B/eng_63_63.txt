@@ -1,0 +1,262 @@
+Got it, let's tackle this problem step by step. First, I need to analyze the balance sheet image and convert it into an HTML table. Let's start by identifying the structure: the title, then sections like Assets, Liabilities, Shareholder's Equity, etc. Each section has subcategories, and there are columns for years 2002 and 2001.
+
+First, the header: "XYZ COMPANY LIMITED BALANCE SHEET AS AT JUNE 30, 2002 UNAUDITED - See 'Notice to Reader'". Then the table has columns for the categories and the two years.
+
+Let's break down each part:
+
+1. Title section: This is a header, maybe a <thead> or just a <div> above the table. But the main table starts with the assets section.
+
+2. Assets section:
+   - Current Assets: Cash, Accounts receivable, Deposits and prepaid expenses, Inventory. Then the total for current assets.
+   - Property, Plant and Equipment (Note 2)
+   - Investments
+   - Then the total assets.
+
+3. Liabilities section:
+   - Current Liabilities: Bank overdraft, Bank loan, Accounts payable and accrued liabilities, Long-term debt - current portion, Income tax payable.
+   - Due to Shareholder (Note 3)
+   - Long-term Debt (Note 4)
+   - Then total liabilities.
+
+4. Shareholder's Equity:
+   - Stated Capital (Note 5)
+   - Retained Earnings (Deficit)
+   - Then total shareholder's equity.
+
+Now, let's map each row. Let's list all the rows with their labels and the two year columns (2002 and 2001). Also, note that some rows have notes (like Note 2, Note 3, Note 4, Note 5) which should be included.
+
+First, the top part: the company name and title. Then the table.
+
+Let's structure the HTML table. The table will have a header row for the years, but maybe the first row is the title, then the table starts.
+
+Wait, the image shows the title above the table. So in HTML, we can have a <div> for the title, then the <table> for the balance sheet.
+
+Let's outline the table structure:
+
+- The first row of the table (after title) is the section headers: Assets, Liabilities, Shareholder's Equity. But looking at the image, the sections are labeled with bold text (like CURRENT, ASSETS, etc.). So each section has a header row, then the sub-rows.
+
+Let's list each row:
+
+First, the title: "XYZ COMPANY LIMITED BALANCE SHEET AS AT JUNE 30, 2002 UNAUDITED - See 'Notice to Reader'"
+
+Then the table:
+
+Columns: The first column is the account name, then 2002, then 2001.
+
+Let's go row by row:
+
+1. Assets section header: "ASSETS" (spans all columns? Or maybe a row with "ASSETS" centered over the two year columns. But in the image, "ASSETS" is a bold label, then the sub-sections.
+
+Wait, the image has:
+
+ASSETS
+
+CURRENT
+
+Cash
+
+Accounts receivable
+
+Deposits and prepaid expenses
+
+Inventory
+
+Total current assets
+
+Property, Plant and Equipment (Note 2)
+
+Investments
+
+Total assets
+
+Then LIABILITIES
+
+CURRENT
+
+Bank overdraft
+
+Bank loan
+
+Accounts payable and accrued liabilities
+
+Long-term debt - current portion
+
+Income tax payable
+
+Due to Shareholder (Note 3)
+
+Long-term Debt (Note 4)
+
+Total liabilities
+
+Then SHAREHOLDER'S EQUITY
+
+Stated Capital (Note 5)
+
+Retained Earnings (Deficit)
+
+Total shareholder's equity
+
+Total assets = Total liabilities + Shareholder's equity
+
+Now, let's map each of these to rows in the table. Let's check the image's numbers:
+
+For example, Cash in 2002 is $11,552, 2001 is --.
+
+Accounts receivable: 42,970 vs 50,995.
+
+Deposits and prepaid: 2,942 vs 2,688.
+
+Inventory: 159,144 vs 156,657.
+
+Total current assets: 216,608 vs 209,940.
+
+Property, Plant and Equipment: 59,890 vs 76,318.
+
+Investments: -- vs 45,001.
+
+Total assets: 276,498 vs 331,259.
+
+Liabilities:
+
+Bank overdraft: -- vs --.
+
+Bank loan: -- vs 60,000.
+
+Accounts payable: 82,053 vs 91,343.
+
+Long-term debt current: 25,200 vs --.
+
+Income tax payable: 14,387 vs 160,817.
+
+Total current liabilities: 121,640 vs 160,817.
+
+Due to Shareholder: 51,591 vs 231,791.
+
+Long-term Debt: 86,100 vs --.
+
+Total liabilities: 259,331 vs 392,608.
+
+Shareholder's Equity:
+
+Stated Capital: 1 vs 1.
+
+Retained Earnings: 17,166 vs (61,350) → so 17,167 vs (61,349) maybe a typo, but image shows 17,167 and (61,349).
+
+Total shareholder's equity: 259,331 vs 332,59? Wait image shows 259,331 for 2002 and 332,59? Wait image's total shareholder's equity is 259,331 (2002) and 332,59? Wait no, image shows:
+
+Stated Capital (Note 5): 1 (2002) and 1 (2001)
+
+Retained Earnings (Deficit): 17,167 (2002) and (61,349) (2001)
+
+Total shareholder's equity: 259,331 (2002) and 332,59? Wait image's total shareholder's equity row: 259,331 (2002) and 332,59? Wait no, image shows:
+
+For Shareholder's Equity:
+
+Stated Capital (Note 5): 1 (2002) and 1 (2001)
+
+Retained Earnings (Deficit): 17,167 (2002) and (61,349) (2001)
+
+Then the total shareholder's equity is 259,331 (2002) and 332,59? Wait image's total shareholder's equity is 259,331 (2002) and 332,59? Wait no, image shows:
+
+Total shareholder's equity: 259,331 (2002) and 332,59? Wait the image's last row under Shareholder's Equity is "APPROVED" and the totals. Let's check the image again.
+
+The image's Shareholder's Equity section:
+
+STATED CAPITAL (Note 5) → 1 (2002) and 1 (2001)
+
+RETAINED EARNINGS (DEFICIT) → 17,167 (2002) and (61,349) (2001)
+
+Then the total for Shareholder's Equity is 259,331 (2002) and 332,59? Wait no, the image shows:
+
+Under Shareholder's Equity, the total is 259,331 (2002) and 332,59? Wait the image's total shareholder's equity row is:
+
+259,331 (2002) and 332,59? Wait no, the image shows:
+
+The total assets is 276,498 (2002) and 331,259 (2001). Then total liabilities is 259,331 (2002) and 392,608 (2001). Then total shareholder's equity should be total assets - total liabilities. For 2002: 276,498 - 259,331 = 17,167. Which matches the retained earnings (since stated capital is 1, 1 + 17,167 = 17,168? Wait image shows stated capital is 1 (2002) and retained earnings is 17,167 (2002). So 1 + 17,167 = 17,168? But the total shareholder's equity is 259,331? Wait no, that can't be. Wait I think I messed up. Let's check the image again.
+
+Wait the image's Shareholder's Equity section:
+
+STATED CAPITAL (Note 5) → 2002: 1, 2001: 1
+
+RETAINED EARNINGS (DEFICIT) → 2002: 17,167, 2001: (61,349)
+
+Then the total for Shareholder's Equity is 1 + 17,167 = 17,168 (2002) and 1 + (61,349) = (61,348) (2001). But the image shows the total shareholder's equity row as 259,331 (2002) and 332,59? No, wait the image's "APPROVED" section has the total assets, total liabilities, and total shareholder's equity. Let's look at the image:
+
+At the bottom, the total assets is $276,498 (2002) and $331,259 (2001). Then total liabilities is $259,331 (2002) and $392,608 (2001). Then total shareholder's equity is $259,331 (2002) and $332,59? No, the image shows:
+
+Under Shareholder's Equity, the last row is "APPROVED" and the totals. Let's check the image's numbers:
+
+The image's Shareholder's Equity section:
+
+- Stated Capital (Note 5): 1 (2002) and 1 (2001)
+- Retained Earnings (Deficit): 17,167 (2002) and (61,349) (2001)
+- Then the total for Shareholder's Equity is 17,168 (2002) and (61,348) (2001). But the image shows the total shareholder's equity as 259,331 (2002) and 332,59? That can't be. Wait no, the image's "Total shareholder's equity" is actually the sum of Stated Capital and Retained Earnings. Let's check the image's numbers:
+
+For 2002:
+
+Stated Capital: 1
+
+Retained Earnings: 17,167
+
+Total Shareholder's Equity: 1 + 17,167 = 17,168. But the image shows the total shareholder's equity row as 259,331? That's not matching. Wait no, I think I'm looking at the wrong part. Let's check the image again.
+
+Wait the image's rightmost column has the totals. Let's look at the "APPROVED" section at the bottom. The image shows:
+
+For 2002, the total assets is $276,498. Then total liabilities is $259,331. Then total shareholder's equity should be 276,498 - 259,331 = 17,167. Which matches the Retained Earnings (since Stated Capital is 1, 1 + 17,167 = 17,168? Wait 1 + 17,167 is 17,168, but 276,498 - 259,331 is 17,167. There's a discrepancy. Maybe the Stated Capital is included in the total. Let's check the image's numbers:
+
+Stated Capital (Note 5) for 2002 is 1. Retained Earnings (Deficit) is 17,167. So 1 + 17,167 = 17,168. But total assets - total liabilities is 276,498 - 259,331 = 17,167. So maybe the image has a typo, or I'm misreading. Let's check the image's Retained Earnings: the image shows "17,167" under Retained Earnings (Deficit) for 2002, and the total shareholder's equity is 259,331? No, that can't be. Wait no, the image's Shareholder's Equity section's total is the same as the total assets minus total liabilities. Let's check the image's numbers:
+
+Total assets (2002): 276,498
+
+Total liabilities (2002): 259,331
+
+Total shareholder's equity (2002): 276,498 - 259,331 = 17,167
+
+Which matches the Retained Earnings (Deficit) of 17,167, and Stated Capital is 1. So 1 + 17,167 = 17,168. There's a difference of 1. Maybe the Stated Capital is included in the Retained Earnings? Or maybe the image's Stated Capital is 0? Wait the image shows Stated Capital (Note 5) as 1 for both years. Let's check 2001:
+
+Total assets (2001): 331,259
+
+Total liabilities (2001): 392,608 → Wait that can't be, total liabilities can't be more than total assets. Oh! Wait I think I mixed up total liabilities and total shareholder's equity. Let's check the image again.
+
+Ah! Here's the mistake: The image's "Total liabilities" is actually the sum of current liabilities and long-term debt. Let's check the image's numbers:
+
+For 2002:
+
+Current Liabilities: Bank overdraft (--) + Bank loan (--) + Accounts payable (82,053) + Long-term debt current (25,200) + Income tax payable (14,387) = 82,053 +25,200 +14,387 = 121,640. Then Due to Shareholder (51,591) + Long-term Debt (86,100) = 51,591 +86,100 = 137,691. Then total liabilities = current liabilities + due to shareholder + long-term debt? No, "Due to Shareholder" is part of liabilities? Wait no, "Due to Shareholder" is a liability (like dividends payable or something). Let's check the image's labels:
+
+LIABILITIES
+
+CURRENT
+
+...
+
+DUE TO SHAREHOLDER (Note 3) → this is a current liability?
+
+Then LONG-TERM DEBT (Note 4) → long-term liability.
+
+So total liabilities = current liabilities (including due to shareholder if it's current) + long-term debt.
+
+Wait the image's "Total liabilities" row is the sum of all liabilities. Let's check the image's numbers for 2002:
+
+Current Liabilities (the sum of bank overdraft, bank loan, accounts payable, long-term debt current, income tax payable) is 121,640 (as per image: "121,640" under Income tax payable's total? Wait no, the image shows:
+
+Under CURRENT LIABILITIES:
+
+Bank overdraft: -- 
+
+Bank loan: -- 
+
+Accounts payable: 82,053 
+
+Long-term debt - current portion: 25,200 
+
+Income tax payable: 14,387 
+
+Then the total for current liabilities is 82,053 +25,200 +14,387 = 121,640. That's correct.
+
+Then DUE TO SHAREHOLDER (Note 3): 51,591 (2002) → this is a liability, maybe current or long-term? But in the image, it's listed under LIABILITIES, not under CURRENT, so maybe it's a non-current liability. Then LONG-TERM DEBT (Note 4): 86,100 (2002) → long-term.
+
+So total liabilities = current liabilities (121,640) + due to shareholder (51,591) + long-term debt (86,100) = 121,640 +51,591 = 173,231 +86,100 = 259,331. Which matches the image's "Total liabilities" row: 259,331 (2002) and 392,608 (2001). Let's check 2001:
+
+Current liabilities: Bank overdraft -- + Bank loan 60,000 + Accounts payable 91,343 + Long-term debt current -- + Income tax payable 160,817 → 60,000 +91,343 +160,817 = 312,160? Wait no, image

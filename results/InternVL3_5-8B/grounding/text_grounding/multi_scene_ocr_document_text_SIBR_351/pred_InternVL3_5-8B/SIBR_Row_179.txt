@@ -1,0 +1,44 @@
+To determine the coordinates of the region containing the text '? 30.0', we need to analyze the image and identify the bounding box around this text. Let's break down the process step-by-step:
+
+1. **Identify the Text Region:**
+   The text '? 30.0' appears in the section labeled "应收额" (Amount Due) and "实收额" (Amount Paid).
+
+2. **Estimate the Bounding Box:**
+   We need to find the left-top and right-bottom corners of the bounding box that encloses the text.
+
+3. **Normalize the Coordinates:**
+   The coordinates should be normalized based on the image's width and height.
+
+### Step-by-Step Analysis:
+
+1. **Image Dimensions:**
+   Assume the image width is approximately 1000 pixels and the height is approximately 600 pixels.
+
+2. **Locate the Text:**
+   The text '? 30.0' is located in the middle section of the receipt, slightly to the right of the center.
+
+3. **Estimate Coordinates:**
+   - **Left-Top Corner (x1, y1):** This is the top-left corner of the text region. It appears to be around the middle height, slightly to the right of the center width.
+     - Approximate coordinates: (450, 250)
+   - **Right-Bottom Corner (x2, y2):** This is the bottom-right corner of the text region. It appears to be around the middle height, further to the right.
+     - Approximate coordinates: (550, 300)
+
+### Normalized Coordinates:
+
+To normalize these coordinates, we divide by the image dimensions (1000 for width and 600 for height):
+
+- **Left-Top Corner:**
+  - x1 = 450 / 1000 = 0.45
+  - y1 = 250 / 600 ≈ 0.417
+
+- **Right-Bottom Corner:**
+  - x2 = 550 / 1000 = 0.55
+  - y2 = 300 / 600 = 0.5
+
+### Final Bounding Box Coordinates:
+
+(x1, y1, x2, y2) = (0.45, 0.417, 0.55, 0.5)
+
+So, the normalized coordinates of the bounding box are:
+
+(0.45, 0.417, 0.55, 0.5)

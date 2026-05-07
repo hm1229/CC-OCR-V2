@@ -1,0 +1,290 @@
+Got it, let's tackle this problem. First, I need to parse the image's table structure. Let's look at the image step by step.
+
+First, identify the rows and columns. The image has two main sections: the top part and the bottom part. Let's check the labels.
+
+Top section rows: NMF-EM, EM, k-means. Then the columns are α values: .01, .1, .2, .3, .4, .5, .6, then there's a section for α=1.0, 1.1, 1.2, 1.3, and also α=.7, .8, .9. Wait, let's list all columns.
+
+Looking at the top part:
+
+Columns (from top row labels):
+- α = .01
+- α = .1
+- α = .2
+- α = .3
+- α = .4
+- α = .5
+- α = .6
+Then, there's a section for α = 1.0, α = 1.1, α = 1.2, α = 1.3 (these are under the EM row maybe? Wait, no. Let's check the row labels.
+
+First, the top table:
+
+Row labels (leftmost column):
+- NMF-EM
+- EM
+- k-means
+
+Then, the columns:
+
+First, the α values from .01 to .6, then there's a split for α=1.0, 1.1, 1.2, 1.3. Also, there's a section for α=.7, .8, .9 under k-means? Wait, let's look at the image again.
+
+Wait, the image has two tables? Let's check:
+
+First table (top part):
+
+Columns: α = .01, α = .1, α = .2, α = .3, α = .4, α = .5, α = .6
+
+Then, for the EM row, there's a continuation: α = 1.0, α = 1.1, α = 1.2, α = 1.3
+
+Also, for the k-means row, there's a section α = .7, α = .8, α = .9
+
+Then the second table (bottom part):
+
+Row labels: NMF-EM, EM, k-means
+
+Columns: α = .7, α = .8, α = .9, α = 1.0, α = 1.1, α = 1.2, α = 1.3
+
+Wait, let's parse each cell.
+
+First, let's list all rows and columns with their content.
+
+First, the top-left cell is NMF-EM, then EM, then k-means (first three rows of the top table).
+
+Let's start with the top table:
+
+Row 1 (NMF-EM):
+- α = .01: 9.5%
+- α = .1: 6.3%
+- α = .2: 4.7%
+- α = .3: 5.0%
+- α = .4: 4.9%
+- α = .5: 5.3%
+- α = .6: 5.9%
+Then, for the next columns (α=1.0, 1.1, 1.2, 1.3) – wait, no, the NMF-EM row only has up to α=.6? Let's check the image.
+
+Wait, the image's first row (NMF-EM) has entries: 9.5% (α=.01), 6.3% (α=.1), 4.7% (α=.2), 5.0% (α=.3), 4.9% (α=.4), 5.3% (α=.5), 5.9% (α=.6). Then the next row (EM) has 8.4%, 6.8%, 5.3%, 5.5%, 5.6%, 6.0%, 6.2%. Then k-means has 6.4%, 5.9%, 5.3%? Wait no, the k-means row in the top part: let's check the image.
+
+Wait, the image shows:
+
+First column (row labels):
+
+NMF-EM
+
+EM
+
+k-means
+
+Then, the columns:
+
+α = .01 | α = .1 | α = .2 | α = .3 | α = .4 | α = .5 | α = .6
+
+Then, for EM row, there's a continuation: α = 1.0, α = 1.1, α = 1.2, α = 1.3
+
+For k-means row, there's a section α = .7, α = .8, α = .9
+
+Wait, let's look at the image's text:
+
+In the top part:
+
+- NMF-EM row: 9.5% (α=.01), 6.3% (α=.1), 4.7% (α=.2), 5.0% (α=.3), 4.9% (α=.4), 5.3% (α=.5), 5.9% (α=.6)
+
+- EM row: 8.4% (α=.01), 6.8% (α=.1), 5.9% (α=.2), 5.5% (α=.3), 5.6% (α=.4), 6.0% (α=.5), 6.2% (α=.6); then α=1.0:7.3%, α=1.1:7.5%, α=1.2:7.5%, α=1.3:8.8%
+
+- k-means row: 6.4% (α=.01), then α=.7:6.5%, α=.8:6.7%, α=.9:7.3%, α=1.0:7.0%, α=1.1:6.8%, α=1.2:7.0%, α=1.3:7.2%? Wait no, the image shows for k-means:
+
+Wait, the image has a section where α = .7 is a column header, then α = .8, α = .9, then α = 1.0, etc. Let's check the image's labels:
+
+Looking at the image, there's a line that says "α = .7" under k-means? Let's parse the image's text:
+
+The image has:
+
+First, the top table:
+
+Columns: α = .01, α = .1, α = .2, α = .3, α = .4, α = .5, α = .6
+
+Then, for the EM row, after α=.6, there's "α = 1.0", "α = 1.1", "α = 1.2", "α = 1.3"
+
+For the k-means row, there's a section "α = .7", "α = .8", "α = .9" which are column headers, and then the values under k-means for those αs.
+
+Then the second table (bottom part) has row labels NMF-EM, EM, k-means, and columns α = .7, α = .8, α = .9, α = 1.0, α = 1.1, α = 1.2, α = 1.3
+
+Let's list all cells with their positions.
+
+First, let's handle the top table (first three rows: NMF-EM, EM, k-means) and the columns up to α=.6, then the additional columns for EM (α=1.0 to 1.3) and k-means (α=.7 to .9).
+
+Wait, maybe the image has two separate tables. Let's check the image's structure:
+
+1. First table (upper part):
+
+Row labels: NMF-EM, EM, k-means
+
+Columns:
+
+- α = .01
+
+- α = .1
+
+- α = .2
+
+- α = .3
+
+- α = .4
+
+- α = .5
+
+- α = .6
+
+- α = 1.0
+
+- α = 1.1
+
+- α = 1.2
+
+- α = 1.3
+
+But for NMF-EM, only up to α=.6 has values; EM has values up to α=.6 and then α=1.0 to 1.3; k-means has values starting from α=.7 (so columns α=.7 to .9 are part of k-means' row, but maybe the columns are merged? Wait, the image shows that for k-means, the α=.7 is a column header, so perhaps the columns are:
+
+Let's list all column headers in order:
+
+α = .01, α = .1, α = .2, α = .3, α = .4, α = .5, α = .6, α = .7, α = .8, α = .9, α = 1.0, α = 1.1, α = 1.2, α = 1.3
+
+Yes, that makes sense. So the columns are from α=.01 to α=1.3, with steps: .01, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1.0, 1.1, 1.2, 1.3.
+
+Now, let's map each row (NMF-EM, EM, k-means) to these columns.
+
+First, NMF-EM row:
+
+- α=.01: 9.5%
+
+- α=.1: 6.3%
+
+- α=.2: 4.7%
+
+- α=.3: 5.0%
+
+- α=.4: 4.9%
+
+- α=.5: 5.3%
+
+- α=.6: 5.9%
+
+- α=.7: (no value? Wait, the image shows for NMF-EM, the next entries after α=.6 are not present. Let's check the image again.
+
+Looking at the image:
+
+The first row (NMF-EM) has entries: 9.5% (α=.01), 6.3% (α=.1), 4.7% (α=.2), 5.0% (α=.3), 4.9% (α=.4), 5.3% (α=.5), 5.9% (α=.6). Then the next columns (α=.7, .8, .9) don't have entries for NMF-EM in the top part. Then α=1.0, 1.1, 1.2, 1.3 also don't have entries for NMF-EM in the top part.
+
+Then EM row:
+
+- α=.01: 8.4%
+
+- α=.1: 6.8%
+
+- α=.2: 5.9%
+
+- α=.3: 5.5%
+
+- α=.4: 5.6%
+
+- α=.5: 6.0%
+
+- α=.6: 6.2%
+
+- α=1.0: 7.3%
+
+- α=1.1: 7.5%
+
+- α=1.2: 7.5%
+
+- α=1.3: 8.8%
+
+Then k-means row (top part):
+
+- α=.01: 6.4%
+
+- α=.7: 6.5% (since the image has "α = .7" as a column header, and under k-means, the value is 6.5%)
+
+- α=.8: 6.7%
+
+- α=.9: 7.3%
+
+- α=1.0: 7.0%
+
+- α=1.1: 6.8%
+
+- α=1.2: 7.0%
+
+- α=1.3: 7.2%? Wait, the image shows for k-means in the top part: "6.4%" (α=.01), then "α = .7" column has 6.5%, "α = .8" has 6.7%, "α = .9" has 7.3%, then "α = 1.0" has 7.0%, "α = 1.1" has 6.8%, "α = 1.2" has 7.0%, "α = 1.3" has 7.2%? Let's check the image's text:
+
+In the image, under k-means (top part), the values are: 6.4% (α=.01), then α=.7:6.5%, α=.8:6.7%, α=.9:7.3%, α=1.0:7.0%, α=1.1:6.8%, α=1.2:7.0%, α=1.3:7.2%? Wait, the image shows "k-means" row with "6.4%" (α=.01), then "α = .7" is a column, and the value is 6.5%, then "α = .8" is 6.7%, "α = .9" is 7.3%, then "α = 1.0" is 7.0%, "α = 1.1" is 6.8%, "α = 1.2" is 7.0%, "α = 1.3" is 7.2%? Let's check the image's text:
+
+The image has:
+
+k-means row: 6.4% (α=.01), then α=.7:6.5%, α=.8:6.7%, α=.9:7.3%, α=1.0:7.0%, α=1.1:6.8%, α=1.2:7.0%, α=1.3:7.2%? Wait, the image shows "k-means" with "6.4%" (α=.01), then the next columns are α=.7, .8, .9, then α=1.0, 1.1, 1.2, 1.3. Let's check the image's text for k-means:
+
+In the image, the k-means row (top part) has: "6.4%" (under α=.01), then "α = .7" column has "6.5%", "α = .8" has "6.7%", "α = .9" has "7.3%", "α = 1.0" has "7.0%", "α = 1.1" has "6.8%", "α = 1.2" has "7.0%", "α = 1.3" has "7.2%". Yes, that seems right.
+
+Now, the second table (bottom part) has row labels NMF-EM, EM, k-means, and columns α=.7, α=.8, α=.9, α=1.0, α=1.1, α=1.2, α=1.3.
+
+Let's check the bottom part of the image:
+
+Row labels: NMF-EM, EM, k-means
+
+Columns: α=.7, α=.8, α=.9, α=1.0, α=1.1, α=1.2, α=1.3
+
+Values:
+
+NMF-EM row:
+
+- α=.7:7.2%
+
+- α=.8:7.3%
+
+- α=.9:6.7%
+
+- α=1.0:7.6%
+
+- α=1.1: (no value? Wait, image shows NMF-EM in bottom part: "7.2%" (α=.7), "7.3%" (α=.8), "6.7%" (α=.9), "7.6%" (α=1.0), then α=1.1: maybe not? Wait, image shows:
+
+Bottom part:
+
+NMF-EM: 7.2% (α=.7), 7.3% (α=.8), 6.7% (α=.9), 7.6% (α=1.0), then maybe α=1.1, 1.2, 1.3? Wait, image shows:
+
+NMF-EM (bottom) has: 7.2% (α=.7), 7.3% (α=.8), 6.7% (α=.9), 7.6% (α=1.0), then α=1.1: maybe not, but let's check the image's text.
+
+Image bottom part:
+
+NMF-EM: 7.2%, 7.3%, 6.7%, 7.6%
+
+EM: 6.6% (α=.7), then α=.8: maybe not, image shows EM row: 6.6% (α=.7), then α=.8: maybe not, but image shows EM row: 6.6% (α=.7), then α=.8: maybe the next is α=1.0? Wait, image shows:
+
+EM (bottom) has: 6.6% (α=.7), then α=.8: maybe not, but image shows "6.6%" under α=.7 for EM.
+
+k-means (bottom) has: maybe not, but image shows k-means row in bottom part? Wait, the image's bottom part has:
+
+NMF-EM: 7.2%, 7.3%, 6.7%, 7.6%
+
+EM: 6.6%
+
+k-means: (maybe no values, but image shows "k-means" row in bottom part? Let's check the image again.
+
+The image's bottom part:
+
+- NMF-EM: 7.2% (α=.7), 7.3% (α=.8), 6.7% (α=.9), 7.6% (α=1.0)
+
+- EM: 6.6% (α=.7)
+
+- k-means: (maybe no values, but the image shows "k-means" as a row label, but perhaps the bottom table is only NMF-EM and EM, with k-means not having values there.
+
+Wait, the image shows:
+
+In the bottom section:
+
+NMF-EM row: 7.2%, 7.3%, 6.7%, 7.6%
+
+EM row: 6.6%
+
+k-means row: (no values, or maybe the image cuts off)
+
+But let's transcribe exactly what's in the image.
+
+Now, let

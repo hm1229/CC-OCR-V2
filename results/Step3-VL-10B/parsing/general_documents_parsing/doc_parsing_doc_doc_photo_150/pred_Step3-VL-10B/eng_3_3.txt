@@ -1,0 +1,185 @@
+Got it, let's tackle this problem. The user wants the image's text, tables, and equations transcribed into LaTeX without alteration. First, I need to parse both the English First Paper and English Second Paper sections, including their tables and notes.
+
+First, let's look at the English First Paper (Subject code: 107). The top part has "Full Marks : 100". Then there's a table for Marks and Test Items Distribution. Let's break down each part.
+
+For the English First Paper:
+
+- Title: English First Paper (Subject code: 107)
+- Full Marks: 100
+- Table: Marks and Test Items Distribution. The table has columns: Marks, Skills/Areas, Marks, Test Items, Item Marks.
+
+Let's structure the table. The first column is "Marks" (with 100 spanning rows), then Skills/Areas, Marks, Test Items, Item Marks.
+
+Section A: Reading Test (Seen Passage) Question 1-3, Marks 25. Test items: 1. Multiple choice questions (1x5=5), 2. Short questions (2x5=10), 3. Summarizing (10). Then Reading Test (Unseen Passage) Question 4 & 5, Marks 35. Test items: 4. Information transfer (1x5=5), 5. True/False (1x5=5), 6. Fill in the gaps with app. words (1x5=5), 7. Rearranging sentence (10), 8. Gap filling with clues (0.5x10=5), 9. Matching sentence parts (1x5=5). Then Section B: Writing, Marks 40. Test items: 10. Dialogue writing (10), 11. Paragraph writing (10), 12. Completing story (10), 13. Informal letter (10).
+
+Now the English Second Paper (Subject code: 108), Full Marks: 50. Table: Marks and Test Items Distribution. Columns: Marks, Skills/Areas, Marks, Test Items, Items Marks.
+
+Section A * Grammar, Marks 50. Subsections: Section A * Grammar has Marks 30. Then test items:
+
+1. Gap filling activities with or without clues (use articles) 0.5x6=03
+
+2. Gap filling activities with or without clues (prepositions etc) 0.5x6=03
+
+3. Substitution table 1x4=4
+
+4. Narrative style (direct to indirect and vice versa) 4
+
+5. Changing sentences (affirmative to negative and vice versa, positive to comparative or vice versa, active to passive and vice versa) 1x5=5
+
+6. Capitalization and punctuation 0.5x6=03
+
+7. Use of suffixes and prefixes 0.5x8=04
+
+8. Right forms of verbs 0.5x8=04
+
+Then notes: * Notes: Marks distribution for each test item (Reading and Writing) can vary from time to time. No text or test item can be taken directly from the EFT. Test items should be placed within appropriate context.
+
+Section B * Composition, Marks 20. Test items: Formal letter/e-mail (08), Writing composition on personal experience and familiar topics, recent events/ incidents (12).
+
+Also, the bottom has "Curriculum Dissemination Programme, SESDP, NCTR".
+
+Now, let's convert this into LaTeX. Need to use tables, proper formatting.
+
+First, the English First Paper:
+
+\section*{English First Paper (Subject code: 107)}
+\textbf{Full Marks : 100}
+
+\begin{table}[h]
+\centering
+\caption{Marks and Test Items Distribution}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Marks} & \multicolumn{3}{c|}{\textbf{Skills/Areas, Marks, Test Items, Item Marks}} \\
+\hline
+100 & \multicolumn{1}{c|}{\textbf{Skills/Areas}} & \multicolumn{1}{c|}{\textbf{Marks}} & \multicolumn{1}{c|}{\textbf{Test Items}} & \multicolumn{1}{c|}{\textbf{Item Marks}} \\
+\hline
+ & \multicolumn{1}{c|}{Section A: Reading Test (Seen Passage) Question 1-3} & 25 & \begin{tabular}{l} 1. Multiple choice questions \\ $1 \times 5 = 5$ \\ 2. Short questions \\ $2 \times 5 = 10$ \\ 3. Summarizing \\ $10$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+ & \multicolumn{1}{c|}{Reading Test (Unseen Passage) Question 4 \& 5} & 35 & \begin{tabular}{l} 4. Information transfer \\ $1 \times 5 = 5$ \\ 5. True/False \\ $1 \times 5 = 5$ \\ 6. Fill in the gaps with app. words \\ $1 \times 5 = 5$ \\ 7. Rearranging sentence \\ $10$ \\ 8. Gap filling with clues \\ $0.5 \times 10 = 5$ \\ 9. Matching sentence parts \\ $1 \times 5 = 5$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+ & \multicolumn{1}{c|}{Section B: Writing} & 40 & \begin{tabular}{l} 10. Dialogue writing \\ $10$ \\ 11. Paragraph writing \\ $10$ \\ 12. Completing story \\ $10$ \\ 13. Informal letter \\ $10$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+\end{tabular}
+\end{table}
+
+Wait, but in the original image, the "Marks" column has 100 spanning all rows. So maybe the first column is "Marks" with 100, then the other columns. Let's check the original image's table structure.
+
+Original image's first table:
+
+Columns: Marks, Skills/Areas, Marks, Test Items, Item Marks.
+
+The "Marks" column has 100 in the first cell, spanning the rows for Section A (25 +35) and Section B (40). So the table should have the first column as "Marks" with 100, then Skills/Areas, then Marks (sub-column for each section), Test Items, Item Marks.
+
+So better to structure the table with rows:
+
+- First row: Marks (100, spanning all rows), Skills/Areas (header), Marks (sub-header), Test Items, Item Marks.
+
+Then each section:
+
+- Section A: Reading Test (Seen Passage) Question 1-3: Marks 25, Test items 1-3, Item marks sum to 5+10+10=25.
+
+- Then Reading Test (Unseen Passage) Question 4 &5: Marks 35, Test items 4-9, Item marks sum to 5+5+5+10+5+5=35.
+
+- Section B: Writing: Marks 40, Test items 10-13, Item marks sum to 10+10+10+10=40.
+
+So the table should have the "Marks" column with 100, then Skills/Areas, then the Marks for each section (25, 35, 40), then Test Items, Item Marks.
+
+Let me adjust the LaTeX table.
+
+For the English First Paper table:
+
+\begin{table}[h]
+\centering
+\caption{Marks and Test Items Distribution}
+\begin{tabular}{|c|l|c|l|l|}
+\hline
+\textbf{Marks} & \multicolumn{1}{c|}{\textbf{Skills/Areas}} & \multicolumn{1}{c|}{\textbf{Marks}} & \multicolumn{1}{c|}{\textbf{Test Items}} & \multicolumn{1}{c|}{\textbf{Item Marks}} \\
+\hline
+100 & \multicolumn{1}{c|}{Section A: Reading Test (Seen Passage) Question 1-3} & 25 & \begin{tabular}{l} 1. Multiple choice questions \\ $1 \times 5 = 5$ \\ 2. Short questions \\ $2 \times 5 = 10$ \\ 3. Summarizing \\ $10$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+100 & \multicolumn{1}{c|}{Reading Test (Unseen Passage) Question 4 \& 5} & 35 & \begin{tabular}{l} 4. Information transfer \\ $1 \times 5 = 5$ \\ 5. True/False \\ $1 \times 5 = 5$ \\ 6. Fill in the gaps with app. words \\ $1 \times 5 = 5$ \\ 7. Rearranging sentence \\ $10$ \\ 8. Gap filling with clues \\ $0.5 \times 10 = 5$ \\ 9. Matching sentence parts \\ $1 \times 5 = 5$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+100 & \multicolumn{1}{c|}{Section B: Writing} & 40 & \begin{tabular}{l} 10. Dialogue writing \\ $10$ \\ 11. Paragraph writing \\ $10$ \\ 12. Completing story \\ $10$ \\ 13. Informal letter \\ $10$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+\end{tabular}
+\end{table}
+
+But in the original image, the "Marks" column has 100 in the first cell, and the other rows under that column are empty (since 100 is the total). So maybe the first column is "Marks" with 100, and the other columns are Skills/Areas, Marks (for the section), Test Items, Item Marks. So the table should have the first column as "Marks" (100, spanning all rows), then Skills/Areas, then Marks (section marks), Test Items, Item Marks.
+
+Alternatively, use a multirow for the Marks column. Let's use the multirow package.
+
+First, include \usepackage{multirow} in the preamble (but since we're writing the LaTeX code, we need to mention that, but the user just wants the transcription, so include the necessary packages in the code.
+
+Now, for the English Second Paper:
+
+\section*{English Second Paper (Subject code: 108)}
+\textbf{Full Marks : 50}
+
+\begin{table}[h]
+\centering
+\caption{Marks and Test Items Distribution}
+\begin{tabular}{|c|l|c|l|l|}
+\hline
+\textbf{Marks} & \multicolumn{1}{c|}{\textbf{Skills/Areas}} & \multicolumn{1}{c|}{\textbf{Marks}} & \multicolumn{1}{c|}{\textbf{Test Items}} & \multicolumn{1}{c|}{\textbf{Items Marks}} \\
+\hline
+50 & \multicolumn{1}{c|}{Section A * Grammar} & 30 & \begin{tabular}{l} 1. Gap filling activities with or without clues (use articles) \\ $0.5 \times 6 = 03$ \\ 2. Gap filling activities with or without clues (prepositions etc) \\ $0.5 \times 6 = 03$ \\ 3. Substitution table \\ $1 \times 4 = 4$ \\ 4. Narrative style (direct to indirect and vice versa) \\ $4$ \\ 5. Changing sentences (affirmative to negative and vice versa, positive to comparative or vice versa, active to passive and vice versa) \\ $1 \times 5 = 5$ \\ 6. Capitalization and punctuation \\ $0.5 \times 6 = 03$ \\ 7. Use of suffixes and prefixes \\ $0.5 \times 8 = 04$ \\ 8. Right forms of verbs \\ $0.5 \times 8 = 04$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+50 & \multicolumn{1}{c|}{Section B * Composition} & 20 & \begin{tabular}{l} \textbf{Test Items} \\ Formal letter/e-mail \\ $08$ \\ Writing composition on personal experience and familiar topics, recent events/ incidents \\ $12$ \end{tabular} & \multicolumn{1}{c|}{ } \\
+\hline
+\end{tabular}
+\end{table}
+
+\textit{Notes:} Marks distribution for each test item (Reading and Writing) can vary from time to time. No text or test item can be taken directly from the EFT. Test items should be placed within appropriate context.
+
+\textbf{Curriculum Dissemination Programme, SESDP, NCTR}
+
+Wait, in the original image, the Section A * Grammar has Marks 30, and the total for Section A is 50? Wait, no: the "Marks" column for Section A * Grammar is 30, and the total Marks for the paper is 50, so Section B * Composition is 20 (30 +20=50). Let's check the original image:
+
+In the English Second Paper table, the first column "Marks" has 50 (total), then Skills/Areas: Section A * Grammar (Marks 30), Section B * Composition (Marks 20). So the table should have:
+
+- First row: Marks (50, spanning both sections), Skills/Areas: Section A * Grammar, Marks: 30, Test Items: list, Items Marks: sum.
+
+- Second row: Marks (50, spanning), Skills/Areas: Section B * Composition, Marks: 20, Test Items: list, Items Marks: sum.
+
+Also, the notes are below the table.
+
+Now, let's check the original image's English Second Paper table:
+
+The "Marks" column has 50, then Skills/Areas: Section A * Grammar (with Marks 30), then Test Items (1-8), then Items Marks (sum of those). Then Section B * Composition (Marks 20), Test Items: Formal letter/e-mail (08) and Writing composition (12), Items Marks sum to 20.
+
+Also, the notes: * Notes: Marks distribution for each test item (Reading and Writing) can vary from time to time. No text or test item can be taken directly from the EFT. Test items should be placed within appropriate context.
+
+And the bottom line: Curriculum Dissemination Programme, SESDP, NCTR.
+
+Now, let's make sure all text is transcribed accurately. Let's check each part.
+
+English First Paper:
+
+- Title: English First Paper (Subject code: 107)
+- Full Marks: 100
+- Table: Marks and Test Items Distribution. Columns: Marks, Skills/Areas, Marks, Test Items, Item Marks.
+- Section A: Reading Test (Seen Passage) Question 1-3, Marks 25. Test items 1-3: Multiple choice (1x5=5), Short questions (2x5=10), Summarizing (10). Total 25.
+- Reading Test (Unseen Passage) Question 4 &5, Marks 35. Test items 4-9: Information transfer (1x5=5), True/False (1x5=5), Fill in gaps with app. words (1x5=5), Rearranging sentence (10), Gap filling with clues (0.5x10=5), Matching sentence parts (1x5=5). Total 5+5+5+10+5+5=35.
+- Section B: Writing, Marks 40. Test items 10-13: Dialogue writing (10), Paragraph writing (10), Completing story (10), Informal letter (10). Total 40.
+
+English Second Paper:
+
+- Title: English Second Paper (Subject code: 108)
+- Full Marks: 50
+- Table: Marks and Test Items Distribution. Columns: Marks, Skills/Areas, Marks, Test Items, Items Marks.
+- Section A * Grammar, Marks 30. Test items 1-8:
+  1. Gap filling with/without clues (articles): 0.5x6=03
+  2. Gap filling with/without clues (prepositions etc): 0.5x6=03
+  3. Substitution table: 1x4=4
+  4. Narrative style (direct to indirect and vice versa): 4
+  5. Changing sentences (affirmative to negative, positive to comparative, active to passive): 1x5=5
+  6. Capitalization and punctuation: 0.5x6=03
+  7. Use of suffixes and prefixes: 0.5x8=04
+  8. Right forms of verbs: 0.5x8=04
+  Sum: 03+03+4+4+5+03+04+04 = let's calculate: 03+03=06, +4=10, +4=14, +5=19, +03=22, +04=26, +04=30. Correct.
+- Section B * Composition, Marks 20. Test items:
+  - Formal letter/e-mail: 08
+  - Writing composition on personal experience, recent events: 12
+  Sum: 08+12=20. Correct.
+- Notes: * Notes: Marks distribution for each test item (Reading and Writing) can vary from time to time. No text or test

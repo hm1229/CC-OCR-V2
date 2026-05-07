@@ -1,0 +1,198 @@
+用户现在需要从合同图片中检测指定的各个对象，然后给出每个的bbox和label。首先得逐一分析每个类别在图中的位置。
+
+首先看No.：图右上角有No.UP220126，所以No.的bbox是对应位置。
+
+Date.：Date.2022-01-26，右上角。
+
+Seller部分的Address：Seller的地址是1332 Jacqueline Radial Suite 597 West Seth, AK 40264，属于Address类别。
+
+Buyer：Buyer: MBP Software Information Co., Ltd.，所以Buyer的label是Buyer，对应位置。
+
+Company Name：Seller和Buyer都是MBP Software Information Co., Ltd.，所以Company Name可以对应这两个，但看标签里的Company Name，可能指Seller或Buyer的公司名。比如Seller的Company Name是MBP Software Information Co., Ltd.，Buyer也是。需要看每个出现的。
+
+Tel：Seller的Tel: +20-84-02126684/18622912，属于Tel类别。
+
+Fax：Seller的Fax: +46-69-12042823，属于Fax类别。
+
+Title：图顶部有“Contract”作为标题，所以Title是Contract。
+
+Description of goods：表格中的Description of goods列，比如L-Lysine HCL等，每个行的描述。
+
+Number：表格中的Number列，1到6。
+
+Quantity：表格中的Quantity列，比如300.0000等。
+
+unit of quantity：表格中的unit of quantity列，KG。
+
+Specifications：表格中的Specifications列，比如USP INJECTABLE等。
+
+Unit Price：表格中的Unit Price列，比如15.0000等。
+
+Value：表格中的Value列，比如4500.0000等。
+
+Currency：表格中的Currency列，USD，以及Total Value旁边的USD。
+
+Total Value：Total Value: SAY US DOLLARS... USD 13875.0000，所以Total Value是这个部分。
+
+Total Amount：可能和Total Value类似？不过图中Total Value是主要的总金额，可能Total Amount对应Total Value？
+
+现在逐一处理：
+
+1. Packing & Shipping Mark：图中1.Packing & Shipping Mark: 后面是25kg/drum or 10kg/drum，所以这个是Packing & Shipping Mark的值，对应位置。
+
+2. Time of Shipment：2.Time of Shipment: PROMPT，对应。
+
+3. Delivery terms (incoterms 2000)：3.Delivery terms (incoterms 2000): FOB SHANGHAI，对应。
+
+4. Terms of payment：4.Terms of payment: TT IN ADVANCE，对应。
+
+5. Insurance：5.Insurance: TO BE EFFECTED BY BUYER，对应。
+
+Address：Seller的地址1332 Jacqueline Radial Suite 597 West Seth, AK 40264，属于Address。
+
+Buyer：Buyer: MBP Software Information Co., Ltd.，对应。
+
+Company Name：Seller的Company Name是MBP Software Information Co., Ltd.，Buyer也是，所以两个Company Name？但看标签里的Company Name，可能指Seller的，因为Seller部分有Company Name。比如Seller: MBP Software Information Co., Ltd. 是Company Name。
+
+Currency：表格中的Currency列（USD），以及Total Value后的USD。比如每个行的Currency是USD，还有Total Value的USD。
+
+Date.：Date.2022-01-26，右上角。
+
+No.：No.UP220126，右上角。
+
+Number：表格中Number列的1-6，每个行的Number。
+
+Quantity：表格中Quantity列的数值，比如300.0000等。
+
+Specifications：表格中Specifications列的内容，比如USP INJECTABLE等。
+
+Tel：Seller的Tel: +20-84-02126684/18622912。
+
+Fax：Seller的Fax: +46-69-12042823。
+
+Title：图顶部的“Contract”。
+
+Total Value：Total Value: SAY US DOLLARS... USD 13875.0000。
+
+现在需要为每个类别找到对应的bbox。需要看图片中的位置，比如：
+
+No.：右上角，No.UP220126，坐标大概是右上角，x范围大概在No.的位置，比如bbox是[692, 102, 767, 118]（假设）。
+
+Date.：Date.2022-01-26，和No.同一行，下面，所以bbox是[692, 122, 782, 138]。
+
+Seller的Address：Seller下面的地址，1332 Jacqueline Radial Suite 597 West Seth, AK 40264，bbox是[158, 202, 442, 218]。
+
+Buyer：Buyer: MBP Software Information Co., Ltd.，bbox是[102, 242, 546, 258]。
+
+Company Name：Seller的Company Name是MBP Software Information Co., Ltd.，在Seller: 后面，所以bbox是[158, 218, 546, 234]（因为Seller: 后面是公司名）。
+
+Tel：Seller的Tel: +20-84-02126684/18622912，bbox是[158, 234, 442, 248]。
+
+Fax：Seller的Fax: +46-69-12042823，bbox是[432, 234, 546, 248]（因为Tel和Fax在同一行，Tel在左，Fax在右）。
+
+Title：图顶部的“Contract”，bbox是[475, 28, 560, 48]（因为图顶部中间是Contract）。
+
+Description of goods：表格中的Description of goods列，比如第一行是L-Lysine HCL，对应每个行的该列，比如第一行的Description of goods的bbox是[172, 300, 332, 322]（表格的列标题是Description of goods，然后每个行的内容）。
+
+Number：表格中的Number列，列标题是Number，每个行的Number（1-6），列标题的bbox是[142, 300, 192, 322]，每个行的Number单元格比如第一行是1，bbox是[142, 322, 192, 344]。
+
+Quantity：表格中的Quantity列，列标题是Quantity，bbox是[342, 300, 412, 322]，每个行的Quantity比如第一行300.0000，bbox是[342, 322, 412, 344]。
+
+unit of quantity：表格中的unit of quantity列，列标题是unit of quantity，bbox是[432, 300, 502, 322]，每个行的unit of quantity是KG，比如第一行的KG，bbox是[432, 322, 502, 344]。
+
+Specifications：表格中的Specifications列，列标题是Specifications，bbox是[302, 300, 392, 322]，每个行的Specifications比如第一行USP INJECTABLE，bbox是[302, 322, 392, 344]。
+
+Unit Price：表格中的Unit Price列，列标题是Unit Price，bbox是[562, 300, 632, 322]，每个行的Unit Price比如第一行15.0000，bbox是[562, 322, 632, 344]。
+
+Value：表格中的Value列，列标题是Value，bbox是[672, 300, 752, 322]，每个行的Value比如第一行4500.0000，bbox是[672, 322, 752, 344]。
+
+Currency：表格中的Currency列，列标题是Currency，bbox是[772, 300, 832, 322]，每个行的Currency是USD，比如第一行的USD，bbox是[772, 322, 832, 344]。另外Total Value后的Currency是USD，比如Total Value: ... USD 13875.0000，这里的USD也是Currency。
+
+Total Value：Total Value: SAY US DOLLARS... USD 13875.0000，bbox是[102, 452, 546, 468]（因为Total Value: 后面的文字）。
+
+Packing & Shipping Mark：1.Packing & Shipping Mark: 后面的内容25kg/drum or 10kg/drum，bbox是[102, 472, 372, 488]（因为1.Packing & Shipping Mark: 后面是内容）。
+
+Time of Shipment：2.Time of Shipment: PROMPT，bbox是[102, 492, 242, 508]。
+
+Delivery terms (incoterms 2000)：3.Delivery terms (incoterms 2000): FOB SHANGHAI，bbox是[102, 512, 322, 528]。
+
+Terms of payment：4.Terms of payment: TT IN ADVANCE，bbox是[102, 532, 292, 548]。
+
+Insurance：5.Insurance: TO BE EFFECTED BY BUYER，bbox是[102, 552, 422, 568]。
+
+现在需要把每个类别对应一个bbox，可能有些类别在图中只有一个实例，比如No.、Date.、Title等。
+
+现在整理所有需要的类别：
+
+1. Packing & Shipping Mark
+2. Time of Shipment
+3. Delivery terms (incoterms 2000)
+4. Terms of payment
+5. Insurance
+6. Address
+7. Buyer
+8. Company Name
+9. Currency
+10. Date.
+11. Description of goods
+12. Fax
+13. No.
+14. Number
+15. Quantity
+16. Specifications
+17. Tel
+18. Title
+19. Total Amount（可能Total Value就是，因为图中Total Value是总金额）
+20. Total Value
+21. Unit Price
+22. Value
+23. unit of quantity
+
+现在逐个对应：
+
+- Packing & Shipping Mark: 对应“1.Packing & Shipping Mark: 25kg/drum or 10kg/drum” → bbox是包含该行的区域，比如[100, 470, 375, 486]
+- Time of Shipment: “2.Time of Shipment: PROMPT” → bbox [100, 490, 245, 506]
+- Delivery terms (incoterms 2000): “3.Delivery terms (incoterms 2000): FOB SHANGHAI” → bbox [100, 510, 325, 526]
+- Terms of payment: “4.Terms of payment: TT IN ADVANCE” → bbox [100, 530, 295, 546]
+- Insurance: “5.Insurance: TO BE EFFECTED BY BUYER” → bbox [100, 550, 425, 566]
+- Address: Seller的地址“1332 Jacqueline Radial Suite 597 West Seth, AK 40264” → bbox [156, 200, 444, 216]
+- Buyer: “Buyer: MBP Software Information Co., Ltd.” → bbox [102, 240, 546, 256]
+- Company Name: Seller的公司名“MBP Software Information Co., Ltd.”（在Seller: 后面）→ bbox [156, 216, 546, 232]
+- Currency: 表格中每个行的Currency列（USD）以及Total Value后的USD。比如取Total Value后的USD，或者表格中的Currency列。比如Total Value行的Currency是USD，bbox [690, 450, 720, 466]（Total Value: ... USD 13875.0000中的USD）
+- Date.: “Date.2022-01-26” → bbox [692, 120, 782, 136]
+- Description of goods: 表格中Description of goods列的标题或内容，比如列标题“Description of goods” → bbox [170, 298, 334, 314]（列标题）
+- Fax: “Fax: +46-69-12042823” → bbox [430, 232, 546, 248]
+- No.: “No.UP220126” → bbox [692, 100, 767, 116]
+- Number: 表格中Number列的列标题“Number” → bbox [140, 298, 194, 314]
+- Quantity: 表格中Quantity列的列标题“Quantity” → bbox [340, 298, 414, 314]
+- Specifications: 表格中Specifications列的列标题“Specifications” → bbox [300, 298, 394, 314]
+- Tel: “Tel: +20-84-02126684/18622912” → bbox [156, 234, 444, 250]
+- Title: “Contract” → bbox [474, 26, 562, 46]
+- Total Amount: 可能和Total Value一致，因为图中Total Value是总金额，所以Total Amount对应Total Value → bbox [102, 450, 546, 466]（Total Value: ... USD 13875.0000）
+- Total Value: 同上，Total Value: SAY US DOLLARS... USD 13875.0000 → bbox [102, 450, 546, 466]
+- Unit Price: 表格中Unit Price列的列标题“Unit Price” → bbox [560, 298, 634, 314]
+- Value: 表格中Value列的列标题“Value” → bbox [670, 298, 754, 314]
+- unit of quantity: 表格中unit of quantity列的列标题“unit of quantity” → bbox [430, 298, 504, 314]
+
+现在需要确保每个类别都被覆盖，并且bbox准确。可能有些类别在图中是列标题，比如Number、Quantity等是表格的列标题，所以它们的bbox是列标题的位置。
+
+现在将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意的是，有些类别可能有多个实例，但这里每个类别取一个主要的实例，比如Total Value只有一个，Packing & Shipping Mark只有一个等。
+
+现在开始构建每个条目：
+
+1. Packing & Shipping Mark: bbox对应“1.Packing & Shipping Mark: 25kg/drum or 10kg/drum” → 假设该行的文本位置，比如x从100到375，y在470左右。具体坐标可能需要估计，因为没有实际图像的像素，但根据布局，大致范围。
+2. Time of Shipment: “2.Time of Shipment: PROMPT” → x100, y490左右。
+3. Delivery terms (incoterms 2000): “3.Delivery terms (incoterms 2000): FOB SHANGHAI” → x100, y510左右。
+4. Terms of payment: “4.Terms of payment: TT IN ADVANCE” → x100, y530左右。
+5. Insurance: “5.Insurance: TO BE EFFECTED BY BUYER” → x100, y550左右。
+6. Address: Seller的地址 → x156, y200左右。
+7. Buyer: “Buyer: MBP Software Information Co., Ltd.” → x102, y240左右。
+8. Company Name: Seller的公司名（在Seller: 后面）→ x156, y216左右。
+9. Currency: Total Value后的USD → x690, y450左右（Total Value行的USD）。
+10. Date.: “Date.2022-01-26” → x692, y120左右。
+11. Description of goods: 列标题“Description of goods” → x170, y298左右。
+12. Fax: “Fax: +46-69-12042823” → x430, y232左右。
+13. No.: “No.UP220126” → x692, y100左右。
+14. Number:

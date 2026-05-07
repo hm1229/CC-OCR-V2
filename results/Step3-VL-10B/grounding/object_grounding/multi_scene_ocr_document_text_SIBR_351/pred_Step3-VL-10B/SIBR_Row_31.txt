@@ -1,0 +1,318 @@
+Got it, let's go through the document and identify each required object. First, let's list all the categories and find their instances.
+
+1. Address: Look for addresses in Ship By, Bill To, Ship To, Sold By, Intermediate Consignee.
+   - Ship By: Unit 6044 Box 1037 DPO AE 95437
+   - Bill To: Tuolong Information Technology Co., Ltd. with address lines
+   - Ship To: Unit 2570 Box 2071 DPO AA 36788 etc.
+   - Sold By: Tuolong Information Technology Co., Ltd. address
+   - Intermediate Consignee: maybe no address? Wait, check each section.
+
+2. BOL: The BOL number is 581253419164 (from Ship Date section: BOL : 581253419164)
+
+3. CLASSIFICATION DISCLAIMER: The text at the bottom: "CLASSIFICATION DISCLAIMER: Western Digital provides product classification information as is and without warranty or regard for any user dataon or other modifications to the relevant item. As an exporter/importer of record, you or your company are responsible for the correct classification of the items and abiding by the import/export regulations."
+
+4. CTN: "CTN: 1" at the bottom left.
+
+5. Company Name: 
+   - Sold By: Tuolong Information Technology Co., Ltd.
+   - Bill To: Tuolong Information Technology Co., Ltd.
+   - Also, maybe others, but these are the main ones.
+
+6. Delivery: "Delivery : 85339901" in the invoice details.
+
+7. Doc. CreationDate: "Doc. CreationDate : 2022/05/17"
+
+8. Fr Terms: "Fr Terms : COLLECT"
+
+9. GW: "GW: 1.540 KG" at the bottom.
+
+10. Gross Weight: "Gross Weight : 0.000 KG (Including Weight of Pallet)" in the invoice section.
+
+11. Id: Not sure, maybe check if there's an ID. Wait, maybe "Id" is not present? Let me check. The categories include Id, but maybe it's not in the document. Let's check all fields.
+
+12. Incoterms: "Incoterms : EXW"
+
+13. Invoice: "Invoice : 4002350235"
+
+14. NW: "NW: 0.079 KG" at the bottom.
+
+15. Named Place: "Named Place : Factory"
+
+16. Number: Maybe the invoice number is already covered, but "Number" could be other numbers. Wait, the categories include Number, but maybe it's part of other fields. Let's check.
+
+17. Order Date: "Order Date : 2022/04/28"
+
+18. Page: "Page: 3 of 3" at the bottom right.
+
+19. Payment Desc: "Payment Desc : Net 30 Days"
+
+20. Payment Terms: "Payment Terms : Z014"
+
+21. Phone: 
+    - Ship By: Phone:469-286223853
+    - Bill To: Phone:581-23385605
+    - Ship To: Phone:685-10855233
+
+22. Purchase Order: "Purchase Order : SDE20220462506"
+
+23. Sales Order: "Sales Order : 11556319"
+
+24. Ship Date: "Ship Date : 2022/05/18"
+
+25. Ship Via: "Ship Via : See Notes"
+
+26. Title: The main title is "COMMERCIAL INVOICE" which is a title.
+
+27. UEN: "UEN: 201021203W" under Sold By.
+
+Now, let's map each category to their bounding boxes.
+
+First, let's handle each category:
+
+- Address: Multiple addresses. Let's check each section.
+  - Ship By address: Unit 6044 Box 1037 DPO AE 95437 (under SHIP BY)
+  - Bill To address: Tuolong Information Technology Co., Ltd. with PSC 2328, Box 0494 APO AE 60681, PSC 9180, Box 0494 APO AA 38913 (under BILL TO)
+  - Ship To address: Unit 2570 Box 2071 DPO AA 36788, PSC 8274, Box 2903 APO AA 72850 (under SHIP TO)
+  - Sold By address: 5891 Williams Lodge Maryland, NM 96653 (under SOLD BY)
+  - Intermediate Consignee: maybe no address, but the label is there. But the address for intermediate consignee? The image shows "INTERMEDIATE CONSIGNEE" but no address below, so maybe not. So addresses are in Ship By, Bill To, Ship To, Sold By.
+
+- BOL: The line "BOL : 581253419164" — find that in the right section of the invoice details.
+
+- CLASSIFICATION DISCLAIMER: The paragraph at the bottom.
+
+- CTN: "CTN: 1" — bottom left.
+
+- Company Name: 
+  - Sold By: "Tuolong Information Technology Co., Ltd." (under SOLD BY)
+  - Bill To: "Tuolong Information Technology Co., Ltd." (under BILL TO)
+  - Also, maybe the "SOLD BY" company is same as Bill To? Yes, both are Tuolong.
+
+- Delivery: "Delivery : 85339901" — in the left section of invoice details.
+
+- Doc. CreationDate: "Doc. CreationDate : 2022/05/17" — right section.
+
+- Fr Terms: "Fr Terms : COLLECT" — right section.
+
+- GW: "GW: 1.540 KG" — bottom left, below CTN.
+
+- Gross Weight: "Gross Weight : 0.000 KG (Including Weight of Pallet)" — in the invoice details left section.
+
+- Id: Not found? Let's check if any ID field. The categories include Id, but maybe it's not present. Let's check the document again. The document has Invoice, Sales Order, Purchase Order, Delivery, etc. Maybe "Id" is not present. But the problem says "detect all objects matching these categories", so if a category isn't present, maybe skip? But the user listed Id as a category. Let me check again. The document has "ODM PO Number:" which is empty. Maybe Id refers to something else. Alternatively, maybe "Id" is a typo, but let's proceed.
+
+- Incoterms: "Incoterms : EXW" — right section.
+
+- Invoice: "Invoice : 4002350235" — left section.
+
+- NW: "NW: 0.079 KG" — bottom left, below CTN.
+
+- Named Place: "Named Place : Factory" — right section.
+
+- Number: Maybe the invoice number is already covered, but "Number" could be other numbers. For example, "Number" might refer to the ODM PO Number, but it's empty. Alternatively, maybe the "Number" is part of other fields. But the category is "Number", so check if any field labeled "Number". The document has "Number" in the list, but maybe it's not present. Let's check the original categories: the user provided "Number" as a category. Let's see if any field has "Number". The document has "ODM PO Number:" which is a number field, even if empty. So maybe that's the Number.
+
+- Order Date: "Order Date : 2022/04/28" — right section.
+
+- Page: "Page: 3 of 3" — bottom right.
+
+- Payment Desc: "Payment Desc : Net 30 Days" — left section.
+
+- Payment Terms: "Payment Terms : Z014" — left section.
+
+- Phone: Multiple phone numbers. Let's list each:
+  - Ship By Phone: "Phone :469-286223853"
+  - Bill To Phone: "Phone :581-23385605"
+  - Ship To Phone: "Phone :685-10855233"
+
+- Purchase Order: "Purchase Order : SDE20220462506" — left section.
+
+- Sales Order: "Sales Order : 11556319" — left section.
+
+- Ship Date: "Ship Date : 2022/05/18" — right section.
+
+- Ship Via: "Ship Via : See Notes" — right section.
+
+- Title: "COMMERCIAL INVOICE" — top title.
+
+- UEN: "UEN: 201021203W" — under SOLD BY.
+
+Now, let's create the JSON entries for each detected object. Let's go step by step.
+
+1. Address (Ship By):
+   - Bounding box: The Ship By section. Let's check coordinates. The image has SHIP BY at top left. The address is "Unit 6044 Box 1037 DPO AE 95437". Let's find the box.
+   - Coordinates: The text is under SHIP BY label. Let's assume the bounding box covers that line.
+
+2. Address (Bill To):
+   - The Bill To section has the address lines.
+
+3. Address (Ship To):
+   - The Ship To section's address.
+
+4. Address (Sold By):
+   - The Sold By section's address.
+
+5. BOL:
+   - The line "BOL : 581253419164" — in the right part of the invoice details.
+
+6. CLASSIFICATION DISCLAIMER:
+   - The paragraph at the bottom.
+
+7. CTN:
+   - "CTN: 1" — bottom left.
+
+8. Company Name (Sold By):
+   - "Tuolong Information Technology Co., Ltd." under SOLD BY.
+
+9. Company Name (Bill To):
+   - "Tuolong Information Technology Co., Ltd." under BILL TO.
+
+10. Delivery:
+    - "Delivery : 85339901" — left section.
+
+11. Doc. CreationDate:
+    - "Doc. CreationDate : 2022/05/17" — right section.
+
+12. Fr Terms:
+    - "Fr Terms : COLLECT" — right section.
+
+13. GW:
+    - "GW: 1.540 KG" — bottom left.
+
+14. Gross Weight:
+    - "Gross Weight : 0.000 KG (Including Weight of Pallet)" — left section.
+
+15. Id: Not found, maybe skip? But the category is required. Let's check again. Maybe "Id" refers to the invoice number? No, invoice is separate. Alternatively, maybe the "Id" is the ODM PO Number, but it's empty. Let's check the document: "ODM PO Number:" is present, so maybe that's the Number category, and Id is not present. But the user included Id in the categories, so perhaps there's an Id field. Let me check the document again. The document has "Sales Person(s):" but no Id. Maybe the problem has a typo, but proceed.
+
+16. Incoterms:
+    - "Incoterms : EXW" — right section.
+
+17. Invoice:
+    - "Invoice : 4002350235" — left section.
+
+18. NW:
+    - "NW: 0.079 KG" — bottom left.
+
+19. Named Place:
+    - "Named Place : Factory" — right section.
+
+20. Number:
+    - "ODM PO Number:" — even if empty, it's a number field.
+
+21. Order Date:
+    - "Order Date : 2022/04/28" — right section.
+
+22. Page:
+    - "Page: 3 of 3" — bottom right.
+
+23. Payment Desc:
+    - "Payment Desc : Net 30 Days" — left section.
+
+24. Payment Terms:
+    - "Payment Terms : Z014" — left section.
+
+25. Phone (Ship By):
+    - "Phone :469-286223853" — under SHIP BY.
+
+26. Phone (Bill To):
+    - "Phone :581-23385605" — under BILL TO.
+
+27. Phone (Ship To):
+    - "Phone :685-10855233" — under SHIP TO.
+
+28. Purchase Order:
+    - "Purchase Order : SDE20220462506" — left section.
+
+29. Sales Order:
+    - "Sales Order : 11556319" — left section.
+
+30. Ship Date:
+    - "Ship Date : 2022/05/18" — right section.
+
+31. Ship Via:
+    - "Ship Via : See Notes" — right section.
+
+32. Title:
+    - "COMMERCIAL INVOICE" — top title.
+
+33. UEN:
+    - "UEN: 201021203W" — under SOLD BY.
+
+Now, let's map each with bounding boxes. Since this is a text-based analysis, I need to estimate the coordinates. Let's assume the image is divided into sections.
+
+For example:
+
+- Title: "COMMERCIAL INVOICE" is at the top center. Bounding box: [44, 12, 555, 50] (approx).
+
+- SHIP BY: label is at top left, address below. Bounding box for the address: [44, 70, 327, 90]
+
+- Phone under SHIP BY: [44, 100, 190, 115]
+
+- SOLD BY: top right, label, then company name and UEN. Bounding box for UEN: [600, 150, 925, 165]
+
+- BILL TO: left middle, label, then company name and address. Bounding box for company name: [70, 230, 327, 245]
+
+- Phone under BILL TO: [70, 260, 200, 275]
+
+- SHIP TO: middle, label, address. Bounding box for address: [450, 300, 720, 315]
+
+- Phone under SHIP TO: [450, 330, 600, 345]
+
+- INTERMEDIATE CONSIGNEE: label, no address, so maybe no bounding box for address here.
+
+- Invoice details left: "Invoice : 4002350235" etc. Bounding box for Invoice: [70, 420, 327, 435]
+
+- Delivery: [70, 440, 150, 455]
+
+- Purchase Order: [70, 455, 327, 470]
+
+- Sales Order: [70, 470, 150, 485]
+
+- Payment Terms: [70, 485, 150, 500]
+
+- Payment Desc: [70, 500, 250, 515]
+
+- Gross Weight: [70, 515, 400, 530]
+
+- ODM PO Number: [70, 530, 200, 545] (this is the Number category)
+
+- Right section details:
+
+  - Doc. CreationDate: [600, 420, 850, 435]
+
+  - Order Date: [600, 440, 750, 455]
+
+  - Ship Date: [600, 455, 750, 470]
+
+  - BOL: [600, 470, 850, 485] (value 581253419164)
+
+  - Incoterms: [600, 485, 750, 500]
+
+  - Fr Terms: [600, 500, 750, 515]
+
+  - Named Place: [600, 515, 750, 530]
+
+- Bottom section:
+
+  - CTN: [44, 680, 100, 695]
+
+  - NW: [44, 695, 100, 710]
+
+  - GW: [44, 710, 120, 725]
+
+  - CLASSIFICATION DISCLAIMER: [44, 820, 925, 860]
+
+  - Page: [870, 880, 925, 895]
+
+- Phone entries:
+
+  - Ship By Phone: [44, 105, 190, 120]
+
+  - Bill To Phone: [70, 265, 200, 280]
+
+  - Ship To Phone: [450, 335, 600, 350]
+
+- Company Name (Sold By): [600, 160, 925, 175]
+
+- UEN: [600, 165, 750, 180] (UEN: 201021203W)
+
+- Address (Sold By): [600, 180, 925, 195] (5891 Williams Lodge Maryland, NM 96653)
+
+- Address (Ship By): [44, 75, 

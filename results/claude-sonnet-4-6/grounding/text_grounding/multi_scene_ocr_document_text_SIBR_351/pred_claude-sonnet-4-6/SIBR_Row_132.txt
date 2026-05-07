@@ -1,0 +1,22 @@
+I need to find all instances of 'CNY' in the image and provide their bounding box coordinates.
+
+There are multiple instances of 'CNY' in the image. Let me identify the main ones:
+
+1. "Balance CNY" - around the middle of the document
+2. "Total Amount Before Taxes: CNY"
+3. "Total Amount Non Taxable: CNY"
+4. "Total VAT: CNY"
+5. "Total Amount with Taxes: CNY"
+
+Looking at the 'CNY' text locations in the charges/credits area:
+
+The 'CNY' text appears in a column, roughly at x positions around 730-780 (normalized), and at various y positions.
+
+For the first 'CNY' (Balance line):
+(718, 463, 768, 483)
+
+For all CNY instances as a group region, they appear to be in a column around x: 718-768.
+
+Let me focus on the most prominent/first occurrence of 'CNY' in the Balance row:
+
+(718, 460, 768, 480)

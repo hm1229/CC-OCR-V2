@@ -1,0 +1,10 @@
+```latex
+\begin{aligned}
+&\mathbb{E}\bigg[\int_{t_0}^{(t_0+h)\wedge\mu(u)\wedge T_S}f(s,X_s^{t_0,x_0,u})ds+\sum_{j\geq1}c(T_j,\xi_j)\cdot I_{\{T_j\leq(t_0+h)\wedge\mu(u)\wedge T_S\}}\\
+&\quad+G\left(\mu(u)\wedge T_S,X_{\mu(u)\wedge T_S}^{t_0,x_0,u}\right)\cdot I_{\{\mu(u)\wedge T_S\leq t_0+h\}}\bigg]\\
+&+\mathbb{E}\bigg[\int_{t_0+h}^{\hat{\mu}(u_{[t_0+h,T_S]})\wedge T_S}f(s,X_s^{t_0+h,X_{t_0+h}^{t_0,x_0,u},u_{[t_0+h,T_S]}})ds\\
+&\quad+\sum_{j\geq1}c(T_j',\xi_j')\cdot I_{\{\hat{\mu}(u_{[t_0+h,T_S]})\wedge T_S\geq T_j'>t_0+h\}}\\
+&\quad+G\left(\hat{\mu}(u_{[t_0+h,T_S]})\wedge T_S,X_{\hat{\mu}(u_{[t_0+h,T_S]})\wedge T_S}^{t_0+h,X_{t_0+h}^{t_0,x_0,u},u_{[t_0+h,T_S]}}\right)\cdot I_{\{\hat{\mu}(u_{[t_0+h,T_S]})\wedge T_S<\infty\}}\\
+&\quad\bigg]\cdot I_{\{\hat{\mu}(u_{[t_0+h,T_S]})\wedge T_S\geq t_0+h\}}-\epsilon.
+\end{aligned}
+```

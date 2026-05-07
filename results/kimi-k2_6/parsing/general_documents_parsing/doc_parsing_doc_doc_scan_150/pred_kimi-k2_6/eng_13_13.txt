@@ -1,0 +1,152 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+\textbf{Statistical Analysis and Probability}
+\end{center}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+\textbf{Mean}
+\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\]
+
+\vspace{0.5cm}
+
+\textbf{Standard Error of the Mean*}
+\[
+SE_{\bar{x}} = \frac{s}{\sqrt{n}}
+\]
+
+\vspace{0.5cm}
+
+\textbf{Laws of Probability}
+
+If A and B are mutually exclusive, then:
+\[
+P(\text{A or B}) = P(A) + P(B)
+\]
+
+If A and B are independent, then:
+\[
+P(\text{A and B}) = P(A) \times P(B)
+\]
+
+\vspace{0.5cm}
+
+\textbf{Hardy-Weinberg Equations}
+\[
+p^2 + 2pq + q^2 = 1
+\]
+\[
+p + q = 1
+\]
+
+$p =$ frequency of the dominant allele in a population
+
+$q =$ frequency of the recessive allele in a population
+
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\textbf{Standard Deviation*}
+\[
+S = \sqrt{\frac{\sum(x_i - \bar{x})^2}{n-1}}
+\]
+
+\vspace{0.5cm}
+
+\textbf{Chi-Square}
+\[
+\chi^2 = \sum \frac{(o-e)^2}{e}
+\]
+
+\vspace{0.5cm}
+
+\textbf{Chi-Square Table}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+\backslashbox{$p$ value}{Degrees of Freedom} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+0.05 & 3.84 & 5.99 & 7.82 & 9.49 & 11.07 & 12.59 & 14.07 & 15.51 \\
+\hline
+0.01 & 6.64 & 9.21 & 11.34 & 13.28 & 15.09 & 16.81 & 18.48 & 20.09 \\
+\hline
+\end{tabular}
+
+\end{minipage}
+
+\vspace{0.5cm}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+$\bar{x} =$ sample mean
+
+$n =$ size of the sample
+
+$s =$ sample standard deviation (i.e., the sample-based estimate of the standard deviation of the population)
+
+$o =$ observed results
+
+$e =$ expected results
+
+Degrees of freedom are equal to the number of distinct possible outcomes minus one.
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{center}
+\textbf{Metric Prefixes}
+\end{center}
+
+\begin{tabular}{ccc}
+\toprule
+\textbf{Factor} & \textbf{Prefix} & \textbf{Symbol} \\
+\midrule
+$10^9$ & giga & G \\
+$10^6$ & mega & M \\
+$10^3$ & kilo & k \\
+$10^{-2}$ & centi & c \\
+$10^{-3}$ & milli & m \\
+$10^{-6}$ & micro & $\mu$ \\
+$10^{-9}$ & nano & n \\
+$10^{-12}$ & pico & p \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{Mode} = value that occurs most frequently in a data set
+
+\vspace{0.2cm}
+\noindent
+\textbf{Median} = middle value that separates the greater and lesser halves of a data set
+
+\vspace{0.2cm}
+\noindent
+\textbf{Mean} = sum of all data points divided by number of data points
+
+\vspace{0.2cm}
+\noindent
+\textbf{Range} = value obtained by subtracting the smallest observation (sample minimum) from the greatest (sample maximum)
+
+\vspace{0.5cm}
+
+\noindent
+\rule{\textwidth}{0.4pt}
+
+\noindent
+* \textit{For the purposes of the AP Exam, students will not be required to perform calculations using this equation; however, they must understand the underlying concepts and applications.}
+
+\end{document}
+```

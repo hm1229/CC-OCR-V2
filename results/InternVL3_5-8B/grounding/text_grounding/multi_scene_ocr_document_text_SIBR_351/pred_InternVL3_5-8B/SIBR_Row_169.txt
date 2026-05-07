@@ -1,0 +1,24 @@
+To determine the coordinates of the region containing the text '富马酸卢帕他定', we need to analyze the image and identify the bounding box around this text.
+
+1. **Identify the text location**: The text '富马酸卢帕他定' is located in the middle section of the receipt, under the column "项目名称" (Item Name).
+
+2. **Estimate the bounding box**:
+   - The left-top corner of the text should be at the beginning of the text '富马酸卢帕他定'.
+   - The right-bottom corner should be at the end of the text and include a small margin for accuracy.
+
+3. **Normalize the coordinates**:
+   - The image width and height need to be considered for normalization. Assuming the image is 1000 pixels wide and 600 pixels tall (as a typical receipt image), we can normalize the coordinates.
+
+4. **Bounding box coordinates**:
+   - Let's assume the left-top corner of the text '富马酸卢帕他定' is approximately at (300, 200) pixels.
+   - The right-bottom corner might be around (500, 250) pixels.
+
+Thus, the normalized coordinates of the bounding box would be approximately:
+
+(x1, y1, x2, y2) = (300/1000, 200/600, 500/1000, 250/600)
+
+(x1, y1, x2, y2) = (0.3, 0.333, 0.5, 0.417)
+
+So, the output is:
+
+(0.3, 0.333, 0.5, 0.417)

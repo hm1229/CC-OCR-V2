@@ -1,0 +1,204 @@
+Based on the provided image, here is the HTML table transcription using `<tr>` and `<td>` tags. The table has 4 columns: **N**, **Emertimi**, **NenArt.**, and **Shuma ne leke**.
+
+Note:
+- The “Totalli Lekë” row spans the first three columns (N, Emertimi, NenArt.) and only the last column contains the total value.
+- All other rows have values in all four columns except that the “Shuma ne leke” column is empty for rows 1–5 — only row 6 (Totalli) has a value in that column.
+- We’ll use `colspan="3"` for the “Totalli Lekë” label cell to reflect the merged layout visually implied by the image (though strictly speaking, the image shows “Totalli Lekë” under “Emertimi”, with blank cells under N and NenArt., and the total under Shuma ne leke — so we’ll represent it as 4 cells, with the first three being part of the label or empty).
+
+However, looking closely at the image:
+
+- Row 6:  
+  - Column 1 (N): “6” → but actually, “Totalli Lekë” appears to be in the *second* column (Emertimi), and the first column (N) is empty or merged?  
+  Actually, re-examining:  
+  In the image, “Totalli Lekë” is written across what would be columns 1–3? No — visually, “Totalli Lekë” is aligned under “Emertimi”, and the number “2,200,000” is under “Shuma ne leke”. The “N” column for that row is empty, and “NenArt.” is also empty.
+
+But in standard table structure, we should preserve the grid. Let’s map exactly as seen:
+
+Row 6:
+- N: (empty)
+- Emertimi: "Totalli Lekë"
+- NenArt.: (empty)
+- Shuma ne leke: "2,200,000"
+
+However, in many such tables, “Totalli” spans multiple columns. But since the image doesn’t show explicit merging lines, and to stay faithful to the visual layout without over-interpreting, we’ll treat each cell individually unless clearly merged.
+
+Actually, looking again — in the image, “Totalli Lekë” starts under “Emertimi” and extends leftward? No, it’s just under “Emertimi”. The “N” column for row 6 is blank, “NenArt.” is blank, and “Shuma ne leke” has the total.
+
+So we’ll represent it as:
+
+```html
+<table border="1">
+  <tr>
+    <th>N</th>
+    <th>Emertimi</th>
+    <th>NenArt.</th>
+    <th>Shuma ne leke</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Libra dhe publike profesionale</td>
+    <td>602100</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Aktivitet promovues, prodhimet vendore</td>
+    <td>602209</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Iftar per muajin e ramazanit</td>
+    <td>602209</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Aktivite per festat kombetare</td>
+    <td>602209</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Aktivite social-kulturore</td>
+    <td>602209</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Aktivite Sportive</td>
+    <td>602209</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>Totalli Lekë</td>
+    <td></td>
+    <td>2,200,000</td>
+  </tr>
+</table>
+```
+
+Wait — correction: In the image, row 6 is “Aktivite Sportive” with NenArt. 602209, and then the next row is “Totalli Lekë” with no N number, no NenArt., and the total in the last column.
+
+Also note: The “N” column for the total row is empty — not “6”. The “6” belongs to “Aktivite Sportive”.
+
+So final corrected version:
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th>N</th>
+      <th>Emertimi</th>
+      <th>NenArt.</th>
+      <th>Shuma ne leke</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Libra dhe publike profesionale</td>
+      <td>602100</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Aktivitet promovues, prodhimet vendore</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Iftar per muajin e ramazanit</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Aktivite per festat kombetare</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Aktivite social-kulturore</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Aktivite Sportive</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Totalli Lekë</td>
+      <td></td>
+      <td>2,200,000</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+This accurately reflects the structure from the image: 6 numbered items, then a total row with label under “Emertimi”, empty “N” and “NenArt.”, and the sum under “Shuma ne leke”.
+
+✅ Final Answer:
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th>N</th>
+      <th>Emertimi</th>
+      <th>NenArt.</th>
+      <th>Shuma ne leke</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Libra dhe publike profesionale</td>
+      <td>602100</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Aktivitet promovues, prodhimet vendore</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Iftar per muajin e ramazanit</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Aktivite per festat kombetare</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Aktivite social-kulturore</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Aktivite Sportive</td>
+      <td>602209</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Totalli Lekë</td>
+      <td></td>
+      <td>2,200,000</td>
+    </tr>
+  </tbody>
+</table>
+```

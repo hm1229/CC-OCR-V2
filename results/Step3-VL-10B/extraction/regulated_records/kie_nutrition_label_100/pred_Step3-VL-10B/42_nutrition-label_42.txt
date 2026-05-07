@@ -1,0 +1,249 @@
+用户现在需要把营养标签的信息对应到各个字段。首先得理解每个缩写可能代表什么，比如CE-PS可能是每份的Energy？先看每个营养项：
+
+先看各个营养成分的列：Ave. Quantity per Serving（每份平均量）、% Daily Intake per Serving（每日摄入百分比）、Ave. Quantity per 100g（每100g平均量）。
+
+现在看每个字段对应可能的缩写。比如Energy（能量）：每份是428 kJ (102 Cal)，每日5%；每100g是1710 kJ (409 Cal)。
+
+Protein（蛋白质）：每份5.9g，12%；每100g23.4g。
+
+Fat, total（总脂肪）：每份8.6g，12%；每100g34.5g。
+
+- saturated（饱和脂肪）：每份5.7g，24%；每100g22.8g。
+
+Carbohydrate（碳水）：每份0.5g，0.2%；每100g1.9g。
+
+- sugars（糖）：每份LESS THAN 0.1g，LESS THAN 0.1%；每100gLESS THAN 0.1g。
+
+Sodium（钠）：每份176mg，8%；每100g702mg。
+
+Calcium（钙）：每份185mg (23% RDI)；每100g740mg。
+
+现在看schema里的字段：CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS（可能是Sodium？或者Sugars？需要对应）。
+
+先推测每个缩写：
+
+CE可能是Energy（Caloric Energy？）；PRO是Protein；TF是Total Fat；CAR是Carbohydrate；SO是Sugars；SS是Sodium？或者SS是Saturated？需要再看。
+
+另外，每个营养项有三个部分：per Serving（PS？）、% Daily Intake（D？）、per 100g（P1？）。比如对于Energy：
+
+CE-PS：428 kJ (102 Cal)
+
+CE-D：5%
+
+CE-P1：1710 kJ (409 Cal)
+
+Protein（PRO）：
+
+PRO-PS：5.9 g
+
+PRO-D：12%
+
+PRO-P1：23.4 g
+
+Total Fat（TF）：
+
+TF-PS：8.6 g
+
+TF-D：12%
+
+TF-P1：34.5 g
+
+Saturated Fat（可能属于TF的子项？但schema里有TF-P1，可能TF是总脂肪，而saturated是另一个？但schema里没有SFA之类的，可能看SO是Sugars？或者SO是Sodium？Sodium是SO-PS？
+
+Sugars（SO？）：
+
+SO-PS：LESS THAN 0.1 g
+
+SO-D：LESS THAN 0.1%
+
+SO-P1：LESS THAN 0.1 g
+
+Sodium（SS？）：
+
+SS-PS：176 mg
+
+SS-D：8%
+
+SS-P1：702 mg
+
+Carbohydrate（CAR）：
+
+CAR-PS：0.5 g
+
+CAR-D：0.2%
+
+CAR-P1：1.9 g
+
+现在检查schema里的字段：CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。注意SS是单独的，没有P1？或者可能SS是Sodium，而Sodium的P1是702mg，所以SS可能对应Sodium的某个部分？或者可能SS是Saturated？但Saturated属于Fat的子项，可能TF下面有saturated，但schema里没有，所以可能SO是Sugars，SS是Sodium。
+
+现在填充每个字段：
+
+CE-PS: "428 kJ (102 Cal)"
+
+CE-D: "5%"
+
+CE-P1: "1710 kJ (409 Cal)"
+
+PRO-PS: "5.9 g"
+
+PRO-D: "12%"
+
+PRO-P1: "23.4 g"
+
+TF-PS: "8.6 g"
+
+TF-D: "12%"
+
+TF-P1: "34.5 g"
+
+CAR-PS: "0.5 g"
+
+CAR-D: "0.2%"
+
+CAR-P1: "1.9 g"
+
+SO-PS: "LESS THAN 0.1 g"
+
+SO-D: "LESS THAN 0.1%"
+
+SO-P1: "LESS THAN 0.1 g"
+
+SS: "176 mg (8%)"？不，SS可能对应Sodium的PS？因为Sodium的PS是176mg，D是8%，P1是702mg。但schema里SS是单独的字段，没有D和P1？看schema里的SS是单独的，没有下标。可能SS是Sodium的PS？或者可能SS是Calcium？但Calcium在标签里是185mg (23% RDI)，但schema里没有CAL的字段。可能用户给的schema中的SS是Sodium的某个值？或者可能我搞错了。
+
+另外，标签里还有Calcium，185mg (23% RDI) per serving，per 100g是740mg。但schema里没有CAL的字段，所以可能SS是Sodium？因为Sodium是常见的，而Calcium可能没在schema里。现在看schema里的字段：CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。共1+3*5 +1？不，数一下：CE-PS, CE-D, CE-P1（3）；PRO-PS, PRO-D, PRO-P1（3）；TF-PS, TF-D, TF-P1（3）；CAR-PS, CAR-D, CAR-P1（3）；SO-PS, SO-D, SO-P1（3）；SS（1）。总共3*5 +1=16？看用户给的schema是：
+
+{"CE-PS": "", "CE-D": "", "CE-P1": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-PS": "", "TF-D": "", "TF-P1": "", "CAR-PS": "", "CAR-D": "", "CAR-P1": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""} → 共15个字段？数一下：CE-PS, CE-D, CE-P1（3）；PRO-PS, PRO-D, PRO-P1（3）；TF-PS, TF-D, TF-P1（3）；CAR-PS, CAR-D, CAR-P1（3）；SO-PS, SO-D, SO-P1（3）；SS（1）→ 3*5 +1=16？哦，用户给的schema里的键是：CE-PS, CE-D, CE-P1, PRO-PS, PRO-D, PRO-P1, TF-PS, TF-D, TF-P1, CAR-PS, CAR-D, CAR-P1, SO-PS, SO-D, SO-P1, SS → 共16个键。现在对应每个营养项：
+
+Energy（CE）：3个字段（PS, D, P1）
+
+Protein（PRO）：3个
+
+Total Fat（TF）：3个
+
+Carbohydrate（CAR）：3个
+
+Sugars（SO）：3个
+
+Sodium（SS？）：但Sodium有PS, D, P1，而SS是单独一个字段，可能SS是Sodium的PS？或者可能SS是Saturated？但Saturated是Fat的子项，可能TF下面没有单独的Saturated字段，因为schema里TF是总脂肪，而Saturated可能属于另一个，但schema里没有。或者可能SO是Sodium？不，Sugars是SO。现在再看标签中的Sodium：
+
+Sodium per serving: 176 mg，% Daily Intake: 8%，per 100g: 702 mg。所以Sodium应该对应三个字段，但schema里SS是单独一个，没有D和P1。可能SS是Sodium的PS？而Sodium的D和P1没有在schema里？但schema里SO是Sugars的三个字段，那Sodium可能没有被覆盖？或者可能我搞错了，标签中的Calcium是185mg (23% RDI) per serving，per 100g是740mg。但schema里没有CAL的字段，所以可能SS是Calcium？但Calcium的PS是185mg (23% RDI)，D是23% RDI，P1是740mg。但schema里SS是单独一个字段，可能SS是Calcium的PS？但这样的话，Sodium的三个字段没有被处理？这可能有问题，因为用户给的schema可能对应的是主要的营养成分，而Sodium可能被包含在SS？或者可能SS是Saturated Fat？Saturated Fat per serving是5.7g，D是24%，P1是22.8g。那Saturated Fat可能对应TF的子项，但schema里没有SFA的字段，所以可能TF是总脂肪，而Saturated是另一个？但schema里没有，所以可能用户提供的schema中的SO是Sugars，SS是Sodium，而Sodium的三个字段中，SS是PS，而D和P1可能没有？但schema里SO有三个字段（SO-PS, SO-D, SO-P1），对应Sugars的三个部分。那Sodium的三个部分应该对应哪个？可能我之前对SO的判断错误，SO是Sodium？那Sugars的三个部分呢？Sugars的per serving是LESS THAN 0.1g，D是LESS THAN 0.1%，P1是LESS THAN 0.1g。如果SO是Sodium，那Sugars没有对应的字段？这显然不对。所以必须重新分析。
+
+另一种可能：CE是Energy，PRO是Protein，TF是Total Fat，CAR是Carbohydrate，SO是Sodium，SS是Sugars？这样：
+
+SO-PS：Sodium per serving: 176 mg
+
+SO-D：Sodium % Daily Intake: 8%
+
+SO-P1：Sodium per 100g: 702 mg
+
+SS-PS：Sugars per serving: LESS THAN 0.1 g
+
+SS-D：Sugars % Daily Intake: LESS THAN 0.1%
+
+SS-P1：Sugars per 100g: LESS THAN 0.1 g
+
+这样SO对应Sodium，SS对应Sugars。那之前的SO是Sugars，现在调整。这样所有营养项都覆盖了：
+
+Energy（CE）：3字段
+
+Protein（PRO）：3
+
+Total Fat（TF）：3
+
+Carbohydrate（CAR）：3
+
+Sodium（SO）：3
+
+Sugars（SS）：3？不，SS是单独一个字段，不是三个。哦，用户给的schema里SS是单独一个，没有下标。看schema里的键：SS是单独的，没有-PS, -D, -P1。而其他如CE-PS等是带后缀的。所以可能SS是某个只有一个值的项？比如Calcium？但Calcium有per serving和per 100g。或者可能SS是Saturated Fat？但Saturated Fat有三个值。或者可能标签中的“Calcium”是SS？因为Calcium的per serving是185mg (23% RDI)，而per 100g是740mg。但SS是单独一个字段，可能取per serving的值？即SS: "185 mg (23% RDI)"。而其他营养项的三个字段（PS, D, P1）都处理了。现在再检查所有营养项：
+
+1. Energy：CE-PS, CE-D, CE-P1 → 正确
+
+2. Protein：PRO-PS, PRO-D, PRO-P1 → 正确
+
+3. Total Fat：TF-PS, TF-D, TF-P1 → 正确
+
+4. Saturated Fat：？标签里有“- saturated”，但schema里没有对应的字段，可能属于TF的子项，但schema里TF是总脂肪，所以可能不需要单独处理，因为总脂肪已经包含，而饱和脂肪是总脂肪的一部分，可能用户不需要单独提取，或者可能我漏了。但schema里没有SFA的字段，所以可能忽略，或者可能TF是总脂肪，而saturated是另一个？但schema里没有，所以可能不处理。
+
+5. Carbohydrate：CAR-PS, CAR-D, CAR-P1 → 正确
+
+6. Sugars：- sugars，标签里有，所以需要处理。Sugars的per serving是LESS THAN 0.1g，% Daily Intake是LESS THAN 0.1%，per 100g是LESS THAN 0.1g。所以Sugars对应三个字段，比如SO-PS, SO-D, SO-P1？但之前假设SO是Sodium，现在调整：Sugars对应SO-PS, SO-D, SO-P1；Sodium对应SS？但SS是单独一个字段，而Sodium有三个值。这显然有问题，因为schema里SO有三个字段（SO-PS, SO-D, SO-P1），SS是单独一个。所以可能Sodium的三个值中，SS是per serving的值，而% Daily Intake和per 100g没有在schema里？但这样不完整。或者可能用户提供的schema中的SS是Sodium的per serving值，而Sugars的三个值由SO-PS, SO-D, SO-P1处理。这样：
+
+Sugars（SO）：
+
+SO-PS: "LESS THAN 0.1 g"
+
+SO-D: "LESS THAN 0.1%"
+
+SO-P1: "LESS THAN 0.1 g"
+
+Sodium（SS）:
+
+SS: "176 mg" （per serving）
+
+同时，Sodium的% Daily Intake是8%，per 100g是702mg，但schema里没有对应的字段，可能因为SS是单独一个，而其他营养项（除了SS）都有三个字段，所以可能SS是Sodium的per serving，而其他两个值（D和P1）没有在schema里？但这样可能不正确，因为用户给的schema可能有遗漏，或者我理解错了缩写。
+
+另一种可能：SS是“Serving Size”？但Serving size是25g，标签里有“Serving size: 25 g”，但schema里没有SSS之类的。或者SS是“Servings per package”？28，但也不对。
+
+现在再看标签中的所有信息：
+
+- Servings per package: 28
+
+- Serving size: 25 g
+
+- Energy: 428 kJ (102 Cal) per serving；5% Daily Intake；1710 kJ (409 Cal) per 100g
+
+- Protein: 5.9 g per serving；12%；23.4 g per 100g
+
+- Fat, total: 8.6 g per serving；12%；34.5 g per 100g
+
+- - saturated: 5.7 g per serving；24%；22.8 g per 100g
+
+- Carbohydrate: 0.5 g per serving；0.2%；1.9 g per 100g
+
+- - sugars: LESS THAN 0.1 g per serving；LESS THAN 0.1%；LESS THAN 0.1 g per 100g
+
+- Sodium: 176 mg per serving；8%；702 mg per 100g
+
+- Calcium: 185 mg (23% RDI) per serving；740 mg per 100g
+
+现在，schema中的字段是CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。
+
+现在，假设：
+
+CE → Energy
+
+PRO → Protein
+
+TF → Total Fat
+
+CAR → Carbohydrate
+
+SO → Sugars
+
+SS → Sodium （因为Sodium是重要的电解质，而Sugars可能次要，或者反过来，但Sugars的三个值可以对应SO-PS, SO-D, SO-P1，而Sodium的per serving是SS，因为SS是单独一个字段，可能用户只需要Sodium的per serving？或者可能SS是Saturated？但Saturated是Fat的子项，可能TF已经包含总脂肪，而Saturated是额外的，但schema里没有SFA的字段，所以可能不处理。
+
+现在，先处理Sugars（SO）的三个字段：
+
+SO-PS: "LESS THAN 0.1 g"
+
+SO-D: "LESS THAN 0.1%"
+
+SO-P1: "LESS THAN 0.1 g"
+
+然后Sodium（SS）：因为SS是单独一个字段，可能取Sodium的per serving值，即"176 mg"。而Sodium的% Daily Intake（8%）和per 100g（702 mg）没有在schema里，但schema里没有对应的字段，可能因为SS是单独的，而其他营养项（除了SS）都有三个字段，所以可能SS是Sodium的per serving。
+
+另外，Calcium没有在schema里，所以忽略。
+
+现在填充所有字段：
+
+CE-PS: "428 kJ (102 Cal)"
+
+CE-D: "5%"
+
+CE-P1: "1710 kJ (409 Cal)"
+
+PRO-PS: "5.9 g"
+
+PRO-D: "12%"
+
+PRO-P

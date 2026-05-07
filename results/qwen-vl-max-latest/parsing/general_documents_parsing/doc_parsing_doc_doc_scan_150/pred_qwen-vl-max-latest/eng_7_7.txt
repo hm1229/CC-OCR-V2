@@ -1,0 +1,92 @@
+Here is the LaTeX transcription of the provided document:
+
+```latex
+\documentclass[10pt]{article}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{hyperref}
+
+% Set page margins
+\geometry{margin=1in}
+
+% Title formatting
+\titleformat{\section}{\large\bfseries\raggedright}{}{0em}{}[\vspace{-0.5em}]
+\titleformat{\subsection}{\normalsize\bfseries\raggedright}{}{0em}{}[\vspace{-0.5em}]
+
+% Remove page numbers and headers
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+    \rule{\textwidth}{1pt}
+    \vspace{0.5cm}
+    {\LARGE \textbf{Attention Is All You Need}}
+    \vspace{0.5cm}
+    \rule{\textwidth}{1pt}
+    \vspace{1.5cm}
+    
+    \begin{tabular}{ccc}
+        \textbf{Ashish Vaswani$^*$} & \textbf{Noam Shazeer$^*$} & \textbf{Niki Parmar$^*$} \\
+        Google Brain & Google Brain & Google Research \\
+        avaswani@google.com & noam@google.com & nikip@google.com \\
+        & & \\
+        \textbf{Jakob Uszkoreit$^*$} & & \\
+        Google Research & & \\
+        usz@google.com & & \\
+    \end{tabular}
+    
+    \vspace{0.5cm}
+    
+    \begin{tabular}{ccc}
+        \textbf{Llion Jones$^*$} & \textbf{Aidan N. Gomez$^*$ $^\dagger$} & \textbf{Lukasz Kaiser$^*$} \\
+        Google Research & University of Toronto & Google Brain \\
+        lllion@google.com & aidan@cs.toronto.edu & lukaszkaiser@google.com \\
+    \end{tabular}
+    
+    \vspace{0.5cm}
+    
+    \begin{center}
+        \textbf{Illia Polosukhin$^*$ $^\ddagger$} \\
+        illia.polosukhin@gmail.com
+    \end{center}
+    
+    \vspace{1cm}
+    
+    \textbf{Abstract}
+\end{center}
+
+The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.0 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.
+
+\vspace{0.5cm}
+
+\section{Introduction}
+
+Recurrent neural networks, long short-term memory~\cite{hochreiter1997long} and gated recurrent~\cite{cho2014learning} neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation~\cite{sutskever2014sequence, bahdanau2014neural, luong2015effective}. Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures~\cite{zhang2016exploiting, chen2016best, gehring2017convolutional}.
+
+\footnotesize
+$^*$Equal contribution. Listing order is random. Jakob proposed replacing RNNs with self-attention and started the effort to evaluate this idea. Ashish, with Illia, designed and implemented the first Transformer models and has been crucially involved in every aspect of this work. Noam proposed scaled dot-product attention, multi-head attention and the parameter-free position representation and became the other person involved in nearly every detail. Niki designed, implemented, tuned and evaluated countless model variants in our original codebase and tensor2tensor. Llion also experimented with novel model variants, was responsible for our initial codebase, and efficient inference and visualizations. Lukasz and Aidan spent countless long days designing various parts of and implementing tensor2tensor, replacing our earlier codebase, greatly improving results and massively accelerating our research.
+
+$^\dagger$Work performed while at Google Brain.
+
+$^\ddagger$Work performed while at Google Research.
+\normalsize
+
+\vspace{0.5cm}
+
+31st Conference on Neural Information Processing Systems (NIPS 2017), Long Beach, CA, USA.
+
+\end{document}
+```
+
+Note: This LaTeX code reproduces the structure, layout, and content of the provided image. The references (e.g., [12], [7], etc.) are represented using `\cite{}` commands, which would need to be linked to a proper bibliography file in a complete document. The footnotes are included as they appear in the original document.

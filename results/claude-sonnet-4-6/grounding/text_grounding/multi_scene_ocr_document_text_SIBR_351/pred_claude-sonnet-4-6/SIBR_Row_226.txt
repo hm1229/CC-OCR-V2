@@ -1,0 +1,21 @@
+I need to find all instances of "157.50" in the image.
+
+Looking at the receipt, I can see "157.50" appears in multiple locations:
+
+1. In the table area showing a charge amount: approximately at the right side of the table
+2. Next to "锻行卡" (bank card): showing 157.50
+3. In the "人民币(大写)" section at the bottom: 157.50
+
+The most prominent instance of "157.50" appears in the bottom total section (人民币大写 area):
+
+(630, 990, 780, 1030) # Bottom total amount 157.50
+
+For the one next to "锻行卡":
+(630, 920, 780, 960) # Bank card payment amount
+
+For the one in the table (57.50 visible, likely 157.50):
+(620, 530, 770, 570)
+
+The main "157.50" in the total (人民币大写) section:
+
+(625, 988, 775, 1025)

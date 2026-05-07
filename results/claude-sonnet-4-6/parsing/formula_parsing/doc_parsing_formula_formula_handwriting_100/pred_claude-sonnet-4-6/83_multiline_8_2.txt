@@ -1,0 +1,23 @@
+$$|TX^R|_{L^{\gamma}_w L^{\infty}_{[0,T]} L^2_x} \leq |X_0|_{L^{\gamma}_w L^2_x} + \left|\int_0^t S_\beta(t,s) \theta_R(X^R)(s) |X^R(s)|^{2\sigma} X^R(s) ds\right|_{L^{\gamma}_w L^{\infty}_{[0,T]} L^2_x}$$
+
+$$\leq |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} \left|\theta_R(X^R) |X^R|^{2\sigma+1}\right|_{L^{\gamma}_w L^1_{[0,T]} L^{p'}_x}$$
+
+$$= |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} \left|\left[\int_0^T \theta_R(X^R)^{\gamma}(t) \left(\int_r |X^R(t)|^{(2\sigma+1)p'} dx\right)^{\frac{\gamma}{p'}} dt\right]^{1/\gamma}\right|_{L^{\gamma}_w}$$
+
+Since $p' = \frac{2\sigma+2}{2\sigma+1}$, the right hand side equals
+
+$$= |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} \left|\left(\int_0^T \theta_R(X^R)^{\gamma}(t) |X^R(t)|^{(2\sigma+1)\gamma'}_{L^2_x} dt\right)^{\frac{1}{\gamma}}\right|_{L^{\gamma}_w}$$
+
+Since $\gamma \geq p = 2\sigma+2$, we can apply Hölder's inequality to get
+
+$$\leq |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} \left|\left(\int_0^T [\theta_R(X^R)(t)]^{\gamma/(2\sigma+1)} |X^R(t)|^{\gamma}_{L^2_x} dt\right)^{\frac{2\sigma+1}{\gamma}} T^{\frac{\gamma - \gamma'(2\sigma+1)}{\gamma\gamma'}}\right|_{L^{\gamma}_w}$$
+
+Letting $\tilde{t}(w) := \inf\{s: |X^R(w)|_{L^\gamma([0,s]; L^2_x)} \geq 2R\}$, from definition of $\theta_R$ in $(??),$ we have
+
+$$= |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} \left|\left(\int_0^{\tilde{t}} [\theta_R(X^R)(t)]^{\gamma/(2\sigma+1)} |X^R(t)|^{\gamma}_{L^2_x} dt\right)^{\frac{2\sigma+1}{\gamma}}\right|_{L^{\gamma}_w}$$
+
+where $\tilde{\beta} = \bar{\beta} + \frac{\gamma - \gamma'(2\sigma+1)}{\gamma\gamma'} > 0$. Furthermore,
+
+$$\leq |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} \left|\left(\int_0^{\tilde{t}} |X^R(t)|^{\gamma}_{L^2_x} dt\right)^{\frac{2\sigma+1}{\gamma}}\right|_{L^{\gamma}_w}$$
+
+$$\leq |X_0|_{L^{\gamma}_w L^2_x} + C_{\gamma,p} \, T^{\tilde{B}} (2R)^{2\sigma} |X^R|_{L^{\gamma}_w L^{\infty}_{[0,T]} L^2_x},$$

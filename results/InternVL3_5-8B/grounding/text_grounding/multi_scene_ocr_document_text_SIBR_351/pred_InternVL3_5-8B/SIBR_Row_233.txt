@@ -1,0 +1,19 @@
+To determine the coordinates of the region containing the text '核查', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the text '核查'**: The text '核查' is located on the right side of the receipt, vertically aligned with the text "第二联" (which means "the second copy").
+
+2. **Estimate the bounding box**:
+   - **Left-top corner (x1, y1)**: This is the top-left point of the text '核查'. It appears to be slightly to the right of the vertical alignment of "第二联" and near the top of the text.
+   - **Right-bottom corner (x2, y2)**: This is the bottom-right point of the text '核查'. It extends slightly to the right and downwards from the text.
+
+3. **Normalize the coordinates**:
+   - The image width and height should be considered for normalization. Assuming the image dimensions are approximately 1000 pixels wide and 600 pixels tall (as a typical printed receipt might be), we can normalize the coordinates.
+
+4. **Normalized coordinates**:
+   - The text '核查' is positioned roughly around the middle-right section of the receipt. Based on visual estimation:
+     - **Left-top corner (x1, y1)**: Approximately (850, 350)
+     - **Right-bottom corner (x2, y2)**: Approximately (900, 400)
+
+Thus, the normalized coordinates of the bounding box for the text '核查' are:
+
+(850, 350, 900, 400)

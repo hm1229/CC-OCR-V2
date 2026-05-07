@@ -1,0 +1,43 @@
+用户现在需要把图片中的表格转换成LaTeX格式。首先得仔细看每个条目，包括g(t)和G(ω)两列，还有条件比如a>0等。要确保每个行的内容准确，包括指数、单位阶跃函数u(t)、冲激δ(t)、三角函数、矩形函数rect等，还有傅里叶变换的表达式，比如分式、δ函数、j的使用等。
+
+首先，先看表格的结构，是Table 3.1，标题是Short Table of Fourier Transforms。然后是两列，g(t)和G(ω)。每一行的编号是1到22。需要逐行处理。
+
+先处理表头：\begin{table}[h] \centering \caption{Short Table of Fourier Transforms} \label{tab:fourier} \begin{tabular}{ll} \hline \multirow{2}{*}{\textbf{No.}} & \multirow{2}{*}{\( g(t) \)} & \multirow{2}{*}{\( G(\omega) \)} \\ \cline{3-3} & & \\ \hline 然后逐行输入。注意每个条目的内容，比如第1行：\( e^{-a\omega}u(t) \) 对应 \( \frac{1}{a + j\omega} \)，条件a>0。要确保符号正确，比如指数是负的aω，u(t)是单位阶跃。第2行是\( e^{a\omega}u(-t) \) 对应\( \frac{1}{a - j\omega} \)，a>0。第3行\( e^{-a|t|} \) 对应\( \frac{2a}{a^2 + \omega^2} \)，a>0。第4行\( t e^{-a\omega}u(t) \) 对应\( \frac{1}{(a + j\omega)^2} \)，a>0。第5行\( t^n e^{-a\omega}u(t) \) 对应\( \frac{n!}{(a + j\omega)^{n+1}} \)，a>0。第6行δ(t)对应1。第7行1对应2πδ(ω)。第8行\( e^{j\omega_0 t} \)对应2πδ(ω−ω0)。第9行cosω0 t对应π[δ(ω−ω0)+δ(ω+ω0)]。第10行sinω0 t对应jπ[δ(ω+ω0)−δ(ω−ω0)]。第11行u(t)对应πδ(ω)+1/(jω)。第12行sgn t对应2/(jω)。第13行cosω0 t u(t)对应(1/2)[δ(ω−ω0)+δ(ω+ω0)] + jω/(a²+ω²)？不对，看图片里第13行是cosω0 t u(t)？不，看图片第13行是cosω0 t u(t)吗？看图片里的第13行：g(t)是cosω0 t u(t)？不，看图片中的第13行，原图片中第13行是“cosω0 t u(t)”？不，看图片里的第13行，原表格第13行是“cosω0 t u(t)”吗？看图片中的第13行，g(t)列是“cosω0 t u(t)”？不，看图片里的第13行，原表格第13行是“cosω0 t u(t)”？不，看图片中的第13行，g(t)是“cosω0 t u(t)”？然后G(ω)是(1/2)[δ(ω−ω0)+δ(ω+ω0)] + jω/(a²+ω²)？不对，看图片里的第13行，原图片中第13行的G(ω)是“\(\frac{1}{2}[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] + \frac{j\omega}{a^2 + \omega^2}\)”？不，可能我看错了，原图片中第13行是“cosω0 t u(t)”吗？不，看图片中的第13行，g(t)是“cosω0 t u(t)”？不，原图片中第13行的g(t)是“cosω0 t u(t)”？然后第14行是sinω0 t u(t)。第15行是e^{-aω} sinω0 t u(t)，对应( a/(a+jω)^2 + a/(a−jω)^2 )？不，看图片第15行：g(t)是\( e^{-a\omega} \sin\omega_0 t \, u(t) \)，G(ω)是\( \frac{a}{(a + j\omega)^2 + \omega_0^2} + \frac{a}{(a - j\omega)^2 + \omega_0^2} \)？不，原图片第15行的G(ω)是\( \frac{a}{(a + j\omega)^2 + \omega_0^2} + \frac{a}{(a - j\omega)^2 + \omega_0^2} \)？不对，看图片中的第15行，G(ω)是“\(\frac{a}{(a + j\omega)^2 + \omega_0^2} + \frac{a}{(a - j\omega)^2 + \omega_0^2}\)”？不，原图片第15行的G(ω)是“\(\frac{a}{(a + j\omega)^2 + \omega_0^2} + \frac{a}{(a - j\omega)^2 + \omega_0^2}\)”？或者可能是其他形式。另外第16行是e^{-aω} cosω0 t u(t)，对应\( \frac{a + j\omega}{(a + j\omega)^2 + \omega_0^2} + \frac{a - j\omega}{(a - j\omega)^2 + \omega_0^2} \)？不，原图片第16行的G(ω)是“\(\frac{a + j\omega}{(a + j\omega)^2 + \omega_0^2} + \frac{a - j\omega}{(a - j\omega)^2 + \omega_0^2}\)”？然后第17行是rect(t/(τ))，对应sin(τω)/2。第18行是W/π sinc(Wt)？不，原图片第18行是\( \frac{W}{\pi} \text{sinc}(W t) \)？不，看图片第18行g(t)是\( \frac{W}{\pi} \text{sinc}(W t) \)？然后G(ω)是rect(ωτ/2)？不，原图片第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”对应“rect(ωτ/2)”？不，看图片中的第18行，g(t)是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？不，原图片第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”吗？不，看图片中的第18行，g(t)是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？然后G(ω)是“rect(ωτ/2)”？不，原图片第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”对应“rect(ωτ/2)”？可能我需要更仔细看图片。
+
+另外，注意图片中的第19行是Δ(τ/t)？不，原图片第19行是“Δ(τ/t)”？不，看图片中的第19行，g(t)是“Δ(τ/t)”？不，原图片第19行是“Δ(τ/t)”？然后G(ω)是“π/2 sinc²(ωτ/4)”？不，原图片第19行是“Δ(τ/t)”？不，看图片中的第19行，g(t)是“Δ(τ/t)”？不，原图片第19行是“Δ(τ/t)”？可能我搞错了，原图片中的第19行是“Δ(τ/t)”？不，看图片中的第19行，g(t)是“Δ(τ/t)”？不，原图片中的第19行是“Δ(τ/t)”？然后第20行是“\( \frac{W}{2\pi} \text{sinc}^2(W t/2) \)”对应“Δ(ωτ/2)”？第21行是“\( \sum_{n=-\infty}^{\infty} \delta(t - nT) \)”对应“\( \sum_{n=-\infty}^{\infty} \delta(\omega - n\omega_0) \)”其中ω0=2π/T。第22行是“\( e^{-t^2/(2\sigma^2)} \)”对应“\( \sqrt{2\pi\sigma} e^{-\sigma^2 \omega^2 / 2} \)”？不，原图片第22行是“\( e^{-t^2/(2\sigma^2)} \)”对应“\( \sqrt{2\pi\sigma} e^{-\sigma^2 \omega^2 / 2} \)”？或者看图片中的第22行，G(ω)是“\( \sqrt{2\pi\sigma} e^{-\sigma^2 \omega^2 / 2} \)”？不，原图片第22行的G(ω)是“\( \sqrt{2\pi\sigma} e^{-\sigma^2 \omega^2 / 2} \)”？或者可能是“\( \sqrt{2\pi\sigma} e^{-\sigma^2 \omega^2 / 2} \)”？
+
+现在需要逐行准确转录，注意每个符号，比如j是虚数单位，δ是冲激函数，u是单位阶跃，sinc函数是sin(πx)/(πx)？不，sinc在工程中有时是sin(x)/x，所以图片中的sinc(Wt)应该是sin(Wt)/(Wt)？不，看图片中的第18行，g(t)是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？不，原图片第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？然后G(ω)是“rect(ωτ/2)”？不，原图片第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”对应“rect(ωτ/2)”？可能图片中的第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？不，看图片中的第18行，g(t)是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？然后G(ω)是“rect(ωτ/2)”？不，原图片第18行是“\( \frac{W}{\pi} \text{sinc}(W t) \)”？可能我需要先看图片中的每个条目：
+
+现在列出图片中的每一行（编号1到22）：
+
+1. g(t): \( e^{-a\omega}u(t) \)？不，不，第1行是\( e^{-a t} u(t) \)？哦，天啊，我之前看错了！图片中的第1行g(t)是\( e^{-a t} u(t) \)（注意是t，不是ω！），因为傅里叶变换中时间域是t，频率域是ω。所以第1行g(t)是\( e^{-a t} u(t) \)，a>0；G(ω)是\( \frac{1}{a + j\omega} \)。对，我之前把t和ω搞混了，这是关键错误。必须注意时间变量是t，频率是ω，所以指数是-a t，不是-aω。这是重要的，之前看错了，现在纠正。
+
+现在重新看图片：
+
+第1行：g(t)是\( e^{-a t} u(t) \)，a>0；G(ω)是\( \frac{1}{a + j\omega} \)。
+
+第2行：g(t)是\( e^{a t} u(-t) \)，a>0；G(ω)是\( \frac{1}{a - j\omega} \)。
+
+第3行：g(t)是\( e^{-a |t|} \)，a>0；G(ω)是\( \frac{2a}{a^2 + \omega^2} \)。
+
+第4行：g(t)是\( t e^{-a t} u(t) \)，a>0；G(ω)是\( \frac{1}{(a + j\omega)^2} \)。
+
+第5行：g(t)是\( t^n e^{-a t} u(t) \)，a>0；G(ω)是\( \frac{n!}{(a + j\omega)^{n+1}} \)。
+
+第6行：g(t)是\( \delta(t) \)；G(ω)是1。
+
+第7行：g(t)是1；G(ω)是\( 2\pi \delta(\omega) \)。
+
+第8行：g(t)是\( e^{j\omega_0 t} \)；G(ω)是\( 2\pi \delta(\omega - \omega_0) \)。
+
+第9行：g(t)是\( \cos\omega_0 t \)；G(ω)是\( \pi [\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] \)。
+
+第10行：g(t)是\( \sin\omega_0 t \)；G(ω)是\( j\pi [\delta(\omega + \omega_0) - \delta(\omega - \omega_0)] \)。
+
+第11行：g(t)是\( u(t) \)；G(ω)是\( \pi \delta(\omega) + \frac{1}{j\omega} \)。
+
+第12行：g(t)是\( \text{sgn}(t) \)；G(ω)是\( \frac{2}{j\omega} \)。
+
+第13行：g(t)是\( \cos\omega_0 t \, u(t) \)；G(ω)是\( \frac{1}{2} [\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] + \frac{j\omega}{a^2 + \omega^2} \)？不，看图片第13行，g(t)是\( \cos\omega_0 t \, u(t) \)？不，原图片第13行是“cosω0 t u(t)”吗？不，看图片中的第13行，g(t)是“cosω0 t u(t)”？然后G(ω)是“\(\frac{1}{2}[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] + \frac{j\omega}{a^2 + \omega^2}\)”？不，可能第13行是“cosω0 t u(t)”的傅里叶变换，正确的应该是对于cosω0 t u(t)，其傅里叶变换是π[δ(ω−ω0)+δ(ω+ω0)]/2 + jω/(a²+ω²)？不，可能我需要看图片中的第13行，原图片第13行的G(ω)是“\(\frac{1}{2}[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] + \frac{j\omega}{a^2 + \omega^2}\)”？不，原图片第13行的G(ω)是“\(\frac{1}{2}[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] + \frac{j\omega}{a^2 + \omega^2}\)”？或者看图片中的第13行，G(ω)是“\(\frac{1}{2}[\delta(\omega - \omega_0) + \delta(\omega + \omega_0)] + \frac{j\omega}{a^2 + \omega^2}\)”？可能第13行是“cosω0 t u(t)”的傅里叶变换，而第14行是“sinω0 t u(t)”。
+
+第14行：g(t)是\( \sin\omega_0 t \, u(t) \)；G(ω)是“\(\frac{1}{2j}[\delta(\omega - \omega_0) - \delta(\omega + \omega_0)] + \frac{\omega_0}{a^2 + \omega^2 - \omega_0^2}\)”？看图片中的第14行，G(ω)是“\(\frac{1}{2j}[\delta(\omega - \omega_0) - \delta(\omega + \omega_0)] + \frac{\omega_0}{a^2 - \omega_0^2 + \omega^2}\)”？是的，图片中第14行的G(ω)是“\(\frac{1}{2j}[\delta(\omega - \omega_0) - \delta(\omega + \omega_0)] + \frac{\omega_0}{a^2 - \omega_0^2 + \omega^2}\)”（注意分母是a² + ω² - ω0²？不，原

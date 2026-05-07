@@ -1,0 +1,47 @@
+Certainly! Here's the transcription of the image's text, tables, and equations into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\section*{Fourier Transform Pairs}
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\textbf{(n, t, $\omega$, a, $\omega_0$, t$_0$ are Real numbers; j = complex number; n = integer; $\omega$ = angular frequency)}} \\
+\hline
+\textbf{Time Domain} & \textbf{Fourier Transform} & \textbf{Time Domain} & \textbf{Fourier Transform} \\
+\hline
+$f(t)$ & $\int_{-\infty}^{\infty} f(t) e^{-j\omega t} dt$ & $\frac{1}{2\pi} \int_{-\infty}^{\infty} F(\omega) e^{j\omega t} d\omega$ & $F(\omega)$ \\
+\hline
+$a_1 f_1(t) + a_2 f_2(t)$ & $a_1 F_1(\omega) + a_2 F_2(\omega)$ & $f(a t)$ & $\frac{1}{|a|} F\left(\frac{\omega}{a}\right)$ \\
+\hline
+$e^{j\omega_0 t} f(t)$ & $F(\omega - \omega_0)$ & $f(t - t_0)$ & $e^{-j\omega_0 t} F(\omega)$ \\
+\hline
+$\frac{d^n}{dt^n} f(t)$ & $(j\omega)^n F(\omega)$ & $(-j t)^n f(t)$ & $\frac{d^n}{d\omega^n} F(\omega)$ \\
+\hline
+$e^{-a t} u(t)$ & $\frac{1}{a + j\omega}$ & $e^{a t} u(-t)$ & $\frac{1}{a - j\omega}$ \\
+\hline
+$\cos(\omega_0 t)$ & $\pi [\delta(\omega - \omega_0) + \delta(\omega + \omega_0)]$ & $\sin(\omega_0 t)$ & $\frac{\pi}{j} [\delta(\omega - \omega_0) - \delta(\omega + \omega_0)]$ \\
+\hline
+$\delta(t)$ & 1 & $\delta(t - t_0)$ & $e^{-j\omega t_0}$ \\
+\hline
+1 & $2\pi \delta(\omega)$ & $e^{j\omega_0 t}$ & $2\pi \delta(\omega - \omega_0)$ \\
+\hline
+$u(t)$ & $\pi \delta(\omega) + \frac{1}{j\omega}$ & $u(-t)$ & $\pi \delta(\omega) - \frac{1}{j\omega}$ \\
+\hline
+$u(t) - u(-t)$ & $\frac{2}{j\omega}$ & $u(t) + u(-t)$ & $2\pi \delta(\omega)$ \\
+\hline
+$t^{(n-1)} e^{-a t} u(t)$ & $\frac{(n-1)!}{(a + j\omega)^n}$ & $t^{(n-1)} e^{a t} u(-t)$ & $\frac{(n-1)! (-1)^{n-1}}{(a - j\omega)^n}$ \\
+\hline
+$\cos(\omega_0 t) \cdot f(t)$ & $\frac{1}{2} [F(\omega - \omega_0) + F(\omega + \omega_0)]$ & $\sin(\omega_0 t) \cdot f(t)$ & $\frac{1}{2j} [F(\omega - \omega_0) - F(\omega + \omega_0)]$ \\
+\hline
+\end{tabular}
+
+\end{document}
+```
+
+This LaTeX code accurately transcribes the text, tables, and equations from the image.

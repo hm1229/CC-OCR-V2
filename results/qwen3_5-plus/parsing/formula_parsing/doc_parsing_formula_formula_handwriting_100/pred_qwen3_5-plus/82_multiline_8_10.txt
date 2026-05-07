@@ -1,0 +1,15 @@
+```latex
+e_s(\Delta \Psi) = (|\Lambda|^2)^2 v
++ \|\Lambda\|^2 \sum_{r \neq s+1} \sum_{k=1}^n \varepsilon_r h_{rk}^{\bar{s}} \chi \wedge e_1 \wedge \cdots \wedge \underbrace{\hat{e}_r}_{r\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge e_{k+1} \wedge \cdots \wedge e_n
++ 2\lambda D_{e_s} A \wedge e_1 \wedge \cdots \wedge \hat{e}_s \wedge \cdots \wedge e_n + \eta \sum_{k=1}^n \sum_{r \neq s+1} \varepsilon_r h_{rk}^{\bar{s}} \hat{A} \wedge e_1 \wedge \cdots \wedge \underbrace{\hat{e}_r}_{k\text{-th}} \wedge \cdots \wedge e_n
+- \eta \sum_{k=1}^n \varepsilon_s \delta_{sk} A \wedge e_1 \wedge \cdots \wedge \hat{e}_k \wedge \cdots \wedge \underbrace{e_s}_{k\text{-th}} \wedge e_{k+1} \wedge \cdots \wedge e_n
+- \eta \sum_{\substack{j,k=1 \\ j \neq k}}^n \varepsilon_k w_{st}(e_j) \chi \wedge e_1 \wedge \cdots \wedge \underbrace{\hat{e}_k}_{j\text{-th}} \wedge \cdots \wedge \underbrace{D_{e_r} A}_{k\text{-th}} \wedge \cdots \wedge e_n
+- \eta \sum_{\substack{j,k=1 \\ j \neq k}}^n \sum_{r \neq s+1} \varepsilon_r h_{rj}^{\bar{s}} \chi \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{j\text{-th}} \wedge \cdots \wedge \underbrace{D_{e_r} A}_{k\text{-th}} \wedge \cdots \wedge e_n
++ \lambda \sum_{k=1}^n \varepsilon_k (A_{D_{e_k} A}(e_s), e_r) \chi \wedge e_1 \wedge \cdots \wedge e_n
+- \lambda \sum_{k=1}^n \chi \wedge e_1 \wedge \cdots \wedge \underbrace{D_{e_k} A}_{k\text{-th}} \wedge \cdots \wedge e_n
++ \sum_{r \neq s+1} \sum_{j \neq k} \varepsilon_r \varepsilon_s \left\{ e_r ; (R_{sj}^{\bar{r}} \chi + R_{sj}^{\bar{r}} e_s) \right\} \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_s}_{k\text{-th}} \wedge \cdots \wedge e_n
++ \sum_{r \neq s+1} \sum_{j \neq k} \varepsilon_r \varepsilon_s R_{sj}^{\bar{r}} \left\{ \sum_{k=1}^n \varepsilon_k w_{st}(e_j) \chi \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge \underbrace{e_n}_{j\text{-th}} \wedge \cdots \wedge e_n \right.
+\left. \wedge \cdots \wedge e_n + \sum_{r \neq s+1} \varepsilon_r h_{rk}^{\bar{s}} \chi \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge \underbrace{e_s}_{j\text{-th}} \wedge \cdots \wedge e_n \right\}
++ \sum_{r \neq s+1} \sum_{j \neq k} \varepsilon_r \varepsilon_s R_{sj}^{\bar{r}} \varepsilon_k h_{rk}^{\bar{s}} \chi \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge e_n
+- \sum_{r \neq s+1} \sum_{\substack{j,k=1 \\ j \neq k}} \varepsilon_r \varepsilon_s R_{sj}^{\bar{r}} w_{st}(e_j) \chi \wedge e_1 \wedge \cdots \wedge \underbrace{e_s}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge e_n
+```

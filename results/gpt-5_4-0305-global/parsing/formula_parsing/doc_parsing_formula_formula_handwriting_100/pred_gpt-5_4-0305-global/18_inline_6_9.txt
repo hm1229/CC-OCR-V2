@@ -1,0 +1,57 @@
+\[
+\mathbb{E}\!\left[\int_{0}^{T}\!\!\int_{\mathbb{R}^{d}} |\nabla u_t|^{2}\,dx\,dt\right]
+=
+\mathbb{E}\!\left[\int_{0}^{T} \|v_t\|_{L^{2}(\mathbb{R}^{d})}^{2}\,dt\right]
+\le
+\mathbb{E}\!\left[\exp\!\left\{\int_{0}^{T} \|v_t\|_{L^{2}(\mathbb{R}^{d})}^{2}\,dt\right\}\right]
+=
+\mathbb{E}\!\left[e^{L_T^{v}}\right]
+<\infty
+\]
+
+\[
+=
+\sum_{i\in N_u} \bigl(2v_i(\pi)+2v_i(\lambda)\bigr)
++
+\sum_{i\in N_v} 2v_i(\lambda)
+\]
+
+\[
+\sum_{t=1}^{M} \hat{\ell}^{\,T}_{t} w_t
+-
+\sum_{t=1}^{M} \hat{\ell}^{\,T}_{t} u
+\le
+D_{\Phi}(u,w_1)
++
+\sum_{t=1}^{M}\sum_{i=1}^{d}
+\frac{\eta}{2}\,
+\frac{\hat{\ell}_{t,i}^{\,2}}{(w_{t,i})}
+\]
+
+\[
+C^{h}(D):=\{\,f\in C(D)\mid \|f\|_{C^{h}(D)}<\infty\,\}
+\]
+
+\[
+\|u+|x|\|_{L^\infty}
++
+(d-1)\|v\|_{L^\infty}
++
+\|(|t-x|)^{1/2}v_t\|_{L^\infty}
+\lesssim
+\mathcal{E}(t)^{1/2}
+\]
+
+\[
+\|f_t\|_{L^\infty}
+\le
+\|x\|_{L^\infty}\,\|\varphi_x(t)\|
+=
+C\!\left(
+\left\|\frac{d\varphi_t(t)}{h t^{2}}\right\|_{L^\infty}
++
+\left\|\frac{d\psi_t(t)}{h t^{2}}\right\|_{L^\infty}
++
+\left\|\frac{d\varphi_x(t)}{h t^{2}}\right\|_{L^\infty}
+\right)
+\]

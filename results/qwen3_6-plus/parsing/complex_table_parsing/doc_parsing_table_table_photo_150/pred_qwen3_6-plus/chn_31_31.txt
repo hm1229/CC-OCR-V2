@@ -1,0 +1,283 @@
+Based on the provided image, here is the HTML table representation using `<tr>` and `<td>` tags. The table reflects the layout from top-left to bottom-right, including merged cells where appropriate (e.g., header rows spanning multiple columns, footer totals).
+
+Note: The image shows a purchase/sales receipt with 10 line items, headers for “行号”, “品名规格”, “单位”, “数量”, “单价”, “金额”, “备注”, and a total row at the bottom. There’s also a stamp “附件” over some cells — we’ll ignore visual overlays and focus on structural data.
+
+We’ll assume:
+- Header row spans all columns.
+- Total row spans across “金额” column or entire row as needed.
+- “币别：人民币” and date are outside the main table but can be included in caption or separate div — however, per instruction, we transcribe *tables* only, so we’ll include them as part of the table structure if they appear within grid lines. In this case, “日期：2020-10-10” and “NO. XSD2020100144” are aligned right above the table, not inside it — so we omit them from the table body unless explicitly in cells.
+
+Looking closely:
+
+The table has:
+- Column headers: 行号 | 品名规格 | 单位 | 数量 | 单价 | 金额 | 备注
+- 10 data rows (行号 1 to 10)
+- A final row for total: “合计 金额大写 伍佰伍拾捌元整” and “¥558.00”
+
+Also note: “币别：人民币” appears below the table, aligned right — we’ll include it as a row spanning the last few columns if it's visually part of the table grid. But in the image, it seems to be outside the main bordered table. However, since the instruction says “reflecting the image's layout”, and the total row includes “合计 金额大写...” which spans multiple columns, we’ll model that.
+
+Let’s reconstruct:
+
+Row 1: Headers → 7 columns
+Rows 2–11: Data (行号 1 to 10)
+Row 12: Total row → “合计 金额大写 伍佰伍拾捌元整” spans first 5 columns? Then “¥558.00” in 金额 column, and possibly empty for 备注.
+But looking at image: “合计 金额大写 伍佰伍拾捌元整” is written vertically along left side? Actually, no — in the image, “合计 金额大写” is written vertically on the far left, and “伍佰伍拾捌元整” is written horizontally under the amount column? Wait — let me re-express based on standard Chinese receipt format.
+
+Actually, in the image:
+
+- Leftmost column: “行号” (1 to 10)
+- Next: “品名规格” (with checkmarks)
+- Then: “单位”, “数量”, “单价”, “金额”, “备注”
+- At bottom: 
+   - Under “金额” column: “¥558.00”
+   - To the left of that, spanning several columns: “合计 金额大写 伍佰伍拾捌元整” — but actually, in the image, “合计 金额大写” is written vertically along the left edge, and “伍佰伍拾捌元整” is written horizontally under the amount? No — looking again:
+
+In the image, the text “合计 金额大写” is written vertically along the left margin (outside the table?), and “伍佰伍拾捌元整” is written horizontally in the row below the last item, spanning from “品名规格” to “金额”? Actually, no — the total amount “¥558.00” is in the “金额” column of the last row, and to its left, there’s a cell that says “合计 金额大写 伍佰伍拾捌元整” — but that doesn’t fit.
+
+Wait — better approach: Let’s count the rows and columns as visible.
+
+From the image:
+
+There are 12 rows in the table grid:
+
+Row 1: Headers → 7 columns: 行号, 品名规格, 单位, 数量, 单价, 金额, 备注
+
+Rows 2 to 11: Items 1 to 10 → each has 7 cells
+
+Row 12: Total row → 
+   - First cell (under 行号): empty or “合计”? In image, it’s blank.
+   - Second cell (under 品名规格): “合计 金额大写 伍佰伍拾捌元整” — but that’s long, so likely spans multiple columns.
+   - Then under 金额: “¥558.00”
+   - Others empty.
+
+But in the image, “合计 金额大写” is written vertically on the far left, outside the table? Actually, no — looking at the original image description, the user provided an image where the table is drawn with borders, and “合计 金额大写 伍佰伍拾捌元整” is written in the bottom-left area, spanning multiple columns.
+
+To simplify and match common practice:
+
+We’ll create:
+
+- Row 1: <th> for headers
+- Rows 2-11: <td> for data
+- Row 12: 
+   - <td colspan="5">合计 金额大写 伍佰伍拾捌元整</td>
+   - <td>¥558.00</td>
+   - <td></td>  (for 备注)
+
+Additionally, “币别：人民币” is shown at the bottom right — we can add a row after the total:
+
+Row 13: 
+   - <td colspan="6"></td>
+   - <td>币别：人民币</td>
+
+But in the image, “币别：人民币” is aligned under “备注” column, so perhaps:
+
+Row 13: 
+   - <td colspan="6"></td>
+   - <td>币别：人民币</td>
+
+However, to strictly follow the image layout without overcomplicating, and since the instruction is to transcribe the table as seen, I’ll go with the following structure:
+
+Total of 12 rows:
+
+Row 1: Headers
+Rows 2-11: Items 1-10
+Row 12: Total row with merged cell for description and amount in correct column.
+
+Also, note that in the image, the “备注” column is mostly empty, and for item 1, there’s “花生米” with a checkmark — we’ll represent checkmarks as “✓” or leave as is? Since it’s transcription, we can put the text and indicate checkmark if present. But the instruction is to convert tables, so we’ll include the text content.
+
+For items with checkmarks, we can append “ ✓” or just keep the text. Since the checkmark is handwritten, and we’re doing HTML, we can use “✓” symbol.
+
+But to be precise, let’s list the content as seen:
+
+Item 1: 花生米 ✓
+Item 2: 白酒41*4 ✓
+Item 3: 胡椒粉 ✓
+Item 4: 面条 ✓
+Item 5: 李锦记生抽1.75*6 ✓
+Item 6: 恒星豆瓣（竹筐） ✓
+Item 7: 香果 ✓
+Item 8: 紫菜 ✓
+Item 9: 大木耳 ✓
+Item 10: 细木耳2.2 ✓
+
+Units and quantities as given.
+
+Now, for the total row:
+
+In the image, the bottom row has:
+- Under “金额”: ¥558.00
+- To the left, spanning from “品名规格” to “单价” or so: “合计 金额大写 伍佰伍拾捌元整”
+
+But in standard HTML table, we can do:
+
+<tr>
+  <td></td> <!-- 行号 -->
+  <td colspan="4">合计 金额大写 伍佰伍拾捌元整</td> <!-- spans 品名规格, 单位, 数量, 单价 -->
+  <td>¥558.00</td> <!-- 金额 -->
+  <td></td> <!-- 备注 -->
+</tr>
+
+That makes sense.
+
+Also, “币别：人民币” is at the bottom right — we can add another row:
+
+<tr>
+  <td colspan="6"></td>
+  <td>币别：人民币</td>
+</tr>
+
+But in the image, it might be part of the same row or separate. To be safe, we’ll include it.
+
+Final decision: 13 rows.
+
+Let’s write the HTML.
+
+Note: The image has “NO. XSD2020100144” at top right — we can ignore as it’s outside the table grid.
+
+Similarly, “日期：2020-10-10” is above the table — omit.
+
+So, here is the HTML table:
+
+```html
+<table border="1">
+  <tr>
+    <th>行号</th>
+    <th>品名规格</th>
+    <th>单位</th>
+    <th>数量</th>
+    <th>单价</th>
+    <th>金额</th>
+    <th>备注</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>花生米 ✓</td>
+    <td>斤</td>
+    <td>10</td>
+    <td>¥7.50</td>
+    <td>¥75.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>白酒41*4 ✓</td>
+    <td>桶</td>
+    <td>1</td>
+    <td>¥35.00</td>
+    <td>¥35.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>胡椒粉 ✓</td>
+    <td>斤</td>
+    <td>1</td>
+    <td>¥28.00</td>
+    <td>¥28.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>面条 ✓</td>
+    <td>件</td>
+    <td>1</td>
+    <td>¥50.00</td>
+    <td>¥50.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>李锦记生抽1.75*6 ✓</td>
+    <td>件</td>
+    <td>1</td>
+    <td>¥95.00</td>
+    <td>¥95.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>恒星豆瓣（竹筐） ✓</td>
+    <td>件</td>
+    <td>1</td>
+    <td>¥82.00</td>
+    <td>¥82.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>香果 ✓</td>
+    <td></td>
+    <td>1</td>
+    <td>¥28.00</td>
+    <td>¥28.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>紫菜 ✓</td>
+    <td>包</td>
+    <td>10</td>
+    <td>¥3.50</td>
+    <td>¥35.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>大木耳 ✓</td>
+    <td>斤</td>
+    <td>3</td>
+    <td>¥18.00</td>
+    <td>¥54.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>细木耳2.2 ✓</td>
+    <td>斤</td>
+    <td>2</td>
+    <td>¥38.00</td>
+    <td>¥76.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td colspan="4">合计 金额大写 伍佰伍拾捌元整</td>
+    <td>¥558.00</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td colspan="6"></td>
+    <td>币别：人民币</td>
+  </tr>
+</table>
+```
+
+Wait — in item 7, “香果”, the unit is blank in the image? Looking back: in the image, for row 7, under “单位”, it’s empty? Or is it “包”? No, row 8 is “紫菜” with “包”, row 7 “香果” — in the image, the unit for “香果” is not filled? Actually, in the provided image description, it’s not specified, but in the initial problem, we have to go by what’s visible.
+
+In the user’s image transcription attempt, for row 7: “香果” with unit blank? But in the text you provided earlier, you have for row 7: “香果” and then unit is empty? Let me check your initial message.
+
+In your initial message, you wrote:
+
+```
+7	香果	✓		1	¥28.00	¥28.00	
+```
+
+So unit is empty for row 7.
+
+Similarly, for row 8: “紫菜” with unit “包”
+
+Row 9: “大木耳” with unit “斤”
+
+Row 10: “细木耳2.2” with unit “斤”
+
+Also, in row 6: “恒星豆瓣（竹筐）” — unit is “件”
+
+All good.
+
+One more thing: in the total row, “合计 金额大写 伍佰伍拾捌元整” — in the image, it’s written as one phrase, so we keep it as is.
+
+And “币别：人民币” is added in the last row.
+
+This should accurately reflect the table structure from the image.
+
+Final HTML code:

@@ -1,0 +1,156 @@
+```latex
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{fontenc}
+\usepackage{helvet}
+\usepackage{setspace}
+\usepackage{multicol}
+\usepackage{graphicx}
+\pgfplotsset{compat=1.18}
+
+\definecolor{goldcolor}{RGB}{204,153,0}
+\definecolor{navyblue}{RGB}{0,32,96}
+\definecolor{headerblue}{RGB}{0,70,127}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+
+\noindent\textcolor{headerblue}{\small CHAIRMAN'S LETTER \hfill MINERALS TECHNOLOGIES INC. \hfill \textbf{5}}
+
+\vspace{1cm}
+
+\noindent{\fontsize{36}{40}\selectfont\textbf{BOTH BUSINESS}}\\
+{\fontsize{36}{40}\selectfont\textbf{SEGMENTS\textcolor{goldcolor}{---}}}
+
+\vspace{0.5cm}
+
+\noindent{\large Specialty Minerals and Refractories---contributed to this outstanding\\
+performance through record-breaking financial results.}
+
+\vspace{1cm}
+
+\begin{multicols}{3}
+
+\noindent Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+\vspace{0.3cm}
+
+\noindent The company's safety performance continued on a strong track in 2013. We achieved our lowest lost workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+\vspace{0.3cm}
+
+\noindent MTI's Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated \$138 million in cash from operations and we repurchased \$52 million of our shares during the year.
+
+\vspace{0.3cm}
+
+\noindent\textcolor{goldcolor}{\textbf{Accomplishments}}\\
+Let's take a look at what drove our outstanding 2013 performance. Our two major strategies---geographic expansion and new product innovation---continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and
+
+\columnbreak
+
+\noindent the second in Europe. The plant in China is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper's papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wished to remain unnamed for competitive reasons.
+
+\vspace{0.3cm}
+
+\noindent More recently, in early January, we announced an agreement with UPM-Kymmene Corporation to build a satellite PCC plant on site at UPM's paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will provide PCC for paper filling and will have an initial capacity of 100,000 tons.
+
+\columnbreak
+
+\noindent In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability through added resources to further expand in this growing market.
+
+\vspace{0.3cm}
+
+\noindent During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to be contributing volume in 2014.
+
+\end{multicols}
+
+\vspace{1cm}
+
+\begin{minipage}{0.45\textwidth}
+\noindent\textbf{Return on Capital*}
+
+\vspace{0.3cm}
+
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=0.6cm,
+    ymin=5, ymax=10,
+    ytick={5,6,7,8,9,10},
+    xtick={2010,2011,2012,2013},
+    xticklabels={2010,2011,2012,2013},
+    ylabel={ROC\%},
+    width=7cm,
+    height=6cm,
+    axis lines=left,
+    enlarge x limits=0.2,
+    nodes near coords,
+    nodes near coords align={vertical},
+    every node near coord/.append style={font=\small},
+]
+\addplot[fill=goldcolor, draw=goldcolor] coordinates {
+    (2010, 8.4)
+    (2011, 8.8)
+    (2012, 9.2)
+};
+\addplot[fill=navyblue, draw=navyblue] coordinates {
+    (2013, 9.5)
+};
+\end{axis}
+\end{tikzpicture}
+
+\vspace{0.2cm}
+\noindent\small * Bloomberg Method
+\end{minipage}
+\hfill
+\begin{minipage}{0.50\textwidth}
+\noindent\textbf{Quarterly Underlying Sales Growth}
+
+\vspace{0.3cm}
+
+\begin{tikzpicture}
+\begin{axis}[
+    ymin=-3, ymax=8,
+    ytick={-3,-2,-1,0,1,2,3,4,5,6,7,8},
+    yticklabels={-3\%,-2\%,-1\%,0\%,1\%,2\%,3\%,4\%,5\%,6\%,7\%,8\%},
+    xtick={1,2,3,4},
+    xticklabels={Q1,Q2,Q3,Q4},
+    width=8cm,
+    height=6cm,
+    axis lines=left,
+    enlarge x limits=0.2,
+    legend style={at={(1,0)}, anchor=south east, font=\tiny},
+]
+% Reported Sales Growth (bar)
+\addplot[ybar, bar width=0.4cm, fill=navyblue, draw=navyblue] coordinates {
+    (1, -1)
+    (2, 2)
+    (3, 2)
+    (4, 6)
+};
+% Underlying Sales Growth (line with dots)
+\addplot[color=goldcolor, mark=*, thick, dashed] coordinates {
+    (1, -2)
+    (2, 4)
+    (3, 4)
+    (4, 7)
+};
+\node at (axis cs:1,-1) [above right, font=\tiny] {-1\%};
+\node at (axis cs:2,2) [above, font=\tiny] {2\%};
+\node at (axis cs:3,2) [above, font=\tiny] {2\%};
+\node at (axis cs:4,6) [above left, font=\tiny] {6\%};
+\node at (axis cs:1,-2) [below, font=\tiny] {-2\%};
+\node at (axis cs:2,4) [above, font=\tiny] {4\%};
+\node at (axis cs:3,4) [above, font=\tiny] {4\%};
+\node at (axis cs:4,7) [above, font=\tiny] {7\%};
+\legend{Reported Sales Growth, Underlying Sales Growth}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\end{document}
+```

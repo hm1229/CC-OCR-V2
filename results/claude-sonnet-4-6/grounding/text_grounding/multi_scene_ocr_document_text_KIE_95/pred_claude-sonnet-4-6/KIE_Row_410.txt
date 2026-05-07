@@ -1,0 +1,32 @@
+I need to find the text '11/09/2017' in the image.
+
+Looking at the receipt, I can see '11/09/2017' appears in two places:
+1. Next to "Date:" on the right side: "Date: 11/09/2017"
+2. In the "DD: 11/09/2017 11:48" line
+
+For the "Date: 11/09/2017" occurrence:
+This appears to be roughly at the right portion of the receipt, around y=230 (normalized) and x around 600-800.
+
+For "DD: 11/09/2017 11:48":
+This appears lower on the receipt.
+
+The question asks for '11/09/2017' - I'll identify the first occurrence next to "Date:".
+
+Looking at the image dimensions and position of "Date: 11/09/2017":
+- It's in the upper portion of the receipt
+- Approximately at y around 22-24% from top
+- The text "11/09/2017" starts around x=580 and ends around x=780
+
+Normalizing (image appears to be approximately 608px wide and 1100px tall):
+
+For "Date: 11/09/2017" line, the "11/09/2017" portion:
+- x1 ≈ 580, y1 ≈ 225
+- x2 ≈ 790, y2 ≈ 250
+
+Normalized to 1000:
+- x1 ≈ 580/608 * 1000 ≈ 554
+- y1 ≈ 225/1100 * 1000 ≈ 205
+- x2 ≈ 790/608 * 1000 ≈ 753
+- y2 ≈ 250/1100 * 1000 ≈ 227
+
+(554, 205, 753, 227)

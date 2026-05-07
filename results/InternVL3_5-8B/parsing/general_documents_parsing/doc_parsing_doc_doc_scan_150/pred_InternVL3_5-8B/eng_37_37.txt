@@ -1,0 +1,94 @@
+Certainly! Below is the transcription of the image's text, tables, and equations into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{array}
+
+\begin{document}
+
+\begin{center}
+    \textbf{AWINIC}\\
+    \textbf{AW36526}\\
+    July 2019 V1.3
+\end{center}
+
+\section*{REGISTER DETAILED DESCRIPTION}
+
+\subsection*{Chip ID Register (0x00), default(0x17)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\ \hline
+      &       &       &       &       &       &       &       \\ \hline
+Chip ID: & "0001 0111" & & & & & & \\ \hline
+Write 55h To Reset All Registers & & & & & & & \\ \hline
+\end{tabular}
+
+\subsection*{Enable Register (0x01), default(0x00)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\ \hline
+      &       &       &       &       &       &       &       \\ \hline
+Strobe Type & Strobe & Mode Bits: M1, M0 & RFU & LED3 Enable & LED2 Enable & LED1 Enable \\ \hline
+0=Level & Enable & 00=Standby (Default) & & 0=OFF (Default) & 0=OFF (Default) & 0=OFF (Default) \\ \hline
+Triggered & 0=Disabled (Default) & 10=Torch & & 1=ON & 1=ON & 1=ON \\ \hline
+1=Edge & 1=Enabled (Default) & 11=Flash & & & & \\ \hline
+Triggered & & & & & & \\ \hline
+\end{tabular}
+
+\textbf{Note:} \\
+In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to ensure proper turn-on of the device.
+
+\subsection*{IVFM Register (0x02), default(0xE1)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\ \hline
+      &       &       &       &       &       &       &       \\ \hline
+LEDx Enable Setting & LED3 Pin & LED1/2 Pin & UVLO Enable & IVFM Levels & IVFM Enable \\ \hline
+0=if LED1 or LED2 is & Short Fault & Short Fault & 0=Disabled (Default) & 000=2.9 V (Default) & 0=Disabled \\ \hline
+Enabled, LED3 is & Detect & Detect & 1=Enabled & 001=3.0 V & 1=Enabled \\ \hline
+Disabled Internally & 0=Disabled & 0=Disabled & & 010=3.1 V & (Default) \\ \hline
+1=No Limitation & 1=Enabled & 1=Enabled & & 011=3.2 V & \\ \hline
+(Default) & & & & 100=3.3 V & \\ \hline
+& & & & 101=3.4 V & \\ \hline
+& & & & 110=3.5 V & \\ \hline
+& & & & 111=3.6 V & \\ \hline
+\end{tabular}
+
+\subsection*{LED1 Flash Brightness Register (0x03), default(0x7F)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\ \hline
+      &       &       &       &       &       &       &       \\ \hline
+LED1 Flash Brightness Levels & & & & & & & \\ \hline
+$I_{flash}$(mA)=(Brightness Code$\times$3.91mA)+3.91mA & & & & & & & \\ \hline
+00000000=3.91 mA & & & & & & & \\ \hline
+01111111=500 mA (Default) & & & & & & & \\ \hline
+11111111=1.0 A & & & & & & & \\ \hline
+\end{tabular}
+
+\subsection*{LED1 Torch Brightness Register (0x04), default(0x7F)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\ \hline
+      &       &       &       &       &       &       &       \\ \hline
+LED1 Torch Brightness Levels & & & & & & & \\ \hline
+$I_{torch}$(mA)=(Brightness Code$\times$1.46mA)+1.46mA & & & & & & & \\ \hline
+00000000=1.46 mA & & & & & & & \\ \hline
+01111111=187.5 mA (Default) & & & & & & & \\ \hline
+11111111=375 mA & & & & & & & \\ \hline
+\end{tabular}
+
+\begin{flushleft}
+www.awinic.com.cn \hfill 20 \hfill Copyright $\copyright$ 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD
+\end{flushleft}
+
+\end{document}
+```
+
+This LaTeX document accurately transcribes the text, tables, and equations from the image into a structured format.

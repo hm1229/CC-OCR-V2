@@ -1,0 +1,106 @@
+用户现在需要把图片中的公式提取成LaTeX。首先看第一行的F_fe(ε_rnt)的表达式，然后是不等式，接着是P(r,t)的公式，然后是u和w的定义，dh/dx的表达式，AB的张量积，求和式，min Tr的优化问题，绝对值的不等式，最后是梯度的等式。要逐个处理，注意符号和上下标。
+
+首先第一行：
+F_{fe}(\varepsilon_{rnt}) = F_{fe}(\varepsilon_0) + \int_0^t r_n L_{v m}^{\mu n} F_{fe}(\varepsilon_{rnr}) dr + N t
+然后是不等式：
+\leq F_{fe}(\varepsilon_0) + \int_0^t 2 r_n \sum_{x \in E_n} \pi^{(n)}(x) \int_{S_{fe}} (\sigma, \varepsilon_{rnr}(x)) d\mu(\sigma) dr + M t
+
+接下来P(r,t)：
+P(r,t) = \frac{N}{V} \sum_j d_{eg}^* \langle \sigma_{ge} \rangle e^{i(k_j z - \nu_j t)},
+
+然后u和w：
+u = -\frac{\partial \Psi}{\partial z} = u_0 \frac{H_1}{H_1 - h}, \quad w = \frac{\partial \Psi}{\partial x} = u_0 H_1 \frac{dh}{dx} \frac{H_1 - 2}{(H_1 - h)^2},
+然后dh/dx：
+\frac{dh}{dx} = -h_0 \left[ \beta \cos^2(\alpha x) \sin(2\beta x) + \delta \cos(\beta x) \sin(2\alpha x) \right] \cdot
+
+然后AB的张量积：
+|\Psi\rangle AB = |\Psi\rangle A \otimes |\phi\rangle B = |4\rangle A \otimes \left( \cos \frac{\theta}{2} |0\rangle_B + \sin \frac{\theta}{2} |1\rangle_B \right),
+
+然后求和式：
+\sigma \sum_{k=0}^n a_k \| x_k - T(x_k \| \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2, 这里可能需要检查，原式是σ∑_{k=0}^n a_k ||x_k - T(x_k|| = ||x_0|| [||x_{01} - ||1||_{n+1} - ||x_{n+1}||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||]？可能原式是：
+
+\sigma \sum_{k=0}^n a_k \| x_k - T(x_k \| \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2, 可能更准确的是看原图中的符号，原图是：
+
+σ∑_{k=0}^n a_k ||x_k - T(x_k|| = ||x_0|| [||x_{01} - ||1||_{n+1} - ||x_{n+1}||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||]？可能原图中的下标是x_{k+1}？比如原图是：
+
+σ∑_{k=0}^n a_k ||x_k - T(x_k|| = ||x_0|| [||x_{01} - ||1||_{n+1} - ||x_{n+1}||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||] 可能更简单的是按原图手写的：
+
+σ∑_{k=0}^n a_k ||x_k - T(x_k|| = ||x_0|| [||x_{01} - ||1||_{n+1} - ||x_{n+1}||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||] 不过可能原图是：
+
+σ∑_{k=0}^n a_k \| x_k - T(x_k \| \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2 这里可能需要保留原图的符号，先记下来。
+
+然后是min Tr(Z^T L Z) subject to Z^T D Z = I
+
+然后绝对值的不等式：
+
+\left| \sum_{|\mathbf{h}| \geq H} a_h, H \sum_{n \sim \delta N} e^{2i\pi f_x (n + \frac{1}{2}) h} \right| \leq c \sum_{|\mathbf{h}| \geq H} H (N h^{-\frac{3}{2}} L^{-\frac{1}{2}} + h^{-\frac{5}{2}} L^{\frac{1}{2}})
+
+然后下一行：
+
+\leq c (N H^{\frac{1}{2}} L^{-\frac{1}{2}} + H^{-\frac{1}{2}} L^{\frac{1}{2}}).
+
+然后最后的梯度等式：
+
+(\tilde{\nabla} \phi^2 \tilde{w} \tilde{R})(\phi^2 X, \phi^2 \gamma) \phi^2 Z = (\tilde{\nabla}_w \tilde{R})(\phi^2 X, \phi^2 \gamma) \phi^2 Z.
+
+现在需要把这些逐个转换成LaTeX，注意符号的准确性，比如上标、下标、积分、求和、张量积（\otimes）、偏导数（\partial）、向量（\mathbf{h}）、绝对值（\left| \right|）、不等式（\leq）、优化问题（\min \text{Tr}... subject to...）等。
+
+现在开始逐个处理：
+
+1. 第一行公式：
+F_{fe}(\varepsilon_{rnt}) = F_{fe}(\varepsilon_0) + \int_0^t r_n L_{v m}^{\mu n} F_{fe}(\varepsilon_{rnr}) \, dr + N t
+
+2. 不等式：
+\leq F_{fe}(\varepsilon_0) + \int_0^t 2 r_n \sum_{x \in E_n} \pi^{(n)}(x) \int_{S_{fe}} (\sigma, \varepsilon_{rnr}(x)) \, d\mu(\sigma) \, dr + M t
+
+3. P(r,t)：
+P(r,t) = \frac{N}{V} \sum_j d_{eg}^* \langle \sigma_{ge} \rangle e^{i(k_j z - \nu_j t)},
+
+4. u和w：
+u = -\frac{\partial \Psi}{\partial z} = u_0 \frac{H_1}{H_1 - h}, \quad w = \frac{\partial \Psi}{\partial x} = u_0 H_1 \frac{dh}{dx} \frac{H_1 - 2}{(H_1 - h)^2},
+
+5. dh/dx：
+\frac{dh}{dx} = -h_0 \left[ \beta \cos^2(\alpha x) \sin(2\beta x) + \delta \cos(\beta x) \sin(2\alpha x) \right] \cdot
+
+6. AB张量积：
+|\Psi\rangle AB = |\Psi\rangle A \otimes |\phi\rangle B = |4\rangle A \otimes \left( \cos \frac{\theta}{2} |0\rangle_B + \sin \frac{\theta}{2} |1\rangle_B \right),
+
+7. 求和式（注意原图中的符号，可能σ是某个系数，求和k=0到n，a_k，然后是范数的差，右边是||x_0||乘以一个平方项，原图中的下标可能是x_{k+1}，比如x_{01}可能是x_{0,1}？不过按原图手写：
+
+\sigma \sum_{k=0}^n a_k \| x_k - T(x_k \| \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2
+
+不过可能更准确的是原图中的“||x_k - T(x_k||”是范数，比如L2范数，所以写成\| x_k - T(x_k) \|，然后右边是\| x_0 \| [ ... ]^2，里面的项可能是相邻点的差，比如x_{k+1} - T(x_{k+1})等，可能原图中的下标是x_{k+1}，所以修正为：
+
+\sigma \sum_{k=0}^n a_k \| x_k - T(x_k) \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2
+
+不过可能原图中的“x_{01}”是x_{0,1}，或者可能是笔误，暂时按原图的符号，可能更简单的是看原图中的符号，原图是：
+
+σ∑_{k=0}^n a_k ||x_k - T(x_k|| = ||x_0|| [||x_{01} - ||1||_{n+1} - ||x_{n+1}||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||]
+
+可能这里的“||1||_{n+1}”是某种范数，比如在n+1维度上的范数，暂时保留。
+
+8. 优化问题：
+\min_{\theta} \operatorname{Tr}(Z^\top L Z) \text{ subject to } Z^\top D Z = I
+
+9. 绝对值不等式：
+\left| \sum_{|\mathbf{h}| \geq H} a_h, H \sum_{n \sim \delta N} e^{2i\pi f_x (n + \frac{1}{2}) h} \right| \leq c \sum_{|\mathbf{h}| \geq H} H \left( N h^{-\frac{3}{2}} L^{-\frac{1}{2}} + h^{-\frac{5}{2}} L^{\frac{1}{2}} \right)
+
+然后下一行：
+\leq c \left( N H^{\frac{1}{2}} L^{-\frac{1}{2}} + H^{-\frac{1}{2}} L^{\frac{1}{2}} \right).
+
+10. 最后一个等式：
+(\tilde{\nabla} \phi^2 \tilde{w} \tilde{R})(\phi^2 X, \phi^2 \gamma) \phi^2 Z = (\tilde{\nabla}_w \tilde{R})(\phi^2 X, \phi^2 \gamma) \phi^2 Z.
+
+现在需要检查每个公式的准确性，比如上标、下标、积分限、求和范围、符号（比如L_{v m}^{\mu n}是L的上标μn，下标vm），还有S_{fe}是积分区域，dμ(σ)是测度。另外，u和w中的H1 - h，H1 - 2等，dh/dx的表达式中的β, α, δ等参数。
+
+现在把所有公式按顺序写成LaTeX，注意换行和对齐，但用户要求是提取公式，所以每个公式单独列出，用LaTeX的数学环境。
+
+现在整理所有公式：
+
+1. $F_{fe}(\varepsilon_{rnt}) = F_{fe}(\varepsilon_0) + \int_0^t r_n L_{v m}^{\mu n} F_{fe}(\varepsilon_{rnr}) \, dr + N t$
+2. $\leq F_{fe}(\varepsilon_0) + \int_0^t 2 r_n \sum_{x \in E_n} \pi^{(n)}(x) \int_{S_{fe}} (\sigma, \varepsilon_{rnr}(x)) \, d\mu(\sigma) \, dr + M t$
+3. $P(r,t) = \frac{N}{V} \sum_j d_{eg}^* \langle \sigma_{ge} \rangle e^{i(k_j z - \nu_j t)},$
+4. $u = -\frac{\partial \Psi}{\partial z} = u_0 \frac{H_1}{H_1 - h}, \quad w = \frac{\partial \Psi}{\partial x} = u_0 H_1 \frac{dh}{dx} \frac{H_1 - 2}{(H_1 - h)^2},$
+5. $\frac{dh}{dx} = -h_0 \left[ \beta \cos^2(\alpha x) \sin(2\beta x) + \delta \cos(\beta x) \sin(2\alpha x) \right] \cdot$
+6. $|\Psi\rangle AB = |\Psi\rangle A \otimes |\phi\rangle B = |4\rangle A \otimes \left( \cos \frac{\theta}{2} |0\rangle_B + \sin \frac{\theta}{2} |1\rangle_B \right),$
+7. $\sigma \sum_{k=0}^n a_k \| x_k - T(x_k) \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2,$ （这里可能需要确认原图中的符号，比如“||x_k - T(x_k||”是否是范数，原图中是“||x_k - T(x_k||”可能少了括号，应该是\| x_k - T(x_k) \|，右边的项可能更准确的是原图中的“||x_{k+1} - T(x_{k+1})||”等，可能原图中的下标是x_{k+1}，所以修正为：$\sigma \sum_{k=0}^n a_k \| x_k - T(x_k) \| = \| x_0 \| \left[ \| x_{01} - \|1\|_{n+1} - \| x_{n+1} \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\|_{n+1} - \| x_{n+1} - T(x_{n+1}) \| \|1\| \right]^2$ 可能不太对，另一种可能是原图中的“||x_k - T(x_k||”是“||x_k - T(x_k)||”，而右边是“||x_0|| [||x_{01} - ||1||_{n+1} - ||x_{n+1}||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||_{n+1} - ||x_{n+1} - T(x_{n+1})||1||]”，可能这里的“||1||_{n+1}”是向量1在n+1维的范数，暂时保留原图的写法，可能用户需要的是准确提取，所以按原图手写的符号，可能原图中的“||x_k - T(x_k||

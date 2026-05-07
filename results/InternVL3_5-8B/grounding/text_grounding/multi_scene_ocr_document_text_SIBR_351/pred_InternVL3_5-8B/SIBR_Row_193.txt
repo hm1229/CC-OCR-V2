@@ -1,0 +1,51 @@
+To determine the coordinates of the region containing the text '14.31', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the text '14.31'**: The text '14.31' appears twice in the image, once in the table under the column "金额(元)" and again in the section "现金支付".
+
+2. **Select the appropriate instance**: We'll focus on the instance in the table under the column "金额(元)" since it is more central to the receipt's content.
+
+3. **Determine the bounding box**:
+   - The left-top corner of the text '14.31' in the table.
+   - The right-bottom corner of the text '14.31' in the table.
+
+4. **Normalize the coordinates**:
+   - The image width and height should be considered for normalization.
+
+Let's assume the image dimensions are approximately 1000 pixels wide and 600 pixels tall for normalization purposes.
+
+### Bounding Box Coordinates Calculation
+
+- **Left-top corner (x1, y1)**:
+  - x1: The horizontal position from the left edge to the start of the text '14.31'.
+  - y1: The vertical position from the top edge to the start of the text '14.31'.
+
+- **Right-bottom corner (x2, y2)**:
+  - x2: The horizontal position from the left edge to the end of the text '14.31'.
+  - y2: The vertical position from the top edge to the end of the text '14.31'.
+
+### Estimation Based on Visual Inspection
+
+- **Left-top corner (x1, y1)**:
+  - x1: Approximately 300 pixels from the left.
+  - y1: Approximately 300 pixels from the top.
+
+- **Right-bottom corner (x2, y2)**:
+  - x2: Approximately 400 pixels from the left.
+  - y2: Approximately 350 pixels from the top.
+
+### Normalized Coordinates
+
+- **Image Width**: 1000 pixels
+- **Image Height**: 600 pixels
+
+Normalized coordinates are calculated as follows:
+- \( x1_{norm} = \frac{300}{1000} = 0.3 \)
+- \( y1_{norm} = \frac{300}{600} = 0.5 \)
+- \( x2_{norm} = \frac{400}{1000} = 0.4 \)
+- \( y2_{norm} = \frac{350}{600} = 0.583 \)
+
+### Final Output
+
+The normalized coordinates of the bounding box for the text '14.31' are:
+
+(0.3, 0.5, 0.4, 0.583)

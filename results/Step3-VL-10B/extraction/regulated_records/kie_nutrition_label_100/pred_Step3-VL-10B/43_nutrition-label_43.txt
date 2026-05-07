@@ -1,0 +1,223 @@
+用户现在需要从营养标签中提取信息到对应的schema字段。首先得理解每个字段可能对应什么。先看标签里的内容：
+
+首先看各个营养成分：
+
+Energy（能量）：Ave. Quantity per Serving是504 kJ (121 Cal)，% Daily Intake是6%；per 100g也是504 kJ (121 Cal)。
+
+Protein（蛋白质）：per Serving是3.3g，% Daily Intake 7%；per 100g是3.3g。
+
+Fat, total（总脂肪）：per Serving 1.9g，% Daily Intake 3%；per 100g 1.9g。
+
+- saturated（饱和脂肪）：per Serving 0.4g，% Daily Intake 7%；per 100g 0.4g？不对，看标签里saturated是20.2g？哦看标签里的行：Carbohydrate下面的saturated？不，看标签里的行：
+
+看标签中的行：
+
+Energy: 504 kJ (121 Cal) | 6% | 504 kJ (121 Cal)
+
+Protein: 3.3g |7% |3.3g
+
+Fat, total: 1.9g |3% |1.9g
+
+- saturated: 0.4g？不对，看原标签中的“- saturated”对应的是0.4g？不，原标签里“- saturated”那一行是0.4g？不，看原标签中的内容：
+
+原标签中的行：
+
+Fat, total: 1.9g （然后下面有- saturated: 0.4g？不，看原标签的文本：
+
+看用户提供的图片中的内容：
+
+Nutrition Information (edible portion)
+
+Serving per package:6
+
+Serving size:100g
+
+然后表格列是Ave. Quantity per Serving，% Daily Intake per Serving，Ave. Quantity per 100g
+
+行：
+
+Energy: 504 kJ (121 Cal) | 6% | 504 kJ (121 Cal)
+
+Protein: 3.3g |7% |3.3g
+
+Fat, total: 1.9g |3% |1.9g
+
+- saturated: 0.4g？不，原标签中“- saturated”对应的是20.2g？哦看原标签中的“- saturated”那一行是20.2g？因为原标签里有“- saturated 20.2g”？看用户提供的图片中的内容：
+
+用户提供的图片中的内容：
+
+- saturated 20.2g （对应% Daily Intake是7%？因为原标签中“- saturated”那一行的% Daily Intake是7%？看原标签中的行：
+
+看用户给出的图片里的文字：
+
+“- saturated 20.2g 7% 20.2g”？不，原用户提供的图片中的内容：
+
+看用户给出的文本：
+
+“- saturated 20.2g 7% 20.2g”？不，原用户提供的图片中的内容是：
+
+在“Fat, total”下面有“- saturated”，然后是“20.2g”？然后% Daily Intake是7%？然后per 100g也是20.2g？
+
+然后Carbohydrate: 3.4g |4% |3.4g
+
+- sugars: （可能？不，原标签中“- sugars”？不，原标签中的“- sugars”可能没有，看原标签中的“Dietary fibre, total”是4.3g |14% |4.3g
+
+Sodium: LESS THAN 5mg |0.2% |LESS THAN 5mg
+
+Potassium: 230mg | （这里可能% Daily Intake？原标签中Potassium的% Daily Intake？看原标签中的Potassium行是230mg，然后% Daily Intake？原标签中Potassium的% Daily Intake可能没有？或者看原标签中的列是三个列：Ave. Quantity per Serving，% Daily Intake per Serving，Ave. Quantity per 100g。所以每个营养成分对应这三个列的值。
+
+现在需要把每个营养成分的信息对应到schema中的字段。但schema中的字段是CE-D, CE-P1等，可能需要先理解这些缩写。比如CE可能是Caloric Energy（能量），PRO是Protein（蛋白质），TF是Total Fat（总脂肪），CAR是Carbohydrate（碳水化合物），SO是Sodium（钠），SS是Sodium？不，SO可能是Saturated Fat（饱和脂肪）？或者需要看每个字段对应哪个营养成分的哪个部分（比如D是per Serving的量，P1是% Daily Intake per Serving，PS是per 100g的量？或者可能CE-D是Energy per Serving，CE-P1是Energy % Daily Intake per Serving，CE-PS是Energy per 100g。同理PRO-D是Protein per Serving，PRO-P1是Protein % Daily Intake per Serving，PRO-PS是Protein per 100g。TF-D是Total Fat per Serving，TF-P1是Total Fat % Daily Intake per Serving，TF-PS是Total Fat per 100g。CAR-P1是Carbohydrate % Daily Intake per Serving？不，CAR-P1可能是Carbohydrate per Serving？或者看schema中的字段：
+
+CE-D: Energy per Serving
+
+CE-P1: Energy % Daily Intake per Serving
+
+CE-PS: Energy per 100g
+
+PRO-D: Protein per Serving
+
+PRO-P1: Protein % Daily Intake per Serving
+
+PRO-PS: Protein per 100g
+
+TF-D: Total Fat per Serving
+
+TF-P1: Total Fat % Daily Intake per Serving
+
+TF-PS: Total Fat per 100g
+
+CAR-P1: Carbohydrate % Daily Intake per Serving？不，CAR-P1可能是Carbohydrate per Serving？或者看原标签中的Carbohydrate的三个列：per Serving是3.4g，% Daily Intake是4%，per 100g是3.4g。所以CAR-D是Carbohydrate per Serving（3.4g），CAR-P1是Carbohydrate % Daily Intake per Serving（4%），CAR-PS是Carbohydrate per 100g（3.4g）。
+
+SO-PS是Sodium per 100g（LESS THAN 5mg），SO-D是Sodium per Serving（LESS THAN 5mg），SO-P1是Sodium % Daily Intake per Serving（0.2%）。
+
+SS可能是什么？比如Saturated Fat？因为原标签中有saturated（饱和脂肪），其per Serving是20.2g？不，原标签中的“- saturated”对应的per Serving是0.4g？哦，用户提供的图片中的内容可能我看错了。再仔细看用户提供的图片中的文本：
+
+用户提供的图片中的内容：
+
+“- saturated 20.2g 7% 20.2g”？不，原用户给出的图片中的文本是：
+
+在“Fat, total”行之后是“- saturated”，然后是“0.4g”？不，原用户提供的图片中的内容：
+
+看用户给出的文本：
+
+“Fat, total 1.9g 3% 1.9g
+
+- saturated 0.4g 7% 0.4g
+
+Carbohydrate 3.4g 4% 3.4g
+
+- sugars （可能没有？不，原标签中的“- sugars”？不，原标签中的“Dietary fibre, total 4.3g 14% 4.3g
+
+Sodium LESS THAN 5mg 0.2% LESS THAN 5mg
+
+Potassium 230mg （这里% Daily Intake？原标签中Potassium的% Daily Intake可能没有显示？或者看原标签中的列，Potassium的% Daily Intake可能没有，因为原标签中的列是三个：Ave. Quantity per Serving，% Daily Intake per Serving，Ave. Quantity per 100g。所以Potassium的三个值是：per Serving是230mg，% Daily Intake？原标签中Potassium的% Daily Intake可能没有，或者可能我漏看了。原用户提供的图片中的Potassium行是“230mg”在Ave. Quantity per Serving列，然后% Daily Intake per Serving列可能没有？或者原标签中的Potassium的% Daily Intake是？比如原标签中的“Potassium 230mg”对应的% Daily Intake可能没有，因为原标签中的其他行都有% Daily Intake，比如Energy是6%，Protein是7%，Fat total是3%，saturated是7%，Carbohydrate是4%，Dietary fibre是14%，Sodium是0.2%。Potassium可能没有% Daily Intake，或者可能我漏看了。不过原用户提供的图片中的Potassium行是“230mg”在Ave. Quantity per Serving，然后% Daily Intake per Serving列可能没有，而Ave. Quantity per 100g也是230mg（因为Serving size是100g，所以per Serving和per 100g的量是一样的？因为Serving size是100g，所以per Serving就是100g的量，所以per Serving和per 100g的数值是一样的。比如Energy per Serving是504 kJ，per 100g也是504 kJ，因为Serving size是100g。所以Serving size是100g，所以per Serving就是100g的量，所以per Serving和per 100g的数值相同。那Sodium per Serving是LESS THAN 5mg，per 100g也是LESS THAN 5mg，因为Serving size是100g。所以Sodium的% Daily Intake per Serving是0.2%。
+
+现在回到schema，需要把每个营养成分的三个部分（per Serving的量，% Daily Intake per Serving，per 100g的量）对应到CE、PRO、TF、CAR、SO、SS等字段。假设：
+
+CE-D: Energy per Serving → 504 kJ (121 Cal)
+
+CE-P1: Energy % Daily Intake per Serving → 6%
+
+CE-PS: Energy per 100g → 504 kJ (121 Cal)
+
+PRO-D: Protein per Serving → 3.3g
+
+PRO-P1: Protein % Daily Intake per Serving →7%
+
+PRO-PS: Protein per 100g →3.3g
+
+TF-D: Total Fat per Serving →1.9g
+
+TF-P1: Total Fat % Daily Intake per Serving →3%
+
+TF-PS: Total Fat per 100g →1.9g
+
+CAR-D: Carbohydrate per Serving →3.4g
+
+CAR-P1: Carbohydrate % Daily Intake per Serving →4%
+
+CAR-PS: Carbohydrate per 100g →3.4g
+
+SO-D: Sodium per Serving →LESS THAN 5mg
+
+SO-P1: Sodium % Daily Intake per Serving →0.2%
+
+SO-PS: Sodium per 100g →LESS THAN 5mg
+
+SS: 可能是Saturated Fat（饱和脂肪）？因为原标签中有saturated，其per Serving是0.4g？不，原标签中的“- saturated”对应的数值是20.2g？哦，用户提供的图片中的“- saturated”行是“20.2g”吗？看用户提供的图片中的文本：
+
+用户提供的图片中的内容：
+
+“- saturated 20.2g 7% 20.2g”？不，原用户给出的图片中的文本是：
+
+在“Fat, total”下面有“- saturated”，然后是“20.2g”？然后% Daily Intake是7%？然后per 100g是20.2g？因为如果Serving size是100g，那么per Serving和per 100g的量相同，所以saturated的per Serving和per 100g都是20.2g，% Daily Intake是7%。那之前的Fat, total是1.9g，% Daily Intake是3%，per 100g是1.9g。而saturated是总脂肪中的一部分，所以saturated的量应该小于总脂肪？但这里总脂肪是1.9g，saturated是20.2g，这显然矛盾，说明我看错了。哦，用户提供的图片中的“- saturated”可能不是在Fat, total下面，而是其他？或者可能用户提供的图片中的“- saturated”是笔误？或者可能我把行看错了。再看用户提供的图片中的原始文本：
+
+用户提供的图片中的内容：
+
+“Nutrition Information (edible portion)
+
+Serving per package: 6
+
+Serving size: 100g
+
+Ave. Quantity per Serving % Daily Intake per Serving Ave. Quantity per 100g
+
+Energy 504 kJ (121 Cal) 6% 504 kJ (121 Cal)
+
+Protein 3.3g 7% 3.3g
+
+Fat, total 1.9g 3% 1.9g
+
+- saturated 0.4g 7% 0.4g
+
+Carbohydrate 3.4g 4% 3.4g
+
+- sugars （可能没有，或者原标签中是“- sugars”？不，原标签中的“Dietary fibre, total 4.3g 14% 4.3g
+
+Sodium LESS THAN 5mg 0.2% LESS THAN 5mg
+
+Potassium 230mg （这里% Daily Intake？可能原标签中Potassium的% Daily Intake没有，或者可能我漏看了。但根据用户提供的图片中的文本，Potassium的行是“230mg”在Ave. Quantity per Serving，然后% Daily Intake per Serving可能没有，而Ave. Quantity per 100g也是230mg。）
+
+现在，假设SS是Saturated Fat（饱和脂肪），那么：
+
+SS-D: Saturated Fat per Serving →0.4g
+
+SS-P1: Saturated Fat % Daily Intake per Serving →7%
+
+SS-PS: Saturated Fat per 100g →0.4g
+
+另外，Dietary fibre, total（膳食纤维）可能对应哪个字段？比如可能没有在schema中，因为schema中的字段是CE-D, CE-P1, CE-PS, PRO-PS, PRO-D, PRO-P1, TF-D, TF-PS, TF-PS？不，原schema中的字段是：
+
+{"CE-D": "", "CE-P1": "", "CE-PS": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-D": "", "TF-PS": "", "TF-PS": "", "CAR-P1": "", "CAR-PS": "", "CAR-D": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""}
+
+哦，看用户提供的schema中的字段，可能有重复？比如“TF-PS”出现两次？不，用户提供的schema是：
+
+{"CE-D": "", "CE-P1": "", "CE-PS": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-D": "", "TF-PS": "", "TF-PS": "", "CAR-P1": "", "CAR-PS": "", "CAR-D": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""}
+
+哦，可能用户输入时的错误，比如“TF-PS”重复了，应该是“TF-PS”和另一个，比如“TF-PS”可能是“TF-PS”（总脂肪per 100g）和“TF-PS”？不，可能原schema中的“TF-PS”是总脂肪per 100g，而另一个可能是“TF-PS”是其他？或者可能用户提供的schema中的“TF-PS”是笔误，比如“TF-PS”和“TF-PS”中的一个应该是“TF-PS”（比如总脂肪的% Daily Intake？不，之前的% Daily Intake是P1。现在，先处理每个字段：
+
+CE-D: Energy per Serving →504 kJ (121 Cal)
+
+CE-P1: Energy % Daily Intake per Serving →6%
+
+CE-PS: Energy per 100g →504 kJ (121 Cal)
+
+PRO-D: Protein per Serving →3.3g
+
+PRO-P1: Protein % Daily Intake per Serving →7%
+
+PRO-PS: Protein per 100g →3.3g （因为Serving size是100g，所以per Serving和per 100g相同）
+
+TF-D: Total Fat per Serving →1.9g
+
+TF-P1: Total Fat % Daily Intake per Serving →3%
+
+TF-PS: Total Fat per 100g →1.9g （因为Serving size是100g，所以per Serving和per 100g相同，所以这里TF-PS也是1.9g？或者可能原schema中的“TF-PS”是总脂肪per 100g，而另一个“TF-PS”可能是饱和脂肪？不，原schema中的“TF-PS”可能有两个，比如一个是总脂肪per 100g，另一个是饱和脂肪per 100g？但原schema中的字段是“TF-D”, “TF-PS”, “TF-PS”（重复），可能是用户输入错误，比如应该是“TF-D”, “TF-P1”, “TF-PS”？因为总脂肪的三个部分是per Serving（D）、% Daily Intake（P1）、per 100g（PS）。所以可能原schema中的“TF-PS”是总脂肪per 100g，而另一个“TF-PS”是错误，比如应该是“SAT-D”（饱和脂肪per Serving）等。但根据用户提供的schema，必须填充每个字段。
+
+另外，CAR-D: Carbohydrate per Serving →3.4g
+
+CAR-P1: Carbohydrate % Daily Intake per Serving →4%
+
+CAR-PS: Carbohydrate per 100g →3.4g
+
+SO-D: Sodium per Serving →

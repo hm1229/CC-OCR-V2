@@ -1,0 +1,10 @@
+\begin{align*}
+(??) &\lesssim \int_{|y|<1} \frac{|x-y|^{-d+\alpha-1}\delta\beta(y)^{a/2}}{\tau\beta(x,y)^{a/2}} \frac{|y-w|^{-d+\alpha-\beta}\delta\beta(w)^{a/2}}{\tau\beta(y,w)^{a/2}} \frac{(1\vee |y-w|^{\beta-a/2})}{\delta\beta(y)^{\beta-a/2}} dy \\
+&\leq |x|_{<1}, |y-w|\geq\delta\beta(y) \frac{\delta\beta(w)^{a/2}}{|x-y|^{-d+\alpha+1}|w-y|^{-d+\alpha-\beta}} \frac{|w-y|^{\beta-a/2}\delta\beta(y)^{a-\beta}}{\tau\beta(x,y)^{a/2}\tau\beta(y,w)^{a/2}} dy \\
+&+ \int_{|y|<1,\ |y-w|<\delta\beta(y)} \frac{\delta\beta(w)^{a/2}}{|x-y|^{-d+\alpha+1}|w-y|^{-d+\alpha-\beta}} \frac{1}{\tau\beta(x,y)^{a/2}\tau\beta(y,w)^{a/2}} dy \\
+&\lesssim \delta\beta(w)^{a/2} \int_{|y|<1,\ |y-w|\geq\delta\beta(y)} |x-y|^{-d+\alpha-1}|y-w|^{-d+\alpha-\beta} dy \\
+&+ \delta\beta(w)^{a/2} \int_{|y|<1,\ |y-w|<\delta\beta(y)} |x-y|^{-d+\alpha-1}|y-w|^{-d+\alpha-\beta} dy \\
+&= \delta\beta(w)^{a/2} \int_{|y|<1} |x-y|^{-d+\alpha-1}|y-w|^{-d+\alpha-\beta} dy \\
+&\lesssim \delta\beta(w)^{a/2} |x-w|^{-d+(\alpha-1)\wedge(\alpha-\beta)} \int_{|y|<1} (|x-y|^{-(\alpha-1)\wedge(\alpha-\beta)} + |y-w|^{-\alpha-\beta-(\alpha-1)\wedge(\alpha-\beta)}) dy \\
+&\lesssim |x-w|^{-d+(\alpha-1)\wedge(\alpha-\beta)} \delta\beta(w)^{a/2}
+\end{align*}

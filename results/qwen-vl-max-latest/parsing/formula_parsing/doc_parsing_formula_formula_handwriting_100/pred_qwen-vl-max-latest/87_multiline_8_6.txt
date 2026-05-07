@@ -1,0 +1,15 @@
+```latex
+\begin{aligned}
+&\mathcal{L}(x,s,\hat{\lambda},q_r,Q_r; z,t_k,p_k,P_k,\forall k\in[K])\\
+&=s+\gamma_sI_{m_s}\cdot Q_r+\sqrt{r}\|q_r\|_2-z\cdot\left(\sum_{k=1}^K(\Delta_kx_k)+\Delta_0\right)-\sum_{k=1}^K\left[t_k\quad p_k\atop p_k\quad p_k\right]\cdot\\
+&\left[s-y_k^*(x)-\lambda_k^Tb-y_k(x)^T\mu+\lambda_k^TA\mu\quad\frac{1}{2}(q_r+(U\Lambda^{\frac{1}{2}}B)^T(A^T\lambda_k-y_k(x)))^T\atop\frac{1}{2}(q_r+(U\Lambda^{\frac{1}{2}}B)^T(A^T\lambda_k-y_k(x)))\right]\\
+&=(1-\sum_{k=1}^Kt_k)s-\sum_{k=1}^K(t_k(A\mu-b)^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^TA^T)\lambda_k+\sqrt{r}\|q_r\|_2-\sum_{k=1}^Kp_k^Tq_r\\
+&\quad+(\gamma_sI_{m_s}-\sum_{k=1}^Kp_k)\cdot Q_r-\sum_{i=1}^T\sum_{j=1}^Tz_{ij}\left(Ae_jx+a_{ij}^o\right)+\sum_{k=1}^K(t_ky_k^*(x)+(t_k\mu^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^T)y_k(x))\\
+&=(1-\sum_{k=1}^Kt_k)s-\sum_{k=1}^K(t_k(A\mu-b)^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^TA^T)\lambda_k+\sqrt{r}\|q_r\|_2-\sum_{k=1}^Kp_k^Tq_r\\
+&\quad+(\gamma_sI_{m_s}-\sum_{k=1}^Kp_k)\cdot Q_r-\sum_{i=1}^T\sum_{j=1}^Tz_{ij}ae_jx-\sum_{i=1}^T\sum_{j=1}^Tz_{ij}a_{ij}^o+\sum_{k=1}^K(t_kw_k^*+(t_k\mu^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^T)w_k)\cdot\\
+&\quad+\sum_{k=1}^K(t_k\alpha_k^*+(t_k\mu^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^T)\alpha_k)\\
+&=(1-\sum_{k=1}^Kt_k)s-\sum_{k=1}^K(t_k(A\mu-b)^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^TA^T)\lambda_k+\sqrt{r}\|q_r\|_2-\sum_{k=1}^Kp_k^Tq_r\\
+&\quad+(\gamma_sI_{m_s}-\sum_{k=1}^Kp_k)\cdot Q_r+\left(\sum_{k=1}^K(t_kw_k^*+(t_k\mu^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^T)w_k)-\sum_{i=1}^T\sum_{j=1}^Tz_{ij}a_{ij}\right)\times\\
+&\quad+\sum_{k=1}^K(t_k\alpha_k^*+(t_k\mu^T+p_k^T(U\Lambda^{\frac{1}{2}}B)^T)\alpha_k)-\sum_{i=1}^T\sum_{j=1}^Tz_{ij}a_{ij}^o.
+\end{aligned}
+```

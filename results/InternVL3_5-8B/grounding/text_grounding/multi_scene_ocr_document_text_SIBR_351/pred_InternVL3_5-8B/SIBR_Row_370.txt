@@ -1,0 +1,32 @@
+To determine the coordinates of the region containing the text '0.00', we need to analyze the image and identify the bounding box that encloses the text.
+
+Here are the steps to find the coordinates:
+
+1. **Identify the Text Location**: The text '0.00' appears in the section towards the bottom left of the image, specifically in the column labeled "门诊大额支付" (Outpatient Large Payment).
+
+2. **Estimate the Bounding Box**: We need to estimate the bounding box that encloses the text '0.00'. This involves identifying the top-left and bottom-right corners of the text.
+
+3. **Normalize the Coordinates**: Convert the pixel coordinates to normalized coordinates based on the image's width and height.
+
+Let's assume the image width is 1000 units and the height is 600 units for normalization purposes.
+
+### Bounding Box Coordinates
+
+- **Top-Left Corner (x1, y1)**: The text '0.00' starts approximately at the position (100, 400) in pixel coordinates.
+- **Bottom-Right Corner (x2, y2)**: The text '0.00' ends approximately at the position (150, 420) in pixel coordinates.
+
+### Normalized Coordinates
+
+- **Top-Left Corner (x1, y1)**: 
+  - x1 = 100 / 1000 = 0.10
+  - y1 = 400 / 600 = 0.67
+
+- **Bottom-Right Corner (x2, y2)**: 
+  - x2 = 150 / 1000 = 0.15
+  - y2 = 420 / 600 = 0.70
+
+### Final Output
+
+The normalized coordinates of the bounding box are:
+
+(0.10, 0.67, 0.15, 0.70)

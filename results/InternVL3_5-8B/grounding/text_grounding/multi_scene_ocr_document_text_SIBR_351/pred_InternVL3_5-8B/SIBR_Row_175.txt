@@ -1,0 +1,24 @@
+To determine the coordinates of the region containing the text '14cm*10', we need to carefully analyze the image and identify the bounding box around this specific text.
+
+Here are the steps to find the coordinates:
+
+1. **Identify the Text Location**: The text '14cm*10' is located in the section detailing the cost of medications, specifically next to the price of 292元.
+
+2. **Estimate the Bounding Box**:
+   - **Left-Top Corner (x1, y1)**: This is the top-left corner of the text '14cm*10'. It is slightly to the right of the text '洛索洛芬钠缓释胶囊' and above the price '292元'.
+   - **Right-Bottom Corner (x2, y2)**: This is the bottom-right corner of the text '14cm*10'. It is slightly to the left of the price '292元' and below the text '14cm*10'.
+
+3. **Normalize the Coordinates**:
+   - The image width and height need to be considered for normalization. Assuming the image width is approximately 1000 units and the height is approximately 600 units (these are typical values for such receipts).
+
+4. **Calculate the Coordinates**:
+   - **x1 (Left-Top Corner)**: The text '14cm*10' starts slightly to the right of the previous text. Let's estimate it to be around 60% from the left edge of the image.
+   - **y1 (Left-Top Corner)**: The text '14cm*10' is positioned above the price '292元', which is roughly around 30% from the top of the image.
+   - **x2 (Right-Bottom Corner)**: The text '14cm*10' ends slightly to the left of the price '292元'. Let's estimate it to be around 70% from the left edge of the image.
+   - **y2 (Right-Bottom Corner)**: The text '14cm*10' is positioned just above the price '292元', which is roughly around 40% from the top of the image.
+
+Based on these estimations, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) = (0.60, 0.30, 0.70, 0.40)
+
+These coordinates represent the left-top and right-bottom corners of the bounding box around the text '14cm*10'.

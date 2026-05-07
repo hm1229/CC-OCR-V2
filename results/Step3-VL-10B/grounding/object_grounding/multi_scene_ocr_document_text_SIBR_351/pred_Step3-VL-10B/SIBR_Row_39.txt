@@ -1,0 +1,167 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看COMPANY NAME：发票顶部的Weiwangming Technology Co., Ltd.，还有下面的维旺明科技有限公司。先看顶部的公司名，坐标是顶部的标题。然后ADDRESS：公司地址是8403 Carol Avenue Apt. 999 Gomezzide, KS 68439，还有Invoice to里的地址58269 Willis Parkways Suite 691 East Stephanie, MS 44887。需要确认哪些是ADDRESS类别。题目里的ADDRESS应该是指公司的地址，比如顶部的公司地址，以及Invoice to的地址？不过看类别里的ADDRESS，可能需要看出现的地址。先列出来：
+
+1. COMPANY NAME：顶部的Weiwangming Technology Co., Ltd.，还有下面的“维旺明科技有限公司”（中文）。先看顶部的英文公司名，bbox是顶部的标题部分。比如“Weiwangming Technology Co., Ltd.”的区域，坐标大概是x从220到770左右，y在顶部。另外下面的“维旺明科技有限公司”也是公司名，属于中文的公司名。
+
+然后Invoice No.：SF-210908，位置在Invoice No.标签右边。
+
+DATE：2021/9/8，对应DATE标签。
+
+TERMS：C&F ICD TUGLAKABAD NEW DELHI SEAPORT，对应TERMS标签。
+
+TERMS OF PAYMENT：T/T，有两个地方？看发票里TERMS OF PAYMENT:T/T，还有右边的SHIPPING MARK:CDIL，COUNTRY OF ORIGIN:（空）。
+
+SHIPPING MARK：CDIL，对应SHIPPING MARK标签。
+
+QTY PCS：列标题是QTY PCS，下面的数值比如1,000,000等是数量，但QTY PCS作为列标题，或者看每个行的QTY PCS单元格？不过类别是QTY PCS，可能指的是列标题或者数值？看题目里的QTY PCS是类别，所以列标题的QTY PCS是该类别。
+
+DESCRIPTION：列标题是DESCRIPTION，下面的行比如1N4007S等是描述内容，所以DESCRIPTION列的内容属于该类别。
+
+CONTRACT NO：列标题是CONTRACT NO，下面的BUI256、CUI047等是合同号，属于CONTRACT NO类别。
+
+Unit Price (USD)：列标题是Unit Price (USD)，下面的0.00480等是单价，属于该类别。
+
+Amount (USD)：列标题是Amount (USD)，下面的4800.00等是金额，属于该类别。
+
+FAX：(11) 92646155888，对应FAX标签。
+
+TEL：(18) 55581552969，对应TEL标签。
+
+TITLE：发票的标题是INVOICE，所以TITLE是INVOICE这个标题。
+
+现在逐个分析：
+
+1. COMPANY NAME：顶部的“Weiwangming Technology Co., Ltd.”，bbox大概是从x=225到x=770，y=20到y=40左右。另外下面的“维旺明科技有限公司”也是公司名，中文的，bbox在红色印章右边，文字是“维旺明科技有限公司”。
+
+2. ADDRESS：公司地址是“8403 Carol Avenue Apt. 999 Gomezzide, KS 68439”，在公司名下面。Invoice to的地址是“58269 Willis Parkways Suite 691 East Stephanie, MS 44887”，属于Invoice to的地址，也是ADDRESS类别。
+
+3. Amount (USD)：列中的金额，比如4800.00、11600.00，以及总计16400.00。每个金额单元格都是Amount (USD)。另外总计行的USD16400.00也是。
+
+4. CONTRACT NO：列中的BUI256、CUI047等，对应每个行的CONTRACT NO列的值。
+
+5. DATE：2021/9/8，对应DATE标签右边的内容。
+
+6. DESCRIPTION：列中的1N4007S、1N4007等，是产品描述。
+
+7. FAX：(11) 92646155888，对应FAX标签右边的内容。
+
+8. Invoice No.：SF-210908，对应Invoice No.标签右边的内容。
+
+9. QTY PCS：列中的1,000,000、2,000,000等数量，以及总计3,000,000PCS。
+
+10. SHIPPING MARK：CDIL，对应SHIPPING MARK标签右边的内容。
+
+11. TEL：(18) 55581552969，对应TEL标签右边的内容。
+
+12. TERMS：C&F ICD TUGLAKABAD NEW DELHI SEAPORT，对应TERMS标签右边的内容。
+
+13. TERMS OF PAYMENT：T/T，对应TERMS OF PAYMENT标签右边的内容。
+
+14. TITLE：INVOICE，发票的标题。
+
+15. Unit Price (USD)：列中的0.00480、0.00580等单价，以及总计行可能没有单价，但列标题是Unit Price (USD)。
+
+现在需要为每个类别找到对应的bbox。需要注意每个元素的位置，比如：
+
+- COMPANY NAME（顶部英文）：[225, 20, 770, 45]（大概，看图片中的公司名位置）
+- COMPANY NAME（中文）：在红色印章右边，“维旺明科技有限公司”，bbox大概在印章右侧，文字区域。
+- ADDRESS（公司地址）：8403 Carol Avenue Apt. 999 Gomezzide, KS 68439，位于公司名下方，TEL和FAX上方。
+- ADDRESS（Invoice to地址）：58269 Willis Parkways Suite 691 East Stephanie, MS 44887，位于Invoice to标签右侧。
+- Amount (USD)：比如4800.00的单元格，11600.00的单元格，总计16400.00的单元格。
+- CONTRACT NO：BUI256、CUI047等，对应每个行的CONTRACT NO列。
+- DATE：2021/9/8，位于DATE标签右侧。
+- DESCRIPTION：1N4007S、1N4007等，对应DESCRIPTION列的内容。
+- FAX：(11) 92646155888，位于FAX标签右侧。
+- Invoice No.：SF-210908，位于Invoice No.标签右侧。
+- QTY PCS：1,000,000、2,000,000等数量，以及总计3,000,000PCS。
+- SHIPPING MARK：CDIL，位于SHIPPING MARK标签右侧。
+- TEL：(18) 55581552969，位于TEL标签右侧。
+- TERMS：C&F ICD TUGLAKABAD NEW DELHI SEAPORT，位于TERMS标签右侧。
+- TERMS OF PAYMENT：T/T，位于TERMS OF PAYMENT标签右侧。
+- TITLE：INVOICE，位于发票的中间大标题。
+- Unit Price (USD)：0.00480、0.00580等，对应Unit Price (USD)列的内容。
+
+现在需要将这些元素逐一列出，确保每个类别都有对应的bbox。需要注意有些类别可能有多个实例，比如Amount (USD)有多个金额值，但题目要求是“detect all objects matching these categories”，所以每个实例都要列吗？还是每个类别只要有一个？不，应该是每个出现的该类别对象。比如Amount (USD)列中的每个金额单元格都是，还有总计的金额。但可能需要看题目中的要求，是“all objects”，所以每个实例都要。
+
+不过可能更实际的是，先识别每个类别的主要实例，比如：
+
+现在开始构建JSON数组：
+
+1. COMPANY NAME（顶部英文）：[222, 22, 772, 48]，label: COMPANY NAME
+2. COMPANY NAME（中文）：[510, 690, 660, 715]（大概，看“维旺明科技有限公司”的位置），label: COMPANY NAME
+3. ADDRESS（公司地址）：[225, 48, 685, 65]，label: ADDRESS
+4. ADDRESS（Invoice to地址）：[115, 145, 485, 165]，label: ADDRESS
+5. Amount (USD)（4800.00）：[650, 700, 750, 720]（对应1N4007S行的Amount列），label: Amount (USD)
+6. Amount (USD)（11600.00）：[650, 725, 750, 745]（对应1N4007行的Amount列），label: Amount (USD)
+7. Amount (USD)（总计16400.00）：[750, 930, 880, 950]，label: Amount (USD)
+8. CONTRACT NO（BUI256）：[250, 700, 320, 720]，label: CONTRACT NO
+9. CONTRACT NO（CUI047）：[250, 725, 320, 745]，label: CONTRACT NO
+10. DATE（2021/9/8）：[115, 155, 225, 175]，label: DATE
+11. DESCRIPTION（1N4007S）：[100, 700, 180, 720]，label: DESCRIPTION
+12. DESCRIPTION（1N4007）：[100, 725, 180, 745]，label: DESCRIPTION
+13. FAX（(11) 92646155888）：[380, 30, 590, 48]，label: FAX
+14. Invoice No.（SF-210908）：[115, 175, 225, 195]，label: Invoice No.
+15. QTY PCS（1,000,000）：[400, 700, 480, 720]，label: QTY PCS
+16. QTY PCS（2,000,000）：[400, 725, 480, 745]，label: QTY PCS
+17. QTY PCS（总计3,000,000PCS）：[400, 930, 550, 950]，label: QTY PCS
+18. SHIPPING MARK（CDIL）：[450, 145, 500, 165]，label: SHIPPING MARK
+19. TEL（(18) 55581552969）：[225, 30, 380, 48]，label: TEL
+20. TERMS（C&F ICD TUGLAKABAD NEW DELHI SEAPORT）：[115, 185, 525, 205]，label: TERMS
+21. TERMS OF PAYMENT（T/T）：[450, 145, 500, 165]？不，看TERMS OF PAYMENT:T/T在Invoice to右边，所以是[500, 140, 540, 160]，label: TERMS OF PAYMENT
+22. TITLE（INVOICE）：[450, 220, 550, 245]，label: TITLE
+23. Unit Price (USD)（0.00480）：[500, 700, 580, 720]，label: Unit Price (USD)
+24. Unit Price (USD)（0.00580）：[500, 725, 580, 745]，label: Unit Price (USD)
+
+现在需要检查每个元素的准确性，比如TERMS OF PAYMENT在发票中是“TERMS OF PAYMENT:T/T”，位于Invoice to的右侧，所以bbox是对应那个T/T的位置。SHIPPING MARK是CDIL，位于COUNTRY OF ORIGIN的上方，所以SHIPPING MARK:CDIL，bbox是CDIL的位置。
+
+另外，GST NO#等是其他信息，不属于要求的类别，所以忽略。
+
+现在整理所有需要的类别，确保没有遗漏：
+
+要求的类别列表：ADDRESS, Amount (USD), COMPANY NAME, CONTRACT NO, DATE, DESCRIPTION, FAX, Invoice No., QTY PCS, SHIPPING MARK, TEL, TERMS, TERMS OF PAYMENT, TITLE, Unit Price (USD)。
+
+现在逐个确认每个类别都有对应的条目：
+
+- ADDRESS：两个地址（公司地址和Invoice to地址）→ 两个条目
+- Amount (USD)：三个金额（4800, 11600, 16400）→ 三个条目
+- COMPANY NAME：两个（英文和中文）→ 两个条目
+- CONTRACT NO：两个（BUI256, CUI047）→ 两个条目
+- DATE：一个（2021/9/8）→ 一个条目
+- DESCRIPTION：两个（1N4007S, 1N4007）→ 两个条目
+- FAX：一个→ 一个条目
+- Invoice No.：一个（SF-210908）→ 一个条目
+- QTY PCS：三个（1M, 2M, 3M）→ 三个条目
+- SHIPPING MARK：一个（CDIL）→ 一个条目
+- TEL：一个→ 一个条目
+- TERMS：一个（C&F...）→ 一个条目
+- TERMS OF PAYMENT：一个（T/T）→ 一个条目
+- TITLE：一个（INVOICE）→ 一个条目
+- Unit Price (USD)：两个（0.00480, 0.00580）→ 两个条目
+
+现在需要为每个条目确定准确的bbox。由于是图像，需要估计坐标，但尽量合理。
+
+现在开始编写JSON数组：
+
+[
+  {"bbox_2d": [222, 22, 772, 48], "label": "COMPANY NAME"},
+  {"bbox_2d": [510, 690, 660, 715], "label": "COMPANY NAME"},
+  {"bbox_2d": [225, 48, 685, 65], "label": "ADDRESS"},
+  {"bbox_2d": [115, 145, 485, 165], "label": "ADDRESS"},
+  {"bbox_2d": [650, 700, 750, 720], "label": "Amount (USD)"},
+  {"bbox_2d": [650, 725, 750, 745], "label": "Amount (USD)"},
+  {"bbox_2d": [750, 930, 880, 950], "label": "Amount (USD)"},
+  {"bbox_2d": [250, 700, 320, 720], "label": "CONTRACT NO"},
+  {"bbox_2d": [250, 725, 320, 745], "label": "CONTRACT NO"},
+  {"bbox_2d": [115, 155, 225, 175], "label": "DATE"},
+  {"bbox_2d": [100, 700, 180, 720], "label": "DESCRIPTION"},
+  {"bbox_2d": [100, 725, 180, 745], "label": "DESCRIPTION"},
+  {"bbox_2d": [380, 30, 590, 48], "label": "FAX"},
+  {"bbox_2d": [115, 175, 225, 195], "label": "Invoice No."},
+  {"bbox_2d": [400, 700, 480, 720], "label": "QTY PCS"},
+  {"bbox_2d": [400, 725, 480, 745], "label": "QTY PCS"},
+  {"bbox_2d": [400, 930, 550, 950], "label": "QTY PCS"},
+  {"bbox_2d": [450, 145, 500, 165], "label": "SHIPPING MARK"},
+  {"bbox_2d": [225, 30, 380, 48], "label": "TEL"},
+  {"bbox_2d": [115, 185, 525, 205], "label": "TERMS"},
+  {"bbox_2d": [500, 140, 540, 160], "label": "TERMS OF PAYMENT"},

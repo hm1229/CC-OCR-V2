@@ -1,0 +1,117 @@
+```latex
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{www.awinic.com.cn}
+\fancyfoot[C]{20}
+\fancyfoot[R]{Copyright \copyright\ 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD}
+
+\begin{document}
+
+\begin{flushleft}
+    \textbf{\huge awinic} \quad {\large 上海艾为电子技术股份有限公司} \\
+    \hspace{2.5cm} {\small shanghai awinic technology co., ltd.}
+\end{flushleft}
+
+\vspace{-1.5cm}
+\begin{flushright}
+    \textbf{\Large AW36526} \\
+    July 2019 V1.3
+\end{flushright}
+
+\vspace{1cm}
+
+\section*{REGISTER DETAILED DESCRIPTION}
+
+\subsection*{$\diamondsuit$ Chip ID Register (0x00), default(0x17)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\ \hline
+\multicolumn{8}{|l|}{\textbf{Chip ID: ``0001 0111''}} \\
+\multicolumn{8}{|l|}{Write 55H To Reset All Registers} \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\subsection*{$\diamondsuit$ Enable Register (0x01), default(0x00)}
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Bit 7}} & \multicolumn{1}{c|}{\textbf{Bit 6}} & \multicolumn{1}{c|}{\textbf{Bit 5}} & \multicolumn{1}{c|}{\textbf{Bit 4}} & \multicolumn{1}{c|}{\textbf{Bit 3}} & \multicolumn{1}{c|}{\textbf{Bit 2}} & \multicolumn{1}{c|}{\textbf{Bit 1}} & \multicolumn{1}{c|}{\textbf{Bit 0}} \\ \hline
+\begin{tabular}[t]{@{}l@{}}\textbf{Strobe Type}\\ 0=Level\\ Triggered\\ (Default)\\ 1=Edge\\ Triggered\end{tabular} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{Strobe}\\ \textbf{Enable}\\ 0=Disabled\\ (Default)\\ 1=Enabled\end{tabular} & 
+\multicolumn{2}{l|}{\begin{tabular}[t]{@{}l@{}}\textbf{Mode Bits: M1, M0}\\ 00=Standby (Default)\\ 01=IR Drive\\ 10=Torch\\ 11=Flash\end{tabular}} & 
+\textbf{RFU} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{LED3 Enable}\\ 0=OFF\\ (Default)\\ 1=ON\end{tabular} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{LED2 Enable}\\ 0=OFF\\ (Default)\\ 1=ON\end{tabular} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{LED1 Enable}\\ 0=OFF\\ (Default)\\ 1=ON\end{tabular} \\ \hline
+\end{tabular}
+
+\vspace{0.3cm}
+\noindent \textbf{Note:} \\
+In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to ensure proper turn-on of the device.
+
+\vspace{0.5cm}
+
+\subsection*{$\diamondsuit$ IVFM Register (0x02) , default(0xE1)}
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Bit 7}} & \multicolumn{1}{c|}{\textbf{Bit 6}} & \multicolumn{1}{c|}{\textbf{Bit 5}} & \multicolumn{1}{c|}{\textbf{Bit 4}} & \multicolumn{1}{c|}{\textbf{Bit 3}} & \multicolumn{1}{c|}{\textbf{Bit 2}} & \multicolumn{1}{c|}{\textbf{Bit 1}} & \multicolumn{1}{c|}{\textbf{Bit 0}} \\ \hline
+\begin{tabular}[t]{@{}l@{}}\textbf{LEDX Enable Setting}\\ 0= if LED1 or LED2 is\\ Enabled, LED3 is\\ Disabled Internally\\ 1=No Limitation\\ (Default)\end{tabular} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{LED3 Pin}\\ \textbf{Short Fault}\\ \textbf{Detect}\\ 0=Disabled\\ 1=Enabled\\ (Default)\end{tabular} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{LED1/2 Pin}\\ \textbf{Short Fault}\\ \textbf{Detect}\\ 0=Disabled\\ 1=Enabled\\ (Default)\end{tabular} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{UVLO Enable}\\ 0=Disabled\\ (Default)\\ 1=Enabled\end{tabular} & 
+\multicolumn{3}{l|}{\begin{tabular}[t]{@{}l@{}}\textbf{IVFM Levels}\\ 000=2.9 V (Default)\\ 001=3.0 V\\ 010=3.1 V\\ 011=3.2 V\\ 100=3.3 V\\ 101=3.4 V\\ 110=3.5 V\\ 111=3.6 V\end{tabular}} & 
+\begin{tabular}[t]{@{}l@{}}\textbf{IVFM Enable}\\ 0=Disabled\\ 1=Enabled\\ (Default)\end{tabular} \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\subsection*{$\diamondsuit$ LED1 Flash Brightness Register (0x03) , default(0x7F)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\ \hline
+\multicolumn{8}{|l|}{\textbf{LED1 Flash Brightness Levels}} \\
+\multicolumn{8}{|l|}{$I_{FLASH}(mA) \approx (Brightness Code * 3.91mA) + 3.91mA$} \\
+\multicolumn{8}{|l|}{} \\
+\multicolumn{8}{|l|}{00000000=3.91 mA} \\
+\multicolumn{8}{|l|}{............} \\
+\multicolumn{8}{|l|}{01111111=500 mA (Default)} \\
+\multicolumn{8}{|l|}{............} \\
+\multicolumn{8}{|l|}{11111111=1.0 A} \\ \hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\subsection*{$\diamondsuit$ LED1 Torch Brightness Register (0x04) , default(0x7F)}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Bit 7} & \textbf{Bit 6} & \textbf{Bit 5} & \textbf{Bit 4} & \textbf{Bit 3} & \textbf{Bit 2} & \textbf{Bit 1} & \textbf{Bit 0} \\ \hline
+\multicolumn{8}{|l|}{\textbf{LED1 Torch Brightness Levels}} \\
+\multicolumn{8}{|l|}{$I_{TORCH}(mA) \approx (Brightness Code * 1.46mA) + 1.46mA$} \\
+\multicolumn{8}{|l|}{} \\
+\multicolumn{8}{|l|}{00000000=1.46 mA} \\
+\multicolumn{8}{|l|}{............} \\
+\multicolumn{8}{|l|}{01111111=187.5 mA (Default)} \\
+\multicolumn{8}{|l|}{............} \\
+\multicolumn{8}{|l|}{11111111=375 mA} \\ \hline
+\end{tabular}
+
+\end{document}
+```

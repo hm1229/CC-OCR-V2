@@ -1,0 +1,22 @@
+I need to find the text '元' in the image.
+
+Looking at the receipt, in the row with "西药费", I can see the columns: 项目名称 | 数量/单位 | 金额(元) | 备注
+
+The text '元' appears in the 数量/单位 column of the 西药费 row, after the number "1".
+
+Looking at the position of '元' in the table row for 西药费:
+- It appears to be roughly in the middle-left area of the document
+- The row is at approximately y=240 out of the image height
+- The '元' text appears after "1" in the unit column
+
+Estimating the coordinates:
+- The image appears to be approximately in the western portion of the table
+- '元' is located at roughly x=370-400, y=230-255 in the image
+
+Normalizing (image dimensions appear to be about 1400 x 870 pixels):
+- x1 ≈ 370/1400 * 1000 ≈ 264
+- y1 ≈ 230/870 * 1000 ≈ 264
+- x2 ≈ 400/1400 * 1000 ≈ 286
+- y2 ≈ 255/870 * 1000 ≈ 293
+
+(264, 264, 286, 293)

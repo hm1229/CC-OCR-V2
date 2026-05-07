@@ -1,0 +1,16 @@
+```latex
+\begin{aligned}
+& E[[\psi_3(X, A, Z, M, Y) S_\theta(O)]] \\
+= & E[\psi_3(X, A, Z, M, Y) (S_\theta(X) + S_\theta(A|X) + S_\theta(Z|X, A) + S_\theta(M|X, A, Z) + S_\theta(Y|X, A, Z, M))] \\
+= & E[S_\theta(X) + S_\theta(A|X) + S_\theta(Z|X, A) + S_\theta(M|X, A, Z)] \underbrace{E[\psi_3(X, A, Z, M, Y) | X, A, Z, M]}_{=0} \\
+& + E[\psi_3(X, A, Z, M, Y) S_\theta(Y|X, A, Z, M)] \\
+= & E[\psi_3(X, A, Z, M, Y) S_\theta(Y|X, A, Z, M)] \\
+= & E \left[ \frac{\mathbb{I}(A=a) \mathbb{I}(M=m) Y S_\theta(Y|X, A, Z, M)}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \right] \\
+& - E \left[ \frac{\mathbb{I}(A=a) \mathbb{I}(M=m) E[Y|X, A=a, Z, M=m]}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \underbrace{E[S_\theta(Y|X, A, Z, M) | X, A, Z, M]}_{=0} \right] \\
+= & E \left\{ E \left[ \frac{\mathbb{I}(A=a) \mathbb{I}(M=m) Y S_\theta(Y|X, A, Z, M)}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \middle| X, A, Z, M=m \right] Pr[M=m|X, A, Z] \right\} \\
+= & E_{X, A} E \left[ \frac{\mathbb{I}(A=a) Pr[M=m|X, A, Z] E[Y S_\theta(Y|X, A, Z, M) | X, A, Z, M=m]}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \middle| X, A \right] \\
+= & E_X \left\{ E \left[ \frac{\mathbb{I}(A=a) Pr[M=m|X, A, Z] E[Y S_\theta(Y|X, A, Z, M) | X, A, Z, M=m]}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \middle| X, A=a \right] Pr[A=a|X] \right\} \\
+= & E_X \{ E [ E[Y S_\theta(Y|X, A, Z, M) | X, A, Z, M=m] | X, A=a ] \} \\
+= & \phi_3
+\end{aligned}
+```

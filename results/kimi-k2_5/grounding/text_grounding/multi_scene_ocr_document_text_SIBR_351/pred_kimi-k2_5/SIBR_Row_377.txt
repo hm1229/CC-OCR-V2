@@ -1,0 +1,37 @@
+I need to find all instances of '0.00' in the text and provide their coordinates.
+
+Looking at the image, I can identify multiple '0.00' values in the lower section of the receipt:
+
+1. First '0.00' - next to "退休补充支付" (Retirement supplementary payment)
+2. Second '0.00' - next to "残军补助支付" (Disabled military subsidy payment)
+3. Third '0.00' - next to "单位补充险[原公疗]支付" (Unit supplementary insurance payment)
+4. Fourth '0.00' - in "本次支付后个人账户余额" (Personal account balance after this payment)
+5. Fifth '0.00' - next to "自付二" (Self-payment 2)
+6. Sixth '0.00' - next to "自费" (Self-funded)
+
+Let me provide the coordinates for these '0.00' instances:
+
+(0.344, 0.694) (0.370, 0.694) # 退休补充支付
+(0.344, 0.727) (0.370, 0.727) # 残军补助支付
+(0.344, 0.760) (0.370, 0.760) # 单位补充险支付
+(0.610, 0.760) (0.636, 0.760) # 本次支付后个人账户余额
+(0.876, 0.727) (0.902, 0.727) # 自付二
+(0.876, 0.760) (0.902, 0.760) # 自费
+
+Or more precisely as bounding boxes with width/height:
+
+(344, 694, 370, 720)
+(344, 727, 370, 753)
+(344, 760, 370, 786)
+(610, 760, 636, 786)
+(876, 727, 902, 753)
+(876, 760, 902, 786)
+
+Normalized to 0-1000:
+
+(0.344, 0.694, 0.370, 0.720)
+(0.344, 0.727, 0.370, 0.753)
+(0.344, 0.760, 0.370, 0.786)
+(0.610, 0.760, 0.636, 0.786)
+(0.876, 0.727, 0.902, 0.753)
+(0.876, 0.760, 0.902, 0.786)

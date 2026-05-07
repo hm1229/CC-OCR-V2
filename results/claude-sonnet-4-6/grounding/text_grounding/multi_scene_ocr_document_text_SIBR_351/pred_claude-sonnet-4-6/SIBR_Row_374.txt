@@ -1,0 +1,27 @@
+I need to find all instances of '1.00' in the document.
+
+Looking at the itemized list at the bottom of the invoice, I can see the quantity column (数量) with values of 1.00 for each line item.
+
+The entries appear to be:
+- 治疗费裂隙灯检查: / 3.00 1.00 3.00
+- 治疗费角膜荧光素染色检查: / 10.00 1.00 10.00
+- 化验费沙眼衣原体测定(进口试剂): / 70.00 1.00 70.00
+- 治疗费冲洗结膜囊: / 4.00 1.00 4.00
+
+The '1.00' values appear in the quantity column. Looking at the positions:
+
+The first '1.00' in the quantity column for the first row (治疗费裂隙灯检查):
+(x1, y1, x2, y2)
+
+The '1.00' values are in the 数量 (quantity) column. They appear to be around x: 490-540 range, and the rows are at approximately y: 460, 490, 520, 550.
+
+Let me estimate the coordinates more carefully based on the image dimensions:
+
+First '1.00' (row 1): approximately x1=490, y1=453, x2=535, y2=470
+Second '1.00' (row 2): approximately x1=490, y1=480, x2=535, y2=497
+Third '1.00' (row 3): approximately x1=490, y1=507, x2=535, y2=524
+Fourth '1.00' (row 4): approximately x1=490, y1=534, x2=535, y2=551
+
+For the first instance of '1.00':
+
+(490, 453, 535, 470)

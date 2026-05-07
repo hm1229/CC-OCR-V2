@@ -1,0 +1,39 @@
+I need to find all instances of '13.10' in the text and provide their coordinates.
+
+Looking at the receipt, I can identify three instances of '13.10':
+
+1. First instance: After "Cheese Matcha" - the price "13.10 SR"
+2. Second instance: After "SubTotal" - "13.10"
+3. Third instance: "Net Total 13.10"
+
+Let me estimate the coordinates for each:
+
+1. First '13.10' (price of Cheese Matcha):
+   - Located in the right side of the item line
+   - (0.580, 0.482, 0.615, 0.498)
+
+2. Second '13.10' (SubTotal):
+   - Located to the right of "SubTotal"
+   - (0.580, 0.518, 0.615, 0.533)
+
+3. Third '13.10' (Net Total):
+   - Located to the right of "Net Total", more prominent
+   - (0.542, 0.531, 0.610, 0.547)
+
+4. Fourth '13.10' (in Tax Summary Amount column):
+   - Located in the Tax Summary section
+   - (0.525, 0.617, 0.563, 0.630)
+
+Let me refine these based on careful reading of the receipt layout:
+
+(0.580, 0.483, 0.614, 0.497) # First instance - Cheese Matcha price
+(0.580, 0.518, 0.614, 0.532) # Second instance - SubTotal
+(0.541, 0.530, 0.610, 0.547) # Third instance - Net Total
+(0.524, 0.616, 0.563, 0.630) # Fourth instance - Tax Summary Amount
+
+The most prominent one is the Net Total. Let me provide the coordinates for all clear instances:
+
+(0.580, 0.483, 0.614, 0.497)
+(0.580, 0.518, 0.614, 0.532)
+(0.541, 0.530, 0.610, 0.547)
+(0.524, 0.616, 0.563, 0.630)

@@ -1,0 +1,290 @@
+Got it, let's tackle this table conversion. First, I need to analyze the structure of the table in the image. Let's break down the columns and rows.
+
+First, the top part: the main headers. The left section has "DP" with a sub-header "PTB" which has UAS and LAS. Then the right section is "SDP" with sub-headers DM (ID, OOD), PAS (ID, OOD), PSD (ID, OOD). Let's check the rows.
+
+First, identify the rows. The rows are:
+
+1. Zhou and Zhao (2019)†
+2. Mrini et al. (2020)†
+3. Zhang et al. (2020)
+4. Wang and Tu (2020)
+5. XLNET+Fine-tune
+6. ACE+Fine-tune
+
+Then on the right side, the rows are:
+
+- He and Choi (2020)‡
+- D & M (2018)
+- Wang et al. (2019)
+- F & G (2020)
+- XLNet+Fine-tune
+- ACE+Fine-tune
+
+Now, let's map the columns. Let's list all columns:
+
+Left section (DP/PTB):
+- First column: the reference (row labels)
+- Then DP/PTB: UAS, LAS
+
+Right section (SDP):
+- DM: ID, OOD
+- PAS: ID, OOD
+- PSD: ID, OOD
+
+So total columns: 1 (row label) + 2 (UAS, LAS) + 6 (DM ID, DM OOD, PAS ID, PAS OOD, PSD ID, PSD OOD) = 9 columns.
+
+Now, let's check the merged cells. The top header: "DP" spans two columns (UAS and LAS under PTB). Then "SDP" spans six columns (DM, PAS, PSD each with two sub-columns). Let's structure the header rows.
+
+First header row (topmost):
+- The first cell is empty? Wait, no. Let's look at the image's top structure.
+
+The image's top has:
+
+- First column group: DP with sub-header PTB, which has UAS and LAS. So the first header row has "DP" spanning two columns (UAS and LAS), then "SDP" spanning six columns (DM, PAS, PSD each with two). Then the second header row: under DP/PTB, UAS and LAS; under SDP, DM ID, DM OOD, PAS ID, PAS OOD, PSD ID, PSD OOD.
+
+So the header has two rows:
+
+Row 1 (main headers):
+- DP (spans 2 columns: UAS, LAS)
+- SDP (spans 6 columns: DM (2), PAS (2), PSD (2))
+
+Row 2 (sub-headers):
+- UAS, LAS (under DP/PTB)
+- DM ID, DM OOD, PAS ID, PAS OOD, PSD ID, PSD OOD (under SDP)
+
+Now, let's build the HTML table.
+
+Start with <table> tag.
+
+First, the header rows:
+
+First header row (<tr>):
+- <th>DP</th> (colspan=2)
+- <th>SDP</th> (colspan=6)
+
+Second header row (<tr>):
+- <th>PTB</th> (colspan=2? Wait no, original image: the first column group is DP with PTB as a sub-header. Let's check the image again.
+
+Looking at the image:
+
+The leftmost part has "DP" with a box around it, and below DP is "PTB", which has UAS and LAS. So the structure is:
+
+- DP is a main header, under which is PTB (a sub-header) with UAS and LAS as sub-sub-headers.
+
+So the first header row (top) has "DP" spanning two columns (UAS, LAS), and "SDP" spanning six columns (DM, PAS, PSD each with two).
+
+Then the second header row has "PTB" spanning two columns (UAS, LAS), and then the SDP sub-headers: DM (ID, OOD), PAS (ID, OOD), PSD (ID, OOD).
+
+Wait, the image's header:
+
+Top row: DP (with a box, covering UAS and LAS columns) and SDP (covering the rest: DM, PAS, PSD columns, each with two sub-columns).
+
+Second row: under DP, it's PTB, which has UAS and LAS. Under SDP, it's DM (ID, OOD), PAS (ID, OOD), PSD (ID, OOD).
+
+So the header rows:
+
+Row 1:
+- <th colspan="2">DP</th>
+- <th colspan="6">SDP</th>
+
+Row 2:
+- <th>PTB</th>
+- <th>UAS</th>
+- <th>LAS</th>
+- <th>DM</th>
+- <th>DM</th> → Wait no, no. Wait, SDP's sub-headers are DM (ID, OOD), PAS (ID, OOD), PSD (ID, OOD). So under SDP, the second row has DM ID, DM OOD, PAS ID, PAS OOD, PSD ID, PSD OOD.
+
+Wait, let's count the columns in the image. Let's list all columns:
+
+1. Reference (row label)
+2. UAS (under DP/PTB)
+3. LAS (under DP/PTB)
+4. DM ID (under SDP/DM)
+5. DM OOD (under SDP/DM)
+6. PAS ID (under SDP/PAS)
+7. PAS OOD (under SDP/PAS)
+8. PSD ID (under SDP/PSD)
+9. PSD OOD (under SDP/PSD)
+
+Yes, that's 9 columns. So the first header row (top) has:
+
+- Columns 2-3: DP (colspan=2)
+- Columns 4-9: SDP (colspan=6)
+
+Then the second header row has:
+
+- Column 2: PTB (under DP)
+- Column 3: (no, wait, column 2 is UAS, column 3 is LAS. So the second header row:
+
+- Column 1: (empty, since the first column is the row label, which doesn't have a header)
+- Column 2: UAS (under DP/PTB)
+- Column 3: LAS (under DP/PTB)
+- Column 4: DM ID (under SDP/DM)
+- Column 5: DM OOD (under SDP/DM)
+- Column 6: PAS ID (under SDP/PAS)
+- Column 7: PAS OOD (under SDP/PAS)
+- Column 8: PSD ID (under SDP/PSD)
+- Column 9: PSD OOD (under SDP/PSD)
+
+Wait, the first column (row labels) doesn't have a header, so the header rows start from column 2. Let's check the image: the first column is the list of references (Zhou and Zhao, etc.), so that's a data column, not a header. Then the headers are for columns 2-9.
+
+So the header rows:
+
+First header row (topmost):
+- Columns 2-3: DP (colspan=2)
+- Columns 4-9: SDP (colspan=6)
+
+Second header row:
+- Columns 2: PTB (under DP)
+- Columns 3: (no, column 2 is UAS, column 3 is LAS. Wait, no. Let's look at the image's header:
+
+In the image, above the UAS and LAS, there's a "PTB" label. So the structure is:
+
+- The "DP" box covers the UAS and LAS columns. Below "DP" is "PTB", which is above UAS and LAS. Then "SDP" is above the DM, PAS, PSD columns, and below SDP are the sub-headers for each (ID, OOD).
+
+So the header has two rows:
+
+Row 1:
+- DP (spans UAS and LAS columns → colspan=2)
+- SDP (spans DM, PAS, PSD columns, each with two sub-columns → colspan=6)
+
+Row 2:
+- PTB (spans UAS and LAS columns → colspan=2? No, PTB is above UAS and LAS, so PTB is a header for the UAS and LAS columns. So row 2 has PTB (colspan=2) for UAS and LAS, then DM (colspan=2) for DM ID and OOD, PAS (colspan=2) for PAS ID and OOD, PSD (colspan=2) for PSD ID and OOD. Wait, that makes sense. Let's check:
+
+Row 1:
+- DP (colspan=2) → covers UAS and LAS
+- SDP (colspan=6) → covers DM (2), PAS (2), PSD (2) → total 6
+
+Row 2:
+- PTB (colspan=2) → under DP, covers UAS and LAS
+- DM (colspan=2) → under SDP, covers DM ID and OOD
+- PAS (colspan=2) → under SDP, covers PAS ID and OOD
+- PSD (colspan=2) → under SDP, covers PSD ID and OOD
+
+Yes, that matches the image. Let's verify the image:
+
+- The left part has "DP" with a box, and below DP is "PTB", which has UAS and LAS below it. So DP is a header spanning UAS and LAS, PTB is a sub-header spanning UAS and LAS.
+
+- The right part has "SDP" as a header, and below SDP are DM, PAS, PSD, each with ID and OOD. So SDP spans DM (2), PAS (2), PSD (2) → 6 columns. Then DM, PAS, PSD are sub-headers each spanning 2 columns (ID and OOD).
+
+So now, the header rows:
+
+First header row (<tr>):
+- <th colspan="2">DP</th>
+- <th colspan="6">SDP</th>
+
+Second header row (<tr>):
+- <th colspan="2">PTB</th>
+- <th colspan="2">DM</th>
+- <th colspan="2">PAS</th>
+- <th colspan="2">PSD</th>
+
+Then, the third header row (<tr>) would be the sub-sub-headers: UAS, LAS, ID, OOD, ID, OOD, ID, OOD. Wait, no. Wait, in the image, the second header row (after DP and SDP) has PTB, then UAS and LAS under PTB. Then under SDP, DM has ID and OOD, PAS has ID and OOD, PSD has ID and OOD. So actually, the image has three header rows? Let's check the image again.
+
+Looking at the image:
+
+The topmost header row has "DP" and "SDP" as main headers.
+
+The second header row has "PTB" under DP, and then "DM", "PAS", "PSD" under SDP.
+
+The third header row has "UAS", "LAS" under PTB, and "ID", "OOD" under each of DM, PAS, PSD.
+
+Yes! That's three header rows. Let's count:
+
+1. Main header row: DP (colspan 2), SDP (colspan 6)
+2. Sub-header row: PTB (colspan 2), DM (colspan 2), PAS (colspan 2), PSD (colspan 2)
+3. Sub-sub-header row: UAS, LAS, ID, OOD, ID, OOD, ID, OOD
+
+Yes, that's correct. Let's check the image:
+
+- The first line of headers: DP and SDP.
+- The second line: PTB (under DP), then DM, PAS, PSD (under SDP).
+- The third line: UAS, LAS (under PTB), then for each of DM, PAS, PSD: ID and OOD.
+
+Yes, that's three header rows. So now, let's structure the HTML with three header rows.
+
+Now, let's list all rows (data rows) and their content.
+
+First, the left section (DP/PTB) rows:
+
+1. Zhou and Zhao (2019)†: UAS=97.2, LAS=95.7
+2. Mrini et al. (2020)†: UAS=97.4, LAS=96.3
+3. Zhang et al. (2020): UAS=96.1, LAS=94.5
+4. Wang and Tu (2020): UAS=96.9, LAS=95.3
+5. XLNET+Fine-tune: UAS=97.0, LAS=95.6
+6. ACE+Fine-tune: UAS=97.2, LAS=95.7 (bold)
+
+Now, the right section (SDP) rows:
+
+1. He and Choi (2020)‡: DM ID=94.6, DM OOD=90.8; PAS ID=96.1, PAS OOD=94.4; PSD ID=86.8, PSD OOD=79.5
+2. D & M (2018): DM ID=94.0, DM OOD=89.7; PAS ID=94.1, PAS OOD=91.3; PSD ID=81.4, PSD OOD=79.6
+3. Wang et al. (2019): DM ID=93.7, DM OOD=88.9; PAS ID=93.9, PAS OOD=90.6; PSD ID=81.0, PSD OOD=79.4
+4. F & G (2020): DM ID=94.4, DM OOD=91.0; PAS ID=95.1, PAS OOD=93.4; PSD ID=82.6, PSD OOD=82.0
+5. XLNet+Fine-tune: DM ID=94.2, DM OOD=90.6; PAS ID=94.8, PAS OOD=93.4; PSD ID=82.7, PSD OOD=81.8
+6. ACE+Fine-tune: DM ID=95.6, DM OOD=92.6; PAS ID=95.8, PAS OOD=94.6; PSD ID=83.8, PSD OOD=83.4 (bold)
+
+Now, we need to map each data row to the columns. Each data row has a reference in the first column, then UAS, LAS, DM ID, DM OOD, PAS ID, PAS OOD, PSD ID, PSD OOD.
+
+Now, let's build the HTML table step by step.
+
+Start with <table> tag.
+
+First, the header rows:
+
+Row 1 (main headers):
+<tr>
+  <th colspan="2">DP</th>
+  <th colspan="6">SDP</th>
+</tr>
+
+Row 2 (sub-headers):
+<tr>
+  <th colspan="2">PTB</th>
+  <th colspan="2">DM</th>
+  <th colspan="2">PAS</th>
+  <th colspan="2">PSD</th>
+</tr>
+
+Row 3 (sub-sub-headers):
+<tr>
+  <th>UAS</th>
+  <th>LAS</th>
+  <th>ID</th>
+  <th>OOD</th>
+  <th>ID</th>
+  <th>OOD</th>
+  <th>ID</th>
+  <th>OOD</th>
+</tr>
+
+Now, the data rows. Let's list each data row:
+
+1. Zhou and Zhao (2019)†:
+   - Ref: Zhou and Zhao (2019)†
+   - UAS: 97.2
+   - LAS: 95.7
+   - DM ID: (empty, since this row is in the left section, right section is empty? Wait no, wait the image shows that the left section (DP/PTB) has rows on the left, and the right section (SDP) has rows on the right. Wait, no, looking at the image, the table is split into two parts: left part (DP/PTB) and right part (SDP). The rows are aligned such that some rows are in the left, some in the right? Wait no, the image shows that the left column has references, and the right part has references. Wait, no, the image's table has two vertical sections: left (DP/PTB) and right (SDP). The rows are such that each row has a reference in the first column, then the DP/PTB columns (UAS, LAS), and then the SDP columns (DM, PAS, PSD with ID, OOD). But in the image, some rows are only in the left section (like Zhou and Zhao, Mrini et al., Zhang et al., Wang and Tu, XLNET+Fine-tune, ACE+Fine-tune) and some rows are only in the right section (He and Choi, D & M, Wang et al., F & G, XLNet+Fine-tune, ACE+Fine-tune). Wait, no, that can't be. Let's check the image again.
+
+Looking at the image:
+
+The left part (under DP/PTB) has rows:
+
+- Zhou and Zhao (2019)†
+- Mrini et al. (2020)†
+- Zhang et al. (2020)
+- Wang and Tu (2020)
+- XLNET+Fine-tune
+- ACE+Fine-tune
+
+The right part (under SDP) has rows:
+
+- He and Choi (2020)‡
+- D & M (2018)
+- Wang et al. (2019)
+- F & G (2020)
+- XLNet+Fine-tune
+- ACE+Fine-tune
+
+Ah, so the table is structured such that the left section (DP/PTB) has its own rows, and the right section (SDP) has its own rows. But in a table, each row should have all columns. So perhaps the image is a two-part table, but in HTML, we need to represent it as a single table where some cells are empty. Let's check the image's layout.
+
+Looking at the image, the leftmost column is the reference, then the DP/PT

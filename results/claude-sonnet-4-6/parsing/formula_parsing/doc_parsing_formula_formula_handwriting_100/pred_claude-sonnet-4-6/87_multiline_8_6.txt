@@ -1,0 +1,21 @@
+$\mathcal{L}(x, s, \hat{\lambda}, q_r, Q_r; Z, t_k, p_k, P_k, \forall k \in [K])$
+
+$= s + \gamma_2 I_{m_1} \cdot Q_r + \sqrt{r_1} \|q_r\|_2 - Z \cdot \left(\sum_{z=1}^{K} (\Delta_z x_z) + \Delta_0\right) - \sum_{k=1}^{K} \begin{bmatrix} t_k & p_k^T \\ p_k & P_k \end{bmatrix} \cdot$
+
+$\begin{bmatrix} s - y_k^0(x) - \lambda_k^T b - y_k(x)^T u + \lambda_k^T A u & \frac{1}{2}(q_r + (U \wedge^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x)))^T \\ \frac{1}{2}(q_r + (U \wedge^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x))) & Q_r \end{bmatrix}$
+
+$= \left(1 - \sum_{k=1}^{K} t_k\right) s - \sum_{k=1}^{K} \left(t_k (Au - b)^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T A^T\right) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^{K} p_k^T q_r$
+
+$+ \left(\gamma_2 I_{m_1} - \sum_{k=1}^{K} p_k\right) \cdot Q_r - \sum_{i=1}^{T} \sum_{j=1}^{T} z_{ij} \left(a_{ij} x + a_{ij}^0\right) + \sum_{k=1}^{K} \left(t_k y_k^0(x) + (t_k u^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T) y_k(x)\right)$
+
+$= \left(1 - \sum_{k=1}^{K} t_k\right) s - \sum_{k=1}^{K} \left(t_k (Au - b)^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T A^T\right) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^{K} p_k^T q_r$
+
+$+ \left(\gamma_2 I_{m_r} - \sum_{k=1}^{K} p_k\right) \cdot Q_r - \sum_{i=1}^{T} \sum_{j=1}^{T} z_{ij} a_{ij} x - \sum_{i=1}^{T} \sum_{j=1}^{T} z_{ij} a_{ij}^0 + \sum_{k=1}^{K} \left(t_k w_k^0 + (t_k u^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T) w_k\right)$
+
+$+ \sum_{k=1}^{K} \left(t_k d_k + (t_k u^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T) d_k\right)$
+
+$= \left(1 - \sum_{k=1}^{K} t_k\right) s - \sum_{k=1}^{K} \left(t_k (Au - b)^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T A^T\right) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^{K} p_k^T q_r$
+
+$+ \left(\gamma_2 I_{m_r} - \sum_{k=1}^{K} p_k\right) \cdot Q_r + \left(\sum_{k=1}^{K} \left(t_k w_k^0 + (t_k u^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T) w_k\right) - \sum_{i=1}^{T} \sum_{j=1}^{T} z_{ij} a_{ij}\right) x$
+
+$+ \sum_{k=1}^{K} \left(t_k d_k^0 + (t_k u^T + p_k^T (U \wedge^{\frac{1}{2}} B)^T) d_k\right) - \sum_{i=1}^{T} \sum_{j=1}^{T} z_{ij} a_{ij}^0$

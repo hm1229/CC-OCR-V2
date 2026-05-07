@@ -1,0 +1,44 @@
+To determine the coordinates of the text '30' in the image, we need to identify the bounding box that contains this text and then normalize these coordinates based on the image's width and height.
+
+1. **Identify the text '30':**
+   The text '30' is located in the date section of the document, specifically under the year and month.
+
+2. **Estimate the bounding box:**
+   By visually inspecting the image, we can approximate the bounding box around the text '30'.
+
+3. **Normalize the coordinates:**
+   The image width and height need to be considered for normalization. Assuming the image dimensions are approximately 1000 pixels wide and 700 pixels tall (these are typical dimensions for such documents), we can normalize the coordinates.
+
+Let's break down the steps:
+
+### Step-by-Step Analysis
+
+1. **Bounding Box Coordinates:**
+   - **Left-top corner (x1, y1):** The text '30' starts around the middle of the date section. Let's approximate this to be around (450, 200).
+   - **Right-bottom corner (x2, y2):** The text '30' ends shortly after, so we can approximate this to be around (500, 250).
+
+2. **Normalization:**
+   - Normalize x1, y1, x2, y2 by dividing by the image width (1000) and height (700).
+
+   \[
+   x1_{normalized} = \frac{450}{1000} = 0.45
+   \]
+   \[
+   y1_{normalized} = \frac{200}{700} \approx 0.286
+   \]
+   \[
+   x2_{normalized} = \frac{500}{1000} = 0.5
+   \]
+   \[
+   y2_{normalized} = \frac{250}{700} \approx 0.357
+   \]
+
+### Final Coordinates
+
+The normalized coordinates of the bounding box for the text '30' are:
+
+\[
+(0.45, 0.286, 0.5, 0.357)
+\]
+
+These coordinates represent the left-top and right-bottom corners of the bounding box containing the text '30' in the image.

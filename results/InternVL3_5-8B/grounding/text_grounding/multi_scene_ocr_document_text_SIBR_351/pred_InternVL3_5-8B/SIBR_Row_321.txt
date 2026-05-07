@@ -1,0 +1,22 @@
+To determine the coordinates of the region containing the text "伍拾叁元叁角零分," we need to carefully analyze the image and identify the bounding box around this text.
+
+1. **Identify the text location:**
+   - The text "伍拾叁元叁角零分" is located in the lower part of the receipt, under the section labeled "合计 (大写):" which means "Total (in words):".
+
+2. **Estimate the bounding box:**
+   - The text is horizontally aligned and spans a moderate width.
+   - The text is positioned above the line that contains the numerical total "¥ 53.3".
+
+3. **Determine the coordinates:**
+   - The receipt image dimensions are approximately 1000 pixels wide and 700 pixels tall.
+   - The text "伍拾叁元叁角零分" is roughly centered horizontally and positioned towards the bottom of the receipt.
+
+Based on visual inspection, the coordinates for the bounding box can be estimated as follows:
+
+- **Left-top corner (x1, y1):** The text starts slightly to the right of the left margin. Let's approximate this to be around 200 pixels from the left and 550 pixels from the top.
+- **Right-bottom corner (x2, y2):** The text ends before the right margin. Let's approximate this to be around 700 pixels from the left and 600 pixels from the top.
+
+Thus, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+(200, 550, 700, 600)

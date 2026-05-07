@@ -1,0 +1,26 @@
+To determine the coordinates of the region containing the text '元', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the Text '元':**
+   The text '元' appears in the section where the total amount is listed. It is located next to the amount "19" under the heading "合计(大写): 壹拾玖元整".
+
+2. **Determine the Bounding Box:**
+   - The left-top corner of the bounding box should be just before the text '元'.
+   - The right-bottom corner of the bounding box should be just after the text '元'.
+
+3. **Estimate the Coordinates:**
+   - The image width and height are approximately 1000 pixels each.
+   - The text '元' is located roughly in the middle-bottom section of the image.
+
+Based on visual inspection, the coordinates can be estimated as follows:
+
+- **Left-Top Corner (x1, y1):** The text '元' starts around 30% from the left and 60% from the top.
+  - x1 ≈ 300
+  - y1 ≈ 600
+
+- **Right-Bottom Corner (x2, y2):** The text '元' ends around 35% from the left and 65% from the top.
+  - x2 ≈ 350
+  - y2 ≈ 650
+
+Thus, the normalized coordinates of the bounding box are:
+
+(300, 600, 350, 650)

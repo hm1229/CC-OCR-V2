@@ -1,0 +1,15 @@
+```latex
+\begin{aligned}
+&\mathbb{E}\left[\psi_{3}(X, A, Z, M, Y) S_{o}(O)\right] \\
+&= \mathbb{E}\left[\psi_{3}(X, A, Z, M, Y)\left(S_{o}(X)+S_{o}(Z \mid X, A)+S_{o}(M \mid X, A, Z)+S_{o}(Y \mid X, A, Z, M)\right)\right] \\
+&= \mathbb{E}\left[S_{o}(X)+S_{o}(A \mid X)+S_{o}(Z \mid X, A)+S_{o}(M \mid X, A, Z)\right] \underbrace{\mathbb{E}\left[\psi_{3}(X, A, Z, M, Y) \mid X, A, Z, M\right]}_{=0} \\
+&\quad + \mathbb{E}\left[\psi_{3}(X, A, Z, M, Y) S_{o}(Y \mid X, A, Z, M)\right] \\
+&= \mathbb{E}\left[\psi_{3}(X, A, Z, M, Y) S_{o}(Y \mid X, A, Z, M)\right] \\
+&= \mathbb{E}\left[\frac{\mathbb{I}(A=a) \mathbb{I}(M=m)}{\operatorname{Pr}[A=a \mid X] \operatorname{Pr}[M=m \mid X, A=a, Z]} S_{o}(Y \mid X, A, Z, M)\right] \\
+&\quad - \mathbb{E}\left[\frac{\mathbb{I}(A=a) \mathbb{I}(M=m) \mathbb{E}[Y \mid X, A=a, Z, M=m]}{\operatorname{Pr}[A=a \mid X] \operatorname{Pr}[M=m \mid X, A=a, Z]} \underbrace{\mathbb{E}\left[S_{o}(Y \mid X, A, Z, M) \mid X, A, Z, M\right]}_{=0}\right] \\
+&= \mathbb{E}\left\{\mathbb{E}\left[\frac{\mathbb{I}(A=a) \mathbb{I}(M=m) Y S_{o}(Y \mid X, A, Z, M)}{\operatorname{Pr}[A=a \mid X] \operatorname{Pr}[M=m \mid X, A=a, Z]} \mid X, A, Z, M=m\right] \operatorname{Pr}[M=m \mid X, A, Z]\right\} \\
+&= \mathbb{E}_{X, A}\left\{\mathbb{E}\left[\frac{\mathbb{I}(A=a) \operatorname{Pr}[M=m \mid X, A, Z] \mathbb{E}[Y S_{o}(Y \mid X, A, Z, M) \mid X, A, Z, M=m]}{\operatorname{Pr}[A=a \mid X] \operatorname{Pr}[M=m \mid X, A=a, Z]} \mid X, A\right]\right\} \\
+&= \mathbb{E}_{X}\left\{\mathbb{E}\left[\mathbb{I}(A=a) \operatorname{Pr}[M=m \mid X, A, Z] \mathbb{E}[Y S_{o}(Y \mid X, A, Z, M) \mid X, A, Z, M=m] \mid X, A=a\right]\right\} \\
+&= \phi_{3}
+\end{aligned}
+```

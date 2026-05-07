@@ -1,0 +1,230 @@
+```latex
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{multicol}
+
+\geometry{margin=0.5in}
+
+\begin{document}
+
+\begin{center}
+\textbf{Formula Sheet for Physics 251}
+\end{center}
+
+\begin{multicols}{3}
+
+\underline{Constants}
+
+$R = 8.3145 \quad \dfrac{\text{J}}{\text{m} \cdot \text{K}}$
+
+$N_a = 6.02 \times 10^{23}$
+
+$k_B = \dfrac{R}{N_a} = 1.38 \times 10^{-23} \quad \dfrac{\text{J}}{\text{m} \cdot \text{K}}$
+
+$e = 1.602 \times 10^{-19}$ C
+
+$k = \dfrac{1}{4\pi\varepsilon_0} = 9 \times 10^9 \quad \dfrac{\text{N} \cdot \text{m}^2}{\text{C}^2}$
+
+$\mu_0 = 4\pi \times 10^{-7} \quad \dfrac{\text{T} \cdot \text{m}}{\text{A}}$
+
+$c = 3 \times 10^8 \quad \dfrac{\text{m}}{\text{s}}$
+
+\underline{Thermal Expansion}
+
+$\Delta L = \alpha L_0 \Delta T$
+
+$\beta = 3\alpha$
+
+\underline{Heat}
+
+$Q = mc\Delta T$
+
+$Q = \pm mL$
+
+$Q = nC_V \Delta T$
+
+$Q = nC_P \Delta T$
+
+\underline{Heat Current}
+
+$H = k\dfrac{A}{L}(T_H - T_C)$
+
+$H = Ae\sigma T^4$
+
+\underline{Quantities}
+
+\underline{Work}
+
+$W = \displaystyle\int_{V_1}^{V_2} P \, dV$
+
+\underline{Isochoric Processes}
+
+$W = 0$
+
+$Q = nC_V \Delta T$
+
+* $\Delta U = nC_V \Delta T$
+
+\vfill\columnbreak
+
+$m_{tot} = nM$
+
+$M = N_a m$
+
+$N = N_a n$
+
+\underline{Ideal gases}
+
+* $PV = nRT$
+
+* $PV = NkT$
+
+* $v_{RMS} = \sqrt{\dfrac{3RT}{M}}$
+
+* $C_V = \dfrac{3}{2}R$ (monatomic)
+
+* $C_V = \dfrac{5}{2}R$ (diatomic)
+
+* $C_P = C_V + R$
+
+\underline{Isobaric Processes}
+
+$W = P\Delta V$
+
+$Q = nC_P \Delta T$
+
+* $\Delta U = nC_V \Delta T$
+
+\underline{Isothermal Processes}
+
+* $W = nRT \ln\left(\dfrac{V_2}{V_1}\right)$
+
+* $Q = nRT \ln\left(\dfrac{V_2}{V_1}\right)$
+
+* $\Delta U = 0$
+
+\underline{Adiabatic Processes}
+
+* $W = -nC_V \Delta T$
+
+$Q = 0$
+
+* $\Delta U = nC_V \Delta T$
+
+* $P_1 V_1^\gamma = P_2 V_2^\gamma$
+
+* $T_1 V_1^{\gamma - 1} = T_2 V_2^{\gamma - 1}$
+
+$\gamma = \dfrac{C_P}{C_V}$
+
+\underline{Cyclic Processes}
+
+$W = Q$
+
+$\Delta U = 0$
+
+\vfill\columnbreak
+
+\underline{Heat Engines}
+
+$W = Q_H + Q_C$
+
+$e = \dfrac{W}{Q_H}$
+
+$e_c = 1 - \dfrac{T_C}{T_H}$
+
+\underline{Refrigerators}
+
+$W = Q_H + Q_C$
+
+$K = \dfrac{|Q_C|}{|W|}$
+
+$K_c = \dfrac{T_C}{T_H - T_C}$
+
+\underline{Force, Field, Energy and Potential}
+
+$\vec{F} = q\vec{E}$
+
+$\Delta U = q\Delta V$
+
+$V_{ab} = \displaystyle\int_a^b \vec{E} \cdot d\vec{l}$
+
+$\vec{E} = -\nabla V$
+
+\underline{1 Point Charge}
+
+$\vec{E} = k\dfrac{q}{r^2}\hat{r}$
+
+$V = k\dfrac{q}{r}$
+
+\underline{2 Point Charges}
+
+$\vec{F} = k\dfrac{q_1 q_2}{r^2}\hat{r}$
+
+$U = k\dfrac{q_1 q_2}{r}$
+
+\underline{Distributed Charge}
+
+$\vec{E} = \displaystyle\int k\dfrac{dq}{r^2}\hat{r}$
+
+$V = \displaystyle\int k\dfrac{dq}{r}$
+
+\end{multicols}
+
+\begin{multicols}{2}
+
+\underline{Many Sources}
+
+$\vec{E}_T = \displaystyle\sum \vec{E}_i$
+
+$U_T = \displaystyle\sum_{pairs} U_{ij}$
+
+\underline{``Elementary'' $\vec{E}$ Fields}
+
+$\vec{E} = k\dfrac{Q}{r^2}\hat{r}$ sphere
+
+$\vec{E} = \dfrac{\lambda}{2\pi\varepsilon_0 r}\hat{r}$ line
+
+$\vec{E} = \dfrac{\sigma}{2\varepsilon_0}\hat{n}$ plane
+
+$\vec{E} = \dfrac{\sigma}{\varepsilon_0}\hat{n}$ conducting surface
+
+\underline{Capacitors}
+
+$C = \dfrac{Q}{V}$
+
+$C_T = \displaystyle\sum C_i$ parallel
+
+$\dfrac{1}{C_T} = \displaystyle\sum \dfrac{1}{C_i}$ series
+
+$U = \dfrac{1}{2}CV^2 = \dfrac{Q^2}{2C} = \dfrac{1}{2}QV$
+
+$\dagger \, C = \varepsilon_0 \dfrac{A}{d}$
+
+$\dagger \, |\vec{E}| = \dfrac{V}{d} = \dfrac{\sigma}{\varepsilon_0}$
+
+\underline{Flux and Gauss's Law}
+
+$\phi = \displaystyle\oint \vec{E} \cdot d\vec{a}$
+
+$\phi_{closed} = \dfrac{Q_{enclosed}}{\varepsilon_0}$
+
+\underline{Current and Current Density}
+
+$I = \dfrac{dq}{dt}$
+
+$I = \displaystyle\iint \vec{J} \cdot d\vec{a}$
+
+$\vec{J} = nq\vec{v}_d$
+
+\end{multicols}
+
+\vspace{0.5em}
+* indicates formulas that are specific to ideal gases
+
+$\dagger$ indicates formulas that are specific to parallel-plate capacitors
+
+\end{document}
+```

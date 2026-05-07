@@ -1,0 +1,30 @@
+To determine the coordinates of the region containing the text '2601', we need to analyze the image and identify the bounding box around the text. Here's the step-by-step process:
+
+1. **Identify the Text Location**: The text '2601' is located near the bottom right of the image, under the label "收款人" (which means "Collector" in English).
+
+2. **Estimate the Coordinates**:
+   - The image width and height are not explicitly given, but we can assume the image is of standard size or use the visual proportions.
+   - The text '2601' is positioned horizontally and vertically within a specific area.
+
+3. **Normalized Coordinates Calculation**:
+   - Let's assume the image width is approximately 1000 units and the height is approximately 600 units for normalization purposes.
+   - The text '2601' appears to be in the lower right section of the image.
+
+4. **Bounding Box Coordinates**:
+   - **Left-Top Corner (x1, y1)**: This is the top-left corner of the text box. It appears to be around 85% from the left and 85% from the top.
+     - x1 ≈ 850
+     - y1 ≈ 450
+   - **Right-Bottom Corner (x2, y2)**: This is the bottom-right corner of the text box. It appears to be around 95% from the left and 95% from the top.
+     - x2 ≈ 950
+     - y2 ≈ 550
+
+5. **Normalized Coordinates**:
+   - Normalize these coordinates by dividing by the image dimensions (assuming 1000 width and 600 height):
+     - x1 = 850 / 1000 = 0.85
+     - y1 = 450 / 600 = 0.75
+     - x2 = 950 / 1000 = 0.95
+     - y2 = 550 / 600 = 0.9167
+
+Thus, the normalized coordinates of the bounding box are:
+
+(0.85, 0.75, 0.95, 0.9167)

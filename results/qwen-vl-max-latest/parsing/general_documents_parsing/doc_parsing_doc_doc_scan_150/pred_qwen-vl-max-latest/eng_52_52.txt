@@ -1,0 +1,125 @@
+Here is the LaTeX transcription of the provided document, preserving all text, tables, and formatting as accurately as possible:
+
+```latex
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Set page margins
+\geometry{margin=1in}
+
+% Remove section numbering
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\vspace{-0.5em}]
+\titleformat{\subsection}{\normalsize\bfseries}{}{0em}{}[\vspace{-0.5em}]
+
+% Set line spacing
+\onehalfspacing
+
+\begin{document}
+
+% Header with logo and university name
+\begin{center}
+    \includegraphics[width=3cm]{UB_logo.png} % Placeholder for UB logo
+    \textbf{\Large University at Buffalo} \\
+    \textit{The State University of New York}
+\end{center}
+
+\vspace{0.5cm}
+
+% Title of the form
+\textbf{2014 INTERNATIONAL APPLICANT FINANCIAL FORM – STANDARD GRADUATE}
+
+\vspace{0.5cm}
+
+% Introduction paragraph
+International applicants must affirm that they are responsible for paying all tuition, fees and living expenses for the entire period of the intended study program. Applicants must document the full cost of only the first year of study before the university issues a Certificate of Visa Eligibility (Form I-20 or DS-2019).
+
+\vspace{0.5cm}
+
+% Instructions
+\textbf{Instructions:}
+\begin{enumerate}[label=\textbf{Part \arabic*}, leftmargin=*]
+    \item Answer questions 1--7 completely.
+    \item Indicate the sources of your funding, the amounts available, and the totals for each year, and have the sponsors verify these amounts by signing this form. Include required documentation as indicated below.
+\end{enumerate}
+
+Applicants must document financial support equal to or greater than the amounts indicated below (one year of study).\\
+\textit{These figures are estimated costs and are subject to increase without notice.}
+
+\vspace{0.5cm}
+
+% Estimated Budget Section
+\textbf{Estimated Budget for International Graduate Students (Standard Programs)}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{TUITION}\textsuperscript{1} & \$20,190 \\
+\textbf{FEES} (including health insurance)\textsuperscript{2} & \$3,579 \\
+\textbf{ROOM AND BOARD}\textsuperscript{3} & \$12,410 \\
+\textbf{ESTIMATED TOTAL} (per year of study) & \textbf{\$36,179} \\
+\hline
+\end{tabular}
+
+\footnotesize
+\begin{itemize}
+    \item \textsuperscript{1}Tuition indicated above is the actual 2014-15 tuition rate for the academic year only (September--May). Tuition may increase up to 10\% per year. Above tuition for Fall and Spring semesters is based on the ``flat tuition'' model where the cost is the same for 12 or more credits (not per credit). Summer and Winter session tuition and fees are not included above; Summer and Winter sessions are optional; students are not required to study in the summer and winter sessions; Summer and Winter tuition is charged per credit; standard graduate tuition and fees are approximately \$990 per credit hour.
+    \item \textsuperscript{2}Fees and health insurance are listed for the full year.
+    \item \textsuperscript{3}This includes housing and food costs for nine months. Students will need an additional funds for books, supplies, personal expenses and incidental costs.
+\end{itemize}
+
+\normalsize
+
+\vspace{0.5cm}
+
+% Dependent Support Section
+\textbf{Dependent Support}
+
+A student wishing to have his or her spouse or children accompany him or her must document the following amounts for each family member per academic year of intended study (freshman: four -- five years, transfer: two -- three years).
+
+\begin{itemize}
+    \item For spouse: \$7,000 per academic year
+    \item For each child: \$5,000 per academic year
+\end{itemize}
+
+\vspace{0.5cm}
+
+% Forms of Financial Documentation Table
+\textbf{Forms of Financial Documentation}
+
+\begin{tabular}{|l|l|}
+\hline
+\rowcolor{blue!80} \textbf{Type of Documentation}\textsuperscript{4} & \textbf{Acceptable} \\
+\hline
+Bank Letters & Acceptable \\
+Bank Statements (Savings or Checking Accounts) & Acceptable \\
+Certificates of Deposit (CD) Statements & Acceptable - maturity date must be earlier than anticipated enrollment date. \\
+Chartered Accountant Statements & Not Acceptable \\
+Employer Letters / Salary Statements & Not Acceptable \\
+Line of Credit Letters & Acceptable \\
+Loan Letters & Acceptable \\
+Provident (Retirement) Fund Statements & Acceptable - if fund permits early withdrawal; value will be calculated at 75 percent of face value (or as determined by terms of the fund). \\
+Scholarship Letters (Private, Government, School, etc.) & Acceptable \\
+Stock Market Statements & Not Acceptable \\
+Valuation Statements (Jewelry, Gold, Property) & Not Acceptable \\
+\hline
+\end{tabular}
+
+\footnotesize
+\textsuperscript{4} This information is required for visa eligibility determination only. All acceptable forms of documentation must be printed on official letterhead paper from the institution that issued the document. Documents must be dated within one year of the anticipated date the student will commence studies. Documents can be clear photocopies, scanned, faxed or original. All documents submitted to UB become the property of UB; they cannot be returned or forwarded to another person/institution.
+
+\end{document}
+```
+
+### Notes:
+- The image contains a logo (UB), which is represented here as a placeholder (`\includegraphics[width=3cm]{UB_logo.png}`).
+- The table uses `\rowcolor` from the `xcolor` package (which should be loaded via `\usepackage[table]{xcolor}` if needed).
+- Footnotes are preserved using `\textsuperscript{}` and formatted appropriately.
+- The layout mimics the original document's structure, including spacing, bolding, and section headings.
+- Since this is a simulation, no actual images or external files are referenced beyond placeholders.
+
+To compile this LaTeX code, ensure you have the necessary packages installed and use a LaTeX compiler like `pdflatex`.

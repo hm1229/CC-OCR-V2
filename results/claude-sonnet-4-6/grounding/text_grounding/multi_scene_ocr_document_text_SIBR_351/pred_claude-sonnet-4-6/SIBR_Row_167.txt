@@ -1,0 +1,22 @@
+I need to find the text '2020-02-28 11：10：30' in the image.
+
+Looking at the receipt, this timestamp appears on the line with "收费时间:" near the bottom of the header information section.
+
+The text '2020-02-28 11：10：30' appears to be located on the right portion of the line that contains "收费时间:", which is approximately in the middle-upper portion of the receipt.
+
+Estimating the coordinates:
+- The text appears at roughly x: 480-870, y: 310-340 in the image
+- Image dimensions appear to be approximately 560 wide × 900 tall
+
+Normalizing:
+- x1: 480/560 × 1000 ≈ 857... let me reconsider the positioning
+
+Looking more carefully at the receipt, the "收费时间: 2020-02-28 11:10:30" line is in the registration info section. The timestamp portion starts around x=370 and ends around x=540 (out of ~560 width), and vertically around y=315 to y=335 (out of ~900 height).
+
+Normalized:
+- x1: 370/560 × 1000 ≈ 661
+- y1: 315/900 × 1000 ≈ 350
+- x2: 545/560 × 1000 ≈ 973
+- y2: 338/900 × 1000 ≈ 376
+
+(661, 350, 973, 376)

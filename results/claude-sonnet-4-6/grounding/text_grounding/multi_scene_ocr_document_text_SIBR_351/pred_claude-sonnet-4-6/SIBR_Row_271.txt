@@ -1,0 +1,25 @@
+I need to find all instances of "120.00" in the image.
+
+Looking at the receipt, I can see "120.00" appears in several locations:
+
+1. In the 金额 (amount) column area: "120.00" appears at the top right of the line items section
+2. In the itemized line: "120.0000" 
+3. At the bottom right: "自费: 120.00" and "个人支付全额: 120.00"
+4. In the 合计 row: "¥: 120.00"
+
+The most prominent "120.00" at the top of the items section:
+
+(563, 268, 660, 295) # "120.00" in the amount column for 挂号费
+
+The "120.00" for 自费 at bottom right:
+(1180, 710, 1290, 735)
+
+The "120.00" for 个人支付全额:
+(1180, 745, 1290, 768)
+
+The "¥: 120.00" in 合计 row:
+(1150, 780, 1290, 808)
+
+For the most clearly visible "120.00" in the fee amount area at top:
+
+(563, 265, 658, 292)

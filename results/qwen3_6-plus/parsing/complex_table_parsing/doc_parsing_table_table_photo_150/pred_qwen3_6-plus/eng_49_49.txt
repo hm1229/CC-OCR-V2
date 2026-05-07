@@ -1,0 +1,119 @@
+Looking at the image, I can see a table with four columns: **Application**, **LoC**, **TCB-LS (MB)**, and **Description**. There are two visible data rows: one for “SQLAudition” and one for “ReEncryption”. The header row spans all four columns.
+
+Note: The image is rotated, but we’ll transcribe it as if viewed upright — top to bottom, left to right.
+
+Also note: The “Description” column contains multi-line text that wraps within the cell. In HTML, we’ll preserve line breaks using `<br>` tags or let natural wrapping occur — since this is a transcription task, we’ll use `<br>` to reflect visual line breaks in the image.
+
+There are no merged cells visible in the provided portion of the table — each row has exactly four cells.
+
+Here’s the HTML transcription:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>LoC</th>
+      <th>TCB-LS (MB)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SQLAudition</td>
+      <td>13,556</td>
+      <td>30.54</td>
+      <td>Audit the security of SQL statements to prevent malicious SQL from actual executions. We let the audit service run on the TEE side, expecting the process to be blind to the attackers and keeping the integrity of the results.</td>
+    </tr>
+    <tr>
+      <td>ReEncryption</td>
+      <td>32,009</td>
+      <td>19.26</td>
+      <td>Decrypt the cipher-text and encrypt it again with another key such that the cracking of the original key will not compromise the objective applications.</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- The “Description” text was broken into multiple lines in the image for layout purposes. In HTML, unless explicitly required to preserve exact line breaks, we typically let the browser wrap text naturally. However, since the instruction says “reflecting the image's layout”, and the image shows explicit line breaks (e.g., after “state-”, “SQL”, “the”, etc.), we could insert `<br>` tags to mimic those. But looking closely, those are just word wraps due to column width — not intentional line breaks. So we keep them as continuous text.
+  
+  *However*, if you want to strictly replicate the visual line breaks as seen in the image (for example, “SQL state-” on one line, “ments to prevent...” on next), then we’d need to insert `<br>` at those points. Since the problem says “reflecting the image's layout”, let’s do that for fidelity.
+
+Let me re-transcribe the Description cells with explicit `<br>` tags where line breaks appear visually in the image:
+
+For **SQLAudition** description (as seen in image):
+> Audit the security of SQL state-  
+> ments to prevent malicious SQL  
+> from actual executions. We let the  
+> audit service run on the TEE side,  
+> expecting the process to be blind  
+> to the attackers and keeping the  
+> integrity of the results.
+
+For **ReEncryption** description:
+> Decrypt the cipher-text and en-  
+> crypt it again with another key  
+> such that the cracking of the orig-  
+> inal key will not compromise the  
+> objective applications.
+
+So here’s the revised version with `<br>` tags to match visual line breaks:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>LoC</th>
+      <th>TCB-LS (MB)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SQLAudition</td>
+      <td>13,556</td>
+      <td>30.54</td>
+      <td>Audit the security of SQL state-<br>ments to prevent malicious SQL<br>from actual executions. We let the<br>audit service run on the TEE side,<br>expecting the process to be blind<br>to the attackers and keeping the<br>integrity of the results.</td>
+    </tr>
+    <tr>
+      <td>ReEncryption</td>
+      <td>32,009</td>
+      <td>19.26</td>
+      <td>Decrypt the cipher-text and en-<br>crypt it again with another key<br>such that the cracking of the orig-<br>inal key will not compromise the<br>objective applications.</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+This version more accurately reflects the visual layout of the table as presented in the image, including the forced line breaks within the Description column.
+
+✅ Final Answer:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Application</th>
+      <th>LoC</th>
+      <th>TCB-LS (MB)</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SQLAudition</td>
+      <td>13,556</td>
+      <td>30.54</td>
+      <td>Audit the security of SQL state-<br>ments to prevent malicious SQL<br>from actual executions. We let the<br>audit service run on the TEE side,<br>expecting the process to be blind<br>to the attackers and keeping the<br>integrity of the results.</td>
+    </tr>
+    <tr>
+      <td>ReEncryption</td>
+      <td>32,009</td>
+      <td>19.26</td>
+      <td>Decrypt the cipher-text and en-<br>crypt it again with another key<br>such that the cracking of the orig-<br>inal key will not compromise the<br>objective applications.</td>
+    </tr>
+  </tbody>
+</table>
+```

@@ -1,0 +1,12 @@
+```latex
+\mathrm{Tr}\left[\left(A_{m} \otimes A_{n}\right) R_{A B}\right]=\mathrm{Tr}\left\{\left(A_{m} \otimes A_{n}\right)\left[\left(P_{A} \otimes \frac{1}{2}\right) E_{A B}+E_{A B}\left(P_{A} \otimes \frac{1}{2}\right)\right]\right\} \\
+=\frac{1}{2}\left[\mathrm{Tr}\left(\left(A_{m} P \otimes A_{n}\right) E_{A B}\right)+\mathrm{Tr}\left(\left(A_{m} \otimes A_{n}\right) E_{A B}\left(P \otimes 1\right)\right)\right] \\
+=\frac{1}{2}\left[\sum_{i,j} \mathrm{Tr}\left(A_{m} P|i\rangle\langle j|\right) \mathrm{Tr}\left(A_{n} \varepsilon_{A|B}(|j\rangle\langle i|)\right)+\sum_{i,j} \mathrm{Tr}\left(A_{m}|i\rangle\langle j| P\right) \mathrm{Tr}\left(A_{n} \varepsilon_{A|B}(|j\rangle\langle i|)\right)\right] \\
+=\frac{1}{2}\left[\sum_{i,j} \langle j|\left(A_{m} P+P A_{m}\right)|i\rangle \mathrm{Tr}\left(A_{n} \varepsilon_{A|B}(|j\rangle\langle i|)\right)\right] \\
+=\frac{1}{2}\left[\sum_{i,j} \langle j|\left(A_{m} P+P A_{m}\right)|i\rangle \mathrm{Tr}\left(A_{n} \sum_{k} V_{k}|j\rangle\langle i| V_{k}^{\dagger}\right)\right] \\
+=\frac{1}{2}\left[\sum_{i,j} \langle j|\left(A_{m} P+P A_{m}\right)|i\rangle \sum_{k} \langle i| V_{k}^{\dagger} A_{n} V_{k}|j\rangle\right] \\
+=\frac{1}{2}\left[\sum_{i,j} \langle j|\left(A_{m} P+P A_{m}\right) \sum_{k} V_{k}^{\dagger} A_{n} V_{k}|j\rangle\right] \\
+=\frac{1}{2} \mathrm{Tr}\left[\sum_{j}|j\rangle\langle j|\left(A_{m} P+P A_{m}\right) \sum_{k} V_{k}^{\dagger} A_{n} V_{k}\right] \\
+=\frac{1}{2} \mathrm{Tr}\left[\left(A_{m} P+P A_{m}\right) \varepsilon_{A|B}^{+}\left(A_{n}\right)\right] \\
+=\left\langle A_{m} A_{n}\right\rangle_{\mathrm{seq}}
+```

@@ -1,0 +1,72 @@
+Here is the accurate LaTeX transcription of the image content, preserving all equations, tables, and formatting:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{graphicx}
+
+\title{Fourier Transform Pairs}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\centering
+\textbf{Fourier Transform Pairs} \\
+\vspace{0.2cm}
+$(n,t,\omega,a,\omega_o,t_o \text{ are Real numbers } ; j = \text{complex number } ; n = \text{integer } ; \omega = \text{angular frequency})$
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Time Domain} & \textbf{Fourier Transform} & \textbf{Time Domain} & \textbf{Fourier Transform} \\
+\hline
+$f(t)$ & $\displaystyle \int_{-\infty}^{+\infty} f(t)e^{-j\omega t} dt$ & 
+$\displaystyle \frac{1}{2\pi} \int_{-\infty}^{+\infty} F(\omega)e^{j\omega t} d\omega$ & $F(\omega)$ \\
+\hline
+$a_1f_1(t) + a_2f_2(t)$ & $a_1F_1(\omega) + a_2F_2(\omega)$ & 
+$f(a \cdot t)$ & $\displaystyle \frac{1}{|a|}F\left(\frac{\omega}{a}\right)$ \\
+& & $a \neq 0$ & \\
+\hline
+$e^{j\omega_o t}f(t)$ & $F(\omega - \omega_o)$ & 
+$f(t - t_o)$ & $e^{-j\omega_o t_o}F(\omega)$ \\
+\hline
+$\displaystyle \frac{d^n[f(t)]}{dt^n}$ & $(j\omega)^n F(\omega)$ & 
+$(-j t)^n f(t)$ & $\displaystyle \frac{d^n[F(\omega)]}{d\omega^n}$ \\
+& $(n > 0)$ & $(n > 0)$ & \\
+\hline
+$e^{-at}u(t)$ & $\displaystyle \frac{1}{a + j\omega}$ & 
+$e^{at}u(-t)$ & $\displaystyle \frac{1}{a - j\omega}$ \\
+& $a > 0$ & $a > 0$ & \\
+\hline
+$\cos(\omega_o t)$ & $\pi[\delta(\omega - \omega_o) + \delta(\omega + \omega_o)]$ & 
+$\sin(\omega_o t)$ & $\displaystyle \frac{\pi}{j}[\delta(\omega - \omega_o) - \delta(\omega + \omega_o)]$ \\
+\hline
+$\delta(t)$ & $1$ & 
+$\delta(t - t_o)$ & $e^{-j\omega t_o}$ \\
+\hline
+$1$ & $2\pi \cdot \delta(\omega)$ & 
+$e^{j\omega_o t}$ & $2\pi \cdot \delta(\omega - \omega_o)$ \\
+\hline
+$u(t)$ & $\pi \cdot \delta(\omega) + \displaystyle \frac{1}{j\omega}$ & 
+$u(-t)$ & $\pi \cdot \delta(\omega) - \displaystyle \frac{1}{j\omega}$ \\
+\hline
+$u(t) - u(-t)$ & $\displaystyle \frac{2}{j\omega}$ & 
+$u(t) + u(-t)$ & $2\pi\delta(\omega)$ \\
+\hline
+$t^{(n-1)} \cdot e^{-at} \cdot u(t)$ & $\displaystyle \frac{(n-1)!}{(a + j\omega)^n}$ & 
+$t^{(n-1)} \cdot e^{at} \cdot u(-t)$ & $\displaystyle \frac{(n-1)!}{(a - j\omega)^n} \cdot (-1)^{n-1}$ \\
+& $a > 0\ ; n > 0$ & $a > 0\ ; n > 0$ & \\
+\hline
+$\cos(\omega_o t) \cdot f(t)$ & $\displaystyle \frac{1}{2}[F(\omega - \omega_o) + F(\omega + \omega_o)]$ & 
+$\sin(\omega_o t) \cdot f(t)$ & $\displaystyle \frac{1}{2j}[F(\omega - \omega_o) - F(\omega + \omega_o)]$ \\
+\hline
+\end{tabular}
+
+\end{document}
+```
+
+This LaTeX code reproduces the entire table with correct mathematical notation, alignment, and structure as shown in the original image. The document includes necessary packages for math typesetting and proper formatting of integrals, deltas, complex numbers, and special functions.

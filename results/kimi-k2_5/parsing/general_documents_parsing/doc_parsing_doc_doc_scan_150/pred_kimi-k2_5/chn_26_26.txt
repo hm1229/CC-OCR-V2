@@ -1,0 +1,137 @@
+```latex
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+\begin{document}
+
+% Header
+\begin{flushleft}
+\includegraphics[width=1.5cm]{logo.png} % Placeholder for the logo
+\textcolor{cyan}{\textbf{KEEP AWAKE}}\\
+\textcolor{cyan}{觉晓教育}
+\hfill
+\textbf{民法主观题知识点+小案例}
+\end{flushleft}
+
+\vspace{0.5cm}
+
+% Table
+\begin{tabular}{|c|p{12cm}|}
+\hline
+\multirow{4}{*}{2010年} & 
+问4：丙公司与戊公司签订房产买卖合同效力如何？为什么？（物权未变动不影响买卖合同效力、多重买卖不影响买卖合同效力） \\
+\cline{2-2}
+& 问2：甲公司与丁、戊公司签定的转卖大蒜的合同的效力如何？为什么？（多重买卖不影响买卖合同效力） \\
+\cline{2-2}
+& 问6：甲公司与乙公司签订的绿豆买卖合同效力如何？为什么？（被代理人以履行合同的方式追认无权代理） \\
+\cline{2-2}
+& 问7：丙公司将绿豆转卖给己公司的买卖合同的效力如何？为什么？（无权处分不影响买卖合同的效力） \\
+\hline
+\end{tabular}
+
+\vspace{1cm}
+
+% Section Title
+\begin{center}
+{\Large \textcolor{cyan}{\textbf{第一节\quad 合同的成立}}}
+\end{center}
+
+\vspace{0.5cm}
+
+% Flowchart using TikZ
+\begin{center}
+\begin{tikzpicture}[
+    box/.style={rectangle, draw, minimum width=2.5cm, minimum height=1cm, align=center},
+    smallbox/.style={rectangle, draw, minimum width=2cm, minimum height=0.8cm, align=center},
+    arrow/.style={->, >=stealth, thick},
+    label/.style={font=\small}
+]
+
+% Left side - 事实判断
+\node[box, fill=cyan!10] (fact) at (0,4) {\textbf{\textcolor{cyan}{事实判断}}\\1.当事人\\2.意思表示\\3.标的};
+
+% Right side - 价值判断
+\node[box, fill=cyan!10] (value) at (5,4) {\textbf{\textcolor{cyan}{价值判断}}\\1.民事行为能力\\2.意思表示真实、自由\\3.不违反强制性规定、\\不违背公序良俗};
+
+% Middle - 民事法律行为
+\node[box] (civil) at (-3,1) {民事法律行为};
+
+% Branches from civil
+\node[smallbox] (notestab) at (-1,2) {不成立};
+\node[smallbox] (estab) at (-1,0) {成立};
+
+% From value - 有效
+\node[smallbox] (valid) at (3,1) {有效};
+
+% From valid - 生效 and 未生效
+\node[smallbox] (effective) at (5,2) {生效};
+\node[smallbox] (noteffective) at (5,0) {未生效};
+
+% From estab - 效力瑕疵
+\node[smallbox] (defect) at (3,-1.5) {效力瑕疵};
+
+% From defect
+\node[smallbox] (invalid) at (5,-1) {无效};
+\node[smallbox] (revocable) at (5,-1.8) {可撤销};
+\node[smallbox] (pending) at (5,-2.6) {效力待定};
+
+% Results
+\node[smallbox] (most) at (8,2) {大多数合同、婚姻};
+\node[smallbox, align=left] (conditions) at (8,0) {附延缓条件\\附始期\\需要审批\\遗嘱};
+
+% Arrows
+\draw[arrow] (fact) -- (notestab);
+\draw[arrow] (value) -- (valid);
+\draw[arrow] (civil) -- (notestab);
+\draw[arrow] (civil) -- (estab);
+\draw[arrow] (estab) -- (valid);
+\draw[arrow] (valid) -- (effective);
+\draw[arrow] (valid) -- (noteffective);
+\draw[arrow] (estab) -- (defect);
+\draw[arrow] (defect) -- (invalid);
+\draw[arrow] (defect) -- (revocable);
+\draw[arrow] (defect) -- (pending);
+\draw[arrow] (effective) -- (most);
+\draw[arrow] (noteffective) -- (conditions);
+
+% Dashed line
+\draw[dashed, thick] (2.5,5) -- (2.5,-3);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+【民事法律行为成立、有效、生效关系图】
+\end{center}
+
+\vspace{0.5cm}
+
+合同的订立，通常要经过要约与承诺的过程。一方当事人的要约与另一方当事人的承诺达成一致，意味着双方当事人形成合意，合同即告成立。
+
+\section*{一、合同的订立：要约与承诺}
+
+\subsection*{（一）要约}
+
+要约，是希望与他人订立合同的意思表示，需满足以下构成要件：
+
+\begin{enumerate}
+    \item 向希望与之订立合同的\textcolor{cyan}{\textbf{受要约人}}作出。
+    \item 内容\textcolor{cyan}{\textbf{具体且确定}}：受要约人只要表示接受即可成立合同，所以要约的内容必须包含合同的必备内容。
+    \item 具有订立合同的目的并表明\textcolor{cyan}{\textbf{一经承诺即受拘束}}的意思。
+\end{enumerate}
+
+\vfill
+\centerline{2}
+
+\end{document}
+```

@@ -1,0 +1,218 @@
+用户现在需要从收据中提取menu、sub_total、total的信息。首先看menu部分，收据里的菜品列表。每个菜品项是名称、数量、价格。需要把每个菜品整理成列表？不过看schema里的menu是字符串？不对，看用户给的schema是{"menu": "", "sub_total": "", "total": ""}，可能menu是所有菜品的列表？或者看例子。先看收据中的菜品：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette Cheese 1 14,000 （这里可能是Croquette Cheese？看原文是Chili Pepper 1 14,000；Croquette 1 14,000；Cheese？不，原文是：
+
+看原文的项目：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （这里可能是另一个？不，看原文：
+
+原文中的项目行：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （这里可能重复？不，看原文是：
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Cheese？不，原文是“Croquette Cheese”？不，看图片中的文字：
+
+看图片里的项目：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （可能这里有个Cheese？不，看原文中的“Croquette Cheese”？不，图片中的文字是：
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （然后是Plastik Amook 1 0，Plastik Putih 1 0。所以menu应该是这些菜品的列表，每个元素包含名称、数量、价格？但schema里的menu是字符串？不对，可能用户给的schema中menu是字符串，或者可能我理解错了。再看sub_total是91,000，total是Rp. 91,000。那menu需要把所有菜品列出来。比如每个菜品项是名称，数量，价格。那menu应该是一个列表，每个元素是对象。比如：
+
+menu: [
+  {"item": "Goblin's Mace", "quantity": 1, "price": "25,000"},
+  {"item": "Mozzarella Hot Dog", "quantity": 2, "price": "38,000"},
+  {"item": "Chili Pepper", "quantity": 1, "price": "14,000"},
+  {"item": "Croquette", "quantity": 1, "price": "14,000"},
+  {"item": "Croquette", "quantity": 1, "price": "0"},  // 这里可能有个Croquette是0？不，看原文中“Croquette Cheese”？不，看图片中的“Croquette Cheese”可能是分开的？不，图片中的文字是：
+
+看图片中的项目行（从Goblin's Mace开始）：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （这里可能价格是0？不，看下面的Plastik Amook 1 0，Plastik Putih 1 0。所以中间的Croquette可能有两个？比如第一个Croquette是Cheese？不，图片中的文字是：
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （然后是Plastik Amook 1 0。所以可能第二个Croquette是Cheese？不，可能图片中的“Croquette Cheese”是合并的？或者可能我看错了。不管怎样，先提取所有菜品项。然后sub_total是91,000，total是Rp. 91,000。
+
+现在看schema是{"menu": "", "sub_total": "", "total": ""}。可能menu是所有菜品的名称列表？或者字符串形式。但更可能的是，menu是包含所有菜品的列表，每个元素是对象。但用户给的schema中menu是字符串？不对，可能用户提供的schema中menu是字符串，比如把所有菜品用换行分隔。或者可能我理解错了。再看问题描述：“Note that if the value is a list, the schema will give a template for each element. This template is used when there are multiple list elements in the image.” 但用户提供的schema中menu是空字符串，没有模板，所以可能menu是字符串，把所有菜品信息拼接。或者可能menu是数组，但schema里没给模板？不，用户给的输入json schema是：
+
+{"menu": "", "sub_total": "", "total": ""}
+
+所以每个字段是字符串。那需要把menu的内容作为字符串，比如列出所有菜品。比如：
+
+menu: "Goblin's Mace (1, 25,000), Mozzarella Hot Dog (2, 38,000), Chili Pepper (1, 14,000), Croquette (1, 14,000), Croquette (1, 0), Plastik Amook (1, 0), Plastik Putih (1, 0), Take Away"
+
+sub_total: "91,000"
+
+total: "Rp. 91,000"
+
+现在检查收据中的Subtotal是91,000，Discount是(0)，TOTAL是Rp. 91,000。Debit是91,000。所以sub_total是91,000，total是Rp. 91,000。menu需要包含所有购买的项目，除了Take Away是备注？看Take Away是订单类型，不是菜品。所以菜品是前面的Goblin's Mace, Mozzarella Hot Dog, Chili Pepper, Croquette, Croquette, Plastik Amook, Plastik Putih？不，Plastik Amook和Plastik Putih价格是0，可能是免费或者赠品？但需要提取。现在整理每个菜品：
+
+1. Goblin's Mace: 数量1，价格25,000
+
+2. Mozzarella Hot Dog: 数量2，价格38,000
+
+3. Chili Pepper: 数量1，价格14,000
+
+4. Croquette: 数量1，价格14,000
+
+5. Croquette: 数量1，价格0？不，看原文中“Croquette Cheese”？不，图片中的第五行是“Croquette”吗？看图片中的文字：
+
+在Chili Pepper之后是“Croquette Cheese”？不，看图片中的文字：
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （这里可能价格是0？不，下面一行是Plastik Amook 1 0，所以可能第二个Croquette是Cheese？或者可能图片中的“Croquette Cheese”是分开的？比如“Croquette”和“Cheese”？不，看图片中的文字，可能“Croquette Cheese”是一个项目？比如：
+
+Chili Pepper 1 14,000
+
+Croquette Cheese 1 14,000
+
+然后是Plastik Amook 1 0，Plastik Putih 1 0。这样更合理。可能我之前看错了。现在重新看图片中的文字（用户提供的图片描述中的文字）：
+
+图片中的项目：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 （这里可能没有价格？不，看下面的Plastik Amook 1 0，所以可能第二个Croquette是Cheese？或者可能“Croquette Cheese”是合并的，比如“Croquette Cheese”是1个，价格14,000？然后另一个Croquette？不，可能图片中的“Croquette”出现两次，第一次是Croquette（14,000），第二次是Croquette（0？不，Plastik Amook是0，Plastik Putih是0。所以可能的项目是：
+
+- Goblin's Mace: 1, 25,000
+
+- Mozzarella Hot Dog: 2, 38,000
+
+- Chili Pepper: 1, 14,000
+
+- Croquette: 1, 14,000
+
+- Croquette: 1, （这里可能没有价格？不，看Subtotal是91,000。计算各价格之和：25k + 38k*2=76k +14k +14k +0 +0 =25+76=101+14=115+14=129？不对，这说明我可能看错了数量。Mozzarella Hot Dog是2个，所以38,000*2=76,000。Goblin's Mace是1个25,000。Chili Pepper是1个14,000。然后Croquette是1个14,000。然后另一个Croquette？不，看Subtotal是91,000。计算：25 + 38*2=76 → 25+76=101；101+14=115；115+14=129。这超过了91,000，说明哪里错了。哦，可能Mozzarella Hot Dog是1个？不，图片中Mozzarella Hot Dog后面是2。或者Chili Pepper是0？不，看图片中的Subtotal是91,000。重新计算：
+
+Goblin's Mace:25,000
+
+Mozzarella Hot Dog:38,000 *2=76,000 → 25+76=101
+
+Chili Pepper:14,000 → 101+14=115
+
+Croquette:14,000 → 115+14=129
+
+然后Plastik Amook:0，Plastik Putih:0 → 总和是129,000，但Subtotal是91,000，这说明我肯定看错了项目。哦，可能Mozzarella Hot Dog是1个？不，图片中Mozzarella Hot Dog后面是2。或者Chili Pepper是0？不，看图片中的“Chili Pepper 1 14,000”是正确的吗？或者“Croquette”是两个，其中一个价格是0？比如：
+
+Goblin's Mace:25
+
+Mozzarella Hot Dog:38*2=76 → 101
+
+Chili Pepper:14 → 115
+
+Croquette:14 → 129
+
+然后另一个Croquette:0 → 129
+
+Plastik Amook:0 → 129
+
+Plastik Putih:0 → 129。这和Subtotal91不符。这说明我可能看错了项目名称。比如“Mozzarella Hot Dog”是1个？不，图片中是2。或者“Goblin's Mace”是0？不。或者“Chili Pepper”是0？不。或者“Croquette”是1个14，另一个Croquette是0？比如：
+
+Goblin's Mace:25
+
+Mozzarella Hot Dog:38*2=76 → 101
+
+Chili Pepper:14 → 115
+
+Croquette:14 → 129
+
+然后Plastik Amook:0，Plastik Putih:0 → 总和129，还是不对。这说明可能图片中的“Mozzarella Hot Dog”是1个？比如数量是1，价格38,000。那总和是25 +38 +14 +14 +0 +0=91。对！这样：Goblin's Mace（1，25k） + Mozzarella Hot Dog（1，38k） + Chili Pepper（1，14k） + Croquette（1，14k） + 其他两个0。总和25+38=63+14=77+14=91。这样Subtotal是91,000。所以可能图片中Mozzarella Hot Dog的数量是1，而不是2？可能我看错了数量。看图片中的“Mozzarella Hot Dog”后面的数字，是2还是1？用户提供的图片描述中写的是“Mozzarella Hot Dog 2 38,000”？不，可能图片中的“Mozzarella Hot Dog”是1个，数量是1。或者可能“Chili Pepper”是0？不，现在重新看用户提供的图片中的文字（用户给出的图片里的文字）：
+
+用户提供的图片中的项目行：
+
+Goblin's Mace 1 25,000
+
+Mozzarella Hot Dog 2 38,000
+
+Chili Pepper 1 14,000
+
+Croquette 1 14,000
+
+Croquette 1 
+
+Plastik Amook 1 0
+
+Plastik Putih 1 0
+
+Take Away
+
+Subtotal 91,000
+
+哦，可能第二个Croquette的价格是0？比如Croquette 1 0。这样总和是25 + 38*2=76 +14 +14 +0 +0 +0=25+76=101+14=115+14=129+0+0+0=129，还是不对。这说明可能“Mozzarella Hot Dog”是1个，数量是1，价格38,000。这样总和是25 +38 +14 +14 +0 +0=91。对，这样。所以可能图片中Mozzarella Hot Dog的数量是1，而不是2。可能用户输入时的错误？或者我看错了。不管怎样，根据Subtotal是91,000，Total是91,000，所以sub_total是91,000，total是Rp. 91,000。menu需要包含所有有价格的项目，或者所有项目。现在不管数量，先提取sub_total和total。sub_total是91,000，total是Rp. 91,000。menu的话，把所有菜品列出来，比如：
+
+menu: "Goblin's Mace, Mozzarella Hot Dog, Chili Pepper, Croquette, Croquette, Plastik Amook, Plastik Putih, Take Away"
+
+但更准确的是，每个菜品的名称，数量，价格。但schema中menu是字符串，所以可以拼接成字符串。比如：
+
+menu: "Goblin's Mace (1, 25,000), Mozzarella Hot Dog (2, 38,000), Chili Pepper (1, 14,000), Croquette (1, 14,000), Croquette (1, 0), Plastik Amook (1, 0), Plastik Putih (1, 0), Take Away"
+
+现在确认sub_total是91,000，total是Rp. 91,000。所以最终的json是：
+
+{
+  "menu": "Goblin's Mace (1, 25,000), Mozzarella Hot Dog (2, 38,000), Chili Pepper (1, 14,000), Croquette (1, 14,000), Croquette (1, 0), Plastik Amook (1, 0), Plastik Putih (1, 0), Take Away",
+  "sub_total": "91,000",
+  "total": "Rp. 91,000"
+}
+
+或者可能menu不需要Take Away，因为Take Away是订单类型。所以去掉Take Away：
+
+menu: "Goblin's Mace (1, 25,000), Mozzarella Hot Dog (2, 38,000), Chili Pepper (1, 14,000), Croquette (1, 14,000), Croquette (1, 0), Plastik Amook (1, 0), Plastik Putih (1, 0)"
+
+这样更准确。现在再检查价格总和：25 + 38*2=76 → 101；14 → 115；14 → 129；0+0+0=129。这和Subtotal91,000不符，说明肯定哪里错了。哦，可能“Mozzarella Hot Dog”是1个，数量是1，价格38,000。这样总和是25 +38 +14 +14 +0 +0=91。对，所以Mozzarella Hot Dog的数量是1，不是2。可能图片中的“2”是“1”的误看。比如图片中Mozzarella Hot Dog后面的数字是1。这样总和是25+38+14+14=91，然后Plastik Amook和Plastik Putih是0，所以Subtotal是91。这样就对了。所以可能图片中的M

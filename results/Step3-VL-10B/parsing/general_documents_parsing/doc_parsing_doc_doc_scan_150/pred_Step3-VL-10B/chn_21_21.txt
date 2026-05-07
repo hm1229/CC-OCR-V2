@@ -1,0 +1,214 @@
+用户现在需要把图片中的财务报表预测与比率分析内容转换成LaTeX格式。首先得仔细看图片里的各个表格，包括资产负债表、利润表、现金流量表、主要财务比率等部分。要确保每个单元格的内容、年份（2019A,2020A,2021E等）对应正确，还有单位、标题等信息。
+
+首先处理标题部分：“附表：财务报表预测与比率分析”，然后是资产负债表、利润表、现金流量表、主要财务比率这几个大表格。每个表格的列是年份，行是项目。需要注意单位是百万元，还有红色的数值（比如财务费用在2019A是(2)，可能是负数，要保留格式）。
+
+先看资产负债表：
+
+单位：百万元，列是2019A,2020A,2021E,2022E,2023E。行项目包括货币资金、应收票据及账款等，直到负债和股东权益总计。
+
+然后利润表，单位百万元，列同上，行是营业收入、营业成本等，直到归属于母公司净利润等。
+
+现金流量表，单位百万元，列同上，行是净利润、折旧摊销等，直到现金净增加额。
+
+主要财务比率部分，分为成长能力、获利能力、偿债能力、营运能力、每指指标、估值比率。列是2019A到2023E，对应各项比率。
+
+现在需要把这些内容用LaTeX的表格环境来排版，比如使用tabular，注意对齐方式，可能用l（左对齐）和r（右对齐）结合，因为有些项目是文本，有些是数值。另外，注意红色的数值在LaTeX中可以用\textcolor{red}{...}，但用户可能需要保留原格式，比如括号里的负数，比如(2)表示-2，所以要准确转录。
+
+首先处理附表标题：
+
+\section*{附表：财务报表预测与比率分析}
+
+然后是资产负债表：
+
+\subsection*{资产负债表}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{项目} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+\hline
+货币资金 & 248 & 1,424 & 3,014 & 5,151 & 7,955 \\
+\hline
+应收票据、账款及款项融资 & 199 & 148 & 208 & 282 & 374 \\
+\hline
+预付账款 & 10 & 18 & 25 & 34 & 45 \\
+\hline
+存货 & 297 & 381 & 520 & 699 & 920 \\
+\hline
+其他 & 1,075 & 4,065 & 4,031 & 4,042 & 4,056 \\
+\hline
+\textbf{流动资产合计} & \textbf{1,828} & \textbf{6,037} & \textbf{7,798} & \textbf{10,208} & \textbf{13,350} \\
+\hline
+长期股权投资 & 0 & 12 & 12 & 12 & 12 \\
+\hline
+固定资产 & 67 & 61 & 94 & 131 & 170 \\
+\hline
+在建工程 & 0 & 0 & 0 & 0 & 1 \\
+\hline
+无形资产 & 6 & 6 & 5 & 5 & 4 \\
+\hline
+其他 & 62 & 1,732 & 1,716 & 1,716 & 1,716 \\
+\hline
+\textbf{非流动资产合计} & \textbf{135} & \textbf{1,811} & \textbf{1,828} & \textbf{1,864} & \textbf{1,903} \\
+\hline
+资产总计 & 1,963 & 7,848 & 9,625 & 12,072 & 15,253 \\
+\hline
+短期借款 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+应付票据及应付账款 & 282 & 377 & 515 & 692 & 911 \\
+\hline
+其他 & 197 & 341 & 282 & 282 & 282 \\
+\hline
+\textbf{流动负债合计} & \textbf{478} & \textbf{719} & \textbf{797} & \textbf{974} & \textbf{1,193} \\
+\hline
+长期借款 & 0 & 0 & 55 & 130 & 230 \\
+\hline
+应付债券 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+其他 & 0 & 15 & 0 & 0 & 0 \\
+\hline
+\textbf{非流动负债合计} & \textbf{0} & \textbf{15} & \textbf{55} & \textbf{130} & \textbf{230} \\
+\hline
+负债合计 & 479 & 734 & 852 & 1,104 & 1,422 \\
+\hline
+少数股东权益 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+实收资本（或股本） & 50 & 67 & 67 & 67 & 67 \\
+\hline
+资本公积 & 553 & 4,941 & 4,941 & 4,941 & 4,941 \\
+\hline
+留存收益 & 878 & 2,114 & 3,766 & 5,960 & 8,823 \\
+\hline
+其他 & 4 & (\textcolor{red}{8}) & 0 & 0 & 0 \\
+\hline
+\textbf{股东权益合计} & \textbf{1,485} & \textbf{7,114} & \textbf{8,773} & \textbf{10,967} & \textbf{13,830} \\
+\hline
+\textbf{负债和股东权益总计} & \textbf{1,963} & \textbf{7,848} & \textbf{9,625} & \textbf{12,072} & \textbf{15,253} \\
+\hline
+\end{tabular}
+\textit{单位：百万元}
+
+然后是利润表：
+
+\subsection*{利润表}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{项目} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+\hline
+\textbf{营业收入} & \textbf{4,205} & \textbf{4,530} & \textbf{6,351} & \textbf{8,617} & \textbf{11,414} \\
+\hline
+营业成本 & 2,686 & 2,205 & 3,011 & 4,048 & 5,326 \\
+\hline
+营业税金及附加 & 20 & 30 & 42 & 56 & 75 \\
+\hline
+营业费用 & 354 & 620 & 919 & 1,260 & 1,670 \\
+\hline
+管理费用及研发费用 & 252 & 346 & 510 & 718 & 974 \\
+\hline
+财务费用 & (\textcolor{red}{2}) & (\textcolor{red}{32}) & (\textcolor{red}{20}) & (\textcolor{red}{35}) & (\textcolor{red}{54}) \\
+\hline
+资产、信用减值损失 & (\textcolor{red}{1}) & 31 & 15 & 18 & 20 \\
+\hline
+公允价值变动收益 & 7 & 110 & 110 & 110 & 110 \\
+\hline
+投资净收益 & 16 & 49 & 49 & 49 & 49 \\
+\hline
+其他 & 6 & 67 & 67 & 67 & 67 \\
+\hline
+\textbf{营业利润} & \textbf{925} & \textbf{1,557} & \textbf{2,100} & \textbf{2,777} & \textbf{3,628} \\
+\hline
+营业外收入 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+营业外支出 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+\textbf{利润总额} & \textbf{925} & \textbf{1,556} & \textbf{2,100} & \textbf{2,777} & \textbf{3,628} \\
+\hline
+所得税 & 142 & 187 & 315 & 417 & 544 \\
+\hline
+\textbf{净利润} & \textbf{783} & \textbf{1,369} & \textbf{1,785} & \textbf{2,361} & \textbf{3,084} \\
+\hline
+少数股东损益 & 0 & 0 & 0 & 0 & 0 \\
+\hline
+\textbf{归属于母公司净利润} & \textbf{783} & \textbf{1,369} & \textbf{1,785} & \textbf{2,361} & \textbf{3,084} \\
+\hline
+每股收益（元） & 11.74 & 20.54 & 26.77 & 35.41 & 46.25 \\
+\hline
+\end{tabular}
+\textit{单位：百万元}
+
+接下来是现金流量表：
+
+\subsection*{现金流量表}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{项目} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+\hline
+净利润 & 783 & 1,369 & 1,785 & 2,361 & 3,084 \\
+\hline
+折旧摊销 & 30 & 41 & 28 & 49 & 76 \\
+\hline
+财务费用 & (\textcolor{red}{2}) & (\textcolor{red}{32}) & (\textcolor{red}{20}) & (\textcolor{red}{35}) & (\textcolor{red}{54}) \\
+\hline
+投资损失 & (\textcolor{red}{16}) & (\textcolor{red}{49}) & (\textcolor{red}{49}) & (\textcolor{red}{49}) & (\textcolor{red}{49}) \\
+\hline
+营运资金变动 & (\textcolor{red}{42}) & 195 & (\textcolor{red}{100}) & (\textcolor{red}{105}) & (\textcolor{red}{129}) \\
+\hline
+其他 & 3 & (\textcolor{red}{6}) & (\textcolor{red}{86}) & (\textcolor{red}{92}) & (\textcolor{red}{90}) \\
+\hline
+\textbf{经营活动现金流量} & \textbf{755} & \textbf{1,518} & \textbf{1,558} & \textbf{2,129} & \textbf{2,838} \\
+\hline
+资本支出 & (\textcolor{red}{54}) & (\textcolor{red}{53}) & (\textcolor{red}{69}) & (\textcolor{red}{94}) & (\textcolor{red}{125}) \\
+\hline
+长期投资 & 0 & (\textcolor{red}{12}) & 0 & 0 & 0 \\
+\hline
+其他 & 0 & 0 & 158 & 158 & 158 \\
+\hline
+\textbf{投资活动现金流量} & \textbf{(514)} & \textbf{(5,543)} & \textbf{89} & \textbf{64} & \textbf{33} \\
+\hline
+债权融资 & 0 & 0 & 55 & 75 & 99 \\
+\hline
+股权融资 & 0 & 4,404 & 0 & 0 & 0 \\
+\hline
+其他 & (\textcolor{red}{20}) & (\textcolor{red}{170}) & (\textcolor{red}{113}) & (\textcolor{red}{132}) & (\textcolor{red}{166}) \\
+\hline
+\textbf{筹资活动现金流量} & \textbf{(20)} & \textbf{4,234} & \textbf{(58)} & \textbf{(57)} & \textbf{(67)} \\
+\hline
+汇率变动影响 & 0 & (\textcolor{red}{7}) & -0 & -0 & -0 \\
+\hline
+\textbf{现金净增加额} & \textbf{222} & \textbf{202} & \textbf{1,590} & \textbf{2,137} & \textbf{2,805} \\
+\hline
+\end{tabular}
+\textit{单位：百万元}
+
+然后是主要财务比率：
+
+\subsection*{主要财务比率}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{类别} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+\hline
+\textbf{成长能力} & & & & & \\
+\hline
+营业收入增长率 & 37.8\% & 7.7\% & 40.2\% & 35.7\% & 32.5\% \\
+\hline
+营业利润增长率 & 142.2\% & 68.3\% & 34.9\% & 32.3\% & 30.6\% \\
+\hline
+归属于母公司净利润增长率 & 154.5\% & 74.9\% & 30.3\% & 32.3\% & 30.6\% \\
+\hline
+\textbf{获利能力} & & & & & \\
+\hline
+毛利率 & 36.1\% & 51.3\% & 52.6\% & 53.0\% & 53.3\% \\
+\hline
+净利率 & 18.6\% & 30.2\% & 28.1\% & 27.4\% & 27.0\% \\
+\hline
+ROE & 71.7\% & 31.9\% & 22.5\% & 23.9\% & 24.9\% \\
+\hline
+ROIC & 71.5\% & 31.2\% & 22.2\% & 23.4\% & 24.1\% \\
+\hline
+\textbf{偿债能力} & & & & & \\
+\hline
+资产负债率 & 24.4\% & 9.4\% & 8.9\% & 9.1\% & 9.3\% \\
+\hline
+净负债率 & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+\hline
+流动比率 & 3.82 & 8.40 & 9.79 & 10.48 & 11.19 \\
+\hline
+速

@@ -1,0 +1,159 @@
+用户现在需要检测指定类别在图像中的对象。首先得逐个分析每个类别，找到对应的位置。
+
+首先看9301912850：在ITEM列里，第一行的ITEM是9301912850，所以找这个文本的位置。看图像中ITEM列下的9301912850，对应的bbox。
+
+然后9301912851：同样在ITEM列，第二行的ITEM是9301912851，找到这个。
+
+ADDRESS：看Invoice to的Address是USNV Barnes FPO AE 05116，还有Ship to的Address是17694 Tran Shore West Olivia, GA 35572，以及Ship to下面的Address（Unit 2736...）。需要确认哪些是ADDRESS类别。可能这里的ADDRESS是标签，而具体地址是内容。不过用户要求的是检测对象，即标签对应的内容？不，用户是检测对象，即每个类别对应的存在。比如ADDRESS这个类别，看是否有该标签。看图像中的“Address:”出现多次，比如Invoice to下面的Address:，Ship to下面的Address:。所以ADDRESS作为类别，对应这些标签的位置？或者看用户给的类别是“ADDRESS”（大写）和“Address”（小写？看用户给的类别列表里的“ADDRESS, Address”是两个？看用户给的类别列表：ADDRESS, Address, ... 所以需要区分。比如Invoice to下面的“Address:”是Address（小写），而可能ADDRESS是另一个？不，看用户给的类别是“ADDRESS, Address”作为两个类别？看用户提供的类别列表：“ADDRESS, Address, COMPANY NAME, COMPANY NO, Country of Origin, EN Date, EN Nb., Fax, NUMBER, PAGE NUMBER, Payment Term, Pickup Date, Price Term, SHIPPING MARKS, Shipped per, TITLE, Tel.” 所以ADDRESS和Address是两个不同的类别？需要看图像中的标签。比如Invoice to下面的“Address:”是“Address”（小写），而可能有没有“ADDRESS”（大写）？看图像中的“Address:”出现多次，比如Invoice to的Address:，Ship to的Address:，还有上面的Address:（Invoice to的Address）。另外，可能“ADDRESS”是另一个？比如可能用户输入时的大小写，需要看图像中的实际标签。比如图像中“Address:”是小写的，所以对应“Address”类别。而“ADDRESS”可能没有？或者可能我搞错了。先继续。
+
+COMPANY NAME：看Invoice to的公司名称是INTER-SIN Development Zone Shichuang Media Co., Ltd.，所以“COMPANY NAME”对应这个内容的标签？不，标签是“COMPANY NAME”作为类别，看图像中是否有“COMPANY NAME”这个标签？不，图像中是“COMPANY NO : 201016894N”，而公司名称是“INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以“COMPANY NAME”是公司名称的内容，而标签是“Invoice to:”后面的公司名，所以“COMPANY NAME”作为类别，对应公司名称的文本。但用户要求的是检测对象，即每个类别对应的存在，比如“COMPANY NAME”这个类别在图像中是否有对应的元素？或者可能“COMPANY NAME”是标签，比如图像中是否有“COMPANY NAME:”？不，图像中是“COMPANY NO :”，而公司名称是“INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以“COMPANY NAME”是公司名称的内容，属于该类别。需要明确每个类别对应的是标签还是内容。根据问题描述，“Detect all objects matching these categories in this document image”，即每个类别对应的是图像中属于该类别的对象（比如文本内容）。例如，“9301912850”是ITEM列中的一个产品编号，所以要找到这个编号的文本位置。
+
+现在逐个处理：
+
+1. 9301912850：在ITEM列，第一行的ITEM是9301912850，看图像中的位置。对应的bbox需要看该文本的位置。图像中ITEM列下的第一行是9301912850: CTN#66... 所以这个文本的bbox。
+
+2. 9301912851：ITEM列下的第二行，9301912851: PLT#1=CTN#1-24... 所以这个文本的bbox。
+
+3. ADDRESS：看图像中的“Address:”标签，比如Invoice to下面的“Address: USNV Barnes FPO AE 05116”，这里的“Address:”是标签，对应“Address”类别？或者用户给的类别是“ADDRESS”和“Address”两个？看用户给的类别列表里有“ADDRESS, Address”，所以可能“ADDRESS”是另一个，比如可能Ship to的Address是另一个？或者可能“ADDRESS”是大写的标签，比如图像中是否有“ADDRESS:”？看图像中Invoice to的Address是“Address:”（小写），Ship to的Address也是“Address:”（小写）。另外，可能“ADDRESS”是另一个，比如在Ship to的Address上面？不，看图像中的“Ship to: E510533”然后“Address: 17694 Tran Shore West Olivia, GA 35572”，所以“Address:”是小写的，所以“Address”类别对应这些“Address:”的标签和内容？或者用户可能将“ADDRESS”作为类别，而“Address”是另一个？可能需要看用户给的类别中的“ADDRESS”和“Address”是两个不同的，比如“ADDRESS”可能是指某个特定的地址标签，而“Address”是另一个。但可能图像中只有“Address:”（小写），所以“Address”类别存在，而“ADDRESS”可能不存在？或者可能我搞错了，先继续。
+
+4. COMPANY NAME：图像中“Invoice to: INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以公司名称是这个，属于“COMPANY NAME”类别。
+
+5. COMPANY NO：图像中“COMPANY NO : 201016894N”，所以这个是“COMPANY NO”类别。
+
+6. Country of Origin：图像中“Country of Origin: CHINA”，所以这个是“Country of Origin”类别。
+
+7. EN Date：图像中“EN Date : 10/20/2021”，所以这个是“EN Date”类别。
+
+8. EN Nb.：图像中“EN Nb. : 2104090958”，所以这个是“EN Nb.”类别。
+
+9. Fax：图像中“Fax: 26-684-4651305”，所以这个是“Fax”类别。
+
+10. NUMBER：可能需要看是否有“NUMBER”类别，比如可能是指某个编号，比如Invoice to的公司编号？或者可能“NUMBER”是指其他，比如CTN编号？但用户给的类别中有“NUMBER”，需要看图像中是否有“NUMBER”标签。可能“NUMBER”是指某个数字，比如EN Nb.是2104090958，属于NUMBER？但可能“NUMBER”是另一个，比如可能没有明确的“NUMBER”标签，或者可能我漏看了。或者可能“NUMBER”是指ITEM中的编号？不，先看其他类别。
+
+11. PAGE NUMBER：图像底部有“Page 8”，所以“PAGE NUMBER”类别对应这个。
+
+12. Payment Term：图像中“Payment Term O/A 75 Days”，所以这个是“Payment Term”类别。
+
+13. Pickup Date：图像中“Pickup Date: 10/20/2021”，所以这个是“Pickup Date”类别。
+
+14. Price Term：图像中“Price Term FOB SHANGHAI”，所以这个是“Price Term”类别。
+
+15. SHIPPING MARKS：图像中“SHIPPING MARKS:”下面的内容，所以这个是“SHIPPING MARKS”类别。
+
+16. Shipped per：图像中“Shipped per: SEA”，所以这个是“Shipped per”类别。
+
+17. TITLE：图像顶部是“PACKING LIST”，所以“TITLE”类别对应这个。
+
+18. Tel：图像中“Tel: 58-841-23601600”，所以这个是“Tel”类别。
+
+现在需要逐个确认每个类别的存在，并找到对应的bbox。
+
+现在开始整理：
+
+- 9301912850：在ITEM列，第一行的ITEM文本，位置大概是图像中ITEM列下的第一行，内容是“9301912850: CTN#66( @CTN/1PCE), DI M 52*25*13( CMS) ...” 所以bbox需要覆盖这个文本。
+
+- 9301912851：ITEM列下的第二行，内容是“9301912851: PLT#1=CTN#1-24( @PLT/24CTNS; @CTN/1PCE), DI M 122*102*99( CMS) ...” 所以bbox覆盖这个。
+
+- ADDRESS：看“Address:”标签，比如Invoice to下面的“Address: USNV Barnes FPO AE 05116”，这里的“Address:”是标签，对应“Address”类别。另外Ship to下面的“Address: 17694 Tran Shore West Olivia, GA 35572”也是“Address”类别。还有Ship to上面的“Address:”？不，Ship to是“Ship to: E510533”然后“Address: ...”，所以有两个Address标签？但用户类别中的“ADDRESS”和“Address”是两个，可能“ADDRESS”是另一个，比如可能没有，或者可能“ADDRESS”是指大写的，而图像中是小写，所以“Address”类别存在，而“ADDRESS”可能不存在？或者可能用户输入时的笔误，比如“ADDRESS”是“Address”的大写，所以视为同一个？但用户给的类别是分开的，所以需要看。可能图像中没有“ADDRESS:”（大写）的标签，只有“Address:”（小写），所以“Address”类别存在，而“ADDRESS”不存在？或者可能我搞错了，先处理“Address”类别，即所有“Address:”的标签和内容。
+
+- COMPANY NAME：Invoice to的公司名称是“INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以这个文本属于“COMPANY NAME”类别。
+
+- COMPANY NO：图像中“COMPANY NO : 201016894N”，所以这个文本属于“COMPANY NO”类别。
+
+- Country of Origin：图像中“Country of Origin: CHINA”，所以这个属于“Country of Origin”类别。
+
+- EN Date：图像中“EN Date : 10/20/2021”，属于“EN Date”类别。
+
+- EN Nb.：图像中“EN Nb. : 2104090958”，属于“EN Nb.”类别。
+
+- Fax：图像中“Fax: 26-684-4651305”，属于“Fax”类别。
+
+- NUMBER：可能需要看是否有“NUMBER”类别，比如可能是指某个编号，比如“EN Nb.”是2104090958，属于NUMBER？但用户类别中的“NUMBER”可能是指其他，比如CTN编号？或者可能“NUMBER”是指“Page 8”中的8？不，“PAGE NUMBER”是另一个。可能“NUMBER”在图像中没有明确的标签，或者可能我漏了。或者可能“NUMBER”是指“EN Nb.”的数值，但“EN Nb.”已经单独列了。可能“NUMBER”类别在图像中没有对应，或者可能用户指的是其他。暂时先标记可能存在的，或者可能“NUMBER”是指“Pickup Date”中的日期？不，先继续其他类别。
+
+- PAGE NUMBER：图像底部“Page 8”，所以“PAGE NUMBER”类别对应这个文本。
+
+- Payment Term：图像中“Payment Term O/A 75 Days”，属于“Payment Term”类别。
+
+- Pickup Date：图像中“Pickup Date: 10/20/2021”，属于“Pickup Date”类别。
+
+- Price Term：图像中“Price Term FOB SHANGHAI”，属于“Price Term”类别。
+
+- SHIPPING MARKS：图像中“SHIPPING MARKS:”下面的内容，比如“ETEC VIETNAM P/NO 1 MADE IN CHINA ...” 所以“SHIPPING MARKS:”是标签，属于“SHIPPING MARKS”类别。
+
+- Shipped per：图像中“Shipped per: SEA”，属于“Shipped per”类别。
+
+- TITLE：图像顶部“PACKING LIST”，属于“TITLE”类别。
+
+- Tel：图像中“Tel: 58-841-23601600”，属于“Tel”类别。
+
+现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个文本的位置。
+
+现在开始构建每个条目的JSON：
+
+1. 9301912850：
+   - 文本在ITEM列，第一行，所以bbox大概是从ITEM列的起始到该行内容。假设图像中ITEM列的9301912850的位置，x1大概在100左右，y1在中间偏下的ITEM表格部分。需要更准确，但根据图像，ITEM列的9301912850是第一行的ITEM值，所以bbox是包含“9301912850:”的区域。
+
+2. 9301912851：
+   - 同样在ITEM列，第二行的ITEM值，即“9301912851:”的区域。
+
+3. ADDRESS：
+   - 比如Invoice to下面的“Address: USNV Barnes FPO AE 05116”，这里的“Address:”是标签，内容是地址。所以bbox是“Address: USNV Barnes FPO AE 05116”这个区域。
+
+4. COMPANY NAME：
+   - “INTER-SIN Development Zone Shichuang Media Co., Ltd.”，在Invoice to: 后面，所以bbox是这个公司名称的文本。
+
+5. COMPANY NO：
+   - “COMPANY NO : 201016894N”，所以bbox是这个文本。
+
+6. Country of Origin：
+   - “Country of Origin: CHINA”，bbox是这个文本。
+
+7. EN Date：
+   - “EN Date : 10/20/2021”，bbox是这个文本。
+
+8. EN Nb.：
+   - “EN Nb. : 2104090958”，bbox是这个文本。
+
+9. Fax：
+   - “Fax: 26-684-4651305”，bbox是这个文本。
+
+10. NUMBER：
+    - 可能需要看是否有“NUMBER”标签，比如可能没有，或者可能“NUMBER”是指“EN Nb.”的数值，但“EN Nb.”已经单独处理。或者可能“NUMBER”是指“Page 8”中的8？不，“PAGE NUMBER”是另一个。可能“NUMBER”在图像中没有，或者可能我漏了。暂时假设“NUMBER”可能是指某个编号，比如“Pickup Date”中的日期是数字，但可能不是。或者可能“NUMBER”类别不存在？但用户要求检测所有匹配的，所以如果不存在就不包含。但可能“NUMBER”是指“EN Nb.”的数值，即2104090958，属于NUMBER。所以“EN Nb.”的数值是NUMBER，所以“NUMBER”类别对应“2104090958”？但“EN Nb.”已经单独列了，可能用户将“EN Nb.”和“NUMBER”视为不同，所以“NUMBER”可能没有。或者可能“NUMBER”是指“Price Term”中的FOB SHANGHAI？不。可能暂时跳过，或者可能“NUMBER”是指“Shipment Marks”中的某个编号，比如P/NO 1，属于NUMBER。但可能更简单的是，先处理存在的类别。
+
+11. PAGE NUMBER：
+    - “Page 8”，在图像底部，所以bbox是这个文本。
+
+12. Payment Term：
+    - “Payment Term O/A 75 Days”，bbox是这个文本。
+
+13. Pickup Date：
+    - “Pickup Date: 10/20/2021”，bbox是这个文本。
+
+14. Price Term：
+    - “Price Term FOB SHANGHAI”，bbox是这个文本。
+
+15. SHIPPING MARKS：
+    - “SHIPPING MARKS:”下面的内容，比如“ETEC VIETNAM P/NO 1 MADE IN CHINA ...” 所以“SHIPPING MARKS:”是标签，bbox是这个标签和内容。
+
+16. Shipped per：
+    - “Shipped per: SEA”，bbox是这个文本。
+
+17. TITLE：
+    - “PACKING LIST”，在图像顶部，bbox是这个文本。
+
+18. Tel：
+    - “Tel: 58-841-23601600”，bbox是这个文本。
+
+现在需要将这些整理成JSON数组，每个元素包含bbox和label。
+
+注意：由于是图像，bbox的坐标是相对的（0-1000），需要估计每个文本的位置。例如：
+
+- TITLE: "PACKING LIST" 在图像顶部，所以bbox大概x1=25, y1=10, x2=350, y2=50（假设）。
+
+- Tel: "Tel: 58-841-23601600" 在顶部地址部分，所以x1=350, y1=30, x2=600, y2=50。
+
+- Fax: "Fax: 26-684-4651305" 在Tel旁边，x1=600, y1=30, x2=800, y2=50。
+
+- Invoice to: "INTER-SIN Development Zone Shichuang Media Co., Ltd." 在左侧，x1=100, y1=120, x2=500, y2=140。
+
+- Address: "USNV Barnes FPO AE 0511

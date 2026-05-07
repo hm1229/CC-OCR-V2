@@ -1,0 +1,20 @@
+\section*{Chain of Hindsight aligns Language Models with Feedback}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{figure2}
+\caption{Figure 2. Evaluation on summarization. The metrics are ROUGE score on TL;DR summary task. CoH substantially outperforms base pretrained models, SFT and RLHF.}
+\label{fig:2}
+\end{figure}
+
+We also introduce three additional variations of SFT: (1) conditioning on the feedback chain used in our approach, (2) applying the loss function to all data, and (3) adding an unlikely loss to negative rated data. To ensure a fair comparison, we apply identical training techniques (including continued training on pretraining data) and hyperparameters to all SFT variations and our own method.
+
+RLHF. The RLHF method involves learning a reward function based on human preference and using reinforcement learning to maximize this reward. In our study, we adopt the PPO algorithm, as previously used in related work. To ensure a fair comparison, we apply identical training techniques (including continued training on pretraining data) and hyperparameters to all baselines and our own method. We also adjust the hyperparameters of the reinforcement learning algorithm and reward function to obtain the best possible results.
+
+\subsection*{4. Main Results}
+
+\subsubsection*{4.1 Better Summarization}
+
+In Figure 2, we present the ROUGE scores of our models on the TL;DR dataset, following the setting of Stiennon et al. (2020). Our proposed approach, CoH, significantly outperforms the pretrained model, supervised finetuning, and RLHF.
+
+To further evaluate the performance of our proposed approach, we conducted human evaluation as shown in Table 1. We conducted pairwise comparisons between CoH and the baselines because we found that this approach was easier for human labelers to evaluate compared to multiple options. We hired 75 human labelers who were proficient in English from a

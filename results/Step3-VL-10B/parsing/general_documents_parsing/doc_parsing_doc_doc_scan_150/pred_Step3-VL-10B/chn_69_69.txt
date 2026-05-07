@@ -1,0 +1,97 @@
+用户现在需要把这篇论文的文本、表格、公式等转成LaTeX格式。首先得仔细看图片里的内容，包括标题、作者、摘要、关键词、正文、参考信息等。先处理标题部分，然后作者信息，接着摘要（中英文），关键词，正文，还有底部的资助信息等。
+
+首先看页面顶部的信息：第22卷第1期，2015年2月，水土保持研究，Vol.22, No.1, Feb., 2015。然后是中文标题“小兴安岭南麓典型森林类型的土壤水文功能研究”，英文标题“ Soil Hydrological Properties of Main Vegetation in Down South of Xiao Xing'an Mountains”。
+
+然后作者部分：张淑兰¹，张海军¹，张武¹，王长宝¹，邓际华²，宋英博³，张强¹。单位：(1.佳木斯大学，黑龙江佳木斯154007；2.黑龙江省合江林业科学研究所，黑龙江佳木斯154007；3.黑龙江省农业科学院佳木斯分院，黑龙江佳木斯154007)。英文作者对应：ZHANG Shulani¹, ZHANG Haijun¹, ZHANG Wu¹, WANG Changbao¹, DENG Jihua², SONG Yingbo³, ZHANG Qiang¹。单位英文：(1. Jiamusi University, Jiamusi, Heilongjiang 154007, China; 2. Hejiang Forestry Institute of Heilongjiang Academy of Forestry Sciences, Jiamusi, Heilongjiang 154002, China; 3. Jiamusi Branch of Heilongjiang Academy of Agricultural Sciences, Jiamusi, Heilongjiang 154007, China)。
+
+接下来是摘要（中文）：摘要：通过测定土壤水文物理性质、持水及渗透性能，分析了小兴安岭南麓典型森林土壤的持水、蓄水和渗透能力，并利用Kostiakov方程、Horton方程和Philip方程模拟了土壤入渗过程。结果表明：该区森林土壤容重介于0.45～1.52 g/cm³之间；不同植被类型饱和含水率为28.73%～177.32%，毛管含水率为25.26～156.84%，自然含水率13.91%～119.18%，随着土层深度增加，毛管持水能力减小；土壤最大持水量范围为282.88～341.41 mm，有效持水量为27.88～61.13 mm，涵养蓄水降能力为165.98～197.37 mm（除人工种植落叶松林为76.32 mm以外）；各植被类型土壤初始入渗速率和稳定入渗速率最大值在0—10 cm或10—20 cm土层，平均值分别为11.92 mm/min和2.78 mm/min，二者最小值在不同的植被类型下出现；从土壤的入渗过程模拟看，Horton方程的模拟效果较好。
+
+英文摘要（Abstract）：Based on soil hydrological physical properties, water holding capacity and infiltration capacity were analyzed in typical forest stands in down south of Xiao Xing'an Mountains, and the water storage and infiltration processes were simulated by Kostiakov equation, Horton equation and Philip equation. The results showed that soil bulk density was between 0.45～1.52 g/cm³, and soil saturated moisture contents of different vegetation types were between 28.73%～177.32%, capillary moisture contents were 25.26%～156.84%, natural moisture contents were 13.91%～119.18%, and these three parameters obviously decreased with increase of soil depth; the range of soil maximum storage capacity was 282.88～341.41 mm, effective capacity was 27.88～61.13 mm, retention ability of precipitation was 165.98～197.37 mm (except for artificial Lari x gmelini forest of 76.32 mm); soil initial infiltration rate and steady infiltration rate of each vegetation type were the largest in 0—10 cm or 10—20 cm soil layer, the average values were 11.92 mm/min and 2.78 mm/min, respectively, and their minimum values in different vegetation types appeared in different soil layers; according to the soil infiltration process simulation, Horton equation was better for this simulation.
+
+关键词（Keywords）：土壤水文物理；持水能力；渗透性；小兴安岭
+
+中文关键词：土壤水文物理；持水能力；渗透性；小兴安岭
+
+然后是正文部分，不过图片里正文可能主要是摘要和关键词，然后下面还有“森林土壤的水文功能是森林保持水土和涵养水源作用的重要指标[4-5]。其中，森林土壤的持水能力是指森林涵养水源、补充地下水和调节河流流量等的功能，其与森林土壤的物理性质有直接的关联要体现[1-3]，也是森林生态系统服务功能评价的一个重要指标[4-5]。” 这部分是中文的补充说明，然后是资助项目信息：收稿日期2014-04-11，修改日期2014-04-29；资助项目：国家自然科学基金青年基金项目（41301034）；黑龙江省教育厅科学技术研究项目（12531703）；佳木斯大学青年基金项目（Sq2012-32第一作者：张淑兰（1980—），女，河北省滦南县人，博士，讲师，主要从事森林生态、生态水文过程与模型应用研究。E-mail: zhangshulian1980@163.com
+
+另外，还有中图分类号：S715.7；文献标识码：A；文献编号：1005-3409(2015)01-0140-06；DOI:10.1386/j.cnki.rswc.2015.01.027
+
+现在需要把这些内容组织成LaTeX格式。注意LaTeX的结构，比如标题用\title{}，作者用\author{}，单位用\affil{}，摘要用\abstract{}，关键词用\keywords{}，正文部分可能需要分段，还有参考信息等。
+
+首先，LaTeX文档的基本结构，比如：
+
+\documentclass{article}
+\usepackage{ctex} % 中文支持
+\usepackage{amsmath,amssymb} % 数学符号
+\usepackage{graphicx} % 图片，不过这里没有图片，可能不需要
+\usepackage{geometry} % 页面布局
+\geometry{a4paper, margin=1in} % 页边距
+
+\begin{document}
+
+\title{小兴安岭南麓典型森林类型的土壤水文功能研究}
+\author{张淑兰$^{1}$，张海军$^{1}$，张武$^{1}$，王长宝$^{1}$，邓际华$^{2}$，宋英博$^{3}$，张强$^{1}$}
+\affil{
+$^{1}$佳木斯大学，黑龙江佳木斯154007；$^{2}$黑龙江省合江林业科学研究所，黑龙江佳木斯154007；$^{3}$黑龙江省农业科学院佳木斯分院，黑龙江佳木斯154007
+}
+\markboth{水土保持研究}{Vol. 22, No. 1 \\ Feb., 2015} % 页眉
+
+\begin{abstract}
+通过测定土壤水文物理性质、持水及渗透性能，分析了小兴安岭南麓典型森林土壤的持水、蓄水和渗透能力，并利用Kostiakov方程、Horton方程和Philip方程模拟了土壤入渗过程。结果表明：该区森林土壤容重介于0.45～1.52 g/cm$^3$之间；不同植被类型饱和含水率为28.73\%～177.32\%，毛管含水率为25.26\%～156.84\%，自然含水率13.91\%～119.18\%，随着土层深度增加，毛管持水能力减小；土壤最大持水量范围为282.88～341.41 mm，有效持水量为27.88～61.13 mm，涵养蓄水降能力为165.98～197.37 mm（除人工种植落叶松林为76.32 mm以外）；各植被类型土壤初始入渗速率和稳定入渗速率最大值在0—10 cm或10—20 cm土层，平均值分别为11.92 mm/min和2.78 mm/min，二者最小值在不同的植被类型下出现；从土壤的入渗过程模拟看，Horton方程的模拟效果较好。
+\end{abstract}
+
+\begin{abstract}
+Based on soil hydrological physical properties, water holding capacity and infiltration capacity were analyzed in typical forest stands in down south of Xiao Xing'an Mountains, and the water storage and infiltration processes were simulated by Kostiakov equation, Horton equation and Philip equation. The results showed that soil bulk density was between 0.45～1.52 g/cm$^3$, and soil saturated moisture contents of different vegetation types were between 28.73\%～177.32\%, capillary moisture contents were 25.26\%～156.84\%, natural moisture contents were 13.91\%～119.18\%, and these three parameters obviously decreased with increase of soil depth; the range of soil maximum storage capacity was 282.88～341.41 mm, effective capacity was 27.88～61.13 mm, retention ability of precipitation was 165.98～197.37 mm (except for artificial Lari x gmelini forest of 76.32 mm); soil initial infiltration rate and steady infiltration rate of each vegetation type were the largest in 0—10 cm or 10—20 cm soil layer, the average values were 11.92 mm/min and 2.78 mm/min, respectively, and their minimum values in different vegetation types appeared in different soil layers; according to the soil infiltration process simulation, Horton equation was better for this simulation.
+\end{abstract}
+
+\begin{keywords}
+土壤水文物理；持水能力；渗透性；小兴安岭
+\end{keywords}
+
+\section*{Soil Hydrological Properties of Main Vegetation in Down South of Xiao Xing'an Mountains}
+ZHANG Shulani$^{1}$, ZHANG Haijun$^{1}$, ZHANG Wu$^{1}$, WANG Changbao$^{1}$, DENG Jihua$^{2}$, SONG Yingbo$^{3}$, ZHANG Qiang$^{1}$
+
+\affil{
+$^{1}$Jiamusi University, Jiamusi, Heilongjiang 154007, China; $^{2}$Hejiang Forestry Institute of Heilongjiang Academy of Forestry Sciences, Jiamusi, Heilongjiang 154002, China; $^{3}$Jiamusi Branch of Heilongjiang Academy of Agricultural Sciences, Jiamusi, Heilongjiang 154007, China
+}
+
+\begin{abstract}
+Based on soil hydrological physical properties, water holding capacity and infiltration capacity were analyzed in typical forest stands in down south of Xiao Xing'an Mountains, and the water storage and infiltration processes were simulated by Kostiakov equation, Horton equation and Philip equation. The results showed that soil bulk density was between 0.45～1.52 g/cm$^3$, and soil saturated moisture contents of different vegetation types were between 28.73\%～177.32\%, capillary moisture contents were 25.26\%～156.84\%, natural moisture contents were 13.91\%～119.18\%, and these three parameters obviously decreased with increase of soil depth; the range of soil maximum storage capacity was 282.88～341.41 mm, effective capacity was 27.88～61.13 mm, retention ability of precipitation was 165.98～197.37 mm (except for artificial Lari x gmelini forest of 76.32 mm); soil initial infiltration rate and steady infiltration rate of each vegetation type were the largest in 0—10 cm or 10—20 cm soil layer, the average values were 11.92 mm/min and 2.78 mm/min, respectively, and their minimum values in different vegetation types appeared in different soil layers; according to the soil infiltration process simulation, Horton equation was better for this simulation.
+\end{abstract}
+
+\begin{abstract}
+Forest soil hydrological functions are important indicators of forest's ability to retain water and regulate water sources. The water retention capacity of forest soil refers to the function of forest in storing water, supplementing groundwater, and regulating river flow, which is directly related to the physical properties of forest soil and is an important indicator for evaluating the ecosystem service functions of forest ecosystems \cite{4-5}.
+\end{abstract}
+
+\begin{abstract}
+收稿日期: 2014-04-11；修改日期: 2014-04-29
+资助项目: 国家自然科学基金青年基金项目（41301034）；黑龙江省教育厅科学技术研究项目（12531703）；佳木斯大学青年基金项目（Sq2012-32）
+第一作者: 张淑兰（1980—），女，河北省滦南县人，博士，讲师，主要从事森林生态、生态水文过程与模型应用研究。E-mail: zhangshulian1980@163.com
+中图分类号: S715.7；文献标识码: A；文献编号: 1005-3409(2015)01-0140-06；DOI: 10.1386/j.cnki.rswc.2015.01.027
+\end{abstract}
+
+\end{document}
+
+不过需要注意，LaTeX中中英文摘要通常用\begin{abstract}，但中文的abstract可能需要处理，或者用ctex包的\begin{abstract}支持中文。另外，页眉部分可能需要调整，比如用\markboth{中文标题}{英文标题}。另外，英文标题的section部分，可能需要更规范的结构，比如\section{Soil Hydrological Properties...}，然后作者和单位在section里。
+
+另外，检查图片中的信息，比如“中图分类号:S715.7 文献标识码:A 文献编号:1005-3409(2015)01-0140-06 DOI:10.1386/j.cnki.rswc.2015.01.027”这些信息需要包含在LaTeX中，可能放在最后的abstract或者单独的section。
+
+另外，图片中的“森林土壤的水文功能是森林保持水土和涵养水源作用的重要指标[4-5]。其中，森林土壤的持水能力是指森林涵养水源、补充地下水和调节河流流量等的功能，其与森林土壤的物理性质有直接的关联要体现[1-3]，也是森林生态系统服务功能评价的一个重要指标[4-5]。” 这部分是中文的补充说明，需要包含在LaTeX中，可能在英文abstract之后，或者作为另一个abstract。
+
+现在再检查图片中的内容，确保没有遗漏。比如图片中的“Research of Soil and Water Conservation Vol. 22, No. 1 Feb., 2015”在右上角，所以页眉可以设置为中文“水土保持研究”和英文“Research of Soil and Water Conservation”。
+
+另外，作者单位的英文部分，图片中的单位是：
+
+(1.佳木斯大学 黑龙江 佳木斯 154007；2.黑龙江省合江林业科学研究所 黑龙江 佳木斯 154007；3.黑龙江省农业科学院佳木斯分院 黑龙江 佳木斯 154007)
+
+英文单位是：
+
+(1. Jiamusi University, Jiamusi, Heilongjiang 154007, China; 2. Hejiang Forestry Institute of Heilongjiang Academy of Forestry Sciences, Jiamusi, Heilongjiang 154002, China; 3. Jiamusi Branch of Heilongjiang Academy of Agricultural Sciences, Jiamusi, Heilongjiang 154007, China)
+
+注意第二个单位的邮编是154002，图片中是“黑龙江佳木斯154002”，所以要准确。
+
+另外，英文作者的姓氏是ZHANG Shulani（张淑兰），注意拼音的拼写，图片中是“ZHANG Shulani¹, ZHANG Haijun¹, ZHANG Wu¹, WANG Changbao¹, DENG Jihua², SONG Yingbo³, ZHANG Qiang¹”，所以要准确。
+
+现在，把所有内容整合，确保LaTeX代码准确，包括数学符号（如g/cm³，mm/min等），百分比，范围（～，—）等。
+
+另外，注意LaTeX中“～”可以用\textasciitilde{}或者直接用～（如果编译器支持），范围“0—10 cm”中的“—”是en dash，用--或者\textemdash{}，但通常在LaTeX中可以用--表示en dash，或者用\textminus{}（但可能显示为短横）。不过图片中的“0—10 cm”是中文

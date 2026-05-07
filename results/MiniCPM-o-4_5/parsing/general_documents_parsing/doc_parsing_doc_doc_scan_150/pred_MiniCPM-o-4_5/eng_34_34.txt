@@ -1,0 +1,60 @@
+```latex
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Example Corporation\\Balance Sheet\\December 31, 2023}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.45\textwidth} >{\raggedleft\arraybackslash}p{0.05\textwidth} >{\raggedright\arraybackslash}p{0.45\textwidth}}
+\toprule
+\textbf{Assets} & & \textbf{Liabilities} \\
+\midrule
+Current assets & & Current liabilities \\
+Cash and cash equivalents & \$ 2,200 & Short-term loans payable & \$ 5,000 \\
+Short-term investments & 10,000 & Current portion of long-term debt & 15,000 \\
+Accounts receivable - net & 39,500 & Accounts payable & 20,900 \\
+Other receivables & 1,000 & Accrued compensation and benefits & 8,500 \\
+Inventory & 31,000 & Income taxes payable & 6,100 \\
+Supplies & 3,800 & Other accrued liabilities & 4,000 \\
+Prepaid expenses & 1,500 & Deferred revenues & 1,500 \\
+Total current assets & 89,000 & Total current liabilities & 61,000 \\
+\midrule
+Investments & 36,000 & Long-term liabilities & \\
+ & & Notes payable & 20,000 \\
+Property, plant \& equipment & & Bonds payable & 375,000 \\
+Land & 5,500 & Deferred income taxes & 25,000 \\
+Land improvements & 6,500 & Total long-term liabilities & 420,000 \\
+Buildings & 180,000 & & \\
+Equipment & 201,000 & & \\
+Less: accumulated depreciation & (56,000) & & \\
+Property, plant \& equip. - net & 337,000 & Total liabilities & 481,000 \\
+\midrule
+Intangible assets & & Commitments and contingencies (see notes) \\
+Goodwill & 105,000 & & \\
+Other intangible assets & 200,000 & & \\
+Total intangible assets & 305,000 & & \\
+\midrule
+Other assets & 3,000 & & \\
+\midrule
+Total assets & \$ 770,000 & Total liabilities \& stockholders' equity & \$ 770,000 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{1em}
+
+\textit{The accompanying notes are an integral part of this statement.}
+
+\end{document}
+```

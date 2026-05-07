@@ -1,0 +1,32 @@
+I need to find all instances of '3725.19' in the image.
+
+Looking at the receipt, I can see '3725.19' appears in several places:
+
+1. "个人支付小计 3725.19" - in the row with personal payment subtotal
+2. "现金支付: 3725.19" - cash payment amount
+3. "¥: 3725.19" - in the 交费金额 row
+4. "收现金 3725.19" - in the bottom row
+
+Let me focus on identifying the regions for each instance:
+
+1. The "3725.19" after "个人支付小计" - approximately at the middle-left area of the payment section
+(230, 790, 340, 820) 
+
+2. The "3725.19" after "现金支付:" 
+(680, 790, 790, 820)
+
+3. The "¥: 3725.19" in the 交费金额 row
+(620, 820, 760, 850)
+
+4. The "收现金 3725.19" in the bottom row
+(530, 855, 660, 885)
+
+Let me re-examine more carefully with normalized coordinates (0-1000):
+
+For "个人支付小计 3725.19":
+(230, 790, 340, 820) → approximately (150, 790, 340, 820)
+
+For the main visible "3725.19" next to ¥:
+Located around x: 620-760, y: 820-850
+
+(620, 820, 760, 850)

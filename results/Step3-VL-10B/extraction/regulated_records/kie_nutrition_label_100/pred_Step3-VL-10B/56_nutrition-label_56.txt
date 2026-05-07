@@ -1,0 +1,160 @@
+用户现在需要把营养标签的信息对应到各个字段。首先看每个营养成分在“per 100g**”和“per sausage approx. 50g**”以及%RI*的数据。先分析每个字段：
+
+首先看SS可能是“Typical values”？不，看结构。不过先看每个营养项：Energy, Fat, of which saturates, Carbohydrate, of which sugars, Fibre, Protein, Salt。然后对应三个列：per 100g, per sausage, %RI。
+
+现在看schema里的字段，比如CE-P1可能是Component（营养成分）的P1（per 100g）？CE-PS是Component的PS（per sausage）？CE-D是Component的D（%RI）？然后TF可能是... 不对，先看每个营养成分对应三个值：per 100g的值，per sausage的值，%RI。然后看schema里的字段，比如CE-P1对应per 100g的Component值？或者可能需要先确定每个营养项的三个数据。
+
+先列出所有营养项及其三个数据：
+
+1. Energy:
+   - per 100g: 1336kJ/322kcal
+   - per sausage: 669kJ/161kcal
+   - %RI: 8%
+
+2. Fat:
+   - per 100g: 26g
+   - per sausage: 13g
+   - %RI: 19%
+
+3. of which saturates:
+   - per 100g: 10g
+   - per sausage: 5.0g
+   - %RI: <1%
+
+4. Carbohydrate:
+   - per 100g: 2.6g
+   - per sausage: 1.3g
+   - %RI: <1%
+
+5. of which sugars:
+   - per 100g: 1.4g
+   - per sausage: <0.5g
+   - %RI: 2%
+
+6. Fibre:
+   - per 100g: 0.9g
+   - per sausage: 9.5g
+   - %RI: 19%
+
+7. Protein:
+   - per 100g: 19g
+   - per sausage: 0.60g？不对，看图片里Protein的per sausage是0.60g？不，看图片中Protein行：per 100g是19g，per sausage approx.50g是0.60g？然后%RI是10%？看图片里Protein的%RI是10%吗？看图片中Protein那一行的%RI列是10%？看图片中的Protein行：Salt是1.2g（per 100g），per sausage是0.60g，%RI是10%。然后Protein的per 100g是19g，per sausage是？看图片中Protein行的per sausage列是0.60g？不，看图片中的Protein行：per 100g是19g，per sausage approx.50g是？看图片里的Protein行，per sausage列是0.60g？然后%RI是10%？对，图片中Protein的%RI是10%吗？看图片中的%RI列，Protein对应的是10%？看图片中的Salt行%RI是10%？不，Salt的%RI是10%？看图片中的Salt行：%RI是10%？看图片中的Salt行：per 100g是1.2g，per sausage是0.60g，%RI是10%。然后Protein的%RI是？看图片中Protein行的%RI列，应该是10%？不，看图片中的Protein行，%RI列是10%吗？看图片中的%RI列，Protein对应的是10%？可能我之前看错了。现在重新看图片：
+
+图片中的列是Typical values（per 100g**）、per sausage approx.50g**、%RI*。
+
+行：
+
+Energy: 1336kJ/322kcal | 669kJ/161kcal | 8%
+
+Fat: 26g | 13g | 19%
+
+of which saturates: 10g | 5.0g | <1%
+
+Carbohydrate: 2.6g | 1.3g | <1%
+
+of which sugars: 1.4g | <0.5g | 2%
+
+Fibre: 0.9g | 9.5g | 19%
+
+Protein: 19g | 0.60g？不，看图片中Protein行的per sausage列，应该是？看图片中的Protein行，per sausage列是0.60g？然后%RI是？看图片中Protein行的%RI列是10%？因为Salt的%RI是10%？不，Salt行的%RI是10%。Protein行的%RI是？看图片中的Protein行，%RI列是10%吗？可能图片中的Protein行%RI是10%？或者可能我看错了。不管怎样，先按图片中的内容提取。
+
+现在看schema的字段：SS, CE-P1, CE-PS, CE-D, TF-P1, TF-PS, TF-D, CAR-P1, CAR-PS, CAR-D, PRO-P1, PRO-PS, PRO-D。这些字段可能对应不同的类别，比如CE是Component（营养成分），TF是... 可能CE是Energy, Fat等？不，可能每个大类别？比如CE是Carbohydrate？不，可能需要看每个字段对应哪个营养项。或者可能SS是“Typical values”？不，可能用户给的schema是每个营养项的三个值（per 100g, per sausage, %RI）对应到不同的字段。比如CE-P1是Component的per 100g，CE-PS是Component的per sausage，CE-D是Component的%RI。然后TF可能是... 不，可能CE是Energy？不，可能需要重新分析。
+
+另一种可能：schema中的每个字段对应一个营养成分的三个属性（P1=per 100g, PS=per sausage, D=%RI）。比如CE是Carbohydrate？不，看字段名：CE-P1, CE-PS, CE-D；TF-P1等。可能CE是“Component Energy”？TF是“Component Fat”？不，可能CE是“Component”（比如Energy）？不，可能更简单的是，每个营养项对应三个字段，比如Energy对应CE-P1, CE-PS, CE-D；Fat对应TF-P1, TF-PS, TF-D；Carbohydrate对应CAR-P1, CAR-PS, CAR-D；Protein对应PRO-P1, PRO-PS, PRO-D。这样四个主要营养项：Energy, Fat, Carbohydrate, Protein？但还有of which saturates, of which sugars, Fibre, Salt。但schema里只有CE, TF, CAR, PRO四个前缀？可能CE是Energy，TF是Fat，CAR是Carbohydrate，PRO是Protein？然后其他项可能不包含？但看schema里的字段是SS, CE-P1, CE-PS, CE-D, TF-P1, TF-PS, TF-D, CAR-P1, CAR-PS, CAR-D, PRO-P1, PRO-PS, PRO-D。共13个字段。SS是空字符串？可能SS是“Typical values”？不，可能SS是某个总项？或者可能SS是“per 100g**”的标题？不，可能用户给的schema是需要填充每个对应字段的值，比如CE-P1是Energy的per 100g值，CE-PS是Energy的per sausage值，CE-D是Energy的%RI；TF-P1是Fat的per 100g值，TF-PS是Fat的per sausage值，TF-D是Fat的%RI；CAR-P1是Carbohydrate的per 100g值，CAR-PS是Carbohydrate的per sausage值，CAR-D是Carbohydrate的%RI；PRO-P1是Protein的per 100g值，PRO-PS是Protein的per sausage值，PRO-D是Protein的%RI；然后剩下的SS可能是其他？比如Fibre、Salt、of which saturates等？但schema里没有这些前缀，可能用户提供的schema可能有遗漏，或者我理解错了。但根据问题描述，“given a json schema, fill the value part of the schema with the information in the image. Note that if the value is a list, the schema will give a template for each element.” 现在看用户提供的schema是：
+
+{"SS": "", "CE-P1": "", "CE-PS": "", "CE-D": "", "TF-P1": "", "TF-PS": "", "TF-D": "", "CAR-P1": "", "CAR-PS": "", "CAR-D": "", "PRO-P1": "", "PRO-PS": "", "PRO-D": ""}
+
+现在需要把每个字段对应到营养信息。假设：
+
+- SS：可能是“Typical values”？但可能不需要，或者SS是某个总项，比如“per 100g**”的标题？不，可能SS是空，或者对应某个项。但先处理CE、TF、CAR、PRO，因为它们是主要的营养成分（Energy, Fat, Carbohydrate, Protein）。
+
+现在对应：
+
+CE（Energy）：
+- P1（per 100g）: 1336kJ/322kcal
+- PS（per sausage）: 669kJ/161kcal
+- D（%RI）: 8%
+
+TF（Fat）：
+- P1: 26g
+- PS: 13g
+- D: 19%
+
+CAR（Carbohydrate）：
+- P1: 2.6g
+- PS: 1.3g
+- D: <1%
+
+PRO（Protein）：
+- P1: 19g
+- PS: 0.60g？不，看图片中Protein的per sausage列，图片中Protein行的per sausage是0.60g吗？看图片中的Protein行：per 100g是19g，per sausage approx.50g是？看图片中的Protein行，per sausage列是0.60g？然后%RI是？看图片中Protein行的%RI列是10%？因为Salt的%RI是10%？不，Salt行的%RI是10%。Protein行的%RI是？看图片中的Protein行，%RI列是10%吗？看图片中的%RI列，Protein对应的是10%？是的，图片中Protein的%RI是10%。然后Protein的per sausage是0.60g？不，看图片中的Protein行，per sausage列是0.60g？因为per 100g是19g，per 50g就是9.5g？哦，我之前看错了！啊，这里犯了错误。看图片中的Fibre行：per 100g是0.9g，per sausage是9.5g。而Protein行：per 100g是19g，per sausage应该是19g * 50g/100g = 9.5g？但图片中Protein行的per sausage列是0.60g？这显然不对，可能我看反了行。重新看图片：
+
+图片中的行：
+
+- Energy
+- Fat
+- of which saturates
+- Carbohydrate
+- of which sugars
+- Fibre
+- Protein
+- Salt
+
+现在看每行的per sausage列（approx.50g）：
+
+- Energy: 669kJ/161kcal
+- Fat: 13g
+- of which saturates: 5.0g
+- Carbohydrate: 1.3g
+- of which sugars: <0.5g
+- Fibre: 9.5g （因为per 100g是0.9g，50g就是0.45g？不对，图片中Fibre的per 100g是0.9g，per sausage是9.5g？这明显是数值错误？不，可能图片中的Fibre行的per 100g是0.9g，per sausage是9.5g？这不可能，因为50g是100g的一半，所以per 50g的Fibre应该是0.45g左右，但图片中Fibre的per sausage是9.5g，这说明可能我看反了列？哦，不，图片中的列是“per 100g**”和“per sausage approx.50g**”，所以per sausage是50g，所以per 100g的数值是per 50g的两倍。比如Fibre的per sausage是9.5g，那么per 100g应该是19g？但图片中Fibre的per 100g是0.9g，这明显矛盾，说明我看反了行和列？不，看图片中的Fibre行：Fibre对应的per 100g是0.9g，per sausage是9.5g？这显然数值不合理，可能图片中的Fibre行的per 100g是9.5g，per sausage是0.9g？哦，对！可能我把列看反了。图片中的列是“Typical values per 100g**”和“per sausage approx.50g**”，所以“per 100g”是左边列，“per sausage”是中间列。现在看Fibre行：左边（per 100g）是0.9g？不，看图片中的Fibre行，左边是0.9g，中间是9.5g？这显然有问题，因为50g的Fibre不可能是9.5g，而100g是0.9g，这说明可能图片中的Fibre行的数值是：per 100g是9.5g，per sausage是0.9g？这样才对，因为50g是100g的一半，9.5g/2=4.75g？不，还是不对。哦，可能图片中的“Fibre”行的per 100g是9.5g，per sausage是4.75g？但图片中显示的是Fibre行的per sausage是9.5g，per 100g是0.9g？这可能是图片中的排版问题，或者我看错了。现在不管这个，先按图片中的文字提取，因为用户提供的图片是给定的，要准确提取。
+
+现在重新看图片中的每个单元格：
+
+第一行（Energy）：
+- per 100g: 1336kJ/322kcal
+- per sausage: 669kJ/161kcal
+- %RI: 8%
+
+第二行（Fat）：
+- per 100g: 26g
+- per sausage: 13g
+- %RI: 19%
+
+第三行（of which saturates）：
+- per 100g: 10g
+- per sausage: 5.0g
+- %RI: <1%
+
+第四行（Carbohydrate）：
+- per 100g: 2.6g
+- per sausage: 1.3g
+- %RI: <1%
+
+第五行（of which sugars）：
+- per 100g: 1.4g
+- per sausage: <0.5g
+- %RI: 2%
+
+第六行（Fibre）：
+- per 100g: 0.9g
+- per sausage: 9.5g
+- %RI: 19%
+
+第七行（Protein）：
+- per 100g: 19g
+- per sausage: 0.60g？不，看图片中Protein行的per sausage列，图片中Protein行的per sausage是0.60g？然后%RI是10%？因为Salt行的%RI是10%。Salt行：
+- per 100g: 1.2g
+- per sausage: 0.60g
+- %RI: 10%
+
+哦，对！Salt行的per sausage是0.60g，%RI是10%。而Protein行的per sausage应该是19g * 50g/100g = 9.5g？但图片中Protein行的per sausage列是？看图片中的Protein行，per sausage列是0.60g？不，这明显是Salt行的per sausage是0.60g，而Protein行的per sausage应该是9.5g？因为per 100g是19g，50g就是9.5g。所以可能图片中的Protein行的per sausage列是9.5g？而Fibre行的per 100g是0.9g，per sausage是4.5g？但图片中Fibre行的per sausage是9.5g，这说明可能图片中的Fibre和Protein的数值写反了？比如Fibre的per 100g是9.5g，per sausage是4.75g？不，可能我之前看反了行。现在不管这些，先按图片中的文字准确提取，因为用户提供的图片是给定的，要忠实于图片。
+
+现在回到schema，用户提供的schema有CE、TF、CAR、PRO四个前缀，对应四个营养成分。假设：
+
+CE是Energy（因为Energy是第一个主要成分）
+TF是Fat（第二个）
+CAR是Carbohydrate（第三个主要碳水）
+PRO是Protein（第四个主要蛋白质）
+
+然后SS可能是其他，比如“of which saturates”、“of which sugars”、“Fibre”、“Salt”？但schema中只有SS，所以可能SS是“Typical values”或者空。但根据问题，需要填充每个字段的value。现在先处理CE、TF、CAR、

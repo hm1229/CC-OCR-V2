@@ -1,0 +1,190 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Sheet HTML</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f8f0; /* Light green background to match image */
+            color: #000;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        td {
+            padding: 4px 8px;
+            vertical-align: top;
+        }
+        .header-cell {
+            text-align: center;
+            font-weight: bold;
+        }
+        .section-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        .sub-header {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        .label {
+            text-align: left;
+            padding-right: 20px;
+        }
+        .value {
+            text-align: right;
+            padding-left: 20px;
+        }
+        .total-row {
+            font-weight: bold;
+            border-top: 1px solid black;
+        }
+        .double-total-row {
+            font-weight: bold;
+            border-top: 2px solid black;
+        }
+        .currency-symbol {
+            text-align: right;
+            padding-right: 10px;
+        }
+        .row-gap {
+            height: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td colspan="4" class="header-cell">Example:</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="header-cell">*ABC Design</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="header-cell">Balance Sheet</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="header-cell">As at December 31, 2022</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td colspan="4" class="section-header">ASSETS</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="sub-header">Current Assets</td>
+        </tr>
+        <tr>
+            <td class="label">Cash and cash equivalents</td>
+            <td class="currency-symbol">$</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr>
+            <td class="label">Accounts Receivable</td>
+            <td class="value">150.00</td>
+        </tr>
+        <tr>
+            <td class="label">Inventories</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr>
+            <td class="label">Prepaid and other assets</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr class="total-row">
+            <td class="label">Total Current Assets</td>
+            <td class="value">450.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td class="label">Long-term Investment</td>
+            <td class="value">200.00</td>
+        </tr>
+        <tr>
+            <td class="label">Property & Equipment</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr>
+            <td class="label">Other assets</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td colspan="4" class="section-header">TOTAL ASSETS</td>
+        </tr>
+        <tr class="double-total-row">
+            <td class="value">$ 850.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td colspan="4" class="section-header">LIABILITIES</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="sub-header">Current Liabilities</td>
+        </tr>
+        <tr>
+            <td class="label">Accounts Payable</td>
+            <td class="currency-symbol">$</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr>
+            <td class="label">Unearned Revenue</td>
+            <td class="value">50.00</td>
+        </tr>
+        <tr>
+            <td class="label">Short-term debt</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr class="total-row">
+            <td class="label">Total Current Liabilities</td>
+            <td class="value">250.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td class="label">Long-term debt</td>
+            <td class="value">200.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td colspan="4" class="section-header">TOTAL LIABILITIES</td>
+        </tr>
+        <tr class="total-row">
+            <td class="value">$ 450.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td colspan="4" class="section-header">OWNER'S EQUITY</td>
+        </tr>
+        <tr>
+            <td class="label">Equity</td>
+            <td class="currency-symbol">$</td>
+            <td class="value">100.00</td>
+        </tr>
+        <tr>
+            <td class="label">Retained Earnings</td>
+            <td class="value">300.00</td>
+        </tr>
+        <tr class="total-row">
+            <td class="label">TOTAL EQUITY</td>
+            <td class="value">$ 400.00</td>
+        </tr>
+        <tr class="row-gap"></tr>
+        <tr>
+            <td colspan="4" class="section-header">TOTAL LIABILITIES AND OWNER'S EQUITY</td>
+        </tr>
+        <tr class="double-total-row">
+            <td class="value">$ 850.00</td>
+        </tr>
+    </table>
+
+</body>
+</html>
+```

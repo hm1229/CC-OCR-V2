@@ -1,0 +1,25 @@
+To determine the coordinates of the region containing the text '77.16', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the Text Location:**
+   The text '77.16' appears in two places:
+   - In the section under "金额" (Amount) next to the item description.
+   - In the section under "应收金额" (Amount Due) at the bottom.
+
+   We will focus on the latter, as it is more prominent and likely the target.
+
+2. **Estimate the Coordinates:**
+   - The text '77.16' is located near the bottom center of the image.
+   - We need to estimate the normalized coordinates for the left-top and right-bottom corners of the bounding box.
+
+3. **Normalized Coordinates Calculation:**
+   - The image width and height are assumed to be 1000 units each for normalization purposes.
+   - By visually inspecting the image, the bounding box can be approximated.
+
+   Let's assume:
+   - The left-top corner (x1, y1) is approximately at (400, 750).
+   - The right-bottom corner (x2, y2) is approximately at (500, 800).
+
+Thus, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+(400, 750, 500, 800)

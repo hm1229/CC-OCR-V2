@@ -1,0 +1,14 @@
+```latex
+\begin{aligned}
+&= \sum_{t=1}^T \kappa_t \\
+&\leq \sum_{t=1}^T \mathbb{E}_{\gamma_t, i: i \in [n]} \Big[ \underbrace{\left| f_2(\phi(x_t, i^*); \theta_{t-1}^{2,*}) - (\gamma_t, i^* f_1(x_t, i^*; \theta_{t-1}^{1,*}) \right|}_{I_1} \\
+&\quad + \underbrace{\left| f_2(\phi(x_t, i^*); \theta_{t-1}^{2,*}) - f_2(\phi(x_t, i^*); \theta_{t-1}^2) \right|}_{I_3} \\
+&\quad + \underbrace{\left| f_1(x_t, i^*; \theta_{t-1}^{1,*}) - f_1(x_t, i^*; \theta_{t-1}') \right|}_{I_4} \\
+&\quad + \underbrace{\sum_{\gamma_t, \hat{i}: \hat{i} \in [n]} \left[ f_1(\phi(x_t, \hat{i}); \theta_{t-1}^2) - (\gamma_t, \hat{i} \cdot f_1(x_t, \hat{i}; \theta_{t-1}')) \right]}_{I_5} \Big] \\
+&\leq 2 \sum_{t=1}^T \left( \frac{\sqrt{\Psi(\theta_0^2, R/m^{1/4})} + O(1)}{\sqrt{T}} + \frac{2 \sqrt{\log(O(1)/\delta)}}{T} \right) \\
+&\quad + 2 \sum_{t=1}^T \left( O(\sqrt{L}R/m^{1/4}) + O(R^{4/3} L^2 \sqrt{\log m}/m^{1/3}) \right) \\
+&\leq \sum_{t=1}^T \left( \frac{2 \sqrt{\Psi(\theta_0^2, R/m^{1/4})} + O(1)}{\sqrt{T}} + \frac{2 \sqrt{2 \log(O(1)/\delta)}}{T} \right) \\
+&\quad + O(\sqrt{L}TR/m^{1/4}) + O(TR^{4/3} L^2 \sqrt{\log m}/m^{1/3}) \\
+&\leq 2 \sqrt{\Psi(\theta_0^2, R/m^{1/4}) T} + 2 \sqrt{2 \log(O(1)/\delta) T} + O(1)
+\end{aligned}
+```

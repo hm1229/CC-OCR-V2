@@ -1,0 +1,223 @@
+用户现在需要从营养标签中提取信息到对应的schema字段。首先得理解每个字段可能对应什么。先看标签里的内容：
+
+首先看“Typical Composition”下的各项：Energy, Protein, Carbohydrate of which sugars, Fat of which saturates, Fibre, Sodium, Vitamins/Minerals里的Thiamin, Folic Acid。然后右边是100g provides的数据。
+
+现在看schema的字段：SS, CE-P1, CE-PS, PRO-P1, PRO-PS, CAR-P1, CAR-PS, TF-P1, TF-PS, SO-P1, SO-PS。需要对应每个部分。
+
+先分析每个缩写可能的含义：比如CE可能是Carbohydrate of which sugars？不，先看常见的营养标签结构。或者看每个字段对应标签中的项目。比如：
+
+- Energy：对应Energy，左边是1个土豆（约175g）的能量是586kJ，138kcal；右边100g是335kJ，79kcal。
+- Protein：左边3.7g，右边2.1g。
+- Carbohydrate：左边30.1g，右边17.2g；of which sugars是1.1g（左边），0.2g（右边）。
+- Fat：左边2.3g，右边trace；of which saturates是trace（两边）。
+- Fibre：trace（两边？看标签里Fibre是trace，右边也是trace？不，标签里Fibre那行，左边是trace，右边是trace？看图片中的Fibre行，左边是trace，右边是trace？然后Sodium左边是0.37mg？不，看Sodium那行：左边是0.37mg？不，看图片中的Sodium：左边是“Sodium”对应的是0.37mg？不，看图片里的Sodium行，左边是“Sodium”下面的数值是0.37mg？不，看图片中的内容：
+
+看图片中的文字：
+
+Typical Composition
+Energy: 586kJ, 138kcal（对应1 potato approx 175g）
+1 potato (approx 175g) provides: 586kJ, 138kcal
+然后右边100g provides: 335kJ, 79kcal
+
+Protein: 3.7g（左边），右边2.1g
+Carbohydrate: 30.1g（左边），右边17.2g；of which sugars: 1.1g（左边），0.2g（右边）
+Fat: 2.3g（左边），右边trace；of which saturates: trace（两边）
+Fibre: trace（两边？看Fibre行，左边是trace，右边是trace？
+Sodium: 左边是0.37mg？不，看Sodium那行，左边是“Sodium”对应的数值是0.37mg？不，看图片中的Sodium行：左边是“Sodium”下面的数值是0.37mg？不，看图片里的Sodium行，左边是“Sodium”对应的是0.37mg？不，看图片中的“Sodium”行，左边是“0.37mg (26% RDA)”？不，看Vitamins/Minerals部分：
+
+Thiamin (Vitamin B1): 左边是0.37mg (26% RDA)，右边是0.21mg (15% RDA)
+Folic Acid: 左边是61μg (31% RDA)，右边是35μg (18% RDA)
+
+现在需要把每个字段对应到schema的SS, CE-P1等。可能需要先确定每个缩写代表的营养成分：
+
+假设：
+
+SS: Sodium（Sodium）
+CE-P1: Carbohydrate of which sugars - P1（1个土豆的量）
+CE-PS: Carbohydrate of which sugars - PS（100g的量）
+PRO-P1: Protein - P1（1个土豆）
+PRO-PS: Protein - PS（100g）
+CAR-P1: Carbohydrate - P1（1个土豆）
+CAR-PS: Carbohydrate - PS（100g）
+TF-P1: Fat - P1（1个土豆）
+TF-PS: Fat - PS（100g）
+SO-P1: Thiamin (Vitamin B1) - P1（1个土豆）
+SO-PS: Thiamin (Vitamin B1) - PS（100g）？ 不对，可能SO是Sodium？不，Sodium是另一个。或者看Folic Acid是另一个。可能需要重新分析。
+
+另一种可能，schema中的字段是针对每个营养成分的两个部分（P1是per item，PS是per standard？比如P1是1个土豆的量，PS是100g的量）。然后每个营养成分对应两个字段（P1和PS）。现在看有多少个营养成分：
+
+Energy, Protein, Carbohydrate, of which sugars, Fat, of which saturates, Fibre, Sodium, Thiamin, Folic Acid。但schema里的字段是SS, CE-P1, CE-PS, PRO-P1, PRO-PS, CAR-P1, CAR-PS, TF-P1, TF-PS, SO-P1, SO-PS。共11个字段。数一下：SS是1个，CE是2个（P1, PS），PRO是2个，CAR是2个，TF是2个，SO是2个？不对，SS是单独，然后CE（2）、PRO（2）、CAR（2）、TF（2）、SO（2）？ 1+2*5=11，对。所以：
+
+SS: 可能是Sodium？不，Sodium是另一个。或者SS是Fibre？不，看Fibre是trace。或者看Vitamins/Minerals中的某个。或者可能CE是Carbohydrate of which sugars（CE可能代表Carbohydrate - sugars？），PRO是Protein，CAR是Carbohydrate（总），TF是Fat，SO是Sodium？然后SS可能是另一个，比如Folic Acid？ 不太对。或者看每个字段的缩写：
+
+CE-P1, CE-PS：CE可能是Carbohydrate of which sugars（因为of which sugars是carbohydrate的一部分，所以CE代表Carbohydrate - sugars？）
+
+PRO-P1, PRO-PS：Protein
+
+CAR-P1, CAR-PS：Carbohydrate（总）
+
+TF-P1, TF-PS：Fat
+
+SO-P1, SO-PS：Sodium？ 不，Sodium是S，那SO可能是Thiamin？ 因为Thiamin是Vitamin B1，Folic Acid是另一个。或者SO是Sodium？ 那SS可能是Folic Acid？ 因为Folic Acid是另一个维生素。
+
+现在尝试填充：
+
+首先，确定每个字段对应的内容：
+
+1. SS：可能对应Folic Acid（因为Folic Acid是单独的，而Sodium是S，Thiamin是另一个。或者看SS是Sodium？ 不，Sodium是S，那SO可能是Sodium？ 不对，可能需要看标签中的项目和schema的字段数量。标签中的项目（1个土豆的量）有：
+
+Energy: 586kJ, 138kcal
+
+Protein: 3.7g
+
+Carbohydrate: 30.1g
+
+of which sugars: 1.1g
+
+Fat: 2.3g
+
+of which saturates: trace
+
+Fibre: trace
+
+Sodium: 0.37mg？ 不，看Sodium那行，左边是“Sodium”对应的数值是0.37mg？不，看图片中的Sodium行，左边是“0.37mg (26% RDA)”？不，看图片中的“Sodium”行，左边是“0.37mg”？不，看图片中的文字：
+
+看图片中的“Sodium”行，左边是“0.37mg”？不，看图片中的“Vitamins/Minerals”下面：
+
+Thiamin (Vitamin B1): 0.37mg (26% RDA) （左边是1个土豆的量）
+
+Folic Acid: 61μg (31% RDA) （左边是1个土豆的量）
+
+右边100g provides的Thiamin是0.21mg (15% RDA)，Folic Acid是35μg (18% RDA)
+
+然后Sodium那行，左边是“Sodium”对应的数值是？看图片中的“Sodium”行，在Fibre下面，Vitamins/Minerals上面。看图片中的Sodium行：左边是“0.37mg”？不，看图片中的Sodium行，左边是“trace”？不，看图片中的Sodium行，原文是：
+
+Sodium
+
+然后对应的数值，左边是“0.37mg”？不，看图片中的内容，可能我之前看错了。重新看图片：
+
+图片中的文字：
+
+Nutrition
+
+Typical Composition
+
+1 potato (approx 175g) provides
+
+Energy: 586kJ, 138kcal
+
+Protein: 3.7g
+
+Carbohydrate: 30.1g
+
+of which sugars: 1.1g
+
+Fat: 2.3g
+
+of which saturates: trace
+
+Fibre: trace
+
+Sodium: 0.37mg？ 不，看Sodium那行，可能是“0.37mg”？不，看图片中的Sodium行，右边100g provides的Sodium是0.21mg (15% RDA)？不，看右边的列，100g provides下面的Sodium是0.21mg？不，看右边的列，100g provides的Thiamin是0.21mg (15% RDA)，Folic Acid是35μg (18% RDA)。而Sodium在右边列的数值是？看图片中的Sodium行，右边列（100g provides）的Sodium是？可能图片中的Sodium行，左边是“0.37mg”？不，可能Sodium的数值在图片中是：左边（1个土豆）是“0.37mg”？不，看图片中的“Sodium”行，左边是“0.37mg”吗？或者可能Sodium的数值是“trace”？ 不，可能我混淆了。现在先处理能明确的：
+
+Energy：
+
+P1（1个土豆）：586kJ, 138kcal
+
+PS（100g）：335kJ, 79kcal
+
+Protein：
+
+P1：3.7g
+
+PS：2.1g
+
+Carbohydrate（总）：
+
+P1：30.1g
+
+PS：17.2g
+
+of which sugars：
+
+P1：1.1g
+
+PS：0.2g
+
+Fat：
+
+P1：2.3g
+
+PS：trace
+
+of which saturates：
+
+P1：trace
+
+PS：trace
+
+Fibre：
+
+P1：trace
+
+PS：trace
+
+Sodium：
+
+P1：？看图片中的Sodium行，左边（1个土豆）的数值是“0.37mg”？不，看图片中的“Sodium”行，左边是“0.37mg”吗？或者看Vitamins/Minerals中的Thiamin是0.37mg (26% RDA)（P1），Folic Acid是61μg (31% RDA)（P1）。右边（PS）的Thiamin是0.21mg (15% RDA)，Folic Acid是35μg (18% RDA)。
+
+现在看schema的字段：
+
+SS: 可能是Sodium？ 但Sodium的P1和PS？ 不，schema中的SS是单独的，没有P1/PS，而其他是P1和PS。比如CE-P1, CE-PS是of which sugars（因为of which sugars是carbohydrate的一部分，CE可能代表Carbohydrate - sugars）。然后PRO-P1, PRO-PS是Protein；CAR-P1, CAR-PS是Carbohydrate（总）；TF-P1, TF-PS是Fat；SO-P1, SO-PS是Thiamin（因为Thiamin是Vitamin B1，属于Vitamins/Minerals，而Folic Acid可能是SS？因为SS是单独的，没有P1/PS？ 不对，SS是单独的字段，没有P1/PS，所以SS可能对应Folic Acid？ 因为Folic Acid是另一个维生素，而Thiamin是SO-P1和SO-PS？ 这样：
+
+SO-P1: Thiamin (Vitamin B1) P1（1个土豆）：0.37mg (26% RDA)
+
+SO-PS: Thiamin (Vitamin B1) PS（100g）：0.21mg (15% RDA)
+
+SS: Folic Acid P1（1个土豆）：61μg (31% RDA)？ 但Folic Acid的PS是35μg (18% RDA)，但SS没有PS，所以可能SS是Sodium？ 但Sodium的P1和PS？ 不，Sodium在图片中的数值，看图片中的Sodium行，左边（1个土豆）是“0.37mg”？不，可能Sodium的数值是“0.37mg”（P1）和“0.21mg”（PS）？ 因为右边的Thiamin是0.21mg，而Sodium的PS可能是0.21mg？ 不对，看图片中的Sodium行，右边（100g provides）的Sodium是0.21mg？ 因为Thiamin的PS是0.21mg，而Sodium的PS可能也是0.21mg？ 不，可能图片中的Sodium行，左边是“0.37mg”（P1），右边是“0.21mg”（PS）？ 因为Thiamin的P1是0.37mg，PS是0.21mg；Folic Acid的P1是61μg，PS是35μg。那Sodium的P1和PS可能也是类似的数值？ 但图片中Sodium行的描述是“Sodium”下面，左边是“0.37mg”？ 不，可能我之前看错了，图片中的Sodium行，左边是“trace”？ 不，看图片中的“Sodium”行，在Fibre下面，Vitamins/Minerals上面。看图片中的文字：
+
+Fibre
+
+Sodium
+
+Vitamins/Minerals
+
+Thiamin (Vitamin B1)
+
+Folic Acid
+
+所以Sodium行的数值，左边（1个土豆）是？ 右边（100g）是？ 看右边的列（100g provides）中，Sodium对应的数值是0.21mg？ 因为Thiamin的右边是0.21mg，而Sodium的右边可能也是0.21mg？ 不，可能图片中的Sodium行，左边是“0.37mg”（和Thiamin的P1数值一样？ 不太可能）。或者可能Sodium的数值在图片中是“0.37mg”（P1）和“0.21mg”（PS），而Thiamin是另一个。现在可能需要先处理明确的字段，比如Energy、Protein、Carbohydrate、of which sugars、Fat、Thiamin、Folic Acid，因为这些在图片中有明确数值。
+
+现在回到schema，需要填充每个字段：
+
+SS: 可能是Sodium？ 但Sodium没有P1/PS，而其他有。或者SS是Folic Acid？ 因为Folic Acid是单独的，而Thiamin是SO-P1和SO-PS。现在假设：
+
+SS: Folic Acid（1个土豆的量）：61μg (31% RDA)
+
+CE-P1: of which sugars（1个土豆）：1.1g
+
+CE-PS: of which sugars（100g）：0.2g
+
+PRO-P1: Protein（1个土豆）：3.7g
+
+PRO-PS: Protein（100g）：2.1g
+
+CAR-P1: Carbohydrate（1个土豆）：30.1g
+
+CAR-PS: Carbohydrate（100g）：17.2g
+
+TF-P1: Fat（1个土豆）：2.3g
+
+TF-PS: Fat（100g）：trace
+
+SO-P1: Thiamin (Vitamin B1)（1个土豆）：0.37mg (26% RDA)
+
+SO-PS: Thiamin (Vitamin B1)（100g）：0.21mg (15% RDA)
+
+这样所有字段都填充了。现在检查每个字段：
+
+SS: Folic Acid的P1？ 因为Folic Acid是单独的，没有PS？ 不，Folic Acid的PS是35μg (18% RDA)，但SS没有PS，所以可能SS是Sodium？ 但Sodium的P1和PS？ 不，Sodium的P1是？ 看图片中的Sodium行，左边（1个土豆）的数值是“0.37mg”？ 不，可能Sodium的P1是“0.37mg”（和Thiamin的P1一样？ 不对）。或者可能我搞错了，图片中的Sodium行，左边是“0.37mg”（P1），右边是“0.21mg”（PS），而Thiamin是另一个。但这样的话，Sodium可以是SS？ 因为SS是单独的，而Sodium的P1和PS可能没有在schema中？ 不，schema中的SS是单独的，没有P1/PS，而其他是P1和PS。所以可能SS是Sodium的P1？ 不，SS是单独的字段，没有P1/PS，所以可能SS是Fiber？ 因为Fiber的P1是trace，PS是trace。但Fiber没有P1/PS，所以SS是Fiber？ 这样：
+
+SS: Fibre（1个土豆）：trace
+
+CE-P1: of

@@ -1,0 +1,69 @@
+用户现在需要从两张图片里提取信息到给定的JSON schema里。首先看各个字段：
+
+date_issue：看第一张图里的日期，比如“05-16-2022”或者“2384 MAY2022 WNIS”？不对，看第一张图右上角有“05-16-2022”是日期，还有“2384 MAY2022 WNIS”可能是月份？再看“Projected Billing (USD)”里是May, 2022，所以date_issue应该是05-16-2022？或者看Invoice Notes上面的日期？先看vendor_name是KATZ MEDIA GROUP，因为第一张图右边是KATZ MEDIA GROUP，地址是125 WEST 55TH STREET 3RD FLOOR NEW YORK NY 10019。vendor_address就是这个地址。vendor_email是WNIS-AM的邮箱power@wtar.com。customer_billing_name是JENNIFER KIGGANS FOR CONGRESS（Adviser: JENNIFER KIGGANS FOR CONGRESS）。customer_billing_address？看第一张图里WNIS-AM的地址是Eastman, (757) 640-8500, 999 Waterside Dr .Suite 500, Norfolk VA, US 23510。然后amount_total_gross是Total里的$1,836.00（看Total那一行是$1,836.00）。amount_due是Total NET的$1,560.60？因为amount_due应该是需要支付的净额？看Total NET是$1,560.60。现在逐一确认：
+
+date_issue：看第一张图右上角有“05-16-2022”，这是合同日期？或者看“2384 MAY2022 WNIS”可能是 billing period是May 2022，而date_issue可能对应这个。另外“Projected Billing (USD)”里是May, 2022，所以date_issue可以是05-16-2022？或者看Invoice Notes上面的日期？再检查：
+
+vendor_name：KATZ MEDIA GROUP（第一张图右侧，Advertiser是JENNIFER...，而KATZ是广告公司？不，看第一张图右上角Advertiser: JENNIFER KIGGANS FOR CONGRESS，而KATZ MEDIA GROUP是右边的地址，应该是客户（广告主的代理？或者Station是WNIS-AM，属于广播站，所以vendor是KATZ MEDIA GROUP？不，看第一张图的结构：左边是WNIS-AM（Station），右边是KATZ MEDIA GROUP（可能是广告公司？或者Advertiser是JENNIFER...，而KATZ是媒体公司？可能需要再看。其实，vendor_name应该是提供服务的一方？不，可能customer是JENNIFER KIGGANS FOR CONGRESS（广告主），而vendor是KATZ MEDIA GROUP？或者看“Contract”里的Advertiser是JENNIFER KIGGANS FOR CONGRESS，而KATZ MEDIA GROUP是他们的代理？或者看Station是WNIS-AM，属于广播站，所以customer是JENNIFER...，vendor是WNIS-AM？不对，可能搞反了。再看schema里的vendor_name和customer_billing_name。通常，vendor是提供服务的（比如广播站WNIS-AM），customer是广告主（JENNIFER...）。但看第一张图中，KATZ MEDIA GROUP是右边的地址，可能是广告代理，而Advertiser是JENNIFER...。但schema里的vendor_name可能对应KATZ MEDIA GROUP？或者看“KATZ MEDIA GROUP”是广告公司的地址，而WNIS-AM是广播站（客户？不，广播站是提供广告服务的，所以vendor是WNIS-AM？不对，可能需要重新分析。
+
+看第一张图的结构：
+
+- 左上角是AM790 NEWS TALK WNIS的logo，所以Station是WNIS-AM，地址是Eastman等，这是广播站的信息，即提供广告服务的（vendor）。
+
+- 右边是KATZ MEDIA GROUP，地址是New York，这是广告公司的信息？或者Advertiser是JENNIFER KIGGANS FOR CONGRESS（广告主），而KATZ是代理广告主的公司。但schema中的vendor_name应该是提供服务的（即WNIS-AM？不，vendor是提供商品或服务的一方，这里广播站WNIS-AM提供广告服务，所以vendor是WNIS-AM？而customer是广告主JENNIFER...。但看schema中的vendor_address应该是WNIS-AM的地址：Eastman, (757) 640-8500, 999 Waterside Dr .Suite 500, Norfolk VA, US 23510。vendor_email是power@wtar.com。customer_billing_name是JENNIFER KIGGANS FOR CONGRESS（Adviser: JENNIFER KIGGANS FOR CONGRESS）。customer_billing_address？可能没有明确给出，或者看KATZ MEDIA GROUP的地址？不，可能customer是JENNIFER...，而他们的 billing address可能没有在图中，或者可能KATZ是代理，所以customer是KATZ？不对，再看“Advertiser: JENNIFER KIGGANS FOR CONGRESS”，所以customer是JENNIFER...，而vendor是WNIS-AM（提供广告服务）。但看“KATZ MEDIA GROUP”是右边的地址，可能是广告代理，所以可能vendor是KATZ？不，可能我搞反了。或者看“Contract”中的Advertiser是JENNIFER...，而KATZ是媒体公司（即广播站是WNIS-AM，属于KATZ MEDIA GROUP？因为KATZ MEDIA GROUP的地址是New York，而WNIS-AM在Norfolk VA，所以可能KATZ是广告代理，代表JENNIFER...与WNIS-AM签订合同。所以此时，vendor是WNIS-AM（提供广告服务），customer是JENNIFER...（通过KATZ代理）。但schema中的vendor_name应该是WNIS-AM？但看第一张图中“WNIS-AM”是Station，而“KATZ MEDIA GROUP”是另一个实体。现在看schema的字段：
+
+date_issue：看第一张图中的日期，比如“05-16-2022”是合同日期（右上角），或者“2384 MAY2022 WNIS”是 billing period（May 2022）。另外“Projected Billing (USD)”里是May, 2022，所以date_issue可以是05-16-2022（合同日期）。
+
+vendor_name：KATZ MEDIA GROUP？因为右边是KATZ MEDIA GROUP，可能是广告代理，而他们与广播站签订合同？或者vendor是WNIS-AM？不，可能需要看“CLASS OF TIME: See 'Invoice Notes' below”中的Invoice Notes是PRE-EMPTIBLE，而vendor是提供发票的一方？可能更简单的是看Total金额。amount_total_gross是Total列的$1,836.00（Total那一行）。amount_due是Total NET的$1,560.60。现在再整理：
+
+date_issue：05-16-2022（右上角的日期）
+
+vendor_name：KATZ MEDIA GROUP（右边的公司名称）
+
+vendor_address：125 WEST 55TH STREET 3RD FLOOR NEW YORK NY 10019（KATZ的地址）
+
+vendor_email：power@wtar.com（WNIS-AM的邮箱，因为左边是WNIS-AM的联系信息，可能vendor是WNIS-AM？这里可能混淆了。或者vendor是WNIS-AM，因为提供广告服务的是WNIS-AM，而KATZ是广告主的代理。此时vendor_name是WNIS-AM，vendor_address是Eastman, (757) 640-8500, 999 Waterside Dr .Suite 500, Norfolk VA, US 23510，vendor_email是power@wtar.com。customer_billing_name是JENNIFER KIGGANS FOR CONGRESS（Adviser: JENNIFER KIGGANS FOR CONGRESS），customer_billing_address可能没有，或者看KATZ的地址？不，customer是JENNIFER...，他们的 billing address可能未显示，或者可能KATZ是客户？因为KATZ MEDIA GROUP是右边的地址，而Advertiser是JENNIFER...，可能KATZ是广告代理，代表JENNIFER...，所以customer是KATZ MEDIA GROUP？但Adviser是JENNIFER...，所以可能customer是JENNIFER...，而KATZ是代理。但schema中的customer_billing_name应该是JENNIFER KIGGANS FOR CONGRESS。现在再检查amount_total_gross：Total行是$1,836.00，这是总费用（gross）。amount_due是Total NET，即$1,560.60，因为佣金是15%，所以net是总费用减去佣金。现在确认各个字段：
+
+date_issue：看“05-16-2022”是合同日期，或者“2384 MAY2022 WNIS”中的May 2022是 billing month，而date_issue可能对应这个。另外“Projected Billing (USD)”里是May, 2022，所以date_issue可以是05-16-2022（合同日期）。
+
+现在填充：
+
+date_issue: "05-16-2022"
+
+vendor_name: "KATZ MEDIA GROUP" （因为右边是KATZ，可能是提供服务的？不，可能vendor是WNIS-AM，因为WNIS-AM是广播站，提供广告服务。此时vendor_name是"WNIS-AM"，vendor_address是"Eastman\n(757) 640-8500\n999 Waterside Dr .Suite 500\nNorfolk VA\nUS 23510"，vendor_email是"power@wtar.com"。customer_billing_name是"JENNIFER KIGGANS FOR CONGRESS"，customer_billing_address可能没有，或者看KATZ的地址？不，customer是JENNIFER...，他们的地址可能未在图中，但可能KATZ是客户？因为KATZ MEDIA GROUP是右边的地址，而Advertiser是JENNIFER...，可能KATZ是广告公司，代表JENNIFER...，所以customer是KATZ MEDIA GROUP？但Adviser是JENNIFER...，所以可能customer是JENNIFER...，而KATZ是代理。但schema中的customer_billing_name需要是客户名称，即JENNIFER KIGGANS FOR CONGRESS。现在再看amount_total_gross是Total的$1,836.00，amount_due是Total NET的$1,560.60。
+
+现在再检查第一张图中的Total行：“Total”列是$1,836.00，然后“- Agency Commission (15%)”是$275.40，“Total NET”是$1,560.60。所以amount_total_gross是$1,836.00，amount_due是$1,560.60（因为是净额，需要支付的）。
+
+现在确定vendor_name：看“KATZ MEDIA GROUP”是右边的公司，可能是广告代理，而WNIS-AM是广播站（服务提供方），所以vendor是WNIS-AM，customer是JENNIFER KIGGANS FOR CONGRESS（通过KATZ代理）。所以vendor_name是"WNIS-AM"，vendor_address是"Eastman\n(757) 640-8500\n999 Waterside Dr .Suite 500\nNorfolk VA\nUS 23510"，vendor_email是"power@wtar.com"。customer_billing_name是"JENNIFER KIGGANS FOR CONGRESS"，customer_billing_address可能没有，或者可能KATZ是客户？但图中Advertiser是JENNIFER...，所以customer是JENNIFER...。现在再看date_issue，图中右上角有“05-16-2022”是合同日期，另外“2384 MAY2022 WNIS”是 billing period（May 2022），而“Projected Billing (USD)”里是May, 2022，所以date_issue可以是“05-16-2022”（合同日期）。
+
+现在整理所有字段：
+
+date_issue: "05-16-2022"
+
+vendor_name: "WNIS-AM" （因为是提供广告服务的广播站）
+
+vendor_address: "Eastman\n(757) 640-8500\n999 Waterside Dr .Suite 500\nNorfolk VA\nUS 23510"
+
+vendor_email: "power@wtar.com"
+
+customer_billing_name: "JENNIFER KIGGANS FOR CONGRESS"
+
+customer_billing_address: 这里可能没有明确信息，或者看KATZ的地址？不，可能customer是KATZ MEDIA GROUP？因为KATZ是广告代理，代表客户JENNIFER...，但图中Advertiser是JENNIFER...，所以customer是JENNIFER...。但图中KATZ MEDIA GROUP是右边的地址，可能是广告公司的地址，而Advertiser是JENNIFER...，所以可能customer是JENNIFER...，而KATZ是代理，所以customer_billing_address可能未提供，或者可能KATZ是客户？这里可能需要再检查。或者，可能vendor是KATZ MEDIA GROUP，因为KATZ是与WNIS-AM签订合同的一方？不，图中“Advertiser: JENNIFER KIGGANS FOR CONGRESS”，而KATZ MEDIA GROUP是右边的地址，可能是广告代理，所以合同是JENNIFER...（通过KATZ）与WNIS-AM签订的。所以vendor是WNIS-AM，customer是JENNIFER...（通过KATZ代理）。此时customer_billing_name是JENNIFER KIGGANS FOR CONGRESS，customer_billing_address可能没有，或者可能KATZ的地址是代理的地址，但图中没有给出JENNIFER...的地址，所以可能customer_billing_address留空？但schema中需要填充，可能图中没有，所以可能我之前搞错了vendor和customer。另一种可能：vendor是KATZ MEDIA GROUP，因为KATZ是提供广告服务的？不，KATZ是媒体集团，可能WNIS-AM是KATZ旗下的？因为KATZ MEDIA GROUP的地址是New York，而WNIS-AM在Norfolk VA，可能KATZ是母公司，所以vendor是KATZ MEDIA GROUP，而customer是JENNIFER...。此时vendor_name是KATZ MEDIA GROUP，vendor_address是125 WEST 55TH STREET 3RD FLOOR NEW YORK NY 10019，vendor_email可能没有，因为KATZ的联系信息在图中没有给出，而WNIS-AM的邮箱是power@wtar.com，可能KATZ是客户？不，现在可能需要重新看问题中的schema，用户需要提取的信息，可能更简单的是看：
+
+date_issue：图中的日期，比如“05-16-2022”（右上角）
+
+vendor_name：KATZ MEDIA GROUP（右边的公司名）
+
+vendor_address：125 WEST 55TH STREET 3RD FLOOR NEW YORK NY 10019（KATZ的地址）
+
+vendor_email：power@wtar.com（WNIS-AM的邮箱，可能vendor是WNIS-AM，因为提供服务的是WNIS-AM，而KATZ是客户？不，可能混淆了。或者，可能vendor是WNIS-AM，因为图中左边是WNIS-AM的详细信息（地址、邮箱），而右边是KATZ MEDIA GROUP（可能是广告代理，属于客户方？不，广告代理是代表客户，所以客户是JENNIFER...，广告代理是KATZ，广播站是WNIS-AM（vendor）。所以vendor是WNIS-AM，customer是JENNIFER...（通过KATZ代理）。此时：
+
+vendor_name: "WNIS-AM"
+
+vendor_address: "Eastman\n(757) 640-8500\n999 Waterside Dr .Suite 500\nNorfolk VA\nUS 23510"
+
+vendor_email: "power@wtar.com"
+
+customer_billing_name: "JENNIFER KIGGANS FOR CONGRESS"
+
+customer_billing_address: 图中没有明确给出JENNIFER...的地址，可能KATZ的地址是代理的地址，但图中KATZ的地址是125 WEST 55TH STREET 3RD FLOOR NEW YORK NY 10019，可能customer_billing_address是这个？因为KATZ是代理，代表客户，所以客户的 billing address可能是KATZ的地址？或者可能没有，但图中没有其他地址，所以可能customer_billing_address留空？但schema需要填充，可能图中没有，所以可能我哪里错了。或者，可能customer是KATZ MEDIA GROUP，因为KATZ是广告主？不，Adviser是JENNIFER...，所以JENNIFER是广告主，KATZ是代理。现在，可能amount_total_gross是$1,836.00，amount_due是$1,560.60，这两个是确定的。date_issue是05-16-2022（合同日期）。vendor_name是WNIS-AM，vendor_address是WNIS-AM的地址，vendor_email是power@wtar.com。customer_billing_name是JENNIFER KIGGANS FOR CONGRESS，customer_billing_address可能没有，或者可能图中“2384 MAY2022 WNIS”中的WNIS是station，而KATZ是media group，可能customer是KATZ？不，现在可能需要接受customer_billing_address可能没有，或者可能我之前对vendor和customer的判断错误，导致customer_billing_address无法获取

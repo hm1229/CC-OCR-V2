@@ -1,0 +1,41 @@
+To determine the coordinates of the region containing the text '0', we need to identify the bounding box around the text '0' in the image. Let's break down the process step-by-step:
+
+1. **Identify the Text '0':**
+   The text '0' appears in the column labeled "个人支付金额" (Personal Payment Amount) for each item listed.
+
+2. **Locate the Specific '0':**
+   We'll focus on the first '0' under the "个人支付金额" column for the first item (富马酸比索洛尔片).
+
+3. **Estimate the Coordinates:**
+   We'll estimate the normalized coordinates for the bounding box around this '0'.
+
+### Detailed Steps:
+
+1. **Image Dimensions:**
+   Assume the image width is \( W \) and the height is \( H \).
+
+2. **Bounding Box for the '0':**
+   - **Left-Top Corner (x1, y1):** This is the top-left corner of the '0'.
+   - **Right-Bottom Corner (x2, y2):** This is the bottom-right corner of the '0'.
+
+### Estimation:
+
+By visually inspecting the image, we can estimate the coordinates:
+
+- **Left-Top Corner (x1, y1):** Approximately at (100, 300)
+- **Right-Bottom Corner (x2, y2):** Approximately at (150, 350)
+
+### Normalized Coordinates:
+
+Assuming the image width \( W \) is 1000 and the height \( H \) is 700 (these are typical dimensions for such receipts):
+
+- **x1:** 100
+- **y1:** 300
+- **x2:** 150
+- **y2:** 350
+
+### Final Output:
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+
+(100, 300, 150, 350)

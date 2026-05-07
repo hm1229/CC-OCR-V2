@@ -1,0 +1,64 @@
+Based on the provided image, here is the HTML transcription of the table using `<tr>` and `<td>` tags. The table has a header row with merged cells for “Minimum parking required” spanning three columns, and then sub-headers for location types. The first column (“use type”) spans all data rows vertically in structure, but since HTML doesn’t support vertical merging without `rowspan`, we’ll represent each row independently as shown in the image — which implies that “use type” is repeated per row (though visually it’s aligned left). However, looking closely at the image, the “use type” column is not merged — each row has its own entry.
+
+Also note: The table has 5 data rows (residential, office, retail, factory, other) and 3 location-based columns under “Minimum parking required”.
+
+We’ll use `colspan` for the top-level header “Minimum parking required” spanning 3 columns.
+
+Here’s the HTML:
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th rowspan="2">use type</th>
+      <th colspan="3">Minimum parking required</th>
+    </tr>
+    <tr>
+      <th>in the CBD</th>
+      <th>within 400m distance of a rapid transit station</th>
+      <th>everywhere else</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>residential</td>
+      <td></td>
+      <td>1 space per unit</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>office</td>
+      <td>1 space per 450 m²</td>
+      <td>1 space per 250 m²</td>
+      <td>1 space per 200 m²</td>
+    </tr>
+    <tr>
+      <td>retail</td>
+      <td>1 space per 400 m²</td>
+      <td>1 space per 200 m²</td>
+      <td>1 space per 150 m²</td>
+    </tr>
+    <tr>
+      <td>factory</td>
+      <td></td>
+      <td>1 space per 450 m²</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>other</td>
+      <td></td>
+      <td>1 space per 300 m²</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- Empty cells are represented by `<td></td>` where no value is present in the image.
+- The “residential”, “factory”, and “other” rows have values only in the middle column (“within 400m...”), so left and right columns are empty.
+- The header uses `rowspan="2"` for “use type” to align with the two-row header structure.
+- “Minimum parking required” uses `colspan="3"` to span the three location columns.
+- Units like “m²” are preserved as written.
+
+This accurately reflects the layout and content of the table in the image.

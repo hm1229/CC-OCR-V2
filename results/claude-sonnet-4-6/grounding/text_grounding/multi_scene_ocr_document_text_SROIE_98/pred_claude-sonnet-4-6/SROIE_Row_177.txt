@@ -1,0 +1,19 @@
+I need to find the text '37.45' in the receipt image.
+
+Looking at the receipt, '37.45' appears twice:
+1. After "Rounding RM" 
+2. After "CREDIT RM"
+
+The first instance "Rounding RM 37.45" appears to be around the middle-lower portion of the receipt.
+
+Looking at the image dimensions and the position of "37.45" after "Rounding RM":
+
+The text "37.45" after "Rounding RM" appears at approximately:
+- Horizontally: roughly from x=580 to x=720 out of the image width
+- Vertically: roughly around y=490 to y=515 out of the image height
+
+Normalizing to 1000:
+- Image appears to be roughly 703px wide and 1050px tall based on typical receipt proportions
+
+For "Rounding RM    37.45":
+(580, 488, 720, 512)

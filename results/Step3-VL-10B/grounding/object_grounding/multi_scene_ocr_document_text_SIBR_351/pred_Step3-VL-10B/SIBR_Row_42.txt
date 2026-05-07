@@ -1,0 +1,175 @@
+用户现在需要从采购订单中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看各个类别：
+
+1. 3、Payment term：图中第3点，内容是“3、Payment term : A.M.S. 30 DAYS”，所以要找到这个区域。
+2. 4、Package requirements：第4点，包含(1)(2)(3)的条款。
+3. 5、Quality Assurance：第5点，关于质量保证的内容。
+4. 6、Intellectual property rights：第6点，知识产权条款。
+5. 7、Liability for breach of contract：第7点，违约责任。
+然后是其他类别：ADDRESS（多个地址，比如Order to的Add，Bill To的Add，Ship To的Add等）；AMOUNT US$（表格里的金额列，以及总计）；Add（各个部分的Add字段）；Attn（联系人）；Buyer（Buyer: Smart-core）；COMPANY NAME（比如Liangnuo Technology Co., Ltd.等）；CUSTOMER（表格中的CUSTOMER列）；DESCRIPTION OF GOODS（货物描述列）；FAX（多个FAX字段）；PAGE NUMBER（右下角1/2）；PO DATE（PO DATE: 2022-04-01）；PO No（PO No: SHKSMC-Z003220400004）；QUANTITY（数量列）；SHIP DATE（交货日期列）；TEL（多个电话，比如Order to的TEL，Bill To的TEL等）；TITLE（标题是PURCHASE ORDER，还有公司名称等？不过TITLE可能指PURCHASE ORDER的标题？不过看用户给的类别里有TITLE，需要检查。另外还有UNIT PRICE /USD（单价列）。
+
+现在需要逐个定位每个元素的bbox。先看图片中的各个部分：
+
+首先，整体结构是采购订单，分为几个部分：Order to, Bill To, Ship To, 表格，然后是条款（2-7点）。
+
+先处理条款部分：
+
+- 3、Payment term：在条款3，文字是“3、Payment term : A.M.S. 30 DAYS”，位置在表格下方，条款部分。bbox需要看对应区域。
+- 4、Package requirements：条款4，包含(1)(2)(3)的内容，比如“The static sensitive Semiconductor...”等。
+- 5、Quality Assurance：条款5，“5、Quality Assurance: The products supplied to Smart-core shall have no quality problems...”
+- 6、Intellectual property rights：条款6，“6、Intellectual property rights: If the products supplied by Seller infringe the intellectual property rights...”
+- 7、Liability for breach of contract：条款7，“7、Liability for breach of contract: The penalty shall be paid at the rate of 0.3% order total amount...”
+
+然后是其他类别：
+
+- ADDRESS：比如Order to的Add是“宁夏回族自治区阜新县金平胡路S座 938887”，Bill To的Add是“299 Christopher Place West Adam, VT 63160 PSC 5184, Box 9141 APO AP 94869”，Ship To的Add是“9135 Rogers Grove Suite 535 Gainesborough, OH 89211 USS Thomas FPO AA 24734”。这些Add字段都属于ADDRESS类别。
+- AMOUNT US$：表格中的AMOUNT US$列，以及总计“TOTAL USD 38397.28”。
+- Add：每个部分的Add标签，比如Order to: Add:，Bill To: Add:，Ship To: Add:，这些“Add:”是标签，属于Add类别。
+- Attn：Order to的Attn: 王柳；Bill To的Attn: Lance Wells；Ship To的Attn: James York。这些Attn字段。
+- Buyer：Buyer: Smart-core，在PO信息部分。
+- COMPANY NAME：Liangnuo Technology Co., Ltd.（出现多次，Order to的公司，Bill To的公司，Ship To的公司，还有顶部的Liangnuo Technology Co., Ltd.）。
+- CUSTOMER：表格中的CUSTOMER列，内容是“SMART-CORE INTERNATIONAL COMPANY LIMITED”等。
+- DESCRIPTION OF GOODS：表格中的DESCRIPTION OF GOODS列，比如WDR02U-CSKU等。
+- FAX：Order to的FAX: 0667-63850075；Bill To的FAX:（可能空？看图片中Bill To的FAX是空？不，看图片中Bill To的FAX字段，原文中Bill To的FAX是“FAX :”后面可能没有？不，看图片：Bill To部分的FAX是“FAX :”然后可能没有？不，看用户提供的图片内容，Bill To的FAX是“FAX :”后面可能没有？不，看原文：
+
+Order to的FAX: 0667-63850075；
+
+Bill To的FAX: （原文中Bill To的FAX是“FAX :”然后可能没有？不，看用户给的图片中的Bill To部分：
+
+Bill To:Li... Add:... TEL:078-35627002 FAX: Attn:Lance Wells —— 这里FAX:后面可能没有内容？或者看Ship To的FAX: 855-96287562。所以FAX字段包括Order to的FAX，Ship To的FAX等，这些属于FAX类别。
+- PAGE NUMBER：右下角“1/2”。
+- PO DATE：PO DATE: 2022-04-01。
+- PO No：PO No: SHKSMC-Z003220400004。
+- QUANTITY：表格中的QUANTITY列，3,208和1,092。
+- SHIP DATE：表格中的SHIP DATE列，2022-04-06等。
+- TEL：Order to的TEL: 0576-81370506；Bill To的TEL:078-35627002；Ship To的TEL:251-05821571；还有顶部的TEL:225-51571028（不过顶部是公司信息，可能不算？看用户给的类别中的TEL，应该包括所有TEL字段，比如Order to的TEL，Bill To的TEL，Ship To的TEL，以及顶部的TEL？不过顶部是Liangnuo Technology Co., Ltd.的地址中的TEL:225-51571028，这个也是TEL。
+- TITLE：标题是“PURCHASE ORDER”，还有公司名称的标题？比如顶部的Liangnuo Technology Co., Ltd.是公司名称，而PURCHASE ORDER是标题。所以TITLE可能指“PURCHASE ORDER”这个标题。
+- UNIT PRICE /USD：表格中的UNIT PRICE /USD列，8.92960等。
+
+现在需要逐个列出每个检测到的对象，注意不要重复，每个类别对应多个实例的话，每个实例都要列吗？用户要求“Detect all objects matching these categories”，所以每个出现的实例都要作为单独的条目，只要属于该类别。
+
+现在开始逐个分析：
+
+1. 3、Payment term：找到条款3的文本，bbox是包含“3、Payment term : A.M.S. 30 DAYS”的区域。看图片中的位置，条款部分在表格下方，第3点。坐标需要估计，比如y轴在条款部分，x轴是整个宽度。假设bbox是[20, 625, 979, 645]（大概范围）。
+
+2. 4、Package requirements：条款4，包含(1)(2)(3)的内容，bbox是[20, 650, 979, 710]（因为条款4有三个子项）。
+
+3. 5、Quality Assurance：条款5，内容是“5、Quality Assurance: ...”，bbox是[20, 715, 979, 770]。
+
+4. 6、Intellectual property rights：条款6，内容是“6、Intellectual property rights: ...”，bbox是[20, 775, 979, 830]。
+
+5. 7、Liability for breach of contract：条款7，内容是“7、Liability for breach of contract: ...”，bbox是[20, 835, 979, 890]。
+
+然后是其他类别：
+
+ADDRESS：
+- Order to的Add：地址是“宁夏回族自治区阜新县金平胡路S座 938887”，属于ADDRESS。bbox是Order to部分的Add行，即“Add : 宁夏回族自治区阜新县金平胡路S座 938887”。
+- Bill To的Add：“Bill To:Li... Add: 299 Christopher Place West Adam, VT 63160 PSC 5184, Box 9141 APO AP 94869”。
+- Ship To的Add：“Ship To: Liangnuo... Add: 9135 Rogers Grove Suite 535 Gainesborough, OH 89211 USS Thomas FPO AA 24734”。
+- 顶部的公司地址：“424 Henderson Road South Julia, ME 87352 Unit 0439 Box 8032 DPO AP 46157”（属于ADDRESS吗？因为是公司地址，可能也算。但看用户给的类别中的ADDRESS，应该包括所有地址字段。
+
+AMOUNT US$：
+- 表格中的AMOUNT US$列的两个值：28646.16和9751.12，以及总计38397.28。每个金额都是AMOUNT US$。比如第一行的AMOUNT US$是28646.16，第二行是9751.12，总计是38397.28。所以这三个都是AMOUNT US$的实例。
+
+Add：
+- Order to: Add: （标签）
+- Bill To: Add: （标签）
+- Ship To: Add: （标签）
+- 还有顶部的公司信息中的Add？不，顶部是公司地址，没有Add标签。所以三个Add标签：Order to的Add:，Bill To的Add:，Ship To的Add:。
+
+Attn：
+- Order to的Attn: 王柳
+- Bill To的Attn: Lance Wells
+- Ship To的Attn: James York
+
+Buyer：
+- Buyer: Smart-core （在PO信息部分，Buyer: Smart-core）
+
+COMPANY NAME：
+- Order to的Liangnuo Technology Co., Ltd.
+- Bill To的Liangnuo Technology Co., Ltd.
+- Ship To的Liangnuo Technology Co., Ltd.
+- 顶部的Liangnuo Technology Co., Ltd.（在地址上方）
+- 还有Smart-core INTERNATIONAL COMPANY LIMITED（作为CUSTOMER，但COMPANY NAME是Liangnuo的那些，Smart-core是客户，不是公司名称？不，COMPANY NAME类别应该包括所有公司名称，比如Liangnuo Technology Co., Ltd.，Smart-core INTERNATIONAL COMPANY LIMITED也是公司名称。所以需要看用户给的类别中的COMPANY NAME，可能包括所有公司名称的实例。
+
+CUSTOMER：
+- 表格中的CUSTOMER列，两个条目都是“SMART-CORE INTERNATIONAL COMPANY LIMITED”（可能有重复，但每个行都是CUSTOMER的实例）。
+
+DESCRIPTION OF GOODS：
+- 表格中的DESCRIPTION OF GOODS列，两个条目：WDR02U-CSKU和WDR02U-WSKU。
+
+FAX：
+- Order to的FAX: 0667-63850075
+- Ship To的FAX: 855-96287562
+- Bill To的FAX: （原文中Bill To的FAX是“FAX :”后面可能没有？看用户提供的图片中Bill To部分：“FAX :”后面是否有内容？看用户给的原文：
+
+Bill To:Li... Add:... TEL:078-35627002 FAX: Attn:Lance Wells —— 这里FAX:后面没有内容，所以可能没有FAX？或者可能我漏看了。另外顶部的公司FAX:876-55562289（在顶部地址的FAX:876-55562289）。所以FAX包括：
+
+- Order to的FAX: 0667-63850075
+- 顶部公司的FAX:876-55562289
+- Ship To的FAX:855-96287562
+
+PAGE NUMBER：
+- 右下角的“1/2”
+
+PO DATE：
+- PO DATE: 2022-04-01
+
+PO No：
+- PO No: SHKSMC-Z003220400004
+
+QUANTITY：
+- 表格中的QUANTITY列，3,208和1,092
+
+SHIP DATE：
+- 表格中的SHIP DATE列，2022-04-06（两个行都是这个日期）
+
+TEL：
+- Order to的TEL: 0576-81370506
+- Bill To的TEL:078-35627002
+- Ship To的TEL:251-05821571
+- 顶部公司的TEL:225-51571028
+
+TITLE：
+- “PURCHASE ORDER”（大标题）
+- 顶部的“Liangnuo Technology Co., Ltd.”（公司名称作为标题？可能TITLE是“PURCHASE ORDER”这个标题，所以只有这个。
+
+UNIT PRICE /USD：
+- 表格中的UNIT PRICE /USD列，两个值都是8.92960
+
+现在需要将这些都整理成JSON数组，每个元素是bbox和label。由于图片中的坐标需要估计，这里假设每个部分的bbox大致范围，比如：
+
+先处理条款部分的7个类别（3-7）：
+
+3、Payment term的bbox：假设在条款3的位置，比如y从620到640，x从20到980。
+
+4、Package requirements：y从645到705，x20-980。
+
+5、Quality Assurance：y从708到765，x20-980。
+
+6、Intellectual property rights：y从768到825，x20-980。
+
+7、Liability for breach of contract：y从828到885，x20-980。
+
+然后是其他类别，比如ADDRESS的三个Add地址：
+
+Order to的Add地址：Order to部分的Add行，bbox是[20, 180, 350, 200]（大概）。
+
+Bill To的Add地址：Bill To部分的Add行，bbox是[100, 300, 600, 320]。
+
+Ship To的Add地址：Ship To部分的Add行，bbox是[500, 450, 900, 470]。
+
+AMOUNT US$的三个值：表格中的AMOUNT US$列，第一行的金额28646.16，bbox是[650, 320, 800, 340]；第二行9751.12，bbox是[650, 360, 800, 380]；总计38397.28，bbox是[600, 480, 850, 500]。
+
+Add标签：Order to的Add:，bbox是[20, 190, 60, 205]；Bill To的Add:，bbox是[100, 310, 130, 325]；Ship To的Add:，bbox是[500, 460, 530, 475]。
+
+Attn：Order to的Attn:王柳，bbox是[20, 210, 100, 225]；Bill To的Attn:Lance Wells，bbox是[100, 330, 250, 345]；Ship To的Attn:James York，bbox是[500, 480, 650, 495]。
+
+Buyer：Buyer: Smart-core，bbox是[600, 230, 750, 245]（在PO信息部分，Buyer: Smart-core）。
+
+COMPANY NAME：比如Order to的Liangnuo Technology Co., Ltd.，bbox是[100, 100, 300, 115]；Bill To的Liangnuo Technology Co., Ltd.，bbox是[100, 290, 300, 305]；Ship To的Liangnuo Technology Co., Ltd.，bbox是[500, 440, 750, 455]；顶部的Liangnuo Technology Co., Ltd.，bbox是[150, 50, 350, 65]；Smart-core INTERNATIONAL COMPANY LIMITED（作为CUSTOMER，但COMPANY NAME也包括，比如表格中的CUSTOMER列的公司名称，bbox是[350, 320, 600, 335]（第一行CUSTOMER）和[350, 360, 600, 375]（第二行CUSTOMER）。
+
+CUSTOMER：表格中的CUSTOMER列，两个条目，每个都是CUSTOMER类别，所以两个实例。
+
+DESCRIPTION OF GOODS：表格中的DESCRIPTION OF GOODS列，第一行WDR02U-CSKU，bbox是[250, 320, 450, 

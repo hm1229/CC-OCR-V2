@@ -1,0 +1,134 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看Company Name：图顶部的Helian Electronic Information Co., Ltd. 是公司名称，对应Company Name。
+
+Address：公司地址是53080 John Prairie Apt. 040 New Elizabethchester, NV 69876 China 214185，还有客户地址等，但先找公司地址。另外客户地址是Delivery address等，但先处理每个类别。
+
+先列所有类别，然后找每个的实例：
+
+1. A/C NO.：图底部有A/C NO.: 390-00083-011，所以这个是A/C NO.。
+2. Address：比如公司地址“53080 John Prairie Apt. 040 New Elizabethchester, NV 69876 China 214185”；客户地址“26043 Knight Neck Richardport, HI 02531 Unit 8218 Box 6801 DPO AE 33834 USGCG Mitchell FPO AE 76084”；Novacyl的地址？不，Address可能指公司地址、客户地址等。需要看每个Address实例。
+3. Beneficiary bank：图底部“Beneficiary bank: HSBC BANK (CHINA) COMPANY LIMITED WUXI BRANCH”。
+4. Company Name：Helian Electronic Information Co., Ltd.
+5. Customer Reference：Customer Reference: Brandon Martin
+6. Customer ref：Customer ref: 22000033（在Customer Order Number下面）
+7. Date：Date: 2022-06-21
+8. Delivery Manner：Delivery Manner: By sea
+9. Delivery address：Delivery address: 26043 Knight Neck Richardport, HI 02531 Unit 8218 Box 6801 DPO AE 33834 USGCG Mitchell FPO AE 76084
+10. Description of Goods：表格里的“PARACETAMOL/ACETAMINOPHEN POWDER IN 50KG DRUM”
+11. Destination Country：EGYPTE
+12. Due Date：Due date: 2022-08-10
+13. FOB Value：FOB Value 371469（在price consist部分）
+14. FaX：Fax:1850096180128（图中Fax:1850096180128）
+15. Freight：Freight 59295（price consist里的Freight）
+16. Insurance：Insurance 84（price consist里的Insurance）
+17. Invoice No.：Invoice No.:NWP22062103
+18. No：表格里的No.列，比如1
+19. Novacyl Reference：Novacyl Reference: ZHANG Anita
+20. Novacyl order Number：Novacyl Order Number: NWP22148
+21. Number：可能和No重复？或者看其他Number，比如Customer Order Number是4500307144，但Number类别可能指表格中的No.（序号）。
+22. Payment condition：30 days eof month by the 10th
+23. Port in destination：Alexandria
+24. Quantity(kg)：6600（表格里的Quantity(kg)列）
+25. Swift code：HSBCNSHWUX（图中Swift code: HSBCNSHWUX）
+26. TeL：Tel:0098116182050
+27. Title：Invoice（大标题）
+28. Total：Total（在price consist里的Total，以及Total Amount(CNY)的Total？看表格里的Total Amount是430848，还有price consist里的Total是430848。Total类别可能指price consist里的Total行。
+29. Total Amount(CNY)：表格里的Total Amount (CNY)列的430848
+30. Unit Price(CNY)：65.28（表格里的Unit Price(CNY)列）
+
+现在需要逐个确认每个类别的位置，然后生成bbox。注意每个元素的坐标需要看图片中的位置，因为是发票，需要大致定位。
+
+现在开始逐个处理：
+
+1. A/C NO.：在底部，A/C NO.: 390-00083-011 → bbox是对应位置。
+2. Address：公司地址是“53080 John Prairie Apt. 040 New Elizabethchester, NV 69876 China 214185” → 顶部公司信息里的地址。
+3. Beneficiary bank：底部的Beneficiary bank: HSBC BANK (CHINA) COMPANY LIMITED WUXI BRANCH
+4. Company Name：Helian Electronic Information Co., Ltd.（顶部）
+5. Customer Reference：Customer Reference: Brandon Martin（左侧上方）
+6. Customer ref：Customer ref: 22000033（在Customer Order Number下方）
+7. Date：Date: 2022-06-21（右侧上方）
+8. Delivery Manner：Delivery Manner: By sea（左侧中间）
+9. Delivery address：Delivery address: 26043 Knight Neck Richardport, HI 02531 Unit 8218 Box 6801 DPO AE 33834 USGCG Mitchell FPO AE 76084（中间偏右）
+10. Description of Goods：表格中第一行的描述“PARACETAMOL/ACETAMINOPHEN POWDER IN 50KG DRUM”
+11. Destination Country：EGYPTE（右侧中间，Destination Country: EGYPTE）
+12. Due Date：Due date: 2022-08-10（右侧，Due date: 2022-08-10）
+13. FOB Value：在price consist部分，FOB Value 371469
+14. FaX：Fax:1850096180128（顶部公司信息里的Fax）
+15. Freight：price consist里的Freight 59295
+16. Insurance：price consist里的Insurance 84
+17. Invoice No.：Invoice No.:NWP22062103（右上角）
+18. No：表格中的No.列，比如第一行的1（表格的No列）
+19. Novacyl Reference：Novacyl Reference: ZHANG Anita（右侧上方，Novacyl Reference: ZHANG Anita）
+20. Novacyl order Number：Novacyl Order Number: NWP22148（中间，Novacyl Order Number: NWP22148）
+21. Number：可能是指Customer Order Number: 4500307144？但Number类别可能对应表格中的No.（序号），或者看是否有其他Number。不过可能Number和No是同一个？但用户给的类别里有No和Number，可能No是表格的序号，Number是其他编号？比如Customer Order Number是4500307144，属于Number？需要看用户给的类别中的“Number”和“No”。用户给的类别里有“No”和“Number”，所以需要区分。比如表格中的No.是序号（1），而Number可能是指其他编号，比如Customer Order Number是4500307144，属于Number？或者可能用户中的“Number”是笔误，或者看具体。先按用户给的类别处理，No是表格的No列（序号），Number可能是指其他，比如Novacyl Order Number是NWP22148，属于Novacyl order Number，所以Number可能是指其他，比如Customer Order Number:4500307144，所以Number的bbox是Customer Order Number的值。
+22. Payment condition：30 days eof month by the 10th（右侧，Payment condition: 30 days eof month by the 10th）
+23. Port in destination：Alexandria（右侧，Port in destination Alexandria）
+24. Quantity(kg)：6600（表格中Quantity(kg)列的值）
+25. Swift code：HSBCNSHWUX（底部，Swift code: HSBCNSHWUX）
+26. TeL：Tel:0098116182050（顶部公司信息里的Tel）
+27. Title：Invoice（大标题，中间上方的INVOICE）
+28. Total：在price consist里的Total行，Total 430848（因为FOB+Freight+Insurance=371469+59295+84=430848，所以Total是430848）
+29. Total Amount(CNY)：表格中Total Amount (CNY)列的430848（第一行的Total Amount是430848）
+30. Unit Price(CNY)：65.28（表格中Unit Price(CNY)列的值）
+
+现在需要为每个类别生成对应的bbox。由于是文本，需要估计每个元素的位置。例如：
+
+- Company Name：顶部公司名称，坐标大概是x从500左右？不，看图片结构，顶部是Helian Electronic Information Co., Ltd.，所以bbox是[500, 50, 900, 70]左右（假设图片的坐标系统，左上角是(0,0)）。
+- Address（公司地址）：53080 John Prairie Apt. 040 New Elizabethchester, NV 69876 China 214185 → 位于Company Name下方，所以bbox是[500, 70, 900, 95]
+- FaX：Fax:1850096180128 → 位于Tel下方，所以bbox是[500, 100, 800, 120]
+- TeL：Tel:0098116182050 → 位于Fax上方，bbox是[500, 95, 800, 115]
+- Title：INVOICE → 大标题，居中，bbox是[450, 150, 550, 170]
+- Invoice No.：NWP22062103 → 右上角，Invoice No.:NWP22062103，bbox是[750, 160, 900, 180]
+- Date：2022-06-21 → 右侧，Date: 2022-06-21，bbox是[750, 185, 900, 205]
+- Customer Reference：Brandon Martin → 左侧，Customer Reference: Brandon Martin，bbox是[200, 210, 400, 230]
+- Novacyl Reference：ZHANG Anita → 右侧，Novacyl Reference: ZHANG Anita，bbox是[500, 215, 700, 235]
+- Customer Order Number：4500307144 → 左侧，Customer Order Number: 4500307144，bbox是[200, 240, 400, 260]
+- Novacyl Order Number：NWP22148 → 中间，Novacyl Order Number: NWP22148，bbox是[500, 245, 700, 265]
+- Customer ref：22000033 → 左侧，Customer ref: 22000033，bbox是[200, 265, 400, 285]
+- Delivery address：26043 Knight Neck Richardport, HI 02531 Unit 8218 Box 6801 DPO AE 33834 USGCG Mitchell FPO AE 76084 → 中间偏右，Delivery address: ...，bbox是[500, 270, 900, 300]
+- Destination Country：EGYPTE → 右侧，Destination Country: EGYPTE，bbox是[750, 290, 900, 310]
+- Due Date：2022-08-10 → 右侧，Due date: 2022-08-10，bbox是[750, 315, 900, 335]
+- Payment condition：30 days eof month by the 10th → 右侧，Payment condition: ...，bbox是[750, 340, 900, 360]
+- Delivery Manner：By sea → 左侧，Delivery Manner: By sea，bbox是[200, 345, 400, 365]
+- Port in destination：Alexandria → 右侧，Port in destination Alexandria，bbox是[750, 365, 900, 385]
+- Number（比如Customer Order Number的4500307144？或者表格的No.是1）：表格中的No.列是1，所以No的bbox是表格中第一行的No列，即[150, 450, 200, 470]（假设表格的No列是第一列，值为1）
+- Description of Goods：PARACETAMOL/ACETAMINOPHEN POWDER IN 50KG DRUM → 表格中Description of Goods列，bbox是[250, 450, 500, 470]
+- Quantity(kg)：6600 → 表格中Quantity(kg)列，值为6600，bbox是[400, 450, 470, 470]
+- Unit Price(CNY)：65.28 → 表格中Unit Price(CNY)列，值为65.28，bbox是[550, 450, 620, 470]
+- Total Amount(CNY)：430848 → 表格中Total Amount (CNY)列，值为430848，bbox是[670, 450, 750, 470]
+- FOB Value：371469 → price consist部分，FOB Value 371469，bbox是[500, 480, 900, 500]
+- Freight：59295 → price consist里的Freight 59295，bbox是[500, 505, 900, 525]
+- Insurance：84 → price consist里的Insurance 84，bbox是[500, 530, 900, 550]
+- Total（price consist里的Total）：430848 → price consist里的Total行，值为430848，bbox是[500, 555, 900, 575]
+- Swift code：HSBCNSHWUX → 底部，Swift code: HSBCNSHWUX，bbox是[200, 600, 400, 620]
+- A/C NO.：390-00083-011 → 底部，A/C NO.: 390-00083-011，bbox是[200, 625, 400, 645]
+- Beneficiary bank：HSBC BANK (CHINA) COMPANY LIMITED WUXI BRANCH → 底部，Beneficiary bank: ...，bbox是[200, 590, 700, 610]
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。注意要确保每个类别都被覆盖，没有遗漏。
+
+现在检查所有30个类别：
+
+1. A/C NO. → 是
+2. Address → 公司地址和客户地址？但用户可能需要所有Address实例？但可能每个Address对应一个，比如公司地址是一个Address，客户地址是另一个Address？但用户给的类别是Address，所以可能需要列出所有Address。但可能图中主要的Address是公司地址，客户地址，Novacyl的地址？不，Novacyl的地址是ATTN...，属于客户地址的一部分？可能Delivery address是主要的Address。需要确认。但根据用户给的类别，Address是一个类别，所以可能图中有多个Address，比如公司地址、客户地址（Delivery address）、Novacyl的地址？但可能用户希望每个Address实例都列出。不过可能图中主要的Address是公司地址（顶部）、Delivery address（中间）、Novacyl的地址（Novacyl的ATTN...）。但可能为了简化，先处理主要的。
+
+不过可能更简单的是，每个类别在图中出现一次，比如：
+
+- Company Name：1个
+- Address（公司地址）：1个
+- Beneficiary bank：1个
+- Customer Reference：1个
+- Customer ref：1个
+- Date：1个
+- Delivery Manner：1个
+- Delivery address：1个
+- Description of Goods：1个（表格中的描述）
+- Destination Country：1个
+- Due Date：1个
+- FOB Value：1个
+- FaX：1个
+- Freight：1个
+- Insurance：1个
+- Invoice No.：1个
+- No：1个（表格中的No.）
+- Novacyl

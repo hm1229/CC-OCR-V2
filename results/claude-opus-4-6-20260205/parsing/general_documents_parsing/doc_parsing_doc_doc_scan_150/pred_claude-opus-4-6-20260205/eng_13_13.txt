@@ -1,0 +1,118 @@
+```latex
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{Statistical Analysis and Probability}
+
+\subsection*{Mean}
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]
+
+\subsection*{Standard Deviation*}
+\[
+s = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n-1}}
+\]
+
+\subsection*{Standard Error of the Mean*}
+\[
+SE_{\bar{x}} = \frac{s}{\sqrt{n}}
+\]
+
+\subsection*{Chi-Square}
+\[
+\chi^2 = \sum \frac{(o-e)^2}{e}
+\]
+
+\bigskip
+
+$\bar{x}$ = sample mean
+
+$n$ = size of the sample
+
+$s$ = sample standard deviation (i.e., the sample-based estimate of the standard deviation of the population)
+
+$o$ = observed results
+
+$e$ = expected results
+
+\bigskip
+
+Degrees of freedom are equal to the number of distinct possible outcomes minus one.
+
+\subsection*{Chi-Square Table}
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline
+$p$ & \multicolumn{8}{c|}{Degrees of Freedom} \\
+\cline{2-9}
+value & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+0.05 & 3.84 & 5.99 & 7.82 & 9.49 & 11.07 & 12.59 & 14.07 & 15.51 \\
+\hline
+0.01 & 6.64 & 9.21 & 11.34 & 13.28 & 15.09 & 16.81 & 18.48 & 20.09 \\
+\hline
+\end{tabular}
+
+\subsection*{Laws of Probability}
+
+If A and B are mutually exclusive, then:
+\[
+P(\text{A or B}) = P(\text{A}) + P(\text{B})
+\]
+
+If A and B are independent, then:
+\[
+P(\text{A and B}) = P(\text{A}) \times P(\text{B})
+\]
+
+\subsection*{Hardy-Weinberg Equations}
+
+$p^2 + 2pq + q^2 = 1$ \qquad $p$ = frequency of the dominant allele in a population
+
+$p + q = 1$ \qquad\qquad\qquad $q$ = frequency of the recessive allele in a population
+
+\subsection*{Metric Prefixes}
+
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Factor} & \textbf{Prefix} & \textbf{Symbol} \\
+\hline
+$10^9$ & giga & G \\
+$10^6$ & mega & M \\
+$10^3$ & kilo & k \\
+$10^{-2}$ & centi & c \\
+$10^{-3}$ & milli & m \\
+$10^{-6}$ & micro & $\mu$ \\
+$10^{-9}$ & nano & n \\
+$10^{-12}$ & pico & p \\
+\hline
+\end{tabular}
+
+\bigskip
+
+\noindent Mode = value that occurs most frequently in a data set
+
+\noindent Median = middle value that separates the greater and lesser halves of a data set
+
+\noindent Mean = sum of all data points divided by number of data points
+
+\noindent Range = value obtained by subtracting the smallest observation (sample minimum) from the greatest (sample maximum)
+
+\bigskip
+
+\noindent\textit{* For the purposes of the AP Exam, students will not be required to perform calculations using this equation; however, they must understand the underlying concepts and applications.}
+
+\end{document}
+```

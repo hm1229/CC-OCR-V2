@@ -1,0 +1,42 @@
+To transcribe the image content into LaTeX, we structure each section with appropriate tables and text. Here's the detailed LaTeX code:
+
+
+### First Table (Combination Totals)
+```latex
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+组合小计 & 8,709,863.67 & 37.32 & 2,318,593.84 & 26.62 & 6,391,269.83 \\
+\hline
+单项金额重大并单项计提坏账准备 & 12,377,376.84 & 53.04 & 10,536,346.86 & 85.13 & 1,841,029.98 \\
+\hline
+单项金额不重大但单项计提坏账准备 & 2,250,000.00 & 9.64 & 2,250,000.00 & 100.00 &  \\
+\hline
+合计 & 23,337,240.51 & 100.00 & 15,104,940.70 & 64.72 & 8,232,299.81 \\
+\hline
+\end{tabular}
+\caption{Combination Totals}
+\end{table}
+```
+
+
+### Second Table (Continued from Above: Types and Opening Balances)
+```latex
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+种类 & \multicolumn{2}{c|}{账面余额（期初数）} & \multicolumn{2}{c|}{坏账准备（期初数）} & 账面价值 \\
+\hline
+ & 金额 & 比例(%) & 金额 & 计提比例(%) &  \\
+\hline
+账龄分析法组合 & 56,614,226.15 & 43.51 & 3,311,173.09 & 5.85 & 53,303,053.06 \\
+\hline
+余额百分比法组合 & 65,465,002.12 & 50.31 & 327,325.01 & 0.50 & 65,137,677.11 \\
+\hline
+组合小计 & 122,079,228.27 & 93.83 & 3,638,498.10 & 2.98 & 118,440,730.17 \\
+\hline
+单项金额不重大但单项计提坏账准备 & 8,033,436.00 & 6.17 & 8,033,436.00 & 100.00 &  \\
+\hline
+合计 & 130,112,664.27 & 100.0

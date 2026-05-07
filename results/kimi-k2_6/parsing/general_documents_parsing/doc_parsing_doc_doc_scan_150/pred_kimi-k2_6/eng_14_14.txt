@@ -1,0 +1,137 @@
+```latex
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+
+\definecolor{MTIgold}{RGB}{218,165,32}
+\definecolor{MTInavy}{RGB}{25,25,112}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small\textcolor{gray}{CHAIRMAN'S LETTER \hspace{0.5cm} MINERALS TECHNOLOGIES INC. \hspace{0.5cm} 5}}
+\renewcommand{\headrulewidth}{0.5pt}
+
+\begin{document}
+
+\begin{center}
+{\Huge\textbf{\textcolor{MTIgold}{BOTH BUSINESS}}}\\[0.2cm]
+{\Huge\textbf{\textcolor{MTIgold}{SEGMENTS}}}\raisebox{0.5ex}{\rule{3cm}{0.5pt}}
+\end{center}
+
+\vspace{0.3cm}
+
+\noindent\textbf{Specialty Minerals and Refractories---contributed to this outstanding performance through record-breaking financial results.}
+
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.31\textwidth}
+Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+\vspace{0.3cm}
+
+The company's safety performance continued on a strong track in 2013. We achieved our lowest lost workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+\vspace{0.3cm}
+
+MTI's Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated \$138 million in cash from operations and we repurchased \$52 million of our shares during the year.
+
+\vspace{0.3cm}
+
+\textbf{Accomplishments}
+
+Let's take a look at what drove our outstanding 2013 performance. Our two major strategies---geographic expansion and new product innovation---continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.31\textwidth}
+the second in Europe. The plant in China is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper's papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wished to remain unnamed for competitive reasons.
+
+\vspace{0.3cm}
+
+More recently, in early January, we announced an agreement with UPM-Kymmene Corporation to build a satellite PCC plant on site at UPM's paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will provide PCC for paper filling and will have an initial capacity of 100,000 tons.
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.31\textwidth}
+In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability through added resources to further expand in this growing market.
+
+\vspace{0.3cm}
+
+During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to be contributing volume in 2014.
+\end{minipage}
+
+\vspace{0.8cm}
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{Return on Capital*}
+
+\vspace{0.3cm}
+
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    width=6cm,
+    height=5cm,
+    bar width=0.6cm,
+    ymin=5,
+    ymax=10,
+    ytick={5,10},
+    yticklabels={5,10},
+    xtick=data,
+    xticklabels={2010,2011,2012,2013},
+    x tick label style={font=\small},
+    y tick label style={font=\small},
+    ylabel={ROC \%},
+    ylabel style={font=\small, rotate=-90},
+    nodes near coords,
+    nodes near coords style={font=\small, above},
+    axis lines*=left,
+    enlarge x limits=0.15,
+    every axis plot/.append style={fill=MTIgold},
+]
+\addplot[fill=MTIgold] coordinates {(2010,8.4) (2011,8.8) (2012,9.2)};
+\addplot[fill=MTInavy] coordinates {(2013,9.5)};
+\end{axis}
+\end{tikzpicture}
+
+\vspace{0.2cm}
+{\small * Bloomberg Method}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{Quarterly Underlying Sales Growth}
+
+\vspace{0.3cm}
+
+\begin{tikzpicture}
+\begin{axis}[
+    width=6.5cm,
+    height=5cm,
+    ymin=-3,
+    ymax=8,
+    ytick={-3,-2,-1,0,1,2,3,4,5,6,7,8},
+    yticklabels={-3\%,-2\%,-1\%,0\%,1\%,2\%,3\%,4\%,5\%,6\%,7\%,8\%},
+    xtick={1,2,3,4},
+    xticklabels={Q1,Q2,Q3,Q4},
+    x tick label style={font=\small},
+    y tick label style={font=\small},
+    axis lines*=left,
+    enlarge x limits=0.15,
+    legend style={at={(0.5,-0.2)}, anchor=north, legend columns=1, font=\tiny},
+]
+\addplot[ybar, fill=MTInavy, bar width=0.4cm] coordinates {(1,-1) (2,2) (3,2) (4,6)};
+\addplot[only marks, mark=*, mark options={fill=MTIgold, draw=MTIgold}, mark size=3pt] coordinates {(1,-2) (2,4) (3,4) (4,7)};
+\legend{Reported Sales Growth, Underlying Sales Growth}
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\end{document}
+```

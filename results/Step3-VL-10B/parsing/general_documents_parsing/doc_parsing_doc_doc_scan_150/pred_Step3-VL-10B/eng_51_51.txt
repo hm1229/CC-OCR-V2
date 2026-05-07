@@ -1,0 +1,238 @@
+用户现在需要把图片中的内容转换成LaTeX格式，要准确无误。首先得分析图片的结构，分为几个部分：离散时间LTI信号和系统的公式、有用公式、连续时间LTI信号和系统的公式、Z变换对、Z变换性质。需要逐个部分处理，注意表格、公式、符号的正确表示。
+
+首先看第一部分“formulas for discrete-time LTI signals and systems”，下面有name和formula两列。然后是“useful formulas”部分，也是name和formula。接着是“formulas for continuous-time LTI signals and systems”，同样两列。然后是“Z-transform transform pairs”表格，“Z-transform transform properties”表格。还要注意页码“Page 8 of 169”。
+
+现在开始逐个处理：
+
+第一部分：离散时间LTI公式
+
+name列的内容：
+- area under impulse
+- multiplication by impulse
+- … by shifted impulse
+- … with an impulse
+- … with a shifted impulse
+- transfer function
+- frequency response
+- … their connection
+
+formula列对应：
+- $\sum_n \delta(n) = 1$
+- $\sum_n f(n)\delta(n) = f(0)\delta(n)$
+- $f(n)\delta(n - n_0) = f(n_0)\delta(n - n_0)$
+- $f(n)*\delta(n) = f(n)$
+- $f(n)*\delta(n - n_0) = f(n - n_0)$
+- $H(z) = \sum_n h(n) z^{-n}$
+- $H^F(\omega) = \sum_n h(n) e^{-j\omega n}$
+- $H^F(\omega) = H(e^{j\omega})$ provided unit circle $\subset$ ROC
+
+然后是“useful formulas”部分：
+
+name：
+- Euler's formula
+- … for cosine
+- … for sine
+- Sinc function
+
+formula：
+- $e^{j\theta} = \cos(\theta) + j\sin(\theta)$
+- $\cos(\theta) = \frac{e^{j\theta} + e^{-j\theta}}{2}$
+- $\sin(\theta) = \frac{e^{j\theta} - e^{-j\theta}}{2j}$
+- $\text{sinc}(\theta) := \frac{\sin(\pi\theta)}{\pi\theta}$
+
+接下来是“formulas for continuous-time LTI signals and systems”：
+
+name：
+- area under impulse
+- multiplication by impulse
+- … by shifted impulse
+- convolution
+- … with an impulse
+- … with a shifted impulse
+- transfer function
+- frequency response
+- … their connection
+
+formula：
+- $\int \delta(t) dt = 1$
+- $f(t)\delta(t) = f(0)\delta(t)$
+- $f(t)\delta(t - t_0) = f(t_0)\delta(t - t_0)$
+- $f(t) * g(t) = \int \tau f(\tau) g(t - \tau) d\tau$
+- $f(t) * \delta(t) = f(t)$
+- $f(t) * \delta(t - t_0) = f(t - t_0)$
+- $H(s) = \int h(t) e^{-st} dt$
+- $H^F(\omega) = \int h(t) e^{-j\omega t} dt$
+- $H^F(\omega) = H(j\omega)$ provided $j\omega$-axis $\subset$ ROC
+
+然后是“Z-transform transform pairs”表格，列是name, formula, ROC：
+
+行：
+- $x(n)$, $X(z)$, ROC
+- $\delta(n)$, $\sum_n x(n) z^{-n}$ (def.), all $z$
+- $u(n)$, $\frac{z}{z - 1}$, $|z| > 1$
+- $a^n u(n)$, $\frac{z}{z - a}$, $|z| > |a|$
+- $-a^n u(-n - 1)$, $\frac{-z}{z - a}$, $|z| < |a|$
+- $\cos(\omega_0 n) u(n)$, $\frac{z^2 - \cos(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$, $|z| > 1$
+- $\sin(\omega_0 n) u(n)$, $\frac{\sin(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$, $|z| > 1$
+- $a^n \cos(\omega_0 n) u(n)$, $\frac{z^2 - a \cos(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$, $|z| > |a|$
+- $a^n \sin(\omega_0 n) u(n)$, $\frac{a \sin(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$, $|z| > |a|$
+
+然后是“Z-transform transform properties”表格，列是$x(n)$, $X(z)$：
+
+行：
+- $x(n)$, $X(z)$
+- $a x(n) + b g(n)$, $a X(z) + b G(z)$
+- $x(n - n_0)$, $z^{-n_0} X(z)$
+- $x(n) * f(n)$, $X(z) F(z)$
+
+最后页码“Page 8 of 169”。
+
+现在需要把这些内容用LaTeX的表格和公式环境组织起来。注意表格的结构，可能用tabular环境，列对齐。另外，公式中的符号要正确，比如\delta, \sum, \int, *（卷积），Z变换的表示等。
+
+现在开始编写LaTeX代码：
+
+首先，标题部分：
+
+\section*{formulas for discrete-time LTI signals and systems}
+\begin{tabular}{ll}
+\toprule
+name & formula \\
+\midrule
+area under impulse & $\displaystyle \sum_n \delta(n) = 1$ \\
+multiplication by impulse & $\displaystyle \sum_n f(n)\delta(n) = f(0)\delta(n)$ \\
+$\ldots$ by shifted impulse & $f(n)\delta(n - n_0) = f(n_0)\delta(n - n_0)$ \\
+$\ldots$ with an impulse & $f(n) * \delta(n) = f(n)$ \\
+$\ldots$ with a shifted impulse & $f(n) * \delta(n - n_0) = f(n - n_0)$ \\
+transfer function & $H(z) = \displaystyle \sum_n h(n) z^{-n}$ \\
+frequency response & $H^F(\omega) = \displaystyle \sum_n h(n) e^{-j\omega n}$ \\
+$\ldots$ their connection & $H^F(\omega) = H(e^{j\omega})$ \textit{provided unit circle $\subset$ ROC} \\
+\bottomrule
+\end{tabular}
+
+然后是useful formulas部分：
+
+\section*{useful formulas}
+\begin{tabular}{ll}
+\toprule
+name & formula \\
+\midrule
+Euler's formula & $e^{j\theta} = \cos(\theta) + j\sin(\theta)$ \\
+$\ldots$ for cosine & $\cos(\theta) = \dfrac{e^{j\theta} + e^{-j\theta}}{2}$ \\
+$\ldots$ for sine & $\sin(\theta) = \dfrac{e^{j\theta} - e^{-j\theta}}{2j}$ \\
+Sinc function & $\text{sinc}(\theta) := \dfrac{\sin(\pi\theta)}{\pi\theta}$ \\
+\bottomrule
+\end{tabular}
+
+接下来是连续时间LTI公式：
+
+\section*{formulas for continuous-time LTI signals and systems}
+\begin{tabular}{ll}
+\toprule
+name & formula \\
+\midrule
+area under impulse & $\displaystyle \int \delta(t) dt = 1$ \\
+multiplication by impulse & $f(t)\delta(t) = f(0)\delta(t)$ \\
+$\ldots$ by shifted impulse & $f(t)\delta(t - t_0) = f(t_0)\delta(t - t_0)$ \\
+convolution & $f(t) * g(t) = \displaystyle \int \tau f(\tau) g(t - \tau) d\tau$ \\
+$\ldots$ with an impulse & $f(t) * \delta(t) = f(t)$ \\
+$\ldots$ with a shifted impulse & $f(t) * \delta(t - t_0) = f(t - t_0)$ \\
+transfer function & $H(s) = \displaystyle \int h(t) e^{-st} dt$ \\
+frequency response & $H^F(\omega) = \displaystyle \int h(t) e^{-j\omega t} dt$ \\
+$\ldots$ their connection & $H^F(\omega) = H(j\omega)$ \textit{provided $j\omega$-axis $\subset$ ROC} \\
+\bottomrule
+\end{tabular}
+
+然后是Z-transform transform pairs表格：
+
+\section*{Z-transform transform pairs}
+\begin{tabular}{ccc}
+\toprule
+name & formula & ROC \\
+\midrule
+$x(n)$ & $\displaystyle \sum_n x(n) z^{-n}$ \textit{(def.)} & all $z$ \\
+$\delta(n)$ &  &  \\
+$u(n)$ & $\displaystyle \frac{z}{z - 1}$ & $|z| > 1$ \\
+$a^n u(n)$ & $\displaystyle \frac{z}{z - a}$ & $|z| > |a|$ \\
+$-a^n u(-n - 1)$ & $\displaystyle \frac{-z}{z - a}$ & $|z| < |a|$ \\
+$\cos(\omega_0 n) u(n)$ & $\displaystyle \frac{z^2 - \cos(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\
+$\sin(\omega_0 n) u(n)$ & $\displaystyle \frac{\sin(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\
+$a^n \cos(\omega_0 n) u(n)$ & $\displaystyle \frac{z^2 - a \cos(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\
+$a^n \sin(\omega_0 n) u(n)$ & $\displaystyle \frac{a \sin(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\
+\bottomrule
+\end{tabular}
+
+然后是Z-transform transform properties表格：
+
+\section*{Z-transform transform properties}
+\begin{tabular}{cc}
+\toprule
+$x(n)$ & $X(z)$ \\
+\midrule
+$x(n)$ & $X(z)$ \\
+$a x(n) + b g(n)$ & $a X(z) + b G(z)$ \\
+$x(n - n_0)$ & $z^{-n_0} X(z)$ \\
+$x(n) * f(n)$ & $X(z) F(z)$ \\
+\bottomrule
+\end{tabular}
+
+最后页码：
+
+\begin{center}
+Page 8 of 169
+\end{center}
+
+需要注意的是，表格中的“name”列在Z-transform pairs中，第一行是$x(n)$, $X(z)$, ROC，然后下面是具体的信号。另外，有些行在表格中可能需要对齐，比如“$\delta(n)$”对应的formula是$\sum_n x(n) z^{-n}$ (def.)，所以表格中第一行是表头，然后$\delta(n)$是第二行，对应公式是$\sum_n x(n) z^{-n}$ (def.)，ROC是all $z$。之前的表格可能在编写时需要注意行的对应。
+
+另外，检查每个公式的LaTeX表示是否正确，比如卷积用$*$，积分符号$\int$，求和$\sum$，Z变换的$z^{-n}$，复指数$e^{j\theta}$等。
+
+现在再检查Z-transform transform pairs的表格，原图片中的第一行是$x(n)$, $X(z)$, ROC，然后$\delta(n)$的$X(z)$是$\sum_n x(n) z^{-n}$ (def.)，ROC是all $z$。所以表格的结构应该是：
+
+第一行（表头）：name, formula, ROC
+
+第二行：$\delta(n)$, $\sum_n x(n) z^{-n}$ (def.), all $z$
+
+第三行：$u(n)$, $z/(z-1)$, $|z|>1$
+
+等等。之前的代码中可能把$\delta(n)$放在了第二行，而第一行是表头，所以需要调整。比如：
+
+\begin{tabular}{ccc}
+\toprule
+name & formula & ROC \\
+\midrule
+$\delta(n)$ & $\displaystyle \sum_n x(n) z^{-n}$ \textit{(def.)} & all $z$ \\
+$u(n)$ & $\displaystyle \frac{z}{z - 1}$ & $|z| > 1$ \\
+$a^n u(n)$ & $\displaystyle \frac{z}{z - a}$ & $|z| > |a|$ \\
+$-a^n u(-n - 1)$ & $\displaystyle \frac{-z}{z - a}$ & $|z| < |a|$ \\
+$\cos(\omega_0 n) u(n)$ & $\displaystyle \frac{z^2 - \cos(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\
+$\sin(\omega_0 n) u(n)$ & $\displaystyle \frac{\sin(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\
+$a^n \cos(\omega_0 n) u(n)$ & $\displaystyle \frac{z^2 - a \cos(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\
+$a^n \sin(\omega_0 n) u(n)$ & $\displaystyle \frac{a \sin(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\
+\bottomrule
+\end{tabular}
+
+这样更准确，因为原图片中“Z-transform transform pairs”下的第一行是$x(n)$, $X(z)$, ROC，然后下面是$\delta(n)$等。可能原图片中的第一行是表头，然后$\delta(n)$是第一个数据行，所以需要确认。看原图片中的“Z-transform transform pairs”表格：
+
+原图片中该表格的列是x(n), X(z), ROC。第一行（表头）是x(n), X(z), ROC。然后第二行是δ(n)对应的X(z)是∑x(n)z⁻ⁿ (def.)，ROC是all z。所以正确的表格应该是：
+
+\begin{tabular}{ccc}
+\toprule
+$x(n)$ & $X(z)$ & ROC \\
+\midrule
+$\delta(n)$ & $\displaystyle \sum_n x(n) z^{-n}$ \textit{(def.)} & all $z$ \\
+$u(n)$ & $\displaystyle \frac{z}{z - 1}$ & $|z| > 1$ \\
+$a^n u(n)$ & $\displaystyle \frac{z}{z - a}$ & $|z| > |a|$ \\
+$-a^n u(-n - 1)$ & $\displaystyle \frac{-z}{z - a}$ & $|z| < |a|$ \\
+$\cos(\omega_0 n) u(n)$ & $\displaystyle \frac{z^2 - \cos(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\
+$\sin(\omega_0 n) u(n)$ & $\displaystyle \frac{\sin(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\
+$a^n \cos(\omega_0 n) u(n)$ & $\displaystyle \frac{z^2 - a \cos(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\
+$a^n \sin(\omega_0 n) u(n)$ & $\displaystyle \frac{a \sin(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\
+\bottomrule
+\end{tabular}
+
+这样更符合原图片的结构，因为原图片中“Z-transform transform pairs”下的第一行是x(n), X(z), ROC，然后下面是各个信号的行，其中δ(n)是第一个数据行，X(z)是定义式。
+
+另外，检查“formulas for continuous-time LTI signals and systems”中的convolution公式，原图片中是$f(t) * g(t) = \int \tau f(\tau) g(t - \tau) d\tau$，所以LaTeX中是$\int \tau f(\tau) g(t - \tau) d\tau$，注意积分变量是$\tau$，所以要写成$\displaystyle \int \tau f(\tau) g(t - \tau) d\tau$。
+
+还有“… their connection”在离散时间部分是$H^F(\omega) = H(e^{j\omega})$ provided unit circle $\subset$ ROC，需要用\textit{...}来表示注释。
+
+现在整合所有部分，确保每个部分的标题、表格、公式都正确。最后页码是“Page 

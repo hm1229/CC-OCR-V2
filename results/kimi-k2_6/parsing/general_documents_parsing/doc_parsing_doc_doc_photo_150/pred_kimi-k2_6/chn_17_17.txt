@@ -1,0 +1,73 @@
+I'll transcribe the image content into LaTeX format, including the table, text, and mathematical examples.
+
+```latex
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|ccccc|l|}
+\hline
+38个月 & 3480 & 2680 & 1968 & 1040 & 440 & \multirow{7}{*}{持一致} \\
+\cline{1-6}
+39个月 & 2960 & 2360 & 1736 & 880 & 380 & \\
+\cline{1-6}
+40个月 & 2440 & 2040 & 1504 & 720 & 320 & \\
+\cline{1-6}
+41个月 & 1920 & 1720 & 1272 & 560 & 260 & \\
+\cline{1-6}
+42个月 & 1400 & 1400 & 1040 & 400 & 200 & \\
+\cline{1-6}
+\multirow{2}{*}{\parbox{1.5cm}{43--47个月}} & \multirow{2}{*}{1400} & \multirow{2}{*}{1400} & \multirow{2}{*}{1040} & \multirow{2}{*}{400} & \multirow{2}{*}{200} & \\
+ & & & & & & \\
+\cline{1-6}
+\multirow{2}{*}{\parbox{1.5cm}{48个月及以上}} & \multicolumn{5}{c|}{\multirow{2}{*}{0元购}} & \\
+ & \multicolumn{5}{c|}{} & \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.5em}
+\noindent 其他要求与常规自购保持一致。预离职自购，需在员工离职日之前完成安全处理和自购付款。
+
+\section*{三、FAQ}
+
+\begin{enumerate}
+    \item \textbf{什么情况下可以定义为``预离职''员工，享受预离职自购的福利？}
+    
+    员工已提交离职申请，且业务审批阶段已结束后，如符合自购条件，可发起预离职资产自购。
+    
+    \item \textbf{预离职自购在哪里发起申请？}
+    
+    与常规自购的申请入口一致，\url{https://aap.alibaba-inc.com/#/selfPurchase}
+    
+    \item \textbf{目前员工可以通过什么途径获取离职自购政策？}
+    \begin{enumerate}
+        \item AAP系统自购页面，更新相应的自购规则；
+        \item 预计在HR离职系统中，员工IT资产归还的环节，增加相应的文案提醒，符合自购条件的同学可以看到相关内容（HR离职系统排期中，预计3月底上线）
+        \item 服务台回收离职资产时，如同学符合自购规则，可主动询问同学是否需要自购
+    \end{enumerate}
+    
+    \item \textbf{关于自购金额，举个例子}
+    
+    例子1：小A同学名下资产使用月份2个月，资产净值8000，资产原值10000，37个月自购价格3000，则自购金额计算逻辑为：
+    \[\text{资产净值}8000 + \text{37个月自购价格}3000 = 11000\text{元} > \text{资产原值}10000\]
+    则自购金额为10000元
+\end{enumerate}
+
+\end{document}
+```
+
+This LaTeX transcription includes:
+- The pricing table with multirow cells for merged rows
+- The note about pre-resignation self-purchase requirements
+- The FAQ section with numbered questions and sub-items
+- The mathematical example showing the calculation logic with inequality
+- Proper formatting for the URL
+- Chinese text support via UTF-8 encoding (assuming `ctex` or XeLaTeX/LuaLaTeX compilation)

@@ -1,0 +1,20 @@
+\[
+\begin{aligned}
+\mathbb{E}\int_a^b\int_a^t \bigl|K_9(t,x)-K_9(s,y)\bigr|^p\,dt\,dx\,ds\,dy
+&=\mathbb{E}\int_a^b\int_a^t \Bigl|\int_0^t\int_{\mathbb{R}^d} K(t-r,z)g(x-z)\,dz\,dW(r) \\
+&\qquad\qquad\qquad\ -\int_0^s\int_{\mathbb{R}^d} K(s-r,z)g(y-z)\,dz\,dW(r)\Bigr|^p\,dt\,dx\,ds\,dy \\
+&\le N(p)\mathbb{E}\int_a^b\int_a^t \Bigl|\int_0^s\int_{\mathbb{R}^d}
+\bigl(K(t-r,z)-K(s-r,z)\bigr)g(y-z)\,dz\,dW(r)\Bigr|^p\,dt\,dx\,ds\,dy \\
+&\quad +N(p)\mathbb{E}\int_a^b\int_a^t \Bigl|\int_0^s\int_{\mathbb{R}^d}
+K(t-r,z)\bigl(g(x-z)-g(y-z)\bigr)\,dz\,dW(r)\Bigr|^p\,dt\,dx\,ds\,dy \\
+&\quad +N(p)\mathbb{E}\int_a^b\int_a^t \Bigl|\int_s^t\int_{\mathbb{R}^d}
+K(t-r,z)g(x-z)\,dz\,dW(r)\Bigr|^p\,dt\,dx\,ds\,dy \\
+&\le N(p)\mathbb{E}\int_a^b\int_a^t \left(\int_0^s\Bigl|\int_{\mathbb{R}^d}
+\bigl(K(t-r,z)-K(s-r,z)\bigr)g(y-z)\,dz\Bigr|^2\,dr\right)^{p/2}\,dt\,dx\,ds\,dy \\
+&\quad +N(p)\mathbb{E}\int_a^b\int_a^t \left(\int_0^s\Bigl|\int_{\mathbb{R}^d}
+K(t-r,z)\bigl(g(x-z)-g(y-z)\bigr)\,dz\Bigr|^2\,dr\right)^{p/2}\,dt\,dx\,ds\,dy \\
+&\quad +N(p)\mathbb{E}\int_a^b\int_a^t \left(\int_s^t\Bigl|\int_{\mathbb{R}^d}
+K(t-r,z)g(x-z)\,dz\Bigr|^2\,dr\right)^{p/2}\,dt\,dx\,ds\,dy \\
+&=: I_1+I_2+I_3.
+\end{aligned}
+\]

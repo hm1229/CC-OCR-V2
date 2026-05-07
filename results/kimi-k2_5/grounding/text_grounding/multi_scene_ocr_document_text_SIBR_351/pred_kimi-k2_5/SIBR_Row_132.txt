@@ -1,0 +1,25 @@
+I need to find all occurrences of 'CNY' in the image and provide their bounding box coordinates.
+
+Looking at the image, I can identify three instances of 'CNY':
+
+1. First 'CNY' - next to "Balance"
+2. Second 'CNY' - next to "Total Amount Before Taxes"
+3. Third 'CNY' - next to "Total Amount Non Taxable"
+4. Fourth 'CNY' - next to "Total VAT"
+5. Fifth 'CNY' - next to "Total Amount with Taxes"
+
+Based on the image layout, here are the normalized coordinates:
+
+(0.832, 0.381, 0.862, 0.395) # Balance CNY
+(0.832, 0.412, 0.862, 0.426) # Total Amount Before Taxes CNY
+(0.832, 0.430, 0.862, 0.444) # Total Amount Non Taxable CNY
+(0.832, 0.451, 0.862, 0.465) # Total VAT CNY
+(0.832, 0.473, 0.862, 0.487) # Total Amount with Taxes CNY
+
+However, if you're asking for a single region that encompasses all 'CNY' text, or if you want each one separately, please clarify. Based on typical OCR requests, here are the individual bounding boxes:
+
+(0.832, 0.381, 0.862, 0.395)
+(0.832, 0.412, 0.862, 0.426)
+(0.832, 0.430, 0.862, 0.444)
+(0.832, 0.451, 0.862, 0.465)
+(0.832, 0.473, 0.862, 0.487)

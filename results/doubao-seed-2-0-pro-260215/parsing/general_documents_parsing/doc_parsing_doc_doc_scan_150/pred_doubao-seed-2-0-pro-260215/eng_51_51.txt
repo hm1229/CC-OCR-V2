@@ -1,0 +1,99 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\begin{document}
+
+% Left top table: Discrete-time LTI formulas
+\section*{formulas for discrete-time LTI signals and systems}
+\begin{tabular}{ll}
+\hline
+name & formula \\
+\hline
+area under impulse & $\displaystyle\sum_{n} \delta(n) = 1$ \\[1em]
+multiplication by impulse & $f(n)\delta(n) = f(0)\delta(n)$ \\[0.5em]
+...by shifted impulse & $f(n)\delta(n-n_o) = f(n_o)\delta(n-n_o)$ \\[0.5em]
+convolution & $\displaystyle f(n) * g(n) = \sum_{k} f(k)g(n-k)$ \\[1em]
+...with an impulse & $f(n) * \delta(n) = f(n)$ \\[0.5em]
+...with a shifted impulse & $f(n) * \delta(n-n_o) = f(n-n_o)$ \\[0.5em]
+transfer function & $\displaystyle H(z) = \sum_{n} h(n) z^{-n}$ \\[1em]
+frequency response & $\displaystyle H^f(\omega) = \sum h(n) e^{-j\omega n}$ \\[1em]
+...their connection & $H^f(\omega) = H(e^{j\omega})$ \\
+& provided unit circle $\subset$ ROC \\
+\hline
+\end{tabular}
+
+\vspace{2em}
+
+% Left bottom table: Continuous-time LTI formulas
+\section*{formulas for continuous-time LTI signals and systems}
+\begin{tabular}{ll}
+\hline
+name & formula \\
+\hline
+area under impulse & $\displaystyle\int \delta(t) dt = 1$ \\[1em]
+multiplication by impulse & $f(t)\delta(t) = f(0)\delta(t)$ \\[0.5em]
+...by shifted impulse & $f(t)\delta(t-t_o) = f(t_o)\delta(t-t_o)$ \\[0.5em]
+convolution & $\displaystyle f(t) * g(t) = \int f(\tau)g(t-\tau) d\tau$ \\[1em]
+...with an impulse & $f(t) * \delta(t) = f(t)$ \\[0.5em]
+...with a shifted impulse & $f(t) * \delta(t-t_o) = f(t-t_o)$ \\[0.5em]
+transfer function & $\displaystyle H(s) = \int h(t) e^{-st} dt$ \\[1em]
+frequency response & $\displaystyle H^f(\omega) = \int h(t) e^{-j\omega t} dt$ \\[1em]
+...their connection & $H^f(\omega) = H(j\omega)$ \\
+& provided $j\omega$-axis $\subset$ ROC \\
+\hline
+\end{tabular}
+
+\vspace{2em}
+
+% Right top table: Useful formulas
+\section*{useful formulas}
+\begin{tabular}{ll}
+\hline
+name & formula \\
+\hline
+Euler's formula & $e^{j\theta} = \cos(\theta) + j \sin(\theta)$ \\[0.5em]
+...for cosine & $\cos(\theta) = \frac{e^{j\theta} + e^{-j\theta}}{2}$ \\[1em]
+...for sine & $\sin(\theta) = \frac{e^{j\theta} - e^{-j\theta}}{2j}$ \\[1em]
+Sinc function & $\text{sinc}(\theta) := \frac{\sin(\pi \theta)}{\pi \theta}$ \\[1em]
+\hline
+\end{tabular}
+
+\vspace{2em}
+
+% Right middle table: Z-transform pairs
+\section*{Z-transform transform pairs}
+\begin{tabular}{lll}
+\hline
+$x(n)$ & $X(z)$ & ROC \\
+\hline
+$x(n)$ & $\displaystyle\sum_{n} x(n) z^{-n} \quad (\text{def.})$ & \\[1em]
+$\delta(n)$ & $1$ & all $z$ \\[0.5em]
+$u(n)$ & $\frac{z}{z-1}$ & $|z|>1$ \\[1em]
+$a^n u(n)$ & $\frac{z}{z-a}$ & $|z|>|a|$ \\[1em]
+$-a^n u(-n-1)$ & $\frac{z}{z-a}$ & $|z|<|a|$ \\[1em]
+$\cos(\omega_o n) u(n)$ & $\frac{z^2 - \cos(\omega_o) z}{z^2 - 2\cos(\omega_o) z + 1}$ & $|z|>1$ \\[1em]
+$\sin(\omega_o n) u(n)$ & $\frac{\sin(\omega_o) z}{z^2 - 2\cos(\omega_o) z + 1}$ & $|z|>1$ \\[1em]
+$a^n \cos(\omega_o n) u(n)$ & $\frac{z^2 - a \cos(\omega_o) z}{z^2 - 2a \cos(\omega_o) z + a^2}$ & $|z|>|a|$ \\[1em]
+$a^n \sin(\omega_o n) u(n)$ & $\frac{a \sin(\omega_o) z}{z^2 - 2a \cos(\omega_o) z + a^2}$ & $|z|>|a|$ \\[1em]
+\hline
+\end{tabular}
+
+\vspace{2em}
+
+% Right bottom table: Z-transform properties
+\section*{Z-transform transform properties}
+\begin{tabular}{ll}
+\hline
+$x(n)$ & $X(z)$ \\
+\hline
+$a x(n) + b g(n)$ & $a X(z) + b G(z)$ \\[0.5em]
+$x(n-n_o)$ & $z^{-n_o} X(z)$ \\[0.5em]
+$x(n) * f(n)$ & $X(z) F(z)$ \\[0.5em]
+\hline
+\end{tabular}
+
+\vspace{3em}
+\hfill Page 8 of 169
+
+\end{document}
+```

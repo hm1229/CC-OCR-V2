@@ -1,0 +1,32 @@
+To transcribe the provided balance sheet into LaTeX (using `booktabs` for clean horizontal rules), here's the formatted output:  
+
+
+```latex
+\begin{table}[h!]
+\centering
+\caption{BALANCE SHEET - Months}
+\begin{tabular}{lccccc}
+\toprule
+\multicolumn{6}{l}{\textbf{BALANCE SHEET - Months}} \\
+\midrule
+\multicolumn{1}{l}{\textbf{ASSETS}} & \multicolumn{5}{c}{Months} \\
+\cmidrule(lr){2-6}
+ & Jan 2021 & Feb 2021 & Mar 2021 & Apr 2021 & May 2021 \\
+\midrule
+\textbf{Fixed Assets} & & & & & \\
+\cmidrule(lr){1-1}
+\textit{Assets} & & & & & \\
+\cmidrule(lr){1-1}
+\textgreater On-site assets & 5,843.33 & 5,786.77 & 6,350.31 & 6,283.95 & 6,217.70 \\
+\textgreater Other assets & 5,950.00 & 5,900.42 & 5,851.25 & 5,802.49 & 5,754.13 \\
+\midrule
+\textbf{Total of Assets} & 11,793.33 & 11,687.19 & 12,201.56 & 12,086.44 & 11,971.83 \\
+\textbf{Total of Fixed Assets} & 11,793.33 & 11,687.19 & 12,201.56 & 12,086.44 & 11,971.83 \\
+\midrule
+\textbf{Investments} & & & & & \\
+\cmidrule(lr){1-1}
+\textit{Funding} & & & & & \\
+\cmidrule(lr){1-1}
+\textgreater Borrowing & 1,004.17 & 1,008.35 & 1,012.55 & 1,016.77 & 1,021.01 \\
+\midrule
+\textbf{Total of Funding} & 1,

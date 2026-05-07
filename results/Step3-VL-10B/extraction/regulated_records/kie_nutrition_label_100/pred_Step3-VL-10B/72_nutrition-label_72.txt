@@ -1,0 +1,146 @@
+用户现在需要从营养标签中提取信息到给定的JSON schema里。首先看每个字段对应什么。先分析每个CE、TF、CAR、PRO这些可能的分类，比如CE可能是Energy（能量），P1是per 100g，P2是per quarter jar？不过看schema里的键是CE-P1，CE-PS等。先看每个营养成分：
+
+首先看Energy（能量）：per 100g是182kJ/43kcal；per quarter jar（125g）是228kJ/54kcal。但schema里的CE可能对应Energy？然后CE-P1是per 100g的能量值，CE-PS是per serving？不过看标签里“This pack contains 4 servings”，每份是quarter jar？不，quarter jar是125g，而一包有4份，所以每份是125g/4？不，可能per quarter jar是125g，而一包是4个quarter jar？不对，看标签里的“per quarter jar 125g”，然后“This pack contains 4 servings”，所以每份（serving）是quarter jar？或者可能per 100g是P1，per serving是PS？需要看每个营养成分的行。
+
+现在看每个营养项：
+
+Energy: per 100g是182kJ/43kcal；per quarter jar（125g）是228kJ/54kcal。但schema里的CE-P1对应Energy per 100g，CE-PS对应Energy per serving？但需要确定每个字段对应哪个。可能CE是Energy，P1是per 100g，PS是per serving（即quarter jar？因为一包有4份，每份是quarter jar？因为per quarter jar是125g，而一包是4个quarter jar？不，可能per quarter jar是125g，而一包的总量是4*125g=500g？然后每份是125g（quarter jar）。所以per serving就是per quarter jar。那CE-P1是Energy per 100g，CE-PS是Energy per serving（即per quarter jar）。
+
+然后Fat：per 100g是0.3g；per quarter jar是0.4g。所以CE-P1是Energy，那Fat对应哪个？看schema里的键是SS, CE-P1, CE-PS, TF-P1, TF-PS, CAR-P1, CAR-PS, PRO-P1, PRO-PS。可能SS是Salt？因为Salt是S开头？或者看缩写：CE可能是Caloric Energy（能量），TF是Total Fat（总脂肪），CAR是Carbohydrate（碳水化合物），PRO是Protein（蛋白质）。然后P1是per 100g，PS是per serving（即per quarter jar，因为每份是quarter jar？因为一包有4份，每份是125g，即quarter jar）。那现在对应每个：
+
+CE-P1：Energy per 100g → 182kJ/43kcal？但需要看格式，可能取数值。或者看每个营养项的per 100g和per serving（quarter jar）。
+
+现在逐个分析：
+
+1. Energy（CE）：
+   - P1（per 100g）：182kJ/43kcal → 可能需要提取数值，比如kJ和kcal？但看标签里的写法是“182kJ/ 43kcal”（注意空格？原标签是“182kJ/ 43kcal”？看图片里的Energy行：per 100g是182kJ/ 43kcal（可能换行？不，看图片中的Energy行：per 100g列是182kJ/ 43kcal？原图片中“Energy”行，per 100g是“182kJ/ 43kcal”（可能排版问题，比如182kJ/43kcal）。per quarter jar是228kJ/54kcal。
+
+2. Fat（TF）：
+   - P1（per 100g）：0.3g
+   - PS（per serving，即per quarter jar）：0.4g
+
+3. of which saturates：可能属于TF的子项，但schema里没有子项，所以可能不处理，因为schema里的TF-P1和TF-PS是总脂肪，所以saturates可能不提取，因为schema没有对应字段。
+
+4. Carbohydrate（CAR）：
+   - P1（per 100g）：7.6g
+   - PS（per serving）：9.5g
+
+5. of which sugars：子项，不提取。
+
+6. Fibre（可能属于CAR？但schema里CAR是碳水，Fibre可能单独？但schema里没有Fibre的字段，看schema里的键是SS, CE-P1, CE-PS, TF-P1, TF-PS, CAR-P1, CAR-PS, PRO-P1, PRO-PS。所以Fibre可能没有对应，因为schema里没有FIB字段。那看Protein（PRO）：
+   - P1（per 100g）：1.6g
+   - PS（per serving）：2.0g
+
+7. Salt（SS？因为S开头，Salt）：
+   - P1（per 100g）：1.7g
+   - PS（per serving）：2.1g
+
+现在看schema的键：SS, CE-P1, CE-PS, TF-P1, TF-PS, CAR-P1, CAR-PS, PRO-P1, PRO-PS。共9个键。现在对应每个：
+
+- SS：应该是Salt的per serving？或者SS是Salt的per 100g？不，看每个P1是per 100g，PS是per serving（即per quarter jar，因为每份是quarter jar，因为一包有4份，每份是125g，即quarter jar）。所以：
+
+SS：Salt的per serving？或者SS是Salt的某个？不，可能SS是“Salt”的缩写，所以SS对应Salt的per 100g？不，schema里的每个P1是per 100g，PS是per serving。所以：
+
+CE-P1：Energy per 100g → 182kJ/43kcal？但需要看数值，可能取kJ或kcal？或者看标签中的写法，比如Energy per 100g是182kJ/43kcal，所以可以写成“182kJ/43kcal”；CE-PS是Energy per serving（per quarter jar）→228kJ/54kcal。
+
+TF-P1：Total Fat per 100g →0.3g；TF-PS：Total Fat per serving →0.4g
+
+CAR-P1：Carbohydrate per 100g →7.6g；CAR-PS：Carbohydrate per serving →9.5g
+
+PRO-P1：Protein per 100g →1.6g；PRO-PS：Protein per serving →2.0g
+
+SS：Salt的per 100g？或者SS是Salt的per serving？因为schema里有SS，没有SS-P1和SS-PS？不，看schema里的键是“SS”（没有P1或PS后缀？不，看用户给的schema是：{"SS": "", "CE-P1": "", "CE-PS": "", "TF-P1": "", "TF-PS": "", "CAR-P1": "", "CAR-PS": "", "PRO-P1": "", "PRO-PS": ""}。哦，SS是单独的，没有P1或PS？那可能SS是Salt的某个值？或者可能SS是“Salt”的per serving？或者可能我搞错了，再看标签中的Salt行：per 100g是1.7g，per quarter jar是2.1g。而schema里有SS，可能SS是Salt的per serving？因为其他都是P1（per 100g）和PS（per serving），而SS可能是Salt的per serving？或者SS是Salt的per 100g？但schema里SS没有后缀，可能用户给的schema中SS是Salt的某个值，比如总盐？或者可能SS是“Salt”的per serving，而其他如CE-P1是Energy per 100g，CE-PS是Energy per serving，TF-P1是Fat per 100g，TF-PS是Fat per serving，CAR-P1是Carb per 100g，CAR-PS是Carb per serving，PRO-P1是Protein per 100g，PRO-PS是Protein per serving，SS是Salt per serving？因为Salt在标签中是“Salt”行，per 100g是1.7g，per quarter jar是2.1g。而一包有4份，每份是quarter jar（125g），所以per serving是per quarter jar，即2.1g。所以SS可能对应Salt per serving？因为其他都是P1（per 100g）和PS（per serving），而SS可能是Salt的per serving，因为schema里SS没有P1，可能SS是Salt的per serving，而Salt的per 100g可能没有对应？但看schema里的键，SS是单独的，没有P1或PS，可能我之前理解错了。或者可能SS是“Salt”的per 100g？但这样的话，其他如CE-P1是Energy per 100g，TF-P1是Fat per 100g，CAR-P1是Carb per 100g，PRO-P1是Protein per 100g，SS-P1？不，schema里SS没有P1，只有SS。这可能是因为在原始任务中，SS对应的是Salt的某个值，比如总盐，或者可能SS是“Salt”的per serving，而其他P1是per 100g，PS是per serving。现在再检查每个营养项：
+
+标签中的项目：
+
+- Energy → CE（Caloric Energy）
+- Fat → TF（Total Fat）
+- Carbohydrate → CAR
+- Protein → PRO
+- Salt → SS（Salt）
+
+每个项目有两个列：per 100g（P1）和per quarter jar（即per serving，因为一包有4份，每份是quarter jar，所以per serving = per quarter jar，即PS）
+
+所以：
+
+CE-P1：Energy per 100g → 182kJ/43kcal
+
+CE-PS：Energy per serving →228kJ/54kcal
+
+TF-P1：Fat per 100g →0.3g
+
+TF-PS：Fat per serving →0.4g
+
+CAR-P1：Carbohydrate per 100g →7.6g
+
+CAR-PS：Carbohydrate per serving →9.5g
+
+PRO-P1：Protein per 100g →1.6g
+
+PRO-PS：Protein per serving →2.0g
+
+SS：Salt per serving？因为Salt的per serving是2.1g（per quarter jar），而per 100g是1.7g。但schema里SS没有P1或PS，可能SS是Salt的per serving？因为其他都是P1和PS，而SS可能对应Salt的per serving，因为Salt是唯一没有被分成P1和PS？不，不可能，因为其他都是两个值。或者可能SS是Salt的per 100g？但这样的话，SS的值是1.7g，而per serving是2.1g，但schema里没有SS-PS。这说明可能我误解了schema的结构。再看用户提供的schema：
+
+{"SS": "", "CE-P1": "", "CE-PS": "", "TF-P1": "", "TF-PS": "", "CAR-P1": "", "CAR-PS": "", "PRO-P1": "", "PRO-PS": ""}
+
+共9个字段。现在数标签中的营养项（除了子项）：Energy, Fat, Carbohydrate, Fibre, Protein, Salt。但Fibre在schema中没有对应字段，所以Fibre被忽略。子项如saturates, sugars也忽略。所以主要的营养项是Energy, Fat, Carbohydrate, Protein, Salt → 5个项。每个项对应P1（per 100g）和PS（per serving），除了可能Salt是SS，没有P1和PS？不，5个项的话，每个项有P1和PS是10个字段，但schema里是9个字段。哦，Energy是CE，Fat是TF，Carbohydrate是CAR，Protein是PRO，Salt是SS。所以CE有P1和PS（2），TF有P1和PS（2），CAR有P1和PS（2），PRO有P1和PS（2），SS有？不，这样是2*4 +1=9？因为SS可能只有PS？或者SS是P1？比如：
+
+CE-P1, CE-PS →2
+
+TF-P1, TF-PS →2
+
+CAR-P1, CAR-PS →2
+
+PRO-P1, PRO-PS →2
+
+SS →1（因为Salt可能只有per serving？或者per 100g？但这样总和是2+2+2+2+1=9，符合schema的9个字段。所以SS对应的是Salt的per serving（因为per 100g可能没有？不，标签里Salt有per 100g和per quarter jar。那可能SS是Salt的per 100g？而per serving（quarter jar）的Salt是2.1g，但schema里没有SS-PS，所以可能SS是Salt的per serving？因为其他项（CE, TF, CAR, PRO）都有P1和PS，而SS只有PS？这样总和是4项*2 +1=9。现在验证每个字段：
+
+CE-P1: Energy per 100g →182kJ/43kcal
+
+CE-PS: Energy per serving →228kJ/54kcal
+
+TF-P1: Fat per 100g →0.3g
+
+TF-PS: Fat per serving →0.4g
+
+CAR-P1: Carb per 100g →7.6g
+
+CAR-PS: Carb per serving →9.5g
+
+PRO-P1: Protein per 100g →1.6g
+
+PRO-PS: Protein per serving →2.0g
+
+SS: Salt per serving →2.1g （因为per serving是quarter jar，即125g，所以Salt per serving是2.1g）
+
+这样所有9个字段都填满了。现在检查每个值是否正确：
+
+- Energy per 100g：标签中“Energy”行，per 100g列是“182kJ/ 43kcal”（注意原图片中的空格，可能是182kJ/43kcal）
+- Energy per serving（per quarter jar）：228kJ/54kcal
+- Fat per 100g：0.3g（“Fat”行，per 100g列是0.3g）
+- Fat per serving：0.4g（per quarter jar列是0.4g）
+- Carbohydrate per 100g：7.6g（“Carbohydrate”行，per 100g列是7.6g）
+- Carbohydrate per serving：9.5g（per quarter jar列是9.5g）
+- Protein per 100g：1.6g（“Protein”行，per 100g列是1.6g）
+- Protein per serving：2.0g（per quarter jar列是2.0g）
+- Salt per serving：2.1g（“Salt”行，per quarter jar列是2.1g；per 100g是1.7g，但SS是per serving，因为其他项的PS是per serving，而SS可能对应Salt的per serving，因为schema里SS没有P1，可能是因为Salt的per 100g没有被要求？或者可能SS是Salt的per 100g？但这样的话，SS是1.7g，而per serving是2.1g，但schema里没有SS-PS，所以必须确定。再看标签中的“Salt”行，per 100g是1.7g，per quarter jar是2.1g。而一包有4份，每份是quarter jar（125g），所以per serving是quarter jar，即2.1g。现在看schema中的SS，可能SS是Salt的per serving，因为其他项（CE, TF, CAR, PRO）的PS是per serving，而SS是Salt的per serving，这样所有PS都是per serving，P1是per 100g。这样SS没有P1，可能是因为在原始任务中，SS对应的是Salt的per serving，而Salt的per 100g可能没有被包含在schema中？或者可能我之前数错了，再检查schema的字段数：SS是1，CE-P1、CE-PS是2，TF-P1、TF-PS是2，CAR-P1、CAR-PS是2，PRO-P1、PRO-PS是2。总共1+2+2+2+2=9，正确。所以SS是单独的一个字段，对应Salt的per serving（因为per serving是quarter jar，而Salt在quarter jar的量是2.1g）。现在确认每个值：
+
+SS: "2.1g"
+
+CE-P1: "182kJ/43kcal"
+
+CE-PS: "228kJ/54kcal"
+
+TF-P1: "0.3g"
+
+TF-PS: "0.4g"
+
+CAR-P1: "7.6g"
+
+CAR-PS: "9.5g"
+
+PRO-P1: "1.6g"
+
+PRO-PS: "2.0g"
+
+这样所有字段都填充了。现在需要确保格式正确，比如数值和单位。另外，检查是否有其他营养项被遗漏，比如Fibre（6.2g per 100g，7.8g per serving），但

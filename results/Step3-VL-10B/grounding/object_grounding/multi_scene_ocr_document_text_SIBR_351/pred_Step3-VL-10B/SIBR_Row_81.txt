@@ -1,0 +1,185 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Factory：图上方的Factory:2599...，所以bbox是包含Factory信息的部分。然后TEL是电话，FAX是传真，E-mail是邮箱，Website是网址。Invoice to是发票抬头，Consignee是收货人（但这里可能Invoice to是类别里的，看用户给的类别里有Invoice to，所以要找Invoice to的区域。然后Company Name可能对应Factory？或者看其他部分。然后逐个处理：
+
+1. Factory：图中上方“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” 这个区域。
+2. TEL：TEL: 87-868-66185515
+3. FAX：FAX: 82-873-47758536
+4. E-mail：E-mail: erik93@kane.info
+5. Website：Website: https://perry.com/
+6. Invoice to：Invoice to: Daisy Tech JSC
+7. Consignee这里用户没列，但Invoice to是类别里的，所以处理Invoice to。
+8. Shipper：Shipper: 1796 Sharon Villages Martinton, ME 40323... 这个是Shipper。
+9. Date：Date: 2022/2/25 右边的表格里。
+10. Delivery Terms：Delivery Terms: FOB Shanghai
+11. Country of Origin：Country of Origin: China
+12. INV No.：INV No.: 20220225001
+13. PO No.：PO No.: 20211228_gs_tw
+14. Model No.：Model列的TS68，对应Model No.是TS68。
+15. Quantity (PCS)：Quantity (PCS)列的10,000。
+16. Unit Price (USD) /PC：Unit Price列的1.52。
+17. Amount USD：Amount列的US$15,200.00，还有Total行的US$15,200.00。
+18. Product Name：Merchandise Description里的Model TS68 5.3V/1A Mini Single USB Port Wall Charger Black... 这个是Product Name。
+19. Input：Input: 100V-240V 50/60Hz
+20. Output：Output: 5.3V/1A （注意用户类别里有0utput，应该是Output的笔误？看用户给的类别是0utput，可能是OCR错误，对应Output字段）
+21. Size：Size: 69*35.8*14.3(LWII)mm
+22. Weight：Weight:45g （对应45g类别）
+23. 1.Payment Terms：1. Payment Terms: 20% deposit, balance before shipment
+24. 2.Ex-factory date：2. Ex-factory date: 26/Nov/21
+25. Address：可能有多个地址，比如Factory的地址，Shipper的地址，Invoice to的地址（Daisy Tech JSC的地址？看Invoice to是Daisy Tech JSC，Consignee的地址是Unit 9095 Box 3611 DPO AA 68519，Shipper的地址是1796 Sharon Villages... 所以Address可能需要看哪些是地址。比如Factory的地址是Address，Shipper的地址也是Address，Invoice to的地址可能也是。但用户类别里有Address，需要找对应的。
+26. Company Name：可能Factory是公司名？或者Consignee是Daisy Tech JSC，可能Company Name是Daisy Tech JSC？需要看。
+
+现在需要逐个确认每个类别在图中的位置，然后标注bbox。注意图中的元素：
+
+先列所有需要的类别，然后找每个的出现：
+
+- 0utput：对应Output字段，在Merchandise Description里的Output: 5.3V/1A。注意用户写的是0utput，可能是输入错误，应该是Output。
+- 1.Payment Terms：图中“1. Payment Terms: 20% deposit, balance before shipment”
+- 2.Ex-factory date：图中“2. Ex-factory date: 26/Nov/21”
+- 45g：Merchandise Description里的Weight:45g
+- Address：比如Factory的地址“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” 是一个Address；Shipper的地址“1796 Sharon Villages Martinton, ME 40323 USNV Johnson FPO AE 01418” 是另一个Address；Invoice to的地址？Invoice to是Daisy Tech JSC，可能没有详细地址？Consignee的地址是“Unit 9095 Box 3611 DPO AA 68519” 也是Address。需要看用户需要哪些Address，可能选主要的，比如Factory的地址。
+- Amount USD：表格中Amount列的US$15,200.00，以及Total行的US$15,200.00。
+- Company Name：可能Factory是公司，或者Consignee是Daisy Tech JSC，作为Company Name。
+- Country of Origin：表格中的“Country of Origin: China”
+- Date：表格中的“Date: 2022/2/25”
+- Delivery Terms：表格中的“Delivery Terms: FOB Shanghai”
+- E-mail：上方的“E-mail: erik93@kane.info”
+- FAX：上方的“FAX: 82-873-47758536”
+- Factory：上方的“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410”
+- INV No.：表格中的“INV No.: 20220225001”
+- Input：Merchandise Description中的“Input: 100V-240V 50/60Hz”
+- Invoice to：表格左侧的“Invoice to: Daisy Tech JSC”
+- Model No.：表格中Model列的“TS68”
+- PO No.：表格中的“PO No.: 20211228_gs_tw”
+- Product Name：表格中Merchandise Description列的内容“Model TS68 5.3V/1A Mini Single USB Port Wall Charger Black Size: 69*35.8*14.3(LWII)mm Input: 100V-240V 50/60Hz Output: 5.3V/1A Weight:45g”
+- Quantity (PCS)：表格中Quantity列的“10,000”
+- Shipper：表格左侧的“Shipper: 1796 Sharon Villages Martinton, ME 40323 USNV Johnson FPO AE 01418”
+- Size：Merchandise Description中的“Size: 69*35.8*14.3(LWII)mm”
+- TEL：上方的“TEL: 87-868-66185515”
+- Title：可能“Commercial Invoice”是Title，图中“Commercial Invoice 发票”是标题。
+- Unit Price (USD) /PC：表格中Unit Price列的“1.52”
+- Website：上方的“Website: https://perry.com/”
+
+现在需要为每个类别找到对应的bbox。注意图中的坐标，需要估计每个元素的位置。比如：
+
+Factory的bbox：图上方，Factory:... 到Website:... 之间的区域。大概x范围是200到800左右，y是顶部。
+
+TEL的bbox：TEL: 87-868-66185515 这行。
+
+FAX的bbox：FAX: 82-873-47758536 这行。
+
+E-mail的bbox：E-mail: erik93@kane.info 这行。
+
+Website的bbox：Website: https://perry.com/ 这行。
+
+Invoice to的bbox：Invoice to: Daisy Tech JSC 这行。
+
+Consignee的地址是Unit 9095... 属于Address？可能Invoice to的地址可能没有详细，但Consignee的地址是Address。
+
+Shipper的地址是Shipper: ... 这行，属于Shipper和Address。
+
+Date的bbox：表格中Date: 2022/2/25 右边的单元格。
+
+Delivery Terms的bbox：Delivery Terms: FOB Shanghai 右边的单元格。
+
+Country of Origin的bbox：Country of Origin: China 右边的单元格。
+
+INV No.的bbox：INV No.: 20220225001 右边的单元格。
+
+PO No.的bbox：PO No.: 20211228_gs_tw 右边的单元格。
+
+Model No.的bbox：Model列的TS68，即表格中第一列的TS68。
+
+Quantity (PCS)的bbox：Quantity列的10,000。
+
+Unit Price (USD) /PC的bbox：Unit Price列的1.52。
+
+Amount USD的bbox：Amount列的US$15,200.00，以及Total行的Amount。
+
+Product Name的bbox：Merchandise Description列的整个内容。
+
+Input的bbox：Input: 100V-240V 50/60Hz 在Product Name里。
+
+Output（0utput）的bbox：Output: 5.3V/1A 在Product Name里。
+
+Size的bbox：Size: 69*35.8*14.3(LWII)mm 在Product Name里。
+
+Weight（45g）的bbox：Weight:45g 在Product Name里。
+
+1.Payment Terms的bbox：图中“1. Payment Terms: 20% deposit, balance before shipment” 这行。
+
+2.Ex-factory date的bbox：图中“2. Ex-factory date: 26/Nov/21” 这行。
+
+Address的bbox：比如Factory的地址“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” 是一个Address；Shipper的地址“1796 Sharon Villages Martinton, ME 40323 USNV Johnson FPO AE 01418” 是另一个Address；Consignee的地址“Unit 9095 Box 3611 DPO AA 68519” 也是Address。需要选其中一个，比如Factory的地址作为Address。
+
+Company Name的bbox：可能Factory是公司名，或者Consignee是Daisy Tech JSC，作为Company Name。比如Consignee是Daisy Tech JSC，所以Company Name是Daisy Tech JSC。
+
+Title的bbox：“Commercial Invoice 发票” 这个标题，图中中间的横幅。
+
+现在需要将每个类别对应到具体的bbox，注意不要重复，每个类别出现一次？或者可能有多个实例，但用户要求“detect all objects”，所以每个出现的都要列？不过可能每个类别在图中出现一次，除了Amount USD可能有两个（行和Total），但可能算一个。
+
+现在开始逐个处理：
+
+1. 0utput（对应Output）：在Product Name中的“Output: 5.3V/1A” → 找这个文本的bbox。
+2. 1.Payment Terms：文本“1. Payment Terms: 20% deposit, balance before shipment” → bbox。
+3. 2.Ex-factory date：“2. Ex-factory date: 26/Nov/21” → bbox。
+4. 45g：“Weight:45g” → bbox。
+5. Address：比如Factory的地址“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” → bbox。
+6. Amount USD：“US$15,200.00”（在Amount列和Total行）→ 取其中一个，比如第一行的Amount。
+7. Company Name：“Daisy Tech JSC”（Invoice to或Consignee）→ 比如Consignee是Daisy Tech JSC，所以Company Name是这个。
+8. Country of Origin：“China” → bbox。
+9. Date：“2022/2/25” → bbox。
+10. Delivery Terms：“FOB Shanghai” → bbox。
+11. E-mail：“erik93@kane.info” → bbox。
+12. FAX：“82-873-47758536” → bbox。
+13. Factory：“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” → bbox。
+14. INV No.：“20220225001” → bbox。
+15. Input：“100V-240V 50/60Hz” → bbox。
+16. Invoice to：“Invoice to: Daisy Tech JSC” → bbox。
+17. Model No.：“TS68” → bbox。
+18. PO No.：“20211228_gs_tw” → bbox。
+19. Product Name：“Model TS68 5.3V/1A Mini Single USB Port Wall Charger Black Size: 69*35.8*14.3(LWII)mm Input: 100V-240V 50/60Hz Output: 5.3V/1A Weight:45g” → bbox。
+20. Quantity (PCS)：“10,000” → bbox。
+21. Shipper：“Shipper: 1796 Sharon Villages Martinton, ME 40323 USNV Johnson FPO AE 01418” → bbox。
+22. Size：“69*35.8*14.3(LWII)mm” → bbox。
+23. TEL：“87-868-66185515” → bbox。
+24. Title：“Commercial Invoice 发票” → bbox。
+25. Unit Price (USD) /PC：“1.52” → bbox。
+26. Website：“https://perry.com/” → bbox。
+
+现在需要为每个类别生成对应的bbox。由于是图像，需要估计坐标。假设图像的宽度是W，高度是H。图中的元素位置：
+
+- Factory: 顶部，x大约是200到800，y是100左右（假设图的顶部是y=0）。
+- TEL: 在Factory下面，y=120左右。
+- FAX: y=130左右。
+- E-mail: y=140左右。
+- Website: y=150左右。
+- Invoice to: 在表格上方左侧，y=250左右。
+- Consignee: Invoice to下面，y=270左右。
+- Shipper: Consignee下面，y=300左右。
+- 右边的表格（Date, INV No.等）在右侧，x=600到800，y=200左右。
+- Model表格在Shipper下面，y=350左右。
+- 1.Payment Terms在Model表格下面，y=500左右。
+- 2.Ex-factory date在1.Payment Terms下面，y=520左右。
+- 红色印章在左下角，y=600左右。
+
+现在，逐个标注：
+
+1. 0utput: 在Product Name单元格内的“Output: 5.3V/1A” → 找到该文本的位置，属于Model表格的Merchandise Description列。
+2. 1.Payment Terms: 文本“1. Payment Terms: 20% deposit, balance before shipment” → 位置在Model表格下方，y约500。
+3. 2.Ex-factory date: 文本“2. Ex-factory date: 26/Nov/21” → y约520。
+4. 45g: 在Product Name中的“Weight:45g” → Model表格的Merchandise Description列。
+5. Address: Factory的地址“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” → 顶部区域。
+6. Amount USD: Model表格中Amount列的“US$15,200.00” → Model表格的第一行Amount单元格。
+7. Company Name: Consignee的“Daisy Tech JSC” → Invoice to下面的Consignee部分。
+8. Country of Origin: 右边表格中的“China” → 右边表格的Country of Origin行。
+9. Date: 右边表格中的“2022/2/25” → 右边表格的Date行。
+10. Delivery Terms: 右边表格中的“FOB Shanghai” → 右边表格的Delivery Terms行。
+11. E-mail: 顶部的“erik93@kane.info” → 顶部区域。
+12. FAX: 顶部的“82-873-47758536” → 顶部区域。
+13. Factory: 顶部的“Factory:2599 Christopher Shoal Suite 923 Port Rebeccachester, IA 69410” → 顶部区域。
+14. INV No.: 右边表格中的“20220225001” → 右边表格的INV No.行。
+15. Input: Product Name中的“Input: 100V-240V 50/60Hz” → Model表格的Merchandise Description列。
+16. Invoice to: 左侧的“Invoice to: Daisy Tech JSC” → 左侧区域。
+17. Model No.: Model表格的Model列的“TS68” → Model表格的第一列。
+18. PO

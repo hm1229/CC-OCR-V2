@@ -1,0 +1,109 @@
+Here is the LaTeX transcription of the provided image content:
+
+```latex
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fontspec}
+\usepackage{CJK}
+
+% Set page margins
+\geometry{margin=1in}
+
+% Define custom font (simulated)
+\setmainfont{Times New Roman}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{证券研究报告}
+\lhead{\begin{CJK}{UTF8}{gbsn}国海证券\\ SEALAND SECURITIES\end{CJK}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Custom list for figures and tables
+\newlist{figlist}{enumerate}{1}
+\setlist[figlist]{label={图 \arabic*:}, leftmargin=*, align=left, labelsep=0.5em, itemsep=0.1em, parsep=0.1em}
+\newlist{tablist}{enumerate}{1}
+\setlist[tablist]{label={表 \arabic*:}, leftmargin=*, align=left, labelsep=0.5em, itemsep=0.1em, parsep=0.1em}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{图表目录}
+\end{center}
+
+\begin{figlist}
+    \item 石英玻璃应用领域及应用形式 \dotfill 5
+    \item 石英材料各应用领域市场规模（2014 年数据） \dotfill 6
+    \item 石英材料领域各公司市场份额（2013 年数据） \dotfill 6
+    \item 湖北菲利华 \dotfill 8
+    \item 公司资质及荣誉 \dotfill 8
+    \item 公司营业收入及增速 \dotfill 9
+    \item 公司归母净利润及增长率 \dotfill 9
+    \item 三费费率 \dotfill 9
+    \item 公司产品结构 \dotfill 11
+    \item 公司产品市场分布 \dotfill 11
+    \item 产品结构细分组成（2014 年年报） \dotfill 11
+    \item 公司产品毛利率 \dotfill 11
+    \item 公司在研项目 \dotfill 12
+    \item 潜江菲利华新工厂 \dotfill 13
+    \item 石英锭加工工艺流程 \dotfill 14
+    \item 智慧工厂中央控制系统 \dotfill 14
+    \item 上海石创主要产品 \dotfill 15
+    \item 战斗机雷达罩 \dotfill 16
+    \item 机载雷达天线罩常用透波纤维及性能 \dotfill 17
+    \item 中美全部军机数量对比 \dotfill 17
+    \item 中美空军战斗机结构 \dotfill 17
+    \item 飞船返回大气层 \dotfill 17
+    \item 我国近年航天发射次数 \dotfill 18
+    \item 石英玻璃制品在半导体产业中的应用 \dotfill 19
+    \item 半导体产业链 \dotfill 19
+    \item 全球及亚太地区半导体销售情况（十亿美元） \dotfill 19
+    \item 全球半导体产业销售额预测 \dotfill 19
+    \item 我国集成电路制造业销售额 \dotfill 20
+    \item 光纤棒制作 MCVD 工艺流程图 \dotfill 20
+    \item 光纤棒制作 OVD 工艺流程图 \dotfill 20
+    \item 我国光纤光缆长度 \dotfill 21
+    \item 国际市场 652.D 光纤价格 \dotfill 21
+    \item 十三五国家信息化规划发展目标 \dotfill 21
+    \item 2017-2022 年全球光纤光缆供货量与需求量预测 \dotfill 22
+    \item 光掩膜基板在光刻工艺中的应用示例 \dotfill 22
+    \item 光掩膜产业链 \dotfill 22
+    \item 全球 LCD 面板需求面积及增速 \dotfill 23
+    \item 我国光掩膜市场规模及增速 \dotfill 23
+\end{figlist}
+
+\begin{tablist}
+    \item 全球石英材料应用领域及市场规模（2104 年数据） \dotfill 5
+    \item 石英玻璃材料领域主要企业 \dotfill 7
+    \item 公司主要产品、应用领域及客户 \dotfill 10
+    \item 公司研发人员及投入 \dotfill 12
+\end{tablist}
+
+\vspace{1cm}
+\begin{center}
+\small 请务必阅读正文后免责条款部分
+\end{center}
+
+\end{document}
+```
+
+This LaTeX code reproduces the structure and content of the original document, including:
+- The header with "国海证券" and "SEALAND SECURITIES"
+- The title "图表目录" (Table of Figures and Tables)
+- Properly formatted lists for figures and tables with dotted leaders
+- Page numbers aligned to the right
+- Footer with the disclaimer text
+- Appropriate spacing and formatting
+
+The code uses modern LaTeX packages like `fontspec` for font handling (though in practice you'd need to adjust based on your system), `fancyhdr` for headers/footers, and `enumitem` for customizing list styles. The `\dotfill` command creates the dotted lines between entries and page numbers as seen in the original document.

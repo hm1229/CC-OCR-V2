@@ -1,0 +1,239 @@
+Got it, let's tackle this problem. First, I need to parse the table from the image. Let's start by identifying the columns and rows. The table has headers for "Three Months Ended" and "Six Months Ended", each with two years (2020 and 2021 for three months, same for six months). Let's list out the headers first.
+
+First, the top part: the columns are labeled with dates: June 30, 2020; March 31, 2021; June 30, 2021; June 30, 2021 (US$); June 30, 2020 (RMB); June 30, 2021 (RMB); June 30, 2021 (US$). Wait, let's check the image's header row.
+
+Looking at the image, the header row for "Three Months Ended" has columns: June 30, 2020; March 31, 2021; June 30, 2021. Then "Six Months Ended" has June 30, 2020; June 30, 2021. But each of these has currency: RMB or US$(1). Let's check the labels:
+
+For Three Months Ended:
+- June 30, 2020: RMB
+- March 31, 2021: RMB
+- June 30, 2021: RMB (first three columns under Three Months)
+- Then there's a US$(1) column for June 30, 2021? Wait, no, looking at the image:
+
+The columns are:
+
+Three Months Ended:
+- June 30, 2020 (RMB)
+- March 31, 2021 (RMB)
+- June 30, 2021 (RMB)
+- June 30, 2021 (US$(1)) → Wait, no, the fourth column under Three Months? Wait, no, the image shows:
+
+Wait, the table's header row is:
+
+Three Months Ended | Six Months Ended
+Then under Three Months Ended: June 30, 2020; March 31, 2021; June 30, 2021
+Under Six Months Ended: June 30, 2020; June 30, 2021
+But each of these has two sub-columns? Wait, no, looking at the image's column headers:
+
+The columns are labeled as:
+
+June 30, 2020 (RMB)
+March 31, 2021 (RMB)
+June 30, 2021 (RMB)
+June 30, 2021 (US$(1))
+June 30, 2020 (RMB)
+June 30, 2021 (RMB)
+June 30, 2021 (US$(1))
+
+Wait, let's count the columns. Let's look at the image:
+
+The top row of the table (after the "Parameter" maybe) has:
+
+Three Months Ended | Six Months Ended
+Then the columns under Three Months Ended: June 30, 2020; March 31, 2021; June 30, 2021
+Under Six Months Ended: June 30, 2020; June 30, 2021
+But each of these has a currency: RMB or US$(1). Let's check the numbers:
+
+For example, "Net revenues" row has values:
+
+2,508,152 (RMB) for June 30, 2020
+2,152,687 (RMB) for March 31, 2021
+2,336,771 (RMB) for June 30, 2021
+361,920 (US$(1)) for June 30, 2021? Wait, no, the fourth column is US$(1) for June 30, 2021? Wait, the image shows:
+
+Looking at the "Net revenues" row:
+
+- June 30, 2020: RMB 2,508,152
+- March 31, 2021: RMB 2,152,687
+- June 30, 2021: RMB 2,336,771
+- Then a column labeled US$(1) with 361,920 (that's the fourth column, which is under Three Months? No, maybe the Three Months Ended has three columns (2020, 2021 Mar, 2021 Jun) and Six Months Ended has two columns (2020 Jun, 2021 Jun), each with RMB and US$ where applicable. Wait, the image's column headers:
+
+The first three columns are "Three Months Ended" with dates: June 30, 2020; March 31, 2021; June 30, 2021. Each of these has RMB.
+
+Then the next column is "June 30, 2021" with US$(1) — that's a fourth column, maybe part of Three Months? No, maybe the table is structured as:
+
+Columns:
+
+1. June 30, 2020 (Three Months Ended, RMB)
+2. March 31, 2021 (Three Months Ended, RMB)
+3. June 30, 2021 (Three Months Ended, RMB)
+4. June 30, 2021 (Three Months Ended, US$(1)) — wait, no, the fourth column's label is US$(1) and the date is June 30, 2021? Let's check the image's header row text:
+
+The header row has:
+
+June 30, 2020 | March 31, 2021 | June 30, 2021 | June 30, 2021 | June 30, 2020 | June 30, 2021 | June 30, 2021
+
+With currency labels: RMB, RMB, RMB, US$(1), RMB, RMB, US$(1)
+
+Yes, that's seven columns. Let's confirm:
+
+- Column 1: June 30, 2020 (Three Months Ended, RMB)
+- Column 2: March 31, 2021 (Three Months Ended, RMB)
+- Column 3: June 30, 2021 (Three Months Ended, RMB)
+- Column 4: June 30, 2021 (Three Months Ended, US$(1)) — wait, no, maybe the "Three Months Ended" spans columns 1-3, and "Six Months Ended" spans columns 5-6, with column 4 being a US$ column for Three Months? No, the image shows "Three Months Ended" and "Six Months Ended" as two main sections. Let's check the original image's header:
+
+The top of the table has "Three Months Ended" and "Six Months Ended" as two headers. Under "Three Months Ended", there are three columns: June 30, 2020; March 31, 2021; June 30, 2021. Under "Six Months Ended", there are two columns: June 30, 2020; June 30, 2021. But each of these columns has a currency: RMB or US$(1). Let's check the column labels in the image:
+
+Looking at the image, the column headers (from left to right) are:
+
+- June 30, 2020 (RMB) — under Three Months Ended
+- March 31, 2021 (RMB) — under Three Months Ended
+- June 30, 2021 (RMB) — under Three Months Ended
+- June 30, 2021 (US$(1)) — this is a fourth column, maybe part of Three Months? No, maybe the "Three Months Ended" has four columns? Wait, the image shows a column labeled "US$(1)" for June 30, 2021, which is the fourth column. Then "Six Months Ended" has two columns: June 30, 2020 (RMB) and June 30, 2021 (RMB), and another US$(1) column for June 30, 2021. Let's count the columns in the image:
+
+The image's table has 7 columns. Let's list them with their headers:
+
+1. June 30, 2020 (RMB) — Three Months Ended
+2. March 31, 2021 (RMB) — Three Months Ended
+3. June 30, 2021 (RMB) — Three Months Ended
+4. June 30, 2021 (US$(1)) — Three Months Ended? Or maybe this is a separate column for US$ in Three Months?
+5. June 30, 2020 (RMB) — Six Months Ended
+6. June 30, 2021 (RMB) — Six Months Ended
+7. June 30, 2021 (US$(1)) — Six Months Ended
+
+Yes, that's 7 columns. Let's verify with the "Net revenues" row:
+
+- Column 1: 2,508,152 (RMB)
+- Column 2: 2,152,687 (RMB)
+- Column 3: 2,336,771 (RMB)
+- Column 4: 361,920 (US$(1))
+- Column 5: 4,786,107 (RMB)
+- Column 6: 4,489,459 (RMB)
+- Column 7: 695,329 (US$(1))
+
+Yes, that matches. So the columns are:
+
+1. Three Months Ended: June 30, 2020 (RMB)
+2. Three Months Ended: March 31, 2021 (RMB)
+3. Three Months Ended: June 30, 2021 (RMB)
+4. Three Months Ended: June 30, 2021 (US$(1)) — wait, no, column 4's date is June 30, 2021, currency US$(1). Then column 5 is Six Months Ended: June 30, 2020 (RMB), column 6: Six Months Ended: June 30, 2021 (RMB), column 7: Six Months Ended: June 30, 2021 (US$(1)).
+
+Now, let's list all the rows. The rows are the financial line items: Net revenues, Cost of revenues, Gross profit, etc.
+
+First, let's identify each row's label and the corresponding values in each column.
+
+Let's start transcribing each row:
+
+1. Net revenues:
+   - Col1: 2,508,152 (RMB)
+   - Col2: 2,152,687 (RMB)
+   - Col3: 2,336,771 (RMB)
+   - Col4: 361,920 (US$(1))
+   - Col5: 4,786,107 (RMB)
+   - Col6: 4,489,459 (RMB)
+   - Col7: 695,329 (US$(1))
+
+2. Cost of revenues:
+   - Col1: (1,985,270) (RMB)
+   - Col2: (1,892,499) (RMB)
+   - Col3: (2,030,223) (RMB)
+   - Col4: (314,442) (US$(1))
+   - Col5: (3,777,451) (RMB)
+   - Col6: (3,922,722) (RMB)
+   - Col7: (607,552) (US$(1))
+
+3. Gross profit:
+   - Col1: 522,882 (RMB) [2,508,152 - 1,985,270]
+   - Col2: 260,188 (RMB) [2,152,687 - 1,892,499]
+   - Col3: 306,548 (RMB) [2,336,771 - 2,030,223]
+   - Col4: 47,478 (US$(1)) [361,920 - 314,442]
+   - Col5: 1,008,736 (RMB) [4,786,107 - 3,777,451]
+   - Col6: 566,737 (RMB) [4,489,459 - 3,922,722]
+   - Col7: 87,717 (US$(1)) [695,329 - 607,552]
+
+4. Operating income (expenses)(2):
+   - Col1: (142,058) (RMB) [Wait, no, the image shows "Sales and marketing expenses" is next. Wait, let's check the image's row labels:
+
+The rows are:
+
+Net revenues
+Cost of revenues
+Gross profit
+Operating income (expenses)(2)
+Sales and marketing expenses
+General and administrative expenses
+Research and development expenses
+Other operating income, net
+Total operating expenses
+Income (loss) from operations
+Other income (expenses), net
+Interest income, net
+Gain on disposal of subsidiary
+Income (loss) before income taxes and share of income (loss) in equity method investments
+Income tax expense
+Share of income (loss) in equity method investments
+Net income (loss)
+Less: Net loss attributable to noncontrolling interest
+Net income (loss) attributable to ordinary shareholders of the Company
+
+Let's go step by step.
+
+First, "Operating income (expenses)(2)" — in the image, the value for this row:
+
+Col1: (142,058) — no, wait, the image shows under "Operating income (expenses)(2)" the value is 522,882 for June 30, 2020? Wait, no, looking at the image:
+
+The "Gross profit" row is followed by "Operating income (expenses)(2)". Let's check the image's text:
+
+After Gross profit, the next row is "Operating income (expenses)(2)" with values:
+
+For June 30, 2020 (RMB): 522,882
+
+March 31, 2021 (RMB): 260,188
+
+June 30, 2021 (RMB): 306,548
+
+June 30, 2021 (US$(1)): 47,478
+
+June 30, 2020 (RMB) (Six Months): 1,008,736
+
+June 30, 2021 (RMB) (Six Months): 566,737
+
+June 30, 2021 (US$(1)) (Six Months): 87,717
+
+Yes, that's correct. Then the next row is "Sales and marketing expenses":
+
+Col1: (142,058) (RMB)
+
+Col2: (209,877) (RMB)
+
+Col3: (294,953) (RMB)
+
+Col4: (45,682) (US$(1))
+
+Col5: (249,414) (RMB)
+
+Col6: (489,459) (RMB)
+
+Col7: (695,329) (US$(1)) — wait, no, column 7 is US$(1) for Six Months June 30, 2021. Let's check the image's "Sales and marketing expenses" row:
+
+The image shows:
+
+Sales and marketing expenses:
+
+(142,058) for June 30, 2020 (RMB)
+
+(209,877) for March 31, 2021 (RMB)
+
+(294,953) for June 30, 2021 (RMB)
+
+(45,682) for June 30, 2021 (US$(1)) — wait, no, the fourth column (US$(1) June 30, 2021) has (45,682)? Let's check the image:
+
+In the image, under "Sales and marketing expenses", the values are:
+
+- June 30, 2020: (142,058)
+- March 31, 2021: (209,877)
+- June 30, 2021: (294,953)
+- Then the US$(1) column (fourth column) has (45,682)
+- Then Six Months June 30, 2020: (249,414)
+- Six Months June 30, 2021: (489,459)
+- Six Months US$(1) column: (695,329) — no, that can't be, because the US$(

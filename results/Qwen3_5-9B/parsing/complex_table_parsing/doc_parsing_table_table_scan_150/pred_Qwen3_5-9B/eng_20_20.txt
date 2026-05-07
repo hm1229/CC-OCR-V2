@@ -1,0 +1,237 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        width: 100%;
+        }
+        th, td {
+        border: 1px solid #27436B;
+        padding: 5px 10px;
+        text-align: center;
+        }
+        tr:nth-child(even){
+        background-color: #f5f5f5;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <tr>
+    <th rowspan="2" style="width: 5%;">$\epsilon$</th>
+    <th colspan="5">CA+</th>
+    <th colspan="5">CA-</th>
+    <th colspan="5">QA+</th>
+    <th colspan="5">QA-</th>
+   </tr>
+   <tr>
+    <th style="width: 5%;">$w=1$</th>
+    <th style="width: 5%;">2</th>
+    <th style="width: 5%;">5</th>
+    <th style="width: 5%;">10</th>
+    <th style="width: 5%;">$w=1$</th>
+    <th style="width: 5%;">2</th>
+    <th style="width: 5%;">5</th>
+    <th style="width: 5%;">10</th>
+    <th style="width: 5%;">$m=1$</th>
+    <th style="width: 5%;">2</th>
+    <th style="width: 5%;">5</th>
+    <th style="width: 5%;">10</th>
+    <th style="width: 5%;">$m=1$</th>
+    <th style="width: 5%;">2</th>
+    <th style="width: 5%;">5</th>
+    <th style="width: 5%;">10</th>
+   </tr>
+   <tr>
+    <td colspan="17" style="text-align: center; font-style: italic;">(ET) Euclidean Distance, Triplet Loss (R@1=63.1%)</td>
+   </tr>
+   <tr>
+    <td rowspan="4" style="text-align: center;">0</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">19.9</td>
+    <td style="text-align: center;">99.6</td>
+    <td style="text-align: center;">99.4</td>
+    <td style="text-align: center;">99.3</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+   </tr>
+   <tr>
+    <td style="text-align: center;">0.01</td>
+    <td style="text-align: center;">0.0</td>
+    <td style="text-align: center;">0.0</td>
+    <td style="text-align: center;">2.0</td>
+    <td style="text-align: center;">2.6</td>
+    <td style="text-align: center;">99.7</td>
+    <td style="text-align: center;">99.6</td>
+    <td style="text-align: center;">99.4</td>
+    <td style="text-align: center;">99.3</td>
+    <td style="text-align: center;">4.8</td>
+    <td style="text-align: center;">7.0</td>
+    <td style="text-align: center;">16.3</td>
+    <td style="text-align: center;">25.8</td>
+    <td style="text-align: center;">54.9</td>
+    <td style="text-align: center;">40.2</td>
+    <td style="text-align: center;">27.1</td>
+    <td style="text-align: center;">21.9</td>
+   </tr>
+   <tr>
+    <td style="text-align: center;">0.03</td>
+    <td style="text-align: center;">0.0</td>
+    <td style="text-align: center;">0.3</td>
+    <td style="text-align: center;">1.0</td>
+    <td style="text-align: center;">1.5</td>
+    <td style="text-align: center;">100.0</td>
+    <td style="text-align: center;">100.0</td>
+    <td style="text-align: center;">100.0</td>
+    <td style="text-align: center;">100.0</td>
+    <td style="text-align: center;">1.6</td>
+    <td style="text-align: center;">3.3</td>
+    <td style="text-align: center;">10.0</td>
+    <td style="text-align: center;">19.2</td>
+    <td style="text-align: center;">68.1</td>
+    <td style="text-align: center;">52.4</td>
+    <td style="text-align: center;">36.6</td>
+    <td style="text-align: center;">30.1</td>
+   </tr>
+   <tr>
+    <td style="text-align: center;"><b>0.06</b></td>
+    <td style="text-align: center;"><b>0.0</b></td>
+    <td style="text-align: center;"><b>0.2</b></td>
+    <td style="text-align: center;"><b>1.0</b></td>
+    <td style="text-align: center;"><b>1.5</b></td>
+    <td style="text-align: center;"><b>100.0</b></td>
+    <td style="text-align: center;"><b>100.0</b></td>
+    <td style="text-align: center;"><b>100.0</b></td>
+    <td style="text-align: center;"><b>100.0</b></td>
+    <td style="text-align: center;"><b>1.1</b></td>
+    <td style="text-align: center;"><b>2.7</b></td>
+    <td style="text-align: center;"><b>8.8</b></td>
+    <td style="text-align: center;"><b>17.8</b></td>
+    <td style="text-align: center;"><b>73.8</b></td>
+    <td style="text-align: center;"><b>57.9</b></td>
+    <td style="text-align: center;"><b>40.3</b></td>
+    <td style="text-align: center;"><b>32.4</b></td>
+   </tr>
+   <tr>
+    <td colspan="17" style="text-align: center; font-style: italic; background-color: #e1d5e7; color: #4b0082;">(ETD) Euclidean Distance, Triplet Loss, Defensive (R@1=46.4%)</td>
+   </tr>
+   <tr>
+    <td rowspan="4" style="text-align: center;">0</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">2.0</td>
+    <td style="text-align: center;">2.0</td>
+    <td style="text-align: center;">2.0</td>
+    <td style="text-align: center;">2.0</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+    <td style="text-align: center;">50</td>
+   </tr>
+   <tr>
+    <td style="text-align: center;">0.01</td>
+    <td style="text-align: center;">7.5</td>
+    <td style="text-align: center;">12.2</td>
+    <td style="text-align: center;">16.5</td>
+    <td style="text-align: center;">18.0</td>
+    <td style="text-align: center;">66.4</td>
+    <td style="text-align: center;">62.6</td>
+    <td style="text-align: center;">59.3</td>
+    <td style="text-align: center;">57.8</td>
+    <td style="text-align: center;">16.1</td>
+    <td style="text-align: center;">24.8</td>
+    <td style="text-align: center;">36.1</td>
+    <td style="text-align: center;">41.4</td>
+    <td style="text-align: center;">26.7</td>
+    <td style="text-align: center;">18.1</td>
+    <td style="text-align: center;">12.2</td>
+    <td style="text-align: center;">10.2</td>
+   </tr>
+   <tr>
+    <td style="text-align: center;">0.03</td>
+    <td style="text-align: center;">0.7</td>
+    <td style="text-align: center;">4.5</td>
+    <td style="text-align: center;">8.7</td>
+    <td style="text-align: center;">10.4</td>
+    <td style="text-align: center;">91.7</td>
+    <td style="text-align: center;">90.2</td>
+    <td style="text-align: center;">89.1</td>
+    <td style="text-align: center;">88.4</td>
+    <td style="text-align: center;">7.9</td>
+    <td style="text-align: center;">14.5</td>
+    <td style="text-align: center;">27.7</td>
+    <td style="text-align: center;">33.4</td>
+    <td style="text-align: center;">43.4</td>
+    <td style="text-align: center;">31.7</td>
+    <td style="text-align: center;">19.1</td>
+    <td style="text-align: center;">18.1</td>
+   </tr>
+   <tr>
+    <td style="text-align: center;"><b>0.06</b></td>
+    <td style="text-align: center;"><b>0.1</b></td>
+    <td style="text-align: center;"><b>3.8</b></td>
+    <td style="text-align: center;"><b>7.9</b></td>
+    <td style="text-align: center;"><b>9.7</b></td>
+    <td style="text-align: center;"><b>97.3</b></td>
+    <td style="text-align: center;"><b>96.8</b></td>
+    <td style="text-align: center;"><b>96.4</b></td>
+    <td style="text-align: center;"><b>96.2</b></td>
+    <td style="text-align: center;"><b>6.9</b></td>
+    <td style="text-align: center;"><b>12.5</b></td>
+    <td style="text-align: center;"><b>24.3</b></td>
+    <td style="text-align: center;"><b>33.4</b></td>
+    <td style="text-align: center;"><b>51.4</b></td>
+    <td style="text-align: center;"><b>39.0</b></td>
+    <td style="text-align: center;"><b>28.0</b></td>
+    <td style="text-align: center;"><b>23.5</b></td>
+   </tr>
+  </table>
+ </body>
+</html>
+
+```

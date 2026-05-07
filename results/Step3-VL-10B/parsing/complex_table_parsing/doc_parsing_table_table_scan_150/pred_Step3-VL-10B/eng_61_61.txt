@@ -1,0 +1,179 @@
+用户现在需要把图片中的表格转换成HTML，要准确反映布局，包括合并单元格。首先得分析表格结构，分几个部分：INPUT CURRENTS、ISD、I_LEAKEN、R_EN、POWER SWITCH下的R_dson、R_DIS、t_R、t_F、t_ON这些部分。每个部分的参数、测试条件、MIN、TYP、MAX、UNIT列。
+
+首先看表头部分，第一行是参数、测试条件、MIN、TYP、MAX、UNIT。然后各个子部分。需要注意合并单元格，比如INPUT CURRENTS下的Input quiescent current是合并了测试条件的多行，ISD下的Shutdown current from IN to GND也是多行测试条件。还有POWER SWITCH下的R_dson是Internal switch MOSFET on-state resistance，R_DIS是Output discharge resistance等，这些大项是合并行的。
+
+现在开始逐行处理：
+
+首先，表格的thead可能包含参数、测试条件、MIN、TYP、MAX、UNIT。然后tbody部分分各个参数组。
+
+先处理第一部分：INPUT CURRENTS
+
+参数列是“INPUT CURRENTS”作为大标题，然后下面的子参数是Input quiescent current（I_Q）和Shutdown current from IN to GND（I_SD）等。
+
+先看I_Q的行：
+
+第一行（I_Q的Input quiescent current）的测试条件是V_IN=3.3V, V_EN=3.3V, I_OUT=0A, T_A=25°C，对应MIN=2，TYP=12，UNIT=nA。
+
+然后I_Q的下一行测试条件是V_IN=3.3V, V_EN=3.3V, I_OUT=0A, T_A=85°C，MIN=9，TYP空，MAX空，UNIT=nA。
+
+再下一行I_Q的测试条件是V_IN=5.5V, V_EN=5.5V, I_OUT=0A, T_A=25°C，MIN=5，TYP=25，UNIT=nA。
+
+再下一行I_Q的测试条件是V_IN=5.5V, V_EN=5.5V, I_OUT=0A, T_A=85°C，MIN=10，TYP空，MAX空，UNIT=nA。
+
+然后是I_SD部分，Shutdown current from IN to GND，测试条件有很多行，比如V_IN=1.2V, V_EN=0V, T_A=25°C，MIN=2，TYP空，MAX空，UNIT=nA；V_IN=1.8V, V_EN=0V, T_A=25°C，MIN=2，TYP空，MAX空，UNIT=nA；V_IN=3.3V, V_EN=0V, T_A=25°C，MIN=4，TYP=44，UNIT=nA；V_IN=4.0V, V_EN=0V, T_A=25°C，MIN=7，TYP空，MAX空，UNIT=nA；V_IN=4.5V, V_EN=0V, T_A=25°C，MIN=22，TYP空，MAX空，UNIT=nA；V_IN=5.0V, V_EN=0V, T_A=25°C，MIN=62，TYP=970，UNIT=nA；V_IN=5.0V, V_EN=0V, T_A=55°C，MIN=90，TYP空，MAX空，UNIT=nA；V_IN=5.0V, V_EN=0V, T_A=85°C，MIN=350，TYP空，MAX空，UNIT=nA；V_IN=5.5V, V_EN=0V, T_A=25°C，MIN=171，TYP空，MAX空，UNIT=nA。
+
+然后是I_LEAKEN：EN pin leakage current，测试条件V_IN=0V, V_EN=5.0V，MIN空，TYP空，MAX=1.5，UNIT=μA。
+
+R_EN：EN pin pull down resistor，测试条件V_EN=5.0V，MIN=6.85，TYP空，MAX空，UNIT=MΩ。
+
+然后是POWER SWITCH部分，R_dson：Internal switch MOSFET on-state resistance，测试条件有多个，比如V_IN=5.5V, V_EN=high, I_OUT=200mA, T_A=25°C，MIN=50，TYP空，MAX空，UNIT=mΩ；V_IN=4.2V, V_EN=high, I_OUT=200mA, T_A=25°C，MIN=56，TYP空，MAX空，UNIT=mΩ；V_IN=3.3V, V_EN=high, I_OUT=200mA, T_A=25°C，MIN=64，TYP空，MAX空，UNIT=mΩ；V_IN=3.0V, V_EN=high, I_OUT=200mA, T_A=25°C，MIN=68，TYP=120，MAX空，UNIT=mΩ；V_IN=1.8V, V_EN=high, I_OUT=200mA, T_A=25°C，MIN=109，TYP空，MAX空，UNIT=mΩ；V_IN=1.2V, V_EN=high, I_OUT=200mA, T_A=25°C，MIN=225，TYP空，MAX空，UNIT=mΩ。
+
+R_DIS：Output discharge resistance，测试条件V_IN=3.3V, V_EN=low, T_A=25°C, I_OUT Sinking 2mA，MIN=50，TYP=75，MAX=100，UNIT=Ω。
+
+t_R：Output rise time，测试条件V_IN=3.6V, C_OUT=1μF, R_OUT=30Ω，MIN空，TYP=165，MAX空，UNIT=μs。
+
+t_F：Output fall time，测试条件V_IN=3.6V, C_OUT=1μF, R_OUT=30Ω，MIN空，TYP=42，MAX空，UNIT=μs。
+
+t_ON：Switch turn on time，测试条件V_IN=3.6V, C_OUT=1μF, R_OUT=30Ω，MIN空，TYP=238，MAX空，UNIT=μs。
+
+现在需要把这些内容组织成HTML表格，注意合并单元格。比如“INPUT CURRENTS”是跨多行的，每个子参数（I_Q, I_SD等）是单独的行，而测试条件列在每个子参数下可能有多个行（即测试条件不同，对应同一参数的不同情况）。
+
+首先，HTML表格的结构：
+
+<table>
+  <thead>
+    <tr>
+      <th>PARAMETER</th>
+      <th>TEST CONDITION</th>
+      <th>MIN</th>
+      <th>TYP</th>
+      <th>MAX</th>
+      <th>UNIT</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- INPUT CURRENTS 部分 -->
+    <tr>
+      <td rowspan="1">INPUT CURRENTS</td>
+      <td colspan="5">（这里可能需要看原表格，原表格中“INPUT CURRENTS”是第一列的大标题，下面的子参数是I_Q、I_SD等，每个子参数在第一列占一行，然后测试条件列在该子参数下有多个行。比如I_Q的测试条件有4行，所以I_Q在第一列是合并4行？不，看原表格的结构：原表格中“INPUT CURRENTS”是第一列的一个单元格，然后下面的子参数（Input quiescent current）是第一列的下一个单元格，然后测试条件列在该子参数下有多个行（即同一参数，不同测试条件）。所以原表格的结构是：
+
+第一列（PARAMETER）的结构：
+
+- INPUT CURRENTS（跨多行？不，看原表格的截图，原表格中“INPUT CURRENTS”是第一列的一个单元格，然后下面的子项是Input quiescent current（I_Q），然后是Shutdown current from IN to GND（I_SD），然后是I_LEAKEN，R_EN。每个子项在第一列是单独的行，然后测试条件列在该子项下有多个行（即同一参数，不同测试条件，所以测试条件列在这些行中是不同的，而参数列在这些行中是合并的，即同一参数对应多行测试条件）。
+
+比如原表格中，Input quiescent current（I_Q）对应的测试条件有4行，所以参数列（I_Q）在4行中是合并的（rowspan=4），然后测试条件列在每行中是不同的。然后下一个参数是Shutdown current from IN to GND（I_SD），对应的测试条件有9行，所以参数列（I_SD）在9行中是合并的（rowspan=9）。然后I_LEAKEN是1行，R_EN是1行。然后POWER SWITCH部分，R_dson对应的测试条件有6行，所以参数列（R_dson）在6行中是合并的（rowspan=6）。R_DIS是1行，t_R是1行，t_F是1行，t_ON是1行。
+
+现在需要准确还原这些合并单元格。
+
+现在开始构建HTML：
+
+首先，thead部分正确。
+
+然后tbody：
+
+第一部分：INPUT CURRENTS
+
+子参数1：Input quiescent current（I_Q）
+
+测试条件行1：V_IN=3.3V, V_EN=3.3V, I_OUT=0A, T_A=25°C → MIN=2, TYP=12, UNIT=nA
+
+测试条件行2：V_IN=3.3V, V_EN=3.3V, I_OUT=0A, T_A=85°C → MIN=9, TYP=空, MAX=空, UNIT=nA
+
+测试条件行3：V_IN=5.5V, V_EN=5.5V, I_OUT=0A, T_A=25°C → MIN=5, TYP=25, UNIT=nA
+
+测试条件行4：V_IN=5.5V, V_EN=5.5V, I_OUT=0A, T_A=85°C → MIN=10, TYP=空, MAX=空, UNIT=nA
+
+所以I_Q在参数列是rowspan=4，然后这四行的参数列都是I_Q（合并）。
+
+然后子参数2：Shutdown current from IN to GND（I_SD）
+
+测试条件行1：V_IN=1.2V, V_EN=0V, T_A=25°C → MIN=2, TYP=空, MAX=空, UNIT=nA
+
+测试条件行2：V_IN=1.8V, V_EN=0V, T_A=25°C → MIN=2, TYP=空, MAX=空, UNIT=nA
+
+测试条件行3：V_IN=3.3V, V_EN=0V, T_A=25°C → MIN=4, TYP=44, UNIT=nA
+
+测试条件行4：V_IN=4.0V, V_EN=0V, T_A=25°C → MIN=7, TYP=空, MAX=空, UNIT=nA
+
+测试条件行5：V_IN=4.5V, V_EN=0V, T_A=25°C → MIN=22, TYP=空, MAX=空, UNIT=nA
+
+测试条件行6：V_IN=5.0V, V_EN=0V, T_A=25°C → MIN=62, TYP=970, UNIT=nA
+
+测试条件行7：V_IN=5.0V, V_EN=0V, T_A=55°C → MIN=90, TYP=空, MAX=空, UNIT=nA
+
+测试条件行8：V_IN=5.0V, V_EN=0V, T_A=85°C → MIN=350, TYP=空, MAX=空, UNIT=nA
+
+测试条件行9：V_IN=5.5V, V_EN=0V, T_A=25°C → MIN=171, TYP=空, MAX=空, UNIT=nA
+
+所以I_SD在参数列是rowspan=9，然后这九行的参数列都是I_SD（合并）。
+
+然后子参数3：I_LEAKEN（EN pin leakage current）
+
+测试条件行：V_IN=0V, V_EN=5.0V → MIN=空, TYP=空, MAX=1.5, UNIT=μA → 这里是1行，所以参数列rowspan=1。
+
+子参数4：R_EN（EN pin pull down resistor）
+
+测试条件行：V_EN=5.0V → MIN=6.85, TYP=空, MAX=空, UNIT=MΩ → 1行，参数列rowspan=1。
+
+然后是POWER SWITCH部分：
+
+子参数5：R_dson（Internal switch MOSFET on-state resistance）
+
+测试条件行1：V_IN=5.5V, V_EN=high, I_OUT=200mA, T_A=25°C → MIN=50, TYP=空, MAX=空, UNIT=mΩ
+
+测试条件行2：V_IN=4.2V, V_EN=high, I_OUT=200mA, T_A=25°C → MIN=56, TYP=空, MAX=空, UNIT=mΩ
+
+测试条件行3：V_IN=3.3V, V_EN=high, I_OUT=200mA, T_A=25°C → MIN=64, TYP=空, MAX=空, UNIT=mΩ
+
+测试条件行4：V_IN=3.0V, V_EN=high, I_OUT=200mA, T_A=25°C → MIN=68, TYP=120, MAX=空, UNIT=mΩ
+
+测试条件行5：V_IN=1.8V, V_EN=high, I_OUT=200mA, T_A=25°C → MIN=109, TYP=空, MAX=空, UNIT=mΩ
+
+测试条件行6：V_IN=1.2V, V_EN=high, I_OUT=200mA, T_A=25°C → MIN=225, TYP=空, MAX=空, UNIT=mΩ
+
+所以R_dson在参数列是rowspan=6，然后这六行的参数列都是R_dson（合并）。
+
+子参数6：R_DIS（Output discharge resistance）
+
+测试条件行：V_IN=3.3V, V_EN=low, T_A=25°C, I_OUT Sinking 2mA → MIN=50, TYP=75, MAX=100, UNIT=Ω → 1行，参数列rowspan=1。
+
+子参数7：t_R（Output rise time）
+
+测试条件行：V_IN=3.6V, C_OUT=1μF, R_OUT=30Ω → MIN=空, TYP=165, MAX=空, UNIT=μs → 1行，参数列rowspan=1。
+
+子参数8：t_F（Output fall time）
+
+测试条件行：V_IN=3.6V, C_OUT=1μF, R_OUT=30Ω → MIN=空, TYP=42, MAX=空, UNIT=μs → 1行，参数列rowspan=1。
+
+子参数9：t_ON（Switch turn on time）
+
+测试条件行：V_IN=3.6V, C_OUT=1μF, R_OUT=30Ω → MIN=空, TYP=238, MAX=空, UNIT=μs → 1行，参数列rowspan=1。
+
+另外，原表格中“INPUT CURRENTS”是大标题，覆盖I_Q、I_SD、I_LEAKEN、R_EN这些子参数，所以“INPUT CURRENTS”在参数列是rowspan=（I_Q的行数 + I_SD的行数 + I_LEAKEN的行数 + R_EN的行数）。I_Q是4行，I_SD是9行，I_LEAKEN是1行，R_EN是1行，总共4+9+1+1=15行。所以“INPUT CURRENTS”在参数列是rowspan=15。
+
+然后“POWER SWITCH”是大标题，覆盖R_dson、R_DIS、t_R、t_F、t_ON这些子参数。R_dson是6行，R_DIS是1行，t_R是1行，t_F是1行，t_ON是1行，总共6+1+1+1+1=10行。所以“POWER SWITCH”在参数列是rowspan=10。
+
+现在需要确认原表格的结构，原表格中“INPUT CURRENTS”是第一列的一个单元格，然后下面的子项（I_Q, I_SD, I_LEAKEN, R_EN）在第一列，每个子项下面有对应的测试条件行。而“POWER SWITCH”是另一个大标题，下面的子项（R_dson, R_DIS, t_R, t_F, t_ON）在第一列，每个子项下面有对应的测试条件行。
+
+现在开始编写HTML代码，注意rowspan的正确使用。
+
+首先，处理“INPUT CURRENTS”部分：
+
+<tr>
+  <td rowspan="15">INPUT CURRENTS</td>
+  <th>（这里thead已经处理，tbody中是td）</th> 不，thead是表头，tbody中的第一列是参数，所以：
+
+在tbody中，第一行是“INPUT CURRENTS”作为参数列，rowspan=15（因为下面有I_Q（4行）、I_SD（9行）、I_LEAKEN（1行）、R_EN（1行），共15行）。
+
+然后，I_Q的行：
+
+<tr>
+  <td rowspan="4">Input quiescent current</td>
+  <td>V_IN=3.3V, V_EN=3.3V, I_OUT=0A, T_A=25°C</td>
+  <td>2</td>
+  <td>12</td>
+  <td></td>
+  <td>nA</td>
+</tr>
+<tr>
+  <td>V_IN=3.3V, V_EN=3.3V, I

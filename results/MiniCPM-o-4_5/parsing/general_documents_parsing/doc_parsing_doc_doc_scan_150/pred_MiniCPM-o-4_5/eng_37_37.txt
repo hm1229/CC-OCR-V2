@@ -1,0 +1,66 @@
+```latex
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+Chip ID: "0001 0111" & & & & & & & \\
+Write 55H To Reset All Registers & & & & & & & \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+Strobe Type & Strobe Enable & Mode Bits: M1, M0 & RFU & LED3 Enable & LED2 Enable & LED1 Enable \\
+0=Level Triggered (Default) & 0=Disabled (Default) & 00=Standby (Default) & & 0=OFF (Default) & 0=OFF (Default) & 0=OFF (Default) \\
+1=Edge Triggered & 1=Enabled & 01=IPR Drive & & 1=ON & 1=ON & 1=ON \\
+& & 10=Torch & & & & \\
+& & 11=Flash & & & & \\
+\hline
+\multicolumn{8}{l}{\textbf{Note:}} \\
+\multicolumn{8}{l}{In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to} \\
+\multicolumn{8}{l}{ensure proper turn-on of the device.} \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+LEDX Enable Setting & LED3 Pin Short Fault Detect & LED1/2 Pin Short Fault Detect & UVLO Enable & IVFM Levels & IVFM Enable \\
+0= if LED1 or LED2 is Enabled, LED3 is Disabled Internally & 0=Disabled & 0=Disabled & 0=Disabled (Default) & 000=2.9 V (Default) & 0=Disabled \\
+1=No Limitation (Default) & 1=Enabled (Default) & 1=Enabled (Default) & 1=Enabled (Default) & 001=3.0 V & 1=Enabled (Default) \\
+& & & & 010=3.1 V & \\
+& & & & 011=3.2 V & \\
+& & & & 100=3.3 V & \\
+& & & & 101=3.4 V & \\
+& & & & 110=3.5 V & \\
+& & & & 111=3.6 V & \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+LED1 Flash Brightness Levels & & & & & & & \\
+$I_{FLASH}(mA)=(Brightness Code*3.91mA)+3.91mA$ & & & & & & & \\
+00000000=3.91 mA & & & & & & & \\
+01111111=500 mA (Default) & & & & & & & \\
+11111111=1.0 A & & & & & & & \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+LED1 Torch Brightness Levels & & & & & & & \\
+$I_{TORCH}(mA)=(Brightness Code*1.46mA)+1.46mA$ & & & & & & & \\
+00000000=1.46 mA & & & & & & & \\
+01111111=187.5 mA (Default) & & & & & & & \\
+11111111=375 mA & & & & & & & \\
+\hline
+\end{tabular}
+```

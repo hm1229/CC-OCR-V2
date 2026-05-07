@@ -1,0 +1,13 @@
+$$P_{2K}\left[T^{2K}_{\alpha M_S} < T^{2K}_D\right] = \frac{\sum_{n=1}^{2K} 3M_S(x^{2}_{t}e^{2})^{+\alpha K} \frac{1-2S(n)}{1-\beta S(n)} H(n)}{\sum_{n=1}^{2K} 3M_S(x^{2}_{t}e^{2})^{+\alpha K} \prod_{k=1}^{n-1} \frac{1+2C_0kK^{-1}}{1+2C_0kK^{-1}}}$$
+
+$$= \frac{\sum_{n=1}^{2K} \exp\left(\sum_{k=1}^{n-1} \ln\left(\frac{1+2C_0kK^{-1}}{1+2C_0kK^{-1}}\right)\right)}{\sum_{n=1}^{2K} 3M_S(x^{2}_{t}e^{2})^{+\alpha K} \exp\left(\sum_{k=1}^{n-1} \ln(1+2C_0kK^{-1})\right)}$$
+
+$$= \frac{\sum_{n=1}^{2K} \exp\left(\sum_{k=1}^{n-1} 4C_0kK^{-1}\right)}{\sum_{n=1}^{2K} 3M_S(x^{2}_{t}e^{2})^{+\alpha K} \exp\left(\sum_{k=1}^{n-1} 4C_0kK^{-1} - O((kK^{-1})^2)\right)}$$
+
+$$\leq \frac{\sum_{n=1}^{2K} \exp(2C_0n^2K^{-1} - 2C_0nK^{-1})}{\sum_{n=1}^{2K} 3M_S(x^{2}_{t}e^{2})^{+\alpha K} \exp(2C_0n^2K^{-1} - 2C_0nK^{-1} - O(nkK^{-1})^2)}$$
+
+$$\leq \frac{2K\exp(2C_0 z^2 K)}{\sum_{n=2M_S(x^{2}_{t}e^{2})^{+\alpha K}}^{3M_S(x^{2}_{t}e^{2})^{+\alpha K}} \exp(2C_0n^2K^{-1} - 2C_0nK^{-1} - O(nkK^{-1})^2)}$$
+
+$$\leq \frac{2}{M_S(x^{2}_{t}e^{2})^{+\alpha K}} \frac{\exp(8C_0M^2_S(x^{2}_{t}e^{\beta})^{+\alpha K}(4C_0M_S(x^{2}_{t}e^{\beta})^{+\alpha} - O((x^{2}_{t}e^{\beta})^{+\alpha} - z^2))}{}$$
+
+$$\leq \exp(-2C_0K(2M_S(x^{2}_{t}e^{\beta})^{+\alpha} - z^2)).$$

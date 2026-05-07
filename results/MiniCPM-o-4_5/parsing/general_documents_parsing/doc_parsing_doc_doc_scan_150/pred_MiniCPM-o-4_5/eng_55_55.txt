@@ -1,0 +1,36 @@
+```latex
+\begin{table}[h]
+\centering
+\caption{Short Table of Fourier Transforms}
+\begin{tabular}{ll}
+\hline
+\hline
+ & \\
+$g(t)$ & $G(\omega)$ \\
+\hline
+1 & $e^{-at}u(t)$ & $\frac{1}{a+j\omega}$ & $a>0$ \\
+2 & $e^{at}u(-t)$ & $\frac{1}{-a+j\omega}$ & $a>0$ \\
+3 & $e^{-a|t|}$ & $\frac{2a}{a^2+\omega^2}$ & $a>0$ \\
+4 & $e^{-a|t|}u(t)$ & $\frac{a+j\omega}{(a+j\omega)^2}$ & \\
+5 & $t^*e^{-at}u(t)$ & $\frac{1}{(a+j\omega)^2}$ & $a>0$ \\
+6 & $\delta(t)$ & $1$ & \\
+7 & $1$ & $2\pi\delta(\omega)$ & \\
+8 & $e^{j\omega_0t}$ & $2\pi\delta(\omega-\omega_0)$ & \\
+9 & $\cos\omega_0t$ & $\pi[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)]$ & \\
+10 & $\sin\omega_0t$ & $\frac{j}{2}[\delta(\omega+\omega_0)-\delta(\omega-\omega_0)]$ & \\
+11 & $u(t)$ & $\pi\delta(\omega)+\frac{1}{j\omega}$ & \\
+12 & $\mathrm{sgn}\,t$ & $\frac{2}{j\omega}$ & \\
+13 & $\cos\omega_0\,u(t)$ & $\frac{\pi}{2}[\delta(\omega-\omega_0)+\delta(\omega+\omega_0)]+\frac{j\omega_0}{\omega^2+\omega_0^2}$ & \\
+14 & $\sin\omega_0\,u(t)$ & $\frac{\pi}{2j}[\delta(\omega+\omega_0)-\delta(\omega-\omega_0)]+\frac{\omega_0}{\omega^2+\omega_0^2}$ & \\
+15 & $e^{-at}\sin\omega_0\,u(t)$ & $\frac{\omega_0}{(a+j\omega)^2+\omega_0^2}$ & $a>0$ \\
+16 & $e^{-a\omega_0}\cos\omega_0\,u(t)$ & $\frac{a+j\omega}{(a+j\omega)^2+\omega_0^2}$ & $a>0$ \\
+17 & $\mathrm{rect}\left(\frac{t}{T}\right)$ & $T\,\mathrm{sinc}\left(\frac{\omega T}{2}\right)$ & \\
+18 & $\frac{W}{\pi}\,\mathrm{sinc}\left(\frac{Wt}{\pi}\right)$ & $\mathrm{rect}\left(\frac{\omega}{2W}\right)$ & \\
+19 & $\Delta\left(\frac{t}{T}\right)$ & $\frac{\pi}{2}\,\mathrm{sinc}^2\left(\frac{\omega T}{4}\right)$ & \\
+20 & $\frac{W}{2\pi}\,\mathrm{sinc}^2\left(\frac{Wt}{2}\right)$ & $\Delta\left(\frac{\omega}{2W}\right)$ & \\
+21 & $\sum_{n=-\infty}^{\infty}\delta(t-nT)$ & $\omega_0\sum_{n=-\infty}^{\infty}\delta(\omega-n\omega_0)$ & $\omega_0=\frac{2\pi}{T}$ \\
+22 & $e^{-\alpha|t|}$ & $\sigma\sqrt{2\pi}\sigma e^{-\sigma^2/2}$ & \\
+\hline
+\end{tabular}
+\end{table}
+```

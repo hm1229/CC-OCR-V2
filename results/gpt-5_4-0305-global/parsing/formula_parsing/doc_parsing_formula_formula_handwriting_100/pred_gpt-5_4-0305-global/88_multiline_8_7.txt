@@ -1,0 +1,26 @@
+\[
+\begin{aligned}
+\mathbb{E}\!\left[e^{\beta A_t}\mid \mathcal{P}\right]
+&\le \mathbb{E}\!\left[\min\!\left\{\beta^2 u(s_{t+1},a^x),\,\beta A_t(s_{t+1},a^x)\right\}
+-\min\!\left\{\beta A_t(s_{t+1},b^x),\,\beta^2 u(s_{t+1},b^x)\right\}\,\middle|\,\mathcal{P}\right] \\
+&\le \mathbb{E}\!\left[\min\!\left\{\beta A_t(s_{t+1},b^x),\,\beta^2 u(s_{t+1},a^x)\right\}
+-\min\!\left\{\beta A_t(s_{t+1},b^x),\,\beta^2 u(s_{t+1},b^x)\right\}\,\middle|\,\mathcal{P}\right] \\
+&\le \mathbb{E}\!\left[\beta A_t(s_{t+1},b^x)\mid \mathcal{P}\right]
+-\mathbb{E}\!\left[\min\!\left\{\beta A_t(s_{t+1},b^x),\,\beta^2 u(s_{t+1},b^x)\right\}\,\middle|\,\mathcal{P}\right] \\
+&= \gamma \,\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)\ge 2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)
+\,\mathbb{E}\!\left[\beta_t^2(s_{t+1},b^x)\,\middle|\,\beta_t^2(s_{t+1},b^x)\ge 2A_t(s_{t+1},b^x),\mathcal{P}\right] \\
+&\quad + \gamma \,\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)<2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)
+\,\mathbb{E}\!\left[\beta_t^2(s_{t+1},b^x)\,\middle|\,\beta_t^2(s_{t+1},b^x)<2A_t(s_{t+1},b^x),\mathcal{P}\right] \\
+&\quad - \gamma \,\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)>2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)
+\,\mathbb{E}\!\left[2A_t(s_{t+1},b^x)\,\middle|\,\beta_t^2(s_{t+1},b^x)>2A_t(s_{t+1},b^x),\mathcal{P}\right] \\
+&\quad - \gamma \,\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)<2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)
+\,\mathbb{E}\!\left[\beta_t^2(s_{t+1},b^x)\,\middle|\,\beta_t^2(s_{t+1},b^x)<2A_t(s_{t+1},b^x),\mathcal{P}\right] \\
+&= \gamma \,\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)\ge 2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)
+\,\mathbb{E}\!\left[\beta_t^2(s_{t+1},b^x)-2A_t(s_{t+1},b^x)\,\middle|\,\beta_t^2(s_{t+1},b^x)\ge 2A_t(s_{t+1},b^x),\mathcal{P}\right] \\
+&\le \gamma \,\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)\ge 2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)
+\frac{\mathbb{E}\!\left[\beta_t^2(s_{t+1},b^x)-2A_t(s_{t+1},b^x)\right]}
+{\mathcal{P}\!\left(\beta_t^2(s_{t+1},b^x)\ge 2A_t(s_{t+1},b^x)\mid \mathcal{P}\right)} \\
+&\le \gamma \,\mathbb{E}\!\left[\beta_t^2(s_{t+1},b^x)-2A_t(s_{t+1},b^x)\mid \mathcal{P}\right]
+\le \gamma \,\|A_t\|\,\|B_t\|.
+\end{aligned}
+\]

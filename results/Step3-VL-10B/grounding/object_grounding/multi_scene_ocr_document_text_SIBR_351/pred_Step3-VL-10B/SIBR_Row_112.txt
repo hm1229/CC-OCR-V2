@@ -1,0 +1,160 @@
+用户现在需要检测指定类别在采购合同中的对象。首先得逐个分析每个类别，找到对应的位置。
+
+首先看Contract No.：在右上角，Contract No.: AVIVA2110，所以这个是Contract No.的标签。
+
+Date：Date: 2021-12-15，对应Date类别。
+
+The Seller：The Seller: Helian Electronic Media Co., Ltd.，Company Name是卖家和买家的公司名，这里The Seller的Company Name。
+
+The Buyer：The Buyer: Helian Electronic Media Co., Ltd.，也是Company Name。
+
+Address：买家和卖家的地址，比如买家Address: 764 John Unions Wilsonchester...，卖家Address: 61578 Brown Way...，所以Address类别有两个，但需要看是否都算。不过先列出来。
+
+Tel：买家的Tel: TEL92382-22507909...，卖家的Tel: 5800-040-77834496，所以Tel类别。
+
+FAX：买家的FAX: 08205-...，所以FAX类别。
+
+Item：表格中的Item列，比如Item 1，Total Value行，所以Item是表格的列标题。
+
+Commodity Name：表格中的Commodity Name列，比如BRONZE ROD，Total Value行没有，所以Commodity Name是列标题和内容。
+
+Quantity：表格中的Quantity列，数值1113.2等。
+
+Unit：表格中的Unit列，比如KG。
+
+Unit Price：表格中的Unit Price列，比如17.43USD。
+
+Amount：表格中的Amount列，比如19403.08USD等。
+
+Title：可能是指合同标题Purchase Contract？不过看用户给的类别里有Title，需要检查。不过原文中“Purchase Contract”是标题，所以Title对应这个。
+
+10.Quality Guarantee：看第10点，The Seller shall guarantee...，所以这段内容是10.Quality Guarantee。
+
+4. Packing：第4点，Packing: CRATES，以及下面的描述，所以4. Packing对应的内容。
+
+5. Time of Shipment：第5点，Time of Shipment: 2021-12-30，所以是5. Time of Shipment。
+
+8.Terms of Payment：第8点，Terms of Payment: T/T，所以是8.Terms of Payment。
+
+The Seller shall Send the following documents to Buyer via courier：第9点的内容，所以这个是对应的类别。
+
+复核状态：底部“复核状态：已复核”，所以是复核状态。
+
+复核人：复核人：李林，对应复核人。
+
+复核时间：复核时间：2021-12-16 14:56:21，对应复核时间。
+
+现在需要逐个确定每个类别的bbox。需要看图片中的位置。
+
+先处理Contract No.：在右上角，Contract No.: AVIVA2110，所以bbox是包含“Contract No.:”和编号的区域。看图片中Contract No.的位置，大概在上方偏右，坐标需要估计。比如x1大概在590，y1在150左右，x2到800左右？需要看原图的布局。
+
+不过可能更简单的是按每个元素在图中的位置来标记。
+
+现在开始列每个类别：
+
+1. Contract No.：对应“Contract No.: AVIVA2110”，位置在上方，右侧。bbox大概[400, 100, 550, 120]左右？需要看原图。原图中“Contract No.: AVIVA2110”在上方，所以bbox是包含这两个部分的矩形。
+
+2. Date：Date: 2021-12-15，和Contract No.同一行下面，所以Date的bbox是[400, 120, 550, 140]左右。
+
+3. Company Name：The Seller和The Buyer的公司名，比如The Seller: Helian Electronic Media Co., Ltd.，The Buyer: Helian Electronic Media Co., Ltd.。所以Company Name有两个实例，但类别是Company Name，所以需要标记这两个位置。比如The Seller的Company Name是“Helian Electronic Media Co., Ltd.”，The Buyer的也是。所以两个Company Name的实例。
+
+4. Address：The Buyer的Address是“764 John Unions Wilsonchester, UT 18884 809 Lindsay Run New Jose, WT 85670”，The Seller的Address是“61578 Brown Way Smithmouth, OK 83560”。所以两个Address实例。
+
+5. Tel：The Buyer的Tel是“TEL92382-22507909 FAX08205- 39972298”，The Seller的Tel是“5800-040-77834496”。所以两个Tel实例。
+
+6. FAX：The Buyer的FAX是“08205-”，所以FAX的实例。
+
+7. Item：表格中的Item列，第一行是Item 1，Total Value行是Total Value。所以Item的列标题和内容，比如Item列的单元格，bbox是表格中Item列的位置，比如x1在50，y1在280左右（表格的起始行）。
+
+8. Commodity Name：表格中的Commodity Name列，比如“BRONZE ROD”和“Total Value”行的对应列。所以Commodity Name的列标题和内容。
+
+9. Quantity：表格中的Quantity列，数值1113.2和Total Value行的1113.2。所以Quantity列的内容。
+
+10. Unit：表格中的Unit列，比如KG。所以Unit列的内容。
+
+11. Unit Price：表格中的Unit Price列，比如17.43USD。所以Unit Price列的内容。
+
+12. Amount：表格中的Amount列，比如19403.08USD。所以Amount列的内容。
+
+13. Title：合同标题“Purchase Contract”，在最上方，所以Title的bbox是包含这个标题的区域，比如x1=330, y1=50, x2=670, y2=80左右。
+
+14. 10.Quality Guarantee：第10点的内容，即“The Seller shall guarantee that the commodity must be in conformity with the quality, specifications and quantity specified in this Contract and Letter of Quality Guarantee. The guarantee period shall be 3 months after the arrival of the goods at the port of destination, and during the period the Seller shall be responsible for the damage due to the defects in designing and manufacturing of the manufacturer.” 所以这段文字是10.Quality Guarantee的实例。
+
+15. 4. Packing：第4点的内容，“Packing: CRATES The packing of the goods shall be preventive from dampness, rust, moisture, erosion and shock, and shall be suitable for ocean transportation.” 所以是4. Packing的实例。
+
+16. 5. Time of Shipment：第5点，“Time of Shipment: 2021-12-30” 所以是5. Time of Shipment的实例。
+
+17. 8.Terms of Payment：第8点，“Terms of Payment: T/T” 所以是8.Terms of Payment的实例。
+
+18. The Seller shall Send the following documents to Buyer via courier：第9点的内容，“The Seller shall send the following documents to Buyer via courier: (1) Signed commercial invoice in 1 copies indicating Contract No. and shipping marks; (2) Packing list in 1copies issued by seller;” 所以是这个类别。
+
+19. 复核状态：底部“复核状态：已复核” 所以是复核状态的实例。
+
+20. 复核人：底部“复核人：李林” 所以是复核人的实例。
+
+21. 复核时间：底部“复核时间：2021-12-16 14:56:21” 所以是复核时间的实例。
+
+现在需要为每个类别生成对应的bbox。由于是图像，需要估计每个元素的位置。以下是一些关键元素的bbox（基于图像的布局，假设图像的宽度和高度，这里用相对坐标，比如x1,y1是左上角，x2,y2是右下角）。
+
+例如：
+
+- Title: "Purchase Contract" 在图像上方中央，bbox大概[320, 50, 680, 80]
+- Contract No.: "Contract No.: AVIVA2110" 在上方偏右，bbox[400, 100, 550, 125]
+- Date: "Date: 2021-12-15" 在Contract No.下方，bbox[400, 125, 550, 145]
+- The Seller: "The Seller: Helian Electronic Media Co., Ltd." 在右侧，bbox[400, 150, 850, 170]
+- The Buyer: "The Buyer: Helian Electronic Media Co., Ltd." 在左侧，bbox[100, 150, 400, 170]
+- Address (Buyer): "Address: 764 John Unions Wilsonchester..." 左侧地址，bbox[100, 175, 400, 200]
+- Address (Seller): "Address: 61578 Brown Way..." 右侧地址，bbox[400, 175, 850, 195]
+- Tel (Buyer): "Tel: TEL92382-22507909 FAX08205- 39972298" 左侧Tel，bbox[100, 200, 400, 220]
+- Tel (Seller): "Tel: 5800-040-77834496" 右侧Tel，bbox[400, 200, 850, 220]
+- FAX (Buyer): "FAX08205-" 左侧FAX，bbox[200, 220, 300, 235]（在Tel行内）
+- Item (table): 表格的Item列，第一行Item 1，bbox[50, 280, 100, 310]（表格的列标题行）
+- Commodity Name: 表格中Commodity Name列，比如BRONZE ROD，bbox[150, 280, 350, 310]
+- Quantity: 表格中Quantity列，数值1113.2，bbox[350, 280, 450, 310]
+- Unit: 表格中Unit列，KG，bbox[450, 280, 550, 310]
+- Unit Price: 表格中Unit Price列，17.43USD，bbox[550, 280, 650, 310]
+- Amount: 表格中Amount列，19403.08USD，bbox[650, 280, 750, 310]
+- Total Value行的Item: "Total Value"，bbox[50, 320, 100, 340]
+- Total Value行的Commodity Name: 空，bbox[150, 320, 350, 340]
+- Total Value行的Quantity: 1113.2，bbox[350, 320, 450, 340]
+- Total Value行的Amount: 19403.08，bbox[650, 320, 750, 340]
+- 10.Quality Guarantee: 第10点的文本，bbox[100, 450, 850, 550]（大致范围）
+- 4. Packing: 第4点的文本，bbox[100, 380, 850, 420]
+- 5. Time of Shipment: 第5点的文本，bbox[100, 420, 850, 440]
+- 8.Terms of Payment: 第8点的文本，bbox[100, 440, 850, 460]
+- The Seller shall Send...: 第9点的文本，bbox[100, 460, 850, 520]
+- 复核状态: 底部“复核状态：已复核”，bbox[100, 750, 300, 770]
+- 复核人: 底部“复核人：李林”，bbox[500, 750, 700, 770]
+- 复核时间: 底部“复核时间：2021-12-16 14:56:21”，bbox[500, 770, 900, 790]
+
+现在需要将这些整理成JSON数组，每个元素包含bbox和label。注意有些类别可能有多个实例，比如Company Name有两个（买家和卖家），Address有两个，Tel有两个，FAX有一个（买家的），Item有两个（Item 1和Total Value行），Commodity Name有两个（BRONZE ROD和Total Value行的空），Quantity有两个（1113.2和Total Value行的1113.2），Unit有一个（KG），Unit Price有一个（17.43USD），Amount有两个（19403.08和Total Value行的19403.08），Title一个，10.Quality Guarantee一个，4. Packing一个，5. Time of Shipment一个，8.Terms of Payment一个，The Seller shall...一个，复核状态一个，复核人一个，复核时间一个。
+
+现在需要确保每个类别都被覆盖，并且每个实例都列出。但可能有些类别在图中只有一个实例，比如FAX（只有买家有FAX），Title只有一个，10.Quality Guarantee只有一个段落，4. Packing只有一个段落，5. Time of Shipment只有一个，8.Terms of Payment只有一个，The Seller shall...只有一个段落，复核状态、复核人、复核时间各一个。
+
+现在开始构建JSON数组。例如：
+
+[
+  {"bbox_2d": [320, 50, 680, 80], "label": "Title"},
+  {"bbox_2d": [400, 100, 550, 125], "label": "Contract No."},
+  {"bbox_2d": [400, 125, 550, 145], "label": "Date"},
+  {"bbox_2d": [100, 150, 400, 170], "label": "Company Name"},
+  {"bbox_2d": [400, 150, 850, 170], "label": "Company Name"},
+  {"bbox_2d": [100, 175, 400, 200], "label": "Address"},
+  {"bbox_2d": [400, 175, 850, 195], "label": "Address"},
+  {"bbox_2d": [100, 200, 400, 220], "label": "Tel"},
+  {"bbox_2d": [400, 200, 850, 220], "label": "Tel"},
+  {"bbox_2d": [200, 220, 300, 235], "label": "FAX"},
+  {"bbox_2d": [50, 280, 100, 310], "label": "Item"},
+  {"bbox_2d": [150, 280, 350, 310], "label": "Commodity Name"},
+  {"bbox_2d": [350, 280, 450, 310], "label": "Quantity"},
+  {"bbox_2d": [450, 280, 550, 310], "label": "Unit"},
+  {"bbox_2d": [550, 280, 650, 310], "label": "Unit Price"},
+  {"bbox_2d": [650, 280, 750, 310], "label": "Amount"},
+  {"bbox_2d": [50, 320, 100, 340], "label": "Item"},
+  {"bbox_2d": [150, 320, 350, 340], "label": "Commodity Name"},
+  {"bbox_2d": [350, 320, 450, 340], "label": "Quantity"},
+  {"bbox_2d": [650, 320, 750, 340], "label": "Amount"},
+  {"bbox_2d": [100, 380, 850, 420], "label": "4. Packing"},
+  {"bbox_2d": [100, 420, 850, 440], "label": "5. Time of Shipment"},
+  {"bbox_2d": [100, 440, 850, 460], "label": "8.Terms of Payment"},
+  {"bbox_2d": [100, 460,

@@ -1,0 +1,37 @@
+To determine the coordinates of the region containing the text '手术费' (which means "surgery fee"), we need to carefully analyze the image and identify the bounding box around this text.
+
+Here are the steps to find the coordinates:
+
+1. **Identify the Text Location**: The text '手术费' is located in the second row of the table under the column labeled '费别' (fee type).
+
+2. **Estimate the Bounding Box**: We need to estimate the normalized coordinates for the left-top and right-bottom corners of the bounding box that encloses the text '手术费'.
+
+3. **Normalize the Coordinates**: Convert the pixel coordinates to normalized coordinates based on the image's width and height.
+
+### Detailed Steps:
+
+1. **Image Dimensions**:
+   - The image width is approximately 1000 pixels.
+   - The image height is approximately 600 pixels.
+
+2. **Bounding Box Coordinates**:
+   - **Left-Top Corner (x1, y1)**: The text '手术费' starts around the middle of the row. Estimating visually, it might be around (300, 150).
+   - **Right-Bottom Corner (x2, y2)**: The text '手术费' ends shortly after it starts. Estimating visually, it might be around (350, 180).
+
+### Normalized Coordinates Calculation:
+
+- **Left-Top Corner (x1, y1)**:
+  - x1 = 300 / 1000 = 0.3
+  - y1 = 150 / 600 = 0.25
+
+- **Right-Bottom Corner (x2, y2)**:
+  - x2 = 350 / 1000 = 0.35
+  - y2 = 180 / 600 = 0.3
+
+### Final Coordinates:
+
+(x1, y1, x2, y2) = (0.3, 0.25, 0.35, 0.3)
+
+So, the normalized coordinates of the bounding box for the text '手术费' are:
+
+(0.3, 0.25, 0.35, 0.3)

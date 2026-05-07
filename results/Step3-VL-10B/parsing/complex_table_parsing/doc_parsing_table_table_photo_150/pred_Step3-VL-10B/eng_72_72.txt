@@ -1,0 +1,28 @@
+To transcribe the table from the image into HTML, we analyze the structure: row labels (`j=0, j=1, j=2`) on the left, column labels (`k=0, k=1, k=2`) at the top, and corresponding values in each cell. There are no merged cells, so we use standard `<tr>` (table row) and `<td>` (table data) tags.  
+
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>j</th>
+      <th>k=0</th>
+      <th>k=1</th>
+      <th>k=2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>j=0</td>
+      <td>-2/5</td>
+      <td>2/21</td>
+      <td>4/105</td>
+    </tr>
+    <tr>
+      <td>j=1</td>
+      <td>-22/105</td>
+      <td>4/105</td>
+      <td>2/105</td>
+    </tr>
+    <tr>
+      <td>j

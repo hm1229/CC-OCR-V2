@@ -1,0 +1,21 @@
+I need to find the text '0' in the image. Looking at the receipt, I can see several instances of '0' but I need to identify a specific standalone '0'.
+
+Looking at the bottom of the receipt, I can see "收款单位（章）：" followed by what appears to be "0." under "医保统筹支付："
+
+The "0." under 医保统筹支付 appears to be around the left-bottom area of the receipt.
+
+Looking more carefully at the bottom row: "医保统筹支付：" with "0." below it on the left side.
+
+The standalone '0' under 收款单位（章）appears to be at approximately:
+
+(191, 895, 210, 920) in normalized coordinates.
+
+Let me re-examine. The '0' after 收款单位（章）: appears to be around x=191, y=895 area of the image.
+
+The image dimensions appear to be approximately 1400 x 952 pixels.
+
+The '0' under 收款单位 is at roughly x=191, y=895 in pixel coordinates.
+
+Normalized: x1 = 191/1400 * 1000 ≈ 136, y1 = 895/952 * 1000 ≈ 940
+
+(130, 935, 155, 960)

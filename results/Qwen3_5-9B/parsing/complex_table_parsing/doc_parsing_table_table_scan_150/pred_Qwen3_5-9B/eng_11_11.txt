@@ -1,0 +1,186 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table from Synthetic Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.2;
+            color: #000;
+            background-color: #fff;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        td {
+            padding: 4px 6px;
+            vertical-align: top;
+            border-right: 1px solid #eee; /* Subtle border for readability */
+        }
+        td:last-child {
+            border-right: none;
+        }
+        /* Mimic the specific column widths and alignment seen in the image */
+        .col-id { width: 30px; text-align: center; }
+        .col-name { width: 180px; }
+        .col-code { width: 80px; text-align: center; }
+        .col-formula { width: 70px; text-align: center; }
+        .col-mw { width: 50px; text-align: center; }
+        .col-mz { width: 40px; text-align: center; }
+        .col-rt { width: 60px; text-align: center; }
+        .col-int { width: 60px; text-align: center; }
+        .col-ratio { width: 60px; text-align: center; }
+        .col-type { width: 80px; text-align: center; }
+        
+        /* Specific styling to match the image's layout quirks */
+        .formula-sub {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        .code-sub {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        .mw-dec {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        .mz-dec {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        .rt-dec {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+        .ratio-dec {
+            font-size: 0.8em;
+            vertical-align: sub;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td class="col-id">8</td>
+        <td class="col-name">Linalool oxide-M</td>
+        <td class="col-code">C6004717<span class="code-sub">8</span></td>
+        <td class="col-formula">C<sub>10</sub>H<sub>18</sub>O<sub>2</sub></td>
+        <td class="col-mw">170.3<span class="mw-dec">.3</span></td>
+        <td class="col-mz">1069<span class="mz-dec">.3</span></td>
+        <td class="col-rt">445.773</td>
+        <td class="col-int">1.25933</td>
+        <td class="col-ratio">Monomer</td>
+    </tr>
+    <tr>
+        <td class="col-id">9</td>
+        <td class="col-name">Linalool oxide-D</td>
+        <td class="col-code">C6004717<span class="code-sub">8</span></td>
+        <td class="col-formula">C<sub>10</sub>H<sub>18</sub>O<sub>2</sub></td>
+        <td class="col-mw">170.3<span class="mw-dec">.3</span></td>
+        <td class="col-mz">1068<span class="mz-dec">.3</span></td>
+        <td class="col-rt">444.363</td>
+        <td class="col-int">1.81632</td>
+        <td class="col-ratio">Dimer</td>
+    </tr>
+    <tr>
+        <td class="col-id">10</td>
+        <td class="col-name">Trans-linalool oxide-M</td>
+        <td class="col-code">C3499577<span class="code-sub">2</span></td>
+        <td class="col-formula">C<sub>10</sub>H<sub>18</sub>O<sub>2</sub></td>
+        <td class="col-mw">170.3<span class="mw-dec">.1</span></td>
+        <td class="col-mz">1090<span class="mz-dec">.1</span></td>
+        <td class="col-rt">475.387</td>
+        <td class="col-int">1.26101</td>
+        <td class="col-ratio">Monomer</td>
+    </tr>
+    <tr>
+        <td class="col-id">11</td>
+        <td class="col-name">Trans-linalool oxide-D</td>
+        <td class="col-code">C3499577<span class="code-sub">2</span></td>
+        <td class="col-formula">C<sub>10</sub>H<sub>18</sub>O<sub>2</sub></td>
+        <td class="col-mw">170.3<span class="mw-dec">.8</span></td>
+        <td class="col-mz">1085<span class="mz-dec">.8</span></td>
+        <td class="col-rt">469.182</td>
+        <td class="col-int">1.81801</td>
+        <td class="col-ratio">Dimer</td>
+    </tr>
+    <tr>
+        <td class="col-id">12</td>
+        <td class="col-name">1-phenylethanol-M</td>
+        <td class="col-code">C98862</td>
+        <td class="col-formula">C<sub>8</sub>H<sub>8</sub>O</td>
+        <td class="col-mw">120.2<span class="mw-dec">.4</span></td>
+        <td class="col-mz">1060<span class="mz-dec">.4</span></td>
+        <td class="col-rt">433.081</td>
+        <td class="col-int">1.18844</td>
+        <td class="col-ratio">Monomer</td>
+    </tr>
+    <tr>
+        <td class="col-id">13</td>
+        <td class="col-name">1-phenylethanol-D</td>
+        <td class="col-code">C98862</td>
+        <td class="col-formula">C<sub>8</sub>H<sub>8</sub>O</td>
+        <td class="col-mw">120.2<span class="mw-dec">.6</span></td>
+        <td class="col-mz">1060<span class="mz-dec">.6</span></td>
+        <td class="col-rt">433.363</td>
+        <td class="col-int">1.56989</td>
+        <td class="col-ratio">Dimer</td>
+    </tr>
+    <tr>
+        <td class="col-id">14</td>
+        <td class="col-name">(Z)-2-octenal-M</td>
+        <td class="col-code">C2066446<span class="code-sub">4</span></td>
+        <td class="col-formula">C<sub>8</sub>H<sub>14</sub>O</td>
+        <td class="col-mw">126.2<span class="mw-dec">.1</span></td>
+        <td class="col-mz">1050<span class="mz-dec">.1</span></td>
+        <td class="col-rt">418.281</td>
+        <td class="col-int">1.32378</td>
+        <td class="col-ratio">Monomer</td>
+    </tr>
+    <tr>
+        <td class="col-id">15</td>
+        <td class="col-name">(Z)-2-octenal-D</td>
+        <td class="col-code">C2066446<span class="code-sub">4</span></td>
+        <td class="col-formula">C<sub>8</sub>H<sub>14</sub>O</td>
+        <td class="col-mw">126.2<span class="mw-dec">.1</span></td>
+        <td class="col-mz">1046<span class="mz-dec">.1</span></td>
+        <td class="col-rt">412.758</td>
+        <td class="col-int">1.73993</td>
+        <td class="col-ratio">Dimer</td>
+    </tr>
+    <tr>
+        <td class="col-id">16</td>
+        <td class="col-name">(E)-3-Octen-2-one-M</td>
+        <td class="col-code">C1840282<span class="code-sub">9</span></td>
+        <td class="col-formula">C<sub>8</sub>H<sub>14</sub>O</td>
+        <td class="col-mw">126.2<span class="mw-dec">.8</span></td>
+        <td class="col-mz">1027<span class="mz-dec">.8</span></td>
+        <td class="col-rt">386.771</td>
+        <td class="col-int">1.32197</td>
+        <td class="col-ratio">Monomer</td>
+    </tr>
+    <tr>
+        <td class="col-id">17</td>
+        <td class="col-name">(E)-3-Octen-2-one-D</td>
+        <td class="col-code">C1840282<span class="code-sub">9</span></td>
+        <td class="col-formula">C<sub>8</sub>H<sub>14</sub>O</td>
+        <td class="col-mw">126.2<span class="mw-dec">.1</span></td>
+        <td class="col-mz">1029<span class="mz-dec">.1</span></td>
+        <td class="col-rt">388.395</td>
+        <td class="col-int">1.73811</td>
+        <td class="col-ratio">Dimer</td>
+    </tr>
+</table>
+
+</body>
+</html>
+```

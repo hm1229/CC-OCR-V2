@@ -1,0 +1,205 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{array}
+
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+\begin{tabular}{c c c c c c}
+$A$ & 1 & 8 & 9 & 16 & $\cdots$ \\
+$B$ & 2 & 7 & 10 & 15 & $\cdots$ \\
+$C$ & 3 & 6 & 11 & 14 & $\cdots$ \\
+$D$ & 4 & 5 & 12 & 13 & $\cdots$ \\
+\end{tabular}
+\end{center}
+
+\begin{enumerate}[start=7]
+
+\item In which row is the number 600?
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 1st row
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 2nd row
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 3rd row
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 4th row
+\end{minipage}
+\end{enumerate}
+
+\item How many columns are there in Row $A$ if 200 is the last number?
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 48
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 50
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 52
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 54
+\end{minipage}
+\end{enumerate}
+
+\item Compute the following.
+
+$37 + 397 + 3997 + 39\ 997$
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 42\ 284
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 42\ 482
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 44\ 248
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 44\ 428
+\end{minipage}
+\end{enumerate}
+
+\item[10.] Compute the following.
+
+$298 + 2998 + 29\ 998 + 299\ 998$
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 333\ 292
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 334\ 222
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 334\ 292
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 335\ 222
+\end{minipage}
+\end{enumerate}
+
+\item[11.] Compute the following.
+
+$9 + 99 + 999 + 9999 + 99\ 999$
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 110\ 215
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 110\ 745
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 110\ 995
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 111\ 105
+\end{minipage}
+\end{enumerate}
+
+\item[12.] A farmer has 45 chickens and rabbits. There are 140 legs altogether. How many chickens does the farmer have? How many rabbits does the farmer have?
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 24
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 25
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 26
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 27
+\end{minipage}
+\end{enumerate}
+
+\item[13.] A spider has 8 legs. A dragonfly has 6 legs. 28 spiders and dragonflies have 200 legs altogether. How many spiders are there? How many dragonflies are there?
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.22\textwidth}
+\item 10
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 11
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 12
+\end{minipage}
+\begin{minipage}[t]{0.22\textwidth}
+\item 13
+\end{minipage}
+\end{enumerate}
+
+\item[14.] Find the values of A and B in the following.
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+% First triangle
+\draw (0,0) -- (2,0) -- (1,1.732) -- cycle;
+\draw (0.5,0.866) -- (1.5,0.866) -- (1,0) -- cycle;
+\node at (1,1.5) {18};
+\node at (0.5,0.5) {10};
+\node at (1.5,0.5) {};
+\node at (0.75,0) [below] {12};
+\node at (1.25,0) [below] {16};
+
+% Second triangle
+\begin{scope}[xshift=3.5cm]
+\draw (0,0) -- (2,0) -- (1,1.732) -- cycle;
+\draw (0.5,0.866) -- (1.5,0.866) -- (1,0) -- cycle;
+\node at (1,1.5) {34};
+\node at (0.5,0.5) {};
+\node at (1.5,0.5) {A};
+\node at (0.75,0) [below] {25};
+\node at (1.25,0) [below] {15};
+\end{scope}
+
+% Third triangle
+\begin{scope}[xshift=7cm]
+\draw (0,0) -- (2,0) -- (1,1.732) -- cycle;
+\draw (0.5,0.866) -- (1.5,0.866) -- (1,0) -- cycle;
+\node at (1,1.5) {20};
+\node at (0.5,0.5) {22};
+\node at (1.5,0.5) {};
+\node at (0.75,0) [below] {B};
+\node at (1.25,0) [below] {18};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{enumerate}[(1)]
+\begin{minipage}[t]{0.45\textwidth}
+\item $A = 6,\ B = 18$
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+\item[(3)] $A = 8,\ B = 20$
+\end{minipage}
+
+\begin{minipage}[t]{0.45\textwidth}
+\item $A = 6,\ B = 24$
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+\item[(4)] $A = 8,\ B = 22$
+\end{minipage}
+\end{enumerate}
+
+\end{enumerate}
+
+\end{document}
+```

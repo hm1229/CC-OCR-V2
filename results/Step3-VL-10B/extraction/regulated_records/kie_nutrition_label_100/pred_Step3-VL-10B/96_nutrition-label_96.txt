@@ -1,0 +1,293 @@
+用户现在需要从营养标签中提取信息到给定的JSON schema里。首先得理解每个字段可能对应什么。先看图片里的内容：
+
+首先看Serving size部分，图片里“about 2 5 servings per container”？不对，看原文：“about 2 5 servings per container”？不，看图片中的文字：“about 2 5 servings per container”可能是“about 2.5 servings per container”？然后“Serving size”下面应该是每份的量？不过图片里可能“4 pieces (16g)”是Per container？看表格里的Per Serving和Per Container。
+
+先整理各部分：
+
+Calories：Per Serving是60，Per Container是150。
+
+Total Fat：Per Serving是0g（%DV 0%），Per Container是0g（%DV 0%）。
+
+Saturated Fat：Per Serving 0g（0%），Per Container 0g（0%）。
+
+Trans Fat：Per Serving 0g（0%），Per Container 0g（0%）。
+
+Cholesterol：Per Serving 0mg（0%），Per Container 25mg（1%）。
+
+Sodium：Per Serving 10mg（0%），Per Container 25mg（1%）？不对，看图片里的Sodium行：Per Serving是10mg？不，看图片中的Sodium：“Sodium 10mg 0% 25mg 1%”？对，Per Serving是10mg，%DV 0%；Per Container是25mg，%DV 1%。
+
+Total Carb.：Per Serving 14g（5%），Per Container 38g（14%）。
+
+Dietary Fiber：Per Serving 0g（0%），Per Container 0g（0%）。
+
+Total Sugars：Per Serving 10g（？看图片里Total Sugars是10g？然后Incl. Added Sugars是9g（18%），Per Container Total Sugars是27g（49%），Incl. Added Sugars是24g（49%？看图片里Incl. Added Sugars Per Serving是9g，%DV 18%；Per Container是24g，%DV 49%。
+
+Protein：Per Serving 0g，Per Container 0g。
+
+现在看schema里的字段，可能每个字段对应不同的部分。比如SS可能是Serving size？CE-P1可能是Calories Per Serving？CE-PS是Calories Per Container？TF是Total Fat，SO是Sodium？CAR是Total Carb.，PRO是Protein。然后P1是Per Serving，P是Per Container？D是% DV？
+
+现在逐个分析schema的字段：
+
+SS：Serving size，图片里“4 pieces (16g)”是Per Container的量？或者看“about 2.5 servings per container”，所以Serving size可能是指每份的量？但图片里Serving size下面可能没有明确写每份的量，而是“4 pieces (16g)”是Per Container？或者看“Serving size”对应的是每份的大小，比如可能每份是4 pieces？不，看原文：“about 2 5 servings per container”应该是“about 2.5 servings per container”，然后“Serving size”下面应该是每份的量，比如可能每份是4 pieces？不对，看表格里的Per Serving和Per Container。比如Per Container是4 pieces (16g)？因为“4 pieces (16g)”在Serving size右边？看图片中的文字：“Serving size”下面是“about 2 5 servings per container”？不，原图片中的文字是：“about 2 5 servings per container”可能是“about 2.5 servings per container”，然后“4 pieces (16g)”是Serving size？因为通常营养标签中Serving size是每份的量，比如“4 pieces (16g) per serving”？然后“about 2.5 servings per container”是每容器的份数。所以SS（Serving size）应该是“4 pieces (16g)”？
+
+然后CE-P1：Calories Per Serving，即60；CE-PS：Calories Per Container，即150。
+
+TF-PP：Total Fat Per Serving？或者看TF是Total Fat，P1是Per Serving，P是Per Container？比如TF-P1是Total Fat Per Serving（0g），TF-P是Total Fat Per Container（0g）。
+
+SO是Sodium，SO-P1是Sodium Per Serving（10mg），SO-P是Sodium Per Container（25mg）。
+
+CAR是Total Carb.，CAR-P1是Total Carb. Per Serving（14g），CAR-P是Total Carb. Per Container（38g）。
+
+PRO是Protein，PRO-P1是Protein Per Serving（0g），PRO-P是Protein Per Container（0g）。
+
+另外还有% DV的部分，比如Total Fat的% DV Per Serving是0%，Per Container是0%。但schema里可能没有对应% DV的字段？看schema里的字段：CE-P1, CE-PS是Calories的Per Serving和Per Container；TF-PP可能是Total Fat的Per Serving？或者看每个字段的可能对应：
+
+现在再看schema的字段列表：
+
+"SS": "", // Serving size
+"CE-P1": "", // Calories Per Serving
+"CE-PS": "", // Calories Per Container
+"TF-PP": "", // Total Fat Per Serving？
+"TF-PS": "", // Total Fat Per Container？
+"TF-D": "", // Total Fat % DV Per Serving？
+"TF-P1": "", // 可能重复？不，原schema里的字段是：CE-P1, CE-PS, TF-PP, TF-PS, TF-D, TF-P1, SO-PS, SO-D, SO-P1, SO-PP, CAR-PS, CAR-D, CAR-P1, CAR-PP, PRO-PS, PRO-P1
+
+可能需要更仔细分析每个缩写：
+
+CE：Calories；P1：Per Serving；PS：Per Container；D：% DV（Daily Value）；SO：Sodium；CAR：Total Carbohydrate；PRO：Protein；TF：Total Fat；
+
+现在逐个字段：
+
+SS：Serving size → 图片中“4 pieces (16g)”（因为“4 pieces (16g)”在Serving size对应的位置，而“about 2.5 servings per container”是每容器的份数，所以Serving size是每份的量，即4 pieces (16g)）
+
+CE-P1：Calories Per Serving → 60
+
+CE-PS：Calories Per Container → 150
+
+TF-PP：Total Fat Per Serving → 0g （看Total Fat行Per Serving是0g）
+
+TF-PS：Total Fat Per Container → 0g （Per Container是0g）
+
+TF-D：Total Fat % DV Per Serving → 0% （Total Fat的% DV Per Serving是0%）
+
+TF-P1：？可能重复？不，原schema里有TF-P1，可能我之前看错了。原schema是：
+
+{"SS": "", "CE-P1": "", "CE-PS": "", "TF-PP": "", "TF-PS": "", "TF-D": "", "TF-P1": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SO-PP": "", "CAR-PS": "", "CAR-D": "", "CAR-P1": "", "CAR-PP": "", "PRO-PS": "", "PRO-P1": ""}
+
+现在看SO（Sodium）：
+
+SO-PS：Sodium Per Container → 25mg （Per Container的Sodium是25mg）
+
+SO-D：Sodium % DV Per Container → 1% （Sodium的% DV Per Container是1%）
+
+SO-P1：Sodium Per Serving → 10mg （Per Serving的Sodium是10mg）
+
+SO-PP：Sodium % DV Per Serving → 0% （Sodium的% DV Per Serving是0%）
+
+CAR（Total Carb.）：
+
+CAR-PS：Total Carb. Per Container → 38g （Per Container是38g）
+
+CAR-D：Total Carb. % DV Per Container → 14% （Total Carb.的% DV Per Container是14%）
+
+CAR-P1：Total Carb. Per Serving → 14g （Per Serving是14g）
+
+CAR-PP：Total Carb. % DV Per Serving → 5% （Total Carb.的% DV Per Serving是5%）
+
+PRO（Protein）：
+
+PRO-PS：Protein Per Container → 0g （Per Container是0g）
+
+PRO-P1：Protein Per Serving → 0g （Per Serving是0g）
+
+另外还有其他项比如Saturated Fat、Trans Fat、Cholesterol、Total Sugars、Dietary Fiber、Incl. Added Sugars，但schema里没有对应的字段，所以可能这些在schema中没有要求提取，因为schema里的字段是给定的，只提取对应字段。
+
+现在再检查每个字段：
+
+SS：Serving size → 图片中“4 pieces (16g)”（因为“Serving size”下面对应的是每份的量，而“about 2.5 servings per container”是每容器的份数，所以Serving size是4 pieces (16g)）
+
+CE-P1：Calories Per Serving → 60
+
+CE-PS：Calories Per Container → 150
+
+TF-PP：Total Fat Per Serving → 0g （Total Fat行Per Serving是0g）
+
+TF-PS：Total Fat Per Container → 0g （Per Container是0g）
+
+TF-D：Total Fat % DV Per Serving → 0% （Total Fat的% DV Per Serving是0%）
+
+TF-P1：？看Total Fat的Per Serving的% DV？不，可能TF-P1是Total Fat Per Serving的量？但之前TF-PP可能也是量？可能我搞混了。或者看原图片中的Total Fat行：
+
+Total Fat | 0g | 0% | 0g | 0%
+
+所以Per Serving是0g，%DV 0%；Per Container是0g，%DV 0%。所以TF-PP（Total Fat Per Serving）是0g；TF-PS（Total Fat Per Container）是0g；TF-D（Total Fat % DV Per Serving）是0%；TF-P1（Total Fat % DV Per Container？不，原schema有TF-P1，可能P1是Per Serving的% DV？或者可能字段命名是：P1是Per Serving的量，P是Per Container的量，D是% DV（Per Serving？）。
+
+或者可能schema中的TF-P1是Total Fat Per Serving的% DV？比如Total Fat的% DV Per Serving是0%，所以TF-P1是0%？但之前TF-D可能也是% DV？可能我需要重新对应。
+
+另外，Cholesterol的Per Serving是0mg，%DV 0%；Per Container是25mg，%DV 1%。但schema里没有Cholesterol的字段，所以不提取。
+
+Total Sugars：Per Serving是10g？不，看Total Sugars行：Per Serving是10g？然后Incl. Added Sugars是9g（18%）；Per Container Total Sugars是27g（49%），Incl. Added Sugars是24g（49%）。但schema里没有Total Sugars的字段，所以不提取。
+
+现在回到schema的字段，必须填充每个字段，即使没有对应信息？不，应该是提取存在的信息。现在再整理每个字段：
+
+SS：Serving size → 图片中“4 pieces (16g)”（因为“4 pieces (16g)”在Serving size的位置，而“about 2.5 servings per container”是每容器的份数，所以Serving size是4 pieces (16g)）
+
+CE-P1：Calories Per Serving → 60
+
+CE-PS：Calories Per Container → 150
+
+TF-PP：Total Fat Per Serving → 0g （Total Fat行Per Serving的量是0g）
+
+TF-PS：Total Fat Per Container → 0g （Per Container的量是0g）
+
+TF-D：Total Fat % DV Per Serving → 0% （Total Fat的% DV Per Serving是0%）
+
+TF-P1：Total Fat % DV Per Container？不，原schema有TF-P1，可能P1是Per Serving的% DV？或者可能TF-P1是Total Fat Per Serving的% DV，而TF-D是Total Fat Per Container的% DV？比如Total Fat的% DV Per Container是0%，所以TF-D是0%？但之前Total Fat的% DV Per Container是0%，所以可能TF-D是Total Fat % DV Per Serving（0%），TF-P1是Total Fat % DV Per Container（0%）？但这样重复了。或者可能我搞错了字段，比如SO-D是Sodium % DV Per Container（1%），SO-PP是Sodium % DV Per Serving（0%）。
+
+现在再看Sodium行：
+
+Sodium | 10mg | 0% | 25mg | 1%
+
+所以Per Serving是10mg，%DV 0%；Per Container是25mg，%DV 1%。所以：
+
+SO-P1：Sodium Per Serving → 10mg
+
+SO-PP：Sodium % DV Per Serving → 0%
+
+SO-PS：Sodium Per Container → 25mg
+
+SO-D：Sodium % DV Per Container → 1%
+
+这样对应SO的四个字段：SO-PS（Per Container量）、SO-D（Per Container %DV）、SO-P1（Per Serving量）、SO-PP（Per Serving %DV）。
+
+同样，Total Carb.行：
+
+Total Carb. | 14g | 5% | 38g | 14%
+
+所以：
+
+CAR-P1：Total Carb. Per Serving → 14g
+
+CAR-PP：Total Carb. % DV Per Serving → 5%
+
+CAR-PS：Total Carb. Per Container → 38g
+
+CAR-D：Total Carb. % DV Per Container → 14%
+
+Protein行：
+
+Protein | 0g |  | 0g | 
+
+所以：
+
+PRO-P1：Protein Per Serving → 0g
+
+PRO-PS：Protein Per Container → 0g
+
+现在Total Fat行：
+
+Total Fat | 0g | 0% | 0g | 0%
+
+所以：
+
+TF-PP：Total Fat Per Serving → 0g （这里PP可能是Per Serving的量？因为之前SO-P1是Per Serving量，所以TF-PP可能也是Per Serving量？或者TF-PP是Per Serving的量，TF-PS是Per Container的量，TF-D是Per Serving的% DV，TF-P1是Per Container的% DV？这样：
+
+TF-PP：Total Fat Per Serving → 0g
+
+TF-PS：Total Fat Per Container → 0g
+
+TF-D：Total Fat % DV Per Serving → 0%
+
+TF-P1：Total Fat % DV Per Container → 0%
+
+这样四个字段对应Total Fat的四个数据（量Per Serving，量Per Container，%DV Per Serving，%DV Per Container）。
+
+现在Calories行：
+
+Calories | 60 |  | 150 | 
+
+所以CE-P1：Calories Per Serving → 60
+
+CE-PS：Calories Per Container → 150
+
+CE-D和CE-P1？不，Calories的% DV可能没有在图中显示？因为图中Calories下面没有% DV列？看图片中的Calories行，右边是Per Serving 60，Per Container 150，可能% DV没有标注，或者图中没有显示。所以CE-D可能为空？
+
+现在整理所有字段：
+
+SS：Serving size → "4 pieces (16g)" （因为“4 pieces (16g)”是Serving size，而“about 2.5 servings per container”是每容器的份数，所以Serving size是4 pieces (16g)）
+
+CE-P1：Calories Per Serving → "60"
+
+CE-PS：Calories Per Container → "150"
+
+TF-PP：Total Fat Per Serving → "0g"
+
+TF-PS：Total Fat Per Container → "0g"
+
+TF-D：Total Fat % DV Per Serving → "0%"
+
+TF-P1：Total Fat % DV Per Container → "0%"
+
+SO-PS：Sodium Per Container → "25mg"
+
+SO-D：Sodium % DV Per Container → "1%"
+
+SO-P1：Sodium Per Serving → "10mg"
+
+SO-PP：Sodium % DV Per Serving → "0%"
+
+CAR-PS：Total Carb. Per Container → "38g"
+
+CAR-D：Total Carb. % DV Per Container → "14%"
+
+CAR-P1：Total Carb. Per Serving → "14g"
+
+CAR-PP：Total Carb. % DV Per Serving → "5%"
+
+PRO-PS：Protein Per Container → "0g"
+
+PRO-P1：Protein Per Serving → "0g"
+
+现在检查每个字段是否在schema中存在：
+
+schema的字段是：
+
+"SS", "CE-P1", "CE-PS", "TF-PP", "TF-PS", "TF-D", "TF-P1", "SO-PS", "SO-D", "SO-P1", "SO-PP", "CAR-PS", "CAR-D", "CAR-P1", "CAR-PP", "PRO-PS", "PRO-P1"
+
+现在对应填充：
+
+SS: "4 pieces (16g)"
+
+CE-P1: "60"
+
+CE-PS: "150"
+
+TF-PP: "0g"
+
+TF-PS: "0g"
+
+TF-D: "0%"
+
+TF-P1: "0%"
+
+SO-PS: "25mg"
+
+SO-D: "1%"
+
+SO-P1: "10mg"
+
+SO-PP: "0%"
+
+CAR-PS: "38g"
+
+CAR-D: "14%"
+
+CAR-P1: "14g"
+
+CAR-PP: "5%"
+
+PRO-PS: "0g"
+
+PRO-P1: "0g"
+
+现在需要确认Serving size是否正确。图片中的“Serving size”下面，右边是“4 pieces (16g)”吗？看图片中的文字：“Serving size”右边是“4 pieces (16g)”，而“about 2 5 servings per container”是“about 2.5 servings per container”，所以Serving size是“4 pieces (16g)”，每容器有2.5份。所以SS是“4 pieces (16

@@ -1,0 +1,82 @@
+Here is the HTML transcription of the table from the image, using `<tr>` and `<td>` tags with appropriate `rowspan` for merged cells (e.g., "LB" and "UB" spanning multiple rows). The layout reflects the original structure from top-left to bottom-right.
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Algorithm</th>
+      <th>Convergence Rate</th>
+      <th>Compression<sup>a</sup></th>
+      <th>Trans. Compl.<sup>b</sup></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="2">LB</td>
+      <td>Theorem 1+Corollary 1</td>
+      <td>$\Omega \left( \frac{\sigma}{\sqrt{nT}} + \frac{1}{\delta T} \right)$</td>
+      <td>Uni/Bidirectional<br>Contractive</td>
+      <td>$\mathcal{O}(n/\delta^2)$</td>
+    </tr>
+    <tr>
+      <td>Theorem 2+Corollary 2</td>
+      <td>$\Omega \left( \frac{\sigma}{\sqrt{nT}} + \frac{1+\omega}{T} \right)$</td>
+      <td>Uni/Bidirectional<br>Unbiased</td>
+      <td>$\mathcal{O}\left(n(1+\omega)^2\right)$</td>
+    </tr>
+    <tr>
+      <td rowspan="7">UB</td>
+      <td>Theorem 3</td>
+      <td>$\tilde{\mathcal{O}} \left( \frac{\sigma}{\sqrt{nT}} + \frac{1}{\delta T} \right)$</td>
+      <td>Uni/Bidirectional<br>Contractive</td>
+      <td>$\tilde{\mathcal{O}}(n/\delta^2)$</td>
+    </tr>
+    <tr>
+      <td>Corollary 3</td>
+      <td>$\tilde{\mathcal{O}} \left( \frac{\sigma}{\sqrt{nT}} + \frac{1+\omega}{T} \right)$</td>
+      <td>Uni/Bidirectional<br>Unbiased</td>
+      <td>$\tilde{\mathcal{O}}(n(1+\omega)^2)$</td>
+    </tr>
+    <tr>
+      <td>Q-SGD [31]</td>
+      <td>$\mathcal{O} \left( \frac{(1+\omega)\sigma + \omega b^2/\sigma}{\sqrt{nT}} \right)^\dagger$</td>
+      <td>Unidirectional<br>i.i.d, Unbiased</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td>MEM-SGD [52]</td>
+      <td>$\mathcal{O} \left( \frac{\sigma}{\sqrt{nT}} + \frac{G^{2/3}}{\delta^{2/3}T^{2/3}} + \frac{1}{T} \right)$</td>
+      <td>Unidirectional<br>Contractive</td>
+      <td>$\mathcal{O}(n^3/\delta^4)$</td>
+    </tr>
+    <tr>
+      <td>Double Squeeze [56]</td>
+      <td>$\mathcal{O} \left( \frac{1}{\sqrt{nT}} + \frac{G^{2/3}}{\delta^{4/3}T^{2/3}} + \frac{1}{T} \right)$</td>
+      <td>Bidirectional<sup>◦</sup></td>
+      <td>$\mathcal{O}(n^3/\delta^8)$</td>
+    </tr>
+    <tr>
+      <td>CSER [61]</td>
+      <td>$\mathcal{O} \left( \frac{\sigma}{\sqrt{nT}} + \frac{G^{2/3}}{\delta^{2/3}T^{2/3}} + \frac{1}{T} \right)$</td>
+      <td>Unidirectional<br>Contractive</td>
+      <td>$\mathcal{O}(n^3/\delta^4)$</td>
+    </tr>
+    <tr>
+      <td>EF21-SGD [24]</td>
+      <td>$\mathcal{O} \left( \frac{\sigma}{\sqrt{\delta^3 T}} + \frac{1}{\delta T} \right)^*$</td>
+      <td>Unidirectional<br>Contractive</td>
+      <td>–</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- **Merged Cells**: The first column (“LB” and “UB”) uses `rowspan="2"` and `rowspan="7"` respectively to span their respective algorithm groups.
+- **Mathematical Notation**: LaTeX-style math expressions are preserved as plain text within `$...$` delimiters — in a real rendering environment, you’d use MathJax or similar to render them properly.
+- **Superscripts**: Footnote markers like `<sup>a</sup>`, `<sup>b</sup>`, `<sup>◦</sup>`, `<sup>†</sup>`, `<sup>*</sup>` are included as shown in the image.
+- **Dashes**: “–” is used where no value is provided (as in Q-SGD and EF21-SGD for Trans. Compl.).
+- **Line Breaks**: `<br>` is used inside cells to replicate line breaks (e.g., “Uni/Bidirectional<br>Contractive”).
+
+This HTML faithfully reproduces the table’s structure and content as seen in the image.

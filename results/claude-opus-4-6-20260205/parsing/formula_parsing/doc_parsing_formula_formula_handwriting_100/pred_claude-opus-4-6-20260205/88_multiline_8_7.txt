@@ -1,0 +1,19 @@
+The image appears to be upside down. Let me rotate it mentally and transcribe the mathematical formulas.
+
+$$|E[\hat{f}_{BA}^{\delta}(s_0^{\alpha}|R_{\delta}]| = \gamma E[\min\{Q_{\delta}^{\pi}(s, a_0^{\prime\prime+s}), Q_{\delta}^{\pi}(s_0^{\alpha}, (s_0^{\alpha\prime\prime+s})) - \min\{Q_{\delta}^{\pi}(s, q_0^{\prime\prime+s}), Q_{\delta}^{\pi}(s_*^{\alpha}, (s_*^{\alpha\prime\prime+s}))\} | R_{\delta}]$$
+
+$$\leq \gamma E[\min\{Q_{\delta}^{\pi}(s, x_0^{\prime\prime+s}), Q_{\delta}^{\pi}(s_*, q^{\prime\prime+s})\} | R_{\delta}]$$
+
+$$\leq \gamma E[R_{\delta}| (s_*^{\alpha\prime\prime+s}) Q_{\delta}^{\pi}] R_{\delta}] - \gamma E[\min\{Q_{\delta}^{\pi}(s_*, q^{\prime\prime+s}), Q_{\delta}^{\pi}(s_*^{\alpha}, \{(s_*^{\alpha\prime\prime+s})\} | R_{\delta}]$$
+
+$$= \gamma P(Q_{\delta}^{\pi} \geq (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi}) E[(R_{\delta}| (s_*^{\alpha\prime\prime+s}) Q_{\delta}^{\pi}] E[(s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} \geq (s_*, q^{\prime\prime+s}), Q_{\delta}^{\pi}, R_{\delta}]$$
+
+$$+ \gamma P(Q_{\delta}^{\pi} > (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi}) E[(R_{\delta}| (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} | (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} > (s_*, q^{\prime\prime+s}), Q_{\delta}^{\pi}, R_{\delta}]$$
+
+$$- \gamma P(Q_{\delta}^{\pi} \geq (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi}) E[(R_{\delta}| (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} | (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} \geq (s_*, q^{\prime\prime+s}), Q_{\delta}^{\pi}, R_{\delta}]$$
+
+$$- \gamma P(Q_{\delta}^{\pi} > (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi}) E[(R_{\delta}| (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} > (s_*, q^{\prime\prime+s}), Q_{\delta}^{\pi}, R_{\delta}]$$
+
+$$= \gamma P(Q_{\delta}^{\pi} \geq (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi}) E[(R_{\delta}| (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} - (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} | (s_*, q^{\prime\prime+s}) Q_{\delta}^{\pi} \geq (s_*, q^{\prime\prime+s}), Q_{\delta}^{\pi}, R_{\delta}]$$
+
+$$\leq \gamma P(Q_{\delta}^{\pi} \geq (s_*, 0^{\prime\prime+s}) Q_{\delta}^{\pi} | R_{\delta}) \|\nabla_{\delta}^{2} A\| \leq \gamma \|\nabla_{\delta}^{2} A\|,$$

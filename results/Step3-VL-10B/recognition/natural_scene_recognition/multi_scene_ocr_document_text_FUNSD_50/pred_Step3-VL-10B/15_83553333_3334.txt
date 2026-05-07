@@ -1,0 +1,261 @@
+用户现在需要提取图片中的所有文本内容，要逐行看。首先看顶部的日期时间等，然后是公司名，然后是Fax Transmittal部分，Sender、Date、Number of Pages这些，然后是Sender Voice Number、Reference、Sender Fax Number。然后是To部分的各个条目，每个To对应的Fax Number、Company、Recipient Phone Number。然后Message:，最后是Confidentiality Note。要确保所有文字都提取，包括底部的条形码上面的数字？不过看图片里的内容，先处理可见文字。
+
+先看最上面的：11/12/98 19:32 FAX 212 450 4800，DWP 1046，然后右上角是8002/007。然后公司名DAVIS POLK & WARDWELL。然后Fax Transmittal部分：450 Lexington Avenue, New York, NY 10017, 212-450-4000。Sender是Charles Duggan。Date是November 12, 1999。Number of Pages (this page included)是6。然后Sender Voice Number是212-450-4785，右边If problems...是212-450-4785。Reference是17555-002。Sender Fax Number是212-450-3785。然后To部分：
+
+Thomas M. Sobol，Fax Number 617-439-3278，Company Brown Rudnick Freed & Gesmer，Recipient Phone Number 617-330-9000。
+
+Joseph F. Rice，Fax Number 843-720-9290，Company Ness, Motley, Loadholt, Richardson & Poole，Recipient Phone Number 843-720-9000。
+
+Robert V. Costello，Fax Number 617-722-0286，Company Schneider, Reilly, Zabin & Costello，Recipient Phone Number 617-227-7500（这里Jeffrey D. Woolf对应的是Schneider, Reilly, Zabin & Costello？看图片里Robert V. Costello和Jeffrey D. Woolf是同一行？不，看图片里的结构：Robert V. Costello一行，然后Jeffrey D. Woolf是下一行？不，看图片中的To列，每个To是单独的行。看图片里的To部分：
+
+第一行To是Thomas M. Sobol，然后是Joseph F. Rice，然后是Robert V. Costello和Jeffrey D. Woolf？不，看图片中的表格结构，To列下，每个条目是：
+
+Thomas M. Sobol
+
+Joseph F. Rice
+
+Robert V. Costello
+
+Jeffrey D. Woolf
+
+Richard M. Heimann
+
+Michael P. Thornton
+
+然后每个对应的Fax Number、Company、Recipient Phone Number。比如Robert V. Costello的Fax Number是617-722-0286，Company是Schneider, Reilly, Zabin & Costello？然后Jeffrey D. Woolf的Company也是Schneider, Reilly, Zabin & Costello？看图片里的内容：
+
+Robert V. Costello 617-722-0286 Schneider, Reilly, Zabin & Costello 617-227-7500
+
+Jeffrey D. Woolf 这里可能没有单独的Fax Number？不，看图片中的结构，每个To行对应一个Fax Number，Company，Recipient Phone Number。可能Jeffrey D. Woolf是和Robert V. Costello同一Company？看图片中的文字：
+
+Robert V. Costello 617-722-0286 Schneider, Reilly, Zabin & Costello 617-227-7500
+
+Jeffrey D. Woolf 这里可能没有列出Fax Number？不，看图片中的内容，可能排版问题。然后Richard M. Heimann的Fax Number是415-956-1008，Company是Lief, Cabraser & Heimann，Recipient Phone Number是415-956-1000。Michael P. Thornton的Fax Number是617-720-2445，Company是Thornton, Early & Naumes，Recipient Phone Number是617-720-1333。
+
+然后Message: 后面是空的。然后底部的Confidentiality Note: This facsimile is intended only for the person or entity to which it is addressed and may contain information that is privileged, confidential or otherwise protected from disclosure, Distribution or copying of this facsimile or the information herein by anyone other than the intended recipient, or an employee or agent responsible for delivering the message to the intended recipient, is prohibited. If you have received this facsimile in error, please notify us immediately by telephone and return the facsimile by mail.
+
+另外，图片右下角有条形码，上面的数字是835523333？看图片右下角的数字，是835523333吗？图片里右下角的数字是835523333？看图片中的右下角，有竖排的数字，是835523333？需要确认。不过用户要求输出文本内容，包括所有可见文字，包括条形码上面的数字吗？看图片中的右下角，有“835523333”吗？看图片里的右下角，竖排的数字是835523333？是的，图片右下角有竖排的数字，应该是835523333。
+
+现在需要把所有内容按顺序提取，包括顶部的日期、公司名、Fax Transmittal的各个字段，To部分的每个条目，Message，Confidentiality Note，以及右下角的条形码数字。
+
+现在开始逐行整理：
+
+11/12/98 19:32 FAX 212 450 4800 DWP 1046
+
+8002/007
+
+DAVIS POLK & WARDWELL
+
+Fax Transmittal
+
+450 Lexington Avenue
+
+New York, NY 10017
+
+212-450-4000
+
+Sender: Charles Duggan
+
+Date: November 12, 1999
+
+Number of Pages (this page included): 6
+
+Sender Voice Number: 212-450-4785
+
+If problems receiving this fax, call: 212-450-4785
+
+Sender Fax Number: 212-450-3785
+
+Reference: 17555-002
+
+To: Thomas M. Sobol
+
+Fax Number: 617-439-3278
+
+Company: Brown Rudnick Freed & Gesmer
+
+Recipient Phone Number: 617-330-9000
+
+To: Joseph F. Rice
+
+Fax Number: 843-720-9290
+
+Company: Ness, Motley, Loadholt, Richardson & Poole
+
+Recipient Phone Number: 843-720-9000
+
+To: Robert V. Costello
+
+Fax Number: 617-722-0286
+
+Company: Schneider, Reilly, Zabin & Costello
+
+Recipient Phone Number: 617-227-7500
+
+To: Jeffrey D. Woolf
+
+（这里看图片中Jeffrey D. Woolf的Company是否和Robert一样？看图片中的内容，Jeffrey D. Woolf的Company是Schneider, Reilly, Zabin & Costello吗？然后Recipient Phone Number？可能Jeffrey D. Woolf没有单独的Recipient Phone Number？不，看图片中的结构，每个To行对应一个Recipient Phone Number。可能Jeffrey D. Woolf的Recipient Phone Number也是617-227-7500？或者可能排版中Robert和Jeffrey是同一行？不，看图片中的表格，To列下，每个条目是单独的行，所以Jeffrey D. Woolf是下一个To，可能他的Fax Number？不，看图片中的内容，可能我之前看错了。再看图片中的To部分：
+
+在图片中，To列下的条目：
+
+Thomas M. Sobol
+
+Joseph F. Rice
+
+Robert V. Costello
+
+Jeffrey D. Woolf
+
+Richard M. Heimann
+
+Michael P. Thornton
+
+每个对应的Fax Number、Company、Recipient Phone Number。例如：
+
+Thomas M. Sobol: Fax 617-439-3278, Company Brown Rudnick Freed & Gesmer, Recipient 617-330-9000
+
+Joseph F. Rice: Fax 843-720-9290, Company Ness, Motley, Loadholt, Richardson & Poole, Recipient 843-720-9000
+
+Robert V. Costello: Fax 617-722-0286, Company Schneider, Reilly, Zabin & Costello, Recipient 617-227-7500
+
+Jeffrey D. Woolf: 这里可能没有列出Fax Number？不，看图片中的内容，Jeffrey D. Woolf的Fax Number可能没有？或者可能和Robert是同一行？不，看图片中的文字，Robert V. Costello和Jeffrey D. Woolf在同一个Company列？看图片中的Company列，Robert V. Costello的Company是Schneider, Reilly, Zabin & Costello，然后Jeffrey D. Woolf的Company也是这个？然后Recipient Phone Number是617-227-7500？可能Jeffrey D. Woolf没有单独的Fax Number，或者可能排版问题，比如Jeffrey D. Woolf的Fax Number是另一个？不，看图片中的内容，可能Jeffrey D. Woolf的行是：
+
+Jeffrey D. Woolf 对应的Company是Schneider, Reilly, Zabin & Costello，Recipient Phone Number是617-227-7500？而Robert V. Costello的Fax Number是617-722-0286，Jeffrey D. Woolf的Fax Number可能没有列出？或者可能我漏看了。再仔细看图片中的内容：
+
+在图片中，To列下的条目，每个条目有To、Fax Number、Company、Recipient Phone Number四列。所以每个To对应一个Fax Number，一个Company，一个Recipient Phone Number。现在看图片中的内容：
+
+第一行To: Thomas M. Sobol，Fax Number: 617-439-3278，Company: Brown Rudnick Freed & Gesmer，Recipient Phone Number: 617-330-9000
+
+第二行To: Joseph F. Rice，Fax Number: 843-720-9290，Company: Ness, Motley, Loadholt, Richardson & Poole，Recipient Phone Number: 843-720-9000
+
+第三行To: Robert V. Costello，Fax Number: 617-722-0286，Company: Schneider, Reilly, Zabin & Costello，Recipient Phone Number: 617-227-7500
+
+第四行To: Jeffrey D. Woolf，这里看图片中是否有Fax Number？可能Jeffrey D. Woolf的Fax Number是另一个？不，看图片中的内容，第四行To是Jeffrey D. Woolf，然后Company是Schneider, Reilly, Zabin & Costello，Recipient Phone Number是？可能Jeffrey D. Woolf没有Fax Number？或者可能图片中Jeffrey D. Woolf的行是和Robert V. Costello在同一行？不，看图片中的排版，应该是每个To单独一行。可能我之前看错了，再看图片中的文字：
+
+在图片中，To列下的内容：
+
+Thomas M. Sobol
+
+Joseph F. Rice
+
+Robert V. Costello
+
+Jeffrey D. Woolf
+
+Richard M. Heimann
+
+Michael P. Thornton
+
+然后对应的Fax Number列：
+
+617-439-3278
+
+843-720-9290
+
+617-722-0286
+
+（这里Jeffrey D. Woolf的Fax Number？可能图片中Jeffrey D. Woolf的Fax Number是空？或者可能我漏看了。或者可能Jeffrey D. Woolf的Fax Number是另一个，比如没有列出？不，看图片中的内容，可能Jeffrey D. Woolf的行是：
+
+Jeffrey D. Woolf 对应的Company是Schneider, Reilly, Zabin & Costello，Recipient Phone Number是617-227-7500，而Fax Number可能没有？或者可能图片中Robert V. Costello和Jeffrey D. Woolf是同一行，即To列是Robert V. Costello和Jeffrey D. Woolf在同一行？比如To列是“Robert V. Costello, Jeffrey D. Woolf”，然后Fax Number是617-722-0286，Company是Schneider, Reilly, Zabin & Costello，Recipient Phone Number是617-227-7500。这样更合理，因为有时候两个人在一个公司，所以To列是两个人的名字。看图片中的To列，第三行是“Robert V. Costello Jeffrey D. Woolf”，然后Fax Number是617-722-0286，Company是Schneider, Reilly, Zabin & Costello，Recipient Phone Number是617-227-7500。这样就对了，之前看错了，把两个名字分开了。现在重新看：
+
+To列的条目：
+
+1. Thomas M. Sobol
+
+2. Joseph F. Rice
+
+3. Robert V. Costello, Jeffrey D. Woolf （同一行，两个名字）
+
+4. Richard M. Heimann
+
+5. Michael P. Thornton
+
+这样每个To行对应一个Fax Number、Company、Recipient Phone Number。现在验证：
+
+第三行To是Robert V. Costello和Jeffrey D. Woolf，Fax Number是617-722-0286，Company是Schneider, Reilly, Zabin & Costello，Recipient Phone Number是617-227-7500。这样就正确了，因为两个人在一个公司，所以To列是两个名字，其他列对应一个。
+
+然后第四行To是Richard M. Heimann，Fax Number是415-956-1008，Company是Lief, Cabraser & Heimann，Recipient Phone Number是415-956-1000。
+
+第五行To是Michael P. Thornton，Fax Number是617-720-2445，Company是Thornton, Early & Naumes，Recipient Phone Number是617-720-1333。
+
+现在整理所有内容：
+
+顶部：
+
+11/12/98 19:32 FAX 212 450 4800 DWP 1046
+
+8002/007
+
+DAVIS POLK & WARDWELL
+
+Fax Transmittal
+
+450 Lexington Avenue
+
+New York, NY 10017
+
+212-450-4000
+
+Sender: Charles Duggan
+
+Date: November 12, 1999
+
+Number of Pages (this page included): 6
+
+Sender Voice Number: 212-450-4785
+
+If problems receiving this fax, call: 212-450-4785
+
+Sender Fax Number: 212-450-3785
+
+Reference: 17555-002
+
+To: Thomas M. Sobol
+
+Fax Number: 617-439-3278
+
+Company: Brown Rudnick Freed & Gesmer
+
+Recipient Phone Number: 617-330-9000
+
+To: Joseph F. Rice
+
+Fax Number: 843-720-9290
+
+Company: Ness, Motley, Loadholt, Richardson & Poole
+
+Recipient Phone Number: 843-720-9000
+
+To: Robert V. Costello, Jeffrey D. Woolf
+
+Fax Number: 617-722-0286
+
+Company: Schneider, Reilly, Zabin & Costello
+
+Recipient Phone Number: 617-227-7500
+
+To: Richard M. Heimann
+
+Fax Number: 415-956-1008
+
+Company: Lief, Cabraser & Heimann
+
+Recipient Phone Number: 415-956-1000
+
+To: Michael P. Thornton
+
+Fax Number: 617-720-2445
+
+Company: Thornton, Early & Naumes
+
+Recipient Phone Number: 617-720-1333
+
+Message:
+
+Confidentiality Note: This facsimile is intended only for the person or entity to which it is addressed and may contain information that is privileged, confidential or otherwise protected from disclosure, Distribution or copying of this facsimile or the information herein by anyone other than the intended recipient, or an employee or agent responsible for delivering the message to the intended recipient, is prohibited. If you have received this facsimile in error, please notify us immediately by telephone and return the facsimile by mail.
+
+右下角的条形码数字：835523333（竖排的数字，图片中右下角有“835523333”）
+
+现在需要确保所有内容都包含，没有遗漏。另外，检查是否有其他文字，比如顶部的“11/12/98 19:32 FAX 212 450 4800”中的“FAX”是大写，还有“DWP 1046”，右上角的“8002/007”。
+
+现在

@@ -1,0 +1,10 @@
+```latex
+P_{2K}\left[T_{0,M_\Sigma}^{2K}<T_0^{2K}\right]=\frac{\sum_{n=1}^{2K}\frac{1-p_\Sigma(n)}{p_\Sigma(n)}}{\sum_{n=1}^{3M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}\frac{1}{1-p_\Sigma(n)}}
+=\frac{\sum_{n=1}^{2K}\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}}{\sum_{n=1}^{3M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}\prod_{k=1}^{n-1}\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}}
+=\frac{\sum_{n=1}^{2K}\exp\left(\sum_{k=1}^{n-1}\ln\left(\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}\right)\right)}{\sum_{n=1}^{3M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}\exp\left(\sum_{k=1}^{n-1}\ln\left(\frac{1+2C_0kK^{-1}}{1-2C_0kK^{-1}}\right)\right)}
+\leq\frac{\sum_{n=1}^{2K}\exp\left(\sum_{k=1}^{n-1}4C_0kK^{-1}\right)}{\sum_{n=1}^{3M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}\exp\left(\sum_{k=1}^{n-1}4C_0kK^{-1}-O((kK^{-1})^2)\right)}
+\leq\frac{\sum_{n=1}^{2K}\exp\left(2C_0n^2K^{-1}-2C_0nK^{-1}\right)}{\sum_{n=1}^{3M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}\exp\left(2C_0n^2K^{-1}-2C_0nK^{-1}-O(n(nK^{-1})^2)\right)}
+\leq\frac{2K\exp\left(2C_0z^2K\right)}{\sum_{n=2M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}^{3M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}K}\exp\left(2C_0n^2K^{-1}-2C_0nK^{-1}-O(n(nK^{-1})^2)\right)}
+\leq\frac{2K\exp\left(2C_0z^2K\right)}{-M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}\exp\left(8C_0M_\Sigma^2(x^{2i}\varepsilon^2)^{1+\alpha}K-4C_0M_\Sigma(x^{2i}\varepsilon^2)^{1+\alpha}-O((x^{2i}\varepsilon^2)^{1+\alpha}K)\right)}
+\leq\exp\left(-2C_0K\left(2M_\Sigma^2(x^{4i}\varepsilon^4)^{1+\alpha}-z^2\right)\right).
+```

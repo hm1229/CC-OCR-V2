@@ -1,0 +1,153 @@
+用户现在需要检测图像中的各个指定对象，先逐个看。首先看Arrival Date 入住日期，对应的是“09-25-20”那个位置。然后CNY 人民币在Balance 结余那里有“CNY 人民币”。Confirmation No. 确认号码是1412294。Departure Date 退房日期是09-26-20。Email 电邮是james04@mitchell-ortiz.com。Fax:(86 21)是(86 21)84994658。Folio Number 账单号码是331493。Name 姓名是王秀梅。Page No. 页数是2 of 2里的2。Printing Time 列印时间是26-09-2020 13:47。REMINDER是下面的温馨提示英文和中文。Room 房间号码是1516。Staff 职员是RAYXU, E581。Tel 电话是(86 21)58185564。VAT 13% 增值税对应的是0.00的那个行。VAT 5% 增值税是0.00。VAT 6% 增值税是31.13。VAT 9% 增值税是0.00。Website 网址是http://decker-thompson.org/。公司名是良诺信息酒店。地址是516 Hengshan Road, Shanghai,200030,China 台湾省鑫市苗州郭路C座 618513。温馨提示是“温馨提示 ：请提前预订下次旅程。”。细项金额可能看那些带金额的行，比如hotel.com 0.00，XU,E 158对应的，9-2020 13:47对应的。邮政编号是200030。金额比如Total 总计的1,650.03，还有下面的36445 8899 1,650.03这些。
+
+现在要逐个定位每个对象的bbox。先列出来每个类别：
+
+1. Arrival Date 入住日期：看“Arrival Date 入住日期: 09-25-20” 这里的文字区域。在图像中是左侧部分，Arrival Date 对应的值。
+2. CNY 人民币：在“Balance 结余 CNY 人民币”这里，文字是CNY 人民币。
+3. Confirmation No. 确认号码：1412294，对应“Confirmation No. 确认号码: 1412294”。
+4. Departure Date 退房日期：09-26-20，对应“Departure Date 退房日期: 09-26-20”。
+5. Email 电邮：james04@mitchell-ortiz.com，在右侧信息里。
+6. Fax:(86 21)：(86 21)84994658，右侧Fax部分。
+7. Folio Number 账单号码：331493，对应“Folio Number 账单号码: 331493”。
+8. Name 姓名：王秀梅，在Name 姓名对应的位置。
+9. Page No. 页数：2 of 2里的“页数 ：2 of 2”，所以页数是2。
+10. Printing Time 列印时间：26-09-2020 13:47，对应“Printing Time 列印时间: 26-09-2020 13:47”。
+11. REMINDER：英文“REMINDER:Please place your next booking in advance for the best available rate.”和中文“温馨提示 ：请提前预订下次旅程。”。
+12. Room 房间号码：1516，对应“Room 房间号码: 1516”。
+13. Staff 职员：RAYXU, E581，对应“Staff 职员: RAYXU, E581”。
+14. Tel 电话：(86 21)58185564，右侧Tel部分。
+15. VAT 13% 增值税：对应表格中VAT 13% 增值税那一行，金额0.00。
+16. VAT 5% 增值税：对应VAT 5% 增值税那一行，金额0.00。
+17. VAT 6% 增值税：对应VAT 6% 增值税那一行，金额31.13。
+18. VAT 9% 增值税：对应VAT 9% 增值税那一行，金额0.00。
+19. Website 网址：http://decker-thompson.org/，右侧Website部分。
+20. 公司名：良诺信息酒店，在右侧上方。
+21. 地址：516 Hengshan Road, Shanghai,200030,China 台湾省鑫市苗州郭路C座 618513，右侧Address部分。
+22. 温馨提示：中文“温馨提示 ：请提前预订下次旅程。”。
+23. 细项金额：比如下面的“hotel.com...0.00”、“XU,E 158...”、“9-2020 13:47...”这些行，可能需要看是否有对应的区域。不过可能“细项金额”指的是那些明细的金额项，比如Total下面的各个VAT行，或者下面的灰色区域里的金额。不过可能需要看是否有明确的“细项金额”标签，但用户给的类别里有“细项金额”，可能对应那些带金额的明细行，比如“36445 8899 1,650.03”等。
+24. 邮政编号：200030，在地址里的“邮政编号：200030”。
+25. 金额：比如Total 总计的1,650.03，还有Balance 结余的1,650.03，以及下面的各个金额项。
+
+现在需要为每个类别找到对应的bbox。先处理每个类别：
+
+- Arrival Date 入住日期：在左侧，Arrival Date 对应的文本行，位置大概是“Arrival Date 入住日期: 09-25-20” 这个区域。看图像中的位置，Arrival Date 是第三行（Name, Company Name, Address之后是Arrival Date等）。所以bbox大概是包含“Arrival Date 入住日期: 09-25-20”的区域。
+- CNY 人民币：在“Balance 结余 CNY 人民币”这里，右侧Total部分，文字是CNY 人民币。
+- Confirmation No. 确认号码：1412294，对应“Confirmation No. 确认号码: 1412294”。
+- Departure Date 退房日期：09-26-20，对应“Departure Date 退房日期: 09-26-20”。
+- Email 电邮：james04@mitchell-ortiz.com，在右侧Email部分，文字是“Email 电邮:james04@mitchell-ortiz.com”。
+- Fax:(86 21)：(86 21)84994658，右侧Fax部分，“Fax:(86 21)84994658”。
+- Folio Number 账单号码：331493，对应“Folio Number 账单号码: 331493”。
+- Name 姓名：王秀梅，在Name 姓名对应的位置，“Name 姓名 王秀梅”。
+- Page No. 页数：2 of 2里的“页数 ：2 of 2”，所以“Page No. 页数: 2 of 2”。
+- Printing Time 列印时间：26-09-2020 13:47，对应“Printing Time 列印时间: 26-09-2020 13:47”。
+- REMINDER：英文和中文的温馨提示，即“REMINDER:Please place your next booking in advance for the best available rate. 温馨提示 ：请提前预订下次旅程。”。
+- Room 房间号码：1516，对应“Room 房间号码: 1516”。
+- Staff 职员：RAYXU, E581，对应“Staff 职员: RAYXU, E581”。
+- Tel 电话：(86 21)58185564，右侧Tel部分，“Tel 电话:(86 21)58185564”。
+- VAT 13% 增值税：在VAT表格中，VAT 13% 增值税那一行，金额0.00，对应“VAT 13% 增值税 0.00”。
+- VAT 5% 增值税：对应“VAT 5% 增值税 0.00”。
+- VAT 6% 增值税：对应“VAT 6% 增值税 31.13”。
+- VAT 9% 增值税：对应“VAT 9% 增值税 0.00”。
+- Website 网址：http://decker-thompson.org/，右侧Website部分，“Website 网址:http://decker-thompson.org/”。
+- 公司名：良诺信息酒店，在右侧上方，“良诺信息酒店”。
+- 地址：516 Hengshan Road, Shanghai,200030,China 台湾省鑫市苗州郭路C座 618513，右侧Address部分，“Address 地址 516 Hengshan Road...”。
+- 温馨提示：中文“温馨提示 ：请提前预订下次旅程。”。
+- 细项金额：比如下面的“hotel.com...0.00”、“XU,E 158...”等，可能需要看是否有明确的区域，比如在Total下面的明细，或者灰色区域中的金额。比如“36445 8899 1,650.03”这些是金额项，属于细项金额。
+- 邮政编号：200030，在地址里的“邮政编号：200030”。
+- 金额：Total 总计的1,650.03，Balance 结余的1,650.03，以及下面的各个金额，比如“1,650.03”等。
+
+现在需要将每个类别对应到图像中的位置，用bbox表示。由于是图像，需要估计每个元素的位置。例如：
+
+Name 姓名：王秀梅，在图像上方偏左，Name 对应的单元格，文字是“王秀梅”。bbox大概是[200, 50, 350, 70]左右（假设图像的坐标，需要看实际布局）。
+
+公司名：良诺信息酒店，在右侧上方，文字是“良诺信息酒店”，bbox是[600, 150, 800, 170]。
+
+地址：右侧的地址信息，包括516 Hengshan Road等，还有邮政编号200030。bbox是[580, 180, 850, 250]。
+
+Tel 电话：(86 21)58185564，在右侧Tel部分，bbox是[580, 250, 750, 270]。
+
+Fax:(86 21)：(86 21)84994658，bbox是[580, 270, 750, 290]。
+
+Email 电邮：james04@mitchell-ortiz.com，bbox是[580, 290, 800, 310]。
+
+Website 网址：http://decker-thompson.org/，bbox是[580, 310, 800, 330]。
+
+Arrival Date 入住日期：09-25-20，对应左侧“Arrival Date 入住日期: 09-25-20”，bbox是[20, 300, 250, 320]。
+
+Departure Date 退房日期：09-26-20，bbox是[20, 320, 250, 340]。
+
+Room 房间号码：1516，bbox是[20, 340, 250, 360]。
+
+Folio Number 账单号码：331493，bbox是[20, 360, 250, 380]。
+
+Staff 职员：RAYXU, E581，bbox是[450, 320, 600, 340]。
+
+Printing Time 列印时间：26-09-2020 13:47，bbox是[450, 360, 650, 380]。
+
+Page No. 页数：2 of 2，bbox是[450, 380, 600, 400]。
+
+Confirmation No. 确认号码：1412294，bbox是[20, 300, 250, 320]（可能和Arrival Date同区域？不，Confirmation No. 是第一行，看图像中“Confirmation No. 确认号码: 1412294”在Arrival Date上面？看原图像的结构：
+
+原图像中的字段顺序：
+
+Name 姓名
+
+Company Name 公司名称
+
+Address 地址
+
+然后是：
+
+Confirmation No. 确认号码
+
+Arrival Date 入住日期
+
+Departure Date 退房日期
+
+Room 房间号码
+
+Account 账号
+
+Folio Number 账单号码
+
+T/A Reference 参考编号
+
+Guests 客人数目
+
+Staff 职员
+
+Printing Time 列印时间
+
+Page No. 页数
+
+所以顺序是：
+
+Confirmation No. 在Arrival Date上面。所以：
+
+Confirmation No. 确认号码: 1412294 → bbox是[20, 280, 250, 300]
+
+Arrival Date 入住日期: 09-25-20 → [20, 300, 250, 320]
+
+Departure Date 退房日期: 09-26-20 → [20, 320, 250, 340]
+
+Room 房间号码: 1516 → [20, 340, 250, 360]
+
+Folio Number 账单号码: 331493 → [20, 360, 250, 380]
+
+然后Guests 客人数目，Staff 职员: RAYXU, E581 → [450, 320, 600, 340]（因为Guests在Arrival Date右边，Staff在Guests右边）
+
+Printing Time 列印时间: 26-09-2020 13:47 → [450, 360, 650, 380]
+
+Page No. 页数: 2 of 2 → [450, 380, 600, 400]
+
+Name 姓名: 王秀梅 → [200, 50, 350, 70]（Name在左上方，对应姓名是王秀梅）
+
+Company Name 公司名称: 良诺信息酒店？不，Company Name 公司名称在Name下面，而良诺信息酒店是右侧的公司名？看原图像右侧有“良诺信息酒店”，而Company Name 公司名称在左侧，可能左侧的Company Name 是空？不，原图像中“Company Name 公司名称”在Name下面，而右侧的“良诺信息酒店”是酒店的名称，即公司名。所以Company Name 公司名称对应的是良诺信息酒店？可能左侧的Company Name 是客人公司的名称，而右侧的是酒店的公司名。看原图像右侧有“良诺信息酒店”，所以“公司名”类别对应的是右侧的“良诺信息酒店”。
+
+地址：右侧的地址信息，包括516 Hengshan Road, Shanghai,200030,China 台湾省鑫市苗州郭路C座 618513，以及邮政编号200030。所以“地址”类别对应的是这部分，“邮政编号”是其中的200030。
+
+现在整理每个类别的bbox和label：
+
+1. Arrival Date 入住日期: bbox包含“Arrival Date 入住日期: 09-25-20” → 假设坐标是[25, 302, 245, 322]
+2. CNY 人民币: “Balance 结余 CNY 人民币”中的CNY 人民币 → bbox[650, 590, 750, 610]
+3. Confirmation No. 确认号码: “Confirmation No. 确认号码: 1412294” → bbox[25, 

@@ -1,0 +1,15 @@
+\[
+\begin{aligned}
+& \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \int_{S_{r}^{N-1}} |u(S O)|^{p} d \sigma d r \\
+= & \int_{0}^{\infty} r^{N-1} \sup_{0<s \leq r} \int_{S_{r}^{N-1}} \frac{|u(S O)|}{r} \cdot r |u(S O)|^{p-1} d \sigma d r \\
+\leq & \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \left( \int_{S_{r}^{N-1}} \frac{|u(S O)|^{p}}{r^{p}} d \sigma \right)^{\frac{p}{p}} \left( \int_{S_{r}^{N-1}} r^{\frac{p}{p}-1}|u(S O)|^{p} d \sigma \right)^{\frac{p-1}{p}} d r \\
+= & \int_{0}^{\infty} \left\{ r^{N-\frac{1}{p}} \sup_{0<s<r} \left( \int_{S_{r}^{N-1}} \frac{|u(S O)|^{p}}{r^{p}} d \sigma \right)^{\frac{p}{p}} \right\} \times \\
+& \left\{ r^{\frac{(N-1)(p-1)}{p}} \sup_{0<s<r} \left( \int_{S_{r}^{N-1}} r^{\frac{p}{p}-1}|u(S O)|^{p} d \sigma \right)^{\frac{p-1}{p}} \right\} d r \\
+\leq & \left( \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \int_{S_{r}^{N-1}} \frac{|u(S O)|^{p}}{r^{p}} d \sigma d r \right)^{\frac{1}{p}} \times \\
+& \left( \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \int_{S_{r}^{N-1}} r^{\frac{p}{p}-1}|u(S O)|^{p} d \sigma d r \right)^{\frac{p-1}{p}} \\
+\leq & \left( \max \left\{ \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \int_{S_{r}^{N-1}} \frac{|u(S O)|^{p}}{r^{p}} d \sigma d r, \right. \right. \\
+& \left. \left. \int_{0}^{\infty} r^{N-1} \sup_{r<s<\infty} \int_{S_{r}^{N-1}} \frac{|u(S O)|^{p}}{s^{p}} d \sigma d r \right\} \right)^{\frac{1}{p}} \times \\
+& \left( \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \int_{S_{r}^{N-1}} r^{\frac{p}{p}-1}|u(S O)|^{p} d \sigma d r \right)^{\frac{p-1}{p}} \\
+\leq & \left| \frac{p}{N+p} \right| \left( \int_{0}^{r} r^{N-\frac{1}{p}} \cdot \Delta u(S O) d r \right)^{\frac{1}{p}} \left( \int_{0}^{\infty} r^{N-1} \sup_{0<s<r} \int_{S_{r}^{N-1}} r^{\frac{p}{p}-1}|u(S O)|^{p} d \sigma d r \right)^{\frac{p-1}{p}}
+\end{aligned}
+\]

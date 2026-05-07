@@ -1,0 +1,23 @@
+I need to read this image carefully. The text appears to be mirrored/flipped. Let me try to read it by mentally flipping it.
+
+After flipping the image mentally, here is the LaTeX:
+
+$$\mathbb{E}\left[F_{BA}(s_t, s^*)^2\right] = \mathbb{E}\left[\min\{Q_B(s_t, s^*), Q_A(s_{t+1}, s^*)\} - \min\{Q_A(s_t, s^*), Q_B(s_{t+1}, s^*)\}\right]^2$$
+
+$$\leq \mathbb{E}\left[\min\{Q_B(s_t, s^*), Q_A(s_{t+1}, s^*)\} - \min\{Q_A(s_t, s^*), Q_B(s_{t+1}, s^*)\}\right]^2$$
+
+$$\leq \mathbb{E}\left[Q_B(s_t, s^*)\right]\mathbb{E}\left[\min\{Q_A(s_{t+1}, s^*), Q_B(s_t, s^*)\} | P_t\right]$$
+
+$$= \sum_t P\left(Q_B^A(s_t, s^*) \geq Q_A(s_{t+1}, s^*)\right) \mathbb{E}\left[Q_B(s_{t+1}, s^*) \geq Q_A(s_t, s^*) | P_t\right]$$
+
+$$+ \sum_t P\left(Q_B(s_{t+1}, s^*) \geq Q_A(s_t, s^*)\right) \mathbb{E}\left[Q_B(s_t, s^*) Q_A(s_{t+1}, s^*) | Q_B(s_t, s^*) | P_t\right]$$
+
+$$- \sum_t P\left(Q_B^A(s_t, s^*) \geq Q_A(s_{t+1}, s^*)\right) \mathbb{E}\left[Q_B(s_{t+1}, s^*) Q_A(s_t, s^*) | Q_B(s_{t+1}, s^*) | P_t\right]$$
+
+$$- \sum_t P\left(Q_B(s_{t+1}, s^*) \geq Q_A(s_t, s^*)\right) \mathbb{E}\left[Q_A(s_t, s^*) Q_B(s_{t+1}, s^*) | Q_A(s_t, s^*) | P_t\right]$$
+
+$$= \sum_t P\left(Q_B^A(s_t, s^*) \geq Q_A(s_{t+1}, s^*)\right) \mathbb{E}\left[\frac{Q_B(s_{t+1}, s^*) - Q_A(s_{t+1}, s^*)}{\|{\nabla B}\|} \bigg| Q_B(s_t, s^*) \geq Q_A(s_{t+1}, s^*) | P_t\right]$$
+
+$$\leq \sum_t P\left(Q_B^A(s_t, s^*) \geq Q_A(s_{t+1}, s^*)\right) \mathbb{E}\left[Q_B(s_t, s^*) \geq Q_A(s_{t+1}, s^*)\right] \cdot \|\nabla B\|_A,$$
+
+$$\text{where } \|\nabla B\|_A \leq \|\nabla B\|.$$

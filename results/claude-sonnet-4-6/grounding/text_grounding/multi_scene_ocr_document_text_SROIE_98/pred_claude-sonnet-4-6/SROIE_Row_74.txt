@@ -1,0 +1,23 @@
+I need to find all instances of '101.76' in the receipt.
+
+There are two instances of '101.76':
+1. In the totals row "Total Qty: 13" line, the amount 101.76
+2. In "Total Sales (Inclusive of GST): 101.76"
+
+For the first instance (after Total Qty: 13):
+(634, 605, 740, 630)
+
+For the main prominent one in "Total Sales (Inclusive of GST)":
+(634, 745, 740, 770)
+
+Let me focus on the first occurrence of '101.76' which appears in the subtotal line:
+
+(634, 603, 742, 628)
+
+And the second occurrence in "Total Sales (Inclusive of GST)":
+
+(634, 743, 742, 768)
+
+Since the question asks for "the region" (singular), I'll identify the most prominent one - the Total Sales (Inclusive of GST) line:
+
+(622, 743, 748, 768)

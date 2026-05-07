@@ -1,0 +1,38 @@
+I need to find the region of the text '380.00' in the image. Looking at the hotel bill, I can see '380.00' appears in multiple locations:
+
+1. In the Payment column for the Alipay transaction
+2. In the Total row for both Consumptions and Payment
+3. In the Balance row
+
+Let me identify the most prominent one - the Total/总计 row shows "380.00" in the consumption total, and there's also "380.00" in the payment total and the Alipay payment line.
+
+Looking at the Alipay payment row (2020-10-29, 支付宝), the payment amount is 380.00.
+
+Also in the Total row: "Total 总计: CNY 380.00" and payment "380.00"
+
+And Balance: "0.00"
+
+The main '380.00' values appear in:
+- Payment column for Alipay: around (0.774, 0.520)
+- Total consumption: around (0.575, 0.555)
+- Total payment: around (0.774, 0.560)
+
+Let me provide coordinates for the '380.00' in the Total 总计 row (consumption side):
+
+Actually, looking more carefully at the image structure, the '380.00' appears at:
+- The payment for 支付宝 (Alipay) on 2020-10-29
+- The Total 总计 consumption amount
+- The Total 总计 payment amount
+
+The coordinates for the Total consumption '380.00' would be approximately:
+(0.556, 0.549) to (0.599, 0.568)
+
+And for the Total payment '380.00':
+(0.755, 0.555) to (0.798, 0.574)
+
+And for the Alipay payment '380.00':
+(0.755, 0.515) to (0.798, 0.534)
+
+Let me provide the most prominent one - the Total 总计 CNY 380.00:
+
+(0.556, 0.546, 0.599, 0.570)

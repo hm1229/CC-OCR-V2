@@ -1,0 +1,77 @@
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\begin{document}
+
+\noindent
+\begin{minipage}[b]{0.5\textwidth}
+    \textcolor{green!50!black}{\Large\textbf{Test Your Reading}}
+\end{minipage}%
+\begin{minipage}[b]{0.5\textwidth}
+    \raggedleft
+    \textcolor{blue!60!red}{\Large\textbf{\textit{Word Power}}} \\
+    \fcolorbox{gray!50}{yellow!10}{
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{ll}
+            \textbf{Extra} & \textit{more than what is needed} \\
+            \textbf{Instead} & \textit{as an alternative} \\
+            \textbf{Din} & \textit{noise} \\
+            \textbf{Seize} & \textit{catch by force} \\
+        \end{tabular}
+    }
+\end{minipage}
+
+\vspace{1cm}
+
+\begin{enumerate}[label=\textcolor{red!50!black}{\textbf{\arabic*.}}, leftmargin=*]
+    \item \textcolor{red!50!black}{\textbf{Complete the following statements :}}
+    \begin{enumerate}[label=(\alph*), itemsep=0.5em]
+        \item They began \underline{\textcolor{blue!80!black}{\textit{heating}}} the iron and forging it again.
+        \item The farmer \underline{\textcolor{blue!80!black}{\textit{led}}} the lord to the storeroom.
+        \item Off rode the \underline{\textcolor{blue!80!black}{\textit{farmer}}} and the lord to get what he had earned.
+        \item The lord \underline{\textcolor{blue!80!black}{\textit{heated}}} it well and threw it in a tub of water.
+        \item The lord \underline{\textcolor{blue!80!black}{\textit{did not}}} want the coachman to know the shame.
+    \end{enumerate}
+
+    \vspace{0.8cm}
+
+    \item \textcolor{red!50!black}{\textbf{Answer the following questions :}}
+    \begin{enumerate}[label=(\alph*), itemsep=0.5em]
+        \item What did the lord try to make when he failed to make the plough ?
+        \item What did the lord try to make when he could not make the axe ?
+        \item What did the lord make at last ?
+        \item How did the lord make a sizz ?
+        \item Why did the lord take the sack to the farmer's home ?
+        \item What did the strongmen do ?
+    \end{enumerate}
+
+    \vspace{0.8cm}
+
+    \item \textcolor{red!50!black}{\textbf{Who said to whom :}}
+    \begin{enumerate}[label=(\alph*), itemsep=1em]
+        \item Oh all right then. \\
+        \vspace{0.2cm}
+        \textbf{\textit{Who said ?}} \fcolorbox{blue!30}{blue!5}{\makebox[4cm]{\rule{0pt}{12pt}}} \hspace{0.5cm} \textbf{\textit{To whom ?}} \fcolorbox{blue!30}{blue!5}{\makebox[4cm]{\rule{0pt}{12pt}}}
+
+        \item It's a fine sizz. \\
+        \vspace{0.2cm}
+        \textbf{\textit{Who said ?}} \fcolorbox{blue!30}{blue!5}{\makebox[4cm]{\rule{0pt}{12pt}}} \hspace{0.5cm} \textbf{\textit{To whom ?}} \fcolorbox{blue!30}{blue!5}{\makebox[4cm]{\rule{0pt}{12pt}}}
+
+        \item I'll take the sack and go into the storeroom myself. \\
+        \vspace{0.2cm}
+        \textbf{\textit{Who said ?}} \fcolorbox{blue!30}{blue!5}{\makebox[4cm]{\rule{0pt}{12pt}}} \hspace{0.5cm} \textbf{\textit{To whom ?}} \fcolorbox{blue!30}{blue!5}{\makebox[4cm]{\rule{0pt}{12pt}}}
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{1cm}
+\begin{center}
+    \fcolorbox{gray!50}{yellow!20}{\textbf{12}}
+\end{center}
+
+\end{document}
+```

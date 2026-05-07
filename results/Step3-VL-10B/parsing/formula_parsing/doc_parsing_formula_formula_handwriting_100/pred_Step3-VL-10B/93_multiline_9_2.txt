@@ -1,0 +1,83 @@
+用户现在需要把图片中的数学公式提取成LaTeX。首先得仔细看每个公式，先看最左边第一个大公式：
+
+第一个公式：$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q} \bigg( \begin{matrix} \ell + m \\ \ell \end{matrix} \bigg)$？不对，看图片里的第一个式子，左边是$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$？不，看图片里的第一个式子，应该是$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$？不对，再看图片中的第一个公式，左边是$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$？可能更准确的是看图片中的符号，比如第一个式子：
+
+$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$ 不对，看图片里的第一个式子，应该是$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$？可能用户需要逐行看。
+
+先看第一行（最上面）的公式：
+
+$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$ 不对，看图片中的第一个式子，左边是$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$？不，图片中第一个式子是：
+
+$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$ 可能更准确的是看图片中的符号，比如第一个式子的分母是$m^5 (\ell + m)^q (\ell + m)^q$？不，看图片里的第一个式子，分母是$m^5 (\ell + m)^q (\ell + m)^q$？或者看图片中的第一个式子，应该是：
+
+$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q}$ 可能我搞错了，先看第二个式子（-2开头的）：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j-\varepsilon - w} \sum_{m=0}^{\infty} \frac{(-1)^{j-\varepsilon - w} x^{m + q + t - \varepsilon} e^{i(\varepsilon)}}{m!} \lambda_{p - j} \phi(p - j) \binom{w + t - 1}{w - 1}$？不对，看图片中的第二个式子，是：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j - \varepsilon - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i(\varepsilon)}}{m!} \lambda_{p - j} \phi(p - j) \binom{w + t - 1}{w - 1}$？不，图片中的第二个式子是：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j - \varepsilon - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i(\varepsilon)}}{m!} \lambda_{p - j} \phi(p - j) \binom{w + t - 1}{w - 1}$？可能更简单的是，先识别每个公式的结构，比如图片中的公式有很多求和、组合数、指数等。
+
+另外，注意图片中的公式可能有排版问题，比如组合数是$\binom{a}{b}$，求和符号$\sum$，指数$e^{i\theta}$，分式等。
+
+现在，先处理第一个公式（最左边第一个大的）：
+
+$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q} \binom{\ell + m}{\ell}$？不，看图片中的第一个式子，分母是$m^5 (\ell + m)^q (\ell + m)^q$？或者看图片中的第一个式子，分子是$(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}$，分母是$m^5 (\ell + m)^q (\ell + m)^q$，然后有个组合数$\binom{\ell + m}{\ell}$？因为图片中第一个式子有个$\bigg( \begin{matrix} \ell + m \\ \ell \end{matrix} \bigg)$，所以是$\binom{\ell + m}{\ell}$。
+
+然后第二个式子（-2开头）：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j - \varepsilon - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{p - j} \phi(p - j) \binom{w + t - 1}{w - 1}$？不，看图片中的第二个式子，求和是$\sum_{j=0}^2 \sum_{\varepsilon=0}^{j - \varepsilon - w}$？不对，应该是$\sum_{j=0}^2 \sum_{\varepsilon=0}^{j - w}$？不，图片中的第二个式子是：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j - \varepsilon - w}$ 这里可能下标写错了，应该是$\sum_{\varepsilon=0}^{j - w}$？或者看图片中的符号，第二个式子是：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{p - j} \phi(p - j) \binom{w + t - 1}{w - 1}$？可能更准确的是看图片中的第二个式子，中间有$\sum_{\varepsilon=0}^{j - \varepsilon - w}$ 这显然有问题，可能是$\sum_{\varepsilon=0}^{j - w}$，然后是$\sum_{m=0}^{\infty}$，然后是$\frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!}$，然后是$\lambda_{p - j} \phi(p - j)$，然后是$\binom{w + t - 1}{w - 1}$？因为图片中第二个式子有$\binom{w + t - 1}{w - 1}$（即$\bigg( \begin{matrix} w + t - 1 \\ w - 1 \end{matrix} \bigg)$）。
+
+然后第三个式子（+2开头）：
+
+$+2 \sum_{j=0}^{\infty} \sum_{\varepsilon=0}^{j - q - j} \sum_{m=0}^{\infty} \frac{(-1)^{p - 1 - j - \varepsilon - w} x^{m + s + t + j - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{q - j} \phi(q - j) \binom{p - 1}{p - 1 - j}$？不，看图片中的第三个式子，是：
+
+$+2 \sum_{j=0}^{\infty} \sum_{\varepsilon=0}^{j - q - j}$ 不对，应该是$\sum_{j=0}^{p - 1}$？因为图片中有$\sum_{j=0}^{p - 1}$，然后是$\sum_{\varepsilon=0}^{j - q - j}$ 不对，看图片中的第三个式子，有$\sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - q - j}$ 这显然错误，可能是$\sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w}$？或者看图片中的第三个式子，有$\sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - q - j}$ 不对，可能图片中的第三个式子是：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{p - 1 - j - \varepsilon - w} x^{m + s + t + j - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{q - j} \phi(q - j) \binom{p - 1}{j}$？因为图片中有$\binom{p - 1}{j}$（即$\bigg( \begin{matrix} p - 1 \\ j \end{matrix} \bigg)$）。
+
+然后第四个式子（+2开头）：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - q - j}$ 不对，看图片中的第四个式子，是：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{p - 1 - j - \varepsilon - w} x^{m + s + t + j - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{q - j} \phi(q - j) \binom{p - 1}{j}$？不，图片中的第四个式子是：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - q - j}$ 可能我需要更仔细看图片中的每个公式，可能图片中的公式是关于某种展开，比如生成函数或者组合恒等式。
+
+另外，注意到图片中的公式有很多重复的结构，比如求和、组合数、指数项、分式等。可能用户需要将每个公式逐个提取，但因为图片中的公式比较密集，可能需要先识别每个公式的LaTeX代码。
+
+现在，先处理最左边第一个公式（第一行）：
+
+$\sum_{\ell \geq 2, j \geq 1} \frac{(-1)^{\ell m} x^{\ell m} e^{i(\ell + 2m)\theta}}{m^5 (\ell + m)^q (\ell + m)^q} \binom{\ell + m}{\ell}$
+
+然后第二个公式（-2开头）：
+
+$-2 \sum_{j=0}^2 \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{p - j} \phi(p - j) \binom{w + t - 1}{w - 1}$
+
+第三个公式（+2开头，第一个+2）：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{p - 1 - j - \varepsilon - w} x^{m + s + t + j - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{q - j} \phi(q - j) \binom{p - 1}{j}$
+
+第四个公式（+2开头，第二个+2）：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{p - 1 - j - \varepsilon - w} x^{m + s + t + j - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{q - j} \phi(q - j) \binom{p - 1}{j}$？不，看图片中的第四个式子，是：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - q - j}$ 不对，可能图片中的第四个式子是：
+
+$+2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{p - 1 - j - \varepsilon - w} x^{m + s + t + j - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{q - j} \phi(q - j) \binom{p - 1}{j}$
+
+然后第五个公式（-2开头）：
+
+$-2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{p - j} \phi(p - j) \binom{q - 1}{j - 1}$？不，看图片中的第五个式子，是：
+
+$-2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{p - j} \phi(p - j) \binom{q - 1}{j - 1}$？不，图片中的第五个式子是：
+
+$-2 \sum_{j=0}^{p - 1} \sum_{\varepsilon=0}^{j - w} \sum_{m=0}^{\infty} \frac{(-1)^{j - \varepsilon - w} x^{m + q + t - \varepsilon} e^{i\varepsilon}}{m!} \lambda_{p - j} \phi(p - j) \binom{q - 1}{j - 1}$？可能更简单的是，注意到图片中的公式可能有对称性，比如最后有一个等式$\frac{(-1)^{\ell}}{\ell!} \frac{x^{\ell + q + t - \varepsilon}}{m^{\ell + q + t - \varepsilon}} = 0$？不，看图片中的最后一个等式：
+
+$\frac{(-1)^{\ell}}{\ell!} \frac{x^{\ell + q + t - \varepsilon}}{m^{\ell + q + t - \varepsilon}} = 0$？不，图片中的最后一个式子是：
+
+$\frac{(-1)^{\ell}}{\ell!}

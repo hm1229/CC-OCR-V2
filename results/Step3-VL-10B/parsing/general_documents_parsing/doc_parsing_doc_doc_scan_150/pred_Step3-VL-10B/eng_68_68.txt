@@ -1,0 +1,58 @@
+-43-  
+
+\title{FEA – A Formal English Subset for Algebra/Assertions}  
+\author{Stef. W. Postma \\ Dept. Computer Science, 247, \\ Rand Aikrans University, \\ PB 524, JHB 2000, South Africa}  
+\maketitle  
+
+
+\section*{Introduction}  
+The language FEA was developed to facilitate semantic information retrieval on literature about abstract algebra. FEA has since proved useful as a means of stating program assertions, and may be used also as a non - procedural programming language.  
+
+The paper is divided into four sections:  
+\begin{enumerate}  
+    \item An informal introduction to FEA  
+    \item The possible use of FEA in information retrieval  
+    \item The possible use of FEA in program validation  
+    \item The formal definition of FEA.  
+\end{enumerate}  
+
+
+\section*{1. An informal introduction to FEA}  
+In this section the language FEA – Formal English for Algebra (or Assertions) is described informally. References to the formal definition in section 4 are given in the form of (F20 – F22) which will refer to the productions numbered F20, F21, F22.  
+
+FEA is not a programming language. It is a formal, unambiguous language that can be understood by mathematically mature persons.  
+
+\begin{enumerate}  
+    \item Can be used to paraphrase theorems, hypotheses, axioms, rules of inference and (algebraic) formulas. These paraphrases are called \emph{stellings}. (The word \emph{stellings} is coined to ensure that no confusion with the term 'proposition', which is used in logic, can arise.)  
+    \item Can, in certain cases, be used to construct algorithms automatically.  
+\end{enumerate}  
+
+The syntax and most of the semantics of FEA is defined in terms of \textsc{PLISIP}. \textsc{PLISIP} is a high - level language for \textsc{LISP}, and is the subject of a paper in preparation. The \textsc{PLISIP} that is used in this paper is effectively self - explanatory, but notes will be added wherever confusion may arise.  
+
+
+\subsection*{Elementary Atoms (F42 – F45)}  
+An atom is a variable, or is a function of one or more terms. The syntax of a term will depend on the system in which FEA is embedded. In this paper a term is any term will be dependent on the system in which FEA is embedded. In this paper a term is any term will be dependent on the system in which FEA is embedded. \textit{(Note: The original text contains repeated phrasing; this is transcribed verbatim.)}  
+
+E.g. The following are \texttt{<atom>'s}:  
+\begin{itemize}  
+    \item $X \text{ EQUALS } Y + 1$  
+    \item $B \in S \cup S$  
+    \item $T3 < C25 \cup N15$  
+    \item $10 > N + J - 6$  
+\end{itemize}  
+
+In general the notation of formal logic is allowed in FEA. This means that \texttt{<atom>'s} can be written in the form in the \texttt{<predicate>} (\texttt{<termlist>}). E.g.:  
+\begin{itemize}  
+    \item $\texttt{REAL}(X)$  
+    \item $\texttt{BETWEEN}(X; K; W)$  
+    \item $\texttt{IS - RING}(T; S; O +; \texttt{ox})$  
+    \item $\texttt{SUBSETP}(B \cup N; S \cup S \cup B)$  
+\end{itemize}  
+
+Other forms of \texttt{<atom>'s} that correspond to a natural language are also allowed in FEA.  
+
+
+\subsection*{Elementary Quantified Formulae (F1 – F3)}  
+A quantified well - formed formula, or \texttt{<qwf>}, is a well - formed formula with zero or one or more quantifiers preceding it.  
+
+A quantified well - formed formula, or \texttt{<qwf>}, is the basic unit in a FEA stelling.

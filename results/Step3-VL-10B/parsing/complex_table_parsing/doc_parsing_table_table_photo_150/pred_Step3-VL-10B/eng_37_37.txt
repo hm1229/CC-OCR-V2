@@ -1,0 +1,250 @@
+Got it, let's tackle this problem. First, I need to parse the table from the image. Let's start by identifying the headers and rows. The table is titled "Table 1 Panel B Interlochen Center for the Arts Statements of Activities and Changes in Net Assets (Existing and New Format) Year ended May 31, 2017". Then the columns are: Unrestricted, Temporarily Restricted, Permanently Restricted, Without Donor Restriction, With Donor Restriction. Wait, let's check the image's column headers.
+
+Looking at the image, the columns are:
+
+- Unrestricted
+- Temporarily Restricted
+- Permanently Restricted
+- Without Donor Restriction
+- With Donor Restriction
+
+Now, let's list each row. Let's start with the first section: Revenues and Other Additions.
+
+First row under Revenues and Other Additions: Gross tuition and student fees. The values are $42,605,941 under Unrestricted, then the other columns (Temporarily, Permanently) are $ and -, so maybe those cells are empty or zero? Wait, the image shows:
+
+Gross tuition and student fees: Unrestricted $42,605,941, Temporarily Restricted $, Permanently Restricted $, then Without Donor Restriction $42,605,941, With Donor Restriction (empty? Wait no, the image's "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Wait no, let's check the image again.
+
+Wait the image's first row under Revenues and Other Additions:
+
+Gross tuition and student fees:
+
+- Unrestricted: $42,605,941
+- Temporarily Restricted: $ (maybe a dash, meaning zero or not applicable)
+- Permanently Restricted: $ (dash)
+- Without Donor Restriction: $42,605,941
+- With Donor Restriction: (empty? Wait no, the image shows the "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Wait no, looking at the image, the "Without Donor Restriction" and "With Donor Restriction" columns are merged for some rows? Wait no, the image's columns are:
+
+The top headers are:
+
+Unrestricted | Temporarily Restricted | Permanently Restricted | Without Donor Restriction | With Donor Restriction
+
+Now, let's go step by step.
+
+First, the title row: "Table 1 Panel B Interlochen Center for the Arts Statements of Activities and Changes in Net Assets (Existing and New Format) Year ended May 31, 2017" — this is a header, maybe a <th> spanning all columns.
+
+Then the column headers: Unrestricted, Temporarily Restricted, Permanently Restricted, Without Donor Restriction, With Donor Restriction — each is a <th>.
+
+Now, the rows:
+
+1. Revenues and Other Additions (this is a section header, maybe a row with colspan 5)
+2. Gross tuition and student fees:
+   - Unrestricted: $42,605,941
+   - Temporarily Restricted: $ (maybe empty or 0, but in image it's "$" then "-"? Wait the image shows "Gross tuition and student fees" row: Unrestricted $42,605,941, Temporarily Restricted $ (maybe a dash, meaning no amount), Permanently Restricted $ (dash), Without Donor Restriction $42,605,941, With Donor Restriction (empty? Wait no, the image's "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Wait the image shows the "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Let me check the image again.
+
+Looking at the image:
+
+The first row under Revenues and Other Additions is "Gross tuition and student fees". The columns:
+
+- Unrestricted: $42,605,941
+- Temporarily Restricted: $ (maybe a dash, so empty)
+- Permanently Restricted: $ (dash, empty)
+- Without Donor Restriction: $42,605,941
+- With Donor Restriction: (empty? No, the image shows the "Without Donor Restriction" and "With Donor Restriction" columns are the same for this row? Wait the image's "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Because the image shows the cell under "Without Donor Restriction" is $42,605,941, and "With Donor Restriction" is the same? Wait no, the image's "Without Donor Restriction" and "With Donor Restriction" are two columns, and for "Gross tuition and student fees", the "Without Donor Restriction" is $42,605,941, and "With Donor Restriction" is empty? No, the image shows that the "Without Donor Restriction" column has the value, and "With Donor Restriction" is the same? Wait the image's "Without Donor Restriction" column is a single column, and "With Donor Restriction" is another. Let's check the next row: "Assets released from restrictions: Operating item: Financial aid". The Unrestricted column has 3,224,308, Temporarily Restricted has (3,224,308), Permanently Restricted is -, Without Donor Restriction has 3,224,308, With Donor Restriction has (3,224,308). So that row has values in all columns.
+
+Let's structure the table step by step.
+
+First, the table header:
+
+- The title: "Table 1 Panel B Interlochen Center for the Arts Statements of Activities and Changes in Net Assets (Existing and New Format) Year ended May 31, 2017" — this is a row with colspan 5 (since there are 5 columns).
+
+Then the column headers: Unrestricted, Temporarily Restricted, Permanently Restricted, Without Donor Restriction, With Donor Restriction — each is a <th>.
+
+Now, the rows:
+
+1. Revenues and Other Additions — this is a section header, maybe a row with colspan 5, text "Revenues and Other Additions".
+
+2. Gross tuition and student fees:
+   - Unrestricted: $42,605,941
+   - Temporarily Restricted: (empty or $, but in image it's "$" then "-", so maybe empty)
+   - Permanently Restricted: (empty)
+   - Without Donor Restriction: $42,605,941
+   - With Donor Restriction: (empty? Wait no, the image shows the "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Wait the image's "Without Donor Restriction" and "With Donor Restriction" columns are labeled, and for "Gross tuition and student fees", the "Without Donor Restriction" is $42,605,941, and "With Donor Restriction" is the same? Let me check the image again. The image shows the "Without Donor Restriction" column has $42,605,941, and "With Donor Restriction" is the same? Because the image's "Without Donor Restriction" cell is filled, and "With Donor Restriction" is the same? Maybe the "With Donor Restriction" is empty for this row. Let's proceed.
+
+3. Assets released from restrictions: Operating item: Financial aid:
+   - Unrestricted: 3,224,308
+   - Temporarily Restricted: (3,224,308)
+   - Permanently Restricted: -
+   - Without Donor Restriction: 3,224,308
+   - With Donor Restriction: (3,224,308)
+
+4. Less financial aid grants:
+   - Unrestricted: (12,456,963)
+   - Temporarily Restricted: -
+   - Permanently Restricted: -
+   - Without Donor Restriction: (12,456,963)
+   - With Donor Restriction: -
+
+5. Net tuition and student fees:
+   - Unrestricted: 33,373,286 (since 42,605,941 + 3,224,308 - 12,456,963 = 33,373,286)
+   - Temporarily Restricted: (3,224,308) (since 0 + (-3,224,308) - 0 = -3,224,308)
+   - Permanently Restricted: -
+   - Without Donor Restriction: 33,373,286 (42,605,941 + 3,224,308 - 12,456,963 = 33,373,286)
+   - With Donor Restriction: (3,224,308) (since 0 + (-3,224,308) - 0 = -3,224,308)
+
+6. Ticket sales:
+   - Unrestricted: 2,485,871
+   - Temporarily Restricted: -
+   - Permanently Restricted: -
+   - Without Donor Restriction: 2,485,871
+   - With Donor Restriction: -
+
+7. Lodging:
+   - Unrestricted: 1,466,416
+   - Temporarily Restricted: -
+   - Permanently Restricted: -
+   - Without Donor Restriction: 1,466,416
+   - With Donor Restriction: -
+
+8. Retail sales:
+   - Unrestricted: 1,989,716
+   - Temporarily Restricted: -
+   - Permanently Restricted: -
+   - Without Donor Restriction: 1,989,716
+   - With Donor Restriction: -
+
+9. Contributions and grants:
+   - Unrestricted: 4,913,599
+   - Temporarily Restricted: 8,279,615
+   - Permanently Restricted: 3,313,440
+   - Without Donor Restriction: 4,913,599
+   - With Donor Restriction: 11,593,055 (4,913,599 + 8,279,615 + 3,313,440 = 16,506,654? Wait no, maybe the "With Donor Restriction" is a sum. Wait the image shows "Contributions and grants" row: Unrestricted 4,913,599, Temporarily Restricted 8,279,615, Permanently Restricted 3,313,440, Without Donor Restriction 4,913,599, With Donor Restriction 11,593,055. Let's check: 4,913,599 + 8,279,615 = 13,193,214; 13,193,214 + 3,313,440 = 16,506,654. But the "With Donor Restriction" is 11,593,055. Maybe "With Donor Restriction" is a different column. Anyway, take the values as per image.
+
+10. Net gain (loss) on investments, net of fees of $219,000 in 2017 and $210,000 in 2016 (Note 1):
+    - Unrestricted: 9,185,231
+    - Temporarily Restricted: 5,415,008
+    - Permanently Restricted: -
+    - Without Donor Restriction: 9,185,231
+    - With Donor Restriction: 5,415,008
+
+11. Assets released from restrictions: Operating item: Cost of operations and general administrative:
+    - Unrestricted: 843,776
+    - Temporarily Restricted: (843,776)
+    - Permanently Restricted: -
+    - Without Donor Restriction: 843,776
+    - With Donor Restriction: (843,776)
+
+12. Other revenues:
+    - Unrestricted: 1,003,045
+    - Temporarily Restricted: 3,841
+    - Permanently Restricted: -
+    - Without Donor Restriction: 1,003,045
+    - With Donor Restriction: 3,841
+
+13. Total revenues and other additions:
+    - Unrestricted: 55,260,940
+    - Temporarily Restricted: 9,630,380
+    - Permanently Restricted: 3,313,440
+    - Without Donor Restriction: 55,260,940
+    - With Donor Restriction: 12,943,820 (55,260,940 + 9,630,380 + 3,313,440 = 68,204,760? No, maybe "With Donor Restriction" is a sum of certain columns. Anyway, take the image's value: 12,943,820.
+
+Then Cost of Goods and Services:
+
+14. Artist fees:
+    - Unrestricted: 1,547,346
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 1,547,346
+    - With Donor Restriction: -
+
+15. Cost of goods sold:
+    - Unrestricted: 989,939
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 989,939
+    - With Donor Restriction: -
+
+16. Total cost of goods and services:
+    - Unrestricted: 2,537,285
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 2,537,285
+    - With Donor Restriction: -
+
+Cost of Operations:
+
+17. Salaries, wages and benefits:
+    - Unrestricted: 27,971,100
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 27,971,100
+    - With Donor Restriction: -
+
+18. Food costs:
+    - Unrestricted: 1,421,448
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 1,421,448
+    - With Donor Restriction: -
+
+19. Contracted services:
+    - Unrestricted: 1,082,023
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 1,082,023
+    - With Donor Restriction: -
+
+20. Supplies:
+    - Unrestricted: 2,617,423
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 2,617,423
+    - With Donor Restriction: -
+
+21. Repairs and maintenance:
+    - Unrestricted: 942,672
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 942,672
+    - With Donor Restriction: -
+
+22. Lease and rental:
+    - Unrestricted: 432,849
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 432,849
+    - With Donor Restriction: -
+
+23. Utilities:
+    - Unrestricted: 882,216
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 882,216
+    - With Donor Restriction: -
+
+24. Insurance:
+    - Unrestricted: 311,404
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 311,404
+    - With Donor Restriction: -
+
+25. Telephone and postage:
+    - Unrestricted: 593,536
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 593,536
+    - With Donor Restriction: -
+
+26. Other operational:
+    - Unrestricted: 283,612
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 283,612
+    - With Donor Restriction: -
+
+27. Total cost of operations:
+    - Unrestricted: 36,538,283
+    - Temporarily Restricted: -
+    - Permanently Restricted: -
+    - Without Donor Restriction: 36,538,283
+    - With Donor Restriction:

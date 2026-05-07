@@ -1,0 +1,39 @@
+用户现在需要找到卖家地址的文本区域。看图片里SELLER下面的ADD部分，内容是6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845。要确定这个文本的 bounding box。先看图像中的位置，SELLER的ADD对应的是这个地址。然后计算坐标。图像中这个地址在SELLER下方，所以需要看其在页面中的位置。然后归一化到0-1000的范围。先看整个图像的布局，卖家地址的区域，所以确定x1, y1, x2, y2。需要看每个部分的位置。比如，图像中SELLER的ADD行，文字是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845”。现在要确定这个文本的边界。假设图像的宽度和高度，然后计算。不过根据常规的OCR，这个地址的区域在SELLER的ADD部分，所以对应的坐标范围。现在看图片中的内容，SELLER的ADD是第三行（SELLER:...然后ADD:...）。所以这个文本的bounding box应该是从ADD:后面的内容开始。现在要输出归一化的坐标。比如，图像中这个地址的左上角和右下角。假设图像的宽度是w，高度是h。但可能更简单的是看在页面中的位置。比如，整个图像中，卖家地址的文本区域，其x范围大概是ADD:后面的起始到结束，y是对应行的位置。现在根据图片中的内容，这个地址的文本是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845”，所以需要确定这个文本的四个坐标。可能需要看图像中的位置，比如，SELLER的ADD行，所以y坐标是对应SELLER的ADD的位置。然后x坐标是ADD:之后的起始。现在，假设图像的宽度是整个页面的宽度，高度是页面的高度。然后将每个点归一化到0-1000。比如，这个地址的左边界大约是ADD:的x位置，右边界是文本的结束。现在，可能更直接的是看图片中的实际位置。比如，在图片中，SELLER的ADD部分，文字是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845”，所以其bounding box的x1是ADD:后面的起始，y1是该行的y坐标，x2是文本的结束x，y2是该行的y坐标（因为是单行？不，可能换行？看原文本，原文本是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845”，应该是一行。所以y1和y2是同一行的y范围。现在，根据图片中的布局，BUYER的ADD是两行（地址和TEL），SELLER的ADD是一行？看原文本：SELLER: Tuolong Information Technology Co., Ltd. ADD: 6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845。所以ADD:后面的内容是一行。现在，要确定这个文本的bounding box。假设图像的宽度是整个页面的宽度，比如，页面的宽度是图像的宽度，高度是图像的高度。现在，将图像的左上角作为(0,0)，右下角是(1000,1000)。然后看这个文本在图像中的位置。比如，BUYER的ADD是两行，第一行是地址，第二行是TEL。SELLER的ADD是一行，所以其y坐标在SELLER的ADD行。现在，计算这个文本的x1, y1, x2, y2。比如，ADD:的x位置大约是图像中SELLER部分的ADD标签的x，然后文本从那里开始。假设图像中，SELLER的ADD行的x范围是：ADD:的x是大约在图像的左侧，然后文本从ADD:的右边开始。现在，可能需要更精确的估计。或者，看图片中的实际内容，这个地址的文本在图像中的位置，比如，SELLER的ADD是第三部分（BUYER是第一部分，SELLER是第二部分）。现在，可能更简单的是，根据图片中的内容，这个地址的文本是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845”，所以其bounding box的坐标需要覆盖这段文字。现在，假设图像的宽度是w，高度是h。比如，图像的宽度大约是页面的宽度，高度是页面的高度。现在，将每个点转换为0-1000的范围。比如，这段文字的左边界x1大约是图像中ADD:的x坐标（比如，ADD:在图像中的x是大约100左右？不，可能更准确的是看整个图像的结构。比如，标题是PURCHASE CONTRACT在顶部，然后NO.和DATE在右上角。BUYER在左上方，SELLER在BUYER下方。所以，SELLER的ADD行在图像中的y坐标大约是BUYER的ADD行的y坐标下方。现在，可能需要使用OCR的思路，但这里需要手动估计。或者，看图片中的红色印章在右下角，所以图像的右下角是印章的位置。现在，回到问题，用户需要的是这个地址文本的区域的归一化坐标。现在，先看原文本在图像中的位置：
+
+SELLER: Tuolong Information Technology Co., Ltd.
+
+ADD: 6356 David Crossroad Suite 770 Singletonfurt, NM 72191
+
+USNV Thompson FPO AP 51845
+
+哦，原文本中，SELLER的ADD是两行吗？看原文本中的SELLER部分：
+
+SELLER:Tuolong Information Technology Co., Ltd.
+
+ADD: 6356 David Crossroad Suite 770 Singletonfurt, NM 72191
+
+USNV Thompson FPO AP 51845
+
+所以，ADD:后面是两行？因为原文本中“USNV Thompson FPO AP 51845”是下一行？看用户提供的图片中的SELLER部分：
+
+SELLER:Tuolong Information Technology Co., Ltd.
+
+ADD: 6356 David Crossroad Suite 770 Singletonfurt, NM 72191
+
+USNV Thompson FPO AP 51845
+
+是的，所以ADD:下面有两行。所以这个地址是两行文本。现在，需要确定这两行的bounding box。第一行是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191”，第二行是“USNV Thompson FPO AP 51845”。所以整个ADD部分的文本是这两行。现在，要找到这两行的区域。现在，计算这两行的x和y范围。假设图像的宽度是W，高度是H。将图像的左上角(0,0)到右下角(W,H)。然后，将每个点的x和y转换为0-1000的范围，即x = (x_pixel / W) * 1000，y = (y_pixel / H) * 1000。现在，需要估计这两行在图像中的位置。比如，BUYER的ADD是两行（地址和TEL），SELLER的ADD也是两行。现在，看图像中的布局，BUYER的ADD在上方，SELLER的ADD在BUYER的ADD下方。现在，假设图像的高度中，BUYER部分大约占上半部分，SELLER部分在中间。现在，具体到SELLER的ADD的两行：
+
+第一行（6356...72191）的y坐标大约是SELLER的ADD标签的y坐标加上一些，第二行（USNV...51845）的y坐标是第一行的y坐标加上行高。现在，要确定这两行的x范围，从ADD:的x坐标（即标签的x）到文本的结束x。现在，可能更简单的是，将整个ADD部分（包括两行）的bounding box确定。现在，根据图片中的内容，这个地址的文本是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845”（可能换行，但作为整体）。现在，假设图像中这个文本的左边界是ADD:的x位置（比如，ADD:在图像中的x是大约100，因为BUYER的ADD的ADD:在左边，然后文本从那里开始），右边界是文本的最右端（接近图像的中间偏右？不，看图像中的SELLER地址，应该是在美国新墨西哥州的地址，所以文本长度较长，可能到图像的中间。现在，可能需要更准确的估计。或者，参考图像中的其他元素，比如，BUYER的地址是“35537 Castillo Coves Suite 464 Port Mathewsshire, MI 09500 TaiwanTEL:+125-2670-8285#1783”，其中“TaiwanTEL:”是下一行，所以BUYER的ADD是两行。SELLER的ADD也是两行，第一行是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191”，第二行是“USNV Thompson FPO AP 51845”。现在，要找到这两行的bounding box。现在，假设图像的宽度是1000单位（归一化后），高度也是1000单位。现在，看图像中的红色印章在右下角，所以图像的右下角是(1000,1000)。标题PURCHASE CONTRACT在顶部中间，NO.和DATE在右上角，所以NO.的x大约是850，y大约是100。BUYER的名称在左上方，x大约是50，y大约是150。BUYER的ADD第一行（地址）的x大约是50，y大约是200；第二行（TEL）的x大约是50，y大约是230。SELLER的名称在BUYER名称的下方，x大约是50，y大约是280。SELLER的ADD第一行的x大约是50，y大约是310；第二行的x大约是50，y大约是340。现在，SELLER的ADD第一行的文本是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191”，其长度大约到x=700左右（因为文本较长）。第二行“USNV Thompson FPO AP 51845”大约到x=600左右。所以，整个SELLER的ADD部分的bounding box的x1是50（ADD:的x，即标签的x，可能ADD:在x=50，然后文本从x=60开始？不，ADD:是标签，然后文本在ADD:的右边，所以ADD:的x大约是50，文本的x从ADD:的x+20开始，到x=700左右。y1是第一行的y（310），y2是第二行的y（340）+行高（比如，行高是30，所以y2=340+30=370？不，每个行的y范围是该行的顶部到该行的底部。所以第一行的y范围是y=310到y=330（假设行高20），第二行的y范围是y=330到y=350。所以整个ADD部分的y范围是310到350。x范围是从ADD:的x（比如，ADD:在x=50，y=300）到文本的最右端（比如，x=750）。现在，将这些坐标归一化到0-1000。假设图像的宽度是W，高度是H。比如，图像的宽度大约是800像素，高度大约是1200像素（因为有表格和印章）。但可能更简单的是，根据图像中的元素位置，大致估计。或者，可能用户需要的是这个文本的准确bounding box，可能需要更精确。另一种方法是，看图片中的SELLER部分的ADD文本，其在图像中的位置，然后用坐标。比如，在提供的图片中，SELLER的ADD是：
+
+6356 David Crossroad Suite 770 Singletonfurt, NM 72191
+
+USNV Thompson FPO AP 51845
+
+这两行的文本，所以bounding box应该覆盖这两行。现在，假设图像的左上角是(0,0)，右下角是(1000,1000)。现在，观察图像中的红色印章在右下角，大约在(850,850)到(950,950)左右。标题PURCHASE CONTRACT在(400,50)左右。NO.在(800,60)，DATE在(800,75)。BUYER的名称在(100,120)，BUYER的ADD第一行在(100,150)，第二行在(100,180)。SELLER的名称在(100,220)，SELLER的ADD第一行在(100,250)，第二行在(100,280)。表格在中间，大约从y=300到y=500。然后下面的条款从y=520开始。所以，SELLER的ADD第一行的y大约是250，第二行y大约是280。x方面，ADD:的标签在(100,240)左右，然后文本从x=120开始，到x=700左右（因为文本长度）。所以，第一行的x范围是120到700，y范围是250到270。第二行的x范围是120到600，y范围是280到300。所以整个ADD部分的bounding box是x1=120，y1=250，x2=700，y2=300。现在，将这些坐标归一化到0-1000（因为图像的宽度和高度在归一化时是1000）。假设图像的宽度是W，高度是H，那么x1 = (120 / W) * 1000，y1 = (250 / H) * 1000，x2 = (700 / W) * 1000，y2 = (300 / H) * 1000。但可能更简单的是，因为图像中的元素位置是相对的，所以可以将整个图像的宽度和高度视为1000，然后根据视觉比例。比如，图像的宽度大约是1000单位（归一化后），高度也是1000单位。那么，SELLER的ADD部分的x范围大约是从100到750，y范围是从250到300。所以，bounding box是(100,250,750,300)。现在，验证一下：文本“6356 David Crossroad Suite 770 Singletonfurt, NM 72191”在第一行，长度较长，到x=750左右；第二行“USNV Thompson FPO AP 51845”较短，到x=600左右，所以整个ADD部分的x最大是750（第一行的末尾）。y方面，两行的y范围是250到300（因为两行，每行高度约25）。所以，最终的bounding box是x1=100，y1=250，x2=750，y2=300。现在，需要确认是否正确。另外，可能需要检查是否有其他部分。比如，用户提供的图片中，SELLER的ADD是：
+
+6356 David Crossroad Suite 770 Singletonfurt, NM 72191
+
+USNV Thompson FPO AP 51845
+
+这两行，所以bounding box应该包含这两行。现在，再看图像中的其他元素，比如，表格在SELLER的ADD下方，所以表格的y开始于320左右。所以，SELLER的ADD的y结束于320左右，所以y2=320。x2是第一行的末尾，大约在700左右。所以，可能更准确的是x1=90（ADD:的x，即标签的x，然后文本从x=100开始），y1=240（ADD:的y，然后第一行的y是250），y2=290（第二行的y是280，行高10，所以y2=290）。x2=720（第一行的末尾）。所以，最终的bounding box大约是(90,240,720,290)。现在，可能需要更精确，但根据问题要求，输出归一化的坐标，所以需要将图像的宽度和高度作为基准。假设图像的宽度是w，高度是h，那么每个点的x = (x_pixel / w) * 1000，y = (y_pixel / h) * 1000。现在，假设图像的宽度是1000（归一化后），高度是1000。那么，观察图像中的红色印章在右下角，大约在(850,850)到(950,950)。标题在(400,50)。BUYER的ADD在(100,150)到(400,200)。SELLER的ADD在(100,250)到(7

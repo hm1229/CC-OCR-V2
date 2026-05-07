@@ -1,0 +1,12 @@
+Absolutely, I'll extract the LaTeX representation of the formula from the image for you.
+```
+\begin{align*}
+&\int_{t_n}^t \int_{-\infty}^\infty \frac{\mu^2 e^{2(\lambda^2 T)}}{2} (G_x(x, (x, T), s) h_\alpha'(s) + G_{sx}(x, x, T; s, t) h_\alpha(s)) ds d\lambda \\
+&\leq \frac{(\|u_0\|_\infty + 1)^2}{2} \|h_\alpha'\|_{\infty} \int_{t_n}^t \frac{1}{\sqrt{t - \tau}} d\tau \\
+&+ \int_{t_n}^\infty \left\{ \mu^2 (\alpha^2 + (x^2 + 2\sqrt{x^2 + \lambda}) \tau, \lambda) h_\alpha(x + 2\sqrt{x^2 + \lambda}) - (\lambda x^2 - \mu^2) h_\alpha(x) \right\} \\
+&\times \frac{(x^2 - 1/2)}{\sqrt{t - \tau}} e^{-\lambda^2} ds d\tau \} \\
+&\leq c (\|u_0\|_\infty, \alpha) (2\eta)^{-1/2} \\
+&+ \int_{t_n}^\infty \int_{-\infty}^\infty c (\|u_0\|_\infty, \alpha, \beta) \left( \frac{\sqrt{t - \tau} |\lambda|}{\sqrt{t - \tau}} \right)^{1/p'} \lambda^{1/p'} \frac{1}{\sqrt{t - \tau}} e^{-\lambda^2} d\tau \\
+&\leq c (\|u_0\|_\infty, \alpha, \beta) (2\eta)^{-1/2} \int_{t_n}^\infty \int_{-\infty}^\infty \frac{1}{(1 + \lambda^2)^{1/q}} g(\lambda) d\lambda d\tau
+\end{align*}
+```

@@ -1,0 +1,62 @@
+Looking at the image, I can see a contribution format income statement for "The Alpine House, Inc." The layout is structured with labels on the left and numerical values on the right, with some indentation to show hierarchy.
+
+Here's the HTML representation using `<table>`, `<tr>`, and `<td>` tags. Since this is a financial statement with aligned columns and no true grid structure (like a spreadsheet), I’ll use a simple table with two main columns: one for descriptions and one for amounts. Merged cells aren’t strictly necessary here since each row has its own label and value — but I’ll preserve the visual grouping by using appropriate spacing or colspan where needed for alignment.
+
+Note: The image shows:
+- A title section spanning multiple lines.
+- Sales line with amount on far right.
+- Variable expenses section with sub-items indented.
+- Some calculations shown in parentheses.
+- Totals underlined or summed at the bottom.
+
+I’ll simulate the layout as closely as possible within standard HTML table constraints.
+
+```html
+<table border="0" cellpadding="5" cellspacing="0" style="font-family: monospace; width: 100%;">
+  <tr>
+    <td colspan="2" style="text-align: center; font-weight: bold;">2. Contribution format income statement</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: center; font-weight: bold;">The Alpine House, Inc.</td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: center; font-weight: bold;">Contribution Format Income Statement</td>
+  </tr>
+  <tr>
+    <td>Sales.........................................................................................</td>
+    <td style="text-align: right;">$150,000</td>
+  </tr>
+  <tr>
+    <td>Variable expenses:</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;Cost of goods sold<br>&nbsp;&nbsp;($30,000 + $100,000 – $40,000).......................</td>
+    <td style="text-align: right;">$90,000</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;Selling expenses<br>&nbsp;&nbsp;($50 per unit × 200 pairs of skis).......................</td>
+    <td style="text-align: right;">10,000</td>
+  </tr>
+  <tr>
+    <td>&nbsp;&nbsp;Administrative expenses...........................................</td>
+    <td style="text-align: right;">2,000</td>
+  </tr>
+  <tr>
+    <td style="border-top: 1px solid black;"></td>
+    <td style="text-align: right; border-top: 1px solid black;">102,000</td>
+  </tr>
+</table>
+```
+
+### Explanation:
+
+- Used `colspan="2"` for centered titles.
+- Indented variable expense items using `&nbsp;&nbsp;` to mimic the visual hierarchy.
+- Aligned monetary values to the right.
+- Added a horizontal line above the total (`102,000`) using `border-top` to simulate the underline seen in the image.
+- No actual merged cells are required because each row corresponds to a single logical entry — even if it spans multiple lines visually, it’s still one row in terms of data structure.
+
+This preserves the layout from top-left to bottom-right as requested, while being semantically clean and safe for sandboxed environments.
+
+Let me know if you’d like to add CSS classes, make it responsive, or convert it to a more semantic structure (e.g., using `<dl>` or `<div>`s). But per your request — pure `<table>` with `<tr>` and `<td>` — this fulfills the requirement.

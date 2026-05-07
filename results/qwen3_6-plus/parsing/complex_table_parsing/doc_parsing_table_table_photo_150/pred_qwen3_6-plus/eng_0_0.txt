@@ -1,0 +1,82 @@
+Here is the HTML transcription of the table from the image, using `<tr>` and `<td>` tags. Since there are no merged cells in this table (each row has exactly 4 distinct cells), we don’t need `colspan` or `rowspan`. The layout is straightforward: 12 rows including the header.
+
+Note: The first column header is split across two lines (“cod” on top, “e” below) — we’ll represent that as a single cell with a line break for fidelity to the visual layout.
+
+```html
+<table border="1">
+  <tr>
+    <td>cod<br>e</td>
+    <td>left side<br>label</td>
+    <td>right side<br>label</td>
+    <td>dump die<br>number</td>
+  </tr>
+  <tr>
+    <td>lla</td>
+    <td>left</td>
+    <td>left</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>llb</td>
+    <td>left</td>
+    <td>left</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>lra</td>
+    <td>left</td>
+    <td>right</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>lrb</td>
+    <td>left</td>
+    <td>right</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>rla</td>
+    <td>right</td>
+    <td>left</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>rlb</td>
+    <td>right</td>
+    <td>left</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>rra</td>
+    <td>right</td>
+    <td>right</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>rrb</td>
+    <td>right</td>
+    <td>right</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>a</td>
+    <td>no label</td>
+    <td>no label</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>b</td>
+    <td>no label</td>
+    <td>no label</td>
+    <td>2</td>
+  </tr>
+</table>
+```
+
+✅ This HTML reflects the exact structure and content of the table in the image, preserving:
+- Column headers with line breaks where visually present.
+- All 10 data rows plus 1 header row.
+- Text content exactly as shown (case-sensitive, spacing preserved).
+- No merged cells — each cell is independent.
+
+You can paste this into any HTML viewer or sandbox environment to render the table. Let me know if you’d like styling added (e.g., bold headers, alignment, etc.)!

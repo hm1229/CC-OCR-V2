@@ -1,0 +1,101 @@
+Here is the HTML transcription of the table from the image, using `<tr>` and `<td>` tags with appropriate `rowspan` and `colspan` attributes to reflect merged cells as shown in the original layout. The structure follows top-left to bottom-right flow, preserving visual grouping and hierarchy.
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <!-- Row 1: Main Dimensions & Cargo Capacity / TEU -->
+  <tr>
+    <td rowspan="4">
+      A. Main Dimensions<br><br>
+      (i) LOA (m)<br><br>
+      (ii) Length between perpendiculars (m)<br><br>
+      (iii) Deadweight capacity (DWT) (mts)<br><br>
+      (iv) Design draft (m)
+    </td>
+    <td rowspan="2">
+      B. cargo capacity<br><br>
+      (i) Cubic capacity<br><br>
+      (ii) Rold capacity
+    </td>
+    <td rowspan="4">
+      B2. TEU carrying capacity (state number of containers)<br><br>
+      (i) Total on deck<br><br>
+      a. 20’ /40’ /45’ TEU<br><br>
+      b. No. of reefers<br><br>
+      (ii) Total under deck<br><br>
+      a. 20’ /40’ /45’ TEU<br><br>
+      b. No. of reefers
+    </td>
+  </tr>
+  <tr></tr> <!-- Empty row for rowspan alignment -->
+  <tr></tr> <!-- Empty row for rowspan alignment -->
+  <tr></tr> <!-- Empty row for rowspan alignment -->
+
+  <!-- Row 2: Main Engine & Speed / Other Matters -->
+  <tr>
+    <td rowspan="4">
+      Main engine<br><br>
+      (i) Maker/Type<br><br>
+      (ii) Max. continuous rating (kilowatts at MCR)<br><br>
+      (iii) RPM at MCR<br><br>
+      (iv) Specific Fuel Oil Consumption at MCR
+    </td>
+    <td colspan="2">
+      D. Average speed<br><br>
+      (i) Service speed (knot) at design draft<br><br>
+      E. Other matters (optional)
+    </td>
+  </tr>
+  <tr></tr> <!-- Empty row for rowspan alignment -->
+  <tr></tr> <!-- Empty row for rowspan alignment -->
+  <tr></tr> <!-- Empty row for rowspan alignment -->
+
+  <!-- Row 3: Builder’s Hull Number & Flag State -->
+  <tr>
+    <td>5. BUILDER’s Hull Number</td>
+    <td colspan="2">6. Flag State</td>
+  </tr>
+
+  <!-- Row 4: Classification Society & Contract Price -->
+  <tr>
+    <td>7. Classification Society/Class character</td>
+    <td colspan="2">
+      8. Contract Price and Currency<br><br>
+      (a) Price<br><br>
+      (b) Currency
+    </td>
+  </tr>
+
+  <!-- Row 5: Delivery Date & Payments -->
+  <tr>
+    <td>9. Contractual Date of Delivery</td>
+    <td colspan="2" rowspan="2">
+      10. Payments<br><br>
+      1st installment<br><br>
+      2nd installment<br><br>
+      3rd installment<br><br>
+      4th installment
+    </td>
+  </tr>
+
+  <!-- Row 6: Builder’s Bank Account Data -->
+  <tr>
+    <td>
+      11. BUILDER’s Bank Account Data<br><br>
+      Name:<br><br>
+      Address:<br><br>
+      Country:
+    </td>
+  </tr>
+</table>
+```
+
+### Notes:
+- **Merged Cells**: 
+  - Column 1 (Main Dimensions, Main Engine, etc.) uses `rowspan="4"` where appropriate.
+  - Column 3 (TEU, Speed/Payments) spans multiple rows via `rowspan`.
+  - Some rows are left empty (`<tr></tr>`) to maintain vertical alignment when using `rowspan`.
+- **Layout Preservation**: The table mirrors the original document’s structure — left column for vessel specs, middle/right for cargo, speed, financials.
+- **Text Formatting**: Line breaks (`<br>`) are used to preserve paragraph-like spacing within cells, matching the printed form’s appearance.
+- **No Real Data**: All fields remain blank as per the source image — this is a template/form structure.
+
+This HTML will render a structurally accurate representation of the form in any browser or sandbox environment.

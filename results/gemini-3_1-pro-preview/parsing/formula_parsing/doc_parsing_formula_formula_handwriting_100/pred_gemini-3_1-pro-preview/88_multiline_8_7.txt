@@ -1,0 +1,16 @@
+Based on the image provided, here is the transcription of the mathematical derivation, starting from the bottom line and moving upwards:
+
+$|\mathbb{E}[F_{BA}^t(s_t, a_t) | P_t]| = \gamma \mathbb{E} [ \min \{ Q_B^t(s_{t+1}, a_t^*), Q_A^t(s_{t+1}, a_t^*) \} - \min \{ Q_A^t(s_{t+1}, b^*), Q_B^t(s_{t+1}, b^*) \} | P_t ]$
+
+$\leq \gamma \mathbb{E} [ \min \{ Q_B^t(s_{t+1}, b^*), Q_A^t(s_{t+1}, a^*) \} - \min \{ Q_A^t(s_{t+1}, b^*), Q_B^t(s_{t+1}, b^*) \} | P_t ]$
+
+$\leq \gamma \mathbb{E} [ Q_B^t(s_{t+1}, b^*) | P_t ] - \gamma \mathbb{E} [ \min \{ Q_A^t(s_{t+1}, b^*), Q_B^t(s_{t+1}, b^*) \} | P_t ]$
+
+$= \gamma P(Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E} [ Q_B^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*), P_t ]$
+$+ \gamma P(Q_B^t(s_{t+1}, b^*) < Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E} [ Q_B^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) < Q_A^t(s_{t+1}, b^*), P_t ]$
+$- \gamma P(Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E} [ Q_A^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*), P_t ]$
+$- \gamma P(Q_B^t(s_{t+1}, b^*) < Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E} [ Q_B^t(s_{t+1}, b^*) | Q_B^t(s_{t+1}, b^*) < Q_A^t(s_{t+1}, b^*), P_t ]$
+
+$= \gamma P(Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*) | P_t) \mathbb{E} [ \underbrace{Q_B^t(s_{t+1}, b^*) - Q_A^t(s_{t+1}, b^*)}_{\leq ||\Delta_{BA}^t||} | Q_B^t(s_{t+1}, b^*) \geq Q_A^t(s_{t+1}, b^*), P_t ]$
+
+$\leq \gamma P(Q_B^t(s_{t+1}, a^*) \geq Q_A^t(s_{t+1}, a^*) | P_t) ||\Delta_{BA}^t|| \leq \gamma ||\Delta_{BA}^t||$

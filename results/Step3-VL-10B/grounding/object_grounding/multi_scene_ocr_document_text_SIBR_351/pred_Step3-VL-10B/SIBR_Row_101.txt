@@ -1,0 +1,185 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name：最上面的Tuolong Information Technology Co., Ltd. 是公司名，还有下面的Shanghai...的印章？不过主要公司名是顶部的Tuolong...。然后Address：Sold To和Ship To的地址，比如Sold To的地址是Holbrook Rise...United Kingdom，Ship To的地址也是类似的。还有顶部的USS Malone FPO AP 17413等是公司地址？需要区分。
+
+先列每个类别：
+
+1. Company Name：顶部的“Tuolong Information Technology Co., Ltd.”，还有可能印章里的Shanghai...但主要公司名是顶部的。看bbox：[25, 8, 242, 25] 左右？看原文第一行是Tuolong Information Technology Co., Ltd.，所以这个是Company Name。
+
+2. Address：比如Sold To的地址块，Ship To的地址块，还有顶部的USS Malone FPO AP 17413，PSC 0292...这些也是地址。需要找所有Address类。比如Sold To的地址：Holbrook Rise...United Kingdom，Ship To的地址：Holbrook Rise...英国。还有顶部的USS Malone FPO AP 17413，PSC 0292, Box 5057 APO AE 60289 也是地址。
+
+3. Currency：图中有“Currency: USD”，所以这个是Currency，位置在中间偏右，Terms: Advance下面。
+
+4. Date：Invoice右边的Date: 2022/06/20，还有Ship Date: 2022/06/20，这两个都是Date。
+
+5. Delivery Terms：DeliveryTerms: Ex-Works，对应这个。
+
+6. Ext Price：表格里的Ext Price列，比如5,633.28，还有Total里的Total: $5,633.28？看Ext Price是每行的扩展价格，这里只有一行，Ext Price是5,633.28。
+
+7. Fax：Phone下面的Fax: 937-20876155，所以Fax的bbox是对应位置。
+
+8. Invoice：Invoice:13067，还有大标题INVOICE。
+
+9. Name：Sold To的Alyssa Romero，Ship To的Robert Adams，还有Sales Rep: Tina Zhou，这些是Name。
+
+10. PO Number：PO Number: 81016，对应这个。
+
+11. Packing List：Packing List: 2482，对应。
+
+12. Page：Page: 页, 共1页，对应。
+
+13. Part Number/Description：表格里的Part Number/Description列，内容是1DAC4J03 数显充气表...。
+
+14. Phone：Phone: 065-57631278，对应。
+
+15. Quantity：Quantity列的216.00 EA。
+
+16. Revision：Revision列的A。
+
+17. Sales Rep：Sales Rep: Tina Zhou。
+
+18. Ship Date：Ship Date: 2022/06/20。
+
+19. Ship Via：Ship Via: Sea Freight。
+
+20. Terms：Terms: Advance。
+
+21. Title：大标题INVOICE，还有顶部的公司名？Title可能指INVOICE这个标题。
+
+22. Total：Total: $5,633.28，在印章旁边。
+
+现在需要逐个确定每个元素的bbox。因为是图片，需要估计坐标。先处理每个类别：
+
+- Company Name：顶部的“Tuolong Information Technology Co., Ltd.”，bbox大概[25, 10, 240, 28]；另外可能还有Shanghai...的印章，但主要公司名是顶部的，所以这个是Company Name。
+
+- Address：多个地址，比如顶部的USS Malone FPO AP 17413，PSC 0292, Box 5057 APO AE 60289；Sold To的地址：Holbrook Rise...United Kingdom；Ship To的地址：Holbrook Rise...英国。需要分别找。比如Sold To的地址块：从“Sold To:”下面的Alyssa Romero，然后是Holbrook Rise...United Kingdom，这个地址的bbox是[58, 238, 342, 300]左右。Ship To的地址是“Ship To:”下面的Robert Adams，然后是Holbrook Rise...英国，bbox是[430, 238, 690, 310]左右。顶部的地址：USS Malone FPO AP 17413，PSC 0292...，bbox是[25, 30, 242, 50]和[25, 55, 242, 75]。
+
+- Currency：在中间偏右，“Currency: USD”，bbox大概[520, 330, 580, 345]。
+
+- Date：有两个，Invoice右边的Date: 2022/06/20，bbox是[725, 210, 865, 225]；Ship Date: 2022/06/20，bbox是[600, 360, 720, 375]。
+
+- Delivery Terms：“DeliveryTerms: Ex-Works”，bbox是[600, 335, 720, 350]。
+
+- Ext Price：表格中的Ext Price列，数值5,633.28，bbox是[720, 450, 860, 465]（对应行的Ext Price）。
+
+- Fax：“Fax: 937-20876155”，bbox是[45, 155, 240, 170]。
+
+- Invoice：大标题“INVOICE”在中间，bbox是[380, 200, 620, 225]；还有Invoice:13067，bbox是[100, 250, 230, 265]。
+
+- Name：Sold To的Alyssa Romero（bbox [58, 240, 220, 255]）；Ship To的Robert Adams（bbox [430, 240, 560, 255]）；Sales Rep: Tina Zhou（bbox [100, 365, 280, 380]）。
+
+- PO Number：“PO Number: 81016”，bbox是[100, 340, 230, 355]。
+
+- Packing List：“Packing List: 2482”，bbox是[100, 360, 230, 375]。
+
+- Page：“Page: 页, 共1页”，bbox是[725, 215, 865, 230]。
+
+- Part Number/Description：表格中的第一列，内容是“1DAC4J03 数显充气表 Accura 4 Tyre Inflator (0.53m Hose (with Spring) THO Connector)”，bbox是[50, 430, 350, 490]。
+
+- Phone：“Phone: 065-57631278”，bbox是[45, 130, 240, 145]。
+
+- Quantity：“216.00 EA”，在表格的Quantity列，bbox是[350, 440, 450, 455]。
+
+- Revision：“A”，在Revision列，bbox是[300, 440, 320, 455]。
+
+- Sales Rep：“Sales Rep: Tina Zhou”，bbox是[100, 365, 280, 380]（之前可能重复，这里确认）。
+
+- Ship Date：“Ship Date: 2022/06/20”，bbox是[600, 365, 720, 380]。
+
+- Ship Via：“Ship Via: Sea Freight”，bbox是[600, 345, 720, 360]。
+
+- Terms：“Terms: Advance”，bbox是[520, 330, 600, 345]。
+
+- Title：“INVOICE”大标题，bbox是[380, 200, 620, 225]；另外顶部公司名可能不算Title，Title主要是INVOICE这个标题。
+
+- Total：“Total: $5,633.28”，在印章旁边，bbox是[720, 680, 860, 695]（看图片中的Total: $5,633.28）。
+
+现在需要把每个类别对应一个或多个实例，但用户要求“detect all objects”，所以每个出现的都要列？不过可能有些类别只有一个实例。现在需要整理成JSON数组，每个元素是bbox和label。
+
+现在开始逐个列出：
+
+1. Company Name: 顶部的Tuolong Information Technology Co., Ltd. → bbox [25, 10, 242, 28], label "Company Name"
+2. Address: USS Malone FPO AP 17413 → bbox [25, 30, 242, 48], label "Address"
+3. Address: PSC 0292, Box 5057 APO AE 60289 → bbox [25, 55, 242, 73], label "Address"
+4. Address: Sold To的Holbrook Rise...United Kingdom → bbox [58, 238, 342, 300], label "Address"
+5. Address: Ship To的Holbrook Rise...英国 → bbox [430, 238, 690, 310], label "Address"
+6. Currency: USD → bbox [520, 330, 580, 345], label "Currency"
+7. Date: 2022/06/20（Invoice的Date）→ bbox [725, 210, 865, 225], label "Date"
+8. Date: 2022/06/20（Ship Date）→ bbox [600, 360, 720, 375], label "Date"
+9. Delivery Terms: Ex-Works → bbox [600, 335, 720, 350], label "Delivery Terms"
+10. Ext Price: 5,633.28 → bbox [720, 450, 860, 465], label "Ext Price"
+11. Fax: 937-20876155 → bbox [45, 155, 240, 170], label "Fax"
+12. Invoice: INVOICE（大标题）→ bbox [380, 200, 620, 225], label "Invoice"
+13. Invoice: Invoice:13067 → bbox [100, 250, 230, 265], label "Invoice"
+14. Name: Alyssa Romero → bbox [58, 240, 220, 255], label "Name"
+15. Name: Robert Adams → bbox [430, 240, 560, 255], label "Name"
+16. Name: Tina Zhou → bbox [100, 365, 280, 380], label "Name"
+17. PO Number: 81016 → bbox [100, 340, 230, 355], label "PO Number"
+18. Packing List: 2482 → bbox [100, 360, 230, 375], label "Packing List"
+19. Page: 页, 共1页 → bbox [725, 215, 865, 230], label "Page"
+20. Part Number/Description: 1DAC4J03 数显充气表... → bbox [50, 430, 350, 490], label "Part Number/Description"
+21. Phone: 065-57631278 → bbox [45, 130, 240, 145], label "Phone"
+22. Quantity: 216.00 EA → bbox [350, 440, 450, 455], label "Quantity"
+23. Revision: A → bbox [300, 440, 320, 455], label "Revision"
+24. Ship Date: 2022/06/20 → bbox [600, 365, 720, 380], label "Ship Date"
+25. Ship Via: Sea Freight → bbox [600, 345, 720, 360], label "Ship Via"
+26. Terms: Advance → bbox [520, 330, 600, 345], label "Terms"
+27. Title: INVOICE（大标题）→ 可能和之前的Invoice重复？但Title是标题，所以这个是Title，bbox [380, 200, 620, 225], label "Title"
+28. Total: $5,633.28 → bbox [720, 680, 860, 695], label "Total"
+
+现在需要检查是否有重复或遗漏。比如Company Name是否还有其他？比如印章里的Shanghai...是公司名吗？图中的印章是“Shanghai Tuolong Information Technology Co., Ltd.”？看印章文字：“Shanghai Tuolong Information Technology Co., Ltd.” 所以印章也是Company Name，需要加上。印章的bbox大概在图片下方偏右，所以：
+
+29. Company Name: 印章中的Shanghai... → bbox [500, 500, 800, 700]（估计），label "Company Name"
+
+另外，Sold To和Ship To的Name是Alyssa和Robert，Sales Rep是Tina Zhou，这些是Name。
+
+现在再检查每个类别：
+
+- Address：多个，已列。
+- Company Name：顶部和印章，两个。
+- Currency：1个。
+- Date：两个（Invoice Date和Ship Date）。
+- Delivery Terms：1个。
+- Ext Price：1个（因为只有一行产品）。
+- Fax：1个。
+- Invoice：两个（Invoice:13067和大标题INVOICE）。
+- Name：Alyssa, Robert, Tina Zhou → 三个。
+- PO Number：1个。
+- Packing List：1个。
+- Page：1个。
+- Part Number/Description：1个。
+- Phone：1个。
+- Quantity：1个。
+- Revision：1个。
+- Sales Rep：1个（Tina Zhou）。
+- Ship Date：1个。
+- Ship Via：1个。
+- Terms：1个。
+- Title：大标题INVOICE，1个。
+- Total：1个。
+
+现在需要确保每个检测到的对象都列出。可能有些类别在图中没有，比如Title可能就是INVOICE，所以Title和Invoice可能有重叠，但按要求分类。
+
+现在整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+注意bbox的坐标是相对图片的，需要大致估计。比如：
+
+Company Name（顶部）：[25, 8, 242, 26]
+Address（USS Malone...）：[25, 30, 242, 48]
+Address（PSC...）：[25, 55, 242, 73]
+Address（Sold To地址）：[58, 238, 342, 300]
+Address（Ship To地址）：[430, 238, 690, 310]
+Currency：[520, 332, 580, 344]
+Date（Invoice Date）：[725, 212, 863, 224]
+Date（Ship Date）：[600, 362, 718, 374]
+Delivery Terms：[600, 337, 718, 349]
+Ext Price：[720, 452, 858, 464]
+Fax：[45, 157, 238, 169]
+Invoice（大标题）：[382, 202, 618, 224]
+Invoice（Invoice:13067）：[102, 252, 228, 264]
+Name（Alyssa）：[58, 242, 218, 254]
+Name（Robert）：[432, 242, 558, 254]
+Name（Tina Zhou）：[102, 367, 278, 379]
+PO Number：[102, 342, 228, 354]
+Packing List：[102, 362, 228, 374]
+Page

@@ -1,0 +1,15 @@
+I need to find the region containing '¥0.00' in the image.
+
+Looking at the receipt, I can see '¥0.00' appears in two places:
+1. Under '帐户支付:' - showing ¥0.00
+2. Under '账户余额:' - showing ¥0.00
+
+For the first '¥0.00' under '帐户支付:':
+(90, 755, 270, 800)
+
+For the second '¥0.00' under '账户余额:':
+(90, 840, 270, 885)
+
+The question asks for '￥0.00' - I'll identify the primary one which appears to be the account payment amount:
+
+(90, 755, 270, 800)

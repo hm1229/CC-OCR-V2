@@ -1,0 +1,151 @@
+Here is the HTML representation of the table from the image, using `<tr>` and `<td>` tags with appropriate `rowspan` and `colspan` attributes to reflect merged cells as shown in the original layout.
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th colspan="2">管理单位</th>
+    <th colspan="5">定吴高速</th>
+  </tr>
+  <tr>
+    <th colspan="2">桥梁类型</th>
+    <th>全部桥梁</th>
+    <th>特大桥</th>
+    <th>大桥</th>
+    <th>中桥</th>
+    <th>小桥、通道桥</th>
+  </tr>
+  <tr>
+    <th colspan="2">数量</th>
+    <td>288</td>
+    <td>6</td>
+    <td>158</td>
+    <td>54</td>
+    <td>70</td>
+  </tr>
+  <tr>
+    <th colspan="2">定期检查时间</th>
+    <td>2020 年</td>
+    <td>2020 年</td>
+    <td>2020 年</td>
+    <td>2020 年</td>
+    <td>2020 年</td>
+  </tr>
+  <tr>
+    <th colspan="2">最高评分</th>
+    <td>100.00</td>
+    <td>92.51</td>
+    <td>100.00</td>
+    <td>100.00</td>
+    <td>100.00</td>
+  </tr>
+  <tr>
+    <th colspan="2">最低评分</th>
+    <td>81.80</td>
+    <td>86.25</td>
+    <td>86.57</td>
+    <td>83.87</td>
+    <td>81.80</td>
+  </tr>
+  <tr>
+    <th colspan="2">平均分</th>
+    <td>95.03</td>
+    <td>88.94</td>
+    <td>94.56</td>
+    <td>95.93</td>
+    <td>95.93</td>
+  </tr>
+  <tr>
+    <th rowspan="2">1 类<br>桥梁</th>
+    <th>数量</th>
+    <td>152</td>
+    <td>0</td>
+    <td>70</td>
+    <td>35</td>
+    <td>47</td>
+  </tr>
+  <tr>
+    <th>比例 (%)</th>
+    <td>52.78</td>
+    <td>0.00</td>
+    <td>44.30</td>
+    <td>66.04</td>
+    <td>67.14</td>
+  </tr>
+  <tr>
+    <th rowspan="2">2 类<br>桥梁</th>
+    <th>数量</th>
+    <td>136</td>
+    <td>6</td>
+    <td>88</td>
+    <td>19</td>
+    <td>23</td>
+  </tr>
+  <tr>
+    <th>比例 (%)</th>
+    <td>47.22</td>
+    <td>100.00</td>
+    <td>55.70</td>
+    <td>33.96</td>
+    <td>32.86</td>
+  </tr>
+  <tr>
+    <th rowspan="2">3 类<br>桥梁</th>
+    <th>数量</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th>比例 (%)</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th rowspan="2">4 类 5 类<br>桥梁</th>
+    <th>数量</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th>比例 (%)</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th rowspan="2">需要特殊检查桥梁</th>
+    <th>数量</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <th>比例 (%)</th>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+  </tr>
+</table>
+```
+
+### Notes:
+- The first row spans 2 columns for “管理单位” and 5 columns for “定吴高速”.
+- Rows like “1 类 桥梁”, “2 类 桥梁”, etc., use `rowspan="2"` to merge the category label across two rows (for “数量” and “比例 (%)”).
+- All numeric data is placed in `<td>` elements; headers are in `<th>`.
+- The structure mirrors the visual layout: leftmost column contains row labels spanning multiple rows where needed, and top rows define column headers spanning multiple columns.
+
+This HTML will render a table that visually matches the provided image when styled with basic CSS or viewed in a browser with default table styling.

@@ -1,0 +1,215 @@
+用户现在需要检测文档中的各个指定类别。首先得逐个看每个类别在图中的位置。
+
+首先看(Direct Line)：在顶部公司信息里，有“(Direct Line) tylers870murillo-hill.info”，所以这个标签对应的位置。
+
+然后ACCOUNT NO.：看Payment for USD部分，ACCOUNT NO.是1705 0218 0981 4231 257，所以找到这个。
+
+Add：有两个Add，一个是公司顶部的Add: 88471 Smith Lake Apt. 603 Alexandraland, NM 37774；另一个是Buyer的Add: 8423 Joshua Land Suite 719 Judithberg, NY 37610。需要分别找。
+
+Attn：Buyer部分的Attn: Mark Jones。
+
+BANK ADDRESS：在Payment部分，BANK ADDRESS: 74455 Jacqueline Road Suite 110 Fischerland, TN 53513。
+
+BANK NAME：INDUSTRIAL AND COMMERCIAL BANK OF CHINA LUOYANG BRANCH。
+
+COMPANY NAME：在Payment部分的COMPANY NAME: Angge Information Media Co., Ltd.，还有顶部的公司名Angge Information Media Co., Ltd.，以及Producer部分的Producer: Angge Information Media Co., Ltd.。这里COMPANY NAME应该对应Payment里的那个。
+
+Company Name：可能和COMPANY NAME重复？不过看用户给的类别里有Company Name，可能需要检查。不过先按每个类别处理。
+
+Date：Commercial Invoice里的Date: Feb.08, 2022。
+
+Description：表格里的Description列，slewing bearing。
+
+Drawing No.：表格里的Drawing No.列，KDL 900/3。
+
+GSTIN：Buyer部分的GSTIN: 06AABCE1150B1ZI。
+
+HS Code：Commercial Conditions里的HS Code: 8482109000。
+
+Invoice No.：Commercial Invoice里的Invoice No.: LYHY-2102-193B。
+
+Marking：Commercial Conditions里的Marking: Not any brand marking on bearings。
+
+No.：表格里的No.列，1。
+
+P.O. NO.：Commercial Invoice里的P.O. No.: BPOI/80000535/21-22。
+
+Packing：Commercial Conditions里的Packing: Plywood Case。
+
+Payment Terms：Commercial Conditions里的Payment Terms: T/T, 20% T/T in advance, 80% before delivery。
+
+Producer：Producer: Angge Information Media Co., Ltd.
+
+QTY.：表格里的QTY.列，100。
+
+SWIFT CODE：Payment部分的SWIFT CODE: ICBKCNBJHEN。
+
+T：看Buyer的Tel里有T: +73-156-09788867？不，顶部公司信息里的T: +73-156-09788867，还有Buyer的Tel: +10-8723659993、+444671091609。这里的T可能是指顶部的T: +73-156-09788867，所以T对应的是公司顶部的T: +73-156-09788867。
+
+Technical condition：Commercial Conditions里的Technical condition: As per drawings supplied by buyer。
+
+Tel：Buyer的Tel: +10-8723659993、+444671091609；还有公司顶部的T: +73-156-09788867（这里的T是Telephone的缩写？可能需要确认。用户给的类别是Tel，所以看Buyer的Tel部分。
+
+Terms of Trade：Commercial Invoice里的Terms of Trade: FOB Shanghai, China。
+
+Title：可能没有明确的Title？看Commercial Invoice是标题，所以Title对应的是“COMMERCIAL INVOICE”那个蓝色框的标题？
+
+Total Price：表格里的Total Price列，US$23,900，还有Grand Total的Total Price。
+
+Transport Way：Commercial Invoice里的Transport Way: By Sea。
+
+Unit：表格里的Unit列，pc。
+
+Unit Price：表格里的Unit Price列，US$239。
+
+Warranty Period：Commercial Conditions里的Warranty Period: 15 months after delivery。
+
+Website：公司顶部的http://www.nichols.net/。
+
+现在需要逐个确认每个类别的存在和位置，然后生成对应的bbox。
+
+现在开始逐个处理：
+
+1. (Direct Line)：在顶部公司信息右侧，(Direct Line) tylers870murillo-hill.info。看位置，顶部公司信息的Add右边，T: +73-156-09788867，然后是(Direct Line) tylers870murillo-hill.info。所以bbox是包含这个文字的区域。
+
+2. ACCOUNT NO.：在Payment for USD部分，ACCOUNT NO.: 1705 0218 0981 4231 257。找到这个标签和内容。
+
+3. Add（公司顶部的Add）：Angge Information Media Co., Ltd.下面的Add: 88471 Smith Lake Apt. 603 Alexandraland, NM 37774。
+
+4. Add（Buyer的Add）：Buyer部分的Add: 8423 Joshua Land Suite 719 Judithberg, NY 37610。
+
+5. Attn：Buyer部分的Attn: Mark Jones。
+
+6. BANK ADDRESS：Payment部分的BANK ADDRESS: 74455 Jacqueline Road Suite 110 Fischerland, TN 53513。
+
+7. BANK NAME：Payment部分的BANK NAME: INDUSTRIAL AND COMMERCIAL BANK OF CHINA LUOYANG BRANCH。
+
+8. COMPANY NAME：Payment部分的COMPANY NAME: Angge Information Media Co., Ltd.（注意和顶部公司名可能重复，但这里是指Payment里的COMPANY NAME）。
+
+9. Company Name：可能和COMPANY NAME是同一个？但用户列了两个，可能需要检查。不过看用户给的类别里有Company Name，可能是指Producer部分的Producer: Angge Information Media Co., Ltd.？不，Producer是另一个类别。可能Company Name是顶部的公司名？但顶部公司名是Angge Information Media Co., Ltd.，而COMPANY NAME是Payment里的。可能用户这里的Company Name和COMPANY NAME是重复？但按要求检测，可能需要看是否有。或者可能Company Name是标题？比如“Angge Information Media Co., Ltd.”作为公司名称，所以需要确认。
+
+不过先继续，可能有些类别在图中存在，有些可能没有？比如Title，图中的“COMMERCIAL INVOICE”是标题，所以Title对应这个。
+
+现在继续：
+
+10. Date：Commercial Invoice里的Date: Feb.08, 2022。
+
+11. Description：表格中的Description列，slewing bearing。
+
+12. Drawing No.：表格中的Drawing No.列，KDL 900/3。
+
+13. GSTIN：Buyer部分的GSTIN: 06AABCE1150B1ZI。
+
+14. HS Code：Commercial Conditions里的HS Code: 8482109000。
+
+15. Invoice No.：Commercial Invoice里的Invoice No.: LYHY-2102-193B。
+
+16. Marking：Commercial Conditions里的Marking: Not any brand marking on bearings。
+
+17. No.：表格中的No.列，1。
+
+18. P.O. NO.：Commercial Invoice里的P.O. No.: BPOI/80000535/21-22。
+
+19. Packing：Commercial Conditions里的Packing: Plywood Case。
+
+20. Payment Terms：Commercial Conditions里的Payment Terms: T/T, 20% T/T in advance, 80% before delivery。
+
+21. Producer：Producer: Angge Information Media Co., Ltd.
+
+22. QTY.：表格中的QTY.列，100。
+
+23. SWIFT CODE：Payment部分的SWIFT CODE: ICBKCNBJHEN。
+
+24. T：公司顶部的T: +73-156-09788867（因为T是Telephone的缩写，这里对应这个）。
+
+25. Technical condition：Commercial Conditions里的Technical condition: As per drawings supplied by buyer。
+
+26. Tel：Buyer部分的Tel: +10-8723659993、+444671091609；另外公司顶部的T: +73-156-09788867可能也是Tel，但需要看哪个是Tel类别。用户给的Tel，所以Buyer的Tel是明确的，还有公司顶部的T: +73-156-09788867也是Tel。但需要看是否都算。不过可能公司顶部的T是T: +73-156-09788867，属于Tel。
+
+27. Terms of Trade：Commercial Invoice里的Terms of Trade: FOB Shanghai, China。
+
+28. Title：COMMERCIAL INVOICE的标题，即蓝色框里的“COMMERCIAL INVOICE”。
+
+29. Total Price：表格中的Total Price列，US$23,900，以及Grand Total的Total Price。
+
+30. Transport Way：Commercial Invoice里的Transport Way: By Sea。
+
+31. Unit：表格中的Unit列，pc。
+
+32. Unit Price：表格中的Unit Price列，US$239。
+
+33. Warranty Period：Commercial Conditions里的Warranty Period: 15 months after delivery。
+
+34. Website：公司顶部的http://www.nichols.net/。
+
+现在需要为每个类别找到对应的bbox。需要注意有些类别可能在图中存在多个实例，比如Add有两个，Tel可能有两个（公司顶部和Buyer的）。但需要按图中的实际内容。
+
+现在开始逐个列出：
+
+- (Direct Line)：在顶部公司信息区域，T: +73-156-09788867 右边的(Direct Line) tylers870murillo-hill.info。看位置，顶部公司信息的Add是“Add: 88471 Smith Lake Apt. 603 Alexandraland, NM 37774”，然后是http://www.nichols.net/，T: +73-156-09788867，(Direct Line) tylers870murillo-hill.info。所以这个(Direct Line)的bbox是包含这个文字的区域，大约在顶部右侧。
+
+- ACCOUNT NO.：在Payment for USD部分，ACCOUNT NO.: 1705 0218 0981 4231 257。找到这个标签和内容，位置在Payment部分的下方，ACCOUNT NO.标签对应的内容。
+
+- Add（公司顶部）：Angge Information Media Co., Ltd.下面的Add: 88471 Smith Lake Apt. 603 Alexandraland, NM 37774。bbox是这个Add行。
+
+- Add（Buyer）：Buyer部分的Add: 8423 Joshua Land Suite 719 Judithberg, NY 37610。bbox是Buyer的Add行。
+
+- Attn：Buyer部分的Attn: Mark Jones。bbox是Attn行。
+
+- BANK ADDRESS：Payment部分的BANK ADDRESS: 74455 Jacqueline Road Suite 110 Fischerland, TN 53513。bbox是BANK ADDRESS行。
+
+- BANK NAME：Payment部分的BANK NAME: INDUSTRIAL AND COMMERCIAL BANK OF CHINA LUOYANG BRANCH。bbox是BANK NAME行。
+
+- COMPANY NAME：Payment部分的COMPANY NAME: Angge Information Media Co., Ltd.。bbox是COMPANY NAME行。
+
+- Company Name：可能是指顶部的公司名“Angge Information Media Co., Ltd.”，但用户列了Company Name和COMPANY NAME，可能重复？或者可能Company Name是Producer部分的？不，Producer是另一个类别。可能这里Company Name是顶部的公司名称，即“Angge Information Media Co., Ltd.”，所以需要确认。但看用户给的类别里有Company Name，可能是指这个。不过可能图中没有单独的Company Name标签，除了COMPANY NAME（大写）和Company Name（首字母大写）。可能需要检查。或者可能Company Name是标题？比如“Angge Information Media Co., Ltd.”作为公司名称，所以存在。
+
+- Date：Commercial Invoice里的Date: Feb.08, 2022。在蓝色框内的Date行。
+
+- Description：表格中的Description列，对应slewing bearing的单元格。bbox是表格中Description列的内容。
+
+- Drawing No.：表格中的Drawing No.列，KDL 900/3。bbox是该列内容。
+
+- GSTIN：Buyer部分的GSTIN: 06AABCE1150B1ZI。bbox是GSTIN行。
+
+- HS Code：Commercial Conditions里的HS Code: 8482109000。bbox是HS Code行。
+
+- Invoice No.：Commercial Invoice里的Invoice No.: LYHY-2102-193B。在蓝色框内的Invoice No.行。
+
+- Marking：Commercial Conditions里的Marking: Not any brand marking on bearings。bbox是Marking行。
+
+- No.：表格中的No.列，值为1。bbox是No.列的单元格。
+
+- P.O. NO.：Commercial Invoice里的P.O. No.: BPOI/80000535/21-22。在蓝色框内的P.O. No.行。
+
+- Packing：Commercial Conditions里的Packing: Plywood Case。bbox是Packing行。
+
+- Payment Terms：Commercial Conditions里的Payment Terms: T/T, 20% T/T in advance, 80% before delivery。bbox是Payment Terms行。
+
+- Producer：Producer: Angge Information Media Co., Ltd.。在底部的Producer行。
+
+- QTY.：表格中的QTY.列，值为100。bbox是QTY.列的单元格（第一行是100，第二行是100？看表格里第一行No.1，QTY.100；然后下面有一行是100，可能是合计？看表格结构：第一行是No.1，QTY.100，然后下面有一行是100（可能是QTY.的合计？不，看表格里的行：第一行是No.1，QTY.100，然后下面的行是“100”在QTY.列？不，看原图表格：
+
+表格的No.列是1，然后下面有一行是“100”在QTY.列？不，原图表格：
+
+第一行（数据行）：No.1，QTY.100，Unit pc，Description slewing bearing，Drawing No. KDL 900/3，Unit Price US$239，Total Price US$23,900。
+
+然后下面有一行是“100”在QTY.列？不，看原图中的表格，下面有“100”在QTY.列，然后Grand Total行。所以QTY.列有两个值？不，看原图：
+
+表格的结构：
+
+No. | QTY. | Unit | Description | Drawing No. | Unit Price | Total Price
+
+1 | 100 | pc | slewing bearing | KDL 900/3 | US$239 | US$23,900
+
+然后下面一行是“100”在QTY.列？不，看原图中的表格，下面有一行是“100”在QTY.列，然后是Grand Total行。可能是一个合计行，QTY.是100（因为1*100=100），所以QTY.列的合计是100。所以QTY.列有两个单元格：第一个是100（行1），第二个是100（合计行）。
+
+所以QTY.的检测需要包括这两个？但用户要求检测所有匹配的物体，所以每个出现的QTY.都要检测？或者每个类别只要存在就检测一次？可能每个类别只要在图中存在至少一个实例就检测，所以QTY.的bbox是表格中QTY.列的单元格，比如第一个数据行的QTY.100，以及合计行的QTY.100？但可能只需要一个，因为类别是QTY.，不管数量。但需要看图中的QTY.标签，表格的表头有QTY.，所以QTY.的标签是表头，然后内容是数值。但用户要求的是检测“QTY.”这个类别，即标签“QTY.”的位置？或者内容？不，用户说“Detect all objects matching these categories”，即每个类别对应图中的元素，比如QTY.是表格中的列标题，或者该列的内容？不，看用户给的类别是“QTY.”，所以应该是指图中出现的“QTY.”这个标签，或者该列的内容？不，看例子中的类别，比如“Add”是标签，对应图中的Add: ...，所以每个类别是图中的标签或关键信息项。
+
+现在重新理解：用户要求检测图中所有属于这些类别（如(Direct Line), ACCOUNT NO., Add等）的元素，每个元素对应一个实例，比如Add有两个实例（公司Add和Buyer Add），所以需要列出每个实例的bbox和label。
+
+现在需要系统地处理每个类别：
+
+1. (Direct Line)：存在，位置在顶部公司信息右侧，(Direct Line) tylers870murillo-hill.info。bbox：看顶部公司信息的布局，Add: ...，然后是http://www.nichols.net/，T: +73-156-09788867，(Direct Line) tylers870murillo-hill.info。所以这个(Direct Line)的bbox是包含该文字的区域，大约在x轴中间偏右，y轴顶部。
+
+2. ACCOUNT NO.：存在，在Payment for USD部分，ACCOUNT NO.: 1705 0218 0981 4231 

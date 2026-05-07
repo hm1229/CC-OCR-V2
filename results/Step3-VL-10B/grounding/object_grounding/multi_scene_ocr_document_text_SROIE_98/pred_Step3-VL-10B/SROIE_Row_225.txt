@@ -1,0 +1,228 @@
+Got it, let's go through the document and identify each category: address, company, date, total.
+
+First, company: The top part has "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" which is the company. Also, "MAKASSAR FRESH MARKET SDN BHD" is another company (the vendor). Let's check.
+
+Address: For GARDENIA BAKERIES, the address is "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Then for MAKASSAR FRESH MARKET, the address is "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)". Also, the date: "Date: 07/10/2017" and "DD: 07/10/2017". The total payables: "Total Payable: 32.12" and other totals like "Total 0% supplies: 16.86", "Total 6% supplies (Inc. GST): 15.26" etc.
+
+Let's list each:
+
+Company 1: GARDENIA BAKERIES (KL) SDN BHD. Bounding box around that line.
+
+Company 2: MAKASSAR FRESH MARKET SDN BHD.
+
+Address for GARDENIA: the lines below the company name.
+
+Address for MAKASSAR: the lines below their company name.
+
+Date: There's "Date: 07/10/2017" and "DD: 07/10/2017 12:06". Let's check which date is relevant. The main date is probably the one with "Date: 07/10/2017" (the cash inv date) and the DD is the transaction date.
+
+Total: The "Total Payable: 32.12" is a total. Also, other totals like "Total 0% supplies: 16.86", "Total 6% supplies (excl. GST): 14.40", "Total 6% supplies (Inc. GST): 15.26", "GST: 0.86". But the question says "total" category, so likely the main total payable.
+
+Now, let's map each:
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD. Let's find its bounding box. The text is at the top: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)". So coordinates.
+
+2. Company: MAKASSAR FRESH MARKET SDN BHD. The line "MAKASSAR FRESH MARKET SDN BHD".
+
+3. Address: For GARDENIA, the address lines: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+
+4. Address: For MAKASSAR, the address lines: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)".
+
+5. Date: "Date: 07/10/2017" (the cash inv date) and "DD: 07/10/2017 12:06" (transaction date). Let's check which is the main date. The problem says "date" category, so both might be dates, but let's see.
+
+6. Total: "Total Payable: 32.12" is a key total. Also, other totals, but let's pick the main one.
+
+Now, let's check each element's position.
+
+First, GARDENIA BAKERIES (company):
+
+Text: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — top part.
+
+Address for GARDENIA: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+
+Then, MAKASSAR FRESH MARKET SDN BHD (company):
+
+"MAKASSAR FRESH MARKET SDN BHD"
+
+Address for MAKASSAR: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)"
+
+Date: "Date: 07/10/2017" (from "Date: 07/10/2017" in the cash inv line) and "DD: 07/10/2017 12:06" (the transaction date). Let's include both as date entries.
+
+Total: "Total Payable: 32.12" — that's a total. Also, "Total 0% supplies: 16.86", "Total 6% supplies (Inc. GST): 15.26", etc. But the question says "total" category, so any of these. Let's check the most prominent, which is Total Payable.
+
+Now, let's list all:
+
+- Company: GARDENIA BAKERIES (KL) SDN BHD
+- Address: Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor.
+- Company: MAKASSAR FRESH MARKET SDN BHD
+- Address: GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)
+- Date: 07/10/2017 (from Date: 07/10/2017)
+- Date: 07/10/2017 (from DD: 07/10/2017 12:06) — maybe same date, but two instances.
+- Total: Total Payable: 32.12
+- Total: Total 0% supplies: 16.86
+- Total: Total 6% supplies (Inc. GST): 15.26
+- Total: GST: 0.86 (but GST is a tax, maybe not "total" in the sense of payable. The main total is Total Payable.)
+
+Wait, the problem says "detect all objects matching these categories". So we need to find every occurrence of address, company, date, total.
+
+Let's go step by step.
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD — line at top.
+   Bounding box: Let's estimate. The text is from top, so y1 is around 30, x1 left, x2 right.
+
+2. Address for GARDENIA: The lines below the company name: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." — that's an address.
+
+3. Company: MAKASSAR FRESH MARKET SDN BHD — line below the cash inv no and date.
+
+4. Address for MAKASSAR: The lines below that company name: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)" — address.
+
+5. Date: "Date: 07/10/2017" — in the line "VE0514 Date: 07/10/2017" (cash inv date).
+
+6. Date: "DD: 07/10/2017 12:06" — the transaction date.
+
+7. Total: "Total 0% supplies: 16.86" — a total.
+
+8. Total: "Total 6% supplies (excl. GST): 14.40" — total.
+
+9. Total: "Total 6% supplies (Inc. GST): 15.26" — total.
+
+10. Total: "Total 0% supplies: 16.86" — another total (repeated? Let's check the image: yes, there's "Total 0% supplies: 16.86" and later again "Total 0% supplies: 16.86". So two instances.
+
+11. Total: "Total Payable: 32.12" — main total.
+
+Now, let's check which of these are distinct and need to be included.
+
+But the problem says "detect all objects", so each occurrence.
+
+Now, let's map each with bounding boxes.
+
+First, GARDENIA BAKERIES (company):
+
+Text: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)"
+
+In the image, the top part. Let's assume the coordinates. Let's look at the image structure.
+
+The image has:
+
+- Top: GARDENIA BAKERIES (KL) SDN BHD (139386 X)
+- Then address lines for GARDENIA: Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor.
+- Then Tel, Fax, GST ID.
+- Then TAX INVOICE / ADJUSTMENT NOTE
+- Cash Inv No. and Date: 07/10/2017
+- Then MAKASSAR FRESH MARKET SDN BHD (company)
+- Then address for MAKASSAR: GROUND FLOOR... etc.
+- Then DD: 07/10/2017 12:06
+- Then the table with descriptions.
+- Then totals: Total 0% supplies: 16.86, CR-B'S SCOTCH... then Total 6% supplies (excl. GST):14.40, GST:0.86, Total 6% supplies (Inc. GST):15.26, Total 0% supplies:16.86, Total Payable:32.12.
+
+Now, let's list each category:
+
+Company:
+- GARDENIA BAKERIES (KL) SDN BHD: [x1, y1, x2, y2] — top section.
+- MAKASSAR FRESH MARKET SDN BHD: below cash inv date.
+
+Address:
+- GARDENIA's address: Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor.
+- MAKASSAR's address: GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900).
+
+Date:
+- Date: 07/10/2017 (from "Date: 07/10/2017" in cash inv line)
+- DD: 07/10/2017 12:06 (transaction date)
+
+Total:
+- Total 0% supplies: 16.86 (first occurrence)
+- Total 6% supplies (excl. GST): 14.40
+- GST: 0.86 (maybe not a total, but a component)
+- Total 6% supplies (Inc. GST): 15.26
+- Total 0% supplies: 16.86 (second occurrence)
+- Total Payable: 32.12
+
+Now, let's check which of these are "total" as per the category. The problem says "total" category, so any line that shows a total amount. So all the "Total..." lines.
+
+Now, let's create the JSON array.
+
+First, identify each element:
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD
+   Bounding box: Let's estimate. The text is at the top, so from the image, the first line. Let's say the coordinates are [x1=50, y1=20, x2=600, y2=35] (approx).
+
+2. Address: GARDENIA's address
+   Line: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+   Bounding box: Below the company name, so y around 40-50.
+
+3. Company: MAKASSAR FRESH MARKET SDN BHD
+   Line: "MAKASSAR FRESH MARKET SDN BHD"
+   Bounding box: Below cash inv date, y around 150-170.
+
+4. Address: MAKASSAR's address
+   Line: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)"
+   Bounding box: Below the company name, y around 180-200.
+
+5. Date: "Date: 07/10/2017"
+   Line: "VE0514 Date: 07/10/2017"
+   Bounding box: Around the cash inv date line, y around 120-130.
+
+6. Date: "DD: 07/10/2017 12:06"
+   Line: "VE05: Ridzuan (11900) DD: 07/10/2017 12:06"
+   Bounding box: Below the address, y around 210-220.
+
+7. Total: "Total 0% supplies: 16.86" (first)
+   Line: After the table, "Total 0% supplies: 16.86"
+   Bounding box: y around 250-260.
+
+8. Total: "Total 6% supplies (excl. GST): 14.40"
+   Line: After CR-B'S SCOTCH, "Total 6% supplies (excl. GST): 14.40"
+   Bounding box: y around 280-290.
+
+9. Total: "Total 6% supplies (Inc. GST): 15.26"
+   Line: After GST, "Total 6% supplies (Inc. GST): 15.26"
+   Bounding box: y around 300-310.
+
+10. Total: "Total 0% supplies: 16.86" (second)
+    Line: Later, "Total 0% supplies: 16.86"
+    Bounding box: y around 320-330.
+
+11. Total: "Total Payable: 32.12"
+    Line: At the end of totals, "Total Payable: 32.12"
+    Bounding box: y around 340-350.
+
+Now, let's check if all these are present. Let's verify the image content:
+
+- The image has "Total 0% supplies: 16.86" (after the first item total)
+- Then "CR-B'S SCOTCH 0.72 20 0 0 20 14.40" — then "Total 6% supplies (excl. GST): 14.40"
+- Then "GST: 0.86"
+- Then "Total 6% supplies (Inc. GST): 15.26"
+- Then "Total 0% supplies: 16.86" (again, maybe a repeat for clarity)
+- Then "Total Payable: 32.12"
+
+Yes, so those totals are there.
+
+Now, let's create the JSON array with each entry.
+
+Note: The problem says "Return ONLY a JSON array in this format: [{"bbox_2d": [x1, y1, x2, y2], "label": "category_name"}]"
+
+We need to make sure each entry is a dictionary with bbox_2d and label.
+
+Let's list each:
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD
+   bbox: Let's check the image. The top line is "GARDENIA BAKERIES (KL) SDN BHD (139386 X)". Let's assume the coordinates. Since it's the top, maybe [62, 25, 620, 45]
+
+2. Address: GARDENIA's address
+   Line: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+   bbox: [62, 47, 620, 65]
+
+3. Company: MAKASSAR FRESH MARKET SDN BHD
+   Line: "MAKASSAR FRESH MARKET SDN BHD"
+   bbox: [62, 175, 520, 195]
+
+4. Address: MAKASSAR's address
+   Line: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR VE05: Ridzuan (11900)"
+   bbox: [62, 197, 620, 217]
+
+5. Date: "Date: 07/10/2017"
+   Line: "VE0514 Date: 07/10/2017"
+   bbox: [62, 135, 620, 153]
+
+6. Date: "DD: 07/10/2017 12:06"
+   Line: "VE05: Ridzuan (11900) DD: 07/10

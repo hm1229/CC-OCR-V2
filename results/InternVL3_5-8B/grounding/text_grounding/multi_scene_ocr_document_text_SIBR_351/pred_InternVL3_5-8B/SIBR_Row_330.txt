@@ -1,0 +1,23 @@
+To determine the coordinates of the region containing the text '2020', we need to identify the bounding box that encloses this text. Let's break down the process step-by-step:
+
+1. **Identify the Text Location**: The text '2020' is located near the bottom right of the receipt, just above the time '14:57:05'.
+
+2. **Estimate the Bounding Box**:
+   - The text '2020' is horizontally aligned.
+   - We need to find the top-left and bottom-right corners of the text.
+
+3. **Normalize Coordinates**:
+   - The image width and height are assumed to be 1000 units for normalization purposes.
+
+4. **Bounding Box Coordinates**:
+   - **Top-left corner (x1, y1)**: This is the starting point of the text '2020'.
+   - **Bottom-right corner (x2, y2)**: This is the endpoint of the text '2020'.
+
+Based on visual inspection:
+
+- The top-left corner (x1, y1) appears to be approximately at (750, 750).
+- The bottom-right corner (x2, y2) appears to be approximately at (800, 780).
+
+Thus, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) = (750, 750, 800, 780)

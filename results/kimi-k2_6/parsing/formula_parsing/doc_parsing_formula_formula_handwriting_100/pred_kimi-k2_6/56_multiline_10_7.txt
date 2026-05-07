@@ -1,0 +1,12 @@
+\[\begin{array} { l } 
+ \text{Tr} \left[ \left( A _ { m } \otimes A _ { n } \right) R _ { A B } \right] = \text{Tr} \left\{ \left( A _ { m } \otimes A _ { n } \right) \left[ \left( \rho _ { A } \otimes \frac { 1 } { 2 } \right) E _ { A B } + E _ { A B } \left( \rho _ { A } \otimes \frac { 1 } { 2 } \right) \right] \right\} } \\ 
+ = \frac { 1 } { 2 } \left[ \text{Tr} \left( A _ { m } \rho \otimes A _ { n } \right) E _ { A B } + \text{Tr} \left( A _ { m } \otimes A _ { n } \right) E _ { A B } \left( \rho \otimes 1 \right) \right] \\ 
+ = \frac { 1 } { 2 } \left[ \sum _ { i j } \text{Tr} \left( A _ { m } \rho | i \rangle \langle j | \right) \text{Tr} \left( A _ { n } \varepsilon _ { A | B } ( | j \rangle \langle i | ) \right) + \sum _ { i j } \text{Tr} \left( A _ { m } | i \rangle \langle j | \rho \right) \text{Tr} \left( A _ { n } \varepsilon _ { A | B } ( | j \rangle \langle i | ) \right) \right] \\ 
+ = \frac { 1 } { 2 } \left[ \sum _ { i j } \langle j | \left( A _ { m } \rho + \rho A _ { m } \right) | i \rangle \text{Tr} \left( A _ { n } \varepsilon _ { A | B } ( | j \rangle \langle i | ) \right) \right] \\ 
+ = \frac { 1 } { 2 } \left[ \sum _ { i j } \langle j | \left( A _ { m } \rho + \rho A _ { m } \right) | i \rangle \text{Tr} \left( A _ { n } \sum _ { k } V _ { k } | j \rangle \langle i | V _ { k } ^ { \dagger } \right) \right] \\ 
+ = \frac { 1 } { 2 } \left[ \sum _ { i j } \langle j | \left( A _ { m } \rho + \rho A _ { m } \right) | i \rangle \sum _ { k } \text{Tr} \left( V _ { k } ^ { \dagger } A _ { n } V _ { k } | j \rangle \langle i | \right) \right] \\ 
+ = \frac { 1 } { 2 } \left[ \sum _ { i j } \langle j | \left( A _ { m } \rho + \rho A _ { m } \right) | i \rangle \langle i | \sum _ { k } V _ { k } ^ { \dagger } A _ { n } V _ { k } | j \rangle \right] \\ 
+ = \frac { 1 } { 2 } \text{Tr} \left[ \sum _ { j } | j \rangle \langle j | \left( A _ { m } \rho + \rho A _ { m } \right) \sum _ { k } V _ { k } ^ { \dagger } A _ { n } V _ { k } \right] \\ 
+ = \frac { 1 } { 2 } \text{Tr} \left[ \left( A _ { m } \rho + \rho A _ { m } \right) \varepsilon _ { A | B } ^ { \dagger } \left( A _ { n } \right) \right] \\ 
+ = \langle A _ { m } A _ { n } \rangle _ { \text{seq} } 
+\end{array}\]

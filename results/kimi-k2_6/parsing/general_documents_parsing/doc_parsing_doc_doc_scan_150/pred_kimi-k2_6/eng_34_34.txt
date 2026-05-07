@@ -1,0 +1,55 @@
+```latex
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+\textbf{Example Corporation}\\
+\textbf{Balance Sheet}\\
+\textbf{December 31, 2023}
+\end{center}
+
+\begin{tabular}{@{}l r l r@{}}
+\multicolumn{2}{l}{\textbf{Assets}} & \multicolumn{2}{l}{\textbf{Liabilities}} \\
+\midrule
+\multicolumn{2}{l}{Current assets} & \multicolumn{2}{l}{Current liabilities} \\
+\quad Cash and cash equivalents & \$ \quad 2,200 & \quad Short-term loans payable & \$ \quad 5,000 \\
+\quad Short-term investments & 10,000 & \quad Current portion of long-term debt & 15,000 \\
+\quad Accounts receivable - net & 39,500 & \quad Accounts payable & 20,900 \\
+\quad Other receivables & 1,000 & \quad Accrued compensation and benefits & 8,500 \\
+\quad Inventory & 31,000 & \quad Income taxes payable & 6,100 \\
+\quad Supplies & 3,800 & \quad Other accrued liabilities & 4,000 \\
+\quad Prepaid expenses & 1,500 & \quad Deferred revenues & 1,500 \\
+\quad Total current assets & \underline{89,000} & \quad Total current liabilities & \underline{61,000} \\
+\\
+Investments & \underline{36,000} & \multicolumn{2}{l}{Long-term liabilities} \\
+& & \quad Notes payable & 20,000 \\
+Property, plant \& equipment & & \quad Bonds payable & 375,000 \\
+\quad Land & 5,500 & \quad Deferred income taxes & \underline{25,000} \\
+\quad Land improvements & 6,500 & \quad Total long-term liabilities & \underline{420,000} \\
+\quad Buildings & 180,000 & & \\
+\quad Equipment & 201,000 & Total liabilities & \underline{481,000} \\
+\quad Less: accumulated depreciation & \underline{(56,000)} & & \\
+\quad Property, plant \& equip. - net & \underline{337,000} & \multicolumn{2}{l}{Commitments and contingencies (see notes)} \\
+\\
+Intangible assets & & \multicolumn{2}{l}{\textbf{Stockholders' Equity}} \\
+\quad Goodwill & 105,000 & & \\
+\quad Other intangible assets & \underline{200,000} & \quad Common stock & 110,000 \\
+\quad Total intangible assets & \underline{305,000} & \quad Retained earnings & 220,000 \\
+& & \quad Accum other comprehensive income & 9,000 \\
+Other assets & \underline{3,000} & \quad Less: Treasury stock & \underline{(50,000)} \\
+& & \quad Total stockholders' equity & \underline{289,000} \\
+Total assets & \underline{\$ \quad 770,000} & Total liabilities \& stockholders' equity & \underline{\$ \quad 770,000} \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5cm}
+
+\textit{The accompanying notes are an integral part of this statement.}
+
+\end{document}
+```

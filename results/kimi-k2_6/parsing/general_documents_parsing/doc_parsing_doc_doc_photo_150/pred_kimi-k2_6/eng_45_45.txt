@@ -1,0 +1,165 @@
+I'll transcribe this educational worksheet into LaTeX format, preserving all text, structure, and visual elements.
+
+```latex
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fancybox}
+\usepackage{enumitem}
+
+\begin{document}
+
+% Header section with title and Word Power box
+\begin{center}
+\begin{tikzpicture}[remember picture, overlay]
+% Word Power box in upper right
+\node[anchor=north east, inner sep=0pt] at (current page.north east) {
+\begin{tikzpicture}
+% Cartoon character
+\draw[fill=brown!20] (0,0) circle (0.3); % head
+\draw[fill=black] (0,0.15) ellipse (0.15 and 0.08); % hair
+\draw (0.1,0.05) -- (0.15,0.2); % eye brow
+\draw (-0.1,0.05) -- (-0.15,0.2); % eye brow
+\draw[fill=white] (0.08,0) circle (0.03); % eye
+\draw[fill=white] (-0.08,0) circle (0.03); % eye
+\draw[fill=black] (0.08,0) circle (0.015); % pupil
+\draw[fill=black] (-0.08,0) circle (0.015); % pupil
+\draw (0,-0.08) arc (270:310:0.1); % smile
+\draw (0,-0.35) -- (0,-0.5); % body line
+\draw (-0.2,-0.4) -- (0.2,-0.4); % arms
+\draw (-0.3,-0.35) -- (-0.2,-0.4); % hand
+\draw (0.3,-0.35) -- (0.2,-0.4); % hand
+% Word Power title
+\node[font=\bfseries\large\color{blue!60!black}] at (1.5,0.3) {Word Power};
+\draw[thick, blue!60!black] (0.5,0.1) -- (2.5,0.1);
+% Definition box
+\node[draw, rounded corners, fill=yellow!10, text width=4.5cm, align=left, font=\small] at (1.5,-0.8) {
+\begin{tabular}{@{}ll@{}}
+\textbf{Extra} & more than what is needed \\
+\textbf{Instead} & as an alternative \\
+\textbf{Din} & noise \\
+\textbf{Seize} & catch by force \\
+\end{tabular}
+};
+\end{tikzpicture}
+};
+\end{tikzpicture}
+\end{center}
+
+\vspace*{0.5cm}
+
+% Title with illustration
+\begin{minipage}[t]{0.3\textwidth}
+\begin{tikzpicture}
+% Simple cartoon of person reading
+\draw[fill=violet!30] (0,0) circle (0.4); % head
+\draw[fill=black] (0,0.35) ellipse (0.2 and 0.1); % hair
+\draw[fill=white] (0.12,0.05) circle (0.06); % eye
+\draw[fill=white] (-0.12,0.05) circle (0.06); % eye
+\draw[fill=black] (0.12,0.05) circle (0.03); % pupil
+\draw[fill=black] (-0.12,0.05) circle (0.03); % pupil
+\draw (0,-0.1) arc (270:290:0.15); % small smile
+\draw[fill=violet!50] (-0.3,-0.4) rectangle (0.3,-1); % body
+\draw[fill=white] (0.1,-0.6) -- (0.5,-0.8) -- (0.5,-1) -- (0.1,-0.9) -- cycle; % book
+\draw (0.15,-0.7) -- (0.45,-0.85); % book line
+\draw (0.15,-0.8) -- (0.45,-0.95); % book line
+\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}[t]{0.7\textwidth}
+\vspace{0.3cm}
+{\Large\bfseries\color{green!40!black} Test Your Reading}
+\end{minipage}
+
+\vspace{0.5cm}
+
+% Question 1
+\textbf{1.\hspace{0.5cm}Complete the following statements :}
+
+\begin{enumerate}[label=(\alph*), leftmargin=*, itemsep=0.3cm]
+\item They began \underline{\hspace{2cm}heating\hspace{2cm}} the iron and forging it again.
+
+\hfill
+\begin{tikzpicture}[baseline=-0.5cm]
+% Blacksmith forge illustration
+\draw[fill=gray!30] (0,0) ellipse (1.5 and 0.4); % stones base
+\foreach \x in {-1.2,-0.8,-0.4,0,0.4,0.8,1.2} {
+    \draw[fill=gray!50] (\x-0.15,0) rectangle (\x+0.15,0.3);
+}
+\draw[fill=brown!40] (-0.5,0.3) rectangle (0.5,0.8); % furnace
+\draw[fill=red!70!yellow] (-0.3,0.4) -- (0,0.9) -- (0.3,0.4); % flames
+\draw[fill=red!80!yellow] (-0.2,0.5) -- (0,0.85) -- (0.2,0.5); % inner flames
+\draw[fill=orange!80!yellow] (-0.1,0.6) -- (0,0.8) -- (0.1,0.6); % core flames
+\draw[thick, brown!60!black] (1,0.6) -- (2.5,1.2); % poker stick
+\draw[fill=gray!70] (2.5,1.2) circle (0.15); % handle
+\end{tikzpicture}
+
+\item The farmer \underline{\hspace{2.5cm}led\hspace{2.5cm}} the lord to the storeroom.
+
+\item Off rode the \underline{\hspace{2cm}farmer\hspace{2cm}} and the lord to get what he had earned.
+
+\item The lord \underline{\hspace{2cm}heated\hspace{2cm}} it well and threw it in a tub of water.
+
+\item The lord \underline{\hspace{1.5cm}did not\hspace{1.5cm}} want the coachman to know the shame.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+% Question 2
+\textbf{2.\hspace{0.5cm}Answer the following questions :}
+
+\begin{enumerate}[label=(\alph*), leftmargin=*, itemsep=0.3cm]
+\item What did the lord try to make when he failed to make the plough ?
+\item What did the lord try to make when he could not make the axe ?
+\item What did the lord make at last ?
+\item How did the lord make a sizz ?
+\item Why did the lord take the sack to the farmer's home ?
+\item What did the strongmen do ?
+\end{enumerate}
+
+\vspace{0.5cm}
+
+% Question 3
+\textbf{3.\hspace{0.5cm}Who said to whom :}
+
+\begin{enumerate}[label=(\alph*), leftmargin=*, itemsep=0.5cm]
+\item Oh all right then.
+
+\begin{tabular}{@{}p{3cm}p{5cm}p{3cm}p{5cm}@{}}
+\textbf{Who said ?} & \fbox{\hspace{4cm}} & \textbf{To whom ?} & \fbox{\hspace{4cm}}
+\end{tabular}
+
+\item It's a fine sizz.
+
+\begin{tabular}{@{}p{3cm}p{5cm}p{3cm}p{5cm}@{}}
+\textbf{Who said ?} & \fbox{\hspace{4cm}} & \textbf{To whom ?} & \fbox{\hspace{4cm}}
+\end{tabular}
+
+\item I'll take the sack and go into the storeroom myself.
+
+\begin{tabular}{@{}p{3cm}p{5cm}p{3cm}p{5cm}@{}}
+\textbf{Who said ?} & \fbox{\hspace{4cm}} & \textbf{To whom ?} & \fbox{\hspace{4cm}}
+\end{tabular}
+\end{enumerate}
+
+\vfill
+
+\begin{center}
+\begin{tikzpicture}
+% Page number in decorative style
+\draw[fill=yellow!20, rounded corners] (0,0) rectangle (1,1);
+\node[font=\Large\bfseries] at (0.5,0.5) {112};
+\end{tikzpicture}
+\end{center}
+
+\end{document}
+```
+
+This LaTeX transcription includes:
+- The **Word Power** vocabulary box with definitions in the upper right corner
+- The **Test Your Reading** title with a reading figure illustration
+- **Question 1**: Fill-in-the-blank statements with handwritten-style answers preserved (heating, led, farmer, heated, did not) and the blacksmith forge illustration
+- **Question 2**: Six comprehension questions
+- **Question 3**: "Who said to whom" dialogue identification with empty boxes for answers
+- Page number **112** at the bottom in a decorative frame

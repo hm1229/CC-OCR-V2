@@ -1,0 +1,9 @@
+\begin{align*}
+S &\leq \sum_{d|w} \sum_{b_{1}, \ldots, b_{k} \in B} \frac{w}{d} \prod_{p|w / d} \left(1-\frac{r_{p}\left(b_{1}, \ldots, b_{k}\right)+1}{p}\right) \\
+&\leq \sum_{d|w} \sum_{b_{1}, \ldots, b_{k} \in B} \frac{w}{d} \prod_{p|w / d} \left(1-\frac{2}{p}\right) \frac{w_{2}}{d_{2}} \prod_{p|w_{2} / d_{2}}\left(1-\frac{r_{p}\left(b_{1}, \ldots, b_{k}\right)+1}{p}\right) \\
+&= \sum_{d|w} \varphi(w / d) \sum_{b_{1}, \ldots, b_{k} \in B} \frac{w_{2}}{d_{2}} \prod_{p|w_{2} / d_{2}}\left(1-\frac{r_{p}\left(b_{1}, \ldots, b_{k}\right)+1}{p}\right) \\
+&\leq \sum_{d|w} \varphi(w / d) \sum_{j=-\infty}^{\infty} \sum_{\substack{b_{1}, \ldots, b_{k} \in B \\ \left(b_{1}, \ldots, b_{k}\right) \in\left[2 j, 2 j+1\right]}} \frac{w_{2}}{d_{2}} \prod_{p|w_{2} / d_{2}}\left(1-\frac{2 k+1}{p}\right) \prod_{\substack{r_{p}\left(b_{1}, \ldots, b_{k}\right) \leq 2 j-1}}\left(1-\frac{2 k+1}{p}\right)^{-1} \\
+&\leq \sum_{d|w} \varphi^{2}(w / d) \frac{w_{2}}{d_{2}} \prod_{p|w_{2} / d_{2}}\left(1-\frac{2 k+1}{p}\right) \sum_{j=-\infty}^{\infty} \sum_{\substack{b_{1}, \ldots, b_{k} \in B \\ \left(b_{1}, \ldots, b_{k}\right) \in\left[2 j, 2 j+1\right]}} e^{(2 k+1) 2 j+1} \\
+&\leq \sum_{d|w} k^{2}|B|^{k-2} \varphi^{2}(w / d) \frac{w_{2}}{d_{2}} \prod_{p|w_{2} / d_{2}}\left(1-\frac{2 k+1}{p}\right) \sum_{j=0}^{\infty} 2^{-\exp \left(2 j / c^{2}\right)} e^{(2 k+1) 2 j+1} \\
+&= C_{k} k^{2}|B|^{k-2} \varphi^{2}(w) \sum_{d|w} \varphi(w / d) \frac{w_{2}}{d_{2}} \prod_{p|w_{2} / d_{2}}\left(1-\frac{2 k+1}{p}\right),
+\end{align*}

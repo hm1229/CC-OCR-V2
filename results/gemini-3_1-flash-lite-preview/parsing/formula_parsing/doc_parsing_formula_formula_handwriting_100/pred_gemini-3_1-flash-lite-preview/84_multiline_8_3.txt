@@ -1,0 +1,14 @@
+\begin{aligned}
+& E[\psi_3(X, A, Z, M, Y) S_o(0)] \\
+= & E[\psi_3(X, A, Z, M, Y) (S_o(X) + S_o(Z|X, A) + S_o(M|X, A, Z) + S_o(Y|X, A, Z, M))] \\
+= & E[S_o(X) + S_o(A|X) + S_o(Z|X, A) + S_o(M|X, A, Z)] E[\psi_3(X, A, Z, M, Y) | X, A, Z, M] \\
+& + E[\psi_3(X, A, Z, M, Y) S_o(Y|X, A, Z, M)] \quad (= 0) \\
+= & E[\psi_3(X, A, Z, M, Y) S_o(Y|X, A, Z, M)] \\
+= & E\left[ \frac{\mathbb{I}(A=a)\mathbb{I}(M=m) S_o(Y|X, A, Z, M)}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \right] \\
+= & E\left[ \frac{\mathbb{I}(A=a)\mathbb{I}(M=m) E[Y|X, A=a, Z, M=m]}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} E[S_o(Y|X, A, Z, M) | X, A, Z, M] \right] \quad (= 0) \\
+= & E\left\{ E\left[ \frac{\mathbb{I}(A=a)\mathbb{I}(M=m) S_o(Y|X, A, Z, M)}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} | X, A, Z, M=m \right] Pr[M=m|X, A, Z] \right\} \\
+= & E_X E\left[ \frac{\mathbb{I}(A=a) Pr[M=m|X, A, Z] E[S_o(Y|X, A, Z, M) | X, A, Z, M=m] | X, A]}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} \right] \\
+= & E_X \left\{ E\left[ \frac{\mathbb{I}(A=a) Pr[M=m|X, A, Z] E[S_o(Y|X, A, Z, M) | X, A, Z, M=m]}{Pr[A=a|X] Pr[M=m|X, A=a, Z]} | X, A=a \right] \right\} \\
+= & E_X \{ E[E[S_o(Y|X, A, Z, M) | X, A, Z, M=m] | X, A=a] \} \\
+= & \phi_3
+\end{aligned}

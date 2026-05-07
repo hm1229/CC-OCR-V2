@@ -1,0 +1,125 @@
+```latex
+\documentclass[12pt,a4paper]{article}
+\usepackage[UTF8]{ctex}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\begin{document}
+
+\begin{center}
+\includegraphics[width=3cm]{orient_securities_logo.png}
+
+{\LARGE\bfseries 东方证券}
+
+{\large ORIENT SECURITIES}
+
+\vspace{0.5cm}
+
+\rule{\textwidth}{0.4pt}
+
+\vspace{0.3cm}
+
+{\normalsize 石头科技首次报告 —— 专注研发的扫地机器人新贵，产品端全球竞争力逐步展现}
+
+\vspace{1cm}
+\end{center}
+
+\section*{\color{red}附表：财务报表预测与比率分析}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{p{4cm}ccccc|p{4cm}ccccc}
+\toprule
+\multicolumn{6}{l|}{\cellcolor{gray!30}\textbf{资产负债表}} & \multicolumn{6}{l}{\cellcolor{gray!30}\textbf{利润表}} \\
+\midrule
+\textbf{单位：百万元} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} & \textbf{单位：百万元} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+\midrule
+货币资金 & 248 & 1,424 & 3,014 & 5,151 & 7,955 & 营业收入 & 4,205 & 4,530 & 6,351 & 8,617 & 11,414 \\
+应收票据、账款及款项融资 & 199 & 148 & 208 & 282 & 374 & 营业成本 & 2,686 & 2,205 & 3,011 & 4,048 & 5,326 \\
+预付账款 & 10 & 18 & 25 & 34 & 45 & 营业税金及附加 & 20 & 30 & 42 & 56 & 75 \\
+存货 & 297 & 381 & 520 & 699 & 920 & 营业费用 & 354 & 620 & 919 & 1,260 & 1,670 \\
+其他 & 1,075 & 4,065 & 4,031 & 4,042 & 4,056 & 管理费用及研发费用 & 252 & 346 & 510 & 718 & 974 \\
+\midrule
+\textbf{流动资产合计} & \textbf{1,828} & \textbf{6,037} & \textbf{7,798} & \textbf{10,208} & \textbf{13,350} & 财务费用 & \textcolor{red}{(2)} & \textcolor{red}{(32)} & \textcolor{red}{(20)} & \textcolor{red}{(35)} & \textcolor{red}{(54)} \\
+长期股权投资 & 0 & 12 & 12 & 12 & 12 & 资产、信用减值损失 & \textcolor{red}{(1)} & 31 & 15 & 18 & 20 \\
+固定资产 & 67 & 61 & 94 & 131 & 170 & 公允价值变动收益 & 7 & 110 & 110 & 110 & 110 \\
+在建工程 & 0 & 0 & 0 & 0 & 1 & 投资净收益 & 16 & 49 & 49 & 49 & 49 \\
+无形资产 & 6 & 6 & 5 & 5 & 4 & 其他 & 6 & 67 & 67 & 67 & 67 \\
+其他 & 62 & 1,732 & 1,716 & 1,716 & 1,716 & \textbf{营业利润} & \textbf{925} & \textbf{1,557} & \textbf{2,100} & \textbf{2,777} & \textbf{3,628} \\
+\midrule
+\textbf{非流动资产合计} & \textbf{135} & \textbf{1,811} & \textbf{1,828} & \textbf{1,864} & \textbf{1,903} & 营业外收入 & 0 & 0 & 0 & 0 & 0 \\
+\textbf{资产总计} & \textbf{1,963} & \textbf{7,848} & \textbf{9,625} & \textbf{12,072} & \textbf{15,253} & 营业外支出 & 0 & 0 & 0 & 0 & 0 \\
+短期借款 & 0 & 0 & 0 & 0 & 0 & \textbf{利润总额} & \textbf{925} & \textbf{1,556} & \textbf{2,100} & \textbf{2,777} & \textbf{3,628} \\
+应付票据及应付账款 & 282 & 377 & 515 & 692 & 911 & 所得税 & 142 & 187 & 315 & 417 & 544 \\
+其他 & 197 & 341 & 282 & 282 & 282 & \textbf{净利润} & \textbf{783} & \textbf{1,369} & \textbf{1,785} & \textbf{2,361} & \textbf{3,084} \\
+\midrule
+\textbf{流动负债合计} & \textbf{478} & \textbf{719} & \textbf{797} & \textbf{974} & \textbf{1,193} & 少数股东损益 & 0 & 0 & 0 & 0 & 0 \\
+长期借款 & 0 & 0 & 55 & 130 & 230 & \textbf{归属于母公司净利润} & \textbf{783} & \textbf{1,369} & \textbf{1,785} & \textbf{2,361} & \textbf{3,084} \\
+应付债券 & 0 & 0 & 0 & 0 & 0 & 每股收益（元） & 11.74 & 20.54 & 26.77 & 35.41 & 46.25 \\
+其他 & 0 & 15 & 0 & 0 & 0 & & & & & & \\
+\midrule
+\textbf{非流动负债合计} & \textbf{0} & \textbf{15} & \textbf{55} & \textbf{130} & \textbf{230} & \multicolumn{6}{l}{\cellcolor{gray!30}\textbf{主要财务比率}} \\
+\textbf{负债合计} & \textbf{479} & \textbf{734} & \textbf{852} & \textbf{1,104} & \textbf{1,422} & & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} \\
+少数股东权益 & 0 & 0 & 0 & 0 & 0 & \textbf{成长能力} & & & & & \\
+实收资本（或股本） & 50 & 67 & 67 & 67 & 67 & 营业收入 & 37.8\% & 7.7\% & 40.2\% & 35.7\% & 32.5\% \\
+资本公积 & 553 & 4,941 & 4,941 & 4,941 & 4,941 & 营业利润 & 142.2\% & 68.3\% & 34.9\% & 32.3\% & 30.6\% \\
+留存收益 & 878 & 2,114 & 3,766 & 5,960 & 8,823 & 归属于母公司净利润 & 154.5\% & 74.9\% & 30.3\% & 32.3\% & 30.6\% \\
+其他 & 4 & \textcolor{red}{(8)} & 0 & 0 & 0 & \textbf{获利能力} & & & & & \\
+\midrule
+\textbf{股东权益合计} & \textbf{1,485} & \textbf{7,114} & \textbf{8,773} & \textbf{10,967} & \textbf{13,830} & 毛利率 & 36.1\% & 51.3\% & 52.6\% & 53.0\% & 53.3\% \\
+\textbf{负债和股东权益总计} & \textbf{1,963} & \textbf{7,848} & \textbf{9,625} & \textbf{12,072} & \textbf{15,253} & 净利率 & 18.6\% & 30.2\% & 28.1\% & 27.4\% & 27.0\% \\
+& & & & & & ROE & 71.7\% & 31.9\% & 22.5\% & 23.9\% & 24.9\% \\
+\multicolumn{6}{l|}{\cellcolor{gray!30}\textbf{现金流量表}} & ROIC & 71.5\% & 31.2\% & 22.2\% & 23.4\% & 24.1\% \\
+\midrule
+\textbf{单位：百万元} & \textbf{2019A} & \textbf{2020A} & \textbf{2021E} & \textbf{2022E} & \textbf{2023E} & \textbf{偿债能力} & & & & & \\
+净利润 & 783 & 1,369 & 1,785 & 2,361 & 3,084 & 资产负债率 & 24.4\% & 9.4\% & 8.9\% & 9.1\% & 9.3\% \\
+折旧摊销 & 30 & 41 & 28 & 49 & 76 & 净负债率 & 0.0\% & 0.0\% & 0.0\% & 0.0\% & 0.0\% \\
+财务费用 & \textcolor{red}{(2)} & \textcolor{red}{(32)} & \textcolor{red}{(20)} & \textcolor{red}{(35)} & \textcolor{red}{(54)} & 流动比率 & 3.82 & 8.40 & 9.79 & 10.48 & 11.19 \\
+投资损失 & \textcolor{red}{(16)} & \textcolor{red}{(49)} & \textcolor{red}{(49)} & \textcolor{red}{(49)} & \textcolor{red}{(49)} & 速动比率 & 3.20 & 7.85 & 9.11 & 9.73 & 10.39 \\
+营运资金变动 & \textcolor{red}{(42)} & 195 & \textcolor{red}{(100)} & \textcolor{red}{(105)} & \textcolor{red}{(129)} & \textbf{营运能力} & & & & & \\
+其它 & 3 & \textcolor{red}{(6)} & \textcolor{red}{(86)} & \textcolor{red}{(92)} & \textcolor{red}{(90)} & 应收账款周转率 & 14.3 & 26.8 & 38.5 & 38.0 & 37.6 \\
+\midrule
+\textbf{经营活动现金流} & \textbf{755} & \textbf{1,518} & \textbf{1,558} & \textbf{2,129} & \textbf{2,838} & 存货周转率 & 9.4 & 6.4 & 6.4 & 6.4 & 6.3 \\
+资本支出 & \textcolor{red}{(54)} & \textcolor{red}{(53)} & \textcolor{red}{(69)} & \textcolor{red}{(94)} & \textcolor{red}{(125)} & 总资产周转率 & 2.6 & 0.9 & 0.7 & 0.8 & 0.8 \\
+长期投资 & 0 & \textcolor{red}{(12)} & 0 & 0 & 0 & \textbf{每股指标（元）} & & & & & \\
+其他 & \textcolor{red}{(460)} & \textcolor{red}{(5,478)} & 158 & 158 & 158 & 每股收益 & 11.74 & 20.54 & 26.77 & 35.41 & 46.25 \\
+\midrule
+\textbf{投资活动现金流} & \textbf{\textcolor{red}{(514)}} & \textbf{\textcolor{red}{(5,543)}} & \textbf{89} & \textbf{64} & \textbf{33} & 每股经营现金流 & 15.11 & 22.77 & 23.37 & 31.94 & 42.58 \\
+债权融资 & 0 & 0 & 55 & 75 & 99 & 每股净资产 & 22.27 & 106.71 & 131.60 & 164.51 & 207.46 \\
+股权融资 & 0 & 4,404 & 0 & 0 & 0 & \textbf{估值比率} & & & & & \\
+其他 & \textcolor{red}{(20)} & \textcolor{red}{(170)} & \textcolor{red}{(113)} & \textcolor{red}{(132)} & \textcolor{red}{(166)} & 市盈率 & 108.9 & 62.2 & 47.7 & 36.1 & 27.6 \\
+\midrule
+\textbf{筹资活动现金流} & \textbf{\textcolor{red}{(20)}} & \textbf{4,234} & \textbf{\textcolor{red}{(58)}} & \textbf{\textcolor{red}{(57)}} & \textbf{\textcolor{red}{(67)}} & 市净率 & 57.4 & 12.0 & 9.7 & 7.8 & 6.2 \\
+汇率变动影响 & 0 & \textcolor{red}{(7)} & \textcolor{red}{-0} & \textcolor{red}{-0} & \textcolor{red}{-0} & EV/EBITDA & 83.4 & 50.7 & 37.7 & 28.5 & 21.8 \\
+\midrule
+\textbf{现金净增加额} & \textbf{222} & \textbf{202} & \textbf{1,590} & \textbf{2,137} & \textbf{2,805} & EV/EBIT & 86.0 & 52.1 & 38.2 & 29.0 & 22.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.3cm}
+
+{\small 资料来源：东方证券研究所}
+
+\vspace{1cm}
+
+\rule{\textwidth}{0.4pt}
+
+\vspace{0.3cm}
+
+{\small 有关分析师的申明，见本报告最后部分。其他重要信息披露见分析师申明之后部分，或请与您的投资代表联系。并请阅读本证券研究报告最后一页的免责申明。}
+
+\begin{center}
+27
+\end{center}
+
+\end{document}
+```

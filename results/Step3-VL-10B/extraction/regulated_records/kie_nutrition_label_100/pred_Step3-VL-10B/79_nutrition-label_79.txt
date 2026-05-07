@@ -1,0 +1,166 @@
+用户现在需要从图片中提取信息填充到给定的JSON schema里。首先得理解每个字段对应什么。先看图片中的两部分：per 100g和per serving（125g）。
+
+先分析每个字段的可能对应。比如CE是Energy（能量），P是Protein（蛋白质），F是Fat（脂肪），C是Carbohydrate（碳水），S是Salt（盐），还有saturates（饱和脂肪）等。另外还有%RI（参考摄入量百分比）。
+
+现在看schema里的字段：CE-P1, TF-P1（可能是Fat？因为TF可能是Fat？或者看缩写。比如CE是Energy，P是per 100g？或者看per serving和per 100g的对应。另外，PS是per serving，D是per 100g？或者看标签里的“per 100g”和“per serving (125g)”。另外%RI是参考摄入量，比如Energy的%RI是10%（per serving）。
+
+现在逐个看schema的字段：
+
+CE-P1：可能对应per 100g的Energy？看per 100g的Energy是821kJ/197kcal。那CE是Energy，P1是per 100g？或者看字段命名，比如CE-D是per 100g的Energy？或者看“per 100g”是D（detail？），per serving是S（serving？）？或者看%RI是RI，比如Energy的%RI在per serving是10%。
+
+现在先整理图片中的数据：
+
+per 100g**:
+- Energy: 821kJ/197kcal
+- Fat: 13.0g
+- of which saturates: 3.7g
+- Carbohydrate: 0g
+- of which sugars: 0g
+- Fibre: 0g
+- Protein: 20.0g
+- Salt: 0.25g
+
+per serving (125g)*:
+- Energy: 817kJ/194kcal, 10% RI
+- Fat: 6.0g, 9% RI
+- of which saturates: 2.0g, 10% RI
+- Carbohydrate: 0g, 0% RI
+- of which sugars: 0g, 0% RI
+- Fibre: 0g
+- Protein: 35.0g, 70% RI
+- Salt: 0.31g, 5% RI
+
+Reference intake...是参考成人（8400kJ/2000kcal）
+
+现在看schema的字段：
+
+CE-P1: CE是Energy，P1可能是per 100g的Energy？因为per 100g的Energy是821kJ/197kcal。那CE-P1对应per 100g的Energy值。
+
+TF-P1: TF可能是Fat（Total Fat），per 100g的Fat是13.0g。
+
+CAR-P1: Carbohydrate，per 100g是0g。
+
+PRO-P1: Protein，per 100g是20.0g。
+
+SS: 可能是Salt？per 100g的Salt是0.25g？或者看SS是Saturates？因为of which saturates是饱和脂肪。或者看SS可能对应Saturates？比如per 100g的saturates是3.7g。但需要看字段。或者可能SS是Salt？因为Salt是S开头。或者看其他字段。
+
+另外，TF-PS: TF是Fat，PS是per serving的Fat。per serving的Fat是6.0g。
+
+TF-D: TF是Fat，D是per 100g的Fat？不，D可能是per 100g，S是per serving？比如D是detail（per 100g），S是serving（per serving）。那TF-D是per 100g的Fat（13.0g），TF-PS是per serving的Fat（6.0g）。
+
+CAR-PS: per serving的Carbohydrate（0g）。
+
+CAR-D: per 100g的Carbohydrate（0g）。
+
+CE-PS: per serving的Energy（817kJ/194kcal）。
+
+CE-D: per 100g的Energy（821kJ/197kcal）。
+
+PRO-PS: per serving的Protein（35.0g）。
+
+PRO-D: per 100g的Protein（20.0g）。
+
+现在再看SS，可能SS是Saturates（饱和脂肪）。per 100g的saturates是3.7g（of which saturates），per serving的saturates是2.0g。那SS可能对应per 100g的saturates？或者看字段中的SS，可能SS是Salt？因为Salt在per 100g是0.25g，per serving是0.31g。但需要看schema中的SS字段。另外还有%RI，比如Energy的%RI在per serving是10%，但schema里没有%RI的字段？可能用户给的schema中的字段需要对应提取。
+
+现在再看schema的字段列表：
+
+{"CE-P1": "", "TF-P1": "", "CAR-P1": "", "PRO-P1": "", "SS": "", "TF-PS": "", "TF-D": "", "CAR-PS": "", "CAR-D": "", "CE-PS": "", "CE-D": "", "PRO-PS": "", "PRO-D": ""}
+
+现在逐个填充：
+
+CE-P1：per 100g的Energy → 821kJ/197kcal
+
+TF-P1：per 100g的Total Fat（Fat）→ 13.0g
+
+CAR-P1：per 100g的Carbohydrate → 0g
+
+PRO-P1：per 100g的Protein → 20.0g
+
+SS：这里可能需要看，图片中的“of which saturates”是饱和脂肪，可能SS是Saturates（per 100g？因为per 100g的saturates是3.7g；或者per serving的saturates是2.0g？但SS没有PS或D后缀，可能SS是per 100g的Saturates？或者看Salt？因为Salt是S开头。per 100g的Salt是0.25g，per serving是0.31g。但SS如果是Salt的话，可能SS是per 100g的Salt？或者看其他。另外，可能SS是“of which saturates”在per 100g的值，即3.7g。因为saturates是饱和脂肪，属于Fat的一部分。那SS对应per 100g的saturates：3.7g。
+
+TF-PS：per serving的Total Fat（Fat）→ 6.0g
+
+TF-D：per 100g的Total Fat？不，D是per 100g，S是per serving。所以TF-D是per 100g的Fat（13.0g？但之前TF-P1是per 100g的Fat？可能我搞混了P1和D。或者P1是per 100g，S是per serving，D是另一个？不，看图片中的“per 100g**”和“per serving (125g)*”。可能P1是per 100g，PS是per serving，D是per 100g？不对。或者看“Typical values per 100g”是D（detail），per serving是S（serving），而P1可能是另一个？不，可能用户给的schema中的P1是per 100g，PS是per serving，D是per 100g？这显然重复。可能我理解错了缩写。另一种可能：CE是Energy，P是Protein，F是Fat，C是Carbohydrate，S是Salt，Sat是Saturates。然后后缀：-P1是per 100g的该营养素；-PS是per serving的该营养素；-D是per 100g的参考摄入量百分比？不，%RI是参考摄入量。比如Energy的%RI在per serving是10%，per 100g的话，参考摄入是8400kJ/2000kcal，per 100g的Energy是821kJ，占8400kJ的比例是821/8400≈9.77%，约10%？但图片中per serving的Energy是817kJ，占10%（因为per serving是125g，125g的Energy是817kJ，参考是2000kcal=8366kJ？可能图片中的参考是8400kJ/2000kcal，所以per serving（125g）的Energy是817kJ，占8400kJ的比例是817/8400≈9.73%，约10%。而per 100g的Energy是821kJ，占8400kJ的比例是821/8400≈9.77%，约10%？但图片中per 100g的Energy没有给出%RI，只有per serving给出了%RI（比如Energy是10%）。
+
+现在回到schema，可能SS是Saturates（饱和脂肪）的per 100g值，即3.7g。因为“of which saturates”在per 100g是3.7g。然后：
+
+CE-P1: 821kJ/197kcal （per 100g Energy）
+
+TF-P1: 13.0g （per 100g Fat）
+
+CAR-P1: 0g （per 100g Carbohydrate）
+
+PRO-P1: 20.0g （per 100g Protein）
+
+SS: 3.7g （per 100g Saturates，因为“of which saturates”是饱和脂肪，属于Fat的子项，这里SS可能对应这个值）
+
+TF-PS: 6.0g （per serving Fat）
+
+TF-D: 这里可能D是per 100g的Saturates？不，TF是Fat，D可能是per 100g的Fat？但TF-P1已经是per 100g的Fat了，这显然重复。哦，可能我搞反了，P1是per serving？不，看“Typical values per 100g”是上面的部分，“per serving (125g)”是下面的部分。可能P1是per 100g，PS是per serving，D是per 100g的另一个？不，可能D是“of which saturates”在per 100g的%RI？但per 100g的saturates没有给出%RI，只有per serving的saturates是10%。比如per serving的saturates是2.0g，占参考摄入量的10%（参考成人每天的饱和脂肪摄入量？比如参考是20g？因为2.0g（per serving）是10%，所以参考是20g/天。那per 100g的saturates是3.7g，占参考20g的比例是3.7/20=18.5%，但图片中没有给出per 100g的%RI，只有per serving的%RI是10%。所以可能SS是per serving的Saturates？但SS没有PS后缀。或者SS是Salt？per 100g的Salt是0.25g，per serving是0.31g。那SS如果是Salt的话，per 100g的Salt是0.25g，per serving是0.31g。但SS字段没有后缀，可能SS是per 100g的Salt？即0.25g。
+
+现在再整理所有字段：
+
+CE-P1: per 100g Energy → 821kJ/197kcal
+
+TF-P1: per 100g Fat → 13.0g
+
+CAR-P1: per 100g Carbohydrate → 0g
+
+PRO-P1: per 100g Protein → 20.0g
+
+SS: 这里可能需要看，图片中的“Salt”是S开头，所以SS是per 100g的Salt → 0.25g
+
+TF-PS: per serving Fat → 6.0g
+
+TF-D: 这里可能D是per 100g的Saturates？不，TF是Fat，D可能是per 100g的Fat？但TF-P1已经是per 100g的Fat，这不可能。哦，可能我之前对后缀的理解错误。比如，-P1是“per 100g”的主要营养素（Energy, Fat, Carbohydrate, Protein），-PS是“per serving”的对应营养素，-D是“per 100g”的子项（比如Saturates, Salt等）。比如：
+
+CE-D: per 100g Energy的%RI？但per 100g Energy的%RI没有给出，只有per serving的Energy是10%。所以可能不是。
+
+另一种可能，D是“of which saturates”在per 100g的值，即3.7g，而SS是“of which saturates”在per serving的值，即2.0g？但SS字段没有PS，所以可能SS是per 100g的Saturates（3.7g），而“of which saturates”在per serving是2.0g，对应另一个字段？但schema中没有Sat-PS或Sat-D。可能用户给的schema中的SS是Saturates（per 100g），即3.7g。
+
+现在继续：
+
+CAR-PS: per serving Carbohydrate → 0g
+
+CAR-D: per 100g Carbohydrate → 0g （因为CAR-P1已经是per 100g的Carbohydrate，所以CAR-D可能重复？不，可能CAR-D是per 100g的Carbohydrate的%RI？但per 100g的Carbohydrate是0g，%RI是0%？图片中per serving的Carbohydrate是0g，%RI是0%。所以CAR-D可能是per 100g的Carbohydrate的%RI？但per 100g的Carbohydrate是0g，占参考摄入量（比如成人每天碳水是200g？0g的话%RI是0%）。但图片中没有给出per 100g的%RI，只有per serving的%RI是0%。所以可能CAR-D是per 100g的Carbohydrate值（0g），而CAR-PS是per serving的Carbohydrate值（0g）。
+
+CE-PS: per serving Energy → 817kJ/194kcal
+
+CE-D: per 100g Energy → 821kJ/197kcal （因为CE-P1可能不是，可能P1是per serving？不，之前搞混了。现在重新看，可能P1是per 100g，PS是per serving，D是per 100g的另一个维度？不，可能D是“Reference intake”相关的，比如%RI。比如CE-D是per 100g Energy的%RI，即约10%（因为821/8400≈9.77%≈10%），而CE-PS是per serving Energy的%RI（10%）。但图片中per serving Energy的%RI是10%，per 100g的Energy的%RI没有明确给出，但可以计算。不过可能图片中per 100g的Energy没有%RI，只有per serving有。所以可能CE-D是per 100g Energy的值（821kJ/197kcal），CE-PS是per serving Energy的值（817kJ/194kcal）。
+
+PRO-PS: per serving Protein → 35.0g
+
+PRO-D: per 100g Protein → 20.0g （因为PRO-P1可能是per 100g的Protein，PRO-D也是？不，可能PRO-P1是per serving的Protein？这显然混乱了。现在必须明确每个字段的对应。
+
+另一种方法是，根据常见的营养标签提取，每个营养素在per 100g和per serving的信息，以及%RI（参考摄入量百分比）。
+
+现在列出所有营养素及其在per 100g和per serving的数据：
+
+1. Energy:
+   - per 100g: 821kJ/197kcal
+   - per serving (125g): 817kJ/194kcal, 10% RI
+
+2. Fat:
+   - per 100g: 13.0g
+   - per serving: 6.0g, 9% RI
+   - of which saturates:
+     - per 100g: 3.7g
+     - per serving: 2.0g, 10% RI
+
+3. Carbohydrate:
+   - per 100g: 0g
+   - per serving: 0g, 0% RI
+   - of which sugars:
+     - per 100g: 0g
+     - per serving: 0g, 0% RI
+
+4. Fibre:
+   - per 100g: 0g
+   - per serving: 0g （无%RI）
+
+5. Protein:
+   - per 100g: 20.0g
+   - per serving: 35.0g, 70% RI
+
+6. Salt:
+   - per 100g: 0.25g

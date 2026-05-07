@@ -1,0 +1,122 @@
+\[
+\|T X^{R}\|_{L_{\omega}^{r}L_{[0,T]}^{\infty}L_{x}^{2}}^{2}
+\le
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+\left\|
+\int_{0}^{t} S_{\beta}(t,s)\,\theta_{R}(X^{R})(s)\,|X^{R}(s)|^{20}X^{R}(s)\,ds
+\right\|_{L_{\omega}^{r}L_{[0,T]}^{\infty}L_{x}^{2}}
+\]
+
+\[
+\le
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\bar\beta}
+\left\|
+\theta_{R}(X^{R})\,|X^{R}|^{20+1}
+\right\|_{L_{\omega}^{r}L_{[0,T]}^{\gamma'}L_{x}^{p'}}
+\]
+
+\[
+=
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\bar\beta}
+\left\|
+\left(
+\int_{0}^{T}
+\theta_{R}(X^{R})^{\gamma'}(t)
+\left(
+\int_{\mathbb{R}} |X^{R}(t)|^{(20+1)p'}\,dx
+\right)^{\gamma'/p'}
+dt
+\right)^{1/\gamma'}
+\right\|_{L_{\omega}^{r}}
+\]
+
+\[
+\text{Since } p'=\frac{26+2}{26+1},
+\text{ the right hand side equals}
+\]
+
+\[
+=
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\bar\beta}
+\left\|
+\left(
+\int_{0}^{T}
+\theta_{R}(X^{R})^{\gamma'}(t)\,
+\|X^{R}(t)\|_{L_{x}^{2}}^{(20+1)\gamma'}\,dt
+\right)^{1/\gamma'}
+\right\|_{L_{\omega}^{r}}
+\]
+
+\[
+\text{Since } \gamma\ge p=20+2,\ \text{we can apply Hölder's inequality to get}
+\]
+
+\[
+\le
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\bar\beta}
+\left\|
+\left(
+\int_{0}^{T}
+\theta_{R}(X^{R})^{\gamma'}(t)\,dt
+\right)^{1/(20+1)}
+\left(
+\int_{0}^{T}
+\|X^{R}(t)\|_{L_{x}^{2}}^{\gamma}\,dt
+\right)^{\frac{20+1}{\gamma}}
+T^{\frac{\gamma-\gamma'(20+1)}{\gamma\gamma'}}
+\right\|_{L_{\omega}^{r}}
+\]
+
+\[
+\text{Letting }\tilde t(\omega):=\inf\left\{s:\|X^{R}(\omega)\|_{L^{\gamma}(0,s;L_{x}^{2})}\ge 2R\right\},
+\text{ from definition of }\theta_{R}\text{ in (??),}
+\]
+
+\[
+=
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\bar\beta}
+\left\|
+\left(
+\int_{0}^{\tilde t}
+\theta_{R}(X^{R})^{\gamma'}(t)\,dt
+\right)^{1/(20+1)}
+\|X^{R}\|_{L^{\gamma}(0,\tilde t;L_{x}^{2})}^{20+1}
+\right\|_{L_{\omega}^{r}}
+\]
+
+\[
+\text{where }\tilde\beta=\bar\beta+\frac{\gamma-\gamma'(20+1)}{\gamma\gamma'}>0.
+\text{ Furthermore}
+\]
+
+\[
+\le
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\tilde\beta}
+\left\|
+\left(
+\int_{0}^{\tilde t}
+\|X^{R}(t)\|_{L_{x}^{2}}^{\gamma}\,dt
+\right)^{\frac{20+1}{\gamma}}
+\right\|_{L_{\omega}^{r}}
+\]
+
+\[
+\le
+\|X_{0}\|_{L_{\omega}^{r}L_{x}^{2}}^{2}
++
+C_{r,p}\,T^{\tilde\beta}(2R)^{20}\,
+\|X^{R}\|_{L_{\omega}^{r}L_{[0,T]}^{\gamma}L_{x}^{2}}.
+\]

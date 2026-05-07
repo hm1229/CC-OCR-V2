@@ -1,0 +1,40 @@
+To determine the coordinates of the text '103.00', we need to identify the bounding box that contains this text. The text '103.00' appears in multiple places on the receipt, but we'll focus on the most prominent instance.
+
+Here are the steps to find the coordinates:
+
+1. **Identify the text '103.00'**: The text '103.00' appears in the section labeled "金额" (Amount) and also in the total section at the bottom.
+
+2. **Select the most prominent instance**: The most prominent instance is in the total section at the bottom of the receipt.
+
+3. **Determine the bounding box**: We'll focus on the total section where '103.00' is written in large characters.
+
+4. **Normalize the coordinates**: We'll normalize the coordinates based on the image width and height.
+
+Let's assume the image width is 1000 units and the height is 1000 units for normalization purposes.
+
+### Bounding Box Coordinates
+
+For the most prominent instance of '103.00' in the total section:
+
+- **Left-top corner (x1, y1)**: This is the top-left corner of the text box containing '103.00'.
+- **Right-bottom corner (x2, y2)**: This is the bottom-right corner of the text box containing '103.00'.
+
+### Approximate Coordinates
+
+Based on visual inspection:
+
+- **Left-top corner (x1, y1)**: (300, 700)
+- **Right-bottom corner (x2, y2)**: (500, 800)
+
+These coordinates are approximate and based on visual estimation. For precise coordinates, you would typically use an image processing tool to get exact pixel values.
+
+### Normalized Coordinates
+
+Assuming the image dimensions are 1000x1000:
+
+- **Left-top corner (x1, y1)**: (300, 700)
+- **Right-bottom corner (x2, y2)**: (500, 800)
+
+So, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) = (300, 700, 500, 800)

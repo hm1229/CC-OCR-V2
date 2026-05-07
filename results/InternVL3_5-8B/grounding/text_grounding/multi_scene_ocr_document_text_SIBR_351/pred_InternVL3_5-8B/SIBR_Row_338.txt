@@ -1,0 +1,44 @@
+To determine the coordinates of the region containing the text '17.8', we need to analyze the image and identify the bounding box around this text. Let's break down the process step-by-step:
+
+1. **Identify the Text Location:**
+   The text '17.8' is located under the heading "西药费" (which translates to "Western Medicine Fee") on the receipt.
+
+2. **Estimate the Bounding Box:**
+   We need to estimate the normalized coordinates for the left-top and right-bottom corners of the bounding box that encloses the text '17.8'.
+
+3. **Normalize the Coordinates:**
+   The coordinates should be normalized based on the image's width and height.
+
+### Detailed Steps:
+
+1. **Image Dimensions:**
+   Assume the image width is \( W \) and the height is \( H \).
+
+2. **Bounding Box Coordinates:**
+   - **Left-Top Corner (x1, y1):** This is the top-left corner of the text '17.8'.
+   - **Right-Bottom Corner (x2, y2):** This is the bottom-right corner of the text '17.8'.
+
+3. **Estimate the Coordinates:**
+   By visually inspecting the image, we can estimate the coordinates. Let's assume:
+   - The text '17.8' is roughly centered horizontally under "西药费".
+   - Vertically, it is positioned below "西药费" and above the total amount.
+
+   For the sake of this example, let's assume:
+   - The left edge of the text '17.8' is approximately at 30% of the image width from the left.
+   - The right edge of the text '17.8' is approximately at 40% of the image width from the left.
+   - The top edge of the text '17.8' is approximately at 60% of the image height from the top.
+   - The bottom edge of the text '17.8' is approximately at 65% of the image height from the top.
+
+4. **Normalized Coordinates:**
+   - \( x1 = 0.30 \)
+   - \( y1 = 0.60 \)
+   - \( x2 = 0.40 \)
+   - \( y2 = 0.65 \)
+
+### Final Output:
+
+The normalized coordinates of the bounding box for the text '17.8' are:
+
+\[ (0.30, 0.60, 0.40, 0.65) \]
+
+These coordinates represent the left-top and right-bottom corners of the bounding box enclosing the text '17.8' on the receipt.

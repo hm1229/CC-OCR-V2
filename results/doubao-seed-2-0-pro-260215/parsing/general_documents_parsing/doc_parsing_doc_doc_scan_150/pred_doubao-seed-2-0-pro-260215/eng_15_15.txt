@@ -1,0 +1,114 @@
+```latex
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{draftwatermark}
+\usepackage{hyperref}
+
+% Set up watermark matching the document
+\SetWatermarkText{\rotatebox{45}{\color{red!25}\Huge Confidential}\hspace{-6cm}\rotatebox{-45}{\color{red!25}\Huge awinic}}
+\SetWatermarkScale{1.2}
+
+\begin{document}
+% Header section
+\noindent
+\begin{minipage}{0.6\textwidth}
+    \textbf{\Huge \textcolor{cyan}{awinic}}\\
+    \small 上海艾为电子技术股份有限公司\\
+    \scriptsize \textit{shanghai awinic technology co., ltd.}
+\end{minipage}
+\begin{minipage}{0.38\textwidth}
+    \raggedleft
+    \textbf{\Large AW36526}\\
+    \small July 2019 V1.3
+\end{minipage}
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+% Main title
+\begin{center}
+    \Large \textbf{Inductorless, Triple Channel Flash \& Indicator 2in1 LED Driver}
+\end{center}
+\vspace{0.5cm}
+
+% Two column section: Features and General Description
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \section*{\textcolor{blue}{FEATURES}}
+    \begin{itemize}[leftmargin=*]
+        \item Flash and Indicator 2in1 application
+        \item Dual Independent 1.0A LED1/LED2 Current Source
+        \begin{itemize}[label=$\triangleright$]
+            \item Flash: 3.91mA~1.0A, 256 levels 3.91mA/level
+            \item Torch: 1.46mA~375mA, 256 levels 1.46mA/level
+            \item Indicator: 0.37mA~375mA, 1024 levels 0.37mA/level
+            \item Flash Timeout: 40ms~1.6s, 16 levels
+        \end{itemize}
+        \item Independent 375 mA LED3 Current Sink
+        \begin{itemize}[label=$\triangleright$]
+            \item Flash: 1.46mA~375mA, 256 levels 1.46mA/level
+            \item Torch: 1.46mA~375mA, 256 levels 1.46mA/level
+            \item Indicator: 0.73mA~375mA, 512 levels 0.73mA/level
+            \item Flash Timeout: 40ms~1.6s, 16 levels
+        \end{itemize}
+        \item Optimized Flash LED Current During Low Battery Conditions (IVFM)
+        \item Hardware Strobe Enable (STROBE)
+        \item 400kHz I\textsuperscript{2}C: AW36526 (I\textsuperscript{2}C Address=0x63)
+        \item 0.4mm Pitch, FCQFN-10L Package
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \section*{\textcolor{blue}{GENERAL DESCRIPTION}}
+    The AW36526 is a inductorless triple channel flash \& Indicator 2in1 LED driver that provides a high level of adjustability within a ultra-small solution size. The AW36526 includes two current sources and a current sink which is controlled independently by I\textsuperscript{2}C-compatible interface. The AW36526 provides IVFM protection mode to prevent system reset or shutdown under low battery condition.
+
+    \vspace{0.3cm}
+    The AW36526 is controlled via an I\textsuperscript{2}C-compatible interface. The main features of the AW36526 include: flash / torch / IR / Indicator current, flash timeout duration, IVFM and breath features. The AW36526 also provides hardware flash pin (STROBE) to control flash event.
+
+    \vspace{0.3cm}
+    The device operates over a -40\textdegree C to +85\textdegree C ambient temperature range.
+
+    \vspace{0.3cm}
+    The AW36526 is available in small 0.4mm pitch 1.6mm$\times$1.2mm FCQFN-10L package.
+\end{minipage}
+
+\vspace{0.5cm}
+\section*{\textcolor{blue}{APPLICATION}}
+Smartphone Camera Flash
+
+\vspace{0.5cm}
+\section*{\textcolor{blue}{TYPICAL APPLICATION CIRCUIT}}
+\begin{center}
+% Schematic representation matching the diagram
+\includegraphics[width=0.8\textwidth]{aw36526_circuit.png} % Placeholder for the circuit diagram
+\vspace{0.3cm}
+
+\textbf{Fig 1} \quad Typical Application Circuit of AW36526
+\end{center}
+
+\vspace{0.5cm}
+\textit{\scriptsize All trademarks are the property of their respective owners.}
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.2cm}
+\noindent
+\begin{minipage}{0.3\textwidth}
+    \scriptsize \url{www.awinic.com.cn}
+\end{minipage}
+\begin{minipage}{0.3\textwidth}
+    \centering
+    \scriptsize 1
+\end{minipage}
+\begin{minipage}{0.38\textwidth}
+    \raggedleft
+    \scriptsize Copyright \copyright 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD
+\end{minipage}
+\end{document}
+```
+*Note: The schematic image placeholder `aw36526_circuit.png` refers to the original circuit diagram in the datasheet, all text content, formatting and specifications are transcribed exactly as presented in the source image.*

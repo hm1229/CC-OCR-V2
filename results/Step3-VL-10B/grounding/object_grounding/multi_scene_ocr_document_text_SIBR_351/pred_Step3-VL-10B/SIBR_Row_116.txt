@@ -1,0 +1,191 @@
+Got it, let's go through the document and identify each category. First, list all the required categories and find their instances.
+
+Starting with Address: There are multiple addresses. Let's check each.
+
+1. Messrs address: "1144 Morgan Vista North Gloriaburgh, ND 46370 USS Poole FPO AE 11750" – that's an address.
+2. Consignee address: "5979 Jones Mount Padillaberg, DC 31021 USS Davis FPO AP 41735" – address.
+3. Top right company address: "Thai Kirin Information Co., Ltd. 16809 Scott Knoll Apt. 415 Baileyton, NE 10085 USNS Gibson FPO AA 31200" – address.
+
+Company Name: "Thai Kirin Information Co., Ltd." (top right and consignee). Also, "VESSEL" is shipped per, but company names are the main ones.
+
+Date: "February 14, 2022" – that's the date.
+
+No: "KLT-4189" – the number.
+
+Offer No.: "KLT-1-2205/TK" – offer number.
+
+On or about: "March 12, 2022" – the date.
+
+From: "SHANGHAI, CHINA" – origin.
+
+To: "BUSAN, KOREA" – destination.
+
+Via: maybe not in the list, but L/C No. is "T.T. REMITTANCE".
+
+L/C No.: "T.T. REMITTANCE" – letter of credit number.
+
+Shipped per: "VESSEL" – who shipped.
+
+Shipping Mark: the diamond with "TK" – that's the shipping mark.
+
+TEL: "2-681-0417" (consignee's TEL) and top right "Tel: 89-6853-8101-4877" – TEL is telephone.
+
+Tel: same as TEL, maybe the top right Tel is labeled Tel.
+
+FAX: "3-970-2286" (consignee's FAX) and top right "Fax: 89-5880-67-1713" – FAX and Fax categories.
+
+Country Of Origin: "MADE IN CHINA" – that's the country of origin.
+
+Description: the product descriptions like "MANGOSTEEN GUM OIL KLT-3381C" etc.
+
+Code: the D/NO. like "3381C-1/4", "5025C-1", etc.
+
+Quantity: "80 KGS.", "20 KGS.", etc.
+
+Unit Price: "@39.00", "@71.10", etc.
+
+Amount: "$3,120.00", "$1,422.00", etc. Also total amount.
+
+Let's list each category with their bounding boxes.
+
+First, identify each element:
+
+1. Messrs: The address block on the left top. "1144 Morgan Vista North Gloriaburgh, ND 46370 USS Poole FPO AE 11750" – label Messrs.
+2. Address (Consignee): "5979 Jones Mount Padillaberg, DC 31021 USS Davis FPO AP 41735" – label Address.
+3. Company Name (top right): "Thai Kirin Information Co., Ltd." – label Company Name.
+4. Address (top right): "16809 Scott Knoll Apt. 415 Baileyton, NE 10085 USNS Gibson FPO AA 31200" – label Address.
+5. Date: "February 14, 2022" – label Date.
+6. No: "KLT-4189" – label No.
+7. Consignee: "Thai Kirin Information Co., Ltd." – label Company Name (since consignee is the company).
+8. TEL (Consignee): "2-681-0417" – label TEL.
+9. FAX (Consignee): "3-970-2286" – label FAX.
+10. Shipped per: "VESSEL" – label Shipped per.
+11. On or about: "March 12, 2022" – label On or about.
+12. From: "SHANGHAI, CHINA" – label From.
+13. To: "BUSAN, KOREA" – label To.
+14. Via: maybe not needed, but L/C No. is "T.T. REMITTANCE" – label L/C No.
+15. Offer No.: "KLT-1-2205/TK" – label Offer No.
+16. Shipping Mark: the diamond with TK – label Shipping Mark.
+17. Country Of Origin: "MADE IN CHINA" – label Country Of Origin.
+18. Code: the D/NO. entries like "3381C-1/4" – label Code.
+19. Description: the product descriptions – label Description.
+20. Quantity: "80 KGS.", "20 KGS.", etc. – label Quantity.
+21. Unit Price: "@39.00", "@71.10", etc. – label Unit Price.
+22. Amount: "$3,120.00", "$1,422.00", etc. – label Amount.
+23. Tel (top right): "89-6853-8101-4877" – label Tel.
+24. Fax (top right): "89-5880-67-1713" – label Fax.
+
+Now, let's check each in the image.
+
+First, top right company info:
+
+- Company Name: "Thai Kirin Information Co., Ltd." – top right.
+- Address: "16809 Scott Knoll Apt. 415 Baileyton, NE 10085 USNS Gibson FPO AA 31200"
+- Tel: "89-6853-8101-4877"
+- Fax: "89-5880-67-1713"
+
+Left side:
+
+- Messrs: "1144 Morgan Vista North Gloriaburgh, ND 46370 USS Poole FPO AE 11750" – label Messrs.
+- Consignee: "Thai Kirin Information Co., Ltd. 5979 Jones Mount Padillaberg, DC 31021 USS Davis FPO AP 41735" – Company Name and Address.
+- TEL: "2-681-0417"
+- FAX: "3-970-2286"
+- Shipped per: "VESSEL"
+- On or about: "March 12, 2022"
+- From: "SHANGHAI, CHINA"
+- To: "BUSAN, KOREA"
+- Via: (not in list, maybe empty)
+- L/C No.: "T.T. REMITTANCE"
+- Offer No.: "KLT-1-2205/TK"
+- Date: "February 14, 2022"
+- No: "KLT-4189"
+- Shipping Mark: the TK diamond
+- Country Of Origin: "MADE IN CHINA"
+- Code: the D/NO. column entries (3381C-1/4, 5025C-1, 2311C-1/5, 1095C-1/12)
+- Description: the product names (MANGOSTEEN..., EVE OIL..., etc.)
+- Quantity: 80 KGS., 20 KGS., 100 KGS., 240 KGS.
+- Unit Price: @39.00, @71.10, @23.00, @45.30
+- Amount: $3,120.00, $1,422.00, $2,300.00, $10,872.00, and total $17,714.00
+
+Now, let's map each to bounding boxes. Since the image is a document, we need to estimate coordinates. Let's go step by step.
+
+1. Messrs address: The left top block. Bounding box: [114, 147, 467, 197] (approx, since the text is there).
+2. Consignee address: The address below Messrs. "5979 Jones Mount Padillaberg, DC 31021 USS Davis FPO AP 41735" – [190, 200, 467, 247]
+3. Company Name (top right): "Thai Kirin Information Co., Ltd." – [590, 6, 786, 25]
+4. Address (top right): "16809 Scott Knoll Apt. 415 Baileyton, NE 10085 USNS Gibson FPO AA 31200" – [590, 27, 786, 45]
+5. Tel (top right): "Tel: 89-6853-8101-4877" – [590, 47, 786, 65]
+6. Fax (top right): "Fax: 89-5880-67-1713" – [590, 67, 786, 85]
+7. Date: "February 14, 2022" – [690, 200, 825, 222]
+8. No: "KLT-4189" – [690, 224, 765, 246]
+9. TEL (Consignee): "2-681-0417" – [200, 250, 325, 268]
+10. FAX (Consignee): "3-970-2286" – [330, 250, 415, 268]
+11. Shipped per: "VESSEL" – [190, 270, 245, 288]
+12. On or about: "March 12, 2022" – [200, 288, 325, 306]
+13. From: "SHANGHAI, CHINA." – [200, 306, 345, 324]
+14. To: "BUSAN, KOREA." – [260, 324, 375, 342]
+15. L/C No.: "T.T. REMITTANCE" – [200, 342, 350, 360]
+16. Offer No.: "KLT-1-2205/TK" – [200, 360, 345, 378]
+17. Shipping Mark: the diamond with TK – [695, 330, 755, 358] (the diamond shape)
+18. Country Of Origin: "MADE IN CHINA" – [500, 360, 630, 378]
+19. Code: the D/NO. entries, e.g., "3381C-1/4" – [140, 400, 225, 420] (first code)
+20. Description: "MANGOSTEEN GUM OIL KLT-3381C" – [240, 400, 500, 420]
+21. Quantity: "80 KGS." – [320, 400, 390, 420]
+22. Unit Price: "@39.00" – [400, 400, 470, 420]
+23. Amount: "$3,120.00" – [500, 400, 590, 420]
+24. Next Code: "5025C-1" – [140, 425, 225, 445]
+25. Next Description: "EVE OIL KLT-5025C" – [240, 425, 450, 445]
+26. Next Quantity: "20 KGS." – [320, 425, 370, 445]
+27. Next Unit Price: "@71.10" – [400, 425, 460, 445]
+28. Next Amount: "$1,422.00" – [500, 425, 580, 445]
+29. Next Code: "2311C-1/5" – [140, 450, 225, 470]
+30. Next Description: "JUICY GUM OIL KLT-2311C" – [240, 450, 500, 470]
+31. Next Quantity: "100 KGS." – [320, 450, 380, 470]
+32. Next Unit Price: "@23.00" – [400, 450, 450, 470]
+33. Next Amount: "$2,300.00" – [500, 450, 570, 470]
+34. Next Code: "1095C-1/12" – [140, 475, 225, 495]
+35. Next Description: "COLA GUM OIL KLT-1095C" – [240, 475, 500, 495]
+36. Next Quantity: "240 KGS." – [320, 475, 390, 495]
+37. Next Unit Price: "@45.30" – [400, 475, 460, 495]
+38. Next Amount: "$10,872.00" – [500, 475, 590, 495]
+39. Total Quantity: "Total: 22 DRUMS" – [140, 500, 260, 520]
+40. Total Amount: "440 KGS" and "$17,714.00" – [400, 500, 470, 520] for 440 KGS, and the red stamp has $17,714.00.
+
+Also, the "No" is KLT-4189, which is the document number.
+
+Now, let's compile all the required categories. The problem says to detect all objects matching the categories. Let's list each category with their bounding boxes.
+
+Let's start:
+
+- Address: multiple instances. Let's take the main ones.
+- Amount: all the amount fields.
+- Code: all D/NO. entries.
+- Company Name: Thai Kirin Information Co., Ltd. (appears twice: top right and consignee)
+- Country Of Origin: MADE IN CHINA
+- Date: February 14, 2022
+- Description: all product descriptions
+- FAX: consignee's FAX and top right Fax
+- Fax: top right's Fax (same as FAX, but maybe separate labels? The problem lists both FAX and Fax, so need to check. The top right has "Fax:" and consignee has "FAX:" – so two entries: FAX (consignee) and Fax (top right)
+- From: SHANGHAI, CHINA
+- L/C No.: T.T. REMITTANCE
+- Messrs: the address block labeled Messrs
+- No: KLT-4189
+- Offer No.: KLT-1-2205/TK
+- On or about: March 12, 2022
+- Quantity: all quantity fields (80 KGS, etc.)
+- Shipped per: VESSEL
+- Shipping Mark: TK diamond
+- TEL: consignee's TEL and top right Tel
+- Tel: top right's Tel (labeled Tel)
+- To: BUSAN, KOREA
+- Unit Price: all unit prices (@39.00, etc.)
+
+Now, let's create the JSON array. Each entry is a dictionary with bbox and label.
+
+Let's go step by step for each category:
+
+1. Messrs: [114, 147, 467, 197] → label Messrs
+2. Address (Consignee address): [190, 200, 467, 247] → label Address
+3. Company Name (top right): [590, 6, 786, 25] → label Company Name
+4. Address (top right address): [590, 27, 786, 45] → label Address
+5. Tel (top right): [590, 47, 786, 65] → label Tel
+6. Fax (top right): [590, 67, 786, 

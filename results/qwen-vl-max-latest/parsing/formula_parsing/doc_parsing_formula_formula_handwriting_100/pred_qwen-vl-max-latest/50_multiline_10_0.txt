@@ -1,0 +1,14 @@
+```latex
+\begin{aligned}
+&\int_0^\infty x^n \tilde{h}(x)dx = c\int_0^\infty dx\, x^{n+1} h(x) + \int_0^\infty dx x^n \int_x^\infty dy\, \overline{\Pi}(\log(y/x)) h(y) \\
+&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad + q\int_0^\infty dx x^n \int_0^\infty h(xe^y)\nu_\phi(dy) \\
+&\qquad= \frac{n!(n+1)c}{\prod_{i=1}^{n+1}(q+\phi(i))} + \int_0^\infty dy h(y) \int_0^y dx\, x^n \overline{\Pi}(\log y/x) \\
+&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad + q\int_0^\infty \nu_\phi(dy) \int_0^\infty dx x^n h(xe^y) \\
+&\qquad= \frac{n!(n+1)c}{\prod_{i=1}^{n+1}(q+\phi(i))} + \int_0^\infty dy h(y) y^{n+1} \int_0^\infty dz e^{-(n+1)z} \overline{\Pi}(z) \\
+&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad + q\int_0^\infty \nu_\phi(dy) e^{-(n+1)y} \int_0^\infty dz z^n h(z) \\
+&\qquad= \frac{n!(n+1)c}{\prod_{i=1}^{n+1}(q+\phi(i))} + \frac{(n+1)!}{\prod_{i=1}^{n+1}(q+\phi(i))} \frac{\int_0^\infty (1-e^{-(n+1)z})\Pi(dz)}{n+1} \\
+&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad + q\frac{n!}{\prod_{i=1}^n(q+\phi(i))} \int_0^\infty \nu_\phi(dy) e^{-(n+1)y} \\
+&\qquad= \frac{n!}{\prod_{i=1}^n(q+\phi(i))} (n+1)c + \frac{\int_0^\infty (1-e^{-(n+1)z})\Pi(dz) + q}{q+\phi(n+1)} \\
+&\qquad= \frac{n!}{\prod_{i=1}^n(q+\phi(i))}
+\end{aligned}
+```

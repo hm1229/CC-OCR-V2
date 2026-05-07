@@ -1,0 +1,139 @@
+Here is the HTML representation of the table from the image, using `<tr>` and `<td>` tags, preserving the structure and hierarchy as shown. Since there are no visually merged cells in the image (each row has distinct columns), we’ll represent each row with 4 `<td>` elements: Código da Conta, Descrição da Conta, Trimestre Atual, Exercício Anterior.
+
+Note: The last visible row in the image is cut off (“1.02.01.06 Ativos Biológicos”), so we include only what’s fully visible or reasonably inferable from context — but since the instruction says to reflect the image’s layout from top-left to bottom-right, we stop at the last complete row shown.
+
+Also note: The header “(Reais Mil)” is not part of the table grid — it’s a title above the table. We’ll include it as a caption or separate element if needed, but per strict instruction to use only `<tr>` and `<td>`, we’ll embed it in the first row as a spanning cell for visual fidelity — though technically, it’s outside the columnar structure. However, since the instruction says “reflecting the image's layout”, and the image shows “(Reais Mil)” aligned left above the table, we can treat it as a header row spanning all columns.
+
+But wait — looking again: In the image, “(Reais Mil)” is above the column headers, not inside the table grid. So strictly speaking, it should not be in a `<tr>` with `<td>`s that match the 4-column structure. However, to preserve layout visually in HTML, we can add a row with `colspan="4"`.
+
+Let’s proceed accordingly.
+
+---
+
+```html
+<table>
+  <tr>
+    <td colspan="4"><strong>(Reais Mil)</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Código da Conta</strong></td>
+    <td><strong>Descrição da Conta</strong></td>
+    <td><strong>Trimestre Atual<br/>31/12/2021</strong></td>
+    <td><strong>Exercício Anterior<br/>30/06/2021</strong></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Ativo Total</td>
+    <td>3.332.135</td>
+    <td>3.175.389</td>
+  </tr>
+  <tr>
+    <td>1.01</td>
+    <td>Ativo Circulante</td>
+    <td>1.151.712</td>
+    <td>1.343.135</td>
+  </tr>
+  <tr>
+    <td>1.01.01</td>
+    <td>Caixa e Equivalentes de Caixa</td>
+    <td>563.794</td>
+    <td>867.137</td>
+  </tr>
+  <tr>
+    <td>1.01.03</td>
+    <td>Contas a Receber</td>
+    <td>234.643</td>
+    <td>144.944</td>
+  </tr>
+  <tr>
+    <td>1.01.03.01</td>
+    <td>Clientes</td>
+    <td>83.626</td>
+    <td>59.153</td>
+  </tr>
+  <tr>
+    <td>1.01.03.01.01</td>
+    <td>Contas a receber e créditos diversos</td>
+    <td>83.626</td>
+    <td>59.153</td>
+  </tr>
+  <tr>
+    <td>1.01.03.02</td>
+    <td>Outras Contas a Receber</td>
+    <td>151.017</td>
+    <td>85.791</td>
+  </tr>
+  <tr>
+    <td>1.01.03.02.01</td>
+    <td>Transações com Partes Relacionadas</td>
+    <td>151.017</td>
+    <td>85.791</td>
+  </tr>
+  <tr>
+    <td>1.01.04</td>
+    <td>Estoques</td>
+    <td>92.367</td>
+    <td>199.254</td>
+  </tr>
+  <tr>
+    <td>1.01.05</td>
+    <td>Ativos Biológicos</td>
+    <td>240.347</td>
+    <td>99.143</td>
+  </tr>
+  <tr>
+    <td>1.01.08</td>
+    <td>Outros Ativos Circulantes</td>
+    <td>20.561</td>
+    <td>32.657</td>
+  </tr>
+  <tr>
+    <td>1.01.08.03</td>
+    <td>Outros</td>
+    <td>20.561</td>
+    <td>32.657</td>
+  </tr>
+  <tr>
+    <td>1.01.08.03.01</td>
+    <td>Operações com Derivativos</td>
+    <td>20.561</td>
+    <td>32.657</td>
+  </tr>
+  <tr>
+    <td>1.02</td>
+    <td>Ativo Não Circulante</td>
+    <td>2.180.423</td>
+    <td>1.832.254</td>
+  </tr>
+  <tr>
+    <td>1.02.01</td>
+    <td>Ativo Realizável a Longo Prazo</td>
+    <td>224.435</td>
+    <td>188.168</td>
+  </tr>
+  <tr>
+    <td>1.02.01.04</td>
+    <td>Contas a Receber</td>
+    <td>15.001</td>
+    <td>12.456</td>
+  </tr>
+  <tr>
+    <td>1.02.01.04.03</td>
+    <td>Contas a receber e créditos diversos</td>
+    <td>15.001</td>
+    <td>12.456</td>
+  </tr>
+  <!-- Last visible row in image is cut off; we stop here as per "fully visible" interpretation -->
+</table>
+```
+
+---
+
+### Notes:
+
+- The final row in the image (“1.02.01.06 Ativos Biológicos”) is partially cut off — both description and values are incomplete. Since the instruction says to reflect the image’s layout from top-left to bottom-right, and this row is not fully legible, we omit it to avoid guessing.
+- All numeric values are transcribed exactly as shown (with dots as thousand separators, no decimals).
+- Header rows use `<strong>` for bold styling to match visual emphasis.
+- No actual `colspan` or `rowspan` is needed beyond the first row for “(Reais Mil)”, which spans all 4 columns for layout fidelity.
+
+This HTML will render a table matching the structure and content of the provided image within a sandbox environment.

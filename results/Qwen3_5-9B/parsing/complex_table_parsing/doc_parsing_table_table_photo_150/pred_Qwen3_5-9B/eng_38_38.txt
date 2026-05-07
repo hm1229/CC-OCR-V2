@@ -1,0 +1,101 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Table Transcription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Procedure</th>
+                    <th>2010-11</th>
+                    <th>2011-12</th>
+                    <th>2012-13</th>
+                    <th>2013-14</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Whole Blood</td>
+                    <td>168</td>
+                    <td>265</td>
+                    <td>308</td>
+                    <td>307</td>
+                </tr>
+                <tr>
+                    <td>Plasmapheresis</td>
+                    <td>82</td>
+                    <td>92</td>
+                    <td>120</td>
+                    <td>158</td>
+                </tr>
+                <tr>
+                    <td>Plateletpheresis</td>
+                    <td>177</td>
+                    <td>288</td>
+                    <td>449</td>
+                    <td>935</td>
+                </tr>
+                <tr>
+                    <td>All apheresis</td>
+                    <td>90</td>
+                    <td>111</td>
+                    <td>146</td>
+                    <td>212</td>
+                </tr>
+                <tr>
+                    <td><strong>Total procedures</strong></td>
+                    <td><strong>190</strong></td>
+                    <td><strong>220</strong></td>
+                    <td><strong>251</strong></td>
+                    <td><strong>26</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+```

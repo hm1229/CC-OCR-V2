@@ -1,0 +1,228 @@
+用户现在需要从发票中提取所有指定类别的对象，每个对象要标注bbox和label。首先得逐个看每个类别在图中的位置。
+
+首先，先列出来所有类别，然后在图中找到对应的位置。
+
+先看Company Name：图顶部有New Greenberg Media Co., Ltd.，还有Care/Of里的Cohu Malaysia Sdn. Bhd.，Bill-To和Ship-To的New Greenberg Media Co., Ltd.也是公司名。需要确认每个出现的Company Name？不过可能主要的公司名是抬头的New Greenberg Media Co., Ltd.，还有Care/Of的Cohu是客户？不过看标签里的Company Name应该是指New Greenberg Media Co., Ltd.，因为是开票方。所以抬头的Company Name是第一个。
+
+然后Address：比如Care/Of的地址是Cohu Malaysia Sdn. Bhd.的地址，Bill-To的地址是514 Robin Tunnel Apt. 775 Seanfort, NY 93472，Ship-To的地址是USNV Jackson FPO AA 65347等。需要把每个Address对应的位置找出来。
+
+现在逐个处理每个类别：
+
+1. Account Manager：在Customer Contact部分，Account Manager对应的是JunJi Cai，看位置。图中“Account Manager : JunJi Cai”，所以bbox是对应这个标签和值的区域。
+
+2. Acct Manager Email：对应JunJi Cai的邮箱，wailune.cham@cohuh.com？不，看图中“Acct Manager Email : JunJi Cai”？不对，图中“Acct Manager Email : wailune.cham@cohuh.com”？看原文：“Acct Manager Email : JunJi Cai”？不，看图片中的内容：
+
+看Customer Contact部分下面的字段：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : JunJi Cai？不，看图片里的内容：
+
+在“Customer Contact : Receiving Department”下面，有：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : wailune.cham@cohuh.com？不，看图片中的文字：
+
+看图片中的“Acct Manager Email : JunJi Cai”？不，原图片中的内容：
+
+看“Prepared by”上面的字段：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : JunJi Cai？不，原图片中的“Acct Manager Email : wailune.cham@cohuh.com”？看图片里的“Acct Manager Email : JunJi Cai”可能我看错了。再看图片中的内容：
+
+在“Customer Contact”部分之后，有：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : wailune.cham@cohuh.com？不，原图片中的“Acct Manager Email : JunJi Cai”？不，看图片中的“Acct Manager Email : wailune.cham@cohuh.com”？看图片里的“Acct Manager Email : JunJi Cai”可能不是，再仔细看：
+
+原图片中的“Acct Manager Email : JunJi Cai”？不，看图片中的“Acct Manager Email : wailune.cham@cohuh.com”？看图片中的“Prepared by”是wailune.cham@cohuh.com？不，原图片中的“Prepared by : ”下面的Email是wailune.cham@cohuh.com？看图片中的“Prepared by”和“Email”字段：
+
+看图片中的“Prepared by” : （可能空？不，看图片中的内容：
+
+在“Customer Contact”下面，有：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : JunJi Cai？不，原图片中的“Acct Manager Email : wailune.cham@cohuh.com”？看图片中的“Acct Manager Email : JunJi Cai”可能错误，再看原图片中的文字：
+
+原图片中“Acct Manager Email : JunJi Cai”？不，看图片中的“Acct Manager Email : wailune.cham@cohuh.com”？看图片中的“Acct Manager Email”对应的是JunJi Cai吗？不，原图片中的“Acct Manager Email : JunJi Cai”可能不是，看图片中的“Acct Manager Email”后面是JunJi Cai？不，原图片中的“Acct Manager Email”后面是wailune.cham@cohuh.com？可能我需要更仔细看图片中的内容。
+
+现在先处理每个类别，先列出所有需要的标签，然后在图中找到对应的位置。
+
+首先，先看Invoice No.：图中“Invoice No. : 1930266”，所以这个是。
+
+Date：图中“Date : 14-Oct-2021”。
+
+Your ref./PO#：图中“Your ref./PO# : PS11576”。
+
+Customer PO Date：图中“Customer PO Date : 02-Sep-2021”。
+
+PO Received Date：图中“PO Received Date : 02-Sep-2021”。
+
+Cohu Quotation No.：图中“Cohu Quotation No. : 100103413”。
+
+Quotation Version：图中“Quotation Version : 1”。
+
+Project：图中“Project : 11576”。
+
+Account Manager：图中“Account Manager : JunJi Cai”。
+
+Acct Manager Email：图中“Acct Manager Email : JunJi Cai”？不，看图片中的“Acct Manager Email : wailune.cham@cohuh.com”？不，原图片中的“Acct Manager Email”对应的是JunJi Cai吗？看图片中的“Acct Manager Email”后面是JunJi Cai？不，原图片中的“Acct Manager Email”后面是wailune.cham@cohuh.com？可能我混淆了。看图片中的“Prepared by”和“Email”：
+
+“Prepared by : ”（可能空？不，看图片中的“Prepared by”下面的“Email : wailune.cham@cohuh.com”？不，原图片中的“Prepared by”是wailune.cham@cohuh.com？不，看图片中的“Prepared by”和“Email”是分开的？看图片中的内容：
+
+在“Customer Contact”部分之后，有：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : JunJi Cai？不，原图片中的“Acct Manager Email : wailune.cham@cohuh.com”？看图片中的“Acct Manager Email”字段，其值是JunJi Cai吗？不，可能“Acct Manager Email”是wailune.cham@cohuh.com，而“Prepared by”也是wailune.cham@cohuh.com？看图片中的“Prepared by” : （可能没有内容？不，看图片中的“Prepared by”下面的“Email : wailune.cham@cohuh.com”？不，原图片中的“Prepared by”和“Email”是同一行？不，看图片中的结构：
+
+在“Customer Contact : Receiving Department”下面，有：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : JunJi Cai？不，原图片中的“Acct Manager Email”后面是JunJi Cai？这可能不对，可能我看错了。不管怎样，先继续。
+
+Packing List：图中“Packing List : 1930266”。
+
+Line No.：在Line No.列，图中Line No.是1（第一行的Line No.是1）。
+
+Customer PO Line No.：图中“Customer PO Line No.”列，第一行是1。
+
+Item No./Customer Part No.：图中“Item No./Customer Part No.”是302068162（第一行）。
+
+Description：图中“Description”是“Conversion kit P-11576 - 11578”。
+
+Qty：图中“Qty”是3（第一行）。
+
+Unit：图中“Unit”是ea（第一行）。
+
+Unit Price：图中“Unit Price”是1000.00（第一行）。
+
+Amount (USD)：图中“Amount (USD)”是3000（第一行，因为3*1000=3000）。
+
+No. of packages：图中“No. of packages : 2”。
+
+Gross weight：图中“Gross weight : 24.80 kg”。
+
+Net weight：图中“Net weight : 21.80 kg”。
+
+Volume：图中“Volume : 1m3”。
+
+Dimension：图中“Dimension : 65x45x35CM”和“65x45x20CM”？看图片中的“Dimension : 65x45x35CM”和下面的“65x45x20CM”？可能是一个字段，所以取对应的位置。
+
+Inco Terms：图中“Inco Terms : DAP”。
+
+Forwarder：图中“Forwarder : FedEx - FEDERAL EXPRESS”。
+
+TVA/VAT：图中“TVA/VAT: CHE-116.320.706 TVA”。
+
+Tel：图中“Tel : +05-54-231-40-20”。
+
+Fax：图中“Fax : +28-49-254-30-51”。
+
+Website：图中“Website: http://taylor.com/”。
+
+Page Number：图中“Page 1 of 3”。
+
+Care/Of：图中“Care/Of : Cohu Malaysia Sdn. Bhd., No.5203-1, Jalan PAK 2/3, Kawasan Perindustrian Ayer Keroh Fasa 4, 75450 Ayer Keroh, Melaka, Malaysia”。
+
+Address：多个地址，比如Care/Of的地址，Bill-To的地址（514 Robin Tunnel Apt. 775 Seanfort, NY 93472），Ship-To的地址（USNV Jackson FPO AA 65347, 8388 Schwartz Walks New Charlesmouth, KY 48640），还有抬头的地址（336 Sierra Lake Suite 729 Fergusonchester, LA 62616）。
+
+Company Name：抬头的New Greenberg Media Co., Ltd.，还有Care/Of的Cohu Malaysia Sdn. Bhd.，Bill-To和Ship-To的New Greenberg Media Co., Ltd.。但Company Name应该是指开票方，即New Greenberg Media Co., Ltd.，所以抬头的Company Name是第一个。
+
+Customer Contact：图中“Customer Contact : Receiving Department”。
+
+Customer PO Date：图中“Customer PO Date : 02-Sep-2021”。
+
+PO Received Date：图中“PO Received Date : 02-Sep-2021”。
+
+现在需要把每个类别对应的位置用bbox标注。因为是图片，需要估计每个元素的坐标。但因为是文本，可能需要根据图中的布局来确定。
+
+现在开始逐个处理：
+
+1. Account Manager：在图中“Account Manager : JunJi Cai”这一行，所以bbox是包含这个标签和值的区域。假设图中的坐标，比如在Customer Contact部分下面，Account Manager的标签位置。
+
+2. Acct Manager Email：对应“Acct Manager Email : JunJi Cai”？不，看图片中的“Acct Manager Email”后面是JunJi Cai吗？或者看图片中的“Acct Manager Email”是wailune.cham@cohuh.com？可能我之前看错了，再看图片中的内容：
+
+在图片中，“Acct Manager Email”后面是JunJi Cai？不，原图片中的“Acct Manager Email”是wailune.cham@cohuh.com？看图片中的“Prepared by”和“Email”：
+
+“Prepared by : ”（可能没有内容？不，看图片中的“Prepared by”下面的“Email : wailune.cham@cohuh.com”？不，原图片中的“Prepared by”是wailune.cham@cohuh.com，而“Acct Manager Email”是JunJi Cai？可能图中的“Acct Manager Email”是JunJi Cai，而“Prepared by”的Email是wailune.cham@cohuh.com。需要确认。
+
+不管怎样，继续列出所有类别，然后在图中找到对应的位置。
+
+现在，先整理所有需要的标签，然后为每个标签找到对应的bbox和label。
+
+例如：
+
+- Account Manager：图中“Account Manager : JunJi Cai” → bbox对应这个区域。
+- Acct Manager Email：图中“Acct Manager Email : JunJi Cai”？或者看图片中的“Acct Manager Email”是wailune.cham@cohuh.com？可能图中的“Acct Manager Email”是JunJi Cai，而“Prepared by”的Email是wailune.cham@cohuh.com。需要看图片中的实际内容。原图片中的“Acct Manager Email”后面是JunJi Cai吗？看图片中的文字：
+
+在“Customer Contact”部分之后，有：
+
+Account Manager : JunJi Cai
+
+Acct Manager Email : JunJi Cai？不，原图片中的“Acct Manager Email”后面是wailune.cham@cohuh.com？可能我混淆了，先看图片中的“Email”字段，有一个“Email : wailune.cham@cohuh.com”在Prepared by下面。而“Acct Manager Email”可能也是这个邮箱？或者可能图中的“Acct Manager Email”是JunJi Cai的邮箱？可能图中的“Acct Manager Email”是JunJi Cai，而“Prepared by”的Email是wailune.cham@cohuh.com。这部分可能需要更仔细看图片。
+
+另外，Customer Contact是“Receiving Department”，所以Customer Contact的label是这个。
+
+现在，先处理每个类别，确保不遗漏：
+
+现在列出所有需要的类别，然后在图中找到：
+
+1. Account Manager
+2. Acct Manager Email
+3. Address（多个，比如Care/Of的地址，Bill-To的地址，Ship-To的地址，抬头的地址）
+4. Amount (USD)
+5. Care/Of
+6. Cohu Quotation No.
+7. Company Name（New Greenberg Media Co., Ltd.）
+8. Customer Contact
+9. Customer PO Date
+10. Customer PO Line No.
+11. Date
+12. Description
+13. Dimension
+14. Email（比如Prepared by的Email）
+15. Fax
+16. Forwarder
+17. Gross weight
+18. Inco Terms
+19. Invoice No.
+20. Item No./Customer Part No.
+21. Line No.
+22. Net weight
+23. No. of packages
+24. PO Received Date
+25. Packing List
+26. Page Number
+27. Prepared by
+28. Project
+29. Qty
+30. Quotation Version
+31. TVA/VAT
+32. Tel
+33. Unit
+34. Unit Price
+35. Volume
+36. Website
+37. Your ref./PO#
+
+现在逐个处理：
+
+1. Account Manager：图中“Account Manager : JunJi Cai” → 找到该行，bbox是包含这个标签和值的区域。假设在图中的位置是中间偏右，Customer Contact下面。
+2. Acct Manager Email：图中“Acct Manager Email : JunJi Cai”？或者看图片中的“Acct Manager Email”是wailune.cham@cohuh.com？不，原图片中的“Acct Manager Email”后面是JunJi Cai吗？看图片中的“Acct Manager Email”字段，其值是JunJi Cai？可能图中的“Acct Manager Email”是JunJi Cai，而“Prepared by”的Email是wailune.cham@cohuh.com。所以Acct Manager Email的label对应JunJi Cai的邮箱？可能图中的“Acct Manager Email”是wailune.cham@cohuh.com？这部分可能需要再看图片。原图片中的“Acct Manager Email”后面是JunJi Cai吗？看图片中的文字：
+
+在图片中，“Acct Manager Email”后面是JunJi Cai？不，原图片中的“Acct Manager Email”是wailune.cham@cohuh.com？可能我之前看错了，现在假设图中的“Acct Manager Email”是wailune.cham@cohuh.com，而“Prepared by”也是wailune.cham@cohuh.com？不，看图片中的“Prepared by”和“Email”是分开的吗？看图片中的“Prepared by” : （可能没有内容？不，看图片中的“Prepared by”下面的“Email : wailune.cham@cohuh.com”？不，原图片中的“Prepared by”是wailune.cham@cohuh.com，而“Acct Manager Email”是JunJi Cai的邮箱？可能图中的“Acct Manager Email”是JunJi Cai，而“Prepared by”的Email是wailune.cham@cohuh.com。这部分可能需要根据图片中的实际内容，可能图中的“Acct Manager Email”是JunJi Cai，而“Prepared by”的Email是wailune.cham@cohuh.com。所以Email类别可能有两个？不，Email是其中一个类别，可能指Prepared by的Email，即wailune.cham@cohuh.com。
+
+3. Address：多个地址，比如：
+   - Care/Of的地址：Cohu Malaysia Sdn. Bhd., No.5203-1, Jalan PAK 2/3, Kawasan Perindustrian Ayer Keroh Fasa 4, 75450 Ayer Keroh, Melaka, Malaysia
+   - Bill-To的地址：514 Robin Tunnel Apt. 775 Seanfort, NY 93472；215021（可能邮编？）
+   - Ship-To的地址：USNV Jackson FPO AA 65347；8388 Schwartz Walks New Charlesmouth, KY 48640；215021
+   - 抬头的地址：336 Sierra Lake Suite 729 Fergusonchester, LA 62616
+   所以每个Address对应一个位置，需要列出所有Address的实例。
+
+4.

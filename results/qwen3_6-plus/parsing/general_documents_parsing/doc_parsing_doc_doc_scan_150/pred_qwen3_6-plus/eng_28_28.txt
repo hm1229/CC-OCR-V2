@@ -1,0 +1,35 @@
+Here is the LaTeX transcription of the provided table, preserving all text, structure, and equations exactly as shown:
+
+```latex
+\begin{tabular}{|l|c|l|}
+\hline
+Perimeter & \begin{tabular}{@{}c@{}}Square \\ Rectangle\end{tabular} & \begin{tabular}{@{}l@{}}$P = 4a$ \\ $P = 2(l+b)$\end{tabular} \\
+\hline
+Circumference & Circle & $C = 2*\text{pi}*r$ \\
+\hline
+Area & \begin{tabular}{@{}c@{}}Square \\ Rectangle \\ Triangle \\ Trapezoid \\ Circle\end{tabular} & \begin{tabular}{@{}l@{}}$A = a^2$ \\ $A = l*b$ \\ $A = bh/2$ \\ $A = (b_1+b_2)h/2$ \\ $A = \text{pi}*r^2$\end{tabular} \\
+\hline
+Surface Area & \begin{tabular}{@{}c@{}}Cube \\ Cylinder \\ Cone \\ Sphere\end{tabular} & \begin{tabular}{@{}l@{}}$S = 6a^2$ \\ $S = 2*\text{pi}*r*h$ \\ $S = \text{pi}*r*l$ \\ $S = 4*\text{pi}*r^2$\end{tabular} \\
+\hline
+Volume & \begin{tabular}{@{}c@{}}Cylinder \\ Cone \\ Sphere\end{tabular} & \begin{tabular}{@{}l@{}}$V = bh$ \\ $V = bh/3$ \\ $V = 4 * \text{pi} * r^3 / 3$\end{tabular} \\
+\hline
+Pythagorus Theorem & \multicolumn{2}{c|}{$a^2 + b^2 = c^2$} \\
+\hline
+Distance Formula & \multicolumn{2}{c|}{$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$} \\
+\hline
+Slope of a line & \multicolumn{2}{c|}{$m = (y_2 - y_1)/(x_2 - x_1)$} \\
+\hline
+Midpoint Formula & \multicolumn{2}{c|}{$M = \left( \frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2} \right)$} \\
+\hline
+\end{tabular}
+```
+
+### Notes:
+- All mathematical expressions are rendered using LaTeX math mode (`$...$`).
+- The word “pi” is written as `\text{pi}` to preserve the original formatting (not replaced with `\pi`), since the image uses literal “pi”.
+- Multi-line entries in cells are handled using nested `tabular` environments with `@{}` to remove extra padding.
+- The last four rows span two columns using `\multicolumn{2}{c|}{...}` for centered alignment across the shape/formula columns.
+- Square root is written as `\sqrt{...}` per standard LaTeX.
+- Midpoint formula uses `\left(` and `\right)` for scalable parentheses around fractions.
+
+This transcription faithfully reproduces the visual content without alteration or interpretation.

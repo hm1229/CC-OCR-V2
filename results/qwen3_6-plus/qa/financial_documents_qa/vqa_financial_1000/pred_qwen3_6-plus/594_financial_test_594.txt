@@ -1,0 +1,84 @@
+Looking at the provided document, we can find the **EST COST** row under the summary section:
+
+```
+EST COST:   160727.22    128438.02    32289.20
+```
+
+This row corresponds to the columns above it:
+
+- **ORDER TOTAL** → 160727.22  
+- **AVAILABLE QTY** → 128438.02  
+- **BO QTY** → 32289.20  
+
+> Note: The column headers are:
+> ```
+> ORDER TOTAL   TOTAL QTY   AVAILABLE QTY   BO QTY   SHIPPED QTY
+> ```
+> But in the data rows (CASES, WEIGHT, SIZE, EST COST), the values align as:
+> - First value = ORDER TOTAL
+> - Second value = TOTAL QTY? Wait — let’s re-examine.
+
+Actually, looking more carefully:
+
+The header line is:
+
+```
+ORDER TOTAL   TOTAL QTY   AVAILABLE QTY   BO QTY   SHIPPED QTY
+```
+
+But then the data rows are:
+
+```
+CASES...:     9547        9293          254
+WEIGHT..:     9016.6400   3266.6400     5750.0000
+SIZE....:     701.2920    261.2920      440.0000
+EST COST:     160727.22   128438.02     32289.20
+```
+
+Wait — there’s a mismatch in column count.
+
+Actually, the layout appears to be:
+
+There are **five** column headers:
+
+1. ORDER TOTAL  
+2. TOTAL QTY  
+3. AVAILABLE QTY  
+4. BO QTY  
+5. SHIPPED QTY  
+
+But in the data rows, only **three** numbers are shown per row.
+
+Looking again:
+
+In the “CASES” row: `9547` (under ORDER TOTAL?), `9293` (under TOTAL QTY?), `254` (under AVAILABLE QTY?) — but that doesn’t make sense because 9547 ≠ 9293 + 254.
+
+Alternatively, perhaps the columns are misaligned visually.
+
+Let’s look at the **EST COST** row specifically:
+
+It says:
+
+```
+EST COST:   160727.22    128438.02    32289.20
+```
+
+And above it, the column headers for the *data* seem to be aligned as:
+
+- First number → corresponds to **ORDER TOTAL**
+- Second number → corresponds to **AVAILABLE QTY**
+- Third number → corresponds to **BO QTY**
+
+Why? Because:
+
+- In the “CASES” row: 9547 (total ordered cases), 9293 (available), 254 (backorder) → 9293 + 254 = 9547 ✔️
+- In “WEIGHT”: 9016.6400 (total weight), 3266.6400 (available weight?), 5750.0000 (backorder weight?) → 3266.64 + 5750 = 9016.64 ✔️
+- In “SIZE”: 701.2920 (total size), 261.2920 (available size), 440.0000 (backorder size) → 261.292 + 440 = 701.292 ✔️
+- In “EST COST”: 160727.22 (total cost), 128438.02 (cost of available qty), 32289.20 (cost of backorder qty) → 128438.02 + 32289.20 = 160727.22 ✔️
+
+✅ So yes — the second value in the EST COST row corresponds to **AVAILABLE QTY**.
+
+---
+
+### ✅ Final Answer:
+**128438.02**

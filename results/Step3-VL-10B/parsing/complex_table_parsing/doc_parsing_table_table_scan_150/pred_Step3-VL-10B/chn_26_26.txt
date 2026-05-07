@@ -1,0 +1,493 @@
+用户现在需要把图片中的表格转换成HTML，用tr和td标签。首先得分析表格的结构，看每一列的表头，然后逐行处理数据。首先看表头部分：记账日期（Date）、货币（Currency）、交易金额（Transaction Amount）、联机余额（Balance）、交易摘要（Transaction Type）、对手信息（Counter Party）。然后看每一行的内容，注意日期、金额等的对应。
+
+首先，先处理表头行。然后逐行处理数据行。需要注意每一行的列数，图片中的表格应该是6列（Date, Currency, Transaction Amount, Balance, Transaction Type, Counter Party）。然后检查每一行的内容，比如第一行数据是2017-08-03，CNY，-20.00，1,141.05，直付通在双向类商户的交易（买卖），直付通交易清结算内户？不对，看图片中的“对手信息”列，第一行的对手信息是直付通交易清结算内户？看图片里的红色印章旁边，对手信息列第一行应该是“直付通交易清结算内户”？不对，看图片中的“对手信息”列，第一行的对手信息是“直付通交易清结算内户”吗？看图片里的内容，第一行的交易摘要对应的是“直付通在双向类商户的交易（买卖）”，对手信息列第一行是“直付通交易清结算内户”？然后看印章上的文字是“招商银行股份有限公司 电子交易清结算内户”？可能对手信息列的内容需要对应。
+
+现在先整理表头：
+
+<th>记账日期</th><th>货币</th><th>交易金额</th><th>联机余额</th><th>交易摘要</th><th>对手信息</th>
+
+然后每一行的数据，比如第一行（2017-08-03）：
+
+Date: 2017-08-03
+
+Currency: CNY
+
+Transaction Amount: -20.00
+
+Balance: 1,141.05
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 直付通交易清结算内户？看图片中的“对手信息”列，第一行的对手信息是“直付通交易清结算内户”吗？看图片里的“对手信息”列，第一行对应的是“直付通交易清结算内户”？因为印章上写了“电子交易清结算内户”，所以可能第一行的对手信息是这个。然后看其他行的对手信息，比如2017-08-04的对手信息是“支付宝（中国）网络技术有限公司”，因为交易摘要对应的是直付通在双向类商户的交易（买卖），对手是支付宝。所以需要逐行对应。
+
+现在开始逐行处理：
+
+先列出行数，图片中的表格从2017-08-03到2017-08-18，共多少行？数一下：
+
+1. 2017-08-03
+
+2. 2017-08-04
+
+3. 2017-08-07（RI网银贷接收）
+
+4. 2017-08-07（直付通发起付款）
+
+5. 2017-08-07（直付通买卖）
+
+6. 2017-08-09
+
+7. 2017-08-10（RI接收）
+
+8. 2017-08-10（RI发起付款）
+
+9. 2017-08-11
+
+10. 2017-08-12（-500.45）
+
+11. 2017-08-12（-375.00）
+
+12. 2017-08-13（-200.00）
+
+13. 2017-08-13（-200.00）
+
+14. 2017-08-13（-348.00）
+
+15. 2017-08-15（-200.00）
+
+16. 2017-08-15（-200.00）
+
+17. 2017-08-15（-1,200.00）
+
+18. 2017-08-15（-65.00）
+
+19. 2017-08-16（-200.00）
+
+20. 2017-08-16（-200.00）
+
+21. 2017-08-17（299.00）
+
+22. 2017-08-17（-12.00）
+
+23. 2017-08-17（-200.00）
+
+24. 2017-08-17（-138.80）
+
+25. 2017-08-17（-84.60）
+
+26. 2017-08-18（-49.00）
+
+现在需要把每一行的六个列内容准确提取。注意交易金额中的负号，联机余额是数字，交易摘要和对手信息要对应。
+
+现在开始构建HTML表格：
+
+首先，thead部分：
+
+<tr>
+  <th>记账日期</th>
+  <th>货币</th>
+  <th>交易金额</th>
+  <th>联机余额</th>
+  <th>交易摘要</th>
+  <th>对手信息</th>
+</tr>
+
+然后tbody部分，逐行添加tr，每个tr包含六个td。
+
+现在处理第一行（2017-08-03）：
+
+Date: 2017-08-03
+
+Currency: CNY
+
+Transaction Amount: -20.00
+
+Balance: 1,141.05
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 直付通交易清结算内户（因为印章是招商银行电子交易清结算内户，第一行的对手信息应该是这个，看图片中“对手信息”列第一行的内容，图片里第一行对手信息列对应的是“直付通交易清结算内户”吗？看图片中的“对手信息”列，第一行的单元格内容是“直付通交易清结算内户”？因为印章覆盖了部分，但看其他行，比如2017-08-04的对手信息是“支付宝（中国）网络技术有限公司”，因为交易摘要对应的是直付通在双向类商户的交易（买卖），对手是支付宝。所以第一行的对手信息是“直付通交易清结算内户”（因为是内户交易）。
+
+第二行（2017-08-04）：
+
+Date: 2017-08-04
+
+Currency: CNY
+
+Transaction Amount: -1,130.00
+
+Balance: 11.05
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第三行（2017-08-07，RI网银贷接收）：
+
+Date: 2017-08-07
+
+Currency: CNY
+
+Transaction Amount: 1,773.52
+
+Balance: 1,784.57
+
+Transaction Type: RI网银贷接收收款
+
+Counter Party: 吴文娟
+
+第四行（2017-08-07，RI网银贷发起付款）：
+
+Date: 2017-08-07
+
+Currency: CNY
+
+Transaction Amount: -660.00
+
+Balance: 1,124.57
+
+Transaction Type: RI网银贷发起付款
+
+Counter Party: 赵子诚
+
+第五行（2017-08-07，直付通买卖）：
+
+Date: 2017-08-07
+
+Currency: CNY
+
+Transaction Amount: -38.00
+
+Balance: 1,086.57
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第六行（2017-08-09）：
+
+Date: 2017-08-09
+
+Currency: CNY
+
+Transaction Amount: -15.00
+
+Balance: 1,071.57
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第七行（2017-08-10，RI接收）：
+
+Date: 2017-08-10
+
+Currency: CNY
+
+Transaction Amount: 9,580.00
+
+Balance: 10,651.57
+
+Transaction Type: RI网银贷接收收款
+
+Counter Party: 吴文娟
+
+第八行（2017-08-10，RI发起付款）：
+
+Date: 2017-08-10
+
+Currency: CNY
+
+Transaction Amount: -5,900.00
+
+Balance: 4,751.57
+
+Transaction Type: RI网银贷发起付款
+
+Counter Party: 赵子诚
+
+第九行（2017-08-11）：
+
+Date: 2017-08-11
+
+Currency: CNY
+
+Transaction Amount: -690.00
+
+Balance: 4,061.57
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第十行（2017-08-12，-500.45）：
+
+Date: 2017-08-12
+
+Currency: CNY
+
+Transaction Amount: -500.45
+
+Balance: 3,561.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第十一行（2017-08-12，-375.00）：
+
+Date: 2017-08-12
+
+Currency: CNY
+
+Transaction Amount: -375.00
+
+Balance: 3,186.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第十二行（2017-08-13，-200.00）：
+
+Date: 2017-08-13
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 2,986.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第十三行（2017-08-13，-200.00）：
+
+Date: 2017-08-13
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 2,786.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第十四行（2017-08-13，-348.00）：
+
+Date: 2017-08-13
+
+Currency: CNY
+
+Transaction Amount: -348.00
+
+Balance: 2,438.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第十五行（2017-08-15，-200.00）：
+
+Date: 2017-08-15
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 2,238.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第十六行（2017-08-15，-200.00）：
+
+Date: 2017-08-15
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 2,038.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第十七行（2017-08-15，-1,200.00）：
+
+Date: 2017-08-15
+
+Currency: CNY
+
+Transaction Amount: -1,200.00
+
+Balance: 838.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第十八行（2017-08-15，-65.00）：
+
+Date: 2017-08-15
+
+Currency: CNY
+
+Transaction Amount: -65.00
+
+Balance: 773.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第十九行（2017-08-16，-200.00）：
+
+Date: 2017-08-16
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 573.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第二十行（2017-08-16，-200.00）：
+
+Date: 2017-08-16
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 373.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第二十一行（2017-08-17，299.00）：
+
+Date: 2017-08-17
+
+Currency: CNY
+
+Transaction Amount: 299.00
+
+Balance: 672.12
+
+Transaction Type: 代发款项
+
+Counter Party: 财付通支付科技有限公司客户备付金
+
+第二十二行（2017-08-17，-12.00）：
+
+Date: 2017-08-17
+
+Currency: CNY
+
+Transaction Amount: -12.00
+
+Balance: 660.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 支付宝（中国）网络技术有限公司
+
+第二十三行（2017-08-17，-200.00）：
+
+Date: 2017-08-17
+
+Currency: CNY
+
+Transaction Amount: -200.00
+
+Balance: 460.12
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第二十四行（2017-08-17，-138.80）：
+
+Date: 2017-08-17
+
+Currency: CNY
+
+Transaction Amount: -138.80
+
+Balance: 321.32
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第二十五行（2017-08-17，-84.60）：
+
+Date: 2017-08-17
+
+Currency: CNY
+
+Transaction Amount: -84.60
+
+Balance: 236.72
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+第二十六行（2017-08-18，-49.00）：
+
+Date: 2017-08-18
+
+Currency: CNY
+
+Transaction Amount: -49.00
+
+Balance: 187.72
+
+Transaction Type: 直付通在双向类商户的交易（买卖）
+
+Counter Party: 财付通支付科技有限公司
+
+现在需要把这些内容转换成HTML的tr和td。注意每个tr包含六个td，对应六列。
+
+现在开始编写HTML代码：
+
+首先，整个表格的结构：
+
+<table>
+  <thead>
+    <tr>
+      <th>记账日期</th>
+      <th>货币</th>
+      <th>交易金额</th>
+      <th>联机余额</th>
+      <th>交易摘要</th>
+      <th>对手信息</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- 第一行 -->
+    <tr>
+      <td>2017-08-03</td>
+      <td>CNY</td>
+      <td>-20.00</td>
+      <td>1,141.05</td>
+      <td>直付通在双向类商户的交易（买卖）</td>
+      <td>直付通交易清结算内户</td>
+    </tr>
+    <!-- 第二行 -->
+    <tr>
+      <td>2017-08-04</td>
+      <td>CNY</td>
+      <td>-1,130.00</td>
+      <td>11.05</td>
+     

@@ -1,0 +1,163 @@
+用户现在需要把图片中的文字、表格、公式等转换成LaTeX格式。首先得仔细看图片里的内容，分部分处理：标题、表格、图注、正文等。
+
+首先看表1（Table 1）：标题是“HTG组和正常对照组血脂和载脂蛋白水平比较”，英文是“Serum lipid and apolipoprotein levels in endogenous hypertriglyceridemic and control groups ($\bar{x} \pm s$)”。然后表格的列是项目（item）、对照组（Control group, n=171）、HTG组（HTG group, n=106）、P值（P value）。需要把每一行的内容对应好，注意单位和数值，还有NS（不显著）这些标记。
+
+然后是图1（Fig 1）：图注是“密码子9 A→G突变序列测定结果”，下面的说明，还有图中的a、b、c对应纯合子、杂合子、纯合子G/G。图的LaTeX可能用tikz或者直接描述，但这里主要是文字转录，图的描述要准确。
+
+接下来是正文部分，比如2.2.2、2.2.3、2.3、2.4这些小节。还有表2（Table 2）：关于apoAⅤ基因在密码子347、MspⅠ位点、密码子360位点的基因型和等位基因频率比较。表2的列是项目（item）、对照组（Control group）、HTG组（HTG group）、合并组（Combined group），还有频率（Frequencies）。
+
+另外要注意一些符号，比如$\bar{x} \pm s$，还有统计标记*，比如“* Subjects with TG > 4.516 mmol/L (400 mg/dl) were excluded in the calculation of LDL-C concentration, the number of cases is 91 [n=91, TG > 4.516 mmol/L (400 mg/dl) were excluded]” 这部分要准确。
+
+现在开始逐部分处理：
+
+首先标题和表1：
+
+表1的标题：表1 HTG组和正常对照组血脂和载脂蛋白水平比较；Table 1 Serum lipid and apolipoprotein levels in endogenous hypertriglyceridemic and control groups ($\bar{x} \pm s$)
+
+然后表格内容：
+
+item列的项目：
+
+Age (year)（年，岁）：对照组53±11，HTG组57±12，P值NS
+
+Sex (M/F)（性别，男/女）：对照组86/85，HTG组76/30，P值<0.001
+
+BMI (kg/m²)：23.0±3.6 vs 25.0±2.8，P<0.001
+
+TG (mmol/L)：1.23±0.44 vs 4.47±1.68，P<0.001
+
+TC (mmol/L)：5.09±0.75 vs 5.04±1.01，NS
+
+HDL-C (mmol/L)：1.45±0.41 vs 4.98±0.26，P<0.001
+
+nHDL-C (mmol/L)：3.65±0.80 vs 4.14±0.80，P<0.05
+
+LDL-C (mmol/L)：3.08±0.75 vs 2.72±0.78，P<0.001
+
+apoAⅠ (mg/L)：1310±210 vs 180±190，P<0.001
+
+apoAⅡ (mg/L)：290±60 vs 280±60，NS
+
+apoB 100 (mg/L)：780±140 vs 940±170，P<0.001
+
+apoCⅠ (mg/L)：47±19 vs 84±37，P<0.001
+
+apoCⅢ (mg/L)：112±31 vs 188±76，P<0.001
+
+apoE (mg/L)：43±12 vs 61±24，P<0.001
+
+TG/HDL-C：2.1±1.0 vs 8.5±4.64，P<0.001
+
+然后下面的注释：* Subjects with TG > 4.516 mmol/L (400 mg/dl) were excluded in the calculation of LDL-C concentration, the number of cases is 91 [n=91, TG > 4.516 mmol/L (400 mg/dl) were excluded]
+
+然后是图1：图1 密码子9 A→G突变序列测定结果；Fig 1 Sequencing analysis of A→G mutation at codon 9; homozygote for A/A: a; heterozygote for A/G: b; homozygote for G/G: c. 然后图中的说明“点通过错配引物而引入PCR产物。”
+
+接下来是2.2.2 内含子2多态位点：测内含子2的MspⅠ消化发生C→T的突变。用限制性内切酶MspⅠ消化PCR产物后，在琼脂糖凝胶电泳谱该位点显示3种基因型：纯合子C/C存在MspⅠ切点，显示585 bp 1条带；杂合子C/T则显示585和619 bp两条带，酶切点消失；纯合子T/T则显示619 bp 1条带，酶切点消失。该位点产生的83和34 bp小片段未显示。
+
+2.2.3 密码子347和360多态位点：这两个位点的碱基分别为A/A和G/C纯合子，未发现ACT→TCT突变或密码子360的CAG→CAT突变。
+
+2.3 HTG组与对照组apoAⅤ基因多态位点基因型及等位基因频率比较：由表2可见，HTG组密码子9等位基因频率较对照组显著为高（0.453 vs 0.366，P<0.05），而MspⅠ位点的突变频率两组之间未见差异。密码子347和密码子360位点突变频率未见ACT和CAT，未见TCT和CAT突变。
+
+表2：表2 正常对照组、HTG组和合并组密码子9、MspⅠ、密码子347和密码子360位点基因型及等位基因频率的比较；Table 2 Genotype and allele frequencies of apoAⅤ gene at codon 9, MspⅠ site, codon 347 and codon 360 in control, HTG and combined groups
+
+表2的列：
+
+Item（项目）：
+
+Codon 9（密码子9）Genotype（基因型）：A/A, A/G, G/G；Allele（等位基因）：A, A/G, G
+
+Control group（对照组）频率：0.414 (65), 0.439 (69), 0.146 (23)；Allele：A 0.634 (199), A/G 0.146 (23), G 0.871 (149)
+
+HTG group（HTG组）频率：0.302 (32), 0.469 (49), 0.227 (0)；Allele：A 0.547 (116), A/G 0.207 (22), G 0.902 (92)
+
+Combined group（合并组）频率：0.369 (97), 0.460 (121), 0.171 (45)；Allele：A 0.599 (315), A/G 0.277 (55), G 0.883 (241)
+
+然后是Codon 347（密码子347）Genotype（基因型）：A/A, A/T, T/T；Allele（等位基因）：A, T
+
+Control group：1.000 (97), 0.000 (0), 0.000 (0)；Allele：A 1.000 (194), T 0.000 (0)
+
+HTG group：1.000 (47), 0.000 (0), 0.000 (0)；Allele：A 1.000 (94), T 0.000 (0)
+
+Combined group：1.000 (95), 0.000 (0), 0.000 (0)；Allele：A 1.000 (190), T 0.000 (0)
+
+Codon 360（密码子360）Genotype（基因型）：G/G, G/T, T/T；Allele（等位基因）：G, T
+
+Control group：1.000 (97), 0.000 (0), 0.000 (0)；Allele：G 1.000 (194), T 0.000 (0)
+
+HTG group：1.000 (47), 0.000 (0), 0.000 (0)；Allele：G 1.000 (94), T 0.000 (0)
+
+Combined group：1.000 (95), 0.000 (0), 0.000 (0)；Allele：G 1.000 (190), T 0.000 (0)
+
+然后注释：* Compared with control group, $X^2=3.950$, $P<0.05$; numbers in parentheses indicate number of subjects with each genotype or number of alleles of each type (numbers in parentheses after each genotype or allele frequency indicate number of subjects with that genotype or allele frequency).
+
+2.4 中国人与欧洲白种人及日本人apoAⅤ基因多态位点基因型及等位基因频率的比较：中国人apoAⅤ基因密码子9等位基因频率为0.362，欧洲白种人约为0.032，两者差异有显著性（$P<0.001$），而与日本人0.388相近（$P>0.05$）。内含子2的M spⅠ | C→T突变在欧、日人群中报道[6]，其等位基因频率为0.0906，突变仅在日本人有报道。
+
+现在需要把这些内容用LaTeX格式组织，注意表格的排版，用tabular环境，还有标题、注释、图注等。
+
+首先处理表1：
+
+\begin{table}[h]
+\centering
+\caption{HTG组和正常对照组血脂和载脂蛋白水平比较}
+\label{tab:serum_lipid}
+Serum lipid and apolipoprotein levels in endogenous hypertriglyceridemic and control groups ($\bar{x} \pm s$)
+\begin{tabular}{lccc}
+\hline
+\textbf{Item (项目)} & \textbf{Control group (对照组, $n=171$)} & \textbf{HTG group (HTG组, $n=106$)} & \textbf{P value (P值)} \\
+\hline
+Age (year)（年，岁） & $53 \pm 11$ & $57 \pm 12$ & NS \\
+Sex (M/F)（性别，男/女） & $86/85$ & $76/30$ & $<0.001$ \\
+BMI (kg/m$^2$) & $23.0 \pm 3.6$ & $25.0 \pm 2.8$ & $<0.001$ \\
+TG (mmol/L) & $1.23 \pm 0.44$ & $4.47 \pm 1.68$ & $<0.001$ \\
+TC (mmol/L) & $5.09 \pm 0.75$ & $5.04 \pm 1.01$ & NS \\
+HDL-C (mmol/L) & $1.45 \pm 0.41$ & $4.98 \pm 0.26$ & $<0.001$ \\
+nHDL-C (mmol/L) & $3.65 \pm 0.80$ & $4.14 \pm 0.80$ & $<0.05$ \\
+LDL-C (mmol/L) & $3.08 \pm 0.75$ & $2.72 \pm 0.78$ & $<0.001$ \\
+apoAⅠ (mg/L) & $1310 \pm 210$ & $180 \pm 190$ & $<0.001$ \\
+apoAⅡ (mg/L) & $290 \pm 60$ & $280 \pm 60$ & NS \\
+apoB 100 (mg/L) & $780 \pm 140$ & $940 \pm 170$ & $<0.001$ \\
+apoCⅠ (mg/L) & $47 \pm 19$ & $84 \pm 37$ & $<0.001$ \\
+apoCⅢ (mg/L) & $112 \pm 31$ & $188 \pm 76$ & $<0.001$ \\
+apoE (mg/L) & $43 \pm 12$ & $61 \pm 24$ & $<0.001$ \\
+TG/HDL-C & $2.1 \pm 1.0$ & $8.5 \pm 4.64$ & $<0.001$ \\
+\hline
+\end{tabular}
+\begin{tabular}{l}
+* Subjects with TG > 4.516 mmol/L (400 mg/dl) were excluded in the calculation of LDL-C concentration, the number of cases is 91 [n=91, TG > 4.516 mmol/L (400 mg/dl) were excluded]
+\end{tabular}
+\end{table}
+
+然后图1：
+
+\begin{figure}[h]
+\centering
+\caption{密码子9 A→G突变序列测定结果}
+\label{fig:codon9_sequencing}
+Sequencing analysis of A→G mutation at codon 9; homozygote for A/A: a; heterozygote for A/G: b; homozygote for G/G: c.
+\includegraphics[width=0.8\textwidth]{fig1_sequencing} % 这里假设图的文件名，实际可能需要调整
+\begin{tabular}{l}
+点通过错配引物而引入PCR产物。
+\end{tabular}
+\end{figure}
+
+接下来是正文部分，比如2.2.2：
+
+\subsection{2.2.2 内含子2多态位点}
+测内含子2的MspⅠ消化发生C→T的突变。用限制性内切酶MspⅠ消化PCR产物后，在琼脂糖凝胶电泳谱该位点显示3种基因型：纯合子C/C存在MspⅠ切点，显示585 bp 1条带；杂合子C/T则显示585和619 bp两条带，酶切点消失；纯合子T/T则显示619 bp 1条带，酶切点消失。该位点产生的83和34 bp小片段未显示。
+
+\subsection{2.2.3 密码子347和360多态位点}
+这两个位点的碱基分别为A/A和G/C纯合子，未发现ACT→TCT突变或密码子360的CAG→CAT突变。
+
+\subsection{2.3 HTG组与对照组apoAⅤ基因多态位点基因型及等位基因频率比较}
+由表2可见，HTG组密码子9等位基因频率较对照组显著为高（0.453 vs 0.366，$P<0.05$），而MspⅠ位点的突变频率两组之间未见差异。密码子347和密码子360位点突变频率未见ACT和CAT，未见TCT和CAT突变。
+
+\begin{table}[h]
+\centering
+\caption{正常对照组、HTG组和合并组密码子9、MspⅠ、密码子347和密码子360位点基因型及等位基因频率的比较}
+\label{tab:apoA5_genotype}
+Genotype and allele frequencies of apoAⅤ gene at codon 9, MspⅠ site, codon 347 and codon 360 in control, HTG and combined groups
+\begin{tabular}{lccc}
+\hline
+\textbf{Item (项目)} & \textbf{Control group (对照组)} & \textbf{HTG group (HTG组)} & \textbf{Combined group (合并组)} \\
+\hline
+\multicolumn{3}{l}{\textbf{Cod

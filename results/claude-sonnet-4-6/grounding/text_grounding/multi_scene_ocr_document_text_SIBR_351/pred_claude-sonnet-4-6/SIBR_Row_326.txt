@@ -1,0 +1,20 @@
+I need to find all instances of '2019' in the image.
+
+I can see '2019' appears in two locations:
+1. In the "住号: 2019-08" field in the upper right area of the receipt
+2. At the bottom "2019-08" near the date/time stamp
+
+For the "住号: 2019-08" text in the middle of the receipt:
+(548, 270, 650, 300)
+
+For the "2019-08" at the bottom near the cashier information:
+(390, 870, 490, 900)
+
+Let me look more carefully at the positions:
+
+The "住号: 2019-08" appears roughly at the right-center area of the form, around y≈270-290 in the receipt area.
+
+The bottom "2019-08" near "收费员: 2594" appears near the bottom of the receipt.
+
+(548, 268, 648, 295) # 住号 area
+(388, 868, 488, 893) # bottom date area

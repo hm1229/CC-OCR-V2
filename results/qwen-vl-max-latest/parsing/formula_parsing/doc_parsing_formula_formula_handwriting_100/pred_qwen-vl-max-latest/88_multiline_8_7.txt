@@ -1,0 +1,15 @@
+```latex
+\begin{aligned}
+&|\operatorname{E}[F_{BA}^{k}(s_{t+1},a_{t}),Q_{P}^{k}(s_{t+1},a_{t})-\min\{Q_{P}^{k}(s_{t+1},a^{*}),Q_{P}^{k}(s_{t+1},b^{*})\}-\min\{Q_{P}^{k}(s_{t+1},a^{*}),Q_{P}^{k}(s_{t+1},b^{*})\}|P_{t}]|\\
+&\leq\operatorname{E}[\min\{Q_{P}^{k}(s_{t+1},a^{*}),Q_{P}^{k}(s_{t+1},b^{*})\}-\min\{Q_{P}^{k}(s_{t+1},a^{*}),Q_{P}^{k}(s_{t+1},b^{*})\}|P_{t}]\\
+&\leq\operatorname{E}[\max\{Q_{P}^{k}(s_{t+1},b^{*}),Q_{P}^{k}(s_{t+1},a^{*})\}-\min\{Q_{P}^{k}(s_{t+1},a^{*}),Q_{P}^{k}(s_{t+1},b^{*})\}|P_{t}]\\
+&= \gamma P(Q_{P}^{k}(s_{t+1},b^{*})\geq Q_{A}^{k}(s_{t+1},b^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},b^{*})|Q_{P}^{k}(s_{t+1},b^{*})\geq Q_{A}^{k}(s_{t+1},b^{*})]P_{t}]\\
+&+\gamma P(Q_{P}^{k}(s_{t+1},b^{*})<Q_{A}^{k}(s_{t+1},b^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},b^{*})|Q_{P}^{k}(s_{t+1},b^{*})<Q_{A}^{k}(s_{t+1},b^{*})]P_{t}]\\
+&-\gamma P(Q_{P}^{k}(s_{t+1},b^{*})>Q_{A}^{k}(s_{t+1},b^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},b^{*})|Q_{P}^{k}(s_{t+1},b^{*})>Q_{A}^{k}(s_{t+1},b^{*})]P_{t}]\\
+&-\gamma P(Q_{P}^{k}(s_{t+1},b^{*})\leq Q_{A}^{k}(s_{t+1},b^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},b^{*})|Q_{P}^{k}(s_{t+1},b^{*})\leq Q_{A}^{k}(s_{t+1},b^{*})]P_{t}]\\
+&=\gamma P(Q_{P}^{k}(s_{t+1},b^{*})\geq Q_{A}^{k}(s_{t+1},b^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},b^{*})|Q_{P}^{k}(s_{t+1},b^{*})\geq Q_{A}^{k}(s_{t+1},b^{*})]P_{t}]\\
+&-\gamma P(Q_{P}^{k}(s_{t+1},b^{*})\leq Q_{A}^{k}(s_{t+1},b^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},b^{*})|Q_{P}^{k}(s_{t+1},b^{*})\leq Q_{A}^{k}(s_{t+1},b^{*})]P_{t}]\\
+&\leq\gamma P(Q_{P}^{k}(s_{t+1},a^{*})\geq Q_{A}^{k}(s_{t+1},a^{*}))\operatorname{E}[Q_{P}^{k}(s_{t+1},a^{*})|Q_{P}^{k}(s_{t+1},a^{*})\geq Q_{A}^{k}(s_{t+1},a^{*})]P_{t}]\\
+&\leq\gamma\|\Delta_{PA}^{k}\|\cdot\|\Delta_{PA}^{k}\|
+\end{aligned}
+```

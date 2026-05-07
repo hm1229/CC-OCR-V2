@@ -1,0 +1,56 @@
+```latex
+\begin{aligned}
+A_{i+1} & = \left( \begin{array}{cccccc}
+0 & \bar{\alpha}_0 & \bar{\alpha}_0 & \cdots & \bar{\alpha}_0 \\
+& 0 & \bar{\alpha}_1 & \cdots & \bar{\alpha}_1 \\
+& & \ddots & \ddots & \vdots \\
+& & & 0 & \bar{\alpha}_{i-1} \\
+& & & & 0
+\end{array} \right), \\
+B_{i+1} & = \left( \begin{array}{cccccc}
+1 & \bar{\beta}_1 & \bar{\beta}_1\bar{\beta}_2 & \cdots & \bar{\beta}_1\bar{\beta}_2 & \cdots & \bar{\beta}_i \\
+& 1 & \bar{\beta}_2 & \ddots & \bar{\beta}_2 & \cdots & \bar{\beta}_i \\
+& & \ddots & \ddots & \ddots & \ddots & \vdots \\
+& & & \ddots & \ddots & \ddots & \bar{\beta}_i \\
+& & & & & & 1
+\end{array} \right), \\
+E_{i+1} & = \left( \begin{array}{cccccc}
+0 & 0 & 0 & \cdots & 0 \\
+& 1 & \bar{\beta}_1 & \ddots & \bar{\beta}_2 & \cdots & \bar{\beta}_i \\
+& & \ddots & \ddots & \ddots & \ddots & \vdots \\
+& & & \ddots & \ddots & \ddots & \bar{\beta}_i \\
+& & & & & 1 &
+\end{array} \right), \\
+P_{i+1} & = \left( \begin{array}{cccccc}
+0 & \bar{w}_0\bar{\beta}_1 & \bar{w}_0\bar{\beta}_1\bar{\beta}_2 & \cdots & \bar{w}_0\bar{\beta}_1\bar{\beta}_2\cdots\bar{\beta}_i \\
+& 0 & \bar{w}_1\bar{\beta}_2 & \ddots & \bar{w}_1\bar{\beta}_2\cdots\bar{\beta}_i \\
+& & \ddots & \ddots & \ddots & \ddots \\
+& & & \ddots & \ddots & \ddots & \bar{w}_{i-1}\bar{\beta}_i \\
+& & & & & 0 &
+\end{array} \right), \\
+C_{i+1} & = \left( \begin{array}{cccccc}
+0 & \bar{w}_0 & \bar{w}_0 & \cdots & \bar{w}_0 \\
+& 0 & \bar{w}_1 & \cdots & \bar{w}_1 \\
+& & \ddots & \ddots & \vdots \\
+& & & \ddots & \bar{w}_{i-1} \\
+& & & & 0
+\end{array} \right), \\
+D_{i+1} & = \left( \begin{array}{cccccc}
+0 & \bar{w}_0\bar{\alpha}_0 & \bar{w}_0\bar{\alpha}_0 & \cdots & \bar{w}_0\bar{\alpha}_0 \\
+& 0 & \bar{w}_1\bar{\alpha}_1 & \ddots & \bar{w}_1\bar{\alpha}_1 \\
+& & \ddots & \ddots & \ddots & \ddots \\
+& & & \ddots & \ddots & \bar{w}_{i-1}\bar{\alpha}_{i-1} \\
+& & & & & 0
+\end{array} \right), \\
+O_{i+1} & = \left( \begin{array}{cccccc}
+0 & \bar{w}_0 & \bar{w}_1 & \cdots & \bar{w}_{i-1}
+\end{array} \right), \\
+U_{i+1} & = \left( \begin{array}{cccccc}
+1 & 1 & \cdots & 1 & 1 \\
+& 1 & \cdots & 1 & 1 \\
+& & \ddots & \ddots & \ddots \\
+& & & 1 & 1 \\
+& & & & 1
+\end{array} \right).
+\end{aligned}
+```

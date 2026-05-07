@@ -1,0 +1,87 @@
+用户现在需要把图片中的文字、图表等转成LaTeX。首先看图片里的内容：标题、图A到D，图注，还有正文部分。先处理图的部分，然后是图注，再是正文。
+
+首先，图的标题是FIG. 2. ... 然后四个子图A到D。每个子图的结构：比如图A是TOPtk和Luciferase的柱状图，横坐标是TOP, TCF-1E, LEF-1, LEF-1E。需要把图的结构用LaTeX的tikz或者graphicx？不过可能先描述图的元素，然后图注。另外正文中的文字要准确转录。
+
+先看页面顶部：VOL. 27, 2007；标题A A NOVEL DNA INTERACTION MOTIF IN TCF-1 AND TCF-4 8355。
+
+然后图A到D：
+
+图A：TOPtk的箭头，Luciferase，柱状图，横坐标TOP, TCF-1E, LEF-1, LEF-1E，纵坐标Fold Activation。柱子高度：TOP是0（因为TOP是对照？看描述里TOP是黑色圆点？不，图A中TOP是三个黑点（TOPtk的表示），然后Luciferase是柱子？不，图A的图例是TOPtk（三个黑点）和Luciferase（柱子？不，看图A的图例：TOPtk是三个黑点加箭头，Luciferase是柱子？不，图A中，TOP是三个黑点（TOPtk的表达？不，图A的横坐标是TOP, TCF-1E, LEF-1, LEF-1E。图例是TOPtk（三个黑点）和Luciferase（柱子？不，看图A的图例：TOPtk是三个黑点（●●●）加箭头，Luciferase是柱子？不，图A中，TOP对应的是一组三个黑点（TOPtk的表达？可能图A是TOPtk作为对照，Luciferase是报告基因。然后柱子是TCF-1E等的激活。比如图A中，TOP的柱子高度是0（因为没有激活？不，图A中TOP的柱子是0？看纵坐标，TOP对应的柱子高度是0？然后TCF-1E是约500，LEF-1是约1000，LEF-1E是约1100？然后图例是TOPtk（三个黑点）和Luciferase（柱子？不，图A的图例是TOPtk（●●●）和Luciferase（柱子？不，图A的图例是“TOPtk”箭头指向三个黑点，然后“Luciferase”是柱子？不，看原文图A的图例：“TOPtk”箭头指向三个黑点（●●●），然后“Luciferase”是柱子？不，图A中，TOPtk是作为对照，可能TOP是TOPtk的表达，而Luciferase是报告基因。可能图A的柱子是Luciferase的激活，而TOP是TOPtk的表达（用黑点表示）。比如图A中，TOP的黑点是三个（表示TOPtk表达），然后Luciferase在TOP时没有柱子（因为TOP是Wnt通路的强响应，而TCF-1E等是弱响应，需要E-tail激活）。所以图A中，TOP的Luciferase激活是0（因为TOP是强响应，不需要E-tail？不，图的说明是“the E-tail is necessary to activate transcription from weak Wnt response elements”，所以TOP是强响应（T3E？不，TOP是T3E，是强Wnt响应元件，不需要E-tail激活；而TCF-1E、LEF-1是弱响应元件，需要E-tail激活。所以图A中，TOPtk（可能TOP是T3E？不，图A的标题是(A) TOPtk，所以TOP是T3E（TOP是T3E，强响应），TCF-1E是TCF-1的E-tail？不，图A的横坐标是TOP, TCF-1E, LEF-1, LEF-1E。其中，TOP是T3E（强响应，不需要E-tail），TCF-1E是TCF-1的E-tail？不，图A的实验是：Cos-1细胞转染TOP（T3E）或LOP（无E-tail的TCF-1）等报告基因，与β-catenin共转染。然后图A是TOPtk（可能TOP是T3E，而TOPtk是TOP的对照？可能图A中，TOP是T3E（强响应，Luciferase激活高？不，看图A的柱子：TOP的柱子高度是0？不，图A中TOP的柱子是0？然后TCF-1E的柱子是约500，LEF-1是约1000，LEF-1E是约1100。而图例中TOPtk是三个黑点（表示TOPtk的表达，可能TOP是TOPtk的表达，而Luciferase是报告基因的激活。可能图A中，TOP是TOPtk（T3E）的表达，此时Luciferase激活应该高？但图中TOP的柱子是0？不对，可能图A的纵坐标是Fold Activation，TOP是T3E，不需要E-tail，所以当表达TOPtk（T3E）时，Luciferase激活应该高？但图A中TOP的柱子是0？哦，可能图A中的“TOP”是作为对照，没有E-tail，而TCF-1E是TCF-1的E-tail？不，看图注：“Cos-1 cells were transiently transfected with TOP (A), LOP (B), or LOP/TOP (C) luciferase reporters with expression of the indicated LEF/TCFs and β-catenin (co-transfected in all conditions). (D) TOP and LOP were cotransfected with increasing concentrations (200, 400, 800, and 1,000 ng) of LEF-VP16 expression vector.” 所以图A是(A) TOP tk？不，图A的标题是(A) TOPtk，可能图A是TOP（T3E）报告基因，与TOPtk（T3E的激活蛋白？不，可能图A中的“TOPtk”是图例，表示TOP是T3E，而tk是某种标记？可能更简单的是先处理图的LaTeX表示，用tikzpicture或者graphicx，但可能用户需要的是文字转录，包括图的描述和图注，以及正文。
+
+现在先转录图注和图的结构，然后正文。
+
+首先，页面顶部：
+
+VOL. 27, 2007
+
+A A NOVEL DNA INTERACTION MOTIF IN TCF-1 AND TCF-4 8355
+
+然后是图A到D：
+
+图A：子图A，标题(A) TOPtk。图例：TOPtk（三个黑点●●●）和Luciferase（柱子？不，图A中，TOP是横坐标第一个，对应三个黑点（TOPtk的表达？），然后Luciferase是柱子？不，图A中，TOP的柱子高度是0（因为TOP是T3E，不需要E-tail，而实验中可能TOP是作为对照，没有E-tail，所以当表达TOPtk（T3E）时，Luciferase激活？不，可能图A中，TOP是T3E报告基因，而TOPtk是T3E的激活，所以TOP的Luciferase激活应该高？但图A中TOP的柱子是0？哦，看纵坐标，图A的纵坐标是Fold Activation，TOP的柱子是0？然后TCF-1E的柱子是约500，LEF-1是约1000，LEF-1E是约1100。而图例中，TOPtk是三个黑点（表示TOPtk的表达，可能TOP是TOPtk的表达，而Luciferase是报告基因的激活，当没有E-tail时（如TOP是T3E？不，T3E是强响应，不需要E-tail，所以TOP（T3E）报告基因在有β-catenin时应该激活，而TCF-1E是弱响应，需要E-tail（如TCF-1的E-tail？不，TCF-1E可能是指TCF-1的E-tail？不，图注中说“the E-tail is necessary to activate transcription from weak Wnt response elements”，所以弱响应元件（如TCF-1E、LEF-1）需要E-tail（如TCF-1的E-tail？不，E-tail是TCF家族的C端延伸，比如TCF-1的E-tail是其C端的酸性区域，能招募共激活因子。所以图A中，TOP是T3E（强响应，不需要E-tail），所以当表达TOPtk（可能TOP是T3E，而tk是某种对照？可能图A中，TOP是T3E报告基因，没有E-tail（因为T3E本身是强响应，不需要E-tail），所以当共转染β-catenin时，TOP的Luciferase激活应该高？但图A中TOP的柱子是0？这可能我理解错了。不管怎样，先按图中的元素转录，图A的横坐标是TOP, TCF-1E, LEF-1, LEF-1E；纵坐标是Fold Activation（0到1200）；柱子：TOP是0（或接近0），TCF-1E是约500，LEF-1是约1000，LEF-1E是约1100；图例是TOPtk（三个黑点●●●）和Luciferase（柱子？不，图例中“TOPtk”箭头指向三个黑点，“Luciferase”是柱子？不，图A的图例是“TOPtk”（三个黑点）和“Luciferase”（柱子？不，图A中，TOP对应的是一组三个黑点（表示TOPtk的表达），而其他柱子是Luciferase的激活。比如，图A中，TOP是TOPtk（T3E）的表达，此时Luciferase激活应该高？但图中TOP的柱子是0？可能图A中的“TOP”是作为没有E-tail的对照，而TCF-1E是TCF-1的E-tail？不，可能图A的标题是(A) TOPtk，其中TOP是T3E，tk是T3E的激活，而Luciferase是报告基因。可能更简单的是，图A的LaTeX表示可以用以下方式（用tikz）：
+
+\begin{figure}[h]
+\centering
+\subfloat[(A) TOPtk]{
+\begin{tikzpicture}
+% 横坐标
+\draw (0,0) node[below] {TOP} -- (3,0) node[below] {TCF-1E} -- (6,0) node[below] {LEF-1} -- (9,0) node[below] {LEF-1E};
+% 纵坐标
+\draw (0,0) -- (0,1200) node[left] {Fold Activation};
+% 柱子
+\draw[fill=black] (0.5,0) rectangle (1.5,0); % TOP，高度0
+\draw[fill=black] (3.5,200) rectangle (4.5,500); % TCF-1E，高度500
+\draw[fill=black] (6.5,0) rectangle (7.5,1000); % LEF-1，高度1000
+\draw[fill=black] (9.5,0) rectangle (10.5,1100); % LEF-1E，高度1100
+% 图例
+\node at (-1,600) {TOPtk};
+\node at (-1,1000) {Luciferase};
+\end{tikzpicture}
+}
+\subfloat[(B) LOPtk]{
+\begin{tikzpicture}
+% 横坐标
+\draw (0,0) node[below] {LOP} -- (3,0) node[below] {TCF-1E} -- (6,0) node[below] {LEF-1} -- (9,0) node[below] {LEF-1E};
+% 纵坐标
+\draw (0,0) -- (0,20) node[left] {Fold Activation};
+% 柱子
+\draw[fill=black] (0.5,0) rectangle (1.5,0); % LOP，高度0
+\draw[fill=black] (3.5,12) rectangle (4.5,18); % TCF-1E，高度约15
+\draw[fill=black] (6.5,2) rectangle (7.5,4); % LEF-1，高度约3
+\draw[fill=black] (9.5,10) rectangle (10.5,15); % LEF-1E，高度约12
+% 图例
+\node at (-1,10) {LOPtk};
+\node at (-1,15) {Luciferase};
+\end{tikzpicture}
+}
+\subfloat[(C) LOP/TOPtk]{
+\begin{tikzpicture}
+% 横坐标
+\draw (0,0) node[below] {LOP/TOP} -- (3,0) node[below] {TCF-1E} -- (6,0) node[below] {LEF-1} -- (9,0) node[below] {LEF-1E};
+% 纵坐标
+\draw (0,0) -- (0,16) node[left] {Fold Activation};
+% 柱子
+\draw[fill=black] (0.5,0) rectangle (1.5,0); % LOP/TOP，高度0
+\draw[fill=black] (3.5,0) rectangle (4.5,14); % TCF-1E，高度约12
+\draw[fill=black] (6.5,2) rectangle (7.5,10); % LEF-1，高度约8
+\draw[fill=black] (9.5,8) rectangle (10.5,14); % LEF-1E，高度约12
+% 图例
+\node at (-1,8) {LOP/TOPtk};
+\node at (-1,12) {Luciferase};
+\end{tikzpicture}
+}
+\subfloat[(D) TOP, LOP, LEF-VP16]{
+\begin{tikzpicture}
+% 横坐标
+\draw (0,0) node[below] {TOP} -- (3,0) node[below] {LEF-VP16} -- (6,0) node[below] {LOP} -- (9,0) node[below] {LEF-VP16};
+% 纵坐标
+\draw (0,0) -- (0,350) node[left] {Fold Activation};
+% 横向的斜线表示浓度梯度
+\draw[thick] (3,0) -- (3,300);
+\draw[thick] (6,0) -- (6,150);
+\draw[thick] (9,0) -- (9,100);
+% 柱子
+\draw[fill=black] (0.5,0) rectangle (1.5,300); % TOP，高度300
+\draw[fill=black] (3.5,100) rectangle (4.5,250); % LEF-VP16（低浓度），高度约150
+\draw[fill=black] (6.5,50) rectangle (7.5,150); % LOP，高度约100
+\draw[fill=black] (9.5,50) rectangle (10.5,150); % LEF-VP16（高浓度），高度约100？不，图D中LEF-VP16是随着浓度增加，激活增加两倍。所以可能TOP是300，LEF-VP16在200ng是150，400ng是200，800ng是250，1000ng是300？而LOP是50左右，不随LEF-VP16变化。图D的横坐标是TOP, LEF-VP16（低浓度？不，图D的横坐标是TOP, LEF-VP16（带斜线表示浓度梯度），LOP, LEF-VP16（另一个梯度？不，图D的横坐标是TOP, LEF-VP16（三个斜线？不，图D的横坐标是TOP, LEF-VP16（第一个LEF-VP16是低浓度，然后LOP，然后LEF-VP16是高浓度？不，图注说“TOP and LOP were cotransfected with increasing concentrations (200, 400, 800, and 1,000 ng) of LEF-VP16 expression vector.” 所以图D中，TOP和LOP是两个组，每个组有四个LEF-VP16浓度，用斜线表示。比如，TOP对应的柱子是300（因为TOP是T3E，不依赖LEF-VP16？不，TOP是T3E，可能不依赖LEF-VP16，而LOP是弱响应，依赖LEF-VP

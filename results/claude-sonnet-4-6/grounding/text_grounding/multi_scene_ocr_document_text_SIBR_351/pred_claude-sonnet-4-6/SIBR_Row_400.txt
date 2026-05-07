@@ -1,0 +1,16 @@
+I need to find the text '50mg*' in the image.
+
+Looking at the receipt, I can see the line:
+"氟康唑胶囊（大扶康）50mg* [甲] 3粒 50.27 0.00/0%"
+
+The text '50mg*' appears on this line, after the parenthetical "(大扶康)".
+
+Estimating the position:
+- The line appears to be roughly at about 67% down the image vertically
+- The text '50mg*' appears to be around x: 390-470 range horizontally
+
+Looking more carefully at the image dimensions and the position of '50mg*':
+- Vertically, this line is approximately at y=670-700 out of the total height
+- Horizontally, '50mg*' starts around x=390 and ends around x=470
+
+(388, 660, 472, 695)

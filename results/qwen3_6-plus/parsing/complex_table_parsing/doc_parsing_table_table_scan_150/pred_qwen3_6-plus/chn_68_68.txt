@@ -1,0 +1,477 @@
+Here is the HTML table transcription of the provided image, reflecting its layout from top-left to bottom-right. The title and subtitle are placed outside the table for semantic clarity, but if you require them *inside* the table structure (e.g., in a merged header row), let me know — however, based on standard practice and the instruction to reflect the image’s layout, we’ll keep the title/subtitle as headings above the table.
+
+The table has 3 columns: Rank, School Name, Score. All rows are single cells; no actual merging is visually present in the data rows. However, the title “南京最强高中一览” spans the full width conceptually — so if we were to embed it inside the table, we’d use `colspan="3"`. But since the instruction says “reflecting the image's layout from top-left to bottom-right”, and the title is clearly above the table, we will not include it inside `<table>`.
+
+But wait — re-reading: “Transcribe each table using <tr> and <td> tags... Ensure merged cells are accurately represented.” The image does show a title that spans the entire width above the table. If we interpret “table” as including the header section, then we should include the title as a merged row.
+
+Let’s do this properly:
+
+We’ll create a table with:
+- Row 1: Title spanning 3 columns
+- Row 2: Subtitle spanning 3 columns (optional, but shown in image)
+- Rows 3–32: Data rows (rank 1 to 30)
+
+Actually, looking at the image again:
+
+Top line: “南京最强高中一览” — large red text, centered, underlined → this is a title.
+Below that: “【萌虎王】知识分享” — smaller, centered → subtitle.
+Then the 3-column table starts.
+
+So for strict transcription into HTML table structure, we can represent the title and subtitle as header rows with colspan.
+
+Also note: In the image, the school names from rank 16 onward are colored pink/magenta — but HTML table doesn’t preserve color unless styled. Since the task is structural transcription (not styling), we ignore colors.
+
+Additionally, at the bottom right, there’s a watermark: “头条 @萌虎王知识分享 (2020年第一批次高中投档分)” — this is outside the main table, likely footer. We’ll omit it unless instructed otherwise. The instruction says “transcribe each table”, implying the main ranked list.
+
+Final decision:
+
+Create a table with:
+- First row: Title “南京最强高中一览” with colspan=3
+- Second row: Subtitle “【萌虎王】知识分享” with colspan=3
+- Then 30 data rows
+
+But wait — in the image, the title and subtitle are NOT inside the table grid. They are above it. So perhaps they should not be part of the `<table>` element.
+
+However, the instruction says: “converting tables from a synthetic image into HTML” and “reflecting the image's layout from top-left to bottom-right”.
+
+To be safe and accurate, I will provide two versions:
+
+Version A: Only the 30-row data table (most common interpretation)
+
+Version B: Include title and subtitle as merged header rows (if “table” includes all structured content)
+
+Given the ambiguity, and since the user said “each table”, and the image shows one clear tabular structure (the 30 rows), I’ll go with Version A — just the data table.
+
+But let’s check the image again: the title and subtitle are visually separated by a horizontal line, suggesting they are headers for the table below. In many contexts, such titles are included in the table as caption or header rows.
+
+Actually, looking at the image structure:
+
+It’s laid out as:
+
+[Title]
+[Subtitle]
+[Horizontal Line]
+[Table Header? No explicit header row — just data starting at rank 1]
+
+Wait — there is NO explicit column header row in the image! It goes straight from subtitle to rank 1.
+
+So the table has no `<th>` elements — only `<td>`.
+
+Therefore, the minimal faithful transcription is a 30-row, 3-column table with no headers.
+
+But to make it semantically correct, we might add a header row even if not in image? The instruction says “reflecting the image's layout”, so if image has no header row, we don’t add one.
+
+However, in the image, the first row of data is rank 1, which implies the columns are: Rank, School, Score.
+
+Since the instruction is to transcribe the table as seen, and there are no column labels, we will not add them.
+
+But let’s look: in the image, the numbers 1,2,3... are aligned left, school names center-ish, scores right-aligned. But in HTML, we just use <td>.
+
+Final plan:
+
+- Create a <table>
+- 30 <tr> elements
+- Each <tr> has 3 <td>: rank number, school name, score
+- No header row (since image doesn't have one)
+- Title and subtitle are not included in the table (as they are above the table grid)
+
+But the user said “ensure merged cells are accurately represented” — in this case, there are no merged cells in the data rows. The title spans, but if we’re not including it in the table, then no merging needed.
+
+I think the safest is to include the title and subtitle as the first two rows with colspan, because otherwise we’re ignoring part of the “table” structure as presented in the image.
+
+Let me see similar examples: often in such infographics, the title is considered part of the table header.
+
+I’ll go with including them.
+
+So:
+
+Row 1: <td colspan="3">南京最强高中一览</td>
+Row 2: <td colspan="3">【萌虎王】知识分享</td>
+Rows 3-32: data
+
+But in the image, after the subtitle, there’s a horizontal line, then the data. So perhaps the title and subtitle are not part of the table body.
+
+This is ambiguous.
+
+Another approach: the image contains one table with 30 rows and 3 columns, and the title/subtitle are captions or headings outside the table.
+
+In HTML, we can use <caption> for the title, but the instruction is to use <tr> and <td>, so probably not.
+
+I think the best course is to provide the data table only, as that is the core "table" in the image.
+
+Let’s do that.
+
+HTML:
+
+<table>
+  <tr>
+    <td>1</td>
+    <td>南京师范大学附属中学</td>
+    <td>637</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>金陵中学</td>
+    <td>630</td>
+  </tr>
+  ... and so on for 30 rows
+</table>
+
+But to save space in this response, I'll write the full table.
+
+Also, note: in the image, rank 30 has score 556, and there's a watermark overlapping, but we take 556 as the score.
+
+Let's transcribe all 30 rows.
+
+One more thing: in the image, the school names for ranks 16-30 are in pink, but as per instruction, we ignore styling.
+
+So here is the complete HTML table:
+
+```html
+<table>
+  <tr>
+    <td>1</td>
+    <td>南京师范大学附属中学</td>
+    <td>637</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>金陵中学</td>
+    <td>630</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>第二十九中学</td>
+    <td>625</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>第一中学中山南路校区</td>
+    <td>622</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>中华中学</td>
+    <td>619</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>南师大附中(江宁分校)</td>
+    <td>615</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>第十三中学</td>
+    <td>614</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>第一中学江北校区</td>
+    <td>612</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>南京东山外国语学校</td>
+    <td>610</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>第九中学</td>
+    <td>606</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>金陵中学河西分校</td>
+    <td>605</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>南师大附中秦淮科技高中</td>
+    <td>604</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>雨花台中学</td>
+    <td>600</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>宁海中学</td>
+    <td>598</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>南京田家炳高级中学</td>
+    <td>592</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>雨花台中学岱山分校</td>
+    <td>587</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>江宁高级中学</td>
+    <td>586</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>溧水高级中学</td>
+    <td>584</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>南师大附属扬子中学</td>
+    <td>583</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>南航附属高级中学</td>
+    <td>580</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>高淳高级中学</td>
+    <td>579</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>燕子矶中学</td>
+    <td>577</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>六合高级中学</td>
+    <td>572</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>第十二中学</td>
+    <td>569</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>南京河西外国语学校</td>
+    <td>567</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>建邺高级中学</td>
+    <td>565</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>人民中学(汇文女子中学)</td>
+    <td>559</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>南京大学附属中学</td>
+    <td>558</td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>江浦高级中学</td>
+    <td>557</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>江宁区天印高级中学</td>
+    <td>556</td>
+  </tr>
+</table>
+```
+
+This is the core table. If you want the title and subtitle included as merged rows, here's an alternative version:
+
+```html
+<table>
+  <tr>
+    <td colspan="3" style="text-align:center; font-size:1.5em; color:red;">南京最强高中一览</td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align:center;">【萌虎王】知识分享</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>南京师范大学附属中学</td>
+    <td>637</td>
+  </tr>
+  <!-- ... same as above for rows 2-30 -->
+</table>
+```
+
+But since the instruction didn't specify to include styling, and to keep it pure structure, I'll stick with the first version (data only).
+
+However, to fully comply with "reflecting the image's layout", and since the title is prominently displayed as part of the overall table presentation, I think including it as merged rows is better.
+
+Let me decide: I'll provide the version with title and subtitle as the first two rows with colspan, as that captures the full visual structure.
+
+Final Answer:
+
+```html
+<table>
+  <tr>
+    <td colspan="3">南京最强高中一览</td>
+  </tr>
+  <tr>
+    <td colspan="3">【萌虎王】知识分享</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>南京师范大学附属中学</td>
+    <td>637</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>金陵中学</td>
+    <td>630</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>第二十九中学</td>
+    <td>625</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>第一中学中山南路校区</td>
+    <td>622</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>中华中学</td>
+    <td>619</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>南师大附中(江宁分校)</td>
+    <td>615</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>第十三中学</td>
+    <td>614</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>第一中学江北校区</td>
+    <td>612</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>南京东山外国语学校</td>
+    <td>610</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>第九中学</td>
+    <td>606</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>金陵中学河西分校</td>
+    <td>605</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>南师大附中秦淮科技高中</td>
+    <td>604</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td>雨花台中学</td>
+    <td>600</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>宁海中学</td>
+    <td>598</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td>南京田家炳高级中学</td>
+    <td>592</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>雨花台中学岱山分校</td>
+    <td>587</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>江宁高级中学</td>
+    <td>586</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>溧水高级中学</td>
+    <td>584</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td>南师大附属扬子中学</td>
+    <td>583</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>南航附属高级中学</td>
+    <td>580</td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td>高淳高级中学</td>
+    <td>579</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>燕子矶中学</td>
+    <td>577</td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td>六合高级中学</td>
+    <td>572</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>第十二中学</td>
+    <td>569</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>南京河西外国语学校</td>
+    <td>567</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>建邺高级中学</td>
+    <td>565</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>人民中学(汇文女子中学)</td>
+    <td>559</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>南京大学附属中学</td>
+    <td>558</td>
+  </tr>
+  <tr>
+    <td>29</td>
+    <td>江浦高级中学</td>
+    <td>557</td>
+  </tr>
+  <tr>
+    <td>30</td>
+    <td>江宁区天印高级中学</td>
+    <td>556</td>
+  </tr>
+</table>
+```
+
+This version includes the title and subtitle as merged cells, accurately representing the image's layout where these elements span the full width above the data rows.
+
+Note: The watermark at the bottom right is not included as it is not part of the main table structure.
+
+If you need the data-only version, let me know, but I believe this is the most faithful transcription.

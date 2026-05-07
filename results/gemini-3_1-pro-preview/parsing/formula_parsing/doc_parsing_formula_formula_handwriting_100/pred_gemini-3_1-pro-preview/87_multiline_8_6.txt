@@ -1,0 +1,17 @@
+The mathematical formulas from the image are transcribed into LaTeX as follows:
+
+$$
+\begin{aligned}
+& L(x, s, \hat{\lambda}, q_r, Q_r; Z, t_k, p_k, P_k, \forall k \in [K]) \\
+= & s + \gamma_2 I_{m_1} \bullet Q_r + \sqrt{r_1} \|q_r\|_2 - Z \cdot \left( \sum_{l=1}^n (A_l x_l) + A_0 \right) - \sum_{k=1}^K \left[ \begin{matrix} t_k & p_k^T \\ p_k & P_k \end{matrix} \right] \bullet \\
+& \begin{bmatrix} s - y_k^0(x) - \lambda_k^T b - y_k(x)^T u + \lambda_k^T A u & \frac{1}{2} \left( q_r + (U \Lambda^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x)) \right)^T \\ \frac{1}{2} \left( q_r + (U \Lambda^{\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x)) \right) & Q_r \end{bmatrix} \\
+= & \left( 1 - \sum_{k=1}^K t_k \right) s - \sum_{k=1}^K \left( t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T \right) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+& + \left( \gamma_2 I_{m_1} - \sum_{k=1}^K P_k \right) \bullet Q_r - \sum_{i=1}^n \sum_{j=1}^m z_{ij} (a_{ij} x + a_{ij}^0) + \sum_{k=1}^K \left( t_k y_k^0(x) + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) y_k(x) \right) \\
+= & \left( 1 - \sum_{k=1}^K t_k \right) s - \sum_{k=1}^K \left( t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T \right) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+& + \left( \gamma_2 I_{m_1} - \sum_{k=1}^K P_k \right) \bullet Q_r - \sum_{i=1}^n \sum_{j=1}^m z_{ij} a_{ij} x - \sum_{i=1}^n \sum_{j=1}^m z_{ij} a_{ij}^0 + \sum_{k=1}^K \left( t_k W_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) W_k \right) x \\
+& + \sum_{k=1}^K \left( t_k d_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) d_k \right) \\
+= & \left( 1 - \sum_{k=1}^K t_k \right) s - \sum_{k=1}^K \left( t_k (A u - b)^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T A^T \right) \lambda_k + \sqrt{r_1} \|q_r\|_2 - \sum_{k=1}^K p_k^T q_r \\
+& + \left( \gamma_2 I_{m_1} - \sum_{k=1}^K P_k \right) \bullet Q_r + \left( \sum_{k=1}^K \left( t_k W_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) W_k \right) - \sum_{i=1}^n \sum_{j=1}^m z_{ij} a_{ij} \right) x \\
+& + \sum_{k=1}^K \left( t_k d_k^0 + (t_k u^T + p_k^T (U \Lambda^{\frac{1}{2}} B)^T) d_k \right) - \sum_{i=1}^n \sum_{j=1}^m z_{ij} a_{ij}^0
+\end{aligned}
+$$

@@ -1,0 +1,113 @@
+Here is the LaTeX transcription of the provided physics formula sheet, preserving all equations, tables, and formatting as closely as possible:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{setspace}
+
+\title{Formula Sheet for Physics 251}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Constants} & \textbf{Ideal gases} & \textbf{Heat Engines} \\
+\hline
+$R = 8.3145~\dfrac{\mathrm{J}}{\mathrm{m}\cdot\mathrm{K}}$ & $PV = nRT$ & $W = Q_h + Q_c$ \\
+$N_A = 6.02\times10^{23}$ & $PV = NkT$ & $\varepsilon = \dfrac{W}{Q_h}$ \\
+$k_B = \dfrac{R}{N_A} = 1.38\times10^{-23}~\dfrac{\mathrm{J}}{\mathrm{m}\cdot\mathrm{K}}$ & $PV = NkT$ & $\varepsilon_c = 1 - \dfrac{T_c}{T_h}$ \\
+$e = 1.602\times10^{-19}~\mathrm{C}$ & $v_{\mathrm{rms}} = \sqrt{\dfrac{3RT}{M}}$ & \\
+$k = \dfrac{1}{4\pi\varepsilon_0} = 9\times10^9~\dfrac{\mathrm{N}\cdot\mathrm{m}^2}{\mathrm{C}^2}$ & $C_V = \dfrac{3}{2}R$ (monatomic) & \textbf{Refrigerators} \\
+$\mu_0 = 4\pi\times10^{-7}~\dfrac{\mathrm{T}\cdot\mathrm{m}}{\mathrm{A}}$ & $C_V = \dfrac{5}{2}R$ (diatomic) & $K = \dfrac{|Q_c|}{|W|}$ \\
+$c = 3\times10^8~\dfrac{\mathrm{m}}{\mathrm{s}}$ & $C_P = C_V + R$ & $K_c = \dfrac{T_c}{T_h - T_c}$ \\
+\hline
+\textbf{Thermal Expansion} & \textbf{Isobaric Processes} & \textbf{Force, Field, Energy} \\
+\hline
+$\Delta L = \alpha L_o\Delta T$ & $W = P\Delta V$ & $\vec{F} = q\vec{E}$ \\
+$\beta = 3\alpha$ & $Q = nC_P\Delta T$ & $\Delta U = q\Delta V$ \\
+& $*\Delta U = nC_P\Delta T$ & $V_{ab} = \int \vec{E}\cdot d\vec{l}$ \\
+\hline
+\textbf{Heat} & \textbf{ Isothermal Processes} & $\vec{E} = -\nabla V$ \\
+\hline
+$Q = mc\Delta T$ & $W = nRT\ln\left(\dfrac{V_f}{V_i}\right)$ & \textbf{1 Point Charge} \\
+$Q = \pm mL$ & $Q = nRT\ln\left(\dfrac{V_f}{V_i}\right)$ & $\vec{E} = k\dfrac{q}{r^2}\hat{r}$ \\
+$Q = nC_V\Delta T$ & $*\Delta U = 0$ & $V = k\dfrac{q}{r}$ \\
+$Q = nC_P\Delta T$ & & \textbf{2 Point Charges} \\
+\hline
+\textbf{Heat Current} & \textbf{Adiabatic Processes} & $\vec{F} = k\dfrac{q_1q_2}{r^2}\hat{r}$ \\
+\hline
+$H = k\dfrac{A}{L}(T_H - T_C)$ & $W = -nC_V\Delta T$ & $U = k\dfrac{q_1q_2}{r}$ \\
+$H = Ae\sigma T^4$ & $Q = 0$ & \textbf{Distributed Charge} \\
+\hline
+\textbf{Quantities} & $*\Delta U = nC_V\Delta T$ & $\vec{E} = k\displaystyle\int\dfrac{dq}{r^2}\hat{r}$ \\
+\hline
+\textbf{Work} & $*P V_i^\gamma = P_f V_f^\gamma$ & $V = k\displaystyle\int\dfrac{dq}{r}$ \\
+\hline
+$W = \displaystyle\int_i^f PdV$ & $*T_iV_i^{\gamma-1} = T_fV_f^{\gamma-1}$ & \\
+\hline
+\textbf{ Isochoric Processes} & $\gamma = \dfrac{C_P}{C_V}$ & \textbf{Flux and Gauss's Law} \\
+\hline
+$W = 0$ & & $\phi = \iint \vec{E}\cdot d\vec{a}$ \\
+$Q = nC_V\Delta T$ & \textbf{Cyclic Processes} & $\phi_{\mathrm{closed}} = \dfrac{Q_{\mathrm{enclosed}}}{\varepsilon_0}$ \\
+$*\Delta U = nC_V\Delta T$ & $W = Q$ & \\
+& $\Delta U = 0$ & \textbf{Current and Current Density} \\
+& & $I = \dfrac{dq}{dt}$ \\
+& & $I = \iint \vec{J}\cdot d\vec{a}$ \\
+& & $J = nqv_e$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\textbf{Many Sources} \\
+\hline
+$\vec{E}_T = k\sum\vec{E}_i$ \\
+$U_T = \sum U_i$ \\
+\hline
+\textbf{"Elementary" }$\vec{E}$ \textbf{Fields} \\
+\hline
+$\vec{E} = k\dfrac{Q}{r^2}\hat{r}$ sphere \\
+$\vec{E} = \dfrac{\lambda}{2\pi\varepsilon_0 r}\hat{r}$ line \\
+$\vec{E} = \dfrac{\sigma}{2\varepsilon_0}\hat{n}$ plane \\
+$\vec{E} = \dfrac{\sigma}{\varepsilon_0}\hat{n}$ conducting \\
+$\vec{E} = \dfrac{\sigma}{\varepsilon_0}$ surface \\
+\hline
+\textbf{Capacitors} \\
+\hline
+$C = \dfrac{Q}{V}$ \\
+$C_T = \sum C_i$ parallel \\
+$\dfrac{1}{C_T} = \sum\dfrac{1}{C_i}$ series \\
+$U = \dfrac{1}{2}CV^2 = \dfrac{Q^2}{2C} = \dfrac{1}{2}QV$ \\
+$+C = \varepsilon_0\dfrac{A}{d}$ \\
+$|\vec{E}| = \dfrac{V}{d} = \dfrac{\sigma}{\varepsilon_0}$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\textit{* indicates formulas that are specific to ideal gases} \\
+\textit{+ indicates formulas that are specific to parallel-plate capacitors}
+\end{center}
+
+\end{document}
+```
+
+This LaTeX code reproduces the entire formula sheet with:
+- Proper alignment using `tabular` environments
+- Correct mathematical notation using `amsmath`
+- All constants, equations, and categories preserved
+- Special symbols and units formatted correctly
+- Footnotes indicating special conditions
+- The layout matching the original document structure
+
+The code can be compiled with any standard LaTeX distribution to produce a faithful reproduction of the original image content.

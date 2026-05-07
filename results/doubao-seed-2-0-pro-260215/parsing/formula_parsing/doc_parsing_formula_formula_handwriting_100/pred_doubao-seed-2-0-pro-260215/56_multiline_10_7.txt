@@ -1,0 +1,15 @@
+```latex
+\begin{align*}
+\mathrm{Tr}\left[(A_m \otimes A_n) R_{AB}\right] &= \mathrm{Tr}\left\{ (A_m \otimes A_n) \left[ \left( P_A \otimes \frac{I}{2} \right) E_{AB} + E_{AB} \left( P_A \otimes \frac{I}{2} \right) \right] \right\} \\
+&= \frac{1}{2} \left[ \mathrm{Tr}\left( (A_m P \otimes A_n) E_{AB} \right) + \mathrm{Tr}\left( (A_m \otimes A_n) E_{AB} (P \otimes I) \right) \right] \\
+&= \frac{1}{2} \left[ \sum_{ij} \mathrm{Tr}\left( A_m P |i\rangle\langle j| \right) \mathrm{Tr}\left( A_n \varepsilon_{AIB}\left(|j\rangle\langle i|\right) \right) + \sum_{ij} \mathrm{Tr}\left( A_m |i\rangle\langle j| P \right) \mathrm{Tr}\left( A_n \varepsilon_{AIB}\left(|j\rangle\langle i|\right) \right) \right] \\
+&= \frac{1}{2} \left[ \sum_{ij} \langle j | (A_m P + P A_m) | i \rangle \mathrm{Tr}\left( A_n \varepsilon_{AIB}\left(|j\rangle\langle i|\right) \right) \right] \\
+&= \frac{1}{2} \left[ \sum_{ij} \langle j | (A_m P + P A_m) | i \rangle \mathrm{Tr}\left( A_n \sum_k V_k |j\rangle\langle i| V_k^\dagger \right) \right] \\
+&= \frac{1}{2} \left[ \sum_{ij} \langle j | (A_m P + P A_m) |i\rangle \langle i | \sum_k V_k^\dagger A_n V_k | j \rangle \right] \\
+&= \frac{1}{2} \left[ \sum_{j} \langle j | (A_m P + P A_m) \sum_k V_k^\dagger A_n V_k | j \rangle \right] \\
+&= \frac{1}{2} \mathrm{Tr} \left[ \sum_j |j\rangle\langle j| (A_m P + P A_m) \sum_k V_k^\dagger A_n V_k \right] \\
+&= \frac{1}{2} \mathrm{Tr} \left[ (A_m P + P A_m) \sum_k V_k^\dagger A_n V_k \right] \\
+&= \frac{1}{2} \mathrm{Tr} \left[ (A_m P + P A_m) \varepsilon_{AIB}^\dagger (A_n) \right] \\
+&= \langle A_m A_n \rangle_{\mathrm{seq}}
+\end{align*}
+```

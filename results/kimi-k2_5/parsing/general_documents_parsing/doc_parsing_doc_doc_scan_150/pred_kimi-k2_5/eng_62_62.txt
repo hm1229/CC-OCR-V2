@@ -1,0 +1,139 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath, amssymb, array, geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Physics Formula Sheet}
+\end{center}
+
+\section*{Mechanics}
+
+\begin{minipage}[t]{0.32\textwidth}
+\begin{align*}
+x &= x_0 + v_{x0}t + \tfrac{1}{2}a_xt^2 \\
+v &= v_0 + at \\
+v_x^2 - v_{x0}^2 &= 2a(x-x_0) \\
+\vec{a} &= \frac{\Sigma\vec{F}}{m} = \frac{\vec{F}_{\text{net}}}{m} \\
+|\vec{F}_{\text{friction}}| &\leq \mu|\vec{F}_{\text{Normal}}| \\
+\vec{p} &= m\vec{v} \\
+\Delta\vec{p} &= \vec{F}\Delta t \\
+KE &= \tfrac{1}{2}mv^2 \\
+\Delta PE &= mg\Delta y \\
+\Delta E &= W = Fd\cos\theta
+\end{align*}
+\end{minipage}
+\begin{minipage}[t]{0.32\textwidth}
+\begin{align*}
+a_c &= \frac{v^2}{r} \\
+\theta &= \theta_0 + \omega_0t + \tfrac{1}{2}\alpha t^2 \\
+\omega &= \omega_0 + \alpha t \\
+T &= \frac{2\pi}{\omega} = \frac{1}{f} \\
+v &= f\lambda \\
+x &= A\cos(2\pi ft) \\
+\vec{\alpha} &= \frac{\Sigma\vec{\tau}}{I} = \frac{\vec{\tau}_{\text{net}}}{I} \\
+\vec{\tau} &= \vec{r} \times \vec{F} \\
+L &= I\omega \\
+\Delta L &= \tau\Delta t
+\end{align*}
+\end{minipage}
+\begin{minipage}[t]{0.32\textwidth}
+\begin{align*}
+|\vec{F}_{\text{spring}}| &= k|\vec{x}| \\
+PE_{\text{spring}} &= \tfrac{1}{2}kx^2 \\
+T_{\text{spring}} &= 2\pi\sqrt{\frac{m}{k}} \\
+T_{\text{pendulum}} &= 2\pi\sqrt{\frac{\ell}{g}} \\
+|\vec{F}_{\text{gravity}}| &= G\frac{m_1m_2}{r^2} \\
+|\vec{F}_{\text{gravity}}| &= m\vec{g} \\
+PE_{\text{gravity}} &= -G\frac{m_1m_2}{r} \\
+\rho &= \frac{m}{V} \\
+KE &= \tfrac{1}{2}I\omega^2
+\end{align*}
+\end{minipage}
+
+\section*{Electricity}
+
+\begin{align*}
+|\vec{F}_E| &= k\left|\frac{q_1q_2}{r^2}\right| & \Delta V &= IR & R &= \frac{\rho\ell}{A} \\
+I &= \frac{\Delta q}{\Delta t} & P &= I\Delta V \\
+R_{\text{series}} &= R_1 + R_2 + \ldots + R_n & \frac{1}{R_{\text{Parallel}}} &= \frac{1}{R_1} + \frac{1}{R_2} + \ldots + \frac{1}{R_n}
+\end{align*}
+
+\section*{Geometry}
+
+\begin{tabular}{llll}
+Rectangle & $A = bh$ & Rectangular Solid & $V = \ell wh$ \\
+Circle & $A = \pi r^2$ & Cylinder & $V = \pi r^2\ell$ \\
+& $C = 2\pi r$ & & $S = 2\pi r\ell + 2\pi r^2$ \\
+Triangle & $A = \tfrac{1}{2}bh$ & Sphere & $V = \tfrac{4}{3}\pi r^3$ \\
+& & & $S = 4\pi r^2$
+\end{tabular}
+
+\section*{Trigonometry}
+
+\begin{minipage}[t]{0.3\textwidth}
+\begin{center}
+\begin{picture}(100,60)
+\put(0,0){\line(1,0){80}}
+\put(80,0){\line(0,1){60}}
+\put(0,0){\line(4,3){80}}
+\put(40,-5){$b$}
+\put(85,30){$a$}
+\put(35,40){$c$}
+\put(15,5){$\theta$}
+\end{picture}
+\end{center}
+\end{minipage}
+\begin{minipage}[t]{0.7\textwidth}
+\begin{align*}
+c^2 &= a^2 + b^2 \\
+\sin\theta &= \frac{a}{c} \quad \cos\theta = \frac{b}{c} \quad \tan\theta = \frac{a}{b}
+\end{align*}
+\end{minipage}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+$\theta$ & $0^\circ$ & $30^\circ$ & $37^\circ$ & $45^\circ$ & $53^\circ$ & $60^\circ$ & $90^\circ$ \\
+\hline
+$\sin\theta$ & 0 & $1/2$ & $3/5$ & $\sqrt{2}/2$ & $4/5$ & $\sqrt{3}/2$ & 1 \\
+\hline
+$\cos\theta$ & 1 & $\sqrt{3}/2$ & $4/5$ & $\sqrt{2}/2$ & $3/5$ & $1/2$ & 0 \\
+\hline
+$\tan\theta$ & 0 & $\sqrt{3}/3$ & $3/4$ & 1 & 1 & $\sqrt{3}$ & $\infty$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{Variables}
+
+\begin{minipage}[t]{0.48\textwidth}
+\begin{tabular}{ll}
+$a$ = acceleration & $A$ = amplitude \\
+$A$ = Area & $b$ = base length \\
+$C$ = circumference & $d$ = distance \\
+$E$ = energy & $f$ = frequency \\
+$F$ = force & $h$ = height \\
+$I$ = current & $I$ = rotational inertia \\
+$KE$ = kinetic energy & $k$ = spring constant \\
+$L$ = angular momentum & $\ell$ = length \\
+$m$ = mass & $P$ = power \\
+$p$ = momentum & $q$ = charge \\
+$r$ = radius & $R$ = resistance \\
+$S$ = surface area & $T$ = period \\
+$t$ = time & $PE$ = potential energy \\
+$V$ = electric potential & $V$ = volume \\
+$v$ = velocity & $w$ = width \\
+$W$ = work & $x$ = position \\
+$y$ = height & $\alpha$ = angular acceleration \\
+$\lambda$ = wavelength & $\mu$ = coefficient of friction \\
+$v$ = wave speed & $\theta$ = angle \\
+$\rho$ = density & $\rho$ = resistivity \\
+$\tau$ = torque & $\omega$ = angular speed
+\end{tabular}
+\end{minipage}
+
+\end{document}
+```

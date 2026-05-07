@@ -1,0 +1,120 @@
+Certainly! Here is the transcription of the image's text, tables, and equations into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+
+\begin{document}
+
+\section*{Statistical Analysis and Probability}
+
+\subsection*{Mean}
+\[
+\bar{x} = \frac{\sum x_i}{n}
+\]
+\begin{itemize}
+    \item $\bar{x}$ = sample mean
+    \item $x_i$ = individual data points
+    \item $n$ = size of the sample
+\end{itemize}
+
+\subsection*{Standard Deviation}
+\[
+S = \sqrt{\frac{\sum (x_i - \bar{x})^2}{n-1}}
+\]
+\begin{itemize}
+    \item $S$ = sample standard deviation (i.e., sample-based estimate of the standard deviation of the population)
+    \item $x_i$ = individual data points
+    \item $\bar{x}$ = sample mean
+    \item $n$ = size of the sample
+\end{itemize}
+
+\subsection*{Standard Error of the Mean}
+\[
+SE = \frac{S}{\sqrt{n}}
+\]
+
+\subsection*{Chi-Square}
+\[
+\chi^2 = \sum \frac{(O - E)^2}{E}
+\]
+\begin{itemize}
+    \item $O$ = observed results
+    \item $E$ = expected results
+\end{itemize}
+
+\subsection*{Chi-Square Table}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Degrees of Freedom} & \multicolumn{9}{c|}{$p$-values} \\ \cline{2-10} 
+ & 0.99 & 0.95 & 0.9 & 0.8 & 0.7 & 0.6 & 0.5 & 0.1 & 0.05 \\ \hline
+1 & 0.000 & 0.001 & 0.004 & 0.016 & 0.036 & 0.079 & 0.151 & 0.455 & 0.579 \\ \hline
+2 & 0.000 & 0.020 & 0.051 & 0.103 & 0.184 & 0.297 & 0.534 & 1.386 & 1.649 \\ \hline
+3 & 0.000 & 0.051 & 0.098 & 0.182 & 0.287 & 0.435 & 0.764 & 2.367 & 2.773 \\ \hline
+4 & 0.000 & 0.083 & 0.147 & 0.259 & 0.384 & 0.579 & 1.020 & 3.357 & 3.896 \\ \hline
+5 & 0.000 & 0.116 & 0.198 & 0.332 & 0.494 & 0.714 & 1.240 & 4.352 & 4.998 \\ \hline
+6 & 0.000 & 0.147 & 0.247 & 0.403 & 0.599 & 0.844 & 1.476 & 5.353 & 6.015 \\ \hline
+7 & 0.000 & 0.175 & 0.293 & 0.471 & 0.697 & 0.972 & 1.700 & 6.348 & 7.014 \\ \hline
+8 & 0.000 & 0.203 & 0.337 & 0.539 & 0.801 & 1.100 & 1.930 & 7.344 & 7.979 \\ \hline
+9 & 0.000 & 0.231 & 0.380 & 0.607 & 0.906 & 1.224 & 2.160 & 8.343 & 9.037 \\ \hline
+10 & 0.000 & 0.259 & 0.422 & 0.675 & 1.010 & 1.344 & 2.394 & 9.342 & 10.09 \\ \hline
+\end{tabular}
+
+\begin{itemize}
+    \item Degrees of freedom are equal to the number of distinct possible outcomes minus one.
+\end{itemize}
+
+\subsection*{Law of Probability}
+\begin{itemize}
+    \item If A and B are mutually exclusive, then:
+    \[
+    P(A \text{ or } B) = P(A) + P(B)
+    \]
+    \item If A and B are independent, then:
+    \[
+    P(A \text{ and } B) = P(A) \times P(B)
+    \]
+\end{itemize}
+
+\subsection*{Hartl-Winnebcke Equations}
+\begin{itemize}
+    \item $p$ = frequency of the dominant allele in a population
+    \item $q$ = frequency of the recessive allele in a population
+    \item $p + q = 1$
+    \item $p^2 + 2pq + q^2 = 1$
+\end{itemize}
+
+\subsection*{Metric Prefixes}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Factor} & \textbf{Exponent} & \textbf{Symbol} \\ \hline
+$10^9$ & giga & G \\ \hline
+$10^6$ & mega & M \\ \hline
+$10^3$ & kilo & k \\ \hline
+$10^2$ & hecto & h \\ \hline
+$10^1$ & deca & da \\ \hline
+$10^0$ & none & -- \\ \hline
+$10^{-1}$ & deci & d \\ \hline
+$10^{-2}$ & centi & c \\ \hline
+$10^{-3}$ & milli & m \\ \hline
+$10^{-6}$ & micro & $\mu$ \\ \hline
+$10^{-9}$ & nano & n \\ \hline
+$10^{-12}$ & pico & p \\ \hline
+\end{tabular}
+
+\subsection*{Descriptive Statistics}
+\begin{itemize}
+    \item \textbf{Mode} = value that occurs most frequently in a data set
+    \item \textbf{Median} = middle value that separates the greater halves of a data set
+    \item \textbf{Mean} = sum of all data points divided by number of data points
+    \item \textbf{Range} = value obtained by subtracting the smallest observation (sample minimum) from the greatest (sample maximum)
+\end{itemize}
+
+\footnote{For the purposes of the AP Exam, students will not be required to perform calculations using this equation; however, understanding the concept is important.}
+
+\end{document}
+```
+
+This LaTeX document accurately transcribes the text, tables, and equations from the image.

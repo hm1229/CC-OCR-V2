@@ -1,0 +1,319 @@
+用户现在需要从营养标签中提取信息到给定的JSON schema里。首先得理解每个字段可能对应什么。先看标签里的内容：
+
+首先看各个营养成分的100g和250g（典型份）的数据，还有%RI*和RI* for average adult。
+
+先分析每个CE-P1、CE-PS等可能的含义？不过可能需要先对应每个字段。不过可能用户给的schema里的字段需要对应提取。先看每个部分：
+
+先看Energy（能量）：100g是346kJ 82kcal；250g是865kJ 204kcal；%RI*是10%；RI* for average adult是8400kJ 2000kcal。
+
+Fat（脂肪）：100g是0.2g；250g是0.5g；%RI*是1%；RI*是70g。
+
+of which saturates（饱和脂肪）：100g<0.1g；250g<0.1g；%RI*<1%；RI*是20g。
+
+Carbohydrate（碳水）：100g17.2g；250g43.0g；%RI*这里看有没有？标签里碳水的%RI*可能没有？看原表，碳水那一行的%RI*列是空？然后RI*是20g？不，看RI* for average adult的碳水是20g？看原表右边RI*列，碳水对应的是20g？看原表：
+
+看原表的列：
+
+Typical values | 100g contains | A typical 250g serving contains | %RI* | RI* for an average adult
+
+Energy行：%RI*是10%；RI*是8400kJ 2000kcal
+
+Fat行：%RI*是1%；RI*是70g
+
+of which saturates：%RI*<1%；RI*是20g
+
+Carbohydrate行：%RI*？原表中Carbohydrate的%RI*列是空？然后RI*是？看原表右边RI*列，Carbohydrate对应的RI*是20g？不，看原表右边RI*列，Energy是8400kJ 2000kcal；Fat是70g；of which saturates是20g；Carbohydrate是？看原表中Carbohydrate的RI*列，可能对应的是？原表中RI* for average adult列，Carbohydrate对应的是20g？不，看原表的RI*列（第四列是%RI*，第五列是RI* for average adult）。看原表：
+
+RI* for an average adult列：
+
+Energy: 8400kJ 2000kcal
+
+Fat:70g
+
+of which saturates:20g
+
+Carbohydrate:？原表中Carbohydrate的RI*列，看原表中Carbohydrate那一行的第五列（RI*）是？原表中Carbohydrate的RI*列可能没有？或者看原表中的数值，比如Fibre的RI*是90g，Protein？Salt的RI*是6g。
+
+现在看schema里的字段：CE-P1, CE-PS, TF-P1, CAR-P1, CAR-PS, PRO-P1, PRO-PS, SS, CE-D, TF-PS, TF-D。可能需要先明确每个缩写。比如CE可能是Calories Energy？TF是Total Fat？CAR是Carbohydrate？PRO是Protein？SS是Salt？
+
+假设：
+
+CE-P1：Energy的100g中的kJ？或者看每个字段对应。比如CE-P1可能是Energy（100g的kJ），CE-PS是Energy（250g的kJ）？或者看%RI*是CE-D？可能需要更仔细分析。
+
+另一种方式，先列出所有营养成分的100g、250g、%RI*、RI*（average adult）：
+
+成分列表：
+
+Energy:
+
+- 100g: 346kJ, 82kcal
+
+- 250g: 865kJ, 204kcal
+
+- %RI*: 10%
+
+- RI* (adult): 8400kJ, 2000kcal
+
+Fat:
+
+- 100g: 0.2g
+
+- 250g: 0.5g
+
+- %RI*: 1%
+
+- RI* (adult): 70g
+
+of which saturates:
+
+- 100g: <0.1g
+
+- 250g: <0.1g
+
+- %RI*: <1%
+
+- RI* (adult): 20g
+
+Carbohydrate:
+
+- 100g: 17.2g
+
+- 250g: 43.0g
+
+- %RI*: （原表中Carbohydrate的%RI*列是空？看原表中Carbohydrate那一行的%RI*列，原表中Carbohydrate的%RI*是？原表中Carbohydrate的%RI*列对应的是？看原表的%RI*列，Carbohydrate那一行的%RI*是？原表中“of which sugars”是Carbohydrate的子项，所以Carbohydrate的%RI*可能没有单独列？或者看原表中的%RI*列，Carbohydrate行的%RI*是？原表中“Carbohydrate”行的%RI*列是空，而“of which sugars”的%RI*也是空？然后Fibre的%RI*是2%；Protein的%RI*？Salt的%RI*是<1%。
+
+Fibre:
+
+- 100g: 0.6g
+
+- 250g: 1.5g
+
+- %RI*: 2%
+
+- RI* (adult): 90g
+
+Protein:
+
+- 100g: 1.3g
+
+- 250g: 3.3g
+
+- %RI*: （原表中Protein的%RI*列是空？看原表中Protein行的%RI*列，原表中Protein的%RI*没有数值？或者看原表中的%RI*列，Protein对应的是？原表中Protein的%RI*可能没有，而RI* (adult)？原表中RI* for average adult的Protein列？原表中RI*列（第五列）中Protein对应的是？原表中RI*列的Protein可能没有，因为原表中RI*列的数值是Energy（8400kJ 2000kcal）、Fat（70g）、of which saturates（20g）、Carbohydrate（？）、Fibre（90g）、Protein（？）、Salt（6g）。看原表中Salt的RI*是6g，Fibre是90g，of which saturates是20g，Fat是70g，Energy是8400kJ 2000kcal。其他成分比如Carbohydrate的RI*可能没有列出？或者可能原表中RI*是针对某些主要成分，比如Energy、Fat、Fibre、Salt等。
+
+现在回到schema，用户给的schema字段是：
+
+{"CE-P1": "", "CE-PS": "", "TF-P1": "", "CAR-P1": "", "CAR-PS": "", "PRO-P1": "", "PRO-PS": "", "SS": "", "CE-D": "", "TF-PS": "", "TF-D": ""}
+
+可能需要对应每个缩写：
+
+CE：Calories Energy（能量）
+
+P1：100g contains
+
+PS：A typical 250g serving contains
+
+D：%RI*（Daily Reference？）
+
+TF：Total Fat（脂肪）
+
+CAR：Carbohydrate（碳水）
+
+PRO：Protein（蛋白质）
+
+SS：Salt（盐）
+
+现在逐个分析：
+
+CE-P1：Energy的100g中的kJ？或者kcal？看原表Energy行100g是346kJ 82kcal。可能CE-P1是kJ，CE-PS是250g的kJ？或者看%RI*是CE-D？
+
+CE-D：Energy的%RI*是10%
+
+TF-P1：Total Fat的100g是0.2g
+
+TF-PS：Total Fat的250g是0.5g
+
+TF-D：Total Fat的%RI*是1%
+
+CAR-P1：Carbohydrate的100g是17.2g
+
+CAR-PS：Carbohydrate的250g是43.0g
+
+PRO-P1：Protein的100g是1.3g
+
+PRO-PS：Protein的250g是3.3g
+
+SS：Salt的100g是<0.1g？或者看Salt的哪个？原表中Salt的100g是<0.1g，250g是<0.1g，%RI*是<1%。但SS可能是指Salt的某个值，比如100g的量？
+
+另外还有CE-PS可能重复？看schema里的字段有CE-PS和TF-PS，可能CE-PS是Energy的250g，TF-PS是Total Fat的250g。
+
+现在整理：
+
+CE-P1：Energy 100g的kJ → 346kJ
+
+CE-PS：Energy 250g的kJ → 865kJ
+
+CE-D：Energy的%RI* → 10%
+
+TF-P1：Total Fat 100g → 0.2g
+
+TF-PS：Total Fat 250g → 0.5g
+
+TF-D：Total Fat的%RI* → 1%
+
+CAR-P1：Carbohydrate 100g → 17.2g
+
+CAR-PS：Carbohydrate 250g → 43.0g
+
+PRO-P1：Protein 100g → 1.3g
+
+PRO-PS：Protein 250g → 3.3g
+
+SS：Salt的100g？或者看Salt的%RI*？原表中Salt的%RI*是<1%，但SS可能是指Salt的100g含量？原表中Salt 100g是<0.1g，250g是<0.1g。或者SS是Salt的RI*（average adult）是6g？
+
+另外schema中的字段还有“TF-PS”重复了？看用户给的schema是：
+
+{"CE-P1": "", "CE-PS": "", "TF-P1": "", "CAR-P1": "", "CAR-PS": "", "PRO-P1": "", "PRO-PS": "", "SS": "", "CE-D": "", "TF-PS": "", "TF-D": ""}
+
+注意有两个TF-PS？可能是输入错误？或者看原schema中的字段，用户给的是：
+
+"CE-P1", "CE-PS", "TF-P1", "CAR-P1", "CAR-PS", "PRO-P1", "PRO-PS", "SS", "CE-D", "TF-PS", "TF-D"
+
+现在需要把每个字段对应：
+
+假设：
+
+CE-P1: Energy (100g) kJ → 346kJ
+
+CE-PS: Energy (250g) kJ → 865kJ
+
+CE-D: Energy %RI* → 10%
+
+TF-P1: Total Fat (100g) → 0.2g
+
+TF-PS: Total Fat (250g) → 0.5g （注意这里有两个TF-PS？可能是用户输入错误，比如另一个是TF-D？不，看字段里有TF-D是Total Fat的%RI* → 1%
+
+CAR-P1: Carbohydrate (100g) → 17.2g
+
+CAR-PS: Carbohydrate (250g) → 43.0g
+
+PRO-P1: Protein (100g) → 1.3g
+
+PRO-PS: Protein (250g) → 3.3g
+
+SS: Salt (100g) → <0.1g （或者Salt的%RI*是<1%，但SS可能是指Salt的RI*（average adult）是6g？看原表中Salt的RI* for average adult是6g，所以SS可能对应Salt的RI* → 6g
+
+另外还有“TF-PS”重复？看用户给的schema里确实有“TF-PS”两次？不，看用户提供的schema：
+
+"CE-P1", "CE-PS", "TF-P1", "CAR-P1", "CAR-PS", "PRO-P1", "PRO-PS", "SS", "CE-D", "TF-PS", "TF-D"
+
+是的，有两个TF-PS？这可能是错误，但按用户给的来。或者可能其中一个TF-PS是其他？比如“of which saturates”的250g？但原表中of which saturates的250g是<0.1g，%RI*是<1%。但schema里没有对应这个的字段。可能用户给的schema有遗漏，但需要尽量填充。
+
+现在再检查原表中的所有数据：
+
+成分：
+
+1. Energy
+
+   - 100g: 346kJ, 82kcal
+
+   - 250g: 865kJ, 204kcal
+
+   - %RI*: 10%
+
+   - RI* adult: 8400kJ, 2000kcal
+
+2. Fat
+
+   - 100g: 0.2g
+
+   - 250g: 0.5g
+
+   - %RI*: 1%
+
+   - RI* adult: 70g
+
+3. of which saturates
+
+   - 100g: <0.1g
+
+   - 250g: <0.1g
+
+   - %RI*: <1%
+
+   - RI* adult: 20g
+
+4. Carbohydrate
+
+   - 100g: 17.2g
+
+   - 250g: 43.0g
+
+   - %RI*: （无？原表中Carbohydrate的%RI*列是空？看原表中“Carbohydrate”行的%RI*列，原表中“of which sugars”是Carbohydrate的子项，所以Carbohydrate的%RI*可能没有单独列出，而“of which sugars”的%RI*也空。Fibre的%RI*是2%；Protein的%RI*？原表中Protein行的%RI*列是空？Salt的%RI*是<1%。
+
+5. Fibre
+
+   - 100g: 0.6g
+
+   - 250g: 1.5g
+
+   - %RI*: 2%
+
+   - RI* adult: 90g
+
+6. Protein
+
+   - 100g: 1.3g
+
+   - 250g: 3.3g
+
+   - %RI*: （无？原表中Protein的%RI*列是空？）
+
+7. Salt
+
+   - 100g: <0.1g
+
+   - 250g: <0.1g
+
+   - %RI*: <1%
+
+   - RI* adult: 6g
+
+现在回到schema的字段，需要确定每个字段对应哪个数据。可能用户给的schema中的字段是：
+
+CE-P1: Energy (100g) kJ → 346kJ
+
+CE-PS: Energy (250g) kJ → 865kJ
+
+CE-D: Energy %RI* → 10%
+
+TF-P1: Total Fat (100g) → 0.2g
+
+TF-PS: Total Fat (250g) → 0.5g （第一个TF-PS）
+
+然后另一个TF-PS？可能是“of which saturates”的250g？即<0.1g？但schema里有两个TF-PS，可能用户输入错误，比如应该是SFA-PS？但按用户给的，可能另一个TF-PS是重复，或者可能我理解错了。或者看schema中的“TF-PS”是Total Fat的250g，而另一个“TF-PS”可能是其他？不，可能用户给的schema有笔误，比如“TF-D”是Total Fat的%RI*（1%），而“TF-PS”是Total Fat的250g（0.5g），另一个“TF-PS”可能是“SFA-PS”（of which saturates的250g，<0.1g）。
+
+然后CAR-P1: Carbohydrate (100g) → 17.2g
+
+CAR-PS: Carbohydrate (250g) → 43.0g
+
+PRO-P1: Protein (100g) → 1.3g
+
+PRO-PS: Protein (250g) → 3.3g
+
+SS: Salt的RI* adult → 6g （因为Salt的RI*是6g，而SS可能代表Salt的参考值）
+
+另外，还有“SS”可能是指Salt的100g含量？<0.1g？但看原表中Salt的RI*是6g，所以SS可能对应这个。
+
+现在整理所有字段：
+
+CE-P1: "346kJ"
+
+CE-PS: "865kJ"
+
+CE-D: "10%"
+
+TF-P1: "0.2g"
+
+TF-PS（第一个）: "0.5g" （Total Fat 250g）
+
+TF-PS（第二个）: "<0.1g" （of which saturates 250g？因为of which saturates的250g是<0.1g，可能这里重复的TF-PS是其他成分？但schema里有两个TF-PS，可能用户输入错误，比如一个是TF-PS（Total Fat 250g），另一个是SFA-PS（饱和脂肪250g）。但按用户给的schema，必须填充，所以假设第二个TF-PS是饱和脂肪的250g，即<

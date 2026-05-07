@@ -1,0 +1,26 @@
+```latex
+\section*{Functions That Modify JSON Values}
+
+This function was added in MySQL 8.0.3 as a synonym for \texttt{JSON\_MERGE()}. The \texttt{JSON\_MERGE()} function is now deprecated, and is subject to removal in a future release of MySQL.
+
+This function is similar to but differs from \texttt{JSON\_MERGE\_PATCH()} in significant respects; see \texttt{JSON\_MERGE\_PATCH()} compared with \texttt{JSON\_MERGE\_PRESERVE()}, for more information.
+
+\paragraph{JSON\_REMOVE(json\_doc, path, path \dots)}
+
+Removes data from a JSON document and returns the result. Returns \texttt{NULL} if any argument is \texttt{NULL}. An error occurs if the \texttt{json\_doc} argument is not a valid JSON document or any \texttt{path} argument is not a valid path expression or is \texttt{\$} or contains a \texttt{*} or \texttt{**} wildcard.
+
+The path arguments are evaluated left to right. The document produced by evaluating one path becomes the new value against which the next path is evaluated.
+
+It is not an error if the element to be removed does not exist in the document; in that case, the path does not affect the document.
+
+\begin{verbatim}
+mysql> SET @j = '{ "a": ["b", "c"], "d": "d" }';
+mysql> SELECT JSON_REMOVE(@j, '$[1]'); 
+| JSON_REMOVE(@j, '$[1]') |
+|--------------------------|
+| ["a", "d"]               |
+\end{verbatim}
+
+\paragraph{JSON\_REPLACE(json\_doc, path, val, path, val \dots)}
+
+Replaces existing values in a JSON document and returns the result. Returns \texttt{NULL} if any argument is \texttt{NULL}. An error occurs if the \texttt{json\_doc} argument is not a valid JSON document or any \texttt{path

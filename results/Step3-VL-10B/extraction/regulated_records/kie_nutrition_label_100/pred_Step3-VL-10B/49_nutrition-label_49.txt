@@ -1,0 +1,113 @@
+用户现在需要把营养信息提取到对应的JSON字段里。首先得理解每个字段对应什么。先看各个营养项：ENERGY（能量）、PROTEIN（蛋白质）、FAT, TOTAL（总脂肪）、SATURATED（饱和脂肪）、CARBOHYDRATE（碳水化合物）、SUGARS（糖）、SODIUM（钠）。然后看每个项的列：AVERAGE QTY PER SERVING（每份平均量）、% DAILY INTAKE PER SERVING（每份每日摄入百分比）、AVERAGE QTY PER 100G（每100克平均量）。
+
+现在看schema里的字段：CE-PS、CE-D、CE-P1；PRO-PS、PRO-D、PRO-P1；TF-PS、TF-D、TF-P1；CAR-PS、CAR-D、CAR-P1；SO-PS、SO-D、SO-P1；SS可能是SODIUM？先对应每个营养项的三个列（PS是per serving，D是daily intake，P1是per 100g？或者看缩写。比如CE是ENERGY，所以CE-PS是ENERGY的AVERAGE QTY PER SERVING，CE-D是% DAILY INTAKE PER SERVING，CE-P1是AVERAGE QTY PER 100G。同理PRO是PROTEIN，TF是FAT, TOTAL，CAR是CARBOHYDRATE，SO是SUGARS？然后SODIUM是另一个，可能SS是SODIUM？看原schema里的字段：CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。可能SS是SODIUM的某个？或者看原营养表中的SODIUM对应哪个。原营养表中的项目：
+
+ENERGY：
+- AVERAGE QTY PER SERVING: 353kJ → CE-PS
+- % DAILY INTAKE PER SERVING: 4.0% → CE-D
+- AVERAGE QTY PER 100G: 1900kJ → CE-P1
+
+PROTEIN：
+- 1.6g → PRO-PS
+- 3.0% → PRO-D
+- 8.5g → PRO-P1
+
+FAT, TOTAL：
+- 3.3g → TF-PS
+- 4.8% → TF-D
+- 17.9g → TF-P1
+
+SATURATED（属于FAT的子项，可能TF下面的？但schema里没有SAT的字段，可能用户给的schema里的字段对应主要项，子项可能不处理？看原schema里的字段，没有SAT的，所以可能忽略子项？或者看原schema中的字段，用户给的schema是CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。所以CAR是CARBOHYDRATE，SO是SUGARS，SS是SODIUM？
+
+然后SODIUM：
+- AVERAGE QTY PER SERVING: 102mg → SS-PS？但schema里SS是一个字段，可能SS对应SODIUM的某个？或者看原schema中的SS可能是指SODIUM的某个列？或者可能SS是SODIUM的% DAILY？不，原schema里的字段是每个营养项的三个部分：PS（per serving量）、D（daily intake%）、P1（per 100g量）。所以SODIUM应该对应三个字段，但schema里只有SS，可能用户给的schema可能有遗漏？或者看原问题中的schema，用户提供的schema是：
+
+{"CE-PS": "", "CE-D": "", "CE-P1": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-PS": "", "TF-D": "", "TF-P1": "", "CAR-PS": "", "CAR-D": "", "CAR-P1": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""}
+
+这里SS可能是一个单独的字段，比如SODIUM的某个值？或者可能SS是SODIUM的AVERAGE QTY PER SERVING？因为其他项都是三个字段（PS, D, P1），而SODIUM可能只有SS？或者可能原schema中的SS是SODIUM的% DAILY？不，原营养表中SODIUM的% DAILY是4.0%，对应D列。那可能SS是SODIUM的AVERAGE QTY PER 100G？即549mg。现在需要把每个对应项填进去。
+
+现在逐个处理：
+
+CE（ENERGY）：
+- CE-PS: 353kJ
+- CE-D: 4.0%
+- CE-P1: 1900kJ
+
+PRO（PROTEIN）：
+- PRO-PS: 1.6g
+- PRO-D: 3.0%
+- PRO-P1: 8.5g
+
+TF（FAT, TOTAL）：
+- TF-PS: 3.3g
+- TF-D: 4.8%
+- TF-P1: 17.9g
+
+CAR（CARBOHYDRATE）：
+- CAR-PS: 12.0g
+- CAR-D: 3.9%
+- CAR-P1: 64.6g
+
+SO（SUGARS）：
+- SO-PS: 1.5g
+- SO-D: 1.7%
+- SO-P1: 8.2g
+
+SS（SODIUM）：这里看原schema里SS是一个字段，可能对应SODIUM的某个值。原SODIUM的AVERAGE QTY PER SERVING是102mg，% DAILY是4.0%，PER 100G是549mg。但schema里SS只有一个字段，可能用户希望SS是SODIUM的AVERAGE QTY PER SERVING？或者可能SS是SODIUM的% DAILY？或者可能原schema中的SS是SODIUM的PER 100G？需要看原schema的结构。原schema中的其他项都是三个字段（PS, D, P1），而SS只有一个，可能SS是SODIUM的某个关键值，比如总和？或者可能用户输入时的schema可能有错误，但根据问题描述，要填充value部分。现在看原营养表中的SODIUM行：
+
+SODIUM的AVERAGE QTY PER SERVING是102mg，% DAILY是4.0%，AVERAGE QTY PER 100G是549mg。但schema里SS是一个字段，可能SS对应SODIUM的AVERAGE QTY PER SERVING？或者可能SS是SODIUM的% DAILY？或者可能原schema中的SS是SODIUM的PER 100G？或者可能用户把SODIUM的三个字段合并？但原schema里没有SOD-PS, SOD-D, SOD-P1，而是SS。可能原题中的SS是SODIUM的某个值，比如可能SS是SODIUM的AVERAGE QTY PER SERVING？因为其他项都有三个字段，而SODIUM可能被单独处理。现在假设SS是SODIUM的AVERAGE QTY PER SERVING，即102mg。或者可能SS是SODIUM的% DAILY？即4.0%。或者可能SS是SODIUM的PER 100G？即549mg。需要再检查原schema的字段数量。原schema有16个字段：CE-PS, CE-D, CE-P1（3）；PRO-PS, PRO-D, PRO-P1（3）；TF-PS, TF-D, TF-P1（3）；CAR-PS, CAR-D, CAR-P1（3）；SO-PS, SO-D, SO-P1（3）；SS（1）。总共3*5 +1=16。原营养表中的项目是ENERGY, PROTEIN, FAT, SATURATED（子项，可能不单独列）, CARBOHYDRATE, SUGARS（子项）, SODIUM。所以主要项是ENERGY, PROTEIN, FAT, CARBOHYDRATE, SUGARS, SODIUM，共6项。每项对应三个字段（PS, D, P1）的话是6*3=18，但schema里是16，少两个。可能SATURATED和SUGARS是子项，不单独作为主项？比如FAT包含SATURATED，CARBOHYDRATE包含SUGARS，所以主项是ENERGY, PROTEIN, FAT, CARBOHYDRATE, SODIUM，共5项，5*3=15，加上SS是16。所以可能SS是SODIUM的某个字段，而其他主项是5个，每个三个字段（15）+SS=16。那SODIUM的三个字段中，可能SS是其中一个，比如SODIUM的% DAILY？或者可能原schema中的SS是SODIUM的AVERAGE QTY PER SERVING？现在再看原营养表中的SODIUM行：
+
+SODIUM的三列是：102mg（PER SERVING）、4.0%（% DAILY）、549mg（PER 100G）。现在需要确定SS对应哪一个。可能原题中的SS是SODIUM的AVERAGE QTY PER SERVING，因为其他项的PS是PER SERVING，而SODIUM可能被单独提取。或者可能SS是SODIUM的PER 100G？或者可能用户希望SS是SODIUM的% DAILY？现在再检查原schema中的字段，可能SS是SODIUM的% DAILY？因为CE-D是ENERGY的% DAILY，PRO-D是PROTEIN的% DAILY，TF-D是FAT的% DAILY，CAR-D是CARBOHYDRATE的% DAILY，SO-D是SUGARS的% DAILY，而SODIUM的% DAILY是4.0%，但schema里没有SOD-D，而是SS。所以可能SS是SODIUM的% DAILY？或者可能原题中的SS是SODIUM的AVERAGE QTY PER 100G？现在可能需要根据常见的营养标签提取，或者可能用户提供的schema中的SS是SODIUM的AVERAGE QTY PER SERVING。现在先处理其他项，然后处理SS。
+
+现在填充各字段：
+
+CE-PS: "353kJ"
+CE-D: "4.0%"
+CE-P1: "1900kJ"
+
+PRO-PS: "1.6g"
+PRO-D: "3.0%"
+PRO-P1: "8.5g"
+
+TF-PS: "3.3g"
+TF-D: "4.8%"
+TF-P1: "17.9g"
+
+CAR-PS: "12.0g"
+CAR-D: "3.9%"
+CAR-P1: "64.6g"
+
+SO-PS: "1.5g"
+SO-D: "1.7%"
+SO-P1: "8.2g"
+
+SS: 这里SODIUM的AVERAGE QTY PER SERVING是102mg，所以SS设为"102mg"？或者SODIUM的PER 100G是549mg？或者SODIUM的% DAILY是4.0%？现在看原营养表中的SODIUM行，可能SS对应SODIUM的AVERAGE QTY PER SERVING，因为其他项的PS是PER SERVING，而SODIUM可能被单独列出。或者可能原题中的SS是SODIUM的AVERAGE QTY PER 100G，即549mg。现在需要确定。另外，原schema中的SS是单独的一个字段，而其他项都是三个字段（PS, D, P1），所以可能SODIUM的三个字段中，SS是其中一个，比如SS是SODIUM的% DAILY？因为CE-D是ENERGY的% DAILY，PRO-D是PROTEIN的% DAILY，TF-D是FAT的% DAILY，CAR-D是CARBOHYDRATE的% DAILY，SO-D是SUGARS的% DAILY，而SODIUM的% DAILY是4.0%，但schema里没有SOD-D，所以可能SS是SODIUM的% DAILY？或者可能原题中的SS是SODIUM的AVERAGE QTY PER SERVING，而其他D字段是各营养的% DAILY，所以SS是SODIUM的PER SERVING量。现在假设SS是SODIUM的AVERAGE QTY PER SERVING，即102mg。或者可能SS是SODIUM的PER 100G，即549mg。现在再检查原营养表中的SODIUM行，可能用户希望提取所有信息，所以SS可能对应SODIUM的某个值，比如总和？不，可能原题中的SS是SODIUM的AVERAGE QTY PER SERVING，因为其他项的PS是PER SERVING，而SODIUM的PS是102mg，所以SS设为"102mg"。
+
+现在整理所有字段：
+
+{
+  "CE-PS": "353kJ",
+  "CE-D": "4.0%",
+  "CE-P1": "1900kJ",
+  "PRO-PS": "1.6g",
+  "PRO-D": "3.0%",
+  "PRO-P1": "8.5g",
+  "TF-PS": "3.3g",
+  "TF-D": "4.8%",
+  "TF-P1": "17.9g",
+  "CAR-PS": "12.0g",
+  "CAR-D": "3.9%",
+  "CAR-P1": "64.6g",
+  "SO-PS": "1.5g",
+  "SO-D": "1.7%",
+  "SO-P1": "8.2g",
+  "SS": "102mg"
+}
+
+或者SS是SODIUM的PER 100G，即549mg？或者SODIUM的% DAILY是4.0%？现在再看原营养表中的SODIUM行，% DAILY是4.0%，而其他项的D字段都是% DAILY，比如CE-D是4.0%，PRO-D是3.0%，TF-D是4.8%，CAR-D是3.9%，SO-D是1.7%。所以SODIUM的% DAILY是4.0%，但schema里没有SOD-D，而是SS。所以可能SS是SODIUM的% DAILY？即"4.0%"。那这样SS是"4.0%"。那现在需要确定哪个更合理。可能原题中的SS是SODIUM的AVERAGE QTY PER 100G，因为其他P1是PER 100G，比如CE-P1是1900kJ，PRO-P1是8.5g，TF-P1是17.9g，CAR-P1是64.6g，SO-P1是8.2g。而SODIUM的P1是549mg，所以可能SS是SODIUM的P1？因为其他项都有P1，而SODIUM的P1是549mg，所以SS设为"549mg"。这样每个主要项（除了SAT和SUGARS是子项）都有P1，而SODIUM的P1是549mg，所以SS是SODIUM的P1。那现在调整SS为"549mg"。
+
+现在再检查：主项是ENERGY, PROTEIN, FAT, CARBOHYDRATE, SUGARS, SODIUM。其中FAT包含SATURATED（子项，不单独列），CARBOHYDRATE包含SUGARS（子项，不单独列？不，SUGARS是CARBOHYDRATE的子项，所以CAR是CARBOHYDRATE，SO是SUGARS（子项？但原schema里有SO-PS, SO-D, SO-P1，所以SUGARS是单独的项。而SODIUM是单独的项，所以SODIUM应该有三个字段（PS, D, P1），但schema里只有SS，所以可能原题中的SS是SODIUM的D（% DAILY），因为其他项的D是% DAILY，而SODIUM的D是4.0%，所以SS是"4.0%"。或者可能原题中的SS是SODIUM的PS（PER SERVING），即102mg。现在可能需要再看原问题中的schema，用户提供的schema是：
+
+{"CE-PS": "", "CE-D": "", "CE-P1": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-PS": "", "TF-D": "", "TF-P1": "", "CAR-PS": "", "CAR-D": "", "CAR-P1": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""}
+
+总共有16个字段。原营养表中的项目数（包括子项）是：ENERGY, PROTEIN, FAT, SATURATED, CARBOHYDRATE, SUGARS, SODIUM → 7项。但FAT和CARBOHYDRATE是总项，SATURATED和SUGARS是子项。如果子项不单独作为主项，那么主项是ENERGY, PROTEIN, FAT, CARBOHYDRATE, SODIUM → 5项。每项3个字段（PS, D, P1）是15个字段，加上SS是16个。所以SODIUM是第5个主项，其三个字段应该是SOD-PS, SOD-D, SOD-P1，但

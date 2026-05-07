@@ -1,0 +1,20 @@
+To determine the coordinates of the region containing the text "携程旅行网," we need to analyze the image and identify the bounding box that encloses this text.
+
+1. **Identify the text location**: The text "携程旅行网" is located under the "协议单位" (Agent) section on the left side of the document.
+
+2. **Estimate the bounding box**:
+   - The text is horizontally aligned and appears to be a few characters wide.
+   - Vertically, it is positioned in the upper-middle section of the document.
+
+3. **Normalize the coordinates**:
+   - The image width and height should be considered for normalization.
+
+Let's assume the image dimensions are approximately 1000 pixels wide and 600 pixels tall for normalization purposes.
+
+4. **Bounding box coordinates**:
+   - **Left-top corner (x1, y1)**: This is the top-left corner of the text. It appears to be roughly at the middle height of the document, slightly to the left of the center. Let's estimate it at approximately (300, 150).
+   - **Right-bottom corner (x2, y2)**: This is the bottom-right corner of the text. It extends a bit to the right and down from the left-top corner. Let's estimate it at approximately (450, 180).
+
+Thus, the normalized coordinates of the bounding box are:
+
+(300, 150, 450, 180)

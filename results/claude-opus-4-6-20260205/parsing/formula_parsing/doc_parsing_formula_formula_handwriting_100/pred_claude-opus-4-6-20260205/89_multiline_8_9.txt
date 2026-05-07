@@ -1,0 +1,17 @@
+$$\|(a_\varepsilon k_i) * (w_0^\lambda - w_0^m)\|_2^2 = \int_{\mathbb{R}^2} \left| \int_{B_{2\varepsilon}(x)} a_\varepsilon(x-y) k_i(x-y)(w_0^\lambda(y) - w_0^m(y)) dy \right|^2 dx$$
+
+$$\leq \int_{\mathbb{R}^2} \left( \int_{B_{2\varepsilon}(x)} \frac{1}{|x-y|} |w_0^\lambda(y) - w_0^m(y)| dy \right)^2 dx$$
+
+$$= \int_{\mathbb{R}^2} \left( \int_{B_{2\varepsilon}(x)} |x-y| (\log(1/|x-y|))^\alpha \sqrt{|w_0^\lambda(y) - w_0^m(y)|} (\log(e + |w_0^\lambda(y) - w_0^m(y)|))^\alpha \right.$$
+
+$$\times \left( \log\left(\frac{1}{|x-y|}\right) \right)^\alpha \sqrt{\frac{|w_0^\lambda(y) - w_0^m(y)|}{(\log(e + |w_0^\lambda(y) - w_0^m(y)|))^\alpha}} \, dy \right)^2 dx$$
+
+$$\leq \int_{\mathbb{R}^2} \int_{B_{2\varepsilon}(x)} |x-y|^2 (\log(1/|x-y|))^{2\alpha} |w_0^\lambda(y) - w_0^m(y)| (\log(e + |w_0^\lambda(y) - w_0^m(y)|))^\alpha dy$$
+
+$$\times \int_{B_{2\varepsilon}(x)} \left( \log\left(\frac{1}{|x-y|}\right) \right)^{2\alpha} \frac{|w_0^\lambda(y) - w_0^m(y)|}{(\log(e + |w_0^\lambda(y) - w_0^m(y)|))^\alpha} \, dy \, dx$$
+
+$$\leq \sup_x \int_{B_{2\varepsilon}(x)} \left( \log\left(\frac{1}{|x-y|}\right) \right)^{2\alpha} \frac{|w_0^\lambda(y) - w_0^m(y)|}{(\log(e + |w_0^\lambda(y) - w_0^m(y)|))^\alpha} \, dy$$
+
+$$\times \int_{\mathbb{R}^2} \int_{B_{2\varepsilon}(x)} |x-y|^2 (\log(1/|x-y|))^{2\alpha} |w_0^\lambda(y) - w_0^m(y)| (\log(e + |w_0^\lambda(y) - w_0^m(y)|))^\alpha \, dy \, dx$$
+
+$$\quad (11*)$$

@@ -1,0 +1,186 @@
+```latex
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{amsmath}
+
+% Define colors from the image
+\definecolor{sectionpink}{RGB}{250, 210, 210}
+\definecolor{exercisebox}{RGB}{240, 150, 150}
+\definecolor{sectionnumber}{RGB}{220, 100, 100}
+\definecolor{arrowgray}{RGB}{150, 150, 150}
+
+% Command for the section number circle
+\newcommand{\sectionnum}[1]{%
+    \begin{tikzpicture}[baseline=(char.base)]
+        \node[shape=circle, fill=sectionnumber, text=white, minimum size=1.2cm, font=\Large\bfseries] (char) {#1};
+    \end{tikzpicture}%
+}
+
+% Command for the exercise box
+\newcommand{\exercisebox}[1]{%
+    \begin{tikzpicture}[baseline=(char.base)]
+        \node[shape=rounded rectangle, fill=exercisebox, text=white, inner sep=2pt, font=\small\bfseries] (char) {EXERCISE};
+        \node[circle, fill=white, text=sectionnumber, inner sep=1pt, font=\small\bfseries, right=2pt of char] {#1};
+    \end{tikzpicture}%
+}
+
+% Command for the dashed arrow
+\newcommand{\dashedarrow}{%
+    \textcolor{arrowgray}{\makebox[2cm]{\dotfill$\rightarrow$}}%
+}
+
+\begin{document}
+
+% --- Section 3: PRESENT CONTINUOUS ---
+\section*{\sectionnum{3} \quad PRESENT CONTINUOUS}
+
+\begin{tabularx}{\linewidth}{|l|X|}
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Form} & am, is, or are + verb + ing \\
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Use} & actions happening now, at the moment of speaking. \\
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Signal words} & now, at the moment, still, Look! Listen!... \\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+
+\noindent\exercisebox{1} \textbf{Find the signal words for present continuous.}
+\begin{enumerate}[label=\arabic*.]
+    \item Which is a signal word for present continuous? \\ last -- now -- every night
+    \item Which is \textbf{not} a signal word for present continuous? \\ now - already - still
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\exercisebox{2} \textbf{Put these verbs in present continuous.}
+\begin{enumerate}[label=\arabic*.]
+    \item They / play \dashedarrow
+    \item Sara and Leila/ dance \dashedarrow
+    \item I/ not, speak \dashedarrow
+    \item He/ to sing \dashedarrow
+    \item David / not, to write \dashedarrow
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\exercisebox{3} \textbf{Put the following verbs in the correct tense.}
+\begin{enumerate}[label=\arabic*.]
+    \item Now, it (rain) heavily outside.
+    \item She (not, speak) French at the moment.
+    \item Many people (still, fight) against poverty in Africa.
+    \item Mark's children (to play) video games at the- moment.
+    \item (Sandra, to do) her homework now?
+\end{enumerate}
+
+\hrulefill
+\vspace{2em}
+
+% --- Section 4: PAST CONTINUOUS ---
+\section*{\sectionnum{4} \quad PAST CONTINUOUS}
+
+\begin{tabularx}{\linewidth}{|l|X|}
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Form} & was or were + verb + ing \\
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Use} & For actions which were in progress in the past. \\
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Signal words} & when, while + long action in the past \\
+    \hline
+\end{tabularx}
+
+\vspace{1em}
+
+\noindent\exercisebox{1} \textbf{Find the signal words for past continuous.}
+\begin{enumerate}[label=\arabic*.]
+    \item Which is a signal word for past continuous? \\ while - by next week - tomorrow
+    \item Which is \textbf{not} a signal word for past continuous? \\ next week -- when - while
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\exercisebox{2} \textbf{Put these verbs in past continuous.}
+\begin{enumerate}[label=\arabic*.]
+    \item She/ watch \dashedarrow
+    \item They/ to play \dashedarrow
+    \item It/ rain \dashedarrow
+    \item Many students/ to work \dashedarrow
+    \item He/ not, to drive \dashedarrow
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\exercisebox{3} \textbf{Put the following verbs in the correct tense.}
+\begin{enumerate}[label=\arabic*.]
+    \item Barbara (to do) her homework yesterday when I came in.
+    \item When I (write) the E-mail last time, Mary (to watch) TV.
+    \item I saw my teacher yesterday when I (wait) for the bus.
+    \item When Sandra (arrive) home yesterday, her father (not, to cook) lunch.
+    \item (Your brother, to play) the game when the computer crashed down?
+\end{enumerate}
+
+\hrulefill
+\vspace{2em}
+
+% --- Section 5: PRESENT PERFECT ---
+\section*{\sectionnum{5} \quad PRESENT PERFECT}
+
+\begin{tabularx}{\linewidth}{|l|X|}
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Form} & have or has + Past Participle \\
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Use} & For actions which started in the past and continued up to the present. \\
+    \hline
+    \rowcolor{sectionpink}
+    \textbf{Signal words} & just, already, yet, for, since, so far, recently, ever... \\
+    \hline
+\end{tabularx}
+
+\vspace{0.5em}
+\noindent\footnotesize{NB. We use Present Perfect Continuous (have/has+ been + verb +ing) to give more emphasis on the duration of the action. However, some verbs can't be used in the continuous form such as own, smell, need, belong, cost, agree, contain..., etc.}
+\vspace{1em}
+
+\noindent\exercisebox{1} \textbf{Find the signal words for present perfect.}
+\begin{enumerate}[label=\arabic*.]
+    \item Which is a signal word for present perfect? \\ still -- usually -- since
+    \item Which is \textbf{not} a signal word for present perfect? \\ since -- before -- for
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\exercisebox{2} \textbf{Put these verbs in present perfect.}
+\begin{enumerate}[label=\arabic*.]
+    \item They/ to do \dashedarrow
+    \item Jack / to publish \dashedarrow
+    \item He/ not, to have \dashedarrow
+    \item She/ to study \dashedarrow
+    \item Mike and Lina / to have \dashedarrow
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\exercisebox{3} \textbf{Put the following verbs in the correct tense.}
+\begin{enumerate}[label=\arabic*.]
+    \item He (just, phone) Sabrina; she is in Chicago now.
+    \item I (buy, recently) a laptop to Louis.
+    \item The maid (not, cook) the dinner yet.
+    \item She (drive) this car for two hours.
+    \item He (to be) in prison since 2003.
+    \item (you, ever, read) Hemingway's novels?
+\end{enumerate}
+
+\end{document}
+```

@@ -1,0 +1,30 @@
+Certainly! Here's the transcription of the text from the image into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{lipsum}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\title{Second multicols Demo}
+\author{}
+\date{April 2021}
+
+\maketitle
+
+\section*{1 First Section}
+
+All human things are subject to decay. And when fate summons, Monarchs must obey.
+
+\begin{multicols}{3}
+\lipsum[1]
+\lipsum[2]
+\lipsum[3]
+\end{multicols}
+
+\end{document}
+```
+
+This LaTeX code sets up a document with a title, date, and a section. It uses the `multicols` environment to create three columns of text, filled with Lorem Ipsum dummy text. Adjust the `\lipsum` indices as needed to match the specific text in each column.

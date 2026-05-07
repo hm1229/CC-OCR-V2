@@ -1,0 +1,138 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ship Specification Table</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #000;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            vertical-align: top;
+        }
+        /* Mimicking the specific layout of the image */
+        .col-1 { width: 35%; }
+        .col-2 { width: 20%; }
+        .col-3 { width: 45%; }
+        
+        /* Specific row styling to match image structure */
+        .row-header {
+            font-weight: bold;
+            text-align: left;
+        }
+        .sub-item {
+            margin-left: 10px;
+        }
+        .indent-1 {
+            margin-left: 20px;
+        }
+        .indent-2 {
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <!-- Top Section: Main Dimensions, Cargo Capacity, TEU -->
+        <tr>
+            <td class="col-1">
+                <div class="row-header">A. Main Dimensions</div>
+                <div class="sub-item">(i) LOA (m)</div>
+                <div class="sub-item">(ii) Length between perpendiculars (m)</div>
+                <div class="sub-item">(iii) Deadweight capacity (DWT) (mts)</div>
+                <div class="sub-item">(iv) Design draft (m)</div>
+            </td>
+            <td class="col-2">
+                <div class="row-header">B. cargo capacity</div>
+                <div class="sub-item">(i) Cubic capacity</div>
+                <div class="sub-item">(ii) Rold capacity</div>
+            </td>
+            <td class="col-3">
+                <div class="row-header">B2. TEU carrying capacity (state number of containers)</div>
+                <div class="sub-item">(i) Total on deck</div>
+                <div class="indent-1">a. 20' /40' /45' TEU</div>
+                <div class="indent-1">b. No. of reefers</div>
+                <div class="sub-item">(ii) Total under deck</div>
+                <div class="indent-1">a. 20' /40' /45' TEU</div>
+                <div class="indent-1">b. No. of reefers</div>
+            </td>
+        </tr>
+
+        <!-- Middle Section: Main Engine, Average Speed, Other Matters -->
+        <tr>
+            <td class="col-1">
+                <div class="row-header">Main engine</div>
+                <div class="sub-item">(i) Maker/Type</div>
+                <div class="sub-item">(ii) Max. continuous rating (kilowatts at MCR)</div>
+                <div class="sub-item">(iii) RPM at MCR</div>
+                <div class="sub-item">(iv) Specific Fuel Oil Consumption at MCR</div>
+            </td>
+            <td class="col-2" colspan="2">
+                <div class="row-header">D. Average speed</div>
+                <div class="sub-item">(i) Service speed (knot) at design draft</div>
+                <div class="row-header">E. Other matters (optional )</div>
+            </td>
+        </tr>
+
+        <!-- Bottom Section: Contractual Details -->
+        <tr>
+            <td class="col-1">
+                <div class="row-header">5. BUILDER' s Hull Number</div>
+            </td>
+            <td class="col-2">
+                <div class="row-header">6. Flag State</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-1">
+                <div class="row-header">7. Classification Society/Class character</div>
+            </td>
+            <td class="col-2">
+                <div class="row-header">8. Contract Price and Currency</div>
+                <div class="sub-item">(a) Price</div>
+                <div class="sub-item">(b) Currency</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-1">
+                <div class="row-header">9. Contractual Date of Delivery</div>
+            </td>
+            <td class="col-2">
+                <div class="row-header">10. Payments</div>
+                <div class="sub-item">1st installment</div>
+                <div class="sub-item">2nd installment</div>
+                <div class="sub-item">3rd installment</div>
+                <div class="sub-item">4th installment</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-1">
+                <div class="row-header">11. BUILDER' s Bank Account Data</div>
+                <div class="sub-item">Name:</div>
+                <div class="sub-item">Address:</div>
+                <div class="sub-item">Country:</div>
+            </td>
+            <td class="col-2" colspan="2" style="height: 50px;"></td>
+        </tr>
+    </table>
+
+</body>
+</html>
+```

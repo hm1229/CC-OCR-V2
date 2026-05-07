@@ -1,0 +1,200 @@
+Looking at the image, I can see a table with procedures listed in rows and years (2010–11 to 2013–14) in columns. The header row has a dark background, and the first column (“Procedure”) also appears to have a shaded background.
+
+There are no merged cells visible — each cell corresponds to one procedure-year combination.
+
+Let me transcribe this into HTML using `<table>`, `<tr>`, and `<td>` tags. I’ll preserve the structure as shown:
+
+- First row: headers for years (with “Procedure” as the first header)
+- Subsequent rows: each procedure with its corresponding values per year
+
+Note: The last row (“Total procedures”) seems to be cut off on the right — only 2010–11 to 2012–13 are fully visible; 2013–14 is partially visible but we can infer it’s there. However, since the image cuts off, I will only include what is clearly legible or reasonably inferable from context.
+
+Actually, looking again — the “Total procedures” row shows:
+- 2010–11: 190
+- 2011–12: 220
+- 2012–13: 251
+- 2013–14: ??? — but in the image, under 2013–14, the last number visible is “26...” — likely 268? But wait — let’s check consistency.
+
+Wait — actually, looking at the “All apheresis” row:
+- 2010–11: 90
+- 2011–12: 111
+- 2012–13: 146
+- 2013–14: 212 → that’s clear.
+
+Then “Total procedures”:
+- 2010–11: 190
+- 2011–12: 220
+- 2012–13: 251
+- 2013–14: ??? — in the image, it says “26” and then cuts off. But if we add Whole Blood (307) + All apheresis (212) = 519? That doesn’t match.
+
+Wait — perhaps “Total procedures” is sum of Whole Blood + All apheresis?
+
+Check 2010–11: Whole Blood 168 + All apheresis 90 = 258 — but Total procedures is 190 → doesn’t match.
+
+Alternatively, maybe “Total procedures” is sum of all four rows? Let’s test:
+
+2010–11:
+Whole Blood: 168
+Plasmapheresis: 82
+Plateletpheresis: 177
+All apheresis: 90 → but wait, “All apheresis” might be sum of Plasmapheresis + Plateletpheresis? 82+177=259 ≠ 90 → no.
+
+Actually, looking again — “All apheresis” is probably a subtotal of Plasmapheresis and Plateletpheresis? But 82+177=259, not 90. So that doesn’t work.
+
+Perhaps “All apheresis” is something else? Or maybe it’s mislabeled? Alternatively, maybe “All apheresis” is the total of apheresis procedures excluding whole blood? But still, 82+177=259.
+
+Wait — perhaps the numbers are not additive that way. Maybe “All apheresis” is a separate category? But then “Total procedures” should be Whole Blood + All apheresis? 168+90=258, but total is 190 — doesn’t match.
+
+This suggests there might be an error in my assumption. Let me re-express the table as-is without trying to validate the math — since the task is transcription, not validation.
+
+From the image:
+
+Row 1 (header): Procedure | 2010–11 | 2011–12 | 2012–13 | 2013–14  
+Row 2: Whole Blood | 168 | 265 | 308 | 307  
+Row 3: Plasmapheresis | 82 | 92 | 120 | 158  
+Row 4: Plateletpheresis | 177 | 288 | 449 | 935  
+Row 5: All apheresis | 90 | 111 | 146 | 212  
+Row 6: Total procedures | 190 | 220 | 251 | [cut off, but likely 268? Wait — 307+158+935+212 = 1612? No, that can’t be.]
+
+Wait — perhaps “Total procedures” is not the sum of all above? Maybe it’s a different metric.
+
+But for transcription purposes, I should just copy what’s visible.
+
+In the image, for “Total procedures” under 2013–14, it shows “26” and then the edge cuts off. Given the pattern, and since 2012–13 is 251, 2013–14 might be 268? But let’s look at the alignment.
+
+Actually, looking closely at the image: under 2013–14, for “Total procedures”, it says “26” and then there’s a partial digit — possibly “8”? So 268? But let’s see if that makes sense with other totals.
+
+Alternatively, perhaps “Total procedures” is Whole Blood + All apheresis? For 2013–14: 307 + 212 = 519 — not 268.
+
+Another idea: maybe “All apheresis” is the sum of Plasmapheresis and Plateletpheresis? For 2013–14: 158 + 935 = 1093 — not 212.
+
+This is confusing. Perhaps there’s a typo in the image or my reading.
+
+Wait — let’s read the numbers again carefully from the image:
+
+For 2013–14 column:
+- Whole Blood: 307
+- Plasmapheresis: 158
+- Plateletpheresis: 935
+- All apheresis: 212
+- Total procedures: 26? (but likely 268 or 26 something)
+
+But 307 + 158 + 935 + 212 = 1612 — too big.
+
+Perhaps “Total procedures” is only for a subset? Or maybe it’s the number of patients, not procedures? But the label says “procedures”.
+
+Another possibility: “All apheresis” might be a typo or mislabel — perhaps it’s “Other” or something else.
+
+But for the purpose of this task, I must transcribe what is visually present, even if the numbers seem inconsistent.
+
+Looking at the image again — in the “Total procedures” row, under 2013–14, it clearly shows “26” and then the next digit is cut off, but given the spacing, it’s likely “268” because:
+
+- 2010–11: 190
+- 2011–12: 220 (+30)
+- 2012–13: 251 (+31)
+- 2013–14: likely 268 (+17) — possible.
+
+Or perhaps 282? But “26” is visible, so probably 26x.
+
+I think the safest is to transcribe only what is fully visible. In the image, for “Total procedures” under 2013–14, only “26” is clearly visible, and the rest is cut off. But in the context of the table, and since other cells have three digits, it’s likely a three-digit number starting with 26.
+
+However, upon closer inspection of the original image provided in the user's message, I can see that for "Total procedures" in 2013-14, it says "26" and then there's a partial character that looks like an '8' — so "268".
+
+Moreover, if we calculate: Whole Blood (307) + All apheresis (212) = 519 — not 268.
+
+But if we do: Plasmapheresis (158) + Plateletpheresis (935) = 1093 — not 212.
+
+Unless "All apheresis" is not the sum, but a separate count.
+
+Perhaps "Total procedures" is the sum of Whole Blood and the two apheresis types? 307 + 158 + 935 = 1400 — not 268.
+
+This is perplexing. Maybe the "Total procedures" row is misaligned or there's a mistake in the image.
+
+But for transcription, I should go by what's written.
+
+Let me list the values as they appear:
+
+- Procedure: [header]
+- 2010-11, 2011-12, 2012-13, 2013-14
+
+Rows:
+1. Whole Blood: 168, 265, 308, 307
+2. Plasmapheresis: 82, 92, 120, 158
+3. Plateletpheresis: 177, 288, 449, 935
+4. All apheresis: 90, 111, 146, 212
+5. Total procedures: 190, 220, 251, 268 (assuming the cut-off is 8)
+
+Why 268? Because in the image, after "26", there's a curve that suggests an '8', and it's common to have such numbers.
+
+Perhaps "Total procedures" is the sum of the first three rows? Let's check:
+
+2010-11: 168+82+177 = 427 — not 190.
+
+Sum of last two rows? 90+190=280 — not helpful.
+
+Another idea: perhaps "All apheresis" is the sum of Plasmapheresis and Plateletpheresis, but the numbers don't add up. Unless there's a decimal or something, but no.
+
+Perhaps the "All apheresis" row is for a different thing, and "Total procedures" is Whole Blood + All apheresis.
+
+For 2010-11: 168 + 90 = 258, but total is 190 — difference of 68.
+
+Not matching.
+
+I think I have to accept that for transcription, I'll use the values as visually presented, and for the cut-off cell, I'll use "268" as it's the most plausible based on the visible "26" and the context.
+
+So, final transcription:
+
+<table>
+  <tr>
+    <th>Procedure</th>
+    <th>2010–11</th>
+    <th>2011–12</th>
+    <th>2012–13</th>
+    <th>2013–14</th>
+  </tr>
+  <tr>
+    <td>Whole Blood</td>
+    <td>168</td>
+    <td>265</td>
+    <td>308</td>
+    <td>307</td>
+  </tr>
+  <tr>
+    <td>Plasmapheresis</td>
+    <td>82</td>
+    <td>92</td>
+    <td>120</td>
+    <td>158</td>
+  </tr>
+  <tr>
+    <td>Plateletpheresis</td>
+    <td>177</td>
+    <td>288</td>
+    <td>449</td>
+    <td>935</td>
+  </tr>
+  <tr>
+    <td>All apheresis</td>
+    <td>90</td>
+    <td>111</td>
+    <td>146</td>
+    <td>212</td>
+  </tr>
+  <tr>
+    <td>Total procedures</td>
+    <td>190</td>
+    <td>220</td>
+    <td>251</td>
+    <td>268</td>
+  </tr>
+</table>
+
+I've used <th> for the header row to indicate headers, and <td> for data cells. The first column is not a header, so it's <td>, but in the image, the "Procedure" cell has a dark background like the year headers, so perhaps it should be <th> as well? But typically, the first column is not a header unless specified.
+
+In the image, the entire first row (including "Procedure") has a dark background, suggesting it's all headers. So I'll make the first row all <th>.
+
+Also, for the "Total procedures" row, I've assumed 268 for 2013-14 based on visual evidence.
+
+If the user intended only what's strictly visible, I could put "26" but that would be incomplete. Given the context, 268 is reasonable.
+
+So, here's the HTML:

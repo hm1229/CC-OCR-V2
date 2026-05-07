@@ -1,0 +1,75 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath, amssymb, array}
+\begin{document}
+
+\begin{center}
+\textbf{\underline{Fourier Transform Pairs}} \\[6pt]
+\small{$(n,t,\omega,a,\omega_o,t_o$ are Real numbers ; $j = \text{complex number}$ ; $n = \text{integer}$ ; $\omega = \text{angular frequency})$} \\[10pt]
+
+% Left table
+\begin{tabular}{|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{4.2cm}|}
+\hline
+\textbf{Time Domain} & \textbf{Fourier Transform} \\
+\hline
+$f(t)$ & $\displaystyle \int_{-\infty}^{+\infty} f(t)e^{-j\omega t} \,dt$ \\
+\hline
+$a_1f_1(t)+a_2f_2(t)$ & $a_1F_1(\omega)+a_2F_2(\omega)$ \\
+\hline
+$e^{j\omega_o t} f(t)$ & $F(\omega-\omega_o)$ \\
+\hline
+$\displaystyle \frac{d^n\left[f(t)\right]}{dt^n}$ \newline $(n>0)$ & $(j\omega)^n F(\omega)$ \\
+\hline
+$e^{-at}u(t)$ \newline $a>0$ & $\displaystyle \frac{1}{a+j\omega}$ \\
+\hline
+$\cos(\omega_o t)$ & $\pi\left[\delta(\omega-\omega_o)+\delta(\omega+\omega_o)\right]$ \\
+\hline
+$\delta(t)$ & $1$ \\
+\hline
+$1$ & $2\pi \cdot \delta(\omega)$ \\
+\hline
+$u(t)$ & $\displaystyle \pi \cdot \delta(\omega) + \frac{1}{j\omega}$ \\
+\hline
+$u(t)-u(-t)$ & $\displaystyle \frac{2}{j\omega}$ \\
+\hline
+$t^{(n-1)} \cdot e^{-at} \cdot u(t)$ \newline $a>0\;;\;n>0$ & $\displaystyle \frac{(n-1)!}{(a+j\omega)^n}$ \\
+\hline
+$\cos(\omega_o t)\cdot f(t)$ & $\displaystyle \frac{1}{2}\left[F(\omega-\omega_o)+F(\omega+\omega_o)\right]$ \\
+\hline
+\end{tabular}
+\hspace{0.4cm}
+% Right table
+\begin{tabular}{|>{\centering\arraybackslash}m{3cm}|>{\centering\arraybackslash}m{4.2cm}|}
+\hline
+\textbf{Time Domain} & \textbf{Fourier Transform} \\
+\hline
+$\displaystyle \frac{1}{2\pi}\int_{-\infty}^{+\infty} F(\omega)e^{j\omega t}\,d\omega$ & $F(\omega)$ \\
+\hline
+$f(a\cdot t)$ \newline $a \neq 0$ & $\displaystyle \frac{1}{|a|}F\left(\frac{\omega}{a}\right)$ \\
+\hline
+$f(t-t_o)$ & $e^{-j\omega t_o}F(\omega)$ \\
+\hline
+$(-jt)^n f(t)$ \newline $(n>0)$ & $\displaystyle \frac{d^n\left[F(\omega)\right]}{d\omega^n}$ \\
+\hline
+$e^{at}u(-t)$ \newline $a>0$ & $\displaystyle \frac{1}{a-j\omega}$ \\
+\hline
+$\sin(\omega_o t)$ & $\displaystyle \frac{\pi}{j}\left[\delta(\omega-\omega_o)-\delta(\omega+\omega_o)\right]$ \\
+\hline
+$\delta(t-t_o)$ & $e^{-j\omega t_o}$ \\
+\hline
+$e^{j\omega_o t}$ & $2\pi \cdot \delta(\omega-\omega_o)$ \\
+\hline
+$u(-t)$ & $\displaystyle \pi \cdot \delta(\omega) - \frac{1}{j\omega}$ \\
+\hline
+$u(t)+u(-t)$ & $2\pi\delta(\omega)$ \\
+\hline
+$t^{(n-1)} \cdot e^{at} \cdot u(-t)$ \newline $a>0\;;\;n>0$ & $\displaystyle \frac{(n-1)!}{(a-j\omega)^n}\cdot (-1)^{n-1}$ \\
+\hline
+$\sin(\omega_o t)\cdot f(t)$ & $\displaystyle \frac{1}{2j}\left[F(\omega-\omega_o)-F(\omega+\omega_o)\right]$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
+```
+All notation, formatting, and entries exactly match the source table, including subscript $o$ (not 0) for $\omega_o, t_o$, use of $j$ as the imaginary unit, and all stated domain constraints.

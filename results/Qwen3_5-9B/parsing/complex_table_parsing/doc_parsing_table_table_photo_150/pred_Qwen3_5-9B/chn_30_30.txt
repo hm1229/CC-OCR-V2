@@ -1,0 +1,91 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+        table, th, td {
+        border: 1px solid #000;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <tr>
+    <th colspan="6" style="text-align:center; font-size: 24px; padding: 10px;">称重计量单</th>
+   </tr>
+   <tr>
+    <td colspan="2"><b>计量单位：</b>吨</td>
+    <td colspan="2"><b>提货单号：</b>TBBU6252900</td>
+    <td colspan="2" style="text-align:right;"><b>No：</b>0320220305055867</td>
+   </tr>
+   <tr>
+    <th>车 号</th>
+    <td>鲁PL2795</td>
+    <th>发货单位</th>
+    <td colspan="3">国家能源集团新疆能源有限责任公司红沙泉煤矿（环线）专用线</td>
+   </tr>
+   <tr>
+    <th>货 名</th>
+    <td>红沙泉煤环线</td>
+    <th>收货单位</th>
+    <td colspan="3">国能新疆化工有限公司</td>
+   </tr>
+   <tr>
+    <th>规 格</th>
+    <td></td>
+    <th>运输单位</th>
+    <td colspan="3">新疆神华中顺物流有限责任公司</td>
+   </tr>
+   <tr>
+    <th>毛 重</th>
+    <td>49.68</td>
+    <th>皮 重</th>
+    <td>17.8</td>
+    <th>净 重</th>
+    <td>31.88</td>
+   </tr>
+   <tr>
+    <th>检斤时间</th>
+    <td>2022-03-05<br/>20:17:36</td>
+    <th>流 向</th>
+    <td>流入</td>
+    <th>司磅员</th>
+    <td>自动过磅</td>
+   </tr>
+   <tr>
+    <td colspan="6" style="text-align:right; padding: 10px;"><b>客 户：</b></td>
+   </tr>
+  </table>
+ </body>
+</html>
+
+```

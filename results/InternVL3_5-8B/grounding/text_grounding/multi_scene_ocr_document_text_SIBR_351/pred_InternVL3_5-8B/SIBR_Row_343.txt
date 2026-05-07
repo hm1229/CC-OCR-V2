@@ -1,0 +1,30 @@
+To determine the coordinates of the region containing the text '3', we need to analyze the image and identify the bounding box that encloses the text '3'. Let's break down the process step-by-step:
+
+1. **Identify the Text '3':**
+   The text '3' appears multiple times in the image. We need to focus on the specific '3' that is relevant to the context of the question. For this example, let's consider the '3' located in the quantity column next to the item "竹茹配方颗粒 10g*1包".
+
+2. **Locate the Bounding Box:**
+   We need to visually identify the bounding box that encloses the text '3'. This involves finding the top-left and bottom-right corners of the box.
+
+3. **Normalize the Coordinates:**
+   The coordinates should be normalized based on the image's width and height. The image width and height are approximately 1000 pixels each.
+
+Let's assume the bounding box for the text '3' is as follows:
+
+- **Top-left corner (x1, y1):** The text '3' starts at approximately 150 pixels from the left and 200 pixels from the top.
+- **Bottom-right corner (x2, y2):** The text '3' ends at approximately 160 pixels from the left and 210 pixels from the top.
+
+Given the image dimensions of 1000x1000 pixels, the normalized coordinates would be:
+
+\[ \text{x1} = \frac{150}{1000} = 0.150 \]
+\[ \text{y1} = \frac{200}{1000} = 0.200 \]
+\[ \text{x2} = \frac{160}{1000} = 0.160 \]
+\[ \text{y2} = \frac{210}{1000} = 0.210 \]
+
+Thus, the normalized coordinates of the bounding box are:
+
+\[ (0.150, 0.200, 0.160, 0.210) \]
+
+So, the final answer is:
+
+\[ (150, 200, 160, 210) \]

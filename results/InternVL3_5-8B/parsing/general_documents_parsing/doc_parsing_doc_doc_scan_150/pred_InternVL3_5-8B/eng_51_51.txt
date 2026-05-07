@@ -1,0 +1,84 @@
+Certainly! Here's the transcription of the image's text, tables, and equations into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\section*{Formulas for Discrete-Time LTI Signals and Systems}
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Name} & \textbf{Formula} \\ \hline
+Area under impulse & $\sum_{n} \delta(n) = 1$ \\ \hline
+Multiplication by impulse & $f(n) \delta(n) = f(0) \delta(n)$ \\ \hline
+... by shifted impulse & $f(n) \delta(n - n_0) = f(n_0) \delta(n - n_0)$ \\ \hline
+Convolution & $f(n) * g(n) = \sum_{k} f(k) g(n - k)$ \\ \hline
+... with an impulse & $f(n) * \delta(n) = f(n)$ \\ \hline
+... with a shifted impulse & $f(n) * \delta(n - n_0) = f(n - n_0)$ \\ \hline
+Transfer function & $H(z) = \sum_{n} h(n) z^{-n}$ \\ \hline
+Frequency response & $H'( \omega ) = \sum_{n} h(n) e^{-j \omega n}$ \\ \hline
+... their connection & $H'( \omega ) = H(e^{j \omega})$ \\ 
+\multicolumn{2}{|c|}{provided unit circle $\subset$ ROC} \\ \hline
+\end{tabular}
+
+\section*{Useful Formulas}
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Name} & \textbf{Formula} \\ \hline
+Euler's formula & $e^{j \theta} = \cos(\theta) + j \sin(\theta)$ \\ \hline
+... for cosine & $\cos(\theta) = \frac{e^{j \theta} + e^{-j \theta}}{2}$ \\ \hline
+... for sine & $\sin(\theta) = \frac{e^{j \theta} - e^{-j \theta}}{2j}$ \\ \hline
+Sinc function & $\text{sinc}(\theta) = \frac{\sin(\pi \theta)}{\pi \theta}$ \\ \hline
+\end{tabular}
+
+\section*{Z-transform Transform Pairs}
+
+\begin{tabular}{|c|c|c|}
+\hline
+$x(n)$ & $X(z)$ & ROC \\ \hline
+$x(n)$ & $\sum_{n} x(n) z^{-n}$ & (def.) \\ \hline
+$\delta(n)$ & 1 & all $z$ \\ \hline
+$u(n)$ & $\frac{z}{z - 1}$ & $|z| > 1$ \\ \hline
+$a^n u(n)$ & $\frac{z}{z - a}$ & $|z| > |a|$ \\ \hline
+$-a^n u(-n - 1)$ & $\frac{z}{z - a}$ & $|z| < |a|$ \\ \hline
+$\cos(\omega_0 n) u(n)$ & $\frac{z^2 - \cos(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\ \hline
+$\sin(\omega_0 n) u(n)$ & $\frac{\sin(\omega_0) z}{z^2 - 2 \cos(\omega_0) z + 1}$ & $|z| > 1$ \\ \hline
+$a^n \cos(\omega_0 n) u(n)$ & $\frac{z^2 - a \cos(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\ \hline
+$a^n \sin(\omega_0 n) u(n)$ & $\frac{a \sin(\omega_0) z}{z^2 - 2 a \cos(\omega_0) z + a^2}$ & $|z| > |a|$ \\ \hline
+\end{tabular}
+
+\section*{Formulas for Continuous-Time LTI Signals and Systems}
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Name} & \textbf{Formula} \\ \hline
+Area under impulse & $\int \delta(t) dt = 1$ \\ \hline
+Multiplication by impulse & $f(t) \delta(t) = f(0) \delta(t)$ \\ \hline
+... by shifted impulse & $f(t) \delta(t - t_0) = f(t_0) \delta(t - t_0)$ \\ \hline
+Convolution & $f(t) * g(t) = \int f(\tau) g(t - \tau) d\tau$ \\ \hline
+... with an impulse & $f(t) * \delta(t) = f(t)$ \\ \hline
+... with a shifted impulse & $f(t) * \delta(t - t_0) = f(t - t_0)$ \\ \hline
+Transfer function & $H(s) = \int h(t) e^{-st} dt$ \\ \hline
+Frequency response & $H'( \omega ) = \int h(t) e^{-j \omega t} dt$ \\ \hline
+... their connection & $H'( \omega ) = H(j \omega)$ \\ 
+\multicolumn{2}{|c|}{provided $j \omega$-axis $\subset$ ROC} \\ \hline
+\end{tabular}
+
+\section*{Z-transform Transform Properties}
+
+\begin{tabular}{|c|c|}
+\hline
+$x(n)$ & $X(z)$ \\ \hline
+$a x(n) + b g(n)$ & $a X(z) + b G(z)$ \\ \hline
+$x(n - n_0)$ & $z^{-n_0} X(z)$ \\ \hline
+$x(n) * f(n)$ & $X(z) F(z)$ \\ \hline
+\end{tabular}
+
+\end{document}
+```
+
+This LaTeX document accurately transcribes the text, tables, and equations from the image.

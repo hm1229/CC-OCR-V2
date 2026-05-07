@@ -1,0 +1,66 @@
+Here is the HTML transcription of the table from the provided image, using `<tr>` and `<td>` tags with appropriate `rowspan` and `colspan` attributes to reflect merged cells as shown in the original document layout.
+
+```html
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+  <tr>
+    <th colspan="4" style="text-align: center; font-size: 1.5em; padding: 10px;">竣工验收申请报告</th>
+  </tr>
+  <tr>
+    <td style="width: 20%;">项目名称</td>
+    <td style="width: 30%;">2021年道路维修<br/>一期一标段</td>
+    <td style="width: 20%;">施工范围</td>
+    <td style="width: 30%;">千童大道</td>
+  </tr>
+  <tr>
+    <td>监理单位</td>
+    <td></td>
+    <td>施工单位</td>
+    <td>中安城投建设<br/>有限公司</td>
+  </tr>
+  <tr>
+    <td>开工时间</td>
+    <td></td>
+    <td>竣工时间</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="3">竣工报告<br/>申请说明</td>
+    <td colspan="3">
+      <p>一、工程概况 &nbsp;&nbsp;千童大道</p>
+      <p>二、工程现已完工，并自检、初验合格。申请沧州市市政设施管理中心组织竣工验收。</p>
+      <br/><br/><br/>
+      <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <span>监理单位盖章</span>
+        <span>施工单位盖章</span>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <!-- This row is part of the rowspan above -->
+  </tr>
+  <tr>
+    <!-- This row is part of the rowspan above -->
+  </tr>
+  <tr>
+    <td>申请单位</td>
+    <td colspan="2">中安城投建设有限公司</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>申请日期</td>
+    <td>2022年5月7日</td>
+    <td>联系方式</td>
+    <td>15030768706</td>
+  </tr>
+</table>
+```
+
+### Notes:
+- The main title “竣工验收申请报告” spans all 4 columns.
+- The “竣工报告申请说明” cell spans 3 rows vertically (rows 4–6) to accommodate the large content area.
+- Within that merged cell, we’ve included both sections (“一、工程概况” and “二、工程现已完工...”) plus the signature lines for “监理单位盖章” and “施工单位盖章”, positioned side-by-side at the bottom.
+- Handwritten entries are transcribed as plain text within the corresponding `<td>` elements.
+- Empty cells (like 监理单位, 开工时间, 竣工时间) are left blank but still represented by `<td></td>`.
+- Styling is minimal and inline for clarity — you can adjust CSS as needed for rendering.
+
+This structure faithfully mirrors the visual layout and merging behavior of the original form.

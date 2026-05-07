@@ -1,0 +1,195 @@
+用户现在需要把图片中的内容转换成LaTeX格式，要准确无误。首先得仔细看图片里的每个部分，包括标题、说明、测试题等。
+
+首先看顶部的标识和标题：
+
+“PROVINCIAL DEPARTMENT OF EDUCATION NORTH WESTERN PROVINCE” 是标题，然后是“THIRD TERM TEST - 2020 ENGLISH LANGUAGE - I”，Grade 11，Name/Index No.，然后是说明“Answer all questions on this paper itself.”
+
+然后Test-1是对话填空，右边的选项是(a) want, (b) package, (c) stamps, (d) weighs, (e) express, (f) tomorrow。对话里的空白是(1)到(6)。
+
+然后Test-2是酒店信息，预填了第一个preposition“from”，然后其他空是(2)到(5)等，预填了(6)是“until”？不，看图片里Test-2的说明是“complete them with the correct prepositions given below. The first one is done for you.” 第一个句子是“The following information will help you to have an enjoyable stay: from” 所以第一个是from，然后其他空要填。
+
+现在要逐行转录，注意格式，比如标题用\section或者\textbf，对话用\texttt或者普通文本，选项用列表等。
+
+首先处理顶部：
+
+\textbf{PROVINCIAL DEPARTMENT OF EDUCATION NORTH WESTERN PROVINCE}
+
+\textbf{THIRD TERM TEST - 2020} \\
+\textbf{ENGLISH LANGUAGE - I} \\
+Grade 11 \\
+Name / Index No. : \\
+Answer all questions on this paper itself.
+
+然后Test-1部分：
+
+\textbf{Test-1} Fill in the blanks in the following dialogue. Use the words given in the box. Write the letter of the correct word in the space given. The first one is done for you.
+
+\begin{tabular}{|l|l|}
+\hline
+Postal clerk & : What can I do for you today? \\
+\hline
+Anne & : I need to mail this (1) \underline{\hspace{1cm}} (b) \underline{\hspace{1cm}} to Galle, please. \\
+\hline
+Postal clerk & : OK, let's see how much it (2) \underline{\hspace{1cm}} (d) \underline{\hspace{1cm}}. Well, It's about 350 grams. \\
+\hline
+Anne & : I need to send it by (3) \underline{\hspace{1cm}} (e) \underline{\hspace{1cm}} mail. \\
+\hline
+Postal clerk & : If you do so, it will get there (4) \underline{\hspace{1cm}} (f) \underline{\hspace{1cm}}. Or you can send it priority and it will get there by Saturday. \\
+\hline
+Anne & : Saturday is fine. How much will that be? \\
+\hline
+Postal clerk & : Rs.750. Do you (5) \underline{\hspace{1cm}} (a) \underline{\hspace{1cm}} anything else? \\
+\hline
+Anne & : Oh, yes! I almost forgot. I need a book of (6) \underline{\hspace{1cm}} (c) \underline{\hspace{1cm}}, too. \\
+\hline
+Postal clerk & : OK, your total is Rs.1950. \\
+\hline
+\end{tabular}
+
+\textbf{Options:} \\
+(a) want \quad (b) package \quad (c) stamps \quad (d) weighs \quad (e) express \quad (f) tomorrow \\
+\textbf{Marks:} 1 x 5 \quad \textbf{Total:} 05
+
+然后Test-2部分：
+
+\textbf{Test-2} Read the following guidelines given by a hotel to its guests and complete them with the correct prepositions given below. The first one is done for you.
+
+\textbf{The Moon Hotel} \\
+The following information will help you to have an enjoyable stay: \\
+\begin{itemize}
+\item The restaurant is open daily (1) \underline{\hspace{1cm}} \textbf{from} \underline{\hspace{1cm}} 6.30 a.m. to 9.30 p.m.
+\item You can order breakfast in your room by hanging the Menu card (2) \underline{\hspace{1cm}} \textbf{on} \underline{\hspace{1cm}} the door.
+\item If you need a doctor (3) \underline{\hspace{1cm}} \textbf{during} \underline{\hspace{1cm}} the night, please call 100.
+\item There is a play room (4) \underline{\hspace{1cm}} \textbf{for} \underline{\hspace{1cm}} kids below 10 years.
+\item There is free wifi in the rooms and the password is given in the back (5) \underline{\hspace{1cm}} \textbf{of} \underline{\hspace{1cm}} your room key.
+\item The main gate is open (6) \underline{\hspace{1cm}} \textbf{until} \underline{\hspace{1cm}} 10.00 p.m.
+\end{itemize}
+\textbf{Marks:} 1 x 5 \quad \textbf{Total:} 05
+
+需要注意图片中的细节，比如Test-2的选项是during, till, for, of, from, on，第一个已经填了from，所以其他空要对应。另外，图片中的“from”是第一个空，所以(1)是from。然后其他空：
+
+(2) 应该是on（hanging the Menu card on the door）；
+
+(3) 是during（during the night）；
+
+(4) 是for（play room for kids）；
+
+(5) 是of（back of your room key）；
+
+(6) 是until（open until 10.00 p.m.）。
+
+现在要确保LaTeX中的格式，比如表格、项目符号，还有下划线表示空白。另外，图片中的“1 x 5”是每个小题1分，共5题，总分05。Test-2也是1x5，总分05。
+
+另外，图片顶部有斯里兰卡语的“All Rights Reserved”和“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”之类的，但可能用户需要的是主要的英文内容，不过题目要求“transcribe the image's text, tables, and equations into LaTeX format without alteration”，所以可能需要包含所有文字，包括顶部的斯里兰卡语？不过图片中顶部有“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”（可能是“College Emblem”之类的？不，看图片左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”？不，原图片左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”？不，看用户提供的图片，左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”？不，原图片中左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”可能不是，看图片中的文字：“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”是斯里兰卡语，对应“All Rights Reserved”在上方。所以需要包含这些吗？题目说“transcribe the image's text, tables, and equations into LaTeX format without alteration”，所以应该包含所有可见文字，包括顶部的斯里兰卡语和英文。
+
+看图片左上角：“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”？不，原图片中左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”可能不是，看用户提供的图片，左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”？不，看图片中的文字，左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”（可能是“College Emblem”？不，原图片中左上角是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”是斯里兰卡语，对应“All Rights Reserved”在它下面。所以需要把这两个都包含进去。
+
+所以开头部分：
+
+\textbf{විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය} \\
+\textit{All Rights Reserved} \\
+
+然后是部门名称等。
+
+现在整理所有内容：
+
+首先，图片中的文字：
+
+- 左上角：විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය（可能是“College Emblem”？不，看图片中的文字，应该是“විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය”是“College Seal”之类的，然后下面是“All Rights Reserved”。
+
+然后是“PROVINCIAL DEPARTMENT OF EDUCATION NORTH WESTERN PROVINCE”
+
+然后是“THIRD TERM TEST - 2020 ENGLISH LANGUAGE - I”
+
+“Grade 11”
+
+“Name / Index No. :”
+
+“Answer all questions on this paper itself.”
+
+然后Test-1，Test-2等。
+
+现在把所有内容用LaTeX排版，注意换行和格式。
+
+另外，图片中的“Total: 05”在Test-1和Test-2的右侧，所以用\textbf{Total:} 05。
+
+现在开始编写LaTeX代码：
+
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+% Top section with Sri Lankan text and All Rights Reserved
+\textbf{විශ්වවිද්‍යාල රුපානිකා ප්‍රාශිකය} \\
+\textit{All Rights Reserved} \\
+
+\vspace{0.5cm}
+
+\textbf{PROVINCIAL DEPARTMENT OF EDUCATION NORTH WESTERN PROVINCE} \\
+\textbf{THIRD TERM TEST - 2020} \\
+\textbf{ENGLISH LANGUAGE - I} \\
+Grade 11 \\
+Name / Index No. : \\
+Answer all questions on this paper itself.
+
+\vspace{1cm}
+
+\textbf{Test-1} Fill in the blanks in the following dialogue. Use the words given in the box. Write the letter of the correct word in the space given. The first one is done for you.
+
+\begin{tabular}{|p{8cm}|p{8cm}|}
+\hline
+\textbf{Postal clerk} & : What can I do for you today? \\
+\hline
+\textbf{Anne} & : I need to mail this (1) \underline{\hspace{1.5cm}} (b) \underline{\hspace{1.5cm}} to Galle, please. \\
+\hline
+\textbf{Postal clerk} & : OK, let's see how much it (2) \underline{\hspace{1.5cm}} (d) \underline{\hspace{1.5cm}}. Well, It's about 350 grams. \\
+\hline
+\textbf{Anne} & : I need to send it by (3) \underline{\hspace{1.5cm}} (e) \underline{\hspace{1.5cm}} mail. \\
+\hline
+\textbf{Postal clerk} & : If you do so, it will get there (4) \underline{\hspace{1.5cm}} (f) \underline{\hspace{1.5cm}}. Or you can send it priority and it will get there by Saturday. \\
+\hline
+\textbf{Anne} & : Saturday is fine. How much will that be? \\
+\hline
+\textbf{Postal clerk} & : Rs.750. Do you (5) \underline{\hspace{1.5cm}} (a) \underline{\hspace{1.5cm}} anything else? \\
+\hline
+\textbf{Anne} & : Oh, yes! I almost forgot. I need a book of (6) \underline{\hspace{1.5cm}} (c) \underline{\hspace{1.5cm}}, too. \\
+\hline
+\textbf{Postal clerk} & : OK, your total is Rs.1950. \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+\textbf{Options:} \\
+(a) want \quad (b) package \quad (c) stamps \quad (d) weighs \quad (e) express \quad (f) tomorrow \\
+\textbf{Marks:} 1 \times 5 \quad \textbf{Total:} 05
+
+\vspace{1cm}
+
+\textbf{Test-2} Read the following guidelines given by a hotel to its guests and complete them with the correct prepositions given below. The first one is done for you.
+
+\textbf{The Moon Hotel} \\
+The following information will help you to have an enjoyable stay: \\
+\begin{itemize}
+\item The restaurant is open daily (1) \underline{\hspace{1.5cm}} \textbf{from} \underline{\hspace{1.5cm}} 6.30 a.m. to 9.30 p.m.
+\item You can order breakfast in your room by hanging the Menu card (2) \underline{\hspace{1.5cm}} \textbf{on} \underline{\hspace{1.5cm}} the door.
+\item If you need a doctor (3) \underline{\hspace{1.5cm}} \textbf{during} \underline{\hspace{1.5cm}} the night, please call 100.
+\item There is a play room (4) \underline{\hspace{1.5cm}} \textbf{for} \underline{\hspace{1.5cm}} kids below 10 years.
+\item There is free wifi in the rooms and the password is given in the back (5) \underline{\hspace{1.5cm}} \textbf{of} \underline{\hspace{1.5cm}} your room key.
+\item The main gate is open (6) \underline{\hspace{1.5cm}} \textbf{until} \underline{\hspace{1.5cm}} 10.00 p.m.
+\end{itemize}
+\textbf{Marks:} 1 \times 5 \quad \textbf{Total:} 05
+
+\vspace{0.5cm}
+\textbf{(01)} % This is the numbering at the bottom of Test-2
+
+\end{document}
+
+需要检查图片中的细节，比如Test-2的最后一个项目是“The main gate is open (6) \underline{\hspace{1.5cm}} 10.00 p.m.”，而选项中有“till”，所以(6)应该是till，而LaTeX中写的是until，因为until和till都是可能的，但图片中可能已经填了until？不，图片中Test-2的说明是“complete them with the correct prepositions given below. The first one is done for you.” 给出的prepositions是during, till, for, of, from, on。第一个是from（已经填了），所以(6)应该是till，因为“open till 10.00 p.m.”是常用表达，而until也可以，但可能图片中是till。不过用户提供的图片中Test-2的(6)是“open (6) \underline{\hspace{1.5cm}} 10.00

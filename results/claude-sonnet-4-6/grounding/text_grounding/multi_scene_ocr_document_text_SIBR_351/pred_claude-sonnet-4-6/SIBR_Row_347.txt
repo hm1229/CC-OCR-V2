@@ -1,0 +1,40 @@
+I need to find all instances of '0.00' in the image and provide their locations.
+
+Looking at the receipt, I can see '0.00' appears in several places:
+
+1. 公补支付：0.00 - right side, upper payment area
+2. 统筹金支付：0.00 - left side
+3. 大额补助支付：0.00 - right side
+4. 个人现金支付：0.00 - left side, bottom
+
+Let me identify each one:
+
+1. **统筹金支付：0.00** - around middle-left area
+(290, 760, 400, 790)
+
+2. **公补支付：0.00** - right side
+(820, 725, 920, 755)
+
+3. **大额补助支付：0.00** - right side lower
+(820, 760, 950, 790)
+
+4. **个人现金支付：0.00** - left side bottom
+(290, 795, 400, 825)
+
+Since the question asks for "the region of the text '0.00'" (singular), I'll provide the most prominent one. But there are multiple instances. Let me provide coordinates for each:
+
+For **公补支付：0.00**:
+(870, 722, 960, 748)
+
+For **统筹金支付：0.00**:
+(330, 758, 415, 782)
+
+For **大额补助支付：0.00**:
+(880, 758, 965, 782)
+
+For **个人现金支付：0.00**:
+(330, 793, 415, 817)
+
+The most visible instance of just "0.00" after 公补支付:
+
+(870, 722, 960, 748) # 公补支付：0.00

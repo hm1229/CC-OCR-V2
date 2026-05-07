@@ -1,0 +1,177 @@
+Certainly! Here's the transcription of the text, tables, and equations from the image into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\section*{Formula Sheet for Physics 251}
+
+\subsection*{Constants}
+\begin{itemize}
+    \item $R = 8.3145 \, \frac{\text{J}}{\text{mol} \cdot \text{K}}$
+    \item $N_A = 6.02 \times 10^{23}$
+    \item $k_B = \frac{R}{N_A} = 1.38 \times 10^{-23} \, \frac{\text{J}}{\text{mol} \cdot \text{K}}$
+    \item $e = 1.602 \times 10^{-19} \, \text{C}$
+    \item $k = \frac{1}{4 \pi \epsilon_0} = 9 \times 10^9 \, \frac{\text{N} \cdot \text{m}^2}{\text{C}^2}$
+    \item $\mu_0 = 4 \pi \times 10^{-7} \, \frac{\text{T} \cdot \text{m}}{\text{A}}$
+    \item $c = 3 \times 10^8 \, \frac{\text{m}}{\text{s}}$
+\end{itemize}
+
+\subsection*{Thermal Expansion}
+\begin{itemize}
+    \item $\Delta L = \alpha L_0 \Delta T$
+    \item $\beta = 3 \alpha$
+\end{itemize}
+
+\subsection*{Heat}
+\begin{itemize}
+    \item $Q = mc \Delta T$
+    \item $Q = \pm mL$
+    \item $Q = nC_v \Delta T$
+    \item $Q = nC_p \Delta T$
+\end{itemize}
+
+\subsection*{Heat Current}
+\begin{itemize}
+    \item $H = k \frac{A}{L} (T_H - T_C)$
+    \item $H = A \epsilon \sigma T^4$
+\end{itemize}
+
+\subsection*{Quantities}
+\begin{itemize}
+    \item \textbf{Work}
+    \begin{itemize}
+        \item $W = \int_{V_i}^{V_f} P \, dV$
+    \end{itemize}
+    \item \textbf{Isochoric Processes}
+    \begin{itemize}
+        \item $W = 0$
+        \item $Q = nC_v \Delta T$
+        \item $\Delta U = nC_v \Delta T$
+    \end{itemize}
+    \item \textbf{Cyclic Processes}
+    \begin{itemize}
+        \item $W = Q$
+        \item $\Delta U = 0$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Ideal gases}
+\begin{itemize}
+    \item $PV = nRT$
+    \item $PV = Nk_B T$
+    \item $v_{\text{rms}} = \sqrt{\frac{3RT}{M}}$
+    \item $C_v = \frac{3}{2} R \, \text{(monatomic)}$
+    \item $C_v = \frac{5}{2} R \, \text{(diatomic)}$
+    \item $C_p = C_v + R$
+\end{itemize}
+
+\subsection*{Isobaric Processes}
+\begin{itemize}
+    \item $W = P \Delta V$
+    \item $Q = nC_p \Delta T$
+    \item $\Delta U = nC_v \Delta T$
+\end{itemize}
+
+\subsection*{Isothermal Processes}
+\begin{itemize}
+    \item $W = nRT \ln \left( \frac{V_f}{V_i} \right)$
+    \item $Q = nRT \ln \left( \frac{V_f}{V_i} \right)$
+    \item $\Delta U = 0$
+\end{itemize}
+
+\subsection*{Adiabatic Processes}
+\begin{itemize}
+    \item $PV^\gamma = \text{constant}$
+    \item $TV^{\gamma-1} = \text{constant}$
+    \item $Q = 0$
+    \item $\Delta U = nC_v \Delta T$
+    \item $P V_f^\gamma = P V_i^\gamma$
+\end{itemize}
+
+\subsection*{Heat Engines}
+\begin{itemize}
+    \item $W = Q_h - Q_c$
+    \item $e = \frac{W}{Q_h}$
+    \item $e_c = 1 - \frac{T_c}{T_h}$
+\end{itemize}
+
+\subsection*{Refrigerators}
+\begin{itemize}
+    \item $W = Q_c + Q_h$
+    \item $K = \frac{|Q_c|}{W}$
+    \item $K_c = \frac{T_c}{T_h - T_c}$
+\end{itemize}
+
+\subsection*{Force, Field, Energy and Potential}
+\begin{itemize}
+    \item $\vec{F} = q \vec{E}$
+    \item $\Delta U = q \Delta V$
+    \item $V_a = \int_a^b \vec{E} \cdot d\vec{l}$
+    \item $\vec{E} = -\nabla V$
+\end{itemize}
+
+\subsection*{1 Point Charge}
+\begin{itemize}
+    \item $\vec{E} = k \frac{q}{r^2} \hat{r}$
+    \item $V = k \frac{q}{r}$
+\end{itemize}
+
+\subsection*{2 Point Charges}
+\begin{itemize}
+    \item $\vec{F} = k \frac{q_1 q_2}{r^2} \hat{r}$
+    \item $U = k \frac{q_1 q_2}{r}$
+\end{itemize}
+
+\subsection*{Distributed Charge}
+\begin{itemize}
+    \item $\vec{E} = \int k \frac{dq}{r^2} \hat{r}$
+    \item $V = \int k \frac{dq}{r}$
+\end{itemize}
+
+\subsection*{Many Sources}
+\begin{itemize}
+    \item $\vec{E}_T = \sum \vec{E}_i$
+    \item $U_T = \sum U_i$
+\end{itemize}
+
+\subsection*{"Elementary" $E$ Fields}
+\begin{itemize}
+    \item $\vec{E} = \frac{k Q}{r^2} \hat{r} \, \text{sphere}$
+    \item $\vec{E} = \frac{\lambda}{2 \pi \epsilon_0 r} \hat{r} \, \text{line}$
+    \item $\vec{E} = \frac{\sigma}{2 \epsilon_0} \hat{n} \, \text{plane}$
+    \item $\vec{E} = \frac{\sigma}{\epsilon_0} \hat{n} \, \text{conducting surface}$
+\end{itemize}
+
+\subsection*{Capacitors}
+\begin{itemize}
+    \item $C = \frac{Q}{V}$
+    \item $C_T = \sum C_i \, \text{parallel}$
+    \item $\frac{1}{C_T} = \sum \frac{1}{C_i} \, \text{series}$
+    \item $U = \frac{1}{2} C V^2 = \frac{Q^2}{2C} = \frac{1}{2} Q V$
+    \item $C = \kappa \epsilon_0 \frac{A}{d}$
+    \item $|\vec{E}| = \frac{V}{d} = \frac{\sigma}{\epsilon_0}$
+\end{itemize}
+
+\subsection*{Flux and Gauss's Law}
+\begin{itemize}
+    \item $\Phi = \iint \vec{E} \cdot d\vec{A}$
+    \item $\Phi_{\text{closed}} = \frac{Q_{\text{enclosed}}}{\epsilon_0}$
+\end{itemize}
+
+\subsection*{Current and Current Density}
+\begin{itemize}
+    \item $I = \frac{dq}{dt}$
+    \item $I = \iint \vec{J} \cdot d\vec{A}$
+    \item $\vec{J} = n q \vec{v}$
+\end{itemize}
+
+\end{document}
+```
+
+This LaTeX document accurately transcribes the text, tables, and equations from the image.

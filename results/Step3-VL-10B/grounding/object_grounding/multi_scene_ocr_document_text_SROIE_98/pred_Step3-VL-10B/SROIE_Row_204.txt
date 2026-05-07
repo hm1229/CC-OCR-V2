@@ -1,0 +1,252 @@
+Got it, let's go through the document and identify each category: address, company, date, total.
+
+First, company: The top part has "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" which is a company. Also, "MAKASSAR FRESH MARKET SDN BHD" is another company. Let's check both.
+
+Address: For GARDENIA, the address is "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Then for MAKASSAR, the address is "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR". Also, the "CUSTOMER'S COPY" part might not be address, but the main addresses are those two.
+
+Date: There's "Date: 03/08/2017" and "DD:03/08/2017 11:11". So those are dates.
+
+Total: The "Total Payable: -5.09" is a total. Also, the other totals like "Total 6% supplies (Inc. GST): -5.09" but the main total payable is the key.
+
+Now let's list each:
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD. Bounding box: top part. Let's check coordinates. The text is at the top, so [72, 12, 922, 32] maybe. Wait, the image's top text: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" is the company.
+
+2. Company: MAKASSAR FRESH MARKET SDN BHD. That's the next company block.
+
+3. Address: GARDENIA's address: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." The bounding box for that line.
+
+4. Address: MAKASSAR's address: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR"
+
+5. Date: "Date: 03/08/2017" and "DD:03/08/2017 11:11" — both are dates. Let's check which one to include. The problem says "date" category, so any date instance.
+
+6. Total: "Total Payable: -5.09" is the total. Also, maybe the other total lines, but "Total Payable" is the final total.
+
+Now let's map each:
+
+First, identify each element's bounding box.
+
+Let's parse the image line by line.
+
+Top section:
+
+- Company: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — this is a company. Bounding box: [72, 12, 922, 32] (approx, since the text is at the top).
+
+- Address for GARDENIA: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." — next line. Bounding box: [72, 34, 922, 54]
+
+- Tel, Fax, GST ID: not needed for our categories.
+
+Then "TAX INVOICE / ADJUSTMENT NOTE" — not a category.
+
+"Cash Inv No.: 7803F713" — not.
+
+"VE0514" — not.
+
+"Date: 03/08/2017" — this is a date. Bounding box: [432, 228, 722, 248] (approx, since "Date: 03/08/2017" is there).
+
+Then "MAKASSAR FRESH MARKET SDN BHD" — company. Bounding box: [72, 272, 522, 292]
+
+Address for MAKASSAR: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR" — next line. Bounding box: [72, 304, 522, 324]
+
+"VE05: Ridzuan(11900)" — not.
+
+"DD:03/08/2017 11:11" — another date. Bounding box: [144, 454, 322, 474]
+
+Then the description line, then totals:
+
+"Total 6% supplies (Inc. GST): -5.09" — total.
+
+"Total Payable: -5.09" — total.
+
+So let's list all required categories:
+
+- company: GARDENIA BAKERIES (KL) SDN BHD
+
+- company: MAKASSAR FRESH MARKET SDN BHD
+
+- address: GARDENIA's address
+
+- address: MAKASSAR's address
+
+- date: Date: 03/08/2017
+
+- date: DD:03/08/2017 11:11
+
+- total: Total Payable: -5.09 (or any total line, but Payable is the main)
+
+Now, let's check each and assign bounding boxes.
+
+Let's go step by step.
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD (139386 X)
+   - Text: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)"
+   - Bounding box: top part, from x=72 (approx) to x=922, y=12 to y=32.
+
+2. Address: Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor.
+   - Next line below company, so y=34 to y=54.
+
+3. Company: MAKASSAR FRESH MARKET SDN BHD
+   - Line after Cash Inv No. and Date, so y=272 to y=292.
+
+4. Address: GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR
+   - Below the company name, y=304 to y=324.
+
+5. Date: Date: 03/08/2017
+   - Line with "Date: 03/08/2017", y=228 to y=248.
+
+6. Date: DD:03/08/2017 11:11
+   - Line with "DD:03/08/2017 11:11", y=454 to y=474.
+
+7. Total: Total Payable: -5.09
+   - Line "Total Payable: -5.09", y=544 to y=564 (approx, since the totals are in the middle-lower part).
+
+Also, "Total 6% supplies (Inc. GST): -5.09" is another total, but maybe we can include that as well, but the problem says "total" category, so any total instance. Let's check the main total payable.
+
+Now, let's structure the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's define the bounding boxes more accurately. Since the image is a receipt, the text positions can be estimated.
+
+For example:
+
+- GARDENIA company: [72, 12, 922, 32] (the top line)
+- GARDENIA address: [72, 34, 922, 54] (next line)
+- Date (03/08/2017): [432, 228, 722, 248] (the "Date: 03/08/2017" line)
+- MAKASSAR company: [72, 272, 522, 292] (the company name line)
+- MAKASSAR address: [72, 304, 522, 324] (the address line)
+- DD date: [144, 454, 322, 474] (the "DD:03/08/2017 11:11" line)
+- Total Payable: [222, 572, 422, 592] (the "Total Payable: -5.09" line)
+
+Let's verify each:
+
+1. Company (GARDENIA): label "company", bbox [72, 12, 922, 32]
+2. Address (GARDENIA): label "address", bbox [72, 34, 922, 54]
+3. Date (03/08/2017): label "date", bbox [432, 228, 722, 248]
+4. Company (MAKASSAR): label "company", bbox [72, 272, 522, 292]
+5. Address (MAKASSAR): label "address", bbox [72, 304, 522, 324]
+6. Date (DD:03/08/2017 11:11): label "date", bbox [144, 454, 322, 474]
+7. Total (Total Payable): label "total", bbox [222, 572, 422, 592]
+
+Are there other totals? The line "Total 6% supplies (Inc. GST): -5.09" is also a total. Let's check that line. The text is "Total 6% supplies (Inc. GST): -5.09". So that's another total. Let's add that.
+
+8. Total (Total 6% supplies (Inc. GST)): label "total", bbox [72, 524, 422, 544] (approx, since the line is above Total Payable)
+
+Also, "Total 6% supplies (excl. GST): -4.80" and "GST: -0.29" are parts of the total calculation, but the main totals are the ones with the final amount. But the problem says "total" category, so any line that represents a total amount.
+
+But maybe the key total is "Total Payable". Let's check the problem statement: "Detect all objects matching these categories in this document image: address, company, date, total."
+
+So we need to include all instances of these categories.
+
+Let's list all:
+
+- Companies: two (GARDENIA and MAKASSAR)
+- Addresses: two (GARDENIA and MAKASSAR)
+- Dates: two (Date: 03/08/2017 and DD:03/08/2017 11:11)
+- Totals: multiple, but at least the main ones. Let's check the image:
+
+Total 6% supplies (excl. GST): -4.80 → total
+GST: -0.29 → part of total, but maybe not a total itself
+Total 6% supplies (Inc. GST): -5.09 → total
+Total Payable: -5.09 → total
+
+So these are four total lines. But maybe the problem expects the main total payable. However, to be thorough, let's include all total lines that are labeled as total.
+
+But let's check the example. The user says "for each detected object". So each occurrence.
+
+Now, let's compile the list:
+
+1. Company: GARDENIA BAKERIES (KL) SDN BHD → bbox [72, 12, 922, 32], label company
+2. Address: GARDENIA's address → [72, 34, 922, 54], label address
+3. Date: Date: 03/08/2017 → [432, 228, 722, 248], label date
+4. Company: MAKASSAR FRESH MARKET SDN BHD → [72, 272, 522, 292], label company
+5. Address: MAKASSAR's address → [72, 304, 522, 324], label address
+6. Date: DD:03/08/2017 11:11 → [144, 454, 322, 474], label date
+7. Total: Total 6% supplies (excl. GST) → [72, 494, 422, 514], label total (the line "Total 6% supplies (excl. GST): -4.80")
+8. Total: GST → [322, 494, 422, 514]? Wait, no. Let's check the line:
+
+The lines after description:
+
+KAYA-PANDN 2.40 0 2 0 -2 -4.80
+
+Then:
+
+Total 6% supplies (excl. GST): -4.80
+
+GST: -0.29
+
+Total 6% supplies (Inc. GST): -5.09
+
+Total Payable: -5.09
+
+So each of these lines is a total-related line.
+
+So:
+
+- Total 6% supplies (excl. GST): -4.80 → total
+- GST: -0.29 → maybe not a total, but part of the calculation. The label is "total" for the category, so maybe only the lines that are totals (the ones with "Total" in them).
+
+So:
+
+- Total 6% supplies (excl. GST): -4.80 → total
+- Total 6% supplies (Inc. GST): -5.09 → total
+- Total Payable: -5.09 → total
+
+These three are the main totals.
+
+So adding those:
+
+7. Total: Total 6% supplies (excl. GST) → bbox [72, 514, 422, 534], label total
+8. Total: Total 6% supplies (Inc. GST) → bbox [72, 538, 422, 558], label total
+9. Total: Total Payable → bbox [72, 562, 422, 582], label total
+
+Now, let's check if all categories are covered.
+
+But maybe the problem expects each unique category instance. Let's make sure we don't miss any.
+
+Now, let's write the JSON array with all these entries.
+
+But let's check the image again for accuracy.
+
+First, the GARDENIA company line:
+
+"GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — correct.
+
+GARDENIA address: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." — correct.
+
+Date line: "Date: 03/08/2017" — correct.
+
+MAKASSAR company: "MAKASSAR FRESH MARKET SDN BHD" — correct.
+
+MAKASSAR address: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR" — correct.
+
+DD date: "DD:03/08/2017 11:11" — correct.
+
+Total lines:
+
+- "Total 6% supplies (excl. GST): -4.80"
+- "GST: -0.29" — maybe not a total, since it's a component.
+- "Total 6% supplies (Inc. GST): -5.09"
+- "Total Payable: -5.09"
+
+So the totals with "Total" in the label are the three: excl. GST, Inc. GST, Payable.
+
+Now, let's define the bounding boxes for each.
+
+Assuming the image's text positions:
+
+For "Total 6% supplies (excl. GST): -4.80" — this line is after the item line. Let's say the y-coordinate is around the middle.
+
+But since we need to provide the bounding box, let's estimate.
+
+Alternatively, maybe the key is to identify all instances, and the exact coordinates can be approximate as long as they enclose the text.
+
+Now, compiling all entries:
+
+1. {"bbox_2d": [72, 12, 922, 32], "label": "company"}  // GARDENIA
+2. {"bbox_2d": [72, 34, 922, 54], "label": "address"} // GARDENIA address
+3. {"bbox_2d": [432, 228, 722, 248], "label": "date"} // Date: 03/08/2017
+4. {"bbox_2d": [72, 272, 522, 292], "label": "company"} // MAKASSAR
+5. {"bbox_2d": [72, 304, 522, 324], "label": "address"} // MAKASSAR address
+6. {"bbox_2d": [144, 454, 322, 474], "label": "date"} // DD date
+7. {"bbox_2d": [72, 

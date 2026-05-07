@@ -1,0 +1,143 @@
+```latex
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{xcolor}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\begin{center}
+\textcolor{cyan}{\Huge awinic} \hspace{2cm}
+\begin{tabular}{l}
+上海艾为电子技术股份有限公司 \\
+\textit{shanghai awinic technology co., ltd.}
+\end{tabular}
+\hfill
+\begin{tabular}{r}
+\textbf{\Large AW36526} \\
+July 2019 V1.3
+\end{tabular}
+\end{center}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{\textbf{REGISTER DETAILED DESCRIPTION}}
+
+\vspace{0.3cm}
+
+$\diamond$ \quad \textbf{Chip ID Register (0x00), default(0x17)}
+
+\vspace{0.2cm}
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|l|}{Chip ID: ``0001 0111''} \\
+\multicolumn{8}{|l|}{Write 55H To Reset All Registers} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+$\diamond$ \quad \textbf{Enable Register (0x01), default(0x00)}
+
+\vspace{0.2cm}
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|>{\centering\arraybackslash}p{1.8cm}|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+Strobe Type & Strobe Enable & Mode Bits: M1, M0 & & RFU & LED3 Enable & LED2 Enable & LED1 Enable \\
+0=Level Triggered (Default) & 0=Disabled (Default) & 00=Standby (Default) & & & 0=OFF (Default) & 0=OFF (Default) & 0=OFF (Default) \\
+1=Edge Triggered & 1=Enabled & 01=IR Drive & & & 1=ON & 1=ON & 1=ON \\
+& & 10=Torch & & & & & \\
+& & 11=Flash & & & & & \\
+\hline
+\end{tabular}
+
+\vspace{0.3cm}
+
+\textbf{Note:}
+
+In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to ensure proper turn-on of the device.
+
+\vspace{0.5cm}
+
+$\diamond$ \quad \textbf{IVFM Register (0x02) , default(0xE1)}
+
+\vspace{0.2cm}
+
+\begin{tabular}{|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|>{\centering\arraybackslash}p{2.2cm}|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+LEDX Enable Setting & LED3 Pin Short Fault Detect & LED1/2 Pin Short Fault Detect & UVLO Enable & \multicolumn{3}{c|}{IVFM Levels} & IVFM Enable \\
+0= if LED1 or LED2 is Enabled, LED3 is Disabled Internally & 0=Disabled (Default) & 0=Disabled (Default) & 0=Disabled (Default) & \multicolumn{3}{c|}{000=2.9 V (Default)} & 0=Disabled \\
+1=No Limitation (Default) & 1=Enabled & 1=Enabled & 1=Enabled & \multicolumn{3}{c|}{001=3.0 V} & 1=Enabled (Default) \\
+& & & & \multicolumn{3}{c|}{010=3.1 V} & \\
+& & & & \multicolumn{3}{c|}{011=3.2 V} & \\
+& & & & \multicolumn{3}{c|}{100=3.3 V} & \\
+& & & & \multicolumn{3}{c|}{101=3.4 V} & \\
+& & & & \multicolumn{3}{c|}{110=3.5 V} & \\
+& & & & \multicolumn{3}{c|}{111=3.6 V} & \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+$\diamond$ \quad \textbf{LED1 Flash Brightness Register (0x03) , default(0x7F)}
+
+\vspace{0.2cm}
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|l|}{LED1 Flash Brightness Levels} \\
+\multicolumn{8}{|l|}{$\text{I}_{\text{FLASH}}\text{(mA)}\approx\text{(Brightness Code*3.91mA)+3.91mA}$} \\
+\multicolumn{8}{|l|}{00000000=3.91 mA} \\
+\multicolumn{8}{|l|}{$\cdots\cdots\cdots\cdots\cdots\cdots$} \\
+\multicolumn{8}{|l|}{01111111=500 mA \quad (Default)} \\
+\multicolumn{8}{|l|}{$\cdots\cdots\cdots\cdots\cdots\cdots$} \\
+\multicolumn{8}{|l|}{11111111=1.0 A} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+$\diamond$ \quad \textbf{LED1 Torch Brightness Register (0x04) , default(0x7F)}
+
+\vspace{0.2cm}
+
+\begin{tabular}{|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|>{\centering\arraybackslash}p{1.2cm}|}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|l|}{LED1 Torch Brightness Levels} \\
+\multicolumn{8}{|l|}{$\text{I}_{\text{TORCH}}\text{(mA)}\approx\text{(Brightness Code*1.46mA)+1.46mA}$} \\
+\multicolumn{8}{|l|}{00000000=1.46 mA} \\
+\multicolumn{8}{|l|}{$\cdots\cdots\cdots\cdots\cdots\cdots$} \\
+\multicolumn{8}{|l|}{01111111=187.5 mA \quad (Default)} \\
+\multicolumn{8}{|l|}{$\cdots\cdots\cdots\cdots\cdots\cdots$} \\
+\multicolumn{8}{|l|}{11111111=375 mA} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\hrule
+
+\vspace{0.3cm}
+
+www.awinic.com.cn \hfill 20 \hfill Copyright \copyright{} 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD
+
+\end{document}
+```

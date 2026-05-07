@@ -1,0 +1,19 @@
+To determine the normalized coordinates of the region containing the text 'JUDYL, E', we need to analyze the image dimensions and locate the text within the context of the image's width and height.
+
+1. **Image Dimensions**: The image width and height are not explicitly given, but we can assume a standard aspect ratio for such documents, typically around 4:3 or similar.
+
+2. **Text Location**: The text 'JUDYL, E' appears under the label "CASHIER" in the middle section of the document.
+
+3. **Bounding Box Calculation**:
+   - **Left-Top Corner (x1, y1)**: This is the top-left corner of the text region. It should be slightly to the right of the "CASHIER" label and above the text 'JUDYL, E'.
+   - **Right-Bottom Corner (x2, y2)**: This is the bottom-right corner of the text region, encompassing the text 'JUDYL, E' and possibly a bit of the line below it.
+
+Given these considerations, the normalized coordinates might look something like this:
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+
+Without precise image dimensions, an exact calculation isn't possible, but based on visual estimation:
+
+(x1, y1, x2, y2) ≈ (400, 300, 600, 350)
+
+This is a rough estimate and might need adjustment based on the actual image dimensions.

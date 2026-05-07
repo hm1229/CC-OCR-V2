@@ -1,0 +1,219 @@
+```latex
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\begin{document}
+
+\begin{center}
+    \includegraphics[width=0.3\textwidth]{awinic_logo.png} % Placeholder for logo
+    \hfill
+    \begin{tabular}{r}
+        \textbf{\Large AW36526} \\
+        July 2019 V1.3
+    \end{tabular}
+\end{center}
+
+\noindent\rule{\textwidth}{1pt}
+
+\vspace{0.5cm}
+\begin{center}
+    \textbf{\Large Inductorless, Triple Channel Flash \& Indicator 2in1 LED Driver}
+\end{center}
+\vspace{0.5cm}
+
+\begin{minipage}[t]{0.48\textwidth}
+    \textcolor{blue}{\textbf{\large FEATURES}}
+    \begin{itemize}
+        \item Flash and Indicator 2in1 application
+        \item Dual Independent 1.0A LED1/LED2 Current Source
+        \begin{itemize}
+            \item Flash: 3.91mA$\sim$1.0A, 256 levels 3.91mA/level
+            \item Torch: 1.46mA$\sim$375mA, 256 levels 1.46mA/level
+            \item Indicator: 0.37mA$\sim$375mA, 1024 levels 0.37mA/level
+            \item Flash Timeout: 40ms$\sim$1.6s, 16 levels
+        \end{itemize}
+        \item Independent 375 mA LED3 Current Sink
+        \begin{itemize}
+            \item Flash: 1.46mA$\sim$375mA, 256 levels 1.46mA/level
+            \item Torch: 1.46mA$\sim$375mA, 256 levels 1.46mA/level
+            \item Indicator: 0.73mA$\sim$375mA, 512 levels 0.73mA/level
+            \item Flash Timeout: 40ms$\sim$1.6s, 16 levels
+        \end{itemize}
+        \item Optimized Flash LED Current During Low Battery Conditions (IVFM)
+        \item Hardware Strobe Enable (STROBE)
+        \item 400kHz I$^2$C: AW36526 (I$^2$C Address=0x63)
+        \item 0.4mm Pitch, FCQFN-10L Package
+    \end{itemize}
+
+    \vspace{0.5cm}
+    \textcolor{blue}{\textbf{\large APPLICATION}}
+    \begin{itemize}
+        \item Smartphone Camera Flash
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textcolor{blue}{\textbf{\large GENERAL DESCRIPTION}}
+    \vspace{0.2cm}
+    
+    The AW36526 is a inductorless triple channel flash \& Indicator 2in1 LED driver that provides a high level of adjustability within a ultra-small solution size. The AW36526 includes two current sources and a current sink which is controlled independently by I$^2$C-compatible interface. The AW36526 provides IVFM protection mode to prevent system reset or shutdown under low battery condition.
+    
+    \vspace{0.2cm}
+    The AW36526 is controlled via an I$^2$C-compatible interface. The main features of the AW36526 include: flash / torch / IR / Indicator current, flash timeout duration, IVFM and breath features. The AW36526 also provides hardware flash pin (STROBE) to control flash event.
+    
+    \vspace{0.2cm}
+    The device operates over a $-40^\circ$C to $+85^\circ$C ambient temperature range.
+    
+    \vspace{0.2cm}
+    The AW36526 is available in small 0.4mm pitch 1.6mm$\times$1.2mm FCQFN-10L package.
+\end{minipage}
+
+\vspace{1cm}
+\textcolor{blue}{\textbf{\large TYPICAL APPLICATION CIRCUIT}}
+
+\begin{center}
+    \begin{tikzpicture}[scale=0.8, transform shape]
+        % Draw the main IC block
+        \draw[thick] (4,0) rectangle (8,3);
+        \node at (6,2.5) {\textcolor{cyan}{\textbf{\large awinic}}};
+        \node at (6,1.5) {\textbf{AW36526FCR}};
+        
+        % Draw MCU block
+        \draw[thick] (0,0) rectangle (2,1.5);
+        \node at (1,0.75) {MCU};
+        
+        % Draw VIN line and components
+        \draw[thick, red] (2,4) -- (8.5,4);
+        \node[left] at (2,4) {VIN};
+        \draw[thick, red] (2,4) circle (0.1);
+        
+        \draw[thick] (3.5,4) -- (3.5,3.5);
+        \draw[thick] (3.2,3.5) -- (3.8,3.5);
+        \draw[thick] (3.2,3.3) -- (3.8,3.3);
+        \draw[thick] (3.5,3.3) -- (3.5,2.8);
+        \draw[thick] (3.3,2.8) -- (3.7,2.8);
+        \node at (3.1,3.8) {\tiny $C_{IN}$};
+        \node at (3.1,3.5) {\tiny $10\mu F$};
+        \node at (3.1,3.2) {\tiny $10V$};
+        
+        \draw[thick, red] (6,4) -- (6,3);
+        \node[above right] at (6,3) {\tiny IN};
+        \node[above left] at (6,3) {\tiny A2};
+        
+        % Draw VIO line and components
+        \draw[thick] (2,2.5) -- (3.5,2.5);
+        \node[left] at (2,2.5) {VIO};
+        \draw[thick] (2,2.5) circle (0.1);
+        \node[above] at (2.75,2.5) {\tiny $1.8V \sim 3.3V$};
+        
+        \draw[thick] (2.5,2.5) -- (2.5,2);
+        \draw[thick] (2.4,2) -- (2.6,1.8) -- (2.4,1.6) -- (2.6,1.4) -- (2.5,1.2);
+        \node[left] at (2.4,1.6) {\tiny $4.7k\Omega$};
+        \node[left] at (2.4,1.2) {\tiny R1};
+        
+        \draw[thick] (3.2,2.5) -- (3.2,2);
+        \draw[thick] (3.1,2) -- (3.3,1.8) -- (3.1,1.6) -- (3.3,1.4) -- (3.2,1.2);
+        \node[right] at (3.3,1.6) {\tiny $4.7k\Omega$};
+        \node[right] at (3.3,1.2) {\tiny R2};
+        
+        % Draw connections between MCU and IC
+        \draw[thick, ->] (2,1.2) -- (4,1.2);
+        \node[right] at (4,1.2) {\tiny STROBE};
+        \node[above left] at (4,1.2) {\tiny C3};
+        
+        \draw[thick, <->] (2,0.7) -- (4,0.7);
+        \node[right] at (4,0.7) {\tiny SDA};
+        \node[above left] at (4,0.7) {\tiny A3};
+        \draw[thick] (2.5,1.2) -- (2.5,0.7);
+        \fill (2.5,0.7) circle (0.05);
+        
+        \draw[thick, ->] (2,0.3) -- (4,0.3);
+        \node[right] at (4,0.3) {\tiny SCL};
+        \node[above left] at (4,0.3) {\tiny B3};
+        \draw[thick] (3.2,1.2) -- (3.2,0.3);
+        \fill (3.2,0.3) circle (0.05);
+        
+        % Draw GND connection
+        \draw[thick] (6,0) -- (6,-0.5);
+        \draw[thick] (5.7,-0.5) -- (6.3,-0.5);
+        \draw[thick] (5.8,-0.6) -- (6.2,-0.6);
+        \draw[thick] (5.9,-0.7) -- (6.1,-0.7);
+        \node[above] at (6,0) {\tiny GND};
+        \node[below left] at (6,0) {\tiny A1};
+        
+        % Draw LED connections
+        \draw[thick, red] (8,1.8) -- (9.5,1.8);
+        \node[left] at (8,1.8) {\tiny LED3};
+        \node[above right] at (8,1.8) {\tiny C1,C2};
+        
+        \draw[thick, red] (8,1.1) -- (10,1.1);
+        \node[left] at (8,1.1) {\tiny LED2};
+        \node[above right] at (8,1.1) {\tiny D1};
+        
+        \draw[thick, red] (8,0.5) -- (9,0.5);
+        \node[left] at (8,0.5) {\tiny LED1};
+        \node[above right] at (8,0.5) {\tiny D3};
+        
+        % Draw LEDs
+        % LED3
+        \draw[thick, red] (8.5,4) -- (8.5,3.5);
+        \draw[thick] (8.5,3.5) -- (8.5,3);
+        \draw[thick] (8.2,3) -- (8.8,3);
+        \draw[thick] (8.5,3) -- (8.5,2.5);
+        \draw[thick] (8.2,2.5) -- (8.8,2.5);
+        \draw[thick] (8.5,2.5) -- (8.5,1.8);
+        \draw[thick, ->] (8.7,3.2) -- (8.9,2.8);
+        \draw[thick, ->] (8.9,3.2) -- (9.1,2.8);
+        \node[right] at (8.5,3.2) {\tiny D3};
+        
+        % LED1
+        \draw[thick, red] (9,0.5) -- (9,0);
+        \draw[thick] (9,0) -- (9,-0.5);
+        \draw[thick] (8.7,-0.5) -- (9.3,-0.5);
+        \draw[thick] (9,-0.5) -- (9,-1);
+        \draw[thick] (8.7,-1) -- (9.3,-1);
+        \draw[thick] (9,-1) -- (9,-1.5);
+        \draw[thick] (8.7,-1.5) -- (9.3,-1.5);
+        \draw[thick] (8.8,-1.6) -- (9.2,-1.6);
+        \draw[thick] (8.9,-1.7) -- (9.1,-1.7);
+        \draw[thick, ->] (9.2,-0.3) -- (9.4,-0.7);
+        \draw[thick, ->] (9.4,-0.3) -- (9.6,-0.7);
+        \node[right] at (9,0) {\tiny D1};
+        
+        % LED2
+        \draw[thick, red] (10,1.1) -- (10,0);
+        \draw[thick] (10,0) -- (10,-0.5);
+        \draw[thick] (9.7,-0.5) -- (10.3,-0.5);
+        \draw[thick] (10,-0.5) -- (10,-1);
+        \draw[thick] (9.7,-1) -- (10.3,-1);
+        \draw[thick] (10,-1) -- (10,-1.5);
+        \draw[thick] (9.7,-1.5) -- (10.3,-1.5);
+        \draw[thick] (9.8,-1.6) -- (10.2,-1.6);
+        \draw[thick] (9.9,-1.7) -- (10.1,-1.7);
+        \draw[thick, ->] (10.2,-0.3) -- (10.4,-0.7);
+        \draw[thick, ->] (10.4,-0.3) -- (10.6,-0.7);
+        \node[right] at (10,0) {\tiny D2};
+        
+    \end{tikzpicture}
+\end{center}
+
+\begin{center}
+    \textbf{Fig 1 \quad Typical Application Circuit of AW36526}
+\end{center}
+
+\vspace{0.5cm}
+\noindent\tiny{All trademarks are the property of their respective owners.}
+
+\vspace{0.2cm}
+\noindent\rule{\textwidth}{0.5pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c r }
+    www.awinic.com.cn & 1 & Copyright \copyright 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD \\
+\end{tabular*}
+
+\end{document}
+```

@@ -1,0 +1,53 @@
+I need to find all instances of the text '398' in the image.
+
+Looking at the image, I can identify three instances of '398':
+
+1. In the "原幣金额 Debit/Credit" column for the room charge
+2. In "当日消费:" (Daily consumption)
+3. In "小计:" (Subtotal)
+4. In "合计 (Total Consume:)" 
+
+Let me identify the coordinates for each:
+
+1. First '398' - in the table under 原幣金额/Debit/Credit column:
+   Located around (0.518, 0.329) to (0.544, 0.347)
+
+2. Second '398' - after "当日消费:":
+   Located around (0.522, 0.372) to (0.553, 0.390)
+
+3. Third '398' - after "小计:":
+   Located around (0.531, 0.536) to (0.562, 0.554)
+
+4. Fourth '398' - after "合计 (Total Consume:)":
+   Located around (0.331, 0.651) to (0.362, 0.669)
+
+The user is asking for "the region of the text '398'" - since there are multiple instances, I'll provide the most prominent one or all of them. Let me provide the one in the total consumption area which is most significant, or the first one in the table.
+
+Actually, looking more carefully, I should identify all bounding boxes. Let me be more precise with the first occurrence in the main table:
+
+First '398' (in table, 原幣金额 column): (0.518, 0.327, 0.545, 0.348)
+Second '398' (当日消费): (0.523, 0.370, 0.554, 0.391)
+Third '398' (小计): (0.532, 0.534, 0.563, 0.556)
+Fourth '398' (合计): (0.329, 0.649, 0.363, 0.671)
+
+I'll provide the one in the "合计" (Total) as it's the final amount, or I can provide all. Let me check which is most clearly visible and significant.
+
+The most prominent one is likely the first in the data table. Let me provide coordinates for all visible instances.
+
+Actually, re-reading the question, it asks for "the region" singular. I'll provide the main one in the total consumption line which is the final bill amount.
+
+(0.329, 0.649, 0.363, 0.671)
+
+Or if they want the one in the itemized list:
+(0.518, 0.327, 0.545, 0.348)
+
+Let me provide all four instances since they're all the same text '398':
+
+1. (0.518, 0.327, 0.545, 0.348) - original amount column
+2. (0.523, 0.370, 0.554, 0.391) - daily consumption
+3. (0.532, 0.534, 0.563, 0.556) - subtotal
+4. (0.329, 0.649, 0.363, 0.671) - total
+
+I'll go with the total amount as it's the most significant:
+
+(0.329, 0.649, 0.363, 0.671)

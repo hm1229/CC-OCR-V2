@@ -1,0 +1,8 @@
+$$(??) \approx \int_{|g|<1} |x-y|^{d+\alpha-1} \frac{\delta_B(y)^{d/2}}{\gamma_B(x,y)^{d/2}} |y-w|^{-d+\alpha-\beta} \frac{\delta_B(w)^{d/2}}{\gamma_B(y,w)^{d/2}} (1 \vee |y-w|^{3-\alpha/2} \frac{\delta_B(y)^{3-\alpha/2}}{\delta_B(y)^{d/2}}) dy$$
+$$\leq \int_{|y|<1, |y-w| \geq \delta_B(y)} |x-y|^{-d+\alpha-1} \frac{\delta_B(y)^{d/2}}{\gamma_B(x,y)^{d/2}} |y-w|^{-d+\alpha-\beta} \frac{\delta_B(w)^{d/2}}{\gamma_B(y,w)^{d/2}} dy$$
+$$+ \int_{|y|<1, |y-w| < \delta_B(y)} |x-y|^{-d+\alpha-1} \frac{\delta_B(y)^{d/2}}{\gamma_B(x,y)^{d/2}} |y-w|^{-d+\alpha-\beta} \frac{\delta_B(w)^{d/2}}{\gamma_B(y,w)^{d/2}} dy$$
+$$+ \delta_B(w)^{\alpha/2} \int_{|y|<1, |y-w| \geq \delta_B(y)} |x-y|^{-d+\alpha-1} |y-w|^{-d+\alpha-\beta} dy$$
+$$+ \delta_B(w)^{\alpha/2} \int_{|y|<1, |y-w| < \delta_B(y)} |x-y|^{-d+\alpha-1} |y-w|^{-d+\alpha-\beta} dy$$
+$$= \delta_B(w)^{\alpha/2} \int_{|y|<1} |x-y|^{-d+\alpha-1} |y-w|^{-d+\alpha-\beta} dy$$
+$$\leq \delta_B(w)^{\alpha/2} |x-w|^{-d+(d+\alpha-1)(\alpha-\beta)} \int_{|y|<1} (|x-y|^{(1-\alpha)-(d+\alpha-1)(\alpha-\beta)} + |y-w|^{(1-\alpha)-(d+\alpha-1)(\alpha-\beta)}) dy$$
+$$\leq |x-w|^{-d+(\alpha-1)(\alpha-\beta)} \delta_B(w)^{\alpha/2}$$

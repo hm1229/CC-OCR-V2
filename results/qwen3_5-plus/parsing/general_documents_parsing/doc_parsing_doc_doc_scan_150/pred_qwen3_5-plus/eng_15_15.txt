@@ -1,0 +1,160 @@
+```latex
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{circuitikz}
+\usepackage{fancyhdr}
+
+% --- Custom Colors and Commands ---
+\definecolor{awinicblue}{RGB}{0, 176, 240}
+\definecolor{sectionblue}{RGB}{0, 112, 192}
+\newcommand{\awiniclogo}{\textcolor{awinicblue}{\textbf{awinic}}}
+\newcommand{\sectiontitle}[1]{\textcolor{sectionblue}{\textbf{\large #1}}}
+
+% --- Page Style ---
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\fancyhead[L]{\awiniclogo \quad \begin{tabular}{l} \textcolor{awinicblue}{上海艾为电子技术股份有限公司} \\ \small \textcolor{awinicblue}{shanghai awinic technology co., ltd.} \end{tabular}}
+\fancyhead[R]{\textbf{AW36526} \\ July 2019 V1.3}
+\fancyfoot[L]{www.awinic.com.cn}
+\fancyfoot[C]{1}
+\fancyfoot[R]{Copyright \textcopyright\ 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\begin{document}
+\thispagestyle{fancy}
+
+% --- Title ---
+\begin{center}
+    \vspace{1cm}
+    {\LARGE \textbf{Inductorless, Triple Channel Flash \& Indicator 2in1 LED Driver}}
+    \vspace{1cm}
+\end{center}
+
+% --- Main Content in Two Columns ---
+\begin{minipage}[t]{0.48\textwidth}
+    \sectiontitle{FEATURES}
+    \begin{itemize}[leftmargin=*, label=\textbullet, itemsep=2pt, topsep=5pt]
+        \item Flash and Indicator 2in1 application
+        \item Dual Independent 1.0A LED1/LED2 Current Source
+        \begin{itemize}[leftmargin=*, label=\textgreater, itemsep=2pt, topsep=2pt]
+            \item Flash: 3.91mA$\sim$1.0A, 256 levels \\ 3.91mA/level
+            \item Torch: 1.46mA$\sim$375mA, 256 levels \\ 1.46mA/level
+            \item Indicator: 0.37mA$\sim$375mA, 1024 levels \\ 0.37mA/level
+            \item Flash Timeout: 40ms$\sim$1.6s, 16 levels
+        \end{itemize}
+        \item Independent 375 mA LED3 Current Sink
+        \begin{itemize}[leftmargin=*, label=\textgreater, itemsep=2pt, topsep=2pt]
+            \item Flash: 1.46mA$\sim$375mA, 256 levels \\ 1.46mA/level
+            \item Torch: 1.46mA$\sim$375mA, 256 levels \\ 1.46mA/level
+            \item Indicator: 0.73mA$\sim$375mA, 512 levels \\ 0.73mA/level
+            \item Flash Timeout: 40ms$\sim$1.6s, 16 levels
+        \end{itemize}
+        \item Optimized Flash LED Current During Low Battery Conditions (IVFM)
+        \item Hardware Strobe Enable (STROBE)
+        \item 400kHz I$^2$C: AW36526 (I$^2$C Address=0x63)
+        \item 0.4mm Pitch, FCQFN-10L Package
+    \end{itemize}
+
+    \sectiontitle{APPLICATION}
+    \begin{itemize}[leftmargin=*, label=\textbullet, itemsep=2pt, topsep=5pt]
+        \item Smartphone Camera Flash
+    \end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \sectiontitle{GENERAL DESCRIPTION}
+    \vspace{5pt}
+    The AW36526 is a inductorless triple channel flash \& Indicator 2in1 LED driver that provides a high level of adjustability within a ultra-small solution size. The AW36526 includes two current sources and a current sink which is controlled independently by I$^2$C-compatible interface. The AW36526 provides IVFM protection mode to prevent system reset or shutdown under low battery condition.
+    \vspace{10pt}
+    
+    The AW36526 is controlled via an I$^2$C-compatible interface. The main features of the AW36526 include: flash / torch / IR / Indicator current, flash timeout duration, IVFM and breath features. The AW36526 also provides hardware flash pin (STROBE) to control flash event.
+    \vspace{10pt}
+    
+    The device operates over a $-40^{\circ}\text{C}$ to $+85^{\circ}\text{C}$ ambient temperature range.
+    \vspace{10pt}
+    
+    The AW36526 is available in small 0.4mm pitch 1.6mm$\times$1.2mm FCQFN-10L package.
+\end{minipage}
+
+\vspace{1cm}
+\sectiontitle{TYPICAL APPLICATION CIRCUIT}
+\vspace{0.5cm}
+
+% --- Circuit Diagram ---
+\begin{figure}[h!]
+    \centering
+    \begin{circuitikz}[american, scale=0.8, transform shape]
+        % Power Rails
+        \draw (0, 6) node[left] {VIN} to[short, o-] (2, 6);
+        \draw (2, 6) to[C, l_=$C_{\text{IN}}$, *-] (2, 4.5) node[ground]{};
+        \draw (2, 6) to[short] (8, 6);
+        \draw (8, 6) to[short] (10, 6);
+        
+        % IC Block
+        \draw (4, 1) rectangle (8, 5);
+        \node at (6, 4) {\awiniclogo};
+        \node at (6, 3.5) {\textbf{AW36526FCR}};
+        
+        % IC Pins and Connections
+        % Top
+        \draw (6, 5) node[above] {\tiny A2} node[above right] {IN} to[short, *-] (6, 6);
+        % Left Side
+        \draw (4, 4.5) node[left] {\tiny C3} node[left] {STROBE} to[short, -o] (3, 4.5);
+        \draw (4, 3.5) node[left] {\tiny A2} node[left] {SDA} to[short, -o] (3, 3.5);
+        \draw (4, 2.5) node[left] {\tiny B2} node[left] {SCL} to[short, -o] (3, 2.5);
+        \draw (4, 1) node[below] {\tiny A1} node[below] {GND} to[short, *-] (4, 0.5) node[ground]{};
+        
+        % Right Side
+        \draw (8, 4.5) node[right] {\tiny C1,C2} node[right] {LED3} to[short, -o] (9, 4.5);
+        \draw (8, 3.5) node[right] {\tiny D1} node[right] {LED2} to[short, -o] (9, 3.5);
+        \draw (8, 2.5) node[right] {\tiny D3} node[right] {LED1} to[short, -o] (9, 2.5);
+        
+        % VIO and Pull-ups
+        \draw (0, 3.5) node[left] {VIO} to[short, o-] (2, 3.5);
+        \draw (2, 3.5) to[R, l=$4.7\text{k}\Omega$, *-] (2, 4.5) to[short] (3, 4.5); % to STROBE line
+        \draw (2, 3.5) to[short] (3, 3.5); % to SDA line
+        \draw (3, 3.5) to[R, l=$4.7\text{k}\Omega$, *-] (3, 4.5); % Pull-up for SDA
+        \draw (3, 2.5) to[short, *-] (3, 3.5); % SCL to SDA line (incorrect in original, should be separate)
+        % Correcting pull-ups based on visual
+        \draw (3, 3.5) to[short] (3, 4.5); % Connect SDA to its pullup
+        \draw (3, 2.5) to[short] (3, 3.0); % Connect SCL to its pullup
+        \draw (3, 3.0) to[R, l=$4.7\text{k}\Omega$, *-] (3, 4.5); % Pull-up for SCL
+        
+        % MCU
+        \draw (0, 2) rectangle (2, 4);
+        \node at (1, 3) {MCU};
+        \draw (2, 3.8) to[short, -o] (3, 3.8); % MCU to STROBE
+        \draw (2, 3.2) to[short, -o] (3, 3.2); % MCU to SDA
+        \draw (2, 2.6) to[short, -o] (3, 2.6); % MCU to SCL
+        
+        % LEDs
+        % LED3 (Indicator)
+        \draw (10, 6) to[led, l_=D3, *-] (10, 4.5);
+        % LED2 (Flash 2)
+        \draw (10, 3.5) to[led, l_=D2, *-] (10, 2) node[ground]{};
+        % LED1 (Flash 1)
+        \draw (10, 2.5) to[led, l_=D1, *-] (10, 2) node[ground]{}; % Shared ground path visually
+        
+        % Labels
+        \node at (2.5, 3.8) {\tiny 1.8v ~ 3.3v};
+        \node at (2.2, 4.2) {\tiny R1};
+        \node at (3.2, 4.2) {\tiny R2};
+
+    \end{circuitikz}
+    \caption{Typical Application Circuit of AW36526}
+    \label{fig:typical_circuit}
+\end{figure}
+
+\vspace{0.5cm}
+\noindent\rule{\textwidth}{0.4pt}
+\begin{flushleft}
+\small \textit{All trademarks are the property of their respective owners.}
+\end{flushleft}
+
+\end{document}
+```

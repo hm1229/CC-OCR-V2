@@ -1,0 +1,224 @@
+用户现在需要检测图像中的各个指定类别。首先得逐个看每个类别在图中的位置。
+
+首先看Arrival 入住日期：图中右侧有“Arrival 入住日期 : 22-07-20”，所以这个区域是Arrival。
+
+Balance 余额：图中有“Balance 余额”字样，对应位置。
+
+CHARGES 消费：表格里的“CHARGES”列，对应消费。
+
+CREDITS 付款：表格里的“CREDITS”列，对应付款。
+
+Cashier 收银员：右侧“Cashier 收银员 : James Ross”。
+
+Confirmation No 确认号：右侧“Confirmation No 确认号 : 83374468”。
+
+DATE 日期：表格里的“DATE”列，对应日期。
+
+Departure 离店日期：右侧“Departure 离店日期 : 24-07-20”。
+
+REFERENCE 备注：表格里的“REFERENCE”列，对应备注。
+
+Room房号：右侧“Room 房号 : 0816”。
+
+lnvoice No 账单号：右侧“Invoice No 账单号 : 646819”。
+
+人名：比如Isaiah Short是人名，还有James Ross也是人名？看用户给的类别里“人名”要找。图中Isaiah Short是客户人名，James Ross是收银员人名。需要确认。
+
+公司名：图中有“Company Name 公司名”，对应位置。
+
+地址：图中上方的“Yu Hang District Hangzhou 310000 China”是地址，还有“USNV Ward FPO AP 20180”也是地址？看用户给的地址类别，应该是酒店的地址？不，看左侧的地址：USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China 这些是地址。
+
+现在逐个定位：
+
+1. Arrival 入住日期：右侧区域，文字“Arrival 入住日期 : 22-07-20” → 找这个的bbox。
+看图像右侧，Arrival 入住日期的位置，坐标大概在右上部分。需要看图像中的位置。
+
+先整理每个元素：
+
+- Arrival 入住日期：右侧，标签是Arrival 入住日期，值是22-07-20。对应bbox是右侧的“Arrival 入住日期 : 22-07-20”区域。
+- Balance 余额：图中“Balance 余额”在总计下方，文字是“Balance 余额”。
+- CHARGES 消费：表格的列标题“CHARGES”对应消费列。
+- CREDITS 付款：表格的列标题“CREDITS”对应付款列。
+- Cashier 收银员：右侧“Cashier 收银员 : James Ross”。
+- Confirmation No 确认号：右侧“Confirmation No 确认号 : 83374468”。
+- DATE 日期：表格的列标题“DATE”对应日期列。
+- Departure 离店日期：右侧“Departure 离店日期 : 24-07-20”。
+- REFERENCE 备注：表格的列标题“REFERENCE”对应备注列。
+- Room房号：右侧“Room 房号 : 0816”。
+- lnvoice No 账单号：右侧“Invoice No 账单号 : 646819”。
+- 人名：Isaiah Short（客户人名）和James Ross（收银员人名）。需要看哪个是“人名”类别。图中Isaiah Short在左侧，是客户姓名，属于人名。James Ross是Cashier收银员，也属于人名？但用户给的类别是“人名”，所以两个都算？但看用户给的类别列表里有“人名”，所以需要找所有人名。比如Isaiah Short是人名，James Ross也是人名。
+- 公司名：图中“Company Name 公司名”对应位置，文字是“Company Name 公司名”。
+- 地址：左侧的“USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China”是地址，还有“Mingteng Network Hotel”是酒店名？不，地址是酒店的地址，即USNV Ward...这些。另外，可能还有其他地址？比如客户地址？但图中主要是酒店的地址信息，所以地址类别对应的是酒店的地址部分。
+
+现在开始逐个确定每个元素的bbox和label：
+
+1. Arrival 入住日期：在图像右侧，文字“Arrival 入住日期 : 22-07-20”。看图像中的位置，右侧列，Arrival 入住日期的标签和值。bbox需要看这个区域。假设图像中右侧的Arrival 入住日期的位置，比如坐标范围。因为是图片，需要估计。但根据提供的图像，右侧的字段：
+
+Room 房号 : 0816
+
+Arrival 入住日期 : 22-07-20
+
+Departure 离店日期 : 24-07-20
+
+Loyalty Number会员号码 :
+
+Confirmation No 确认号 : 83374468
+
+Cashier 收银员 : James Ross
+
+Invoice No 账单号 : 646819
+
+所以Arrival 入住日期的bbox是包含“Arrival 入住日期 : 22-07-20”的区域。
+
+2. Balance 余额：在Total 总计下方，有“Balance 余额”字样，对应位置。
+
+3. CHARGES 消费：表格的列标题“CHARGES”对应消费列，表格中的“CHARGES”列。
+
+4. CREDITS 付款：表格的列标题“CREDITS”对应付款列。
+
+5. Cashier 收银员：右侧“Cashier 收银员 : James Ross”。
+
+6. Confirmation No 确认号：右侧“Confirmation No 确认号 : 83374468”。
+
+7. DATE 日期：表格的列标题“DATE”对应日期列，表格中的“DATE”列。
+
+8. Departure 离店日期：右侧“Departure 离店日期 : 24-07-20”。
+
+9. REFERENCE 备注：表格的列标题“REFERENCE”对应备注列，表格中的“REFERENCE”列。
+
+10. Room房号：右侧“Room 房号 : 0816”。
+
+11. lnvoice No 账单号：右侧“Invoice No 账单号 : 646819”。
+
+12. 人名：Isaiah Short（在左侧，Company Name 公司名上方），以及James Ross（Cashier 收银员的值）。所以两个地方的人名。需要确认是否都算。比如Isaiah Short是客户姓名，属于人名；James Ross是收银员姓名，也属于人名。所以这两个都要检测。
+
+13. 公司名：图中“Company Name 公司名”对应位置，文字是“Company Name 公司名”。
+
+14. 地址：左侧的“USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China”是地址，还有“Mingteng Network Hotel”是酒店名，不是地址。所以地址是USNV Ward...这些行。
+
+现在需要为每个类别生成对应的bbox和label。因为是图像，需要大致确定每个元素的位置。例如：
+
+- 地址：左侧的“USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China” → 这部分的bbox是左侧上方的地址信息。
+
+现在开始列出所有检测到的项目：
+
+1. Arrival 入住日期：右侧，Arrival 入住日期 : 22-07-20 → bbox大概在右侧列，对应文字区域。
+2. Balance 余额：在Total 总计下方，Balance 余额 → 文字位置。
+3. CHARGES 消费：表格的CHARGES列，列标题和对应数值。
+4. CREDITS 付款：表格的CREDITS列，列标题和对应数值。
+5. Cashier 收银员：右侧Cashier 收银员 : James Ross。
+6. Confirmation No 确认号：右侧Confirmation No 确认号 : 83374468。
+7. DATE 日期：表格的DATE列，列标题和对应日期。
+8. Departure 离店日期：右侧Departure 离店日期 : 24-07-20。
+9. REFERENCE 备注：表格的REFERENCE列，列标题和对应备注。
+10. Room房号：右侧Room 房号 : 0816。
+11. lnvoice No 账单号：右侧Invoice No 账单号 : 646819。
+12. 人名（Isaiah Short）：左侧Isaiah Short。
+13. 人名（James Ross）：右侧Cashier 收银员的James Ross。
+14. 公司名：Company Name 公司名。
+15. 地址：USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China。
+
+现在需要检查是否有遗漏。比如Loyalty Number会员号码，但用户没要求这个类别，所以不检测。只检测用户列出的类别。
+
+现在逐个确认用户要求的类别列表：
+
+用户要求的类别：Arrival 入住日期, Balance 余额, CHARGES 消费, CREDITS 付款, Cashier 收银员, Confirmation No 确认号, DATE 日期, Departure 离店日期, REFERENCE 备注, Room房号, lnvoice No 账单号, 人名, 公司名, 地址。
+
+现在对应每个类别：
+
+- Arrival 入住日期：存在，右侧。
+- Balance 余额：存在，图中有“Balance 余额”。
+- CHARGES 消费：存在，表格列。
+- CREDITS 付款：存在，表格列。
+- Cashier 收银员：存在，右侧。
+- Confirmation No 确认号：存在，右侧。
+- DATE 日期：存在，表格列。
+- Departure 离店日期：存在，右侧。
+- REFERENCE 备注：存在，表格列。
+- Room房号：存在，右侧。
+- lnvoice No 账单号：存在，右侧。
+- 人名：存在，Isaiah Short和James Ross。
+- 公司名：存在，Company Name 公司名。
+- 地址：存在，USNV Ward...等。
+
+现在需要为每个生成bbox。因为是图像，需要估计坐标。假设图像的宽度和高度，每个元素的位置。
+
+例如，地址部分：左侧的“USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China” → 这部分在图像的左上方，从“USNV Ward...”到“China”这一行。
+
+人名Isaiah Short：在“Company Name 公司名”上方，即“Isaiah Short”这一行。
+
+公司名：Company Name 公司名这一行。
+
+Room房号：右侧“Room 房号 : 0816” → 右侧列，Room 房号的标签和值。
+
+Arrival 入住日期：右侧“Arrival 入住日期 : 22-07-20”。
+
+Departure 离店日期：右侧“Departure 离店日期 : 24-07-20”。
+
+Confirmation No 确认号：右侧“Confirmation No 确认号 : 83374468”。
+
+Cashier 收银员：右侧“Cashier 收银员 : James Ross”。
+
+Invoice No 账单号：右侧“Invoice No 账单号 : 646819”。
+
+DATE 日期：表格的DATE列，列标题“DATE”以及下面的日期行（22-07-20等）。
+
+REFERENCE 备注：表格的REFERENCE列，列标题“REFERENCE”以及下面的备注内容（ACCOMMODATION等）。
+
+CHARGES 消费：表格的CHARGES列，列标题“CHARGES”以及下面的消费数值（428.81等）。
+
+CREDITS 付款：表格的CREDITS列，列标题“CREDITS”以及下面的付款数值（999.98等）。
+
+Balance 余额：在Total 总计下方，“Balance 余额”以及“CNY0.00”。
+
+现在需要将每个类别对应一个或多个bbox。例如，人名有两个实例（Isaiah Short和James Ross），所以需要两个条目。
+
+现在开始构建JSON数组：
+
+1. Arrival 入住日期：bbox是右侧Arrival 入住日期的区域。假设图像中右侧的Arrival 入住日期在右上部分，比如坐标范围是右侧列，对应文字“Arrival 入住日期 : 22-07-20”。可以估计为[x1, y1, x2, y2]，比如在图像的右侧，垂直位置对应Arrival的标签。
+
+2. Balance 余额：在Total 总计下方，文字“Balance 余额”，所以bbox是该文字的位置。
+
+3. CHARGES 消费：表格的CHARGES列，列标题和所有消费数值的区域，比如表格中CHARGES列的标题和对应行的数值。
+
+4. CREDITS 付款：表格的CREDITS列，列标题和对应行的数值（比如最后一行的999.98）。
+
+5. Cashier 收银员：右侧“Cashier 收银员 : James Ross”的区域。
+
+6. Confirmation No 确认号：右侧“Confirmation No 确认号 : 83374468”的区域。
+
+7. DATE 日期：表格的DATE列，列标题和所有日期行（22-07-20等）。
+
+8. Departure 离店日期：右侧“Departure 离店日期 : 24-07-20”的区域。
+
+9. REFERENCE 备注：表格的REFERENCE列，列标题和所有备注内容（ACCOMMODATION等）。
+
+10. Room房号：右侧“Room 房号 : 0816”的区域。
+
+11. lnvoice No 账单号：右侧“Invoice No 账单号 : 646819”的区域。
+
+12. 人名（Isaiah Short）：左侧“Isaiah Short”的区域。
+
+13. 人名（James Ross）：右侧“Cashier 收银员 : James Ross”中的James Ross，所以这个区域和Cashier收银员的区域重叠，但人名是James Ross，所以需要单独的条目吗？或者Cashier收银员的标签是类别，而James Ross是人名。所以人名类别需要包含Isaiah Short和James Ross两个实例。
+
+14. 公司名：左侧“Company Name 公司名”的区域。
+
+15. 地址：左侧“USNV Ward FPO AP 20180 Yu Hang District Hangzhou 310000 China”的区域。
+
+现在需要确保每个类别都被覆盖。例如，用户要求的“人名”类别，需要检测所有的人名，即Isaiah Short和James Ross，所以两个条目。
+
+现在开始编写每个条目的bbox和label。由于是图像，需要大致估计坐标，这里假设图像的坐标系统，左上角为(0,0)，右下角为(1000,1000)左右（因为是图片，实际尺寸可能不同，但相对位置）。
+
+例如：
+
+- 地址：左侧的地址行，从“USNV Ward FPO AP 20180”到“China”，所以bbox大约是[40, 70, 320, 110]（假设）。
+- 公司名：“Company Name 公司名”在Isaiah Short下方，所以bbox是[40, 130, 200, 150]。
+- 人名（Isaiah Short）：在公司名上方，即“Isaiah Short”一行，bbox是[40, 100, 200, 120]。
+- Room房号：右侧“Room 房号 : 0816”，bbox是[650, 60, 800, 80]。
+- Arrival 入住日期：右侧“Arrival 入住日期 : 22-07-20”，bbox是[650, 80, 800, 100]。
+- Departure 离店日期：右侧“Departure 离店日期 : 24-07-20”，bbox是[650, 100, 800, 120]。
+- Confirmation No 确认号：右侧“Confirmation No 确认号 : 83374468”，bbox是[650, 120, 850, 140]。
+- Cashier 收银员：右侧“Cashier 收银员 : James Ross”，bbox是[650, 140, 850, 160]。
+- Invoice No 账单号：右侧“Invoice No 账单号 : 646819”，bbox是[650, 160, 850, 180]。
+- DATE 日期：表格的DATE列，列标题在表格上方，bbox是[20, 250, 150, 280]，以及下面的日期行（22-07-20等）。
+- REFERENCE 备注：表格的REFERENCE列，列标题“REFERENCE”在表格上方，bbox是[160, 250, 300, 280]，以及下面的备注

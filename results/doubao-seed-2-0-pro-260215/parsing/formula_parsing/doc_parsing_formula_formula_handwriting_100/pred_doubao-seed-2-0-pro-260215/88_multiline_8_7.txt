@@ -1,0 +1,13 @@
+$$
+\begin{align*}
+\left| \mathbb{E}\left[ F_t^{BA}(S_t, a_t) \mid P_t \right] \right| &= \gamma \mathbb{E}\left[ \min\left\{ Q_t^B(S_{t+1}, a^*), Q_t^A(S_{t+1}, a^*) \right\} - \min\left\{ Q_t^A(S_{t+1}, b^*), Q_t^B(S_{t+1}, b^*) \right\} \mid P_t \right] \\
+&\leq \gamma \mathbb{E}\left[ \left| \min\left\{ Q_t^B(S_{t+1}, b^*), Q_t^A(S_{t+1}, a^*) \right\} - \min\left\{ Q_t^A(S_{t+1}, b^*), Q_t^B(S_{t+1}, b^*) \right\} \right| \mid P_t \right] \\
+&\leq \gamma \mathbb{E}\left[ Q_t^B(S_{t+1}, b^*) \mid P_t \right] - \gamma \mathbb{E}\left[ \min\left\{ Q_t^A(S_{t+1}, b^*), Q_t^B(S_{t+1}, b^*) \right\} \mid P_t \right] \\
+&= \gamma P\left(Q_t^B(S_{t+1}, b^*) \geq Q_t^A(S_{t+1}, b^*) \mid P_t\right) \mathbb{E}\left[ Q_t^B(S_{t+1}, b^*) \mid Q_t^B(S_{t+1}, b^*) \geq Q_t^A(S_{t+1}, b^*), P_t \right] \\
+&\quad + \gamma P\left(Q_t^B(S_{t+1}, b^*) < Q_t^A(S_{t+1}, b^*) \mid P_t\right) \mathbb{E}\left[ Q_t^B(S_{t+1}, b^*) \mid Q_t^B(S_{t+1}, b^*) < Q_t^A(S_{t+1}, b^*), P_t \right] \\
+&\quad - \gamma P\left(Q_t^B(S_{t+1}, b^*) \geq Q_t^A(S_{t+1}, b^*) \mid P_t\right) \mathbb{E}\left[ Q_t^A(S_{t+1}, b^*) \mid Q_t^B(S_{t+1}, b^*) \geq Q_t^A(S_{t+1}, b^*), P_t \right] \\
+&\quad - \gamma P\left(Q_t^B(S_{t+1}, b^*) < Q_t^A(S_{t+1}, b^*) \mid P_t\right) \mathbb{E}\left[ Q_t^B(S_{t+1}, b^*) \mid Q_t^B(S_{t+1}, b^*) < Q_t^A(S_{t+1}, b^*), P_t \right] \\
+&= \gamma P\left(Q_t^B(S_{t+1}, b^*) \geq Q_t^A(S_{t+1}, b^*) \mid P_t\right) \mathbb{E}\left[ \left| Q_t^B(S_{t+1}, b^*) - Q_t^A(S_{t+1}, b^*) \right| \mid Q_t^B(S_{t+1}, b^*) \geq Q_t^A(S_{t+1}, b^*), P_t \right] \\
+&\leq \gamma P\left(Q_t^B(S_{t+1}, a^*) \geq Q_t^A(S_{t+1}, a^*) \mid P_t\right) \left\| \Delta_t^{BA} \right\| \leq \gamma \left\| \Delta_t^{BA} \right\|
+\end{align*}
+$$

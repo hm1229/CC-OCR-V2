@@ -1,0 +1,27 @@
+To determine the coordinates of the region containing the text '0.00', we need to carefully analyze the image and identify the bounding box around the text.
+
+1. **Identify the text '0.00'**: The text '0.00' appears in two places on the receipt:
+   - Under "统筹金支付" (Coordination Fund Payment)
+   - Under "大额补助支付" (Large Amount Subsidy Payment)
+
+2. **Select the appropriate instance**: Since the question does not specify which '0.00' to use, I will choose the first instance under "统筹金支付" (Coordination Fund Payment).
+
+3. **Determine the bounding box coordinates**:
+   - The text '0.00' is located near the bottom left of the receipt.
+   - The bounding box should encompass the text and a small margin around it.
+
+4. **Normalize the coordinates**:
+   - The image width and height are approximately 1000 pixels each.
+
+Let's assume the bounding box coordinates for the text '0.00' under "统筹金支付" are approximately as follows:
+- Top-left corner: (x1, y1)
+- Bottom-right corner: (x2, y2)
+
+Based on visual inspection, the coordinates might be:
+- (x1, y1) ≈ (150, 750)
+- (x2, y2) ≈ (200, 800)
+
+These coordinates are normalized to the image dimensions.
+
+So, the output is:
+(150, 750, 200, 800)

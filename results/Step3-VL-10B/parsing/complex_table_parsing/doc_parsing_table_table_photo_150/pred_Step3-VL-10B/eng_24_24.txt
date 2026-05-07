@@ -1,0 +1,389 @@
+Got it, let's tackle this problem. First, I need to transcribe the two tables from the image into HTML. Let's start with the first table.
+
+First, identify the headers of the first table. The columns are Board, Level, Element Code, Title, Grd1, Grd2, Mark Equiv, End1, End2, Points.
+
+Then, each row in the first table. Let's go row by row.
+
+First row (headers):
+Board | Level | Element Code | Title | Grd1 | Grd2 | Mark Equiv | End1 | End2 | Points
+
+Then the data rows:
+
+1. EDEXL/KS | BTEC/1&2 | BTBX2A | Business (2018) (Award) | M2 |  |  |  |  | 46
+2. EDEXL/GC | GCSE/9FC | 1AA0H | Arabic Option H | 9 |  |  |  |  | 58
+3. WJEC/GCS | GCSE/DA | 3430QD | Science (Double Award) Cash-in | *A |  |  |  |  | 110
+4. WJEC/GCS | GCSE/FC | 3110QS | Geography | B |  |  |  |  | 46
+5. WJEC/GCS | GCSE/FC | 3121QS | RS (Catholic Theology & Judaism) Cash-in | A |  |  |  |  | 52
+6. WJEC/GCS | GCSE/FC | 3300PH | Mathematics Higher | A* |  |  |  |  | 58
+7. WJEC/GCS | GCSE/FC | 3700QS | English Language | A |  |  |  |  | 52
+8. WJEC/GCS | GCSE/FC | 3720QS | English Literature Cash-in | B |  |  |  |  | 46
+9. WJEC/GCS | L1L2/L2 | 955001 | Additional Mat Level 2 | M |  |  |  |  | 49
+10. WJEC/GCE | WBQ/1&2 | 9009Q0 | Welsh Bacc National/Found Cashin | P2 |  |  |  |  | 0
+11. WJEC/GCE | WBQ/1&2 | 90S9PA | Skills Challenge Cert N/F Route A | B |  |  |  |  | 46
+12. WJEC/GCS | GCSE/B | 3120UF | RS Option 1F Cath. Christ. & Judaism |  |  | 109 b |  |  | 
+13. WJEC/GCS | GCSE/B | 3121U3 | RS Catholic Christ. & Ethical Themes |  |  | 134 a |  |  | 
+14. WJEC/GCS | GCSE/B | 3430U7 | Science Double Practical Assessment |  |  | 58 b |  |  | 
+15. WJEC/GCS | GCSE/B | 3430UA | Science Double Biology 1 Higher |  |  | 101 a |  |  | 
+16. WJEC/GCS | GCSE/B | 3430UB | Science Double Chemistry 1 Higher |  |  | 111 a* |  |  | 
+17. WJEC/GCS | GCSE/B | 3430UC | Science Double Physics 1 Higher |  |  | 117 a* |  |  | 
+18. WJEC/GCS | GCSE/B | 3430UD | Science Double Biology 2 Higher |  |  | 104 a |  |  | 
+19. WJEC/GCS | GCSE/B | 3430UE | Science Double Chemistry 2 Higher |  |  | 108 a* |  |  | 
+20. WJEC/GCS | GCSE/B | 3430UF | Science Double Physics 2 Higher |  |  | 92 b |  |  | 
+21. WJEC/GCS | GCSE/B | 3720U4 | English Lit Shakespeare |  |  | 48 a* |  |  | 
+22. WJEC/GCS | GCSE/B | 3720UB | Englit Heritage Drama & Prose Higher |  |  | 61 b |  |  | 
+23. WJEC/GCE | WBQ/1&2 | 90S9U1 | Welsh Bacc National/Found Project |  |  | 132 D2 |  |  | 
+24. WJEC/GCE | WBQ/1&2 | 90S9U2 | Welsh Bacc N/F Ent & Employability |  |  | D2 |  |  | 
+25. WJEC/GCE | WBQ/1&2 | 90S9U3 | Welsh Bacc N/F Global Citizenship |  |  | 34 P2 |  |  | 
+
+Now the second table, "Additional Results". Headers: Board, Level, Subject Code, Title, Grade, Points.
+
+Data row:
+NCFE | GNVQ/F | PS3 | NCFE Level 2 Certificate in Equality and Diversity | Pass | 92
+
+Now, need to structure each table with <table>, <tr> for rows, <td> for cells. Also, check if any merged cells. In the image, the first table's "Additional Results" is a section, so the second table is separate.
+
+Let's start coding the first table.
+
+First table:
+
+<table>
+  <tr>
+    <th>Board</th>
+    <th>Level</th>
+    <th>Element Code</th>
+    <th>Title</th>
+    <th>Grd1</th>
+    <th>Grd2</th>
+    <th>Mark Equiv</th>
+    <th>End1</th>
+    <th>End2</th>
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>EDEXL/KS</td>
+    <td>BTEC/1&2</td>
+    <td>BTBX2A</td>
+    <td>Business (2018) (Award)</td>
+    <td>M2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>46</td>
+  </tr>
+  <tr>
+    <td>EDEXL/GC</td>
+    <td>GCSE/9FC</td>
+    <td>1AA0H</td>
+    <td>Arabic Option H</td>
+    <td>9</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>58</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/DA</td>
+    <td>3430QD</td>
+    <td>Science (Double Award) Cash-in</td>
+    <td>*A</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>110</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/FC</td>
+    <td>3110QS</td>
+    <td>Geography</td>
+    <td>B</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>46</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/FC</td>
+    <td>3121QS</td>
+    <td>RS (Catholic Theology & Judaism) Cash-in</td>
+    <td>A</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>52</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/FC</td>
+    <td>3300PH</td>
+    <td>Mathematics Higher</td>
+    <td>A*</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>58</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/FC</td>
+    <td>3700QS</td>
+    <td>English Language</td>
+    <td>A</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>52</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/FC</td>
+    <td>3720QS</td>
+    <td>English Literature Cash-in</td>
+    <td>B</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>46</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>L1L2/L2</td>
+    <td>955001</td>
+    <td>Additional Mat Level 2</td>
+    <td>M</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>49</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCE</td>
+    <td>WBQ/1&2</td>
+    <td>9009Q0</td>
+    <td>Welsh Bacc National/Found Cashin</td>
+    <td>P2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>0</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCE</td>
+    <td>WBQ/1&2</td>
+    <td>90S9PA</td>
+    <td>Skills Challenge Cert N/F Route A</td>
+    <td>B</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>46</td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3120UF</td>
+    <td>RS Option 1F Cath. Christ. & Judaism</td>
+    <td></td>
+    <td></td>
+    <td>109 b</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3121U3</td>
+    <td>RS Catholic Christ. & Ethical Themes</td>
+    <td></td>
+    <td></td>
+    <td>134 a</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430U7</td>
+    <td>Science Double Practical Assessment</td>
+    <td></td>
+    <td></td>
+    <td>58 b</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430UA</td>
+    <td>Science Double Biology 1 Higher</td>
+    <td></td>
+    <td></td>
+    <td>101 a</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430UB</td>
+    <td>Science Double Chemistry 1 Higher</td>
+    <td></td>
+    <td></td>
+    <td>111 a*</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430UC</td>
+    <td>Science Double Physics 1 Higher</td>
+    <td></td>
+    <td></td>
+    <td>117 a*</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430UD</td>
+    <td>Science Double Biology 2 Higher</td>
+    <td></td>
+    <td></td>
+    <td>104 a</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430UE</td>
+    <td>Science Double Chemistry 2 Higher</td>
+    <td></td>
+    <td></td>
+    <td>108 a*</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3430UF</td>
+    <td>Science Double Physics 2 Higher</td>
+    <td></td>
+    <td></td>
+    <td>92 b</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3720U4</td>
+    <td>English Lit Shakespeare</td>
+    <td></td>
+    <td></td>
+    <td>48 a*</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCS</td>
+    <td>GCSE/B</td>
+    <td>3720UB</td>
+    <td>Englit Heritage Drama & Prose Higher</td>
+    <td></td>
+    <td></td>
+    <td>61 b</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCE</td>
+    <td>WBQ/1&2</td>
+    <td>90S9U1</td>
+    <td>Welsh Bacc National/Found Project</td>
+    <td></td>
+    <td></td>
+    <td>132 D2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCE</td>
+    <td>WBQ/1&2</td>
+    <td>90S9U2</td>
+    <td>Welsh Bacc N/F Ent & Employability</td>
+    <td></td>
+    <td></td>
+    <td>D2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>WJEC/GCE</td>
+    <td>WBQ/1&2</td>
+    <td>90S9U3</td>
+    <td>Welsh Bacc N/F Global Citizenship</td>
+    <td></td>
+    <td></td>
+    <td>34 P2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+Then the "Additional Results" section, which is a second table.
+
+<table>
+  <tr>
+    <th>Board</th>
+    <th>Level</th>
+    <th>Subject Code</th>
+    <th>Title</th>
+    <th>Grade</th>
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>NCFE</td>
+    <td>GNVQ/F</td>
+    <td>PS3</td>
+    <td>NCFE Level 2 Certificate in Equality and Diversity</td>
+    <td>Pass</td>
+    <td>92</td>
+  </tr>
+</table>
+
+Wait, need to check if the "Additional Results" is a separate table. In the image, after the first table, there's a section header "Additional Results" and then another table. So yes, two tables.
+
+Also, check for any merged cells. In the image, the first table's rows don't have merged cells (each row has all columns). The second table also has all columns filled. So no merged cells, so each <td> is individual.
+
+Now,

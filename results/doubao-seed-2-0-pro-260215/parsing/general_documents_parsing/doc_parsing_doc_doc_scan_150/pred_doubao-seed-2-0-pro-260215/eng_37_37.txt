@@ -1,0 +1,186 @@
+```latex
+\documentclass{article}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+% Header
+\begin{center}
+\begin{tabular}{l c r}
+\textbf{\Huge awinic} & \textbf{\Large 上海艾为电子技术股份有限公司} & \textbf{\Large AW36526} \\
+ & \textit{shanghai awinic technology co., ltd.} & July 2019 V1.3 \\
+\hline
+\end{tabular}
+\end{center}
+
+\section*{REGISTER DETAILED DESCRIPTION}
+
+% Chip ID Register
+\subsection*{$\diamondsuit$ Chip ID Register (0x00), default(0x17)}
+\begin{tabular}{|*{8}{>{\centering\arraybackslash}p{1.1cm}|}}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|p{8.8cm}|}{
+Chip ID:  ``0001 0111'' \\
+Write 55H To Reset All Registers
+} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+% Enable Register
+\subsection*{$\diamondsuit$ Enable Register (0x01), default(0x00)}
+\begin{tabular}{|*{8}{>{\raggedright\arraybackslash}p{1.1cm}|}}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+Strobe Type
+\newline 0=Level
+\newline Triggered
+\newline (Default)
+\newline 1=Edge
+\newline Triggered
+&
+Strobe
+\newline Enable
+\newline 0=Disabled
+\newline (Default)
+\newline 1=Enabled
+&
+\multicolumn{2}{>{\raggedright\arraybackslash}p{2.2cm}|}{
+Mode Bits: M1, M0
+\newline 00=Standby (Default)
+\newline 01=IR Drive
+\newline 10=Torch
+\newline 11=Flash
+}
+&
+RFU
+&
+LED3 Enable
+\newline 0=OFF
+\newline (Default)
+\newline 1=ON
+&
+LED2 Enable
+\newline 0=OFF
+\newline (Default)
+\newline 1=ON
+&
+LED1 Enable
+\newline 0=OFF
+\newline (Default)
+\newline 1=ON
+\\
+\hline
+\end{tabular}
+
+\subsubsection*{Note:}
+In Edge or Level Strobe Mode, it is recommended that the trigger pulse width be set greater than 1ms to ensure proper turn-on of the device.
+
+\vspace{0.5cm}
+
+% IVFM Register
+\subsection*{$\diamondsuit$ IVFM Register (0x02) , default(0xE1)}
+\begin{tabular}{|*{8}{>{\raggedright\arraybackslash}p{1.1cm}|}}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+LEDX Enable Setting
+\newline 0= if LED1 or LED2 is Enabled, LED3 is Disabled Internally
+\newline 1=No Limitation
+\newline (Default)
+&
+LED3 Pin
+\newline Short Fault
+\newline Detect
+\newline 0=Disabled
+\newline 1=Enabled
+\newline (Default)
+&
+LED1/2 Pin
+\newline Short Fault
+\newline Detect
+\newline 0=Disabled
+\newline 1=Enabled
+\newline (Default)
+&
+UVLO Enable
+\newline 0=Disabled
+\newline (Default)
+\newline 1=Enabled
+&
+\multicolumn{3}{>{\raggedright\arraybackslash}p{3.3cm}|}{
+IVFM Levels
+\newline 000=2.9 V (Default)
+\newline 001=3.0 V
+\newline 010=3.1 V
+\newline 011=3.2 V
+\newline 100=3.3 V
+\newline 101=3.4 V
+\newline 110=3.5 V
+\newline 111=3.6 V
+}
+&
+IVFM Enable
+\newline 0=Disabled
+\newline 1=Enabled
+\newline (Default)
+\\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+% LED1 Flash Brightness Register
+\subsection*{$\diamondsuit$ LED1 Flash Brightness Register (0x03) , default(0x7F)}
+\begin{tabular}{|*{8}{>{\centering\arraybackslash}p{1.1cm}|}}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|p{8.8cm}|}{
+LED1 Flash Brightness Levels \\
+$I_{\text{FLASH}}(\text{mA}) \approx (\text{Brightness Code} * 3.91 \text{mA}) + 3.91 \text{mA}$ \\
+00000000=3.91 mA \\
+\ldots \\
+01111111=500 mA \quad (Default) \\
+\ldots \\
+11111111=1.0 A
+} \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+% LED1 Torch Brightness Register
+\subsection*{$\diamondsuit$ LED1 Torch Brightness Register (0x04) , default(0x7F)}
+\begin{tabular}{|*{8}{>{\centering\arraybackslash}p{1.1cm}|}}
+\hline
+Bit 7 & Bit 6 & Bit 5 & Bit 4 & Bit 3 & Bit 2 & Bit 1 & Bit 0 \\
+\hline
+\multicolumn{8}{|p{8.8cm}|}{
+LED1 Torch Brightness Levels \\
+$I_{\text{TORCH}}(\text{mA}) \approx (\text{Brightness Code} * 1.46 \text{mA}) + 1.46 \text{mA}$ \\
+00000000=1.46 mA \\
+\ldots \\
+01111111=187.5 mA \quad (Default) \\
+\ldots \\
+11111111=375 mA
+} \\
+\hline
+\end{tabular}
+
+\vfill
+% Footer
+\begin{center}
+\begin{tabular}{l c r}
+www.awinic.com.cn & 20 & Copyright \copyright 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD \\
+\end{tabular}
+\end{center}
+
+\end{document}
+```

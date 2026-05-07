@@ -1,0 +1,22 @@
+I need to find all instances of '0.00' in the image and provide their coordinates.
+
+Looking at the receipt, I can see '0.00' appears in several places:
+
+1. First row (11/10): in the 付款(人民币) column - "0.00"
+2. Second row (11/11): in the 消费(人民币) column - "0.00"
+3. Balance Due row: "0.00"
+
+The question asks for "the region of the text '0.00'" - I'll identify the most prominent/first instance.
+
+First instance of '0.00' in the 付款 column on the 11/10 row:
+(855, 448, 920, 468)
+
+Second instance '0.00' in 消费 column on 11/11 row:
+(755, 478, 820, 498)
+
+Third instance '0.00' for Balance Due:
+(855, 558, 920, 578)
+
+Since the question uses singular "the region," I'll provide the balance due '0.00' as it's the most prominent final figure:
+
+(855, 558, 925, 578)

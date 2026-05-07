@@ -1,0 +1,9 @@
+\begin{align*}
+& \left| \frac{1}{2} \int_{t_n}^t \int_{-\infty}^\infty \frac{4c^2(s-\tau)}{2} \left( G_x(x, t; s, \tau) h'_{\alpha\alpha}(s) + G_{sx}(x, t; s, \tau) h_\alpha(s) \right) ds d\tau \right| \\
+& \le \frac{(\|u_\alpha\|_\infty + 1)^2}{2} \|h'_{\alpha\alpha}\|_\infty \int_{t_n}^t \frac{1}{\sqrt{t-\tau}(t-\tau)} d\tau \\
+& \quad + \left| \int_{t_n}^t \int_{-\infty}^\infty \left( \alpha^*(x+2\sqrt{t-\tau}\lambda, \tau) h_{\alpha\alpha}(x+2\sqrt{t-\tau}\lambda) - \alpha^*(x, \tau) h_{\alpha\alpha}(x) \right) \right. \\
+& \qquad \qquad \qquad \left. \times \frac{(\lambda^2 - 1/2)}{\sqrt{\pi}(t-\tau)} e^{-\lambda^2} ds d\tau \right| \\
+& \le c(\|u_\alpha\|_\infty, \alpha) (2n)^{-1/2} \\
+& \quad + \int_{t_n}^t \int_{-\infty}^\infty c(\|u_\alpha\|_\infty, \alpha, \beta) \left( \frac{\sqrt{t-\tau}|\lambda|}{\sqrt{\tau}} \right)^\beta |\lambda^2 - 1/2| \frac{1}{(t-\tau)} e^{-\lambda^2} d\lambda d\tau \\
+& \le c(\|u_\alpha\|_\infty, \alpha, \beta) (2n)^{-1/2} + \int_{1-1/(2n)}^1 q^{\beta/2} (1-q)^{-\beta/2} dq
+\end{align*}

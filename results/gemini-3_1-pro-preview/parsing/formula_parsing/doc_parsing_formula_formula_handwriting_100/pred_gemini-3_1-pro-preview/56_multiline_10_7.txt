@@ -1,0 +1,14 @@
+The LaTeX representation of the mathematical formulas in the image is as follows:
+
+\begin{aligned}
+\operatorname{Tr}\left[\left(A_{m} \otimes A_{n}\right) R_{A B}\right] &=\operatorname{Tr}\left\{\left(A_{m} \otimes A_{n}\right)\left[\left(P \otimes \frac{I}{2}\right) E_{A B}+E_{A B}\left(P \otimes \frac{I}{2}\right)\right]\right\} \\
+&=\frac{1}{2}\left[\operatorname{Tr}\left(\left(A_{m} P \otimes A_{n}\right) E_{A B}\right)+\operatorname{Tr}\left(\left(A_{m} \otimes A_{n}\right) E_{A B}(P \otimes I)\right)\right] \\
+&=\frac{1}{2}\left[\sum_{i j} \operatorname{Tr}\left(A_{m} P|i\rangle\langle j|\right) \operatorname{Tr}\left(A_{n} \mathcal{E}_{A \mid B}(|i\rangle\langle j|)\right)+\sum_{i j} \operatorname{Tr}\left(A_{m}|i\rangle\langle j| P\right) \operatorname{Tr}\left(A_{n} \mathcal{E}_{A \mid B}(|i\rangle\langle j|)\right)\right] \\
+&=\frac{1}{2}\left[\sum_{i j}\left\langle j\left|A_{m} P\right| i\right\rangle \operatorname{Tr}\left(A_{n} \mathcal{E}_{A \mid B}(|i\rangle\langle j|)\right)+\sum_{i j}\left\langle j\left|P A_{m}\right| i\right\rangle \operatorname{Tr}\left(A_{n} \mathcal{E}_{A \mid B}(|i\rangle\langle j|)\right)\right] \\
+&=\frac{1}{2}\left[\sum_{i j}\left\langle j\left|\left(A_{m} P+P A_{m}\right)\right| i\right\rangle \operatorname{Tr}\left(A_{n} \sum_{k} V_{k}|i\rangle\langle j| V_{k}^{\dagger}\right)\right] \\
+&=\frac{1}{2}\left[\sum_{i j}\left\langle j\left|\left(A_{m} P+P A_{m}\right)\right| i\right\rangle \sum_{k}\left\langle j\left|V_{k}^{\dagger} A_{n} V_{k}\right| i\right\rangle\right] \\
+&=\frac{1}{2}\left[\sum_{i j}\left\langle j\left|\left(A_{m} P+P A_{m}\right)\right| i\right\rangle\left\langle i\left|\sum_{k} V_{k}^{\dagger} A_{n} V_{k}\right| j\right\rangle\right] \\
+&=\frac{1}{2} \operatorname{Tr}\left[\sum_{i j}|i\rangle\left\langle j\left|\left(A_{m} P+P A_{m}\right) \sum_{k} V_{k}^{\dagger} A_{n} V_{k}\right|\right]\right. \\
+&=\frac{1}{2} \operatorname{Tr}\left[\left(A_{m} P+P A_{m}\right) \mathcal{E}_{A \mid B}^{\dagger}\left(A_{n}\right)\right] \\
+&=\left\langle A_{m} A_{n}\right\rangle_{\text {seq }}
+\end{aligned}

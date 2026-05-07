@@ -1,0 +1,21 @@
+To determine the coordinates of the region containing the text '支', we need to analyze the image and identify the bounding box that encloses the text.
+
+1. **Identify the text '支':**
+   - The text '支' appears in the section under the item "盐酸利多卡因注射/5ml: 2.6000 2/支 5.2000 无自付".
+
+2. **Determine the bounding box:**
+   - The text '支' is located near the middle of the line, slightly to the right of the quantity "2".
+
+3. **Estimate the normalized coordinates:**
+   - The image width and height are assumed to be 1000 units each for normalization purposes.
+
+4. **Bounding box coordinates:**
+   - **Left-top corner (x1, y1):** The text '支' starts after the quantity "2", so we estimate this to be around 1/3 of the way through the line horizontally and roughly 1/4 of the way down the page vertically.
+   - **Right-bottom corner (x2, y2):** The text '支' ends at the character itself, so we estimate this to be slightly to the right of '支' and a bit further down the line.
+
+Based on these observations, the normalized coordinates for the bounding box are approximately:
+
+(x1, y1, x2, y2) # x1, y1, x2, y2 are the normalized coordinates of the bounding box.
+(400, 300, 450, 350)
+
+These coordinates should encompass the text '支' within the specified section of the receipt.

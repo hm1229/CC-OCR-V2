@@ -1,0 +1,128 @@
+Here is the HTML transcription of the table from the image, using `<tr>` and `<td>` tags with appropriate `rowspan` and `colspan` attributes to reflect merged cells as visually implied in the original layout. Note: The image shows a single-column “Gauge Theory” column that spans multiple rows for some entries (e.g., Standard Model, GUTs), but since each row has distinct content, we treat them as separate rows unless explicitly merged — however, looking closely, **no actual cell merging is present** in the visual structure; each row is independent. The only possible merge might be if “Standard Model” or “Grand Unified Theory” were meant to span multiple force/group rows — but in the image, each row has its own unique entry in all three columns.
+
+Actually, re-examining the image:  
+- Each row corresponds to one gauge theory → one set of forces → one structure group.  
+- There are no vertically or horizontally merged cells visible — every row has exactly 3 cells.  
+- The text “Table 1: Gauge Theories” appears below the table, not part of it.
+
+Thus, we transcribe each row as a simple `<tr>` with three `<td>` elements.
+
+However, note: In the image, the first column (“Gauge Theory”) sometimes contains multi-line text (like “Quantum Electrodynamics (QED)”), but that’s just line wrapping within a single cell — not a merged cell.
+
+Also, the last few rows under “Grand Unified Theory” appear to have identical descriptions in the “Fundamental Forces” column — but again, they are separate rows.
+
+Let’s transcribe faithfully:
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th>Gauge Theory</th>
+      <th>Fundamental Forces</th>
+      <th>Structure Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Quantum Electrodynamics (QED)</td>
+      <td>Electromagnetism</td>
+      <td>U(1)</td>
+    </tr>
+    <tr>
+      <td>Electroweak Theory (Glashow-Salam-Weinberg)</td>
+      <td>Electromagnetism and weak force</td>
+      <td>SU(2) × U(1)</td>
+    </tr>
+    <tr>
+      <td>Quantum Chromodynamics (QCD)</td>
+      <td>Strong force</td>
+      <td>SU(3)</td>
+    </tr>
+    <tr>
+      <td>Standard Model</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SU(3) × SU(2) × U(1)</td>
+    </tr>
+    <tr>
+      <td>Georgi-Glashow Grand Unified Theory (GUT1)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SU(5)</td>
+    </tr>
+    <tr>
+      <td>Fritzsch-Georgi-Minkowski Grand Unified Theory (GUT2)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SO(10)</td>
+    </tr>
+    <tr>
+      <td>Grand Unified Theory (GUT3)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SU(6)</td>
+    </tr>
+    <tr>
+      <td>Grand Unified Theory (GUT4)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>O(16)</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+> ✅ This reflects the exact row-by-row structure seen in the image. No `rowspan` or `colspan` is needed because no cells are visually merged — each row is self-contained across all three columns.
+
+Note: The caption “Table 1: Gauge Theories” is outside the table and should be placed after the `</table>` tag if included in full context, but per instructions, we’re only transcribing the table itself.
+
+Final output:
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th>Gauge Theory</th>
+      <th>Fundamental Forces</th>
+      <th>Structure Group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Quantum Electrodynamics (QED)</td>
+      <td>Electromagnetism</td>
+      <td>U(1)</td>
+    </tr>
+    <tr>
+      <td>Electroweak Theory (Glashow-Salam-Weinberg)</td>
+      <td>Electromagnetism and weak force</td>
+      <td>SU(2) × U(1)</td>
+    </tr>
+    <tr>
+      <td>Quantum Chromodynamics (QCD)</td>
+      <td>Strong force</td>
+      <td>SU(3)</td>
+    </tr>
+    <tr>
+      <td>Standard Model</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SU(3) × SU(2) × U(1)</td>
+    </tr>
+    <tr>
+      <td>Georgi-Glashow Grand Unified Theory (GUT1)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SU(5)</td>
+    </tr>
+    <tr>
+      <td>Fritzsch-Georgi-Minkowski Grand Unified Theory (GUT2)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SO(10)</td>
+    </tr>
+    <tr>
+      <td>Grand Unified Theory (GUT3)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>SU(6)</td>
+    </tr>
+    <tr>
+      <td>Grand Unified Theory (GUT4)</td>
+      <td>Strong, weak forces and electromagnetism</td>
+      <td>O(16)</td>
+    </tr>
+  </tbody>
+</table>
+```

@@ -1,0 +1,24 @@
+To determine the coordinates of the region containing the text "康复中心" (which translates to "Rehabilitation Center"), we need to carefully analyze the image and identify the bounding box around this text.
+
+1. **Identify the Text Location:**
+   - The text "康复中心" is located in the section under the patient's information, specifically in the column labeled "科别" (which means "Department").
+
+2. **Estimate the Coordinates:**
+   - The image width and height are not explicitly given, but we can estimate the normalized coordinates based on the visible portion of the text.
+
+3. **Bounding Box Coordinates:**
+   - The text "康复中心" is horizontally aligned and centered within its cell.
+
+Let's estimate the normalized coordinates:
+
+- **Left-Top Corner (x1, y1):**
+  - The text starts roughly around the middle of the cell horizontally and is positioned towards the top vertically.
+  - Approximate coordinates: (400, 200)
+
+- **Right-Bottom Corner (x2, y2):**
+  - The text ends roughly around the middle of the cell horizontally and is positioned towards the bottom vertically.
+  - Approximate coordinates: (500, 250)
+
+Thus, the normalized coordinates of the bounding box for the text "康复中心" are:
+
+(400, 200, 500, 250)

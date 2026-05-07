@@ -1,0 +1,128 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        }
+        thead tr th {
+        border-top: 2px solid #000;
+        border-bottom: 2px solid #000;
+        padding: 8px;
+        background: #f6f6f6;
+        }
+        tbody td {
+        border-bottom: 1px solid #aaa;
+        padding: 8px;
+        text-align: center;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <tr>
+    <th rowspan="2">污染因子</th>
+    <th>总氮</th>
+    <th>化学需氧量</th>
+    <th>氨氮</th>
+    <th>砷</th>
+    <th>铅</th>
+   </tr>
+   <tr>
+    <th>名次</th>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+   </tr>
+   <tr>
+    <th>综合评价值</th>
+    <td>3.5318</td>
+    <td>2.5277</td>
+    <td>1.8099</td>
+    <td>1.3964</td>
+    <td>1.3423</td>
+   </tr>
+   <tr>
+    <th colspan="6">污染因子</th>
+   </tr>
+   <tr>
+    <th>汞</th>
+    <th>铜</th>
+    <th>锌</th>
+    <th>铬</th>
+    <th>颗粒物</th>
+   </tr>
+   <tr>
+    <th>名次</th>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+   </tr>
+   <tr>
+    <th>综合评价值</th>
+    <td>0.9572</td>
+    <td>0.9283</td>
+    <td>0.3172</td>
+    <td>0.0658</td>
+    <td>-0.2851</td>
+   </tr>
+   <tr>
+    <th colspan="6">污染因子</th>
+   </tr>
+   <tr>
+    <th>镉</th>
+    <th>镍</th>
+    <th colspan="2">NO₂</th>
+    <th>SO₂</th>
+   </tr>
+   <tr>
+    <th>名次</th>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+   </tr>
+   <tr>
+    <th>综合评价值</th>
+    <td>-0.6167</td>
+    <td>-0.6651</td>
+    <td>-2.8157</td>
+    <td>-8.4941</td>
+   </tr>
+  </table>
+ </body>
+</html>
+
+```

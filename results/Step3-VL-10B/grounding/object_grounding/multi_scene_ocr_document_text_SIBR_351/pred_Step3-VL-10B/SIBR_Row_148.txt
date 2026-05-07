@@ -1,0 +1,168 @@
+用户现在需要检测图像中的各个指定对象，先逐个看。首先标题是“住店结帐单 BILL OF HOUSING”，所以标题的bbox。然后客户名称GUEST NAME对应的是“苏秀珍”和“315”？看原文客户名称: GUEST NAME 315，所以客户名称的区域。入住日期CHECK IN是2020-06-10 22:22。协议单位AGENT是“开发区世创传媒酒店”。合计金额AMOUNT是379.00。已收定金DEPOSIT RECEIVED是379.00。帐号ACCOUNT NUM是“222459”？看原文帐号: ACCOUNT NUM 开发区世创传媒酒店？不对，看原文“帐号: ACCOUNT NUM 开发区世创传媒酒店”？不，看图片里的“帐号: ACCOUNT NUM 开发区世创传媒酒店”？不对，看图片中的“帐号: ACCOUNT NUM”后面是“开发区世创传媒酒店”？不，看图片里的“协议单位: AGENT”是“开发区世创传媒酒店”，而“帐号: ACCOUNT NUM”可能对应的是房号？不对，看图片中的“房号: ROOM NUMBER 222459”，所以房号是222459。日期DATE是2020-06-10。摘要DESCRIPTION是“房费”。金额AMOUNT在表格里的列，还有下面的合计金额也是AMOUNT。收款员CASHIER是“唐建军”。离店日期CHECK OUT是2020-06-12 00:00:00。第一联###是“第一联 财务(白) The first Finance”。第二联 The second是“第二联 宾客(黄) The second Guest”。
+
+现在逐个整理：
+
+1. 标题：住店结帐单 BILL OF HOUSING，对应bbox是包含这两个标题的区域，看图片上方的大标题。
+2. 客户名称 GUEST NAME：对应“苏秀珍”和“315”所在的区域，看“客户名称: GUEST NAME 315”。
+3. 入住日期 CHECK IN：2020-06-10 22:22，对应“入住日期: CHECK IN 2020-06-10 22:22”。
+4. 协议单位 AGENT：“开发区世创传媒酒店”对应“协议单位: AGENT 开发区世创传媒酒店”。
+5. 合计金额 AMOUNT：379.00，对应“合计金额: AMOUNT 379.00”。
+6. 已收定金 DEPOSIT RECEIVED：379.00，对应“已收定金: DEPOSIT RECEIVED 379.00”。
+7. 帐号 ACCOUNT NUM：看图片中“帐号: ACCOUNT NUM”后面的内容？看图片里的“帐号: ACCOUNT NUM 开发区世创传媒酒店”？不，看图片中的“帐号: ACCOUNT NUM”可能被协议单位覆盖？不对，看图片中的“帐号: ACCOUNT NUM”应该是另一个字段，可能图片中“帐号: ACCOUNT NUM”后面是空白？不，看图片里的“帐号: ACCOUNT NUM 开发区世创传媒酒店”其实是协议单位？可能我看错了。再看图片：
+
+图片中的内容：
+
+客户名称: GUEST NAME 315
+
+入住日期: CHECK IN 2020-06-10 22:22
+
+离店日期: CHECK OUT 2020-06-12 00:00:00
+
+房号: ROOM NUMBER 222459
+
+帐号: ACCOUNT NUM 开发区世创传媒酒店？不，看“协议单位: AGENT 开发区世创传媒酒店”，所以“帐号: ACCOUNT NUM”可能没有内容？或者可能“帐号”是另一个，比如图片中的“帐号: ACCOUNT NUM”后面是空白？可能我之前看错了。再看图片中的“帐号: ACCOUNT NUM”后面是“开发区世创传媒酒店”吗？不，看图片中的“协议单位: AGENT”是“开发区世创传媒酒店”，而“帐号: ACCOUNT NUM”可能在上面？不，看图片中的文字：
+
+“帐号: ACCOUNT NUM 开发区世创传媒酒店”？不，看图片中的“帐号: ACCOUNT NUM”后面是“开发区世创传媒酒店”吗？可能不是，可能“协议单位”是“开发区世创传媒酒店”，而“帐号”是另一个。可能图片中的“帐号: ACCOUNT NUM”是空白？或者可能我混淆了。不管怎样，先处理明确的。
+
+房号 ROOM NUMBER：222459，对应“房号: ROOM NUMBER 222459”。
+
+房费：在表格中的“房费”是摘要，对应“摘要 DESCRIPTION”中的“房费”。
+
+摘要 DESCRIPTION：表格中的“摘要”列，内容是“房费”。
+
+日期 DATE：2020-06-10，对应“日期 DATE 2020-06-10”。
+
+收款员 CASHIER：唐建军，对应“收款员: CASHIER 唐建军”。
+
+离店日期 CHECK OUT：2020-06-12 00:00:00，对应“离店日期: CHECK OUT 2020-06-12 00:00:00”。
+
+第一联###：第一联 财务(白) The first Finance，对应底部的“第一联 财务(白) The first Finance”。
+
+第二联 The second：第二联 宾客(黄) The second Guest，对应底部的“第二联 宾客(黄) The second Guest”。
+
+金额 AMOUNT：在表格中的“金额 AMOUNT”列，以及下面的“合计金额: AMOUNT 379.00”等，需要看是否有多个，但这里可能指主要的金额项，比如表格中的金额列和合计金额。
+
+现在开始逐个标注：
+
+1. 标题：住店结帐单 BILL OF HOUSING。bbox是包含这两个标题的区域，看图片上方，文字较大。坐标大概是从上方的“住店结帐单”到“BILL OF HOUSING”。
+
+2. 客户名称 GUEST NAME：对应“客户名称: GUEST NAME 315”，所以bbox是包含“客户名称”、“GUEST NAME”、“315”的区域。
+
+3. 入住日期 CHECK IN：“入住日期: CHECK IN 2020-06-10 22:22”，bbox是这个区域。
+
+4. 协议单位 AGENT：“协议单位: AGENT 开发区世创传媒酒店”，bbox是这个区域。
+
+5. 合计金额 AMOUNT：“合计金额: AMOUNT 379.00”，bbox是这个区域。
+
+6. 已收定金 DEPOSIT RECEIVED：“已收定金: DEPOSIT RECEIVED 379.00”，bbox是这个区域。
+
+7. 帐号 ACCOUNT NUM：看图片中的“帐号: ACCOUNT NUM”，可能对应的内容？图片中“帐号: ACCOUNT NUM”后面是“开发区世创传媒酒店”吗？不，看图片中的“帐号: ACCOUNT NUM”可能在“协议单位”上面？不，看图片中的“帐号: ACCOUNT NUM”是“222459”？不，房号是222459，所以帐号可能不是。可能图片中的“帐号: ACCOUNT NUM”是空白？或者可能我之前看错了，可能“帐号”是另一个字段，比如图片中的“帐号: ACCOUNT NUM”后面没有内容，或者可能“协议单位”是“开发区世创传媒酒店”，而“帐号”是另一个。可能这里“帐号”在图片中是“222459”？不，房号是222459，所以帐号可能不是。可能用户提供的类别中的“帐号 ACCOUNT NUM”在图片中是存在的，比如“帐号: ACCOUNT NUM”后面的内容，可能图片中的“帐号: ACCOUNT NUM”是“开发区世创传媒酒店”？不，协议单位是“开发区世创传媒酒店”，所以可能“帐号”是另一个。可能我需要再检查图片。
+
+看图片中的文字：
+
+- 客户名称: GUEST NAME 315
+
+- 入住日期: CHECK IN 2020-06-10 22:22
+
+- 离店日期: CHECK OUT 2020-06-12 00:00:00
+
+- 房号: ROOM NUMBER 222459
+
+- 帐号: ACCOUNT NUM 开发区世创传媒酒店？不，看“协议单位: AGENT 开发区世创传媒酒店”，所以“帐号: ACCOUNT NUM”可能在“协议单位”上面？不，看图片中的“帐号: ACCOUNT NUM”是单独一行，后面可能没有内容，或者可能“帐号”是“222459”？不，房号是222459，所以可能“帐号”是另一个编号。可能图片中的“帐号: ACCOUNT NUM”是空白，或者可能我漏看了。不管怎样，先处理其他明确的。
+
+8. 房号 ROOM NUMBER：“房号: ROOM NUMBER 222459”，bbox是这个区域。
+
+9. 房费：在表格中的“房费”是摘要内容，对应“摘要 DESCRIPTION”中的“房费”，所以“房费”是摘要的内容，属于“摘要 DESCRIPTION”吗？不，“房费”是摘要的描述，所以“摘要 DESCRIPTION”是列名，而“房费”是该列的内容。所以“房费”作为一个对象，对应表格中的“房费”单元格。
+
+10. 摘要 DESCRIPTION：“摘要 DESCRIPTION”是表格的列标题，对应“日期 DATE”、“摘要 DESCRIPTION”、“金额 AMOUNT”这三列的表头，所以“摘要 DESCRIPTION”是表头部分。
+
+11. 收款员 CASHIER：“收款员: CASHIER 唐建军”，bbox是这个区域。
+
+12. 日期 DATE：“日期 DATE 2020-06-10”，是表格的日期列，对应“2020-06-10”所在的单元格，以及表头“日期 DATE”。
+
+13. 离店日期 CHECK OUT：“离店日期: CHECK OUT 2020-06-12 00:00:00”，bbox是这个区域。
+
+14. 第一联###：“第一联 财务(白) The first Finance”，是底部的联次，bbox是这个区域。
+
+15. 第二联 The second：“第二联 宾客(黄) The second Guest”，是底部的联次，bbox是这个区域。
+
+16. 金额 AMOUNT：在表格中的“金额 AMOUNT”列，以及“合计金额: AMOUNT 379.00”中的“AMOUNT”和金额值。需要确定是哪个，可能指“金额 AMOUNT”列的表头，或者合计金额中的金额。这里可能需要包含表头和合计金额的金额部分。
+
+现在需要把每个类别对应到图像中的位置，然后生成bbox。由于是图像，需要估计坐标。假设图像的宽度是w，高度是h，每个元素的bbox用[x1,y1,x2,y2]表示，基于图像的像素位置（但这里没有实际像素，只能根据布局估计）。
+
+现在开始列出每个对象：
+
+1. 标题：住店结帐单 BILL OF HOUSING。位置在图像上方，文字较大。bbox大概是从上方的“住店结帐单”到“BILL OF HOUSING”，覆盖标题区域。
+
+2. 客户名称 GUEST NAME：包含“客户名称: GUEST NAME 315”的区域，位置在标题下方，左侧。
+
+3. 入住日期 CHECK IN：包含“入住日期: CHECK IN 2020-06-10 22:22”的区域，与客户名称同一行右侧。
+
+4. 协议单位 AGENT：包含“协议单位: AGENT 开发区世创传媒酒店”的区域，位置在房号下方。
+
+5. 合计金额 AMOUNT：包含“合计金额: AMOUNT 379.00”的区域，位置在房费说明下方。
+
+6. 已收定金 DEPOSIT RECEIVED：包含“已收定金: DEPOSIT RECEIVED 379.00”的区域，在合计金额下方。
+
+7. 帐号 ACCOUNT NUM：包含“帐号: ACCOUNT NUM”的区域，可能在协议单位上方？看图片中的“帐号: ACCOUNT NUM”在“协议单位”上面吗？看图片中的顺序：
+
+客户名称
+
+入住日期
+
+离店日期
+
+房号
+
+帐号
+
+协议单位
+
+所以“帐号: ACCOUNT NUM”在“房号”下方，“协议单位”上方。所以“帐号: ACCOUNT NUM”对应的内容，可能图片中“帐号: ACCOUNT NUM”后面是空白？或者可能“帐号”是“222459”？不，房号是222459，所以可能“帐号”是另一个编号，比如图片中的“帐号: ACCOUNT NUM”后面是“开发区世创传媒酒店”？不，协议单位是“开发区世创传媒酒店”，所以可能“帐号”是空白，或者可能我之前看错了。假设“帐号: ACCOUNT NUM”存在，即使内容为空，也标注其位置。
+
+8. 房号 ROOM NUMBER：包含“房号: ROOM NUMBER 222459”的区域，在入住日期下方。
+
+9. 房费：在表格中的“房费”单元格，对应“摘要 DESCRIPTION”列下的内容，即“房费”文字。
+
+10. 摘要 DESCRIPTION：表格的列标题“摘要 DESCRIPTION”，在日期、摘要、金额三列的表头。
+
+11. 收款员 CASHIER：包含“收款员: CASHIER 唐建军”的区域，在已收定金下方，客户签名右侧。
+
+12. 日期 DATE：包含“日期 DATE 2020-06-10”的区域，表格的日期列，表头“日期 DATE”和内容“2020-06-10”。
+
+13. 离店日期 CHECK OUT：包含“离店日期: CHECK OUT 2020-06-12 00:00:00”的区域，在入住日期右侧。
+
+14. 第一联###：包含“第一联 财务(白) The first Finance”的区域，在图像底部左侧。
+
+15. 第二联 The second：包含“第二联 宾客(黄) The second Guest”的区域，在图像底部右侧。
+
+16. 金额 AMOUNT：表格的“金额 AMOUNT”列标题，以及“合计金额: AMOUNT 379.00”中的“AMOUNT”和金额值。这里可能需要包含列标题和合计金额的金额部分，但可能列标题是“金额 AMOUNT”，而合计金额中的“AMOUNT”是标签，金额是379.00。需要确定是哪个，可能用户需要的是“金额 AMOUNT”作为类别，所以表头的“金额 AMOUNT”和合计金额中的“AMOUNT”都属于该类别？或者可能指合计金额的金额值。但根据类别名称“金额 AMOUNT”，可能指表头的“金额 AMOUNT”列。
+
+现在需要将这些对象逐一对应，生成JSON数组。由于是示例，需要确保每个类别都被检测到。
+
+现在开始编写每个条目：
+
+- 标题：住店结帐单 BILL OF HOUSING → bbox覆盖标题区域
+- 客户名称 GUEST NAME → 包含“客户名称: GUEST NAME 315”
+- 入住日期 CHECK IN → 包含“入住日期: CHECK IN 2020-06-10 22:22”
+- 协议单位 AGENT → 包含“协议单位: AGENT 开发区世创传媒酒店”
+- 合计金额 AMOUNT → 包含“合计金额: AMOUNT 379.00”
+- 已收定金 DEPOSIT RECEIVED → 包含“已收定金: DEPOSIT RECEIVED 379.00”
+- 帐号 ACCOUNT NUM → 包含“帐号: ACCOUNT NUM”（假设存在，即使内容可能为空）
+- 房号 ROOM NUMBER → 包含“房号: ROOM NUMBER 222459”
+- 房费 → 表格中“房费”单元格
+- 摘要 DESCRIPTION → 表格列标题“摘要 DESCRIPTION”
+- 收款员 CASHIER → 包含“收款员: CASHIER 唐建军”
+- 日期 DATE → 包含“日期 DATE 2020-06-10”（表头和内容）
+- 离店日期 CHECK OUT → 包含“离店日期: CHECK OUT 2020-06-12 00:00:00”
+- 第一联### → 包含“第一联 财务(白) The first Finance”
+- 第二联 The second → 包含“第二联 宾客(黄) The second Guest”
+- 金额 AMOUNT → 表格列标题“金额 AMOUNT”（因为还有“合计金额”中的AMOUNT，但可能列标题是主要的，或者合计金额的AMOUNT也属于，但需要看类别。用户给的类别中有“金额 AMOUNT”和“合计金额 AMOUNT”，可能“合计金额 AMOUNT”是另一个？不，用户给的类别是“合计金额 AMOUNT”和“金额 AMOUNT”是两个？看用户提供的类别列表：
+
+用户提供的类别：
+
+入住日期 CHECK IN, 协议单位 AGENT, 合计金额 AMOUNT, 客户名称 GUEST NAME, 已收定金 DEPOSIT RECEIVED, 帐号 ACCOUNT NUM, 房号 ROOM NUMBER, 房费, 摘要 DESCRIPTION, 收款员 CASHIER, 日期DATE, 标题, 离店日期 CHECK OUT, 第一联###, 第二联 The second, 金额 AMOUNT.
+
+注意“合计金额 AMOUNT”和“金额 AMOUNT”是两个不同的类别吗？看用户给的列表中，“合计金额 AMOUNT”是一个，“金额 AMOUNT”是另一个？不，看用户提供的类别列表：
+
+“合计金额 AMOUNT, ... , 金额 AMOUNT.” 所以是两个？不，看用户写的

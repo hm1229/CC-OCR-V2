@@ -1,0 +1,50 @@
+To determine the coordinates of the region containing the text '0', we need to identify the bounding box that encloses the text '0' in the image. Let's break down the process step-by-step:
+
+1. **Identify the Text '0':**
+   The text '0' appears in the section labeled "个人账户支付" (Personal Account Payment).
+
+2. **Locate the Bounding Box:**
+   We need to find the exact position of the text '0' within the image.
+
+3. **Normalize the Coordinates:**
+   The coordinates should be normalized based on the image's width and height.
+
+### Detailed Steps:
+
+1. **Image Dimensions:**
+   - The image width is approximately 1000 pixels.
+   - The image height is approximately 600 pixels.
+
+2. **Bounding Box for the Text '0':**
+   - The text '0' is located near the bottom center of the image.
+   - By closely examining the image, the bounding box can be approximated.
+
+3. **Normalized Coordinates:**
+   - The left-top corner (x1, y1) of the bounding box.
+   - The right-bottom corner (x2, y2) of the bounding box.
+
+### Coordinates Calculation:
+
+- **Left-Top Corner (x1, y1):**
+  - x1 is approximately 450 (left side of the '0').
+  - y1 is approximately 550 (top side of the '0').
+
+- **Right-Bottom Corner (x2, y2):**
+  - x2 is approximately 500 (right side of the '0').
+  - y2 is approximately 600 (bottom side of the '0').
+
+### Normalized Coordinates:
+
+- **Left-Top Corner (x1, y1):**
+  - x1 = 450 / 1000 = 0.45
+  - y1 = 550 / 600 ≈ 0.917
+
+- **Right-Bottom Corner (x2, y2):**
+  - x2 = 500 / 1000 = 0.5
+  - y2 = 600 / 600 = 1
+
+### Final Output:
+
+(x1, y1, x2, y2) = (0.45, 0.917, 0.5, 1)
+
+This represents the normalized coordinates of the bounding box enclosing the text '0' in the image.

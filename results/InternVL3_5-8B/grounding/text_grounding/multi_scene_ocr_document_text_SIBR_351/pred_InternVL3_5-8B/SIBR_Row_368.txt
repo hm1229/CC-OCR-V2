@@ -1,0 +1,28 @@
+To determine the coordinates of the region containing the text '元', we need to carefully analyze the image and identify the bounding box around the text '元'. Let's break down the process step-by-step:
+
+1. **Identify the Text '元':**
+   The text '元' is located in the section where the amount is specified. It appears next to the number '4612' in the table under the column "金额 (元)" which translates to "Amount (Yuan)".
+
+2. **Locate the Position on the Image:**
+   The text '元' is situated in the middle of the table, slightly to the right of the number '4612'.
+
+3. **Estimate the Coordinates:**
+   We need to estimate the normalized coordinates for the left-top and right-bottom corners of the bounding box that encapsulates the text '元'.
+
+   - **Left-Top Corner (x1, y1):**
+     The left-top corner should be slightly to the left of the '4' in '4612' and above the '元'. This would be approximately at the middle height of the row and slightly left of the center of the '4'.
+
+   - **Right-Bottom Corner (x2, y2):**
+     The right-bottom corner should be slightly to the right of the '元' and at the bottom of the '元' character.
+
+4. **Normalized Coordinates:**
+   Assuming the image width is 1000 units and the height is 1000 units, we can normalize the coordinates accordingly.
+
+   - The left-top corner (x1, y1) might be approximately at (450, 350).
+   - The right-bottom corner (x2, y2) might be approximately at (480, 380).
+
+Therefore, the normalized coordinates of the bounding box for the text '元' are:
+
+(x1, y1, x2, y2) = (450, 350, 480, 380)
+
+These coordinates should encapsulate the text '元' within the specified section of the image.

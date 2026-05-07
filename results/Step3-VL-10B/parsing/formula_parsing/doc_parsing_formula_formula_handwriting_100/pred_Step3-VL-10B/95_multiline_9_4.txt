@@ -1,0 +1,109 @@
+用户现在需要把图片中的公式提取成LaTeX。首先看最左边的公式：
+
+$\left( \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right)_{\alpha} = -\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy - z(x)(x-y) dy$
+
+然后是$\partial_{\alpha} \left( \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \right) = +\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \left\langle \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \right\rangle dy - z(x) - z(x-y) dy$
+
+接下来是$-\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \log(|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|) dy - z(x)(x-y) - z_{x}(x) (x-y) dy$
+
+然后是$+(2\alpha + 2) \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy - z_{x}(x) - z_{x}(x-y) dy$
+
+再看$-\int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+然后是$+\alpha \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \log(|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|) dy - z(x) - z(x-y) dy$
+
+还有$-\alpha (\alpha + \beta) \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy + \alpha \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \log(|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|) dy - z(x) - z(x-y) dy$
+
+另外还有关于$z_{xx}$和$z_{x}$的其他项，比如：
+
+$-\int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+$+\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+还有涉及$z(x)$和$z(x-y)$的组合，比如：
+
+$-\int \frac{z(x) - z(x-y)}{|\frac{z(x) - z(x-y)}{|\alpha|}|} \log(|\frac{z(x) - z(x-y)}{|\alpha|}|) dy - z(x) - z(x-y) dy$
+
+$+\alpha \int \frac{z(x) - z(x-y)}{|\frac{z(x) - z(x-y)}{|\alpha|}|} \log(|\frac{z(x) - z(x-y)}{|\alpha|}|) dy - z(x) - z(x-y) dy$
+
+另外还有像$\langle z_{xx}(x) - z_{xx}(x-y) \rangle^2 dy$这样的项，比如：
+
+$-\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \langle z_{x}(x) - z_{x}(x-y) \rangle^2 dy - z(x) - z(x-y) dy$
+
+还有$\log(|z(x) - z(x-y)|) \log(|z(x) - z(x-y)|) dy$？不，看图片中的符号，比如有$\log(|z(x)-z(x-y)|) \log(|z(x)-z(x-y)|) dy$？不，看图片里的内容，可能需要更仔细看。
+
+另外，图片中还有右边的公式，比如：
+
+$-\int \frac{z(x) - z(x-y)}{|\frac{z(x) - z(x-y)}{|\alpha|}|} \log(|z(x) - z(x-y)|) dy - z(x) - z(x-y) dy$
+
+$+\alpha \int \frac{z(x) - z(x-y)}{|\frac{z(x) - z(x-y)}{|\alpha|}|} \log(|z(x) - z(x-y)|) dy - z(x) - z(x-y) dy$
+
+还有涉及$z_{xx}$和$z_{x}$的交叉项，比如：
+
+$-\int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+$+\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+另外，图片中还有$\langle z_{xx}(x) - z_{xx}(x-y) \rangle \log(|z_{xx}(x) - z_{xx}(x-y)|) dy$这样的项，比如：
+
+$+\alpha \int \langle z_{xx}(x) - z_{xx}(x-y) \rangle \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+还有$-\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \langle z_{x}(x) - z_{x}(x-y) \rangle \log(|z_{x}(x) - z_{x}(x-y)|) dy - z(x) - z(x-y) dy$
+
+现在需要把图片中的所有公式尽可能提取，但可能用户需要的是主要的公式，不过图片中的内容很多，可能需要逐行看。
+
+先看最左边的公式：
+
+$\left( \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right)_{\alpha} = -\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy - z(x)(x-y) dy$
+
+然后是$\partial_{\alpha} \left( \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \right) = +\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \left\langle \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \right\rangle dy - z(x) - z(x-y) dy$
+
+接下来是$-\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \log(|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|) dy - z(x)(x-y) - z_{x}(x)(x-y) dy$
+
+然后是$+(2\alpha + 2) \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy - z_{x}(x) - z_{x}(x-y) dy$
+
+再看$-\int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+然后是$+\alpha \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \log(|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|) dy - z(x) - z(x-y) dy$
+
+还有$-\alpha (\alpha + \beta) \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy + \alpha \int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \log(|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|) dy - z(x) - z(x-y) dy$
+
+另外，图片中还有涉及$z_{xx}$和$z_{x}$的组合，比如：
+
+$-\int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+$+\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+还有$\langle z_{xx}(x) - z_{xx}(x-y) \rangle \log(|z_{xx}(x) - z_{xx}(x-y)|) dy$，比如：
+
+$+\alpha \int \langle z_{xx}(x) - z_{xx}(x-y) \rangle \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+另外，图片中还有$\langle z_{x}(x) - z_{x}(x-y) \rangle^2 dy$，比如：
+
+$-\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \langle z_{x}(x) - z_{x}(x-y) \rangle^2 dy - z(x) - z(x-y) dy$
+
+还有$\log(|z(x) - z(x-y)|) \log(|z(x) - z(x-y)|) dy$？不，看图片中的符号，比如有$\log(|z(x)-z(x-y)|) \log(|z(x)-z(x-y)|) dy$可能不是，而是$\log(|z(x)-z(x-y)|) \times$其他项。
+
+另外，图片中右边的公式，比如：
+
+$-\int \frac{z(x) - z(x-y)}{|\frac{z(x) - z(x-y)}{|\alpha|}|} \log(|z(x) - z(x-y)|) dy - z(x) - z(x-y) dy$
+
+$+\alpha \int \frac{z(x) - z(x-y)}{|\frac{z(x) - z(x-y)}{|\alpha|}|} \log(|z(x) - z(x-y)|) dy - z(x) - z(x-y) dy$
+
+还有涉及$z_{xx}$和$z_{x}$的交叉项，比如：
+
+$-\int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+$+\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \log(|z_{xx}(x) - z_{xx}(x-y)|) dy - z_{xx}(x) - z_{xx}(x-y) dy$
+
+现在，可能用户需要的是图片中的主要公式，但由于图片内容较多，需要确认。不过可能图片中的公式是关于变分或者积分的，涉及$z_x, z_{xx}$等偏导数，以及$\alpha$参数，积分项，内积$\langle \cdot \rangle$，对数函数等。
+
+现在，尝试把图片中最清晰的几个公式提取，比如最左边的：
+
+$\left( \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right)_{\alpha} = -\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \left\langle \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x) - z_{x}(x-y)}{|\alpha|}|} \right\rangle dy - z(x)(x-y) dy$
+
+然后是$\partial_{\alpha} \left( \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \right) = +\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \left\langle \frac{z_{xx}(x) - z_{xx}(x-y)}{|\frac{z_{xx}(x) - z_{xx}(x-y)}{|\alpha|}|} \right\rangle dy - z(x) - z(x-y) dy$
+
+另外，图片中还有：
+
+$-\int \frac{z_{x}(x) - z_{x}(x-y)}{|\frac{z_{x}(x

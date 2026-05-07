@@ -1,0 +1,164 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table Transcription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            margin: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 4px 6px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .legend {
+            margin-top: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .legend strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Case</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Side</th>
+                <th>AIS</th>
+                <th>ISS</th>
+                <th>Suicidal jump</th>
+                <th>Longitudinal displacement</th>
+                <th>Sacral transverse fracture</th>
+                <th>Type of pelvic fracture (AO)</th>
+                <th>Denis</th>
+                <th>Functional deficit (MMT)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>55</td>
+                <td>M</td>
+                <td>lt</td>
+                <td>5</td>
+                <td>34</td>
+                <td>(-)</td>
+                <td>(+)</td>
+                <td>(-)</td>
+                <td>C</td>
+                <td>(-)</td>
+                <td>IP 3, Quad 3, TA 3</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>62</td>
+                <td>M</td>
+                <td>rt</td>
+                <td>5</td>
+                <td>25</td>
+                <td>(-)</td>
+                <td>(+)</td>
+                <td>(-)</td>
+                <td>C</td>
+                <td>Zone I</td>
+                <td>Quad 3, TA 3</td>
+            </tr>
+            <tr>
+                <td rowspan="2">3</td>
+                <td rowspan="2">31</td>
+                <td rowspan="2">F</td>
+                <td>rt</td>
+                <td rowspan="2">5</td>
+                <td rowspan="2">34</td>
+                <td rowspan="2">(-)</td>
+                <td>(+)</td>
+                <td>(-)</td>
+                <td>B</td>
+                <td>Zone II</td>
+                <td>Quad 0, TA 0</td>
+            </tr>
+            <tr>
+                <td>lt</td>
+                <td>(+)</td>
+                <td>(+)</td>
+                <td>C</td>
+                <td>Zone II</td>
+                <td>Quad 1, TA 1</td>
+            </tr>
+            <tr>
+                <td rowspan="2">4</td>
+                <td rowspan="2">37</td>
+                <td rowspan="2">F</td>
+                <td>rt</td>
+                <td rowspan="2">5</td>
+                <td rowspan="2">29</td>
+                <td rowspan="2">(-)</td>
+                <td>(+)</td>
+                <td>(+)</td>
+                <td>C</td>
+                <td>Zone II</td>
+                <td>Quad 2, TA 0</td>
+            </tr>
+            <tr>
+                <td>lt</td>
+                <td>(+)</td>
+                <td>(+)</td>
+                <td>B</td>
+                <td>Zone II</td>
+                <td>Quad 2, TA 0</td>
+            </tr>
+            <tr>
+                <td rowspan="2">5</td>
+                <td rowspan="2">25</td>
+                <td rowspan="2">F</td>
+                <td>rt</td>
+                <td rowspan="2">5</td>
+                <td rowspan="2">29</td>
+                <td rowspan="2">(-)</td>
+                <td>(+)</td>
+                <td>(+)</td>
+                <td>B</td>
+                <td>Zone II</td>
+                <td>Quad 1, TA 1</td>
+            </tr>
+            <tr>
+                <td>lt</td>
+                <td>(+)</td>
+                <td>(+)</td>
+                <td>B</td>
+                <td>Zone II</td>
+                <td>Quad 1, TA 1</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="legend">
+        <p><strong>AIS:</strong> abbreviated injury score</p>
+        <p><strong>ISS:</strong> injury severity score</p>
+        <p><strong>MMT:</strong> manual muscle-testing scale</p>
+        <p><strong>IP:</strong> iliopsoas muscle</p>
+        <p><strong>Quad:</strong> Quadriceps muscle</p>
+    </div>
+
+</body>
+</html>
+```

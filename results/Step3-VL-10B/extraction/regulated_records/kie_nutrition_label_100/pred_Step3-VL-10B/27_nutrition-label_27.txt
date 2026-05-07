@@ -1,0 +1,166 @@
+用户现在需要把营养标签的信息对应到给定的JSON schema里。首先得理解每个字段可能对应什么。先看标签里的内容：Serving per package是16，Serving size是62.5g。然后各项营养成分的Ave. Quantity per Serving，% Daily Intake per Serving，Ave. Quantity per 100g。
+
+先看schema里的键：CE-PS, CE-D, CE-P1；PRO-PS, PRO-D, PRO-P1；TF-PS, TF-D, TF-P1；CAR-PS, CAR-D, CAR-P1；SO-PS, SO-D, SO-P1；SS。可能需要先分析每个缩写代表的营养成分。比如PRO是Protein（蛋白质），CAR是Carbohydrate（碳水化合物），SO是Sodium（钠），TF可能是Total Fat？CE可能是Energy？SS可能是Sugars？需要对应。
+
+先整理每个营养项的信息：
+
+Energy（能量）：
+- Ave. Quantity per Serving: 1070 kJ (256 Cal)
+- % Daily Intake per Serving: 12 %
+- Ave. Quantity per 100g: 1710 kJ (409 Cal)
+
+Protein（蛋白质）：
+- per Serving: 2.4g
+- % Daily: 5%
+- per 100g: 3.8g
+
+Fat, total（总脂肪）：
+- per Serving: 5.8g
+- % Daily: 8%
+- per 100g: 9.3g
+
+- saturated（饱和脂肪）：
+  - per Serving: 1.9g
+  - % Daily: 8%
+  - per 100g: 3.0g
+
+Carbohydrate（碳水化合物）：
+- per Serving: 41.9g
+- % Daily:14%
+- per 100g:67.0g
+
+- sugars（糖）：
+  - per Serving:33.8g
+  - % Daily:38%
+  - per 100g:54.0g
+
+Sodium（钠）：
+- per Serving:44mg
+- % Daily:2%
+- per 100g:70mg
+
+现在看schema的结构，每个大项可能对应CE（Energy）、PRO（Protein）、TF（Total Fat？因为有total fat和saturated，可能TF是Total Fat，然后saturated是子项？但schema里的TF-PS, TF-D, TF-P1可能对应Total Fat的三个部分：per Serving, % Daily, per 100g？同理，CAR是Carbohydrate，SO是Sodium，SS是Sugars？CE是Energy。
+
+现在逐个对应：
+
+CE-PS：Energy的Ave. Quantity per Serving → "1070 kJ (256 Cal)"
+CE-D：Energy的% Daily Intake per Serving → "12 %"
+CE-P1：Energy的Ave. Quantity per 100g → "1710 kJ (409 Cal)"
+
+PRO-PS：Protein的per Serving → "2.4 g"
+PRO-D：Protein的% Daily → "5 %"
+PRO-P1：Protein的per 100g → "3.8 g"
+
+TF-PS：Total Fat的per Serving → "5.8 g"
+TF-D：Total Fat的% Daily → "8 %"
+TF-P1：Total Fat的per 100g → "9.3 g"
+
+然后saturated属于脂肪的子项，但schema里没有saturated的单独键？可能用户给的schema里的SO是Sodium？不，Sodium是SO？看SO-PS, SO-D, SO-P1对应Sodium的三个部分：
+
+SO-PS：Sodium per Serving → "44 mg"
+SO-D：Sodium % Daily → "2 %"
+SO-P1：Sodium per 100g → "70 mg"
+
+CAR-PS：Carbohydrate per Serving → "41.9 g"
+CAR-D：Carbohydrate % Daily → "14 %"
+CAR-P1：Carbohydrate per 100g → "67.0 g"
+
+然后sugars是SS？因为SS是单独的键。Sugars的三个部分：
+
+SS：可能对应sugars的per Serving？或者看SS的结构，可能SS是sugars的某个部分？但schema里SS是单独的键，没有下标？不，看输入的schema是{"CE-PS": "", "CE-D": "", "CE-P1": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-PS": "", "TF-D": "", "TF-P1": "", "CAR-PS": "", "CAR-D": "", "CAR-P1": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""}。注意SS没有下标（-PS, -D, -P1），所以可能SS是sugars的某个值？或者可能SS是Serving size？不，Serving size是62.5g，Serving per package是16。但看标签里的Serving size:62.5g，Serving per package:16。但schema里没有对应这两个的键？可能用户给的schema是针对营养成分的，而SS可能是sugars的某个部分？或者可能我理解错了缩写。
+
+另外，再检查每个营养项的三个数据点：per Serving（PS）、% Daily（D）、per 100g（P1）。所以每个营养大类（Energy, Protein, Total Fat, Carbohydrate, Sodium, Sugars）都有这三个数据。现在看：
+
+- Energy → CE-PS, CE-D, CE-P1
+- Protein → PRO-PS, PRO-D, PRO-P1
+- Total Fat → TF-PS, TF-D, TF-P1 （因为Total Fat是“Fat, total”）
+- Carbohydrate → CAR-PS, CAR-D, CAR-P1
+- Sodium → SO-PS, SO-D, SO-P1 （Sodium是SO）
+- Sugars → SS？因为SS是单独的键，没有三个下标，可能SS是sugars的某个值？但sugars也有三个数据点：per Serving（33.8g）、% Daily（38%）、per 100g（54.0g）。但schema里SS只有一个键，没有-PS, -D, -P1。这可能是个问题，或者可能SS是Serving size？Serving size是62.5g，Serving per package是16。但看schema里的SS，可能用户希望把sugars的某个值放这里？或者可能我漏看了。
+
+另外，再看标签中的“- sugars”是碳水化合物的子项，所以sugars属于Carbohydrate的一部分，但可能在schema中SS是sugars的per Serving？或者可能SS是其他。或者可能用户提供的schema中的SS是“Serving size”？因为Serving size是62.5g，而Serving per package是16。但schema里没有对应这两个的键，比如可能CE-PS是Energy，而其他是营养成分。现在再检查所有可能的键：
+
+CE-PS, CE-D, CE-P1 → Energy的三个值
+PRO-PS, PRO-D, PRO-P1 → Protein的三个值
+TF-PS, TF-D, TF-P1 → Total Fat的三个值（Fat, total）
+CAR-PS, CAR-D, CAR-P1 → Carbohydrate的三个值
+SO-PS, SO-D, SO-P1 → Sodium的三个值
+SS → 可能是Sugars的某个值？比如Sugars的per Serving？因为Sugars是“- sugars”，其per Serving是33.8g，% Daily是38%，per 100g是54.0g。但schema里SS只有一个键，没有三个下标，所以可能SS是Sugars的per Serving？或者可能SS是Serving size？Serving size是62.5g，而Serving per package是16。但看标签里的Serving size:62.5g，Serving per package:16。这两个信息是否需要填入？但schema里没有对应的键，比如可能CE-PS是Energy，而其他是营养成分，Serving size可能没有对应的键，或者可能SS是Serving size？因为SS可能是“Serving Size”？比如SS: "62.5g"。而Serving per package是16，可能没有对应的键。现在再看schema中的键，SS是单独的，没有下标，所以可能SS是Serving size。因为Serving size是62.5g，而Serving per package是16，可能没有对应的键。现在再整理：
+
+现在把每个键对应：
+
+CE-PS: Energy per Serving → "1070 kJ (256 Cal)"
+CE-D: Energy % Daily → "12 %"
+CE-P1: Energy per 100g → "1710 kJ (409 Cal)"
+
+PRO-PS: Protein per Serving → "2.4 g"
+PRO-D: Protein % Daily → "5 %"
+PRO-P1: Protein per 100g → "3.8 g"
+
+TF-PS: Total Fat per Serving → "5.8 g"
+TF-D: Total Fat % Daily → "8 %"
+TF-P1: Total Fat per 100g → "9.3 g"
+
+CAR-PS: Carbohydrate per Serving → "41.9 g"
+CAR-D: Carbohydrate % Daily → "14 %"
+CAR-P1: Carbohydrate per 100g → "67.0 g"
+
+SO-PS: Sodium per Serving → "44 mg"
+SO-D: Sodium % Daily → "2 %"
+SO-P1: Sodium per 100g → "70 mg"
+
+SS: Sugars per Serving？因为Sugars是“- sugars”，其per Serving是33.8g，% Daily是38%，per 100g是54.0g。但schema里SS只有一个键，所以可能SS是Sugars的per Serving？或者可能SS是Serving size？因为Serving size是62.5g，而Serving per package是16。现在看标签中的Serving size:62.5g，Serving per package:16。这两个信息是否在schema中？比如可能SS是Serving size，即"62.5g"。而Serving per package可能没有对应的键。现在再检查schema中的键，SS是存在的，所以可能SS是Serving size。因为其他都是营养成分的三个值，而Serving size是单独的信息。现在验证：
+
+Serving size是62.5g，所以SS: "62.5g"
+
+另外，Serving per package是16，但schema中没有对应的键，可能不需要处理，因为问题中的schema可能只关注营养成分和Serving size。现在再检查所有营养项的sugars，因为sugars是碳水化合物的子项，但可能在schema中没有为sugars单独设置三个键，因为schema里的SS是单独的。或者可能我之前对TF的理解错误，TF是Total Fat，而saturated是脂肪的子项，但schema中没有saturated的键，所以可能saturated不被包含在schema中，因为schema里的键是CE, PRO, TF, CAR, SO, SS。其中SS可能是Sugars。因为Sugars是“- sugars”，其per Serving是33.8g，% Daily是38%，per 100g是54.0g。但schema里SS只有一个键，没有三个下标，所以可能SS是Sugars的某个值，比如per Serving？或者可能SS是Serving per package？Serving per package是16，所以SS: "16"？但Serving per package是16，Serving size是62.5g。现在再看问题中的schema，用户提供的schema是：
+
+{"CE-PS": "", "CE-D": "", "CE-P1": "", "PRO-PS": "", "PRO-D": "", "PRO-P1": "", "TF-PS": "", "TF-D": "", "TF-P1": "", "CAR-PS": "", "CAR-D": "", "CAR-P1": "", "SO-PS": "", "SO-D": "", "SO-P1": "", "SS": ""}
+
+现在需要把每个空填上。现在再逐一对应：
+
+1. CE-PS：Energy的Ave. Quantity per Serving → "1070 kJ (256 Cal)"
+2. CE-D：Energy的% Daily Intake per Serving → "12 %"
+3. CE-P1：Energy的Ave. Quantity per 100g → "1710 kJ (409 Cal)"
+4. PRO-PS：Protein的Ave. Quantity per Serving → "2.4 g"
+5. PRO-D：Protein的% Daily Intake per Serving → "5 %"
+6. PRO-P1：Protein的Ave. Quantity per 100g → "3.8 g"
+7. TF-PS：Fat, total的Ave. Quantity per Serving → "5.8 g"
+8. TF-D：Fat, total的% Daily Intake per Serving → "8 %"
+9. TF-P1：Fat, total的Ave. Quantity per 100g → "9.3 g"
+10. CAR-PS：Carbohydrate的Ave. Quantity per Serving → "41.9 g"
+11. CAR-D：Carbohydrate的% Daily Intake per Serving → "14 %"
+12. CAR-P1：Carbohydrate的Ave. Quantity per 100g → "67.0 g"
+13. SO-PS：Sodium的Ave. Quantity per Serving → "44 mg"
+14. SO-D：Sodium的% Daily Intake per Serving → "2 %"
+15. SO-P1：Sodium的Ave. Quantity per 100g → "70 mg"
+16. SS：这里需要确定。看标签中的“- sugars”是sugars，其Ave. Quantity per Serving是33.8g，% Daily是38%，per 100g是54.0g。但schema中SS只有一个键，没有三个下标，所以可能SS是sugars的Ave. Quantity per Serving？因为其他营养项都有三个键（-PS, -D, -P1），而sugars可能被归为SS，或者SS是Serving size。Serving size是62.5g，而Serving per package是16。现在看标签中的Serving size:62.5g，Serving per package:16。这两个信息是否在schema中？比如SS是Serving size，即"62.5g"。因为其他都是营养成分的三个值，而Serving size是单独的。现在再检查，可能SS是Serving size，因为Serving size是62.5g，而Serving per package是16，可能没有对应的键。现在再看，用户提供的schema中的SS是单独的，没有下标，所以可能SS是Serving size。所以SS: "62.5g"
+
+现在验证所有键是否都填满：
+
+CE-PS: "1070 kJ (256 Cal)"
+CE-D: "12 %"
+CE-P1: "1710 kJ (409 Cal)"
+PRO-PS: "2.4 g"
+PRO-D: "5 %"
+PRO-P1: "3.8 g"
+TF-PS: "5.8 g"
+TF-D: "8 %"
+TF-P1: "9.3 g"
+CAR-PS: "41.9 g"
+CAR-D: "14 %"
+CAR-P1: "67.0 g"
+SO-PS: "44 mg"
+SO-D: "2 %"
+SO-P1: "70 mg"
+SS: "62.5g"
+
+另外，Serving per package是16，但schema中没有对应的键，所以可能不需要处理。现在确认每个营养项的三个数据都填入了，除了sugars，因为sugars是碳水化合物的子项，可能在schema中没有被单独处理，因为schema里的SS是Serving size。或者可能SS是sugars的某个值，比如sugars的% Daily？但sugars的% Daily是38%，而SO-D是Sodium的% Daily（2%），所以SS如果是sugars的% Daily，那SS: "38 %"。但之前认为SS是Serving size，现在需要再检查。
+
+另一种可能：SS是“Sugars”的Ave. Quantity per Serving，即33.8g。因为sugars是“- sugars”，属于碳水化合物的一部分，但可能在schema中需要提取sugars的信息。但schema中的SS是单独的键，没有三个下标，所以可能SS是sugars的Ave. Quantity per Serving。现在再看，标签中的sugars的三个值：
+
+- per Serving: 33.8g
+- % Daily: 38%
+- per 100g: 54.0g
+
+如果SS是sugars的per Serving，那么SS: "33.8 g"。而Serving size是62.5g，可能没有对应的键，因为schema中没有其他键。现在需要确定哪个更合理。看schema中的键，CE, PRO, TF, CAR, SO都是营养成分，每个有三个子键（-PS, -D, -P1），而SS是单独的，可能SS是Serving size，因为Serving size是62.5g，而Serving per package是16，可能16是另一个信息，但schema中没有对应的键。或者可能SS是Serving per package，即16。现在再看标签中的“Servings per package: 16”和“Serving size: 62.5g”。这两个是包装信息，可能需要提取。但schema中的SS是单独的键，所以可能SS是Serving size，即"62.5g"，而Serving per package可能没有对应的键，因为schema中没有其他键。现在再检查，用户提供的schema中的键是否有对应Serving per package的？没有，所以可能SS是Serving size。

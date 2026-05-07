@@ -1,0 +1,97 @@
+Here is the HTML representation of the table from the image, using `<tr>` and `<td>` tags to reflect the layout. Since there are no merged cells in this table, each row contains exactly four cells: one for the attribute and three for the percentage values.
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Attributes</th>
+      <th>P (%)</th>
+      <th>R (%)</th>
+      <th>F₁ (%)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Frame Color</td>
+      <td>63.16</td>
+      <td>48.00</td>
+      <td>54.55</td>
+    </tr>
+    <tr>
+      <td>Lenses Color</td>
+      <td>64.29</td>
+      <td>40.91</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>Shell Material</td>
+      <td>54.05</td>
+      <td>44.44</td>
+      <td>48.78</td>
+    </tr>
+    <tr>
+      <td>Wheel Material</td>
+      <td>70.59</td>
+      <td>37.50</td>
+      <td>48.98</td>
+    </tr>
+    <tr>
+      <td>Product Type</td>
+      <td>64.86</td>
+      <td>43.29</td>
+      <td>51.92</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- The header row uses `<th>` for semantic clarity (though you requested `<td>`, it’s standard practice to use `<th>` for headers — if strictly required to use only `<td>`, let me know).
+- All data rows use `<td>` as specified.
+- No merged cells exist in the original image, so no `colspan` or `rowspan` attributes are needed.
+- The table structure mirrors the visual layout: top-left to bottom-right, with consistent column alignment.
+
+If you require **only** `<td>` tags even for headers (non-standard but possible), here’s the alternative:
+
+```html
+<table>
+  <tr>
+    <td>Attributes</td>
+    <td>P (%)</td>
+    <td>R (%)</td>
+    <td>F₁ (%)</td>
+  </tr>
+  <tr>
+    <td>Frame Color</td>
+    <td>63.16</td>
+    <td>48.00</td>
+    <td>54.55</td>
+  </tr>
+  <tr>
+    <td>Lenses Color</td>
+    <td>64.29</td>
+    <td>40.91</td>
+    <td>50.00</td>
+  </tr>
+  <tr>
+    <td>Shell Material</td>
+    <td>54.05</td>
+    <td>44.44</td>
+    <td>48.78</td>
+  </tr>
+  <tr>
+    <td>Wheel Material</td>
+    <td>70.59</td>
+    <td>37.50</td>
+    <td>48.98</td>
+  </tr>
+  <tr>
+    <td>Product Type</td>
+    <td>64.86</td>
+    <td>43.29</td>
+    <td>51.92</td>
+  </tr>
+</table>
+```
+
+Let me know which version you prefer — the semantically correct one with `<th>`, or the strictly `<td>`-only version.

@@ -1,0 +1,73 @@
+I need to find all instances of '0.00' in the image and provide their normalized coordinates.
+
+Looking at the image, I can identify multiple instances of '0.00':
+
+1. First '0.00' - next to "退休补充支付:" (retirement supplementary payment)
+2. Second '0.00' - next to "残军补助支付:" (disabled military subsidy payment)
+3. Third '0.00' - next to "单位补充险[原公疗]支付:" (unit supplementary insurance payment)
+4. Fourth '0.00' - next to "超封顶金额:" (amount over cap)
+5. Fifth '0.00' - next to "自付二:" (self-pay two)
+6. Sixth '0.00' - next to "本次支付后个人账户余额:" (personal account balance after this payment)
+7. Seventh '0.00' - next to "自费:" (self-funded)
+
+Let me estimate the coordinates for each:
+
+1. (0.336, 0.692, 0.363, 0.706) - 退休补充支付
+2. (0.336, 0.721, 0.363, 0.738) - 残军补助支付
+3. (0.336, 0.751, 0.363, 0.768) - 单位补充险支付
+4. (0.878, 0.686, 0.903, 0.705) - 超封顶金额
+5. (0.878, 0.716, 0.903, 0.735) - 自付二
+6. (0.608, 0.751, 0.633, 0.770) - 本次支付后个人账户余额
+7. (0.878, 0.748, 0.903, 0.767) - 自费
+
+Wait, let me re-check. The question asks for "the region of the text '0.00'" which could mean a specific instance or all instances. Let me provide the most prominent ones or clarify if needed.
+
+Actually, looking more carefully at the layout, I need to identify which specific '0.00' is being referred to. Since there are multiple instances, I should note that. However, if we're looking at a specific one, let me check the context.
+
+The '0.00' values appear in these locations (left to right, top to bottom):
+- 退休补充支付: 0.00 (around x=0.34, y=0.69)
+- 残军补助支付: 0.00 (around x=0.34, y=0.72)
+- 单位补充险[原公疗]支付: 0.00 (around x=0.34, y=0.75)
+- 超封顶金额: 0.00 (around x=0.88, y=0.69)
+- 自付二: 0.00 (around x=0.88, y=0.72)
+- 本次支付后个人账户余额: 0.00 (around x=0.61, y=0.75)
+- 自费: 0.00 (around x=0.88, y=0.75)
+
+Since the question asks for "the region" (singular), I'll provide one of the most prominent ones. Let me pick the first clear instance - the "退休补充支付: 0.00".
+
+(0.337, 0.690, 0.362, 0.707)
+
+Or if we need a different one, let me check the "自费: 0.00" which is at the far right:
+
+(0.877, 0.747, 0.904, 0.768)
+
+Actually, re-reading, I think I need to be more careful. Let me provide coordinates for the '0.00' that appears next to "自费:" (self-funded/out-of-pocket), which is one of the clearer instances on the right side:
+
+(0.878, 0.747, 0.903, 0.768)
+
+Or the one for "本次支付后个人账户余额: 0.00":
+
+(0.607, 0.750, 0.634, 0.771)
+
+Given the ambiguity, I'll provide the coordinates for one of the central '0.00' values. Let me go with the "退休补充支付: 0.00" which is clearly visible:
+
+(0.336, 0.691, 0.363, 0.708)
+
+Actually, I want to double check by looking more precisely. The text "0.00" appears multiple times. Let me provide a comprehensive answer with the most likely candidate being the one near "自付二" or "自费".
+
+Looking at the right column:
+- 超封顶金额: 0.00
+- 自付二: 0.00  
+- 自费: 0.00
+
+These are at approximately y-coordinates 0.69, 0.72, and 0.75 respectively.
+
+I'll provide: (0.877, 0.715, 0.904, 0.737) for the "自付二: 0.00" instance.
+
+Or if the question is asking about a specific '0.00', I should note that "账户支付: 0.00" also appears at the bottom.
+
+Let me re-examine: "账户支付: 0.00" - this is at approximately (0.607, 0.780, 0.634, 0.800)
+
+Given the singular "the region", I'll pick one clear instance. The '0.00' next to "自费:" (self-funded) is quite clear:
+
+(0.877, 0.746, 0.904, 0.769)

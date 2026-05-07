@@ -1,0 +1,39 @@
+The image is upside down. Let me rotate it mentally and extract the content.
+
+```latex
+\begin{pmatrix}
+\ddots & & & & & & \\
+& x & & & & & \\
+& & x & & & & \\
+& & & x & & & \\
+\cdots & x & x & x & x & x & \cdots \\
+& & & x & & & \\
+& & x & & & & \\
+& x & & & & & \\
+\ddots & & & & & & \\
+\end{pmatrix}
+```
+
+Hmm, let me re-examine more carefully by flipping the image 180 degrees.
+
+```latex
+\begin{pmatrix}
+\ddots & & & & & & & & \\
+ & x & & & & & & & \\
+ & & x & & & & & & \\
+ & & & ccc & x & ccc & & & \\
+ & & & cbb & x & bbc & & & \\
+ & & & cba & x & abc & & & \\
+\cdots & x & x & x & x & x & x & x & \cdots \\
+ & & & cba & x & abc & & & \\
+ & & & cbb & x & bbc & & & \\
+ & & & ccc & x & ccc & & & \\
+ & & x & & & & & & \\
+ & x & & & & & & & \\
+\ddots & & & & & & & & \\
+\end{pmatrix}
+```
+
+Let me reconsider the image more carefully after rotating 180°:
+
+$$\begin{pmatrix} \ddots \\ & x \\ & & x \\ & & ccc & x & ccc \\ & & cbb & x & bbc \\ & & cba & x & abc \\ \cdots x\, x\, x\, x & x & x\, x\, x\, x \cdots \\ & & cba & x & abc \\ & & cbb & x & bbc \\ & & ccc & x & ccc \\ & & & x \\ & & & & x \\ & & & & & \ddots \end{pmatrix}$$

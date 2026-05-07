@@ -1,0 +1,77 @@
+Here's the HTML transcription of the table from the image, using `<tr>` and `<td>` tags with appropriate `rowspan` and `colspan` attributes to reflect merged cells and layout:
+
+```html
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th colspan="2">Index\Ablation</th>
+      <th>Ori</th>
+      <th>$\mathcal{L}_{cls}$<br>GHM-C → CE</th>
+      <th>$\mathcal{L}_{loop}$<br>CE → GHM-C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="5"><b>Vessel Classification</b></td>
+      <td>Accuracy</td>
+      <td>97.49</td>
+      <td>96.59</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Precision</td>
+      <td><i>Healthy</i></td>
+      <td>98.55</td>
+      <td>97.37</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><i>MVI</i></td>
+      <td>92.44</td>
+      <td>92.13</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="2">Recall</td>
+      <td><i>Healthy</i></td>
+      <td>98.43</td>
+      <td>98.67</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td><i>MVI</i></td>
+      <td>92.98</td>
+      <td>87.13</td>
+      <td>-</td>
+    </tr>
+    <tr>
+      <td rowspan="3"><b>Cell locating</b></td>
+      <td>Precision</td>
+      <td>71.26</td>
+      <td>-</td>
+      <td>63.26</td>
+    </tr>
+    <tr>
+      <td>Recall</td>
+      <td>94.52</td>
+      <td>-</td>
+      <td>98.95</td>
+    </tr>
+    <tr>
+      <td>Dice</td>
+      <td>79.58</td>
+      <td>-</td>
+      <td>75.97</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- The header row uses `colspan="2"` for “Index\Ablation” to span two columns (for the nested sub-columns under Vessel Classification and Cell locating).
+- “Vessel Classification” spans 5 rows (`rowspan="5"`), and “Cell locating” spans 3 rows (`rowspan="3"`).
+- Under “Precision” and “Recall”, the sub-items “Healthy” and “MVI” are in separate rows — no additional merging needed there.
+- Mathematical notation like `$\mathcal{L}_{cls}$` is preserved as-is; if rendering in a browser that supports MathJax or similar, it will display properly. Otherwise, you may replace with plain text like `L_cls`.
+- Dashes `-` represent missing or not applicable values.
+
+This structure accurately reflects the visual hierarchy and grouping in the original table.

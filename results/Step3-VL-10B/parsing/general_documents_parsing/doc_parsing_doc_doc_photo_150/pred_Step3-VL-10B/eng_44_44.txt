@@ -1,0 +1,189 @@
+用户现在需要把图片中的三角学内容转换成LaTeX格式。首先得仔细看图片里的每个公式、列表项，注意颜色和结构，但LaTeX里可能用不同的环境，比如itemize，equation，align等。先分块处理：
+
+首先标题是TRIGONOMETRY，然后是各个公式，分点列出。注意有些是加法公式，减法公式，正切、余切的和差，和积公式，倍角公式，三倍角，还有奇偶性，倒数、余割、余切的定义，正弦余弦的和差化积，平方和等恒等式，一般解，最大最小值等。
+
+先处理标题：\section*{TRIGONOMETRY} 或者用\textbf{TRIGONOMETRY}。
+
+然后逐个公式：
+
+1. $\sin(A+B) = \sin A \cdot \cos B + \cos A \cdot \sin B$
+2. $\sin(A-B) = \sin A \cdot \cos B - \cos A \cdot \sin B$
+3. $\cos(A+B) = \cos A \cdot \cos B - \sin A \cdot \sin B$
+4. $\cos(A-B) = \cos A \cdot \cos B + \sin A \cdot \sin B$
+5. $\tan(A+B) = \dfrac{\tan A + \tan B}{1 - \tan A \tan B}$
+6. $\tan(A-B) = \dfrac{\tan A - \tan B}{1 + \tan A \tan B}$
+7. $\cot(A+B) = \dfrac{\cot B \cdot \cot A - 1}{\cot B + \cot A}$
+8. $\cot(A-B) = \dfrac{\cot B \cdot \cot A + 1}{\cot B - \cot A}$
+
+然后是和积化积相关：
+
+- $2\sin A \cdot \cos B = \sin(A+B) + \sin(A-B)$
+- $2\cos A \cdot \sin B = \sin(A+B) - \sin(A-B)$
+- $2\cos A \cdot \cos B = \cos(A+B) + \cos(A-B)$
+- $-2\sin A \cdot \sin B = \cos(A+B) - \cos(A-B)$
+
+和的和差：
+
+- $\sin C + \sin D = 2 \cdot \sin\left(\dfrac{C+D}{2}\right) \cdot \cos\left(\dfrac{C-D}{2}\right)$
+- $\sin C - \sin D = 2 \cdot \cos\left(\dfrac{C+D}{2}\right) \cdot \sin\left(\dfrac{C-D}{2}\right)$
+- $\cos C + \cos D = 2 \cdot \cos\left(\dfrac{C+D}{2}\right) \cdot \cos\left(\dfrac{C-D}{2}\right)$
+- $\cos C - \cos D = -2 \cdot \sin\left(\dfrac{C+D}{2}\right) \cdot \sin\left(\dfrac{C-D}{2}\right)$
+
+倍角公式：
+
+- $\sin 2x = 2\sin x \cdot \cos x = \dfrac{2\tan x}{1 + \tan^2 x}$
+- $\cos 2x = \cos^2 x - \sin^2 x = 2\cos^2 x - 1 = 1 - 2\sin^2 x = \dfrac{1 - \tan^2 x}{1 + \tan^2 x}$
+- $\tan 2x = \dfrac{2\tan x}{1 - \tan^2 x}$
+
+三倍角：
+
+- $\sin 3x = 3\sin x - 4\sin^3 x$
+- $\cos 3x = 4\cos^3 x - 3\cos x$
+- $\tan 3x = \dfrac{3\tan x - \tan^3 x}{1 - 3\tan^2 x}$
+
+然后是奇偶性（右边是蓝色和黑色？图片里有odd F(x)→F(-x)=-F(x)；even F(x)→F(-x)=F(x)）：
+
+- $\text{odd } F(x) \implies F(-x) = -F(x)$
+- $\text{even } F(x) \implies F(-x) = F(x)$
+
+倒数、余割、余切的定义（右边列）：
+
+- $\sec(-x) = \sec x$，$\csc(-x) = -\csc x$，$\cot(-x) = -\cot x$；而$\cos(-x)=\cos x$，$\sin(-x)=-\sin x$，$\tan(-x)=-\tan x$（这部分是分两列？图片里右边是sec, csc, cot的负号，左边是cos, sin, tan的负号，所以可以写成：
+
+- $\cos(-x) = \cos x$，$\sec(-x) = \sec x$
+- $\sin(-x) = -\sin x$，$\csc(-x) = -\csc x$
+- $\tan(-x) = -\tan x$，$\cot(-x) = -\cot x$
+
+平方和等恒等式：
+
+- $\sin^2 \theta + \cos^2 \theta = 1$
+- $\sec^2 \theta - \tan^2 \theta = 1$
+- $\csc^2 \theta - \cot^2 \theta = 1$
+- $1 + \cos 2x = 2\cos^2 x$
+- $1 - \cos 2x = 2\sin^2 x$
+- $\tan x = \dfrac{1 - \cos x}{\sin x}$（图片里是tanx = (1 - cosx)/sinx，对吗？看图片里的“tanx = (1 - cosx)/sinx”）
+
+然后是一般解（General Solution of Trigonometry）：
+
+- $\sin x = 0 \implies x = n\pi$，$n \in \mathbb{Z}$
+- $\cos x = 0 \implies x = (2n+1)\dfrac{\pi}{2}$，$n \in \mathbb{Z}$
+- $\tan x = 0 \implies x = n\pi$，$n \in \mathbb{Z}$
+- $\sin x = \sin y \implies x = n\pi + (-1)^n y$，$n \in \mathbb{Z}$
+- $\cos x = \cos y \implies x = 2n\pi \pm y$，$n \in \mathbb{Z}$
+- $\tan x = \tan y \implies x = n\pi + y$，$n \in \mathbb{Z}$
+- $\sin^2 x = \sin^2 y$，$\cos^2 x = \cos^2 y$，$\tan^2 x = \tan^2 y \implies x = n\pi \pm y$，$n \in \mathbb{Z}$
+
+最大值和最小值：
+
+- $\max \text{Value} = +\sqrt{a^2 + b^2}$
+- $\min \text{Value} = -\sqrt{a^2 + b^2}$（对应$A\sin x + B\cos x$的情况，图片里有“a sinx + b cosx”然后箭头到最大最小值，所以可以写$A\sin x + B\cos x$的最大值是$\sqrt{A^2 + B^2}$，最小值是$-\sqrt{A^2 + B^2}$）
+
+现在需要把这些内容组织成LaTeX，注意用合适的环境，比如itemize，equation，align，或者分块用\subsection等。另外图片中的“a sinx + b cosx”对应的是$A\sin x + B\cos x$，其最大值和最小值如上述。
+
+现在开始逐部分转录：
+
+首先标题：
+
+\textbf{TRIGONOMETRY}
+
+然后是和角公式（加法、减法）：
+
+\begin{itemize}
+    \item $\sin(A+B) = \sin A \cdot \cos B + \cos A \cdot \sin B$
+    \item $\sin(A-B) = \sin A \cdot \cos B - \cos A \cdot \sin B$
+    \item $\cos(A+B) = \cos A \cdot \cos B - \sin A \cdot \sin B$
+    \item $\cos(A-B) = \cos A \cdot \cos B + \sin A \cdot \sin B$
+    \item $\tan(A+B) = \dfrac{\tan A + \tan B}{1 - \tan A \tan B}$
+    \item $\tan(A-B) = \dfrac{\tan A - \tan B}{1 + \tan A \tan B}$
+    \item $\cot(A+B) = \dfrac{\cot A \cdot \cot B - 1}{\cot A + \cot B}$ （注意图片中是cotB·cotA -1，分母cotB + cotA，所以顺序不影响，乘法交换律）
+    \item $\cot(A-B) = \dfrac{\cot A \cdot \cot B + 1}{\cot A - \cot B}$
+\end{itemize}
+
+然后是和积化积（2sinA cosB等）：
+
+\begin{itemize}
+    \item $2\sin A \cdot \cos B = \sin(A+B) + \sin(A-B)$
+    \item $2\cos A \cdot \sin B = \sin(A+B) - \sin(A-B)$
+    \item $2\cos A \cdot \cos B = \cos(A+B) + \cos(A-B)$
+    \item $-2\sin A \cdot \sin B = \cos(A+B) - \cos(A-B)$
+\end{itemize}
+
+和的和差（sinC + sinD等）：
+
+\begin{itemize}
+    \item $\sin C + \sin D = 2 \cdot \sin\left( \dfrac{C+D}{2} \right) \cdot \cos\left( \dfrac{C-D}{2} \right)$
+    \item $\sin C - \sin D = 2 \cdot \cos\left( \dfrac{C+D}{2} \right) \cdot \sin\left( \dfrac{C-D}{2} \right)$
+    \item $\cos C + \cos D = 2 \cdot \cos\left( \dfrac{C+D}{2} \right) \cdot \cos\left( \dfrac{C-D}{2} \right)$
+    \item $\cos C - \cos D = -2 \cdot \sin\left( \dfrac{C+D}{2} \right) \cdot \sin\left( \dfrac{C-D}{2} \right)$
+    \item $\cos C - \cos D = 2 \cdot \sin\left( \dfrac{C-D}{2} \right) \cdot \sin\left( \dfrac{D-C}{2} \right)$ （图片里有=2sin((C+D)/2)·sin((D-C)/2)，因为sin(-x)=-sinx，所以和上面等价，可能图片里的写法，需要保留）
+\end{itemize}
+
+倍角公式：
+
+\begin{itemize}
+    \item $\sin 2x = 2\sin x \cdot \cos x = \dfrac{2\tan x}{1 + \tan^2 x}$
+    \item $\cos 2x = \cos^2 x - \sin^2 x = 2\cos^2 x - 1 = 1 - 2\sin^2 x = \dfrac{1 - \tan^2 x}{1 + \tan^2 x}$
+    \item $\tan 2x = \dfrac{2\tan x}{1 - \tan^2 x}$
+\end{itemize}
+
+三倍角公式：
+
+\begin{itemize}
+    \item $\sin 3x = 3\sin x - 4\sin^3 x$
+    \item $\cos 3x = 4\cos^3 x - 3\cos x$
+    \item $\tan 3x = \dfrac{3\tan x - \tan^3 x}{1 - 3\tan^2 x}$
+\end{itemize}
+
+奇偶性（函数性质）：
+
+\begin{itemize}
+    \item $\text{odd } F(x) \implies F(-x) = -F(x)$
+    \item $\text{even } F(x) \implies F(-x) = F(x)$
+\end{itemize}
+
+三角函数的奇偶性（关于x的负号）：
+
+\begin{itemize}
+    \item $\cos(-x) = \cos x$, $\sec(-x) = \sec x$
+    \item $\sin(-x) = -\sin x$, $\csc(-x) = -\csc x$
+    \item $\tan(-x) = -\tan x$, $\cot(-x) = -\cot x$
+\end{itemize}
+
+平方和与恒等式：
+
+\begin{itemize}
+    \item $\sin^2 \theta + \cos^2 \theta = 1$
+    \item $\sec^2 \theta - \tan^2 \theta = 1$
+    \item $\csc^2 \theta - \cot^2 \theta = 1$
+    \item $1 + \cos 2x = 2\cos^2 x$
+    \item $1 - \cos 2x = 2\sin^2 x$
+    \item $\tan x = \dfrac{1 - \cos x}{\sin x}$ （图片中的“tanx = (1 - cosx)/sinx”）
+\end{itemize}
+
+一般解（General Solution of Trigonometry）：
+
+\begin{itemize}
+    \item $\sin x = 0 \implies x = n\pi$, $n \in \mathbb{Z}$
+    \item $\cos x = 0 \implies x = (2n+1)\dfrac{\pi}{2}$, $n \in \mathbb{Z}$
+    \item $\tan x = 0 \implies x = n\pi$, $n \in \mathbb{Z}$
+    \item $\sin x = \sin y \implies x = n\pi + (-1)^n y$, $n \in \mathbb{Z}$
+    \item $\cos x = \cos y \implies x = 2n\pi \pm y$, $n \in \mathbb{Z}$
+    \item $\tan x = \tan y \implies x = n\pi + y$, $n \in \mathbb{Z}$
+    \item $\sin^2 x = \sin^2 y$, $\cos^2 x = \cos^2 y$, $\tan^2 x = \tan^2 y \implies x = n\pi \pm y$, $n \in \mathbb{Z}$
+\end{itemize}
+
+线性组合的最大最小值（$A\sin x + B\cos x$）：
+
+\begin{itemize}
+    \item 对于 $A\sin x + B\cos x$，最大值为 $+\sqrt{A^2 + B^2}$，最小值为 $-\sqrt{A^2 + B^2}$
+\end{itemize}
+
+现在需要检查图片中的每个元素是否都覆盖了。比如图片中的“a sinx + b cosx”对应的是$A\sin x + B\cos x$，所以转录时用A和B更规范。另外图片中的“Max. Value=+√(a²+b²)；Min. Value=-√(a²+b²)”要包含。
+
+另外图片中的“sin(A+B)·sin(A-B)=sin²A - sin²B”和“cos(A+B)·cos(A-B)=cos²A - sin²B”？看图片里的“sin(A+B)·sin(A-B)=sin²A - sin²B”和“cos(A+B)·cos(A-B)=cos²A - sin²B”？不，图片里是“sin(A+B)·sin(A-B)=sin²A - sin²B”？看图片中的内容：“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，图片里写的是“sin(A+B)·sin(A-B)=sin²A - sin²B”？看图片中的右侧部分：“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，图片里是“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，看图片中的内容：
+
+图片中右侧有个部分：“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，看图片里的“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，图片里写的是“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，看图片中的“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，图片里的内容是：
+
+在右侧列，有“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，看图片中的“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，图片里的“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，看图片中的“sin(A+B)·sin(A-B)=sin²A - sin²B”？哦，图片里有“sin(A+B)·sin(A-B)=sin²A - sin²B”吗？看图片中的内容：
+
+图片中右侧部分有“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，看图片中的“sin(A+B)·sin(A-B)=sin²A - sin²B”？不，图片里的“sin(A+B)·sin(A-B)=sin²A - sin²

@@ -1,0 +1,15 @@
+\begin{align*}
+L(x, s, \lambda, q_r, Q_r, z, t_k, p_k, P_k, U_k \in [K]) \nonumber \\
+= s + \gamma_r I_{m_r} \cdot Q_r + \sqrt{r} \| q_r \|_2 - z \cdot \left( \sum_{i=1}^m (\Delta x_i + \Delta_0) - \sum_{k=1}^K [t_k \quad p_k^T] \cdot \right. \nonumber \\
+\left\{ \left[ s - y_k^0(x) - \lambda_k b - y_k(x)^T u_k + \lambda_k A u_k \quad \frac{1}{2} (q_r + (U \Lambda^{-\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x)))^T \right] \right. \nonumber \\
+\left. \frac{1}{2} (q_r + (U \Lambda^{-\frac{1}{2}} B)^T (A^T \lambda_k - y_k(x))) \right\} \nonumber \\
+Q_r \nonumber \\
+= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (t_k (A u_k - b)^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r} \| q_r \|_2 - \sum_{k=1}^K p_k^T q_r \nonumber \\
++ (r_2 I_{m_r} - \sum_{k=1}^K p_k) \cdot Q_r - \sum_{i=1}^m \sum_{j=1}^n z_{ij} a_{ij} x - \sum_{i=1}^m \sum_{j=1}^n z_{ij} a_{ij} + \sum_{k=1}^K (t_k y_k^0(x) + (t_k u_k^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T) y_k(x)) \nonumber \\
+= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (t_k (A u_k - b)^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r} \| q_r \|_2 - \sum_{k=1}^K p_k^T q_r \nonumber \\
++ (r_2 I_{m_r} - \sum_{k=1}^K p_k) \cdot Q_r - \sum_{i=1}^m \sum_{j=1}^n z_{ij} a_{ij} x - \sum_{i=1}^m \sum_{j=1}^n z_{ij} a_{ij} + \sum_{k=1}^K (t_k w_k^T + (t_k u_k^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T) w_k) \nonumber \\
++ \sum_{k=1}^K (t_k d_k + (t_k u_k^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T) d_k) \nonumber \\
+= (1 - \sum_{k=1}^K t_k) s - \sum_{k=1}^K (t_k (A u_k - b)^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T A^T) \lambda_k + \sqrt{r} \| q_r \|_2 - \sum_{k=1}^K p_k^T q_r \nonumber \\
++ (r_2 I_{m_r} - \sum_{k=1}^K p_k) \cdot Q_r + \left( \sum_{k=1}^K (t_k w_k^T + (t_k u_k^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T) w_k) - \sum_{i=1}^m \sum_{j=1}^n z_{ij} a_{ij} \right) x \nonumber \\
++ \sum_{k=1}^K (t_k d_k + (t_k u_k^T + p_k^T (U \Lambda^{-\frac{1}{2}} B)^T) d_k) - \sum_{i=1}^m \sum_{j=1}^n z_{ij} a_{ij}.
+\end{align*}

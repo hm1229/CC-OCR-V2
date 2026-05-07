@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{circuitikz}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+{\Huge \textcolor{cyan}{awinic}} \hfill {\small 上海艾为电子技术股份有限公司}\\
+{\small shanghai awinic technology co., ltd.} \hfill \textbf{\Large AW36526}\\
+\hfill July 2019 V1.3
+\end{center}
+
+\hrule
+
+\vspace{0.5cm}
+
+\begin{center}
+{\LARGE \textbf{Inductorless, Triple Channel Flash \& Indicator 2in1 LED Driver}}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent\begin{minipage}[t]{0.48\textwidth}
+\section*{\textcolor{blue}{FEATURES}}
+\begin{itemize}
+    \item Flash and Indicator 2in1 application
+    \item Dual Independent 1.0A LED1/LED2 Current Source
+    \begin{itemize}
+        \item[$\triangleright$] Flash: 3.91mA$\sim$1.0A, 256 levels\\3.91mA/level
+        \item[$\triangleright$] Torch: 1.46mA$\sim$375mA, 256 levels\\1.46mA/level
+        \item[$\triangleright$] Indicator: 0.37mA$\sim$375mA, 1024 levels\\0.37mA/level
+        \item[$\triangleright$] Flash Timeout: 40ms$\sim$1.6s, 16 levels
+    \end{itemize}
+    \item Independent 375 mA LED3 Current Sink
+    \begin{itemize}
+        \item[$\triangleright$] Flash: 1.46mA$\sim$375mA, 256 levels\\1.46mA/level
+        \item[$\triangleright$] Torch: 1.46mA$\sim$375mA, 256 levels\\1.46mA/level
+        \item[$\triangleright$] Indicator: 0.73mA$\sim$375mA, 512 levels\\0.73mA/level
+        \item[$\triangleright$] Flash Timeout: 40ms$\sim$1.6s, 16 levels
+    \end{itemize}
+    \item Optimized Flash LED Current During Low Battery Conditions (IVFM)
+    \item Hardware Strobe Enable (STROBE)
+    \item 400kHz I$^2$C: AW36526 (I$^2$C Address=0x63)
+    \item 0.4mm Pitch, FCQFN-10L Package
+\end{itemize}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\section*{\textcolor{blue}{GENERAL DESCRIPTION}}
+
+The AW36526 is a inductorless triple channel flash \& Indicator 2in1 LED driver that provides a high level of adjustability within a ultra-small solution size. The AW36526 includes two current sources and a current sink which is controlled independently by I$^2$C-compatible interface. The AW36526 provides IVFM protection mode to prevent system reset or shutdown under low battery condition.
+
+\vspace{0.3cm}
+
+The AW36526 is controlled via an I$^2$C-compatible interface. The main features of the AW36526 include: flash / torch / IR / Indicator current, flash timeout duration, IVFM and breath features. The AW36526 also provides hardware flash pin (STROBE) to control flash event.
+
+\vspace{0.3cm}
+
+The device operates over a $-40^\circ$C to $+85^\circ$C ambient temperature range.
+
+\vspace{0.3cm}
+
+The AW36526 is available in small 0.4mm pitch 1.6mm$\times$1.2mm FCQFN-10L package.
+\end{minipage}
+
+\vspace{0.5cm}
+
+\section*{\textcolor{blue}{APPLICATION}}
+Smartphone Camera Flash
+
+\vspace{0.5cm}
+
+\section*{\textcolor{blue}{TYPICAL APPLICATION CIRCUIT}}
+
+\begin{center}
+\begin{circuitikz}[scale=0.9]
+    % Power input
+    \draw (0,4) node[ocirc, label=left:VIN]{} to[short] (1,4);
+    \draw (1,4) to[C, l=$C_{IN}$, a={10$\mu$F\\10V}] (1,3) node[ground]{};
+    
+    % VIO connection
+    \draw (0,2.5) node[ocirc, label=left:VIO]{} to[short] (0.5,2.5);
+    \draw (0.5,2.5) node[above right]{1.8V $\sim$ 3.3V} to[short] (1,2.5);
+    
+    % Resistors
+    \draw (1,2.5) to[R, l=$R_1$, a=4.7k$\Omega$] (1,1.5);
+    \draw (2,2.5) to[R, l=$R_2$, a=4.7k$\Omega$] (2,1.5);
+    
+    % MCU box
+    \draw (-0.5,0.5) rectangle (1,2);
+    \node at (0.25,1.25) {MCU};
+    
+    % IC box
+    \draw (3,0) rectangle (6,4);
+    \node at (4.5,3.3) {\textcolor{cyan}{\Huge awinic}};
+    \node at (4.5,2.7) {\textbf{AW36526FCR}};
+    
+    % Pin labels
+    \node at (3.3,3.8) {\tiny A2};
+    \node at (3.3,3.5) {IN};
+    \node at (3.3,2.3) {\tiny C1};
+    \node at (3.3,2.0) {STROBE};
+    \node at (3.3,1.5) {\tiny A3};
+    \node at (3.3,1.2) {SDA};
+    \node at (3.3,0.8) {\tiny B3};
+    \node at (3.3,0.5) {SCL};
+    \node at (4.5,0.2) {\tiny A1};
+    \node at (4.5,-0.1) {GND};
+    \node at (5.7,2.3) {\tiny C1/C2};
+    \node at (5.7,2.0) {LED3};
+    \node at (5.7,1.5) {\tiny B1};
+    \node at (5.7,1.2) {LED2};
+    \node at (5.7,0.8) {\tiny D1};
+    \node at (5.7,0.5) {LED1};
+    
+    % Connections
+    \draw (1,4) -- (3,4);
+    \draw (1,1.5) -- (1,1) -- (3,1);
+    \draw (2,1.5) -- (2,0.6) -- (3,0.6);
+    \draw (4.5,0) -- (4.5,-0.5) node[ground]{};
+    
+    % LED connections
+    \draw (6,3.5) -- (7,3.5) to[led, l=$D_3$] (7,2.5) -- (6.5,2.5) -- (6,2.5);
+    \draw (6,1.2) -- (7.5,1.2) to[led, l=$D_2$] (7.5,0.2) -- (6,0.2);
+    \draw (6,0.5) -- (6.5,0.5) -- (6.5,-0.3) to[led, l=$D_1$] (6.5,-1.3) -- (6,-1.3);
+    
+    % Ground connections for LEDs
+    \draw (7,2.5) -- (7,2.2) node[ground]{};
+    \draw (7.5,0.2) -- (7.5,-0.1) node[ground]{};
+    \draw (6.5,-1.3) -- (6.5,-1.6) node[ground]{};
+\end{circuitikz}
+
+\vspace{0.3cm}
+
+\textbf{Fig 1 \quad Typical Application Circuit of AW36526}
+\end{center}
+
+\vspace{0.3cm}
+
+{\small All trademarks are the property of their respective owners.}
+
+\vspace{0.5cm}
+
+\hrule
+
+\vspace{0.2cm}
+
+\noindent www.awinic.com.cn \hfill 1 \hfill Copyright \copyright{} 2017 SHANGHAI AWINIC TECHNOLOGY CO., LTD
+
+\end{document}

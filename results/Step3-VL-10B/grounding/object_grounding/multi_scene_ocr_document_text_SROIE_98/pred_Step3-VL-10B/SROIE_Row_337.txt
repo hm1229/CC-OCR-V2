@@ -1,0 +1,308 @@
+Got it, let's go through the document and identify each category.
+
+First, company: The company name is "Gerbang Alaf Restaurants Sdn Bhd" and also "Licensee of McDonald's". Let's check the text. The top part has "Gerbang Alaf Restaurants Sdn Bhd (65351-M)" so that's the company.
+
+Address: The address lines are "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor". Let's find that section.
+
+Date: The order date is "30/05/2018" in the ORD line.
+
+Total: There are multiple totals. Let's check the "TakeOut Total (incl GST)" which is 19.00, "Total Rounded" 19.00, and "TOTAL INCLUDES 6% GST" 1.08. Also, the item total is 19.00. Let's pick the main total amounts.
+
+Now, let's map each:
+
+Company: "Gerbang Alaf Restaurants Sdn Bhd" is the company. Also, "McDonald's Sheli Mahkota Cheras DT (#36)" is part of the license info, but the main company is Gerbang Alaf.
+
+Address: The block starting from "Level 6, Bangunan TH..." down to "Selangor".
+
+Date: "30/05/2018" in the ORD line.
+
+Total: Let's check the "TakeOut Total (incl GST) 19.00" and "Total Rounded 19.00" and the 1.08 GST. But maybe the main total is 19.00. Let's check each occurrence.
+
+Let's list each element:
+
+1. Company: Gerbang Alaf Restaurants Sdn Bhd (65351-M) – the line with that text.
+2. Address: Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor – that's the address block.
+3. Date: 30/05/2018 – in the ORD line.
+4. Total: The "TOTAL" next to QTY ITEM is 19.00, TakeOut Total is 19.00, Total Rounded 19.00, and the 1.08 GST. Let's pick the main total amounts.
+
+Now, let's define the bounding boxes.
+
+First, company: The text "Gerbang Alaf Restaurants Sdn Bhd (65351-M)" is in the upper part. Let's check coordinates.
+
+Looking at the image, the company name is at the top part. Let's identify the bounding box.
+
+Address: The lines from "Level 6, Bangunan TH..." to "Selangor" (the line with Selangor is part of the address).
+
+Date: The ORD line has "30/05/2018" – that's the date.
+
+Total: Let's take the "TakeOut Total (incl GST) 19.00" as a total, and maybe the item total.
+
+Let's process each:
+
+- Company: "Gerbang Alaf Restaurants Sdn Bhd" – the line is "Gerbang Alaf Restaurants Sdn Bhd (65351-M)". Bounding box would cover that line.
+- Address: The block starting with "Level 6, Bangunan TH, Damansara Uptown3" down to "Selangor". Let's check the lines: "Level 6, Bangunan TH, Damansara Uptown3", "No.3, Jalan SS21/39,47400 Petaling Jaya", "- Selangor". So that's the address.
+- Date: "30/05/2018" in the ORD line: "ORD #64 -REG #19- 30/05/2018 16:07:06".
+- Total: Let's check the "TOTAL" in "QTY ITEM" row: "2 M McChicken 2 M Coke 2 M Fries" and "TOTAL 19.00". Also, "TakeOut Total (incl GST) 19.00", "Total Rounded 19.00", and "TOTAL INCLUDES 6% GST 1.08". Let's pick the main total amounts. Let's take the 19.00 from the item total, and maybe the 19.00 from TakeOut Total.
+
+Now, let's create the JSON entries.
+
+First, company:
+
+The company is "Gerbang Alaf Restaurants Sdn Bhd". Let's check the text. The line is "Gerbang Alaf Restaurants Sdn Bhd (65351-M)". So the bounding box for that line.
+
+Address: The address lines are:
+
+"Level 6, Bangunan TH, Damansara Uptown3"
+
+"No.3, Jalan SS21/39,47400 Petaling Jaya"
+
+"- Selangor"
+
+So the bounding box covers these lines.
+
+Date: The date is "30/05/2018" in the ORD line.
+
+Total: Let's take the "TOTAL" in the QTY ITEM section (19.00), and the TakeOut Total (19.00), and the GST total (1.08). But maybe the main total is the 19.00. Let's check which is the primary total.
+
+Now, let's list each:
+
+1. Company: "Gerbang Alaf Restaurants Sdn Bhd (65351-M)" – label company.
+2. Address: The block from "Level 6, Bangunan TH..." to "Selangor" – label address.
+3. Date: "30/05/2018" – label date.
+4. Total: The "19.00" in the TOTAL column of QTY ITEM, and "19.00" in TakeOut Total, and "1.08" in TOTAL INCLUDES 6% GST. Let's pick the most prominent total, maybe the TakeOut Total.
+
+Let's check the image again.
+
+Now, let's define the bounding boxes with coordinates. Since the image is a receipt, the text positions can be approximated.
+
+For company:
+
+The text "Gerbang Alaf Restaurants Sdn Bhd" is in the upper part, above the license info. Let's say the bounding box is [20, 120, 979, 145] (approximate, since the image's text is centered).
+
+Address:
+
+The address lines start after "Licensee of McDonald's" and go down. Let's check:
+
+"Level 6, Bangunan TH, Damansara Uptown3"
+
+"No.3, Jalan SS21/39,47400 Petaling Jaya"
+
+"- Selangor"
+
+So the bounding box for address would cover these lines, maybe from y=170 to y=230.
+
+Date:
+
+In the ORD line: "ORD #64 -REG #19- 30/05/2018 16:07:06" – the date is 30/05/2018. So the bounding box around that date.
+
+Total:
+
+The "TOTAL" in the QTY ITEM row is on the right, value 19.00. Also, "TakeOut Total (incl GST) 19.00" – that's a total.
+
+Let's create the entries:
+
+- Company: The line "Gerbang Alaf Restaurants Sdn Bhd (65351-M)" – label company.
+- Address: The block of address lines – label address.
+- Date: The date "30/05/2018" – label date.
+- Total: The "19.00" in TakeOut Total (incl GST) – label total. Also, the item total 19.00, but maybe include multiple? But the problem says "detect all objects matching these categories", so each occurrence? Or each category once? Let's check the problem statement: "Detect all objects matching these categories in this document image: address, company, date, total." So for each category, all instances? Or each category's presence. Let's see.
+
+The problem says "for each detected object, provide...". So each instance of address, company, date, total.
+
+But company: there's one main company (Gerbang Alaf), and also McDonald's is a licensee, but the company here is Gerbang Alaf.
+
+Address: one address block.
+
+Date: one date (30/05/2018).
+
+Total: multiple totals (19.00, 19.00, 1.08). Let's check which are labeled as total.
+
+In the receipt, "TOTAL" in the QTY ITEM section is the sum of items. Then "TakeOut Total (incl GST)" is the total including tax. "Total Rounded" is the same. "TOTAL INCLUDES 6% GST" is the GST amount. So all these are totals. Let's include each total value.
+
+But maybe the problem expects the main total. Let's check the example.
+
+Alternatively, let's list:
+
+Company: Gerbang Alaf Restaurants Sdn Bhd (65351-M) – one entry.
+
+Address: Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor – one entry.
+
+Date: 30/05/2018 – one entry.
+
+Total: 19.00 (from QTY ITEM TOTAL), 19.00 (TakeOut Total), 19.00 (Total Rounded), 1.08 (TOTAL INCLUDES 6% GST) – multiple entries.
+
+Now, let's map each with bounding boxes.
+
+First, company:
+
+The text "Gerbang Alaf Restaurants Sdn Bhd (65351-M)" is in the image. Let's find its coordinates. The image has "184" at the top, then the company name. Let's assume the bounding box is [20, 130, 979, 155] (approximate, since the text is centered).
+
+Address:
+
+The address lines:
+
+"Level 6, Bangunan TH, Damansara Uptown3"
+
+"No.3, Jalan SS21/39,47400 Petaling Jaya"
+
+"- Selangor"
+
+These are consecutive lines. Let's take the bounding box covering these. For example, from y=180 to y=240.
+
+Date:
+
+The date "30/05/2018" is in the line "ORD #64 -REG #19- 30/05/2018 16:07:06". Let's find the bounding box around that date. The x and y position of that line is in the middle section.
+
+Total:
+
+- The "TOTAL" in the QTY ITEM row: the line "QTY ITEM ... TOTAL 19.00". So the value 19.00 here.
+- "TakeOut Total (incl GST) 19.00" – the 19.00 here.
+- "Total Rounded 19.00" – the 19.00 here.
+- "TOTAL INCLUDES 6% GST 1.08" – the 1.08 here.
+
+Now, let's create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's start:
+
+1. Company: "Gerbang Alaf Restaurants Sdn Bhd (65351-M)"
+   - bbox: Let's check the image. The text is centered, above the license info. Let's estimate the coordinates. The image's text for company is in the upper part. Let's say the bounding box is [21, 125, 978, 148] (since the image is a receipt, the text is vertical centered).
+
+2. Address: The address block. Let's check the lines:
+   - "Level 6, Bangunan TH, Damansara Uptown3"
+   - "No.3, Jalan SS21/39,47400 Petaling Jaya"
+   - "- Selangor"
+   So the bounding box would cover these three lines. Let's say from y=190 to y=235.
+
+3. Date: "30/05/2018" in the ORD line. The line is "ORD #64 -REG #19- 30/05/2018 16:07:06". Let's find the position of the date. The bounding box for the date part is around that text.
+
+4. Total: Multiple instances. Let's take each total value:
+
+   a. Item total: "19.00" in the QTY ITEM row.
+   b. TakeOut Total: "19.00" in "TakeOut Total (incl GST)"
+   c. Total Rounded: "19.00" in "Total Rounded"
+   d. GST total: "1.08" in "TOTAL INCLUDES 6% GST"
+
+Now, let's define the bounding boxes for each total.
+
+For example, the TakeOut Total line: "TakeOut Total (incl GST) 19.00" – the 19.00 is on the right.
+
+Let's proceed to create the entries.
+
+Now, let's write the JSON.
+
+First, company:
+
+{
+  "bbox_2d": [20, 120, 980, 145],
+  "label": "company"
+}
+
+Address:
+
+The address lines are from "Level 6, Bangunan TH, Damansara Uptown3" to "- Selangor". Let's check the exact text:
+
+"Level 6, Bangunan TH, Damansara Uptown3"
+
+"No.3, Jalan SS21/39,47400 Petaling Jaya"
+
+"- Selangor"
+
+So the bounding box would include these lines. Let's estimate:
+
+{
+  "bbox_2d": [20, 180, 980, 240],
+  "label": "address"
+}
+
+Date:
+
+The date is in the ORD line: "30/05/2018". Let's find the bounding box for that date. The line is "ORD #64 -REG #19- 30/05/2018 16:07:06". The date is part of that line. Let's take the bounding box around the date text.
+
+{
+  "bbox_2d": [320, 290, 425, 310],
+  "label": "date"
+}
+
+Total instances:
+
+1. Item total: The "TOTAL" in the QTY ITEM row. The line is "QTY ITEM ... TOTAL 19.00". Let's find the position of 19.00.
+
+{
+  "bbox_2d": [850, 295, 975, 315],
+  "label": "total"
+}
+
+2. TakeOut Total:
+
+{
+  "bbox_2d": [20, 330, 980, 350],
+  "label": "total"
+}
+
+3. Total Rounded:
+
+{
+  "bbox_2d": [20, 360, 980, 380],
+  "label": "total"
+}
+
+4. GST total:
+
+{
+  "bbox_2d": [20, 400, 980, 420],
+  "label": "total"
+}
+
+Wait, but the "TOTAL INCLUDES 6% GST 1.08" is a line, so the 1.08 is the total for GST.
+
+Now, let's check if all these are correct.
+
+Alternatively, maybe the problem expects each category once, but the instruction says "detect all objects matching these categories", so all instances.
+
+But let's check the image again.
+
+Another approach: list all elements.
+
+Company: Gerbang Alaf Restaurants Sdn Bhd (65351-M) – one.
+
+Address: The address block – one.
+
+Date: 30/05/2018 – one.
+
+Total: The values 19.00 (item total), 19.00 (TakeOut), 19.00 (Total Rounded), 1.08 (GST) – four instances.
+
+Now, let's make sure the bounding boxes are accurate.
+
+Alternatively, maybe the "total" category includes the main total amount, which is 19.00 (TakeOut Total). But the problem says "all objects", so include all.
+
+Now, let's compile the JSON array.
+
+The final JSON should be an array of objects with bbox and label.
+
+Let's list each:
+
+1. Company: Gerbang Alaf Restaurants Sdn Bhd (65351-M)
+   - bbox: Let's check the image. The text is centered, above the license info. The coordinates can be approximated as [21, 125, 978, 148]
+
+2. Address: The address lines (Level 6... to Selangor)
+   - bbox: [21, 182, 978, 237]
+
+3. Date: 30/05/2018 in ORD line
+   - bbox: [318, 292, 423, 312]
+
+4. Total (item total 19.00):
+   - bbox: [848, 297, 973, 317]
+
+5. Total (TakeOut Total 19.00):
+   - bbox: [22, 332, 977, 352]
+
+6. Total (Total Rounded 19.00):
+   - bbox: [22, 362, 977, 382]
+
+7. Total (GST 1.08):
+   - bbox: [22, 402, 977, 422]
+
+Now, let's check if these are all correct.
+
+Also, note that the "McDonald's Sheli Mahkota Cheras DT (#36)" is part of

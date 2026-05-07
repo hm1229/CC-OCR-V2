@@ -1,0 +1,40 @@
+I need to find all instances of '0.00' in the image.
+
+Looking at the receipt, I can see '0.00' appears in several places:
+- 自费:0.00
+- 当年支付:0.00 当年余额:0.00
+- 历年支付:0.00 历年余额:0.00
+
+Let me identify the coordinates for each:
+
+**自费:0.00** - This appears on the line "自理:2.49 自费:0.00"
+The "0.00" after 自费: is approximately at x: 680-740, y: 855-885
+
+**(278, 853, 378, 883)** for 自费:0.00's "0.00" portion
+
+Let me re-examine more carefully:
+
+The image is approximately the receipt. Looking at the lines:
+- "个人现金:9.83 自付:7.34" 
+- "自理:2.49 自费:0.00"
+- "当年支付:0.00 当年余额:0.00"
+- "历年支付:0.00 历年余额:0.00"
+
+For "自费:0.00" on the second payment line:
+(620, 853, 730, 883)
+
+For "当年支付:0.00":
+(270, 885, 380, 912)
+
+For "当年余额:0.00":
+(580, 885, 690, 912)
+
+For "历年支付:0.00":
+(270, 912, 380, 940)
+
+For "历年余额:0.00":
+(580, 912, 690, 940)
+
+The question asks for 'the region' (singular), so likely referring to the most prominent or first instance. The first "0.00" appears in "自费:0.00":
+
+(620, 853, 730, 883)

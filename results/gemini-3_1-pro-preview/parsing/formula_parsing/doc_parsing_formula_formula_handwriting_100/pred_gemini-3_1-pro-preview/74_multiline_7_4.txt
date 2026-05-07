@@ -1,0 +1,12 @@
+```latex
+\begin{aligned}
+&\lim_{\varepsilon \to 0} \left[ I_{\varepsilon - k, \rho}(\phi) - \frac{\phi^{(k-1)}(0)}{\varepsilon(k-1)!} \right] \\
+&= \lim_{\varepsilon \to 0} \left[ \frac{(-1)^k I_{\varepsilon, \rho}(\phi^{(k)})}{\prod_{l=0}^{k-1} (\varepsilon - l)} + \sum_{j=0}^{k-1} \frac{(-1)^j \phi^{(j)}(\rho) \rho^{\varepsilon - k + j + 1}}{\prod_{l=k-j-1}^{k-1} (\varepsilon - l)} - \frac{\phi^{(k-1)}(0)}{\varepsilon(k-1)!} \right] \\
+&= \lim_{\varepsilon \to 0} \left[ \frac{(-1)^k}{\prod_{l=1}^{k-1} (\varepsilon - l)} \int_{r=0}^{\rho} \frac{r^{\varepsilon - 1}}{\varepsilon} \phi^{(k)}(r) + \frac{(-1)^k \int_{r=0}^{\rho} \phi^{(k)}(r)}{\varepsilon \prod_{l=1}^{k-1} (\varepsilon - l)} - \frac{\phi^{(k-1)}(0)}{\varepsilon(k-1)!} \right. \\
+&\quad + \left. \frac{(-1)^{k-1} \phi^{(k-1)}(\rho) \rho^{\varepsilon}}{\varepsilon \prod_{l=1}^{k-1} (\varepsilon - l)} + \sum_{j=0}^{k-2} \frac{(-1)^j \phi^{(j)}(\rho) \rho^{\varepsilon - k + j + 1}}{\prod_{l=k-j-1}^{k-1} (\varepsilon - l)} \right] \\
+&= \lim_{\varepsilon \to 0} \left[ \frac{(-1)^k}{\prod_{l=1}^{k-1} (\varepsilon - l)} \int_{r=0}^{\rho} \frac{r^{\varepsilon - 1}}{\varepsilon} \phi^{(k)}(r) - \frac{\phi^{(k-1)}(0)}{\varepsilon} \left( \frac{1}{(k-1)!} + \frac{(-1)^k}{\prod_{l=1}^{k-1} (\varepsilon - l)} \right) \right. \\
+&\quad + \left. \frac{(-1)^{k-1} \phi^{(k-1)}(\rho) (1 - \rho^{\varepsilon})}{\varepsilon \prod_{l=1}^{k-1} (\varepsilon - l)} + \sum_{j=0}^{k-2} \frac{(-1)^j \phi^{(j)}(\rho) \rho^{\varepsilon - k + j + 1}}{\prod_{l=k-j-1}^{k-1} (\varepsilon - l)} \right] \\
+&= -\frac{1}{(k-1)!} \int_{r=0}^{\rho} (\ln r) \phi^{(k)}(r) \\
+&\quad + \frac{\phi^{(k-1)}(0)}{(k-1)!} \sum_{\nu=1}^{k-1} \frac{1}{\nu} - \frac{1}{(k-1)!} \sum_{j=0}^{k-2} \phi^{(j)}(\rho) \rho^{-k+j+1} (k-j-2)!
+\end{aligned}
+```

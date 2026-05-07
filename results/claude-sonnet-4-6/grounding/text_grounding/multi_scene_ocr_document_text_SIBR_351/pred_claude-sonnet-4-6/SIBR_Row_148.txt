@@ -1,0 +1,20 @@
+I need to find all instances of '379.00' in the image.
+
+Looking at the bill, I can see '379.00' appears in several places:
+
+1. In the amount column on the line with date 2020-06-10: approximately right side of that row
+2. As "房费:379.00" 
+3. As the total amount "379.00" in the middle
+4. As "已收定金: 379.00"
+
+The question asks for "the region of the text '379.00'" - I'll identify the main standalone '379.00' that appears as the subtotal/total in the middle of the receipt.
+
+For the standalone '379.00' appearing as the total amount in the center:
+(290, 1000, 510, 1040)
+
+For the '379.00' in the amount column on the transaction line (2020-06-10 row):
+(620, 575, 760, 600)
+
+Let me provide the most prominent standalone '379.00' which appears centered as the total:
+
+(290, 995, 510, 1035)

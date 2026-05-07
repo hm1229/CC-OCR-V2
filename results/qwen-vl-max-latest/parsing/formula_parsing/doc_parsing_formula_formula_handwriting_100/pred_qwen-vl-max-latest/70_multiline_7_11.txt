@@ -1,0 +1,11 @@
+```latex
+\begin{aligned}
+&\left|\int_{t_n}^t\int_{-\infty}^\infty\frac{\omega^2(s-t)}{s-t}\left(G_x(x,t_1,s,\tau)h_\omega(s)+G_{sx}(x,t_1,s,\tau)h_\omega(s)\right)dsd\tau\right|\\
+&\leq \frac{c(||u_\epsilon||_\infty+1)^2}{2}||\lambda'_\omega||_{L^1}\int_{t_n}^t\frac{1}{\sqrt{t-(\tau)}}d\tau\\
+&\quad+\left|\int_{t_n}^t\int_{-\infty}^\infty(\omega^*(x+2\sqrt{t-\tau}\lambda,\tau)h_\omega(x+2\sqrt{t-\tau}\lambda)-\omega^*(x,\tau)h_\omega(x))\right.\\
+&\quad\quad\quad\quad\quad\quad\times\left.\frac{(\lambda^2-1/2)}{\sqrt{\pi}(t-\tau)^{1/2}}e^{-\lambda^2}dsd\tau\right|\\
+&\leq c(||u_\epsilon||_\infty,\alpha,\rho)(2n)^{-1/2}\\
+&\quad+\int_{t_n}^t\int_{-\infty}^\infty c(||u_\epsilon||_\infty,\alpha,\rho)\left(\frac{\sqrt{t-\tau}|\lambda|}{\sqrt{r}}\right)^\rho|\lambda^{*}-|\lambda||\frac{1}{\sqrt{t-\tau}}e^{-\lambda^2}dsd\tau\\
+&\leq c(||u_\epsilon||_\infty,\alpha,\rho)(2n)^{-1/2}+\int_{n-1/(2n)}^1g^\rho\mathcal{M}_{(-1,g)}\cdot g/\sqrt{g}dg
+\end{aligned}
+```

@@ -1,0 +1,134 @@
+```latex
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+\pgfplotsset{compat=1.17}
+
+\definecolor{darkblue}{RGB}{0,51,102}
+\definecolor{goldyellow}{RGB}{218,165,32}
+\definecolor{darkyellow}{RGB}{200,150,0}
+\definecolor{lightyellow}{RGB}{240,200,80}
+\definecolor{greengold}{RGB}{180,180,0}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textsc{Chairman's Letter}}
+\fancyhead[R]{\textsc{Minerals Technologies Inc.} \quad \textbf{5}}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{center}
+{\Huge\bfseries\color{darkblue} BOTH BUSINESS\\SEGMENTS---}
+
+\vspace{0.5em}
+{\large\bfseries Specialty Minerals and Refractories---contributed to this outstanding\\
+performance through record-breaking financial results.}
+\end{center}
+
+\vspace{1em}
+
+\begin{multicols}{3}
+
+Contributing to these financial results was excellent execution of our 2013 operating plan initiatives, which included growth, return on capital, productivity improvements, expense control, and safety. Since 2007, the company has improved productivity by 5 percent compounded annually and we kept our 2013 expenses flat with 2012 while continuing to grow our Asia positions profitably.
+
+The company's safety performance continued on a strong track in 2013. We achieved our lowest lost workday rate of 0.386 injuries per 100 employees, which is approaching world class safety levels, and our recordable injury rate declined from the previous year to 1.594 injuries per 100 employees. We are committed to making MTI a safe working environment for our employees. Our goal is for our employees to go home each day after work in the same condition they arrived.
+
+MTI's Return on Capital continued to improve. Our return is now 9.5 percent compared to 9.2 percent in 2012. The company generated \$138 million in cash from operations and we repurchased \$52 million of our shares during the year.
+
+\subsection*{\color{goldyellow} Accomplishments}
+
+Let's take a look at what drove our outstanding 2013 performance. Our two major strategies---geographic expansion and new product innovation---continue to gain traction. In 2013, we signed contracts for two new satellites, one in China, and
+
+the second in Europe. The plant in China is a joint venture agreement with Nanning Jindaxing Paper Industry Co. Ltd. for the construction of a 45,000-metric ton satellite PCC facility at Jindaxing Paper's papermaking facility in Guangxi Province, China. The satellite plant, which will produce PCC for paper filling, will become operational in the fourth quarter of 2014. The satellite facility in Europe is for paper filling and is with a papermaker that wished to remain unnamed for competitive reasons.
+
+More recently, in early January, we announced an agreement with UPM-Kymmene Corporation to build a satellite PCC plant on site at UPM's paper mill in Changshu, China, located in Jiangsu province. The satellite plant, scheduled to begin operation early in 2015, will provide PCC for paper filling and will have an initial capacity of 100,000 tons.
+
+In total, we are now constructing four new satellite PCC plants in China. These include the plant at Jianghe Paper in Henan Province and the 100,000-ton coating facility for Sun Paper in Shandong Province, both of which we signed in the fourth quarter of 2012. Our growth in China will continue. We have developed the operational capability through added resources to further expand in this growing market.
+
+During the year, we also began ramping up three satellite facilities, two in India and one in Thailand. MTI now has seven satellite plants in China and 16 in Asia, which is now second only to the 25 satellites we operate in North America. In addition, our North American PCC plant expansions are moving forward and we expect them to be contributing volume in 2014.
+
+\end{multicols}
+
+\vspace{1em}
+
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{Return on Capital*}
+
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    width=8cm,
+    height=6cm,
+    ymin=5,
+    ymax=10,
+    ylabel={ROC \%},
+    symbolic x coords={2010, 2011, 2012, 2013},
+    xtick=data,
+    nodes near coords,
+    nodes near coords style={font=\small},
+    bar width=20pt,
+    enlarge x limits=0.25,
+    ytick={5,10},
+]
+\addplot[fill=lightyellow] coordinates {(2010,8.4)};
+\addplot[fill=lightyellow] coordinates {(2011,8.8)};
+\addplot[fill=greengold] coordinates {(2012,9.2)};
+\addplot[fill=goldyellow] coordinates {(2013,9.5)};
+\end{axis}
+\end{tikzpicture}
+
+\small * Bloomberg Method
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{Quarterly Underlying Sales Growth}
+
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    width=8cm,
+    height=6cm,
+    ymin=-3,
+    ymax=8,
+    ylabel near ticks,
+    symbolic x coords={Q1, Q2, Q3, Q4},
+    xtick=data,
+    bar width=15pt,
+    enlarge x limits=0.25,
+    ytick={-3,-2,-1,0,1,2,3,4,5,6,7,8},
+    yticklabel={\pgfmathprintnumber{\tick}\%},
+    legend style={at={(1.0,0.0)}, anchor=south east, font=\tiny},
+    legend cell align={left},
+]
+\addplot[fill=darkblue] coordinates {(Q1,-2) (Q2,2) (Q3,2) (Q4,6)};
+\addplot[mark=*, draw=darkyellow, thick, dashed, mark options={fill=darkyellow, scale=1.2}] coordinates {(Q1,-1) (Q2,4) (Q3,4) (Q4,7)};
+\legend{Reported Sales Growth, Underlying Sales Growth}
+
+\node[font=\tiny, color=darkblue] at (axis cs:Q1,-2.7) {-2\%};
+\node[font=\tiny, color=darkyellow] at (axis cs:Q1,-0.3) {-1\%};
+\node[font=\tiny, color=darkblue] at (axis cs:Q2,2.7) {2\%};
+\node[font=\tiny, color=darkyellow] at (axis cs:Q2,4.7) {4\%};
+\node[font=\tiny, color=darkblue] at (axis cs:Q3,2.7) {2\%};
+\node[font=\tiny, color=darkyellow] at (axis cs:Q3,4.7) {4\%};
+\node[font=\tiny, color=darkblue] at (axis cs:Q4,6.7) {6\%};
+\node[font=\tiny, color=darkyellow] at (axis cs:Q4,7.7) {7\%};
+
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\end{document}
+```

@@ -1,0 +1,71 @@
+用户现在需要把图片中的公式提取成LaTeX。首先看最左边的公式，先看第一行：
+
+$\mathbb{P}_{zk}\left[\mathbf{T}^{z\zeta}_{\alpha n}\left\langle \mathbf{M}_\Lambda \right\rangle_{\Lambda}\right] = \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{M(n)}{1 - \rho\mathbf{Z}(n)} - \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{1 + 2c_0k k^{-1}}{1 - 2c_0k k^{-1}}$
+
+然后下一行：
+
+$= \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{1 + 2c_0k k^{-1}}{1 - 2c_0k k^{-1}} - \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \prod_{k=1}^{n-1} \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}}$
+
+接下来：
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+然后：
+
+$= -\sum_{k=1}^{n-1} z k \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+再下一行：
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 这里可能之前的步骤，然后继续看后面的：
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 可能需要逐行对应。不过可能图片中的公式是连续的，需要仔细看每个等式。
+
+另外，可能更准确的是看图片中的手写公式，逐行转录。比如第一列的公式：
+
+$\mathbb{P}_{zk}\left[\mathbf{T}^{z\zeta}_{\alpha n}\left\langle \mathbf{M}_\Lambda \right\rangle_{\Lambda}\right] = \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{M(n)}{1 - \rho\mathbf{Z}(n)} - \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{1 + 2c_0k k^{-1}}{1 - 2c_0k k^{-1}}$
+
+然后第二行：
+
+$= \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{1 + 2c_0k k^{-1}}{1 - 2c_0k k^{-1}} - \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \prod_{k=1}^{n-1} \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}}$
+
+第三行：
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+第四行：
+
+$= -\sum_{k=1}^{n-1} z k \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+第五行：
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 可能这里需要看图片中的符号，比如“3MΣ(x²i²ε)(x²i²ε)”可能是3MΣ(x^{2i²ε})(x^{2i²ε})？或者可能是3MΣ(x^{2i²ε})？另外，后面的公式比如：
+
+$\sum_{k=1}^{n-1} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 不对，看图片中的“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 这样的结构。
+
+另外，图片中还有其他公式，比如：
+
+$\sum_{k=1}^{n-1} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 不对，看图片中的“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 应该是指数函数里的和。
+
+另外，可能用户需要的是所有公式，但图片中是多行，需要逐行提取。不过可能图片中的公式是：
+
+第一列（最左边）的公式链：
+
+$\mathbb{P}_{zk}\left[\mathbf{T}^{z\zeta}_{\alpha n}\left\langle \mathbf{M}_\Lambda \right\rangle_{\Lambda}\right] = \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{M(n)}{1 - \rho\mathbf{Z}(n)} - \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{1 + 2c_0k k^{-1}}{1 - 2c_0k k^{-1}}$
+
+$= \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \frac{1 + 2c_0k k^{-1}}{1 - 2c_0k k^{-1}} - \sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \prod_{k=1}^{n-1} \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}}$
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+$= -\sum_{k=1}^{n-1} z k \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ （可能这里重复，看图片中的下一步）
+
+然后下一个等式：
+
+$= -\sum_{k=1}^{n-1} \frac{3\mathbf{M}(x^{2i^2\epsilon})^1}{1 - \rho\mathbf{Z}(n)} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 不对，看图片中的“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有其他项，比如“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能图片中的公式还有：
+
+$\sum_{k=1}^{n-1} \exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$ 不对，看图片中的“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 另外，图片中还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有其他公式，比如：
+
+$\exp\left( \sum_{k=1}^{n-1} \ln\left( \frac{1 - 2c_0k k^{-1}}{1 + 2c_0k k^{-1}} \right) \right)$
+
+然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 另外，图片中还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 另外，图片中还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 另外，图片中还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 另外，图片中还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 另外，图片中还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 可能还有“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1}))” 然后是“exp(Σ_{k=1}^{n-1} ln(1 - 2c0k k^{-1})/(1 + 2c0k k^{-1

@@ -1,0 +1,65 @@
+To calculate the **percentage of paid apps on the iPhone and Android stores taken together**, we need to:
+
+1. Extract the **paid app percentages** for each store from the infographic.
+2. Combine them using a **weighted average**, based on the number of available apps in each store (since they have different total app counts).
+
+---
+
+### Step 1: Get Paid App Percentages
+
+From the “Heavy Hitters” section:
+
+- **Apple App Store for iPhone**:  
+  → 71% paid apps (29% free)
+
+- **Google Android Market**:  
+  → 41% paid apps (60% free — note: this adds to 101%, likely rounding; we’ll use 41% as given)
+
+*(Note: The Blackberry data is not needed since the question only asks for iPhone + Android.)*
+
+---
+
+### Step 2: Get Total Available Apps per Store
+
+From “Top Mobile App Stores”:
+
+- **iPhone**: 375,566 apps  
+- **Android**: 224,808 apps  
+
+Total apps (iPhone + Android) = 375,566 + 224,808 = **600,374**
+
+---
+
+### Step 3: Calculate Weighted Average Paid App Percentage
+
+We compute:
+
+> **(Paid %_iPhone × Apps_iPhone + Paid %_Android × Apps_Android) / Total Apps**
+
+= (0.71 × 375,566 + 0.41 × 224,808) / 600,374
+
+Calculate numerator:
+
+- 0.71 × 375,566 = **266,651.86**
+- 0.41 × 224,808 = **92,171.28**
+- Sum = 266,651.86 + 92,171.28 = **358,823.14**
+
+Now divide by total apps:
+
+→ 358,823.14 / 600,374 ≈ **0.5977**
+
+---
+
+### Final Answer:
+
+≈ **59.8%**
+
+---
+
+✅ So, the percentage of paid apps on the iPhone and Android stores, taken together, is approximately **59.8%**.
+
+*(Note: If the question intended a simple unweighted average — i.e., just averaging 71% and 41% — that would be 56%. But since the stores have very different sizes, the weighted average is more accurate and appropriate.)*
+
+---
+
+**Answer: \boxed{59.8\%}**

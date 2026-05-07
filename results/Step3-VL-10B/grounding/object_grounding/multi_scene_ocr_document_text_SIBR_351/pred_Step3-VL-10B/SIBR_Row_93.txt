@@ -1,0 +1,149 @@
+用户现在需要从文档中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Req.Number：图中左上角“Req. Number”对应223569，所以bbox是包含Req. Number和数字的部分。看坐标的话，Req. Number在左上方，对应区域是[20, 28, 150, 45]左右？需要看原图的布局。原图中Req. Number 223569，所以bbox是[20, 28, 150, 45]？不，看实际位置：Req. Number在左上方，文字是“Req. Number”然后是223569，所以bbox应该是包含这两个的区域，比如x1=20, y1=28, x2=200, y2=45左右？
+
+然后Requestor是Vanessa Rodriguez，对应位置。Requestor Shipment是Samantha Elliott。Requested Date是7/26/2021 8:35:10 AM，Approved Date是7/26/2021 10:43:49 AM。Page是Page: 1/1，所以Page的bbox是右上角。
+
+Ship From Information下的Company是Jinan Yiyiyuan Technology Co., Ltd.，Address是315 Wilson Ville...，City,State,Zi是USNV Young FPO AP 19151，Tax Number是SMM-840503-FQ4，Phone是(37) 020530-4372。这些都要对应。
+
+Sold To Information下的BPID是CU0001262，Company是826 Clark Islands...，City,State,Zi是PA 53690，Tax Number是N/A，Phone是+9318462288216。
+
+Ship To Partner Information下的Address Code是BPC008071，Contact是Zhongshu Feng，Address Desc是Nexteer Automotive (Suzhou)，Address是96750 Carr Brook Martinview, MS 41309，ZIP Code是215000，City是Jiangsu Province, CN，State是JI，Country是CN，Phone是+8319862182426，Tax Number是N/A。
+
+Comments是“Embarkue NEXTER CHINA...Gracias!”。
+
+Shipment Information下的Incoterm是FCA，EPFA是No，Ship Terms是Por Cobrar，Carrier是DG5 | DHL GLOBAL FWR STD | STANDARD，Account Numb.（可能空），Way Bill是9D02136，Transport Categ.是Air，Service是Air，Export Reason是VENTA DE PT，Cust.Broker是DHL，Seal是297307。
+
+然后下面的表格部分：Load是LD0341801，SONumber是J59M47077，Pos（可能对应列），PO Number是1890 0 DB25240？看表格里的列：Load, SONumber, Pos, See, PO Number, Ship Qty, Item, Description, Typ, HISCode, Unit Price, Amount。比如第一行的Item是1152 AAI1H-38018732，Description是CONTROLADOR...，HISCode是8537.10.99，Unit Price是6.7021，Amount是7720.81，Total是7,720.82。还有Amount列的数值，比如7720.81和92？看表格里的Amount列，第一行是7720.81，第二行是92？然后Total是7,720.82。
+
+然后Specification List-第2行-Width：看下面的Long, Width, Height, Weight, Type, Boxes。第二行的Width是122（第一行是122，第二行也是122？看表格里的第二行：Long 122, Width 122, Height 94, Weight 88.5, Type PALLET, Boxes 16。所以第二行的Width是122，对应Specification List-第2行-Width。
+
+现在需要把每个类别都列出来，确保没有遗漏。现在逐个处理：
+
+1. Req.Number：对应“Req. Number 223569”，bbox是包含这两个的区域，比如x1=20, y1=28, x2=200, y2=45（需要看原图的布局，原图中Req. Number在左上方，所以坐标大概是[20, 28, 150, 45]？或者更准确的话，看图片中的位置，Req. Number在左上角，文字是“Req. Number”然后是223569，所以bbox是[20, 28, 200, 45]。
+
+2. Requestor：Vanessa Rodriguez，对应“Requestor Vanessa Rodriguez”，bbox是[340, 28, 520, 45]左右。
+
+3. Requested Date：7/26/2021 8:35:10 AM，对应“Requested Date 7/26/2021 8:35:10 AM”，bbox是[600, 28, 750, 45]。
+
+4. Approved Date：7/26/2021 10:43:49 AM，对应“Approved Date 7/26/2021 10:43:49 AM”，bbox是[600, 45, 750, 62]。
+
+5. Page：Page: 1/1，对应右上角“Page: 1/1”，bbox是[800, 10, 860, 27]。
+
+6. Ship From Information - Company：Jinan Yiyiyuan Technology Co., Ltd.，bbox是[140, 150, 540, 167]（看Ship From的Company行）。
+
+7. Ship From Information - Address：315 Wilson Ville...，bbox是[140, 167, 540, 184]。
+
+8. Ship From Information - City,State,Zi：USNV Young FPO AP 19151，bbox是[140, 184, 540, 201]。
+
+9. Ship From Information - Tax Number：SMM-840503-FQ4，label是SMM-840503-FQ4，bbox是[140, 201, 540, 218]。
+
+10. Ship From Information - Phone：(37) 020530-4372，bbox是[140, 218, 540, 235]。
+
+11. Sold To Information - BPID：CU0001262，label是BPID，bbox是[500, 150, 600, 167]（Sold To的BPID列）。
+
+12. Sold To Information - Company：826 Clark Islands...，bbox是[500, 167, 850, 184]。
+
+13. Sold To Information - City,State,Zi：PA 53690，bbox是[500, 184, 850, 201]。
+
+14. Sold To Information - Tax Number：N/A，label是Tax Number，bbox是[500, 201, 850, 218]。
+
+15. Sold To Information - Phone：+9318462288216，label是Phone，bbox是[500, 218, 850, 235]。
+
+16. Ship To Partner Information - Address Code：BPC008071，label是Address Code，bbox是[50, 300, 540, 317]（Ship To的Address Code行）。
+
+17. Ship To Partner Information - Contact：Zhongshu Feng，label是Contact，bbox是[50, 317, 540, 334]。
+
+18. Ship To Partner Information - Address Desc：Nexteer Automotive (Suzhou)，label是Address Desc，bbox是[50, 334, 540, 351]。
+
+19. Ship To Partner Information - Address：96750 Carr Brook Martinview, MS 41309，label是Address，bbox是[50, 351, 540, 368]。
+
+20. Ship To Partner Information - ZIP Code：215000，label是ZIP Code，bbox是[50, 368, 540, 385]。
+
+21. Ship To Partner Information - City：Jiangsu Province, CN，label是City，bbox是[50, 385, 540, 402]。
+
+22. Ship To Partner Information - State：JI，label是State，bbox是[50, 402, 540, 419]。
+
+23. Ship To Partner Information - Country：CN，label是Country，bbox是[50, 419, 540, 436]。
+
+24. Ship To Partner Information - Phone：+8319862182426，label是Phone，bbox是[50, 436, 540, 453]。
+
+25. Ship To Partner Information - Tax Number：N/A，label是Tax Number，bbox是[50, 453, 540, 470]。
+
+26. Comments：Embarkue NEXTER CHINA...Gracias!，label是Comments，bbox是[100, 480, 350, 520]（Comments框内的内容）。
+
+27. Shipment Information - Incoterm：FCA，label是Incoterm，bbox是[500, 300, 850, 317]（Shipment的Incoterm行）。
+
+28. Shipment Information - EPFA：No，label是EPFA，bbox是[500, 317, 850, 334]。
+
+29. Shipment Information - Ship Terms：Por Cobrar，label是Ship Terms，bbox是[500, 334, 850, 351]。
+
+30. Shipment Information - Carrier：DG5 | DHL GLOBAL FWR STD | STANDARD，label是Carrier，bbox是[500, 351, 850, 368]。
+
+31. Shipment Information - Account Numb.：（可能空，但看是否有内容，图中Account Numb.对应列可能没有内容，但先不管，看其他）。
+
+32. Shipment Information - Way Bill：9D02136，label是Way Bill，bbox是[500, 368, 850, 385]。
+
+33. Shipment Information - Transport Categ.：Air，label是Transport Categ.，bbox是[500, 385, 850, 402]。
+
+34. Shipment Information - Service：Air，label是Service，bbox是[500, 402, 850, 419]。
+
+35. Shipment Information - Export Reason：VENTA DE PT，label是Export Reason，bbox是[500, 419, 850, 436]。
+
+36. Shipment Information - Cust.Broker：DHL，label是Cust.Broker，bbox是[500, 436, 850, 453]。
+
+37. Shipment Information - Seal：297307，label是Seal，bbox是[500, 453, 850, 470]。
+
+38. Load：LD0341801，label是Load，bbox是[20, 520, 100, 537]（表格中的Load列）。
+
+39. SONumber：J59M47077，label是SONumber，bbox是[100, 520, 200, 537]。
+
+40. Pos：（看表格中的Pos列，可能对应列，比如表格里的Pos列，第一行可能没有显示？或者看表格结构，Load, SONumber, Pos, See, PO Number...，所以Pos是其中一个列，比如在表格中Pos列的位置，可能需要看。比如表格中的列是Load | SONumber | Pos | See | PO Number | Ship Qty | Item | Description | Typ | HISCode | Unit Price | Amount。所以Pos是第三列，对应每个行的Pos值，比如第一行的Pos可能没有显示？或者看图片中的表格，第一行的Pos可能对应“See”？可能需要再看。不过先处理有内容的。
+
+41. PO Number：1890 0 DB25240？看表格中的PO Number列，第一行是1890 0 DB25240？不，看表格里的PO Number列，第一行是“1890 0 DB25240”？不，原表格中“PO Number”对应的是“1890 0 DB25240”？看图片中的表格部分：“Load LD0341801 | SONumber J59M47077 | Pos See | PO Number 1890 0 DB25240 | Ship Qty 1152 | Item AAI1H-38018732 | Description ... | Typ ... | HISCode ... | Unit Price ... | Amount ...”。所以PO Number是“1890 0 DB25240”，label是PO Number，bbox是对应列的区域。
+
+42. Ship Qty：1152，label是Ship Qty，bbox是对应列。
+
+43. Item：AAI1H-38018732，label是Item，bbox是对应列。
+
+44. Description：CONTROLADOR...（看图片中的Description列内容，比如“CONTROLADOR DE VELOCIDADES PROGRAMABLE DE ...”），label是Description，bbox是对应列。
+
+45. Typ：（看Typ列，可能对应HISCode旁边的Typ？或者看表格中的Typ列，比如第一行的Typ可能没有显示？或者看HISCode是8537.10.99，然后Typ可能对应其他。不过先处理明确的。
+
+46. HISCode：8537.10.99，label是HISCode，bbox是对应列。
+
+47. Unit Price：6.7021，label是Unit Price，bbox是对应列。
+
+48. Amount：7720.81，label是Amount，bbox是对应列（第一行的Amount）。
+
+49. Total：7,720.82，label是Total？但用户给的类别中没有Total，所以可能不包含。用户给的类别中有Amount，所以第一行的Amount是7720.81，第二行的Amount是92？看表格中的第二行，Ship Qty是1152？不，看下面的Specification List部分，有三行：
+
+第一行：Long 122, Width 122, Height 94, Weight 88, Type PALLET, Boxes 16
+
+第二行：Long 122, Width 122, Height 94, Weight 88.5, Type PALLET, Boxes 16
+
+第三行：Long 122, Width 122, Height 54, Weight 36.5, Type PALLET, Boxes 4
+
+然后“Specification List-第2行-Width”：第二行的Width是122，所以label是“Specification List-第2行-Width”，bbox是对应第二行的Width列。
+
+50. Long：122（第一行、第二行、第三行的Long都是122，比如第一行Long是122，第二行也是122，第三行也是122）。
+
+51. Width：122（第一行Width是122，第二行也是122，第三行也是122）。
+
+52. Height：94（第一行）、94（第二行）、54（第三行）。
+
+53. Weight：88（第一行）、88.5（第二行）、36.5（第三行）。
+
+54. Type：PALLET（三行都是）。
+
+55. Boxes：16（第一、二行）、4（第三行）。
+
+56. Seal：297307（Shipment Information中的Seal）。
+
+57. State：在Ship To Partner Information中的State是JI，另外在Ship From Information中的City,State,Zi是USNV Young FPO AP 19151，其中State可能包含在内，但用户给的State类别需要看。比如Ship To的State是JI，Ship From的City,State,Zi是USNV...，所以State作为类别，可能有两个？但用户给的类别是“State”，所以需要看是否有对应的。
+
+58. Tax Number：在Ship From中的Tax Number是SMM-840503-FQ4，Ship To中的Tax Number是N/A，Sold To中的Tax Number是N/A，所以有多个Tax Number实例，但每个都要检测。
+
+现在需要确保所有用户列出的类别都被覆盖。用户提供的类别列表：
+
+Address, Address Code,

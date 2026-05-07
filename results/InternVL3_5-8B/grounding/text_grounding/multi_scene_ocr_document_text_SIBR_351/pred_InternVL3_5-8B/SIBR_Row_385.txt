@@ -1,0 +1,20 @@
+To determine the coordinates of the region containing the text '收据联', we need to analyze the image and identify the bounding box that encloses this text. The text '收据联' is located on the right side of the document, vertically aligned near the middle.
+
+Here are the steps to find the coordinates:
+
+1. **Identify the text location**: The text '收据联' is vertically aligned on the right side of the document, near the middle.
+
+2. **Estimate the bounding box**: We need to estimate the normalized coordinates for the left-top and right-bottom corners of the bounding box that encloses the text '收据联'.
+
+3. **Normalize the coordinates**: The coordinates should be normalized based on the image width and height.
+
+Based on the visual inspection of the image, the bounding box coordinates for the text '收据联' can be approximated as follows:
+
+- **Left-top corner (x1, y1)**: The text starts near the right edge, slightly above the middle of the document. This can be approximated to (920, 400).
+- **Right-bottom corner (x2, y2)**: The text ends near the right edge, slightly below the middle of the document. This can be approximated to (980, 500).
+
+Thus, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) = (920, 400, 980, 500)
+
+These coordinates are normalized based on the image width and height, ranging from 0 to 1000.

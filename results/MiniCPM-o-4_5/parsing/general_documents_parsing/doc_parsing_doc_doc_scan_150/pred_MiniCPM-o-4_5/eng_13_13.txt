@@ -1,0 +1,95 @@
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{Statistical Analysis and Probability}
+
+\subsection*{Mean}
+\[
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]
+
+\subsection*{Standard Deviation*}
+\[
+s = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n-1}}
+\]
+
+\subsection*{Standard Error of the Mean* Chi-Square}
+\[
+SE = \frac{s}{\sqrt{n}} \quad \chi^2 = \frac{(o-e)^2}{e}
+\]
+
+\subsection*{Chi-Square Table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|cccccccc}
+\multicolumn{2}{c}{Degrees of Freedom} & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+$p$ & 0.05 & 3.84 & 5.99 & 7.82 & 9.49 & 11.07 & 12.59 & 14.07 & 15.51 \\
+    & 0.01 & 6.63 & 9.21 & 11.34 & 13.28 & 15.09 & 16.81 & 18.48 & 20.09 \\
+\end{tabular}
+\caption*{Degrees of freedom are equal to the number of distinct possible outcomes minus one.}
+\end{table}
+
+\subsection*{Laws of Probability}
+
+If A and B are mutually exclusive, then:
+\[
+P(A \text{ or } B) = P(A) + P(B)
+\]
+
+If A and B are independent, then:
+\[
+P(A \text{ and } B) = P(A) \times P(B)
+\]
+
+\subsection*{Hardy-Weinberg Equations}
+\[
+p^2 + 2pq + q^2 = 1 \quad \text{where } p = \text{frequency of the dominant allele in a population}
+\]
+\[
+p + q = 1 \quad \text{where } q = \text{frequency of the recessive allele in a population}
+\]
+
+\subsection*{Metric Prefixes}
+
+\begin{tabular}{ccc}
+\textbf{Factor} & \textbf{Prefix} & \textbf{Symbol} \\
+\hline
+$10^{-12}$ & pico & p \\
+$10^{-9}$ & nano & n \\
+$10^{-6}$ & micro & $\mu$ \\
+$10^{-3}$ & milli & m \\
+$10^{-2}$ & centi & c \\
+$10^{-1}$ & deci & d \\
+$10^{0}$ & & \\
+$10^{1}$ & deka & da \\
+$10^{2}$ & hecto & h \\
+$10^{3}$ & kilo & k \\
+$10^{6}$ & mega & M \\
+$10^{9}$ & giga & G \\
+$10^{12}$ & tera & T \\
+\end{tabular}
+
+\subsection*{Definitions}
+
+\begin{itemize}
+    \item \textbf{Mode} = value that occurs most frequently in a data set
+    \item \textbf{Median} = middle value that separates the greater and lesser halves of a data set
+    \item \textbf{Mean} = sum of all data points divided by number of data points
+    \item \textbf{Range} = value obtained by subtracting the smallest observation (sample minimum) from the greatest (sample maximum)
+\end{itemize}
+
+\textit{For the purposes of the AP Exam, students will not be required to perform calculations using this equation; however, they must understand the underlying concepts and applications.}
+
+\end{document}
+```

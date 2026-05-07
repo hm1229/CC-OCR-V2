@@ -1,0 +1,20 @@
+I need to find the region containing "¥ 30.0" in the image.
+
+Looking at the receipt, I can see "应收额：¥ 30.0" on the left side of a row, and "实收额：¥ 30.0" on the right side.
+
+For the left "¥ 30.0" (after 应收额：):
+The text "¥ 30.0" appears in the middle-left area of the receipt.
+
+Looking at the image dimensions and the position of "应收额：¥ 30.0":
+- This text is roughly in the row that's about 55-60% down the receipt
+- The "¥ 30.0" portion starts around x=280 and ends around x=430
+
+For "应收额：¥ 30.0" the ¥ 30.0 part:
+(280, 540, 430, 590)
+
+For "实收额：¥ 30.0" the ¥ 30.0 part:
+(750, 540, 900, 590)
+
+Since the question asks about '? 30.0' which likely refers to '¥ 30.0', and there are two instances, I'll identify the first one (应收额 side):
+
+(240, 535, 435, 585)

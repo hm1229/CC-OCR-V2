@@ -1,0 +1,95 @@
+Here is the accurate LaTeX transcription of the provided image content, preserving all equations, tables, and formatting as seen:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{caption}
+
+\title{Statistical Analysis and Probability}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Statistical Analysis and Probability}
+
+\begin{tabular}{|p{0.45\linewidth}|p{0.45\linewidth}|}
+\hline
+\textbf{Mean} & \textbf{Standard Deviation$^*$} \\
+$\overline{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$ & 
+$S = \sqrt{\frac{\sum (x_i - \overline{x})^2}{n-1}}$ \\
+\textbf{Standard Error of the Mean$^*$} & \textbf{Chi-Square} \\
+$SE_{\overline{x}} = \frac{S}{\sqrt{n}}$ & $\chi^2 = \sum \frac{(o-e)^2}{e}$ \\
+\multicolumn{2}{|c|}{\textbf{Chi-Square Table}} \\
+\multicolumn{2}{|c|}{\begin{tabular}{|c|cccccccc|}
+\hline
+\textbf{$p$} & \multicolumn{8}{c|}{\textbf{Degrees of Freedom}} \\
+\cline{2-9}
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+\hline
+0.05 & 3.84 & 5.99 & 7.82 & 9.49 & 11.07 & 12.59 & 14.07 & 15.51 \\
+0.01 & 6.64 & 9.21 & 11.34 & 13.28 & 15.09 & 16.81 & 18.48 & 20.09 \\
+\hline
+\end{tabular}} \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{0.45\linewidth}|p{0.45\linewidth}|}
+\hline
+\textbf{Law of Probability} & \textbf{Metric Prefixes} \\
+\begin{itemize}
+    \item If A and B are mutually exclusive, then: $P(A \text{ or } B) = P(A) + P(B)$
+    \item If A and B are independent, then: $P(A \text{ and } B) = P(A) \times P(B)$
+\end{itemize} &
+\begin{tabular}{lll}
+\textbf{Factor} & \textbf{Prefix} & \textbf{Symbol} \\
+$10^9$ & giga & G \\
+$10^6$ & mega & M \\
+$10^3$ & kilo & k \\
+$10^2$ & centi & c \\
+$10^1$ & milli & m \\
+$10^{-3}$ & micro & $\mu$ \\
+$10^{-6}$ & nano & n \\
+$10^{-12}$ & pico & p \\
+\end{tabular} \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{0.45\linewidth}|p{0.45\linewidth}|}
+\hline
+\textbf{Hardy-Weinberg Equations} & \\
+$p^2 + 2pq + q^2 = 1$ & $p =$ frequency of the dominant allele in a population \\
+$p + q = 1$ & $q =$ frequency of the recessive allele in a population \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|p{0.45\linewidth}|p{0.45\linewidth}|}
+\hline
+\textbf{Mode} = value that occurs most frequently in a data set & \\
+\textbf{Median} = middle value that separates the greater and lesser halves of a data set & \\
+\textbf{Mean} = sum of all data points divided by number of data points & \\
+\textbf{Range} = value obtained by subtracting the smallest observation (sample minimum) from the greatest (sample maximum) & \\
+\hline
+\end{tabular}
+
+\begin{center}
+\textit{* For the purposes of the AP Exam, students will not be required to perform calculations using this equation; however, they must understand the underlying concepts and applications.}
+\end{center}
+
+\end{document}
+```
+
+### Notes:
+- The layout uses `tabular` environments with two columns to mirror the original image's structure.
+- All mathematical expressions are rendered using `amsmath` syntax.
+- The Chi-Square table is embedded within a nested tabular for clarity.
+- Metric prefixes use standard symbols (e.g., $\mu$ for micro).
+- The footnote-style note at the bottom is italicized and centered.
+- This LaTeX code can be compiled with any standard LaTeX engine (e.g., pdflatex) to reproduce the visual layout accurately.
+
+Let me know if you'd like a version with additional styling or adjustments!

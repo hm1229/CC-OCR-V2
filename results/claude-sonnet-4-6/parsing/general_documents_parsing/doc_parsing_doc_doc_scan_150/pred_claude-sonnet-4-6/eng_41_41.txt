@@ -1,0 +1,77 @@
+```latex
+\documentclass{article}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{amsmath}
+
+\geometry{margin=1in}
+
+\definecolor{awblue}{RGB}{0, 112, 192}
+
+\begin{document}
+
+\noindent\textbf{\large\textcolor{awblue}{AW32905E}}\\
+\textit{Mar. 2023 V1.0}
+
+\section*{\textcolor{awblue}{Ordering Information}}
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Part Number} & \textbf{Temperature} & \textbf{Package} & \textbf{Marking} & \textbf{\shortstack{Moisture\\Sensitivity\\Level}} & \textbf{\shortstack{Environmental\\Information}} & \textbf{\shortstack{Delivery\\Form}} \\
+\hline
+AW32905EFCR & $-40^{\circ}\text{C} - 85^{\circ}\text{C}$ & \shortstack{FCQFN\\1.3mm$\times$1.8mm\\-12L} & RZR & MSL1 & ROHS+HF & \shortstack{3000 units/\\Tape and\\Reel} \\
+\hline
+\end{tabular}
+
+\section*{\textcolor{awblue}{Absolute Maximum Ratings} \textsuperscript{(NOTE 1)}}
+
+\begin{tabular}{|c|l|l|c|c|c|}
+\hline
+\textbf{Symbol} & \textbf{Parameter} & \textbf{Condition} & \textbf{Min.} & \textbf{Max.} & \textbf{Unit} \\
+\hline
+$V_{\text{IN}}$ & Input voltage & & $-0.3$ & $29$ & V \\
+\hline
+$V_{\text{OUT}}$ & Output voltage & & $-0.3$ & See\textsuperscript{(NOTE 2)} & V \\
+\hline
+$V_{\text{OVLO}}$ & OVLO voltage & & $-0.3$ & $6$ & V \\
+\hline
+$V_{\overline{\text{ACOK}}}$ & $\overline{\text{ACOK}}$ voltage & & $-0.3$ & $6$ & V \\
+\hline
+$V_{\overline{\text{EN}}}$ & $\overline{\text{EN}}$ voltage & & $-0.3$ & $6$ & V \\
+\hline
+$I_{\text{SW}}$ & \shortstack[l]{Continuous current of switch\\IN-OUT\textsuperscript{(NOTE 3)}} & \shortstack[l]{Continuous current on IN and\\OUT pin} & & $5$ & A \\
+\hline
+$I_{\text{PEAK}}$ & Peak current & \shortstack[l]{Peak input and output current\\on IN and OUT pin(10ms)} & & $8$ & A \\
+\hline
+$I_{\text{DIODE}}$ & Continuous diode current & \shortstack[l]{Continuous forward current\\through the nFET body diode} & & $1.5$ & A \\
+\hline
+$T_{\text{A}}$ & Ambient temperature & & $-40$ & $85$ & $^{\circ}$C \\
+\hline
+$T_{\text{J}}$ & Junction temperature & & $-40$ & $150$ & $^{\circ}$C \\
+\hline
+$T_{\text{STG}}$ & Storage temperature & & $-65$ & $150$ & $^{\circ}$C \\
+\hline
+$T_{\text{LEAD}}$ & Soldering temperature & At leads, 10 seconds & & $260$ & $^{\circ}$C \\
+\hline
+Surge & Input surge protection & \shortstack[l]{IEC61000-4-5 test with $2\Omega$\\equivalent series resistance} & $120$ & & V \\
+\hline
+\end{tabular}
+
+\vspace{1em}
+
+\noindent\textit{NOTE1: Conditions out of those ranges listed in ``absolute maximum ratings'' may cause permanent damages to the device. In spite of the limits above, functional operation conditions of the device should within the ranges listed in ``recommended operating conditions''. Exposure to absolute-maximum-rated conditions for prolonged periods may affect device reliability.}
+
+\vspace{0.5em}
+
+\noindent\textit{NOTE2: $29\text{V}$ or $V_{\text{IN}}+0.3\text{V}$, whichever is smaller.}
+
+\vspace{0.5em}
+
+\noindent\textit{NOTE3: Limited by thermal design.}
+
+\end{document}
+```

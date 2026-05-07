@@ -1,0 +1,154 @@
+用户现在需要从两张图片中提取信息到给定的JSON schema里。首先看各个字段：
+
+date_issue：看打印时间，两张图底部都是Printed At: 06:01 PM on Tuesday, April 21 2020，所以date_issue是这个日期。
+
+vendor_name：看左上角KEZI NEWS，还有Eugene COMBO KEZI，所以vendor_name是KEZI（或者看Eugene COMBO (KEZI)？看图片里的Eugene COMBO KEZI，地址是Eugene, OR 97401，所以vendor_name是Eugene COMBO KEZI？
+
+vendor_address：Eugene COMBO KEZI的地址是P. O. BOX 7009, EUGENE, OR 97401。
+
+customer_billing_name：看AL MEDIA是客户？因为Agency是AL MEDIA (1992)，而Buyer Name是KING,MILES。但customer_billing_name可能看Billing Type是Standard，而客户是AL MEDIA？或者看Sales Office是KEZI EUGENE，Buyer Name是KING,MILES。需要看哪个是billing的客户。看图片里的AL MEDIA是地址在Chicago，是Agency？而Buyer Name是KING,MILES，可能customer_billing_name是KING,MILES？
+
+amount_total_net：Net Total是$1,976.25，看第一张图里的Net Total $1,976.25。
+
+amount_total_tax：Sales Tax这里有没有？看图片里的Sales Tax字段，可能没有具体数值？或者看Commission是$348.75，Net Total是$1,976.25，Commission %是15%，所以Tax可能没有单独列？或者看是否有Sales Tax的值。看图片中的Sales Tax字段，可能没有数值，或者看是否有其他。另外，amount_total_gross应该是Net Total + Sales Tax？但图片里可能没有Sales Tax的数值，或者看Grand Total是$2,325.00，而Net Total是$1,976.25，Commission是$348.75，348.75是15% of 1,976.25（1976.25*0.15=296.4375？不对，可能Commission是另外的。或者看Grand Total是$2,325.00，而Net Total是$1,976.25，所以Tax和Commission的总和是2325-1976.25=348.75，而Commission是$348.75，所以可能Sales Tax是0？或者可能图片中的Sales Tax没有显示数值，所以tax_detail_rate等可能为空？
+
+现在逐一分析：
+
+date_issue：Printed At的日期是April 21, 2020，所以date_issue是"2020-04-21"（格式可能需要看，但图片里是April 21 2020，所以直接提取）。
+
+vendor_name：Eugene COMBO KEZI（看右上角Eugene COMBO (KEZI)）。
+
+vendor_address：P. O. BOX 7009, EUGENE, OR 97401（看左上角Eugene COMBO KEZI的地址）。
+
+customer_billing_name：Buyer Name是KING,MILES（看Buyer Name字段）。
+
+customer_billing_address：看AL MEDIA的地址是222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654？但AL MEDIA是Agency，而Sales Office是KEZI EUGENE。Buyer Name是KING,MILES，可能没有地址？或者看是否有其他。或者可能customer_billing_address是KEZI EUGENE的地址？不，KEZI是vendor。所以可能customer_billing_address是KING,MILES的地址？但图片里没有给出KING,MILES的地址，所以可能留空？或者看Phone/Fax是(312) 832-6620 /，但地址可能没有。或者可能customer_billing_address是AL MEDIA的地址？因为AL MEDIA是Agency，可能负责 billing？看Agency是AL MEDIA (1992)，而AL MEDIA的地址是222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654。所以customer_billing_address是这个地址？
+
+amount_total_net：Net Total是$1,976.25（看第一张图里的Net Total $1,976.25）。
+
+amount_total_tax：图片中Sales Tax字段没有数值，可能为0？或者看是否有其他。比如，Commission是$348.75，而Commission %是15%，Net Total是$1,976.25，15% of 1,976.25是296.4375，不对，可能Commission是另外计算的。或者可能Sales Tax没有单独列出，所以amount_total_tax可能为空？但需要看schema中的字段，tax_detail_rate等可能也需要。但可能图片中没有提供这些tax的详细信息，所以这些字段可能为空字符串。
+
+现在整理：
+
+date_issue: "April 21, 2020" （因为Printed At是这个日期，作为issue日期）
+
+vendor_name: "Eugene COMBO KEZI"
+
+vendor_address: "P. O. BOX 7009, EUGENE, OR 97401"
+
+customer_billing_name: "KING,MILES" （Buyer Name）
+
+customer_billing_address: "222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654" （AL MEDIA的地址，因为AL MEDIA是Agency，可能负责billing？或者看Sales Office是KEZI EUGENE，但KING,MILES是Buyer，可能没有地址。但AL MEDIA的地址在图片左侧，是AL MEDIA的地址，可能customer是AL MEDIA？因为Agency是AL MEDIA，所以customer_billing_name是AL MEDIA？需要再看。看Agency字段是AL MEDIA (1992)，所以Agency是AL MEDIA，而Buyer Name是KING,MILES。可能customer是KING,MILES，而billing address可能没有，或者AL MEDIA是代理，所以billing address是AL MEDIA的地址。所以customer_billing_name是AL MEDIA？因为Agency是AL MEDIA，负责处理账单。所以可能customer_billing_name是AL MEDIA，customer_billing_address是222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654。
+
+现在再检查：
+
+在第一张图中，左侧AL MEDIA的地址是222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654。Agency是AL MEDIA (1992)。所以Agency是AL MEDIA，负责这个广告的代理，所以customer（即购买方）的billing信息是AL MEDIA的地址。而Buyer Name是KING,MILES，可能是最终客户？但可能在广告合同中，Agency是代表客户，所以customer_billing_name是KING,MILES，而billing address可能没有给出，或者AL MEDIA是 billing address。这里可能需要根据常见广告合同结构，Agency是处理账单的，所以customer_billing_name是AL MEDIA，customer_billing_address是AL MEDIA的地址。
+
+现在重新确定：
+
+vendor是KEZI（Eugene COMBO KEZI是广告主？不，Eugene COMBO KEZI是广告主，KEZI是电视台（vendor）。所以vendor_name是KEZI（因为KEZI是提供广告服务的，Eugene COMBO KEZI是广告主？不，看右上角Eugene COMBO (KEZI)是广告主，而KEZI是电视台，即vendor是KEZI，广告主是Eugene COMBO KEZI？可能搞反了。看Contract #是89989，Advertiser是COMMITTEE TO ELECT SHEMIA FAGAN (5673)，Agency是AL MEDIA (1992)。所以Advertiser是广告主（客户），Agency是代理，Vendor是KEZI（电视台，提供广告服务）。所以vendor_name是KEZI（因为KEZI是提供服务的一方，即广告供应商）。vendor_address是KEZI的地址：Eugene, OR 97401（P. O. BOX 7009）。customer是Advertiser，即COMMITTEE TO ELECT SHEMIA FAGAN (5673)？但Buyer Name是KING,MILES。可能Buyer Name是实际付款方。这里可能需要更仔细看。
+
+但根据问题中的schema，vendor_name应该是提供服务的公司，即KEZI。因为KEZI是新闻台，提供广告位。所以vendor_name是KEZI（或者Eugene COMBO KEZI？看图片中的Eugene COMBO KEZI是广告主的名称？不，Eugene COMBO KEZI是电视台的名称？看左上角KEZI NEWS的logo，所以KEZI是电视台，Eugene COMBO KEZI是该电视台在Eugene的组合？可能vendor_name是KEZI，vendor_address是Eugene, OR 97401（P. O. BOX 7009）。
+
+customer_billing_name是Buyer Name，即KING,MILES。customer_billing_address：看是否有KING,MILES的地址？图片中没有，所以可能留空？或者看AL MEDIA是Agency，可能KING,MILES是Agency的客户，所以billing address是AL MEDIA的地址？因为AL MEDIA是处理账单的，所以customer_billing_address是AL MEDIA的地址：222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654。
+
+amount_total_net：Net Total是$1,976.25（两张图中的Net Total都是这个值）。
+
+amount_total_tax：图片中Sales Tax字段没有数值，可能为0？或者看Grand Total是$2,325.00，Net Total是$1,976.25，所以Tax + Commission = 2325 - 1976.25 = 348.75。而Commission是$348.75（看Commission字段），所以Sales Tax是0？因为Commission是$348.75，Net Total是$1,976.25，所以Gross Total是Net + Tax + Commission？不，可能Commission是基于Net的，比如Commission %是15%，1976.25 * 15% = 296.4375，但Commission是$348.75，可能不是。或者可能图片中的Sales Tax没有单独列出，所以amount_total_tax是0，amount_total_gross是Grand Total $2,325.00。
+
+现在整理各字段：
+
+date_issue: "April 21, 2020" （Printed At的日期）
+
+vendor_name: "KEZI" （因为是提供广告服务的电视台，看logo是KEZI NEWS）
+
+vendor_address: "P. O. BOX 7009, EUGENE, OR 97401" （KEZI的地址）
+
+customer_billing_name: "KING,MILES" （Buyer Name）
+
+customer_billing_address: "222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654" （AL MEDIA的地址，因为AL MEDIA是Agency，可能负责账单）
+
+amount_total_net: "1976.25" （Net Total的数值，去掉$和逗号？或者保留格式？看图片中是$1,976.25，所以值是"1976.25"或者"$1,976.25"？需要看schema要求，这里应该是数值字符串，所以"$1,976.25"）
+
+amount_total_tax: "0" （因为没有Sales Tax数值，或者可能没有，所以空？但可能图片中没有，所以设为"0"或者空字符串。但根据Grand Total是$2,325.00，Net Total是$1,976.25，Commission是$348.75，所以2325 = 1976.25 + 348.75，所以Tax是0。所以amount_total_tax是"0"）
+
+amount_total_gross: "2325.00" （Grand Total是$2,325.00）
+
+tax_detail_rate: "" （没有提供税率信息）
+
+tax_detail_net: "" 
+
+tax_detail_tax: "" 
+
+tax_detail_gross: "" 
+
+现在验证：
+
+- date_issue：Printed At是06:01 PM on Tuesday, April 21 2020，所以date_issue是"April 21, 2020"
+
+- vendor_name：KEZI（从logo和Eugene COMBO KEZI中的KEZI，以及是提供广告服务的）
+
+- vendor_address：Eugene COMBO KEZI的地址是P. O. BOX 7009, EUGENE, OR 97401
+
+- customer_billing_name：Buyer Name是KING,MILES
+
+- customer_billing_address：AL MEDIA的地址是222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654（因为AL MEDIA是Agency，处理账单，所以是billing address）
+
+- amount_total_net：$1,976.25 → "1976.25" 或 "$1,976.25"，这里保留原格式，所以"$1,976.25"
+
+- amount_total_tax：因为Sales Tax没有数值，且Grand Total = Net + Commission（348.75），所以Tax是0 → "0"
+
+- amount_total_gross：$2,325.00 → "$2,325.00"
+
+- 其他tax_detail字段因为没有信息，设为空字符串。
+
+现在构建JSON：
+
+{
+  "date_issue": "April 21, 2020",
+  "vendor_name": "Eugene COMBO KEZI",
+  "vendor_address": "P. O. BOX 7009, EUGENE, OR 97401",
+  "customer_billing_name": "KING,MILES",
+  "customer_billing_address": "222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654",
+  "amount_total_net": "$1,976.25",
+  "amount_total_tax": "0",
+  "amount_total_gross": "$2,325.00",
+  "tax_detail_rate": "",
+  "tax_detail_net": "",
+  "tax_detail_tax": "",
+  "tax_detail_gross": ""
+}
+
+需要确认vendor_name是否是Eugene COMBO KEZI。因为图片中右上角是Eugene COMBO (KEZI)，而左上角是KEZI NEWS，所以Eugene COMBO KEZI是广告主（Advertiser？不，Advertiser是COMMITTEE TO ELECT SHEMIA FAGAN (5673)。哦，这里可能搞混了。看图片中的“Eugene COMBO KEZI”是电视台的名称，即KEZI在Eugene的组合，所以vendor是KEZI，而Eugene COMBO KEZI是该电视台的标识。所以vendor_name是KEZI，vendor_address是Eugene, OR 97401（P. O. BOX 7009）。
+
+另外，customer_billing_name是Buyer Name，即KING,MILES，而customer_billing_address可能没有，因为KING,MILES是个人，没有地址。而AL MEDIA是Agency，所以可能customer是AL MEDIA，因为Agency是代表客户，所以customer_billing_name是AL MEDIA，customer_billing_address是AL MEDIA的地址。这时候需要再看：
+
+Agency是AL MEDIA (1992)，所以AL MEDIA是代理广告主（COMMITTEE...）的公司，所以AL MEDIA是处理账单的，即customer（billing）是AL MEDIA。而Buyer Name是KING,MILES，可能是最终客户，但账单是AL MEDIA收取。所以customer_billing_name是AL MEDIA，customer_billing_address是AL MEDIA的地址（222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654）。
+
+现在修正：
+
+customer_billing_name: "AL MEDIA"
+
+customer_billing_address: "222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654"
+
+因为Agency是AL MEDIA，负责与电视台（vendor）签订合同，处理账单，所以AL MEDIA是billing的客户。
+
+现在重新整理：
+
+- vendor_name: "KEZI" （提供广告服务的电视台，Eugene COMBO KEZI是其在Eugene的业务，所以vendor是KEZI）
+
+- vendor_address: "P. O. BOX 7009, EUGENE, OR 97401" （KEZI的地址）
+
+- customer_billing_name: "AL MEDIA" （Agency，处理账单）
+
+- customer_billing_address: "222 W. ONTARIO ST, SUITE 600, CHICAGO, IL 60654" （AL MEDIA的地址）
+
+- amount_total_net: "$1,976.25" （Net Total）
+
+- amount_total_tax: "0" （因为Grand Total = Net + Commission，无Tax）
+
+- amount_total_gross: "$2,325.00" （Grand Total）
+
+- 其他tax字段为空。
+
+现在再检查图片中的Net Total是$1,976.25，Commission是$348.75，Grand Total是$2,325.00（12 spots * $1,555 + 5 spots * $770 = 12*1555=18660？不，看右上角Eugene COMBO (KEZI)的By Broadcast Month：Apr. 2020有12

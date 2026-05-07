@@ -1,0 +1,144 @@
+```latex
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ctex}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usepackage{xcolor}
+\usepackage{ulem}
+
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\definecolor{titleblue}{RGB}{0, 112, 192}
+\definecolor{factblue}{RGB}{0, 112, 192}
+
+\begin{document}
+
+\begin{table}[h]
+\centering
+\begin{tabularx}{\textwidth}{|c|X|}
+\hline
+\multirow{4}{*}{2010年} & 问4：丙公司与戊公司签订房产买卖合同效力如何？为什么？（物权未变动不影响买卖合同效力、多重买卖不影响买卖合同效力） \\
+\cline{2-2}
+& 问2：甲公司与丁、戊公司签定的转卖大蒜的合同的效力如何？为什么？（多重买卖不影响买卖合同效力） \\
+\cline{2-2}
+& 问6：甲公司与乙公司签订的绿豆买卖合同效力如何？为什么？（被代理人以履行合同的方式追认无权代理） \\
+\cline{2-2}
+& 问7：丙公司将绿豆转卖给己公司的买卖合同的效力如何？为什么？（无权处分不影响买卖合同的效力） \\
+\hline
+\end{tabularx}
+\end{table}
+
+\begin{center}
+{\large \textcolor{titleblue}{\textbf{第一节 \quad 合同的成立}}}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, draw, text width=3cm, text centered, minimum height=1cm},
+    smallbox/.style={rectangle, draw, text width=2cm, text centered, minimum height=0.8cm},
+    arrow/.style={->, >=stealth, thick}
+]
+
+% 事实判断 box
+\node[box, text width=3cm] (fact) {
+    \textcolor{factblue}{\textbf{事实判断}}\\
+    1.当事人\\
+    2.意思表示\\
+    3.标的
+};
+
+% 价值判断 box
+\node[box, text width=4.5cm, right=2cm of fact] (value) {
+    \textbf{价值判断}\\
+    1.民事行为能力\\
+    2.意思表示真实、自由\\
+    3.不违反强制性规定、\\
+    \quad 不违背公序良俗
+};
+
+% 民事法律行为
+\node[box, left=2cm of fact, yshift=-2cm] (civil) {民事法律行为};
+
+% 不成立
+\node[smallbox, right=1cm of civil, yshift=0.5cm] (invalid) {不成立};
+
+% 成立
+\node[smallbox, right=1cm of civil, yshift=-0.5cm] (valid) {成立};
+
+% 有效
+\node[smallbox, right=3cm of valid, yshift=1cm] (effective) {有效};
+
+% 效力瑕疵
+\node[smallbox, right=3cm of valid, yshift=-1cm] (defect) {效力瑕疵};
+
+% 生效
+\node[smallbox, right=2cm of effective, yshift=0.5cm] (inforce) {生效};
+
+% 未生效
+\node[smallbox, right=2cm of effective, yshift=-0.5cm] (notinforce) {未生效};
+
+% 大多数合同、婚姻
+\node[box, right=1.5cm of inforce, text width=3cm] (most) {大多数合同、婚姻};
+
+% 附延缓条件等
+\node[box, right=1.5cm of notinforce, text width=2.5cm] (conditions) {
+    附延缓条件\\
+    附始期\\
+    需要审批\\
+    遗嘱
+};
+
+% 无效等
+\node[box, right=2cm of defect, text width=2cm] (nullvoid) {
+    无效\\
+    可撤销\\
+    效力待定
+};
+
+% Arrows
+\draw[arrow] (fact) -- ++(0,-2) -| (invalid);
+\draw[arrow] (fact) -- ++(0,-2) -| (valid);
+\draw[arrow] (value) -- ++(0,-2) -| (effective);
+\draw[arrow] (value) -- ++(0,-2) -| (defect);
+\draw[arrow] (civil) -- (invalid);
+\draw[arrow] (civil) -- (valid);
+\draw[arrow] (effective) -- (inforce);
+\draw[arrow] (effective) -- (notinforce);
+\draw[arrow] (inforce) -- (most);
+\draw[arrow] (notinforce) -- (conditions);
+\draw[arrow] (defect) -- (nullvoid);
+
+% Dashed line between fact and value
+\draw[dashed, thick] ($(fact.east)!0.5!(value.west)$) ++(0,2) -- ++(0,-5);
+
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+【民事法律行为成立、有效、生效关系图】
+\end{center}
+
+\vspace{0.5cm}
+
+合同的订立，通常要经过要约与承诺的过程。一方当事人的要约与另一方当事人的承诺达成一致，意味着双方当事人形成合意，合同即告成立。
+
+\section*{一、合同的订立：要约与承诺}
+
+\subsection*{（一）要约}
+
+要约，是希望与他人订立合同的意思表示，需满足以下构成要件：
+
+\begin{enumerate}
+    \item 向希望与之订立合同的\uline{受要约人}作出。
+    \item \textbf{内容具体且确定}：受要约人只要表示接受即可成立合同，所以要约的内容必须包含合同的必备内容。
+    \item 具有订立合同的目的并表明\uline{一经承诺即受拘束}的意思。
+\end{enumerate}
+
+\end{document}
+```

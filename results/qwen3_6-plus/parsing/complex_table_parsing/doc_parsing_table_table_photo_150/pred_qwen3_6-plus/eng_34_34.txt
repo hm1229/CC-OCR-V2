@@ -1,0 +1,52 @@
+Looking at the image, we can see a table with 3 columns and 6 rows (including the header). The columns are:
+
+- **Type/Tput(MOPS)** — this is the first column header, spanning the full width of the first column.
+- **Alloc** — second column header
+- **Free** — third column header
+
+The data rows list different allocators and their allocation/free throughput in MOPS (Million Operations Per Second).
+
+There are no merged cells visible — each row has exactly three cells.
+
+Here’s the HTML transcription using `<table>`, `<tr>`, and `<td>` tags, reflecting the layout from top-left to bottom-right:
+
+```html
+<table>
+  <tr>
+    <td>Type/Tput(MOPS)</td>
+    <td>Alloc</td>
+    <td>Free</td>
+  </tr>
+  <tr>
+    <td>Glibc</td>
+    <td>21.0</td>
+    <td>57.0</td>
+  </tr>
+  <tr>
+    <td>Pmem</td>
+    <td>1.42</td>
+    <td>1.38</td>
+  </tr>
+  <tr>
+    <td>RPC allocator</td>
+    <td>0.33</td>
+    <td>0.88</td>
+  </tr>
+  <tr>
+    <td>Two-tier allocator (slab-size: 128 Bytes)</td>
+    <td>1.33</td>
+    <td>2.41</td>
+  </tr>
+  <tr>
+    <td>Two-tier allocator (slab-size: 1024 Bytes)</td>
+    <td>6.42</td>
+    <td>13.90</td>
+  </tr>
+</table>
+```
+
+✅ This accurately reflects the structure and content of the table in the image. No merged cells were present, so all `<td>` elements are used without `colspan` or `rowspan`.
+
+Note: In real-world usage, you might want to add `<th>` for headers and styling, but per your request, we’re using only `<tr>` and `<td>` as specified, and reflecting the visual layout faithfully.
+
+Let me know if you’d like to add borders, alignment, or convert to other formats!

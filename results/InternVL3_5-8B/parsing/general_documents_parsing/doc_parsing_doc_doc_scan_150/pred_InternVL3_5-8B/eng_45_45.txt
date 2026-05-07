@@ -1,0 +1,179 @@
+Certainly! Here's the transcription of the image's text, tables, and equations into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\begin{document}
+
+\section*{PHY 231C FORMULAS}
+
+\subsection*{Quadratic Formula}
+\begin{equation}
+ax^2 + bx + c = 0
+\end{equation}
+\begin{equation}
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+\end{equation}
+
+\subsection*{Geometry}
+\begin{itemize}
+    \item Circle: circumference $= 2\pi R$, area $= \pi R^2$
+    \item Sphere: area $= 4\pi R^2$, volume $= \frac{4}{3}\pi R^3$
+\end{itemize}
+
+\subsection*{Trigonometry}
+\begin{itemize}
+    \item $\sin \alpha = \frac{A}{C}$, $\cos \alpha = \frac{B}{C}$, $\tan \alpha = \frac{A}{B}$
+    \item $\sin \alpha = \frac{\sin \beta}{B} = \frac{\sin \gamma}{C}$
+    \item $A^2 + B^2 - 2AB \cos \gamma = C^2$
+\end{itemize}
+
+\subsection*{Polar Coordinates}
+\begin{equation}
+x = r \cos \theta, \quad y = r \sin \theta
+\end{equation}
+\begin{equation}
+r = \sqrt{x^2 + y^2}, \quad \tan \theta = \frac{y}{x}
+\end{equation}
+
+\subsection*{SI Units and Constants}
+\begin{tabular}{|c|c|c|}
+\hline
+quantity & unit & abbreviation \\ \hline
+Mass $m$ & kilograms & kg \\ \hline
+Distance $x$ & meters & m \\ \hline
+Time $t$ & seconds & s \\ \hline
+Force $F$ & Newtons & N \\ \hline
+Energy $E$ & Joules & J \\ \hline
+Power $P$ & Watts & W \\ \hline
+Temperature $T$ & $^\circ$C, $^\circ$K or $^\circ$F & $T_F = 32 + (9/5)T_C$ \\ \hline
+Pressure $P$ & Pascals & Pa \\ \hline
+\end{tabular}
+\begin{itemize}
+    \item $g = 9.8 \, \text{m/s}^2$, $G = 6.67 \times 10^{-11} \, \text{Nm}^2/\text{kg}^2$, $0^\circ\text{C} = 273.15 \, \text{K}$ \\
+    \item $R = 8.31 \, \text{J/(mol K)}$, $N_A = 6.023 \times 10^{23}$, $k_B = R/N_A = 1.38 \times 10^{-23} \, \text{J/K}$, $1 \, \text{cal} = 4.1868 \, \text{J}$ \\
+    \item $\sigma = 5.67 \times 10^{-8} \, \text{W/(m}^2\text{K}^4)$, $v_{\text{sound}} = 331 \sqrt{T/273} \, \text{m/s}$
+\end{itemize}
+
+\subsection*{1-d motion, constant $a$}
+\begin{equation}
+a = \frac{v_f - v_0}{t}
+\end{equation}
+\begin{equation}
+v_{\text{avg}} = \frac{v_0 + v_f}{2}, \quad (x_f - x_0) = v_{\text{avg}} t
+\end{equation}
+\begin{equation}
+(x_f - x_0) = v_0 t + \frac{1}{2} a t^2 = v_f t - \frac{1}{2} a t^2
+\end{equation}
+\begin{equation}
+\frac{1}{2} v_f^2 - \frac{1}{2} v_0^2 = a (x_f - x_0)
+\end{equation}
+
+\subsection*{Projectile Motion}
+\begin{equation}
+\text{Range} = \frac{v^2}{g} \sin 2\theta, \quad \text{Max. height} = \frac{v_0^2}{2g} \sin^2 \theta
+\end{equation}
+
+\subsection*{Momentum, Force and Impulse}
+\begin{equation}
+p = mv, \quad F = \frac{\Delta p}{\Delta t} = ma, \quad I = F \Delta t = \Delta p
+\end{equation}
+
+\subsection*{Work, Energy and Power}
+\begin{equation}
+W = \vec{F} \cdot (\vec{r} - \vec{r}_0), \quad KE = \frac{1}{2} mv^2, \quad P = \frac{\Delta E}{\Delta t}
+\end{equation}
+
+\subsection*{Gravity and circular orbits}
+\begin{equation}
+PE = -G \frac{Mm}{r}, \quad \Delta PE = mgh (\text{small } h), \quad F = G \frac{Mm}{r^2} = mg
+\end{equation}
+\begin{equation}
+a = \frac{v^2}{r}, \quad \frac{GM}{4\pi^2} = \frac{R^3}{T^2}
+\end{equation}
+
+\subsection*{Rotational Motion \& Gravity}
+\begin{equation}
+v = \omega r = \frac{2\pi r}{T}, \quad \omega = 2\pi f = \frac{2\pi}{T}, \quad f = \frac{1}{T}
+\end{equation}
+\begin{equation}
+\alpha = \frac{\omega_f - \omega_0}{t} = \frac{a}{r}
+\end{equation}
+\begin{equation}
+L = I \omega = mvr \sin \theta \, (\theta = \text{angle between } v \text{ and } r)
+\end{equation}
+\begin{equation}
+KE = \frac{L^2}{2I} = \frac{1}{2} I \omega^2
+\end{equation}
+\begin{equation}
+\tau = rF \sin \theta, \quad I_\alpha = \tau, \quad I_{\text{point}} = mR^2
+\end{equation}
+\begin{equation}
+I_{\text{cyl. shell}} = mR^2, \quad I_{\text{sphere}} = \frac{2}{5} mR^2, \quad I_{\text{solid cyl.}} = \frac{1}{2} mR^2
+\end{equation}
+
+\subsection*{Gases, liquids and solids}
+\begin{equation}
+PV = NRT, \quad \Delta P = \rho gh, \quad \frac{1}{2} mv^2 = \frac{3}{2} k_B T
+\end{equation}
+\begin{equation}
+F_{\text{buoyant}} = \rho_{\text{displaced liquid}} V_{\text{displaced liquid}} g
+\end{equation}
+\begin{equation}
+\text{Stress} = \frac{F}{A}, \quad \text{Strain} = \frac{\Delta L}{L}, \quad Y = \frac{\text{Stress}}{\text{Strain}}
+\end{equation}
+\begin{equation}
+\frac{\Delta L}{L} = \frac{F}{A} B = -\frac{\Delta P}{B}
+\end{equation}
+\begin{equation}
+Q = mC_\Delta T + mL (\text{if phase trans.}), \quad \frac{\Delta Q}{\Delta t} = \frac{kA(T_b - T_a)}{x_b - x_a}
+\end{equation}
+
+\subsection*{Radiation}
+\begin{equation}
+P = \epsilon \sigma AT^4
+\end{equation}
+
+\subsection*{Thermodynamics}
+\begin{equation}
+\Delta U = Q - W, \quad W = P \Delta V, \quad \text{ideal gas: } \Delta U = nC_v \Delta T
+\end{equation}
+\begin{equation}
+\text{Adiabatic exp: } pV^\gamma = \text{const}, \quad TV^{\gamma-1} = \text{const}
+\end{equation}
+\begin{equation}
+\gamma = \frac{C_p}{C_v} = \frac{5}{3} \text{ for monatomic gas} = \frac{7}{5} \text{ for diatomic gas}
+\end{equation}
+\begin{equation}
+Q = T \Delta S, \quad \Delta S > 0
+\end{equation}
+\begin{equation}
+\text{Engines: } \epsilon = \frac{W}{Q_H} < \frac{T_H - T_L}{T_H} < 1
+\end{equation}
+\begin{equation}
+\text{Refrigerators and heat pumps: } \epsilon = \frac{Q_L}{W} < \frac{T_L}{T_H - T_L}
+\end{equation}
+
+\subsection*{Simple Harmonic Motion and Waves}
+\begin{itemize}
+    \item Spring: $F = -kx$, $PE = \frac{1}{2} kx^2$, $\omega = \sqrt{k/m}$
+    \item $f = \omega / (2\pi)$, $x(t) = A \cos(\omega t) + B \sin(\omega t)$
+    \item Pendulum: $T = 2\pi \sqrt{L/g}$
+    \item Waves: $y(x,t) = A \sin[2\pi (ft - x/\lambda + \delta)], \quad v = f\lambda$
+    \item $I = \text{const} A^2 f^2$, $I_2/I_1 = (R_2/R_1)^2$
+    \item Standing waves: $\lambda_n = 2L/n$
+    \item Strings: $v = \sqrt{T/\mu}$, Solid/Liquid: $v = \sqrt{B/\rho}$
+    \item Sound: $I = \frac{E}{A \Delta t} = \text{Power/A}$
+    \item $I_0 = 10^{-12} \, \text{W/m}^2$, Intensity in decibels $= 10 \log_{10}(I/I_0)$
+    \item Beat freq. $= |f_1 - f_2|$, Doppler: $f_{\text{obs}} = f_{\text{source}} \frac{(V_{\text{sound}} \pm V_{\text{obs}})}{(V_{\text{sound}} \pm V_{\text{source}})}$
+    \item Pipes: same at both ends: $L = \lambda/2, \lambda, 3\lambda/2$ \\
+    Pipes: open at only one end: $L = \lambda/4, 3\lambda/4, \ldots$
+\end{itemize}
+
+\end{document}
+```
+
+This LaTeX document accurately transcribes the text, tables, and equations from the image into a structured format.

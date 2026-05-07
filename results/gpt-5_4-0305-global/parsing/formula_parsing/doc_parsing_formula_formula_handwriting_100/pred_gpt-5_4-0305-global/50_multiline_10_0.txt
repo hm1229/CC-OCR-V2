@@ -1,0 +1,49 @@
+\[
+\int_{0}^{\infty} x^n \tilde h(x)\,dx
+=
+\int_{0}^{\infty} dx\,x^{n+1}h(cx)
++
+\int_{0}^{\infty} dx\,x^n\int_{0}^{\infty} dy\,\Pi(\log(y/x))\,h(cy)
++
+q\int_{0}^{\infty} dx\,x^n\int_{0}^{\infty} h(xe^z)\,V_q(dz)
+\]
+
+\[
+=
+\frac{n!(n+1)c}{\prod_{i=1}^{n+1}(q+\phi(i))}
++
+\int_{0}^{\infty} dy\,h(y)\int_{0}^{y} dx\,x^n\Pi(\log(y/x))
++
+q\int_{0}^{\infty} V_q(dy)\int_{0}^{\infty} dx\,x^n h(xe^y)
+\]
+
+\[
+=
+\frac{n!(n+1)c}{\prod_{i=1}^{n+1}(q+\phi(i))}
++
+\int_{0}^{\infty} dy\,h(y)\,y^{n+1}\int_{0}^{\infty} dz\,e^{-(n+1)z}\Pi(z)
++
+q\int_{0}^{\infty} V_q(dy)\,e^{-(n+1)y}\int_{0}^{\infty} dz\,z^n h(z)
+\]
+
+\[
+=
+\frac{n!(n+1)c}{\prod_{i=1}^{n+1}(q+\phi(i))}
++
+\frac{(n+1)!}{\prod_{i=1}^{n+1}(q+\phi(i))}
+\frac{\int_{0}^{\infty}(1-e^{-(n+1)z})\,\Pi(dz)}{n+1}
++
+q\,\frac{n!}{\prod_{i=1}^{n}(q+\phi(i))}
+\int_{0}^{\infty} V_q(dy)\,e^{-(n+1)y}
+\]
+
+\[
+=
+\frac{n!}{\prod_{i=1}^{n}(q+\phi(i))}
+\frac{(n+1)c+\int_{0}^{\infty}(1-e^{-(n+1)z})\,\Pi(dz)+q}{q+\phi(n+1)}
+\]
+
+\[
+=
+\frac{n!}{\prod_{i=1}^{n}(q+\phi(i))}
+\]

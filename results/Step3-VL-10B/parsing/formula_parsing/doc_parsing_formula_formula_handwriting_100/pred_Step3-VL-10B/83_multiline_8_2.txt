@@ -1,0 +1,85 @@
+用户现在需要把图片中的数学公式转换成LaTeX代码。首先得仔细看每一行的结构，注意符号、积分、范数、指数等。先逐行分析：
+
+第一行：$\| \mathbf{I} X^R \|_{L_w^{\infty, [0,t]}} L^2_x \leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + \left| \int_0^t S_p(\tau, t) \mathcal{O}_x(\mathbf{X}^R)(s) \right| |X^R(s)|^{20} \mathcal{O}_x(\mathbf{R})(s) ds \|_{L_w^{\infty, [0,t]}} L^2_x$
+
+然后第二行：$\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \|\mathcal{O}_x(\mathbf{X}^R)(x)\|_{|X^R|^{20+1}} \|_{L_w^{\infty, [0,t]}} L^2_x$
+
+第三行：$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left[ \int_0^T \mathcal{O}_x(\mathbf{X}^R)(r') \tau^{(28+1)p'} \left( \int_1^{|X^R(t)|} \tau^{1/|X^R(t)|} dt \right) \right]^{(28+1)p'} dx \right]^{1/\tilde{r}} \|_{L_w}$
+
+然后“Since $\dot{p}' = \frac{25 + 2}{25 + 1}$, the right hand side equals” 这里是文字，然后下一行：
+
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T \mathcal{O}_x(\mathbf{X}^R)(r') \tau^{r' - (20+1)p'} \right)^{\frac{r' - (20+1)p'}{r'}} \|_{L_w} \left( \int_1^{|X^R(t)|} \tau^{\frac{20+1 + r'}{r'}} dt \right)^{\frac{20+1}{r'}} \|_{L_w}$
+
+然后“Since $\geq p = 20 + 2$, we can apply Holder's inequality to get” 文字，下一行：
+
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T [\mathcal{O}_x(\mathbf{X}^R)(t)]^{\tau} \right)^{20+1} \|_{L_x^{\infty, [0,t]}} \|_{L_w} dt \|_{L_w} T^{\frac{r' - (20+1)p'}{r'}} \frac{1}{T^{\frac{20+1 + r'}{r'}}}$
+
+然后“Letting $\tilde{t}(w) = \inf\{ s : |X^R(w)|_L \mathcal{Y}([0,s]; L^2] \geq 2R\}$, from definition of $\mathcal{O}_x$ in (?), we have” 文字，下一行：
+
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T \mathcal{O}_x(\mathbf{X}^R)(t) \tau^{20+1} \right)^{\frac{20+1}{r'}} \|_{L_w}$
+
+然后“where $\tilde{\beta} = \beta + \frac{r' - (20+1)p'}{r' r'} > 0$. Furthermore,” 文字，下一行：
+
+$\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{p} \| \left( \int_0^{\tilde{t}} \mathbf{X}^R(t) \tau^{20+1} dt \right)^{\frac{20+1}{r'}} \|_{L_w}$
+
+然后最后一行：
+
+$\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{p} \| \mathbf{X}^R(2R)^{20} \|_{L_w^{\infty, [0,t]}} L^2_x$
+
+现在需要把这些行用LaTeX的align或者逐行写，注意符号的准确性，比如范数的下标，积分上下限，指数，分数等。要确保每个符号都正确，比如$\mathcal{O}_x$，$\tilde{B}$，$\tilde{t}(w)$，$\tilde{\beta}$等。
+
+现在开始逐行转写：
+
+第一行：
+$\| \mathbf{I} X^R \|_{L_w^{\infty, [0,t]}} L^2_x \leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + \left| \int_0^t S_p(\tau, t) \mathcal{O}_x(\mathbf{X}^R)(s) \right| |X^R(s)|^{20} \mathcal{O}_x(\mathbf{R})(s) ds \|_{L_w^{\infty, [0,t]}} L^2_x$
+
+第二行：
+$\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \|\mathcal{O}_x(\mathbf{X}^R)(x)\|_{|X^R|^{20+1}} \|_{L_w^{\infty, [0,t]}} L^2_x$
+
+第三行：
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left[ \int_0^T \mathcal{O}_x(\mathbf{X}^R)(r') \tau^{(28+1)p'} \left( \int_1^{|X^R(t)|} \tau^{1/|X^R(t)|} dt \right) \right]^{(28+1)p'} dx \right]^{1/\tilde{r}} \|_{L_w}$
+
+然后“Since $\dot{p}' = \frac{25 + 2}{25 + 1}$, the right hand side equals” 这里是文字，然后下一行：
+
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T \mathcal{O}_x(\mathbf{X}^R)(r') \tau^{r' - (20+1)p'} \right)^{\frac{r' - (20+1)p'}{r'}} \|_{L_w} \left( \int_1^{|X^R(t)|} \tau^{\frac{20+1 + r'}{r'}} dt \right)^{\frac{20+1}{r'}} \|_{L_w}$
+
+然后“Since $\geq p = 20 + 2$, we can apply Holder's inequality to get” 文字，下一行：
+
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T [\mathcal{O}_x(\mathbf{X}^R)(t)]^{\tau} \right)^{20+1} \|_{L_x^{\infty, [0,t]}} \|_{L_w} dt \|_{L_w} T^{\frac{r' - (20+1)p'}{r'}} \frac{1}{T^{\frac{20+1 + r'}{r'}}}$
+
+然后“Letting $\tilde{t}(w) = \inf\{ s : |X^R(w)|_L \mathcal{Y}([0,s]; L^2] \geq 2R\}$, from definition of $\mathcal{O}_x$ in (?), we have” 文字，下一行：
+
+$= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T \mathcal{O}_x(\mathbf{X}^R)(t) \tau^{20+1} \right)^{\frac{20+1}{r'}} \|_{L_w}$
+
+然后“where $\tilde{\beta} = \beta + \frac{r' - (20+1)p'}{r' r'} > 0$. Furthermore,” 文字，下一行：
+
+$\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{p} \| \left( \int_0^{\tilde{t}} \mathbf{X}^R(t) \tau^{20+1} dt \right)^{\frac{20+1}{r'}} \|_{L_w}$
+
+最后一行：
+
+$\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{p} \| \mathbf{X}^R(2R)^{20} \|_{L_w^{\infty, [0,t]}} L^2_x$
+
+现在需要检查每个公式的准确性，比如指数、积分变量、范数的下标（比如$L_w^{\infty, [0,t]}$是空间，$L^2_x$是x的L2范数），还有$\mathcal{O}_x$的使用，$\tilde{B}$，$\tilde{r}$等符号。另外注意有些地方可能的笔误，比如原文中的“20^0”可能是“20”？不，原文是$|X^R(s)|^{20} \mathcal{O}_x(\mathbf{R})(s)$，然后后面有$20+1$的指数，因为$\dot{p}' = (25+2)/(25+1)$，可能和20+1有关，比如28+1？可能原文中的28是笔误？不过按图片中的内容来，图片里第三行是$(28+1)p'$，然后后面变成$r' - (20+1)p'$，可能28是20+8？不过先按图片中的符号转写，不修改内容，只提取。
+
+现在把所有行用LaTeX的多行公式，比如用align环境，每行用&对齐，不过图片中的公式是逐行的，所以可以按顺序写出每个等式或不等式。
+
+现在整理成LaTeX代码，注意换行和对齐，可能用align*环境：
+
+\begin{align*}
+\| \mathbf{I} X^R \|_{L_w^{\infty, [0,t]}} L^2_x &\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + \left| \int_0^t S_p(\tau, t) \mathcal{O}_x(\mathbf{X}^R)(s) \right| |X^R(s)|^{20} \mathcal{O}_x(\mathbf{R})(s) ds \|_{L_w^{\infty, [0,t]}} L^2_x \\
+&\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \|\mathcal{O}_x(\mathbf{X}^R)(x)\|_{|X^R|^{20+1}} \|_{L_w^{\infty, [0,t]}} L^2_x \\
+&= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left[ \int_0^T \mathcal{O}_x(\mathbf{X}^R)(r') \tau^{(28+1)p'} \left( \int_1^{|X^R(t)|} \tau^{1/|X^R(t)|} dt \right) \right]^{(28+1)p'} dx \right]^{1/\tilde{r}} \|_{L_w} \\
+&\text{Since } \dot{p}' = \frac{25 + 2}{25 + 1}, \text{ the right hand side equals} \\
+&= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T \mathcal{O}_x(\mathbf{X}^R)(r') \tau^{r' - (20+1)p'} \right)^{\frac{r' - (20+1)p'}{r'}} \|_{L_w} \left( \int_1^{|X^R(t)|} \tau^{\frac{20+1 + r'}{r'}} dt \right)^{\frac{20+1}{r'}} \|_{L_w} \\
+&\text{Since } \geq p = 20 + 2, \text{ we can apply Holder's inequality to get} \\
+&= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T [\mathcal{O}_x(\mathbf{X}^R)(t)]^{\tau} \right)^{20+1} \|_{L_x^{\infty, [0,t]}} \|_{L_w} dt \|_{L_w} T^{\frac{r' - (20+1)p'}{r'}} \frac{1}{T^{\frac{20+1 + r'}{r'}}} \\
+&\text{Letting } \tilde{t}(w) = \inf\{ s : |X^R(w)|_L \mathcal{Y}([0,s]; L^2] \geq 2R\}, \text{ from definition of } \mathcal{O}_x \text{ in (?), we have} \\
+&= \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{B} \| \left( \int_0^T \mathcal{O}_x(\mathbf{X}^R)(t) \tau^{20+1} \right)^{\frac{20+1}{r'}} \|_{L_w} \\
+&\text{where } \tilde{\beta} = \beta + \frac{r' - (20+1)p'}{r' r'} > 0. \text{ Furthermore,} \\
+&\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{p} \| \left( \int_0^{\tilde{t}} \mathbf{X}^R(t) \tau^{20+1} dt \right)^{\frac{20+1}{r'}} \|_{L_w} \\
+&\leq \|X_0\|_{L_w^{\infty, [0,t]}} L^2_x + c_{r,p} \tilde{p} \| \mathbf{X}^R(2R)^{20} \|_{L_w^{\infty, [0,t]}} L^2_x
+\end{align*}
+
+需要检查每个符号是否和图片一致，比如图片中的“20^0”？不，图片第一行是$|X^R(s)|^{20} \mathcal{O}_x(\mathbf{R})(s)$，然后后面有$20+1$，比如$\|\mathcal{O}_x(\mathbf{X}^R)(x)\|_{|X^R|^{20+1}}$，然后积分中的指数是$(28+1)p'$，然后后面变成$r' - (20+1)p'$，可能28是笔误，比如20+8？不过按图片中的内容，图片里第三行是$(28+1)p'$，然后下一行是$r' - (20+1)p'$，可能28是20+8，或者可能是25+3？不过不管，按图片中的符号转写。
+
+另外，图片中的“$\tilde{B}$”是存在的，还有“$\tilde{r}$”？不，图片中第三行是$^{1/\tilde{r}}$，然后后面有“$\tilde{B}$”在第二行之后。还有“$\tilde{t}(w)$”是定义的。还有“$\tilde{\beta}$”是$\beta + \frac{r' - (20+1)p'}{r' r'}$，注意分母是$r' r'$？图片中是“$\frac{r' - (20+1)p'}

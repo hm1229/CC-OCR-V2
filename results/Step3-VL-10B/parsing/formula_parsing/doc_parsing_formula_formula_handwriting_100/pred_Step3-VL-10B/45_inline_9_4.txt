@@ -1,0 +1,86 @@
+用户现在需要把图片中的数学公式转换成LaTeX代码。首先得逐行看每个公式，注意符号、上下标、积分、极限等。
+
+首先看第一行：$F_{\pm}=4\langle (\Delta \hat{n})^2 \rangle$ —— 这里是F±=4<...>，注意符号。
+
+然后是偏微分方程：$\partial_t u_t(x)=\frac{1}{2}\Delta u_t(x)+\sigma(u_t, u_{\hat{t}}) \dot{W}_t(x),\ t\in[0,T],\ x\in\mathbb{R},$ —— 注意Δ是拉普拉斯，σ是函数，W_t是维纳过程的点。
+
+接下来：$\overline{D}u(z)=0\ \forall z\in\mathbb{R}\setminus\partial\mathbb{V}.$ —— 这里overline{D}u，可能是某种算子，∂V是边界。
+
+然后：$A\otimes B\in SC(\mathbb{X}\times\mathbb{X}\times\mathbb{R})$ —— 张量积，SC是某个空间，X是集合。
+
+极限式：$\limsup_{t\to\infty} \tilde{f}^{\pm}\frac{1}{t}+\frac{1}{t}|\mathcal{I}_{\tilde{f}}^{\pm}(t,1)|\leq C\lim_{t\to\infty}\int_0^{\infty}|w|_{\tilde{f}}^{\pm}\frac{1}{t^2}\mathbb{U}_{\tilde{f}}(w,t,1)\,dwdt=0.$ —— 这里limsup，积分，|w|的范数，U的函数，注意下标和上标。
+
+然后是关于|E|^T S e g的式子：$|\mathcal{E}^T S e g|=\frac{1}{(x^T A' A A' x)^2}\varepsilon^T A \varepsilon\ \text{or}\ \frac{1}{(c^T x)(T(y-x)-(y-x))^T C x}{(x^T A' A A' x)^2}$ —— 这里可能有排版问题，先看结构，分式，向量内积等。
+
+然后是moeq的式子：$\text{moeq}_{\mathbb{t}(D_1\otimes D_2)}(m_0)=\text{id}(d\otimes d)+D_1\otimes D_2+\frac{1}{H_2}(t^2 D_1^2\otimes D_2^2))$ —— 注意moeq可能是某个算子，id是恒等，张量积，H₂是常数。
+
+求和式：$\sum_{n\geq1} \mu_n^2 T_n = \mathcal{I} <\infty$ —— 求和，μₙ²，Tₙ，I是某个指标。
+
+特征值λ₁：$\lambda_1 = -2k\frac{\rho}{p}\partial_{\mu} = -2k\sum_{z=1}^{\infty}\frac{z}{t}\partial_{z} \partial_{zg},$ —— 这里λ₁的表达式，求和，偏导。
+
+特征值λ₂：$\lambda_2 = \frac{k^2|z/x|^2\langle z\rangle - \kappa}{\langle z\rangle^3} + \frac{\kappa|z/x|\cosh|z|}{\langle z\rangle \sinh|z|}$ —— 分式，cosh和sinh，角度或绝对值。
+
+现在需要把每个公式准确转成LaTeX，注意符号的正确性，比如Δ是\Delta，∂是\partial，⊗是\otimes，∈是\in，\mathbb{R}是\mathbb{R}，\mathbb{V}是\mathbb{V}，\mathbb{X}是\mathbb{X}，\limsup是\limsup，\int是\int，\langle \rangle是内积，\langle (\Delta \hat{n})^2 \rangle，注意\hat{n}是n的帽子。
+
+现在逐行处理：
+
+1. $F_{\pm}=4\langle (\Delta \hat{n})^2 \rangle$
+2. $\partial_t u_t(x)=\frac{1}{2}\Delta u_t(x)+\sigma(u_t, u_{\hat{t}}) \dot{W}_t(x),\ t\in[0,T],\ x\in\mathbb{R},$
+3. $\overline{D}u(z)=0\ \forall z\in\mathbb{R}\setminus\partial\mathbb{V}.$
+4. $A\otimes B\in SC(\mathbb{X}\times\mathbb{X}\times\mathbb{R})$
+5. $\limsup_{t\to\infty} \tilde{f}^{\pm}\frac{1}{t}+\frac{1}{t}|\mathcal{I}_{\tilde{f}}^{\pm}(t,1)|\leq C\lim_{t\to\infty}\int_0^{\infty}|w|_{\tilde{f}}^{\pm}\frac{1}{t^2}\mathbb{U}_{\tilde{f}}(w,t,1)\,dwdt=0.$
+6. $|\mathcal{E}^T S e g|=\frac{\varepsilon^T A \varepsilon}{(x^T A' A A' x)^2}\ \text{or}\ \frac{1}{(c^T x)(T(y-x)-(y-x))^T C x}\frac{\varepsilon^T A \mathcal{E}(c|x|+|c|t)\,x\cdot y}{(x^T A' A A' x)^2}$ （这里原图片可能有排版，需要看清楚，原图片中是“|E^T S e g| = (ε^T A ε)/(x^T A' A A' x)^2 or (c^T x)(T(y-x)-(y-x))^T C x / (x^T A' A A' x)^2”？可能原图片中的“ε^T A ε”是分子，分母是(x^T A' A A' x)^2，然后另一个分式是1/[(c^T x)(T(y-x)-(y-x))^T C x] 乘以 ε^T A ε (c|x| + |c|t) x·y / (x^T A' A A' x)^2？可能需要更仔细看。原图片中第六行是：|E^T S e g| = (ε^T A ε)/(x^T A' A A' x)^2 or (c^T x)(T(y-x)-(y-x))^T C x / (x^T A' A A' x)^2？不，原图片中是“|E^T S e g| = (ε^T A ε)/(x^T A' A A' x)^2 or (c^T x)(T(y-x)-(y-x))^T C x / (x^T A' A A' x)^2”？可能原图片中的“or”后面的分式是：分子是ε^T A ε (c|x| + |c|t) x·y，分母是(c^T x)(T(y-x)-(y-x))^T C x (x^T A' A A' x)^2？可能原图片中的符号需要准确。不过先按图片中的手写内容，可能更准确的是：
+
+$|\mathcal{E}^T S e g|=\frac{\varepsilon^T A \varepsilon}{(x^T A' A A' x)^2}\ \text{or}\ \frac{\varepsilon^T A \mathcal{E}(c|x|+|c|t)\,x\cdot y}{(c^T x)(T(y-x)-(y-x))^T C x\ (x^T A' A A' x)^2}$
+
+然后第七行：$\text{moeq}_{\mathbb{t}(D_1\otimes D_2)}(m_0)=\text{id}(d\otimes d)+D_1\otimes D_2+\frac{1}{H_2}(t^2 D_1^2\otimes D_2^2))$ （注意原图片中是“moeq_{t(D⊗D), D_1⊗D_2}”？不，原图片是“moeq_{\mathbb{t}(D_1\otimes D_2)}(m_0)=id(d\otimes d)+D_1\otimes D_2 + 1/H_2 (t^2 D_1^2⊗D_2^2)”）
+
+第八行：$\sum_{n\geq1} \mu_n^2 T_n = \mathcal{I} <\infty$
+
+第九行：$\lambda_1 = -2k\frac{\rho}{p}\partial_{\mu} = -2k\sum_{z=1}^{\infty}\frac{z}{t}\partial_{z} \partial_{zg},$
+
+第十行：$\lambda_2 = \frac{k^2|z/x|^2\langle z\rangle - \kappa}{\langle z\rangle^3} + \frac{\kappa|z/x|\cosh|z|}{\langle z\rangle \sinh|z|}$
+
+现在需要检查每个公式的LaTeX是否正确，比如：
+
+- 第一行：$F_{\pm}=4\langle (\Delta \hat{n})^2 \rangle$ —— 正确，\hat{n}是n的帽子，\Delta是拉普拉斯，\langle \rangle是内积。
+- 第二行：$\partial_t u_t(x)=\frac{1}{2}\Delta u_t(x)+\sigma(u_t, u_{\hat{t}}) \dot{W}_t(x),\ t\in[0,T],\ x\in\mathbb{R},$ —— \partial_t是偏导，\Delta是拉普拉斯，\sigma是函数，\dot{W}_t是维纳过程的导数（点），\mathbb{R}是实数集。
+- 第三行：$\overline{D}u(z)=0\ \forall z\in\mathbb{R}\setminus\partial\mathbb{V}.$ —— \overline{D}u，\forall是全称量词，\setminus是差集，\partial\mathbb{V}是V的边界。
+- 第四行：$A\otimes B\in SC(\mathbb{X}\times\mathbb{X}\times\mathbb{R})$ —— \otimes是张量积，SC是空间，\mathbb{X}是集合，\times是笛卡尔积。
+- 第五行：$\limsup_{t\to\infty} \tilde{f}^{\pm}\frac{1}{t}+\frac{1}{t}|\mathcal{I}_{\tilde{f}}^{\pm}(t,1)|\leq C\lim_{t\to\infty}\int_0^{\infty}|w|_{\tilde{f}}^{\pm}\frac{1}{t^2}\mathbb{U}_{\tilde{f}}(w,t,1)\,dwdt=0.$ —— \limsup，\int，|w|_{\tilde{f}}^{\pm}是范数，\mathbb{U}_{\tilde{f}}是函数，dwdt是微分。
+- 第六行：$|\mathcal{E}^T S e g|=\frac{\varepsilon^T A \varepsilon}{(x^T A' A A' x)^2}\ \text{or}\ \frac{\varepsilon^T A \mathcal{E}(c|x|+|c|t)\,x\cdot y}{(c^T x)(T(y-x)-(y-x))^T C x\ (x^T A' A A' x)^2}$ —— 这里可能原图片中的“or”后面的分母是(c^T x)(T(y-x) - (y - x))^T C x，分子是ε^T A ε (c|x| + |c|t) x·y，分母还有(x^T A' A A' x)^2。需要确认原图片中的符号，原图片中是“|E^T S e g| = (ε^T A ε)/(x^T A' A A' x)^2 or (c^T x)(T(y-x)-(y-x))^T C x / (x^T A' A A' x)^2”？不，原图片中第六行是：|E^T S e g| = (ε^T A ε)/(x^T A' A A' x)^2 或者 [1 / ((c^T x)(T(y-x)-(y-x))^T C x)] * [ε^T A ε (c|x| + |c|t) x·y] / (x^T A' A A' x)^2？可能更准确的是原图片中的“or”后面的式子是：分子是ε^T A ε (c|x| + |c|t) x·y，分母是(c^T x)(T(y-x) - (y - x))^T C x (x^T A' A A' x)^2。不过可能原图片中的“T(y-x)-(y-x)”是T(y-x) - (y - x)，即T作用于(y-x)减去(y-x)本身？可能T是某个算子，比如时间算子？不过先按手写的结构，可能更简单的是原图片中的第六行是：
+
+$|\mathcal{E}^T S e g|=\frac{\varepsilon^T A \varepsilon}{(x^T A' A A' x)^2}\ \text{or}\ \frac{1}{(c^T x)(T(y-x)-(y-x))^T C x}\frac{\varepsilon^T A \mathcal{E}(c|x|+|c|t)\,x\cdot y}{(x^T A' A A' x)^2}$
+
+然后第七行：$\text{moeq}_{\mathbb{t}(D_1\otimes D_2)}(m_0)=\text{id}(d\otimes d)+D_1\otimes D_2+\frac{1}{H_2}(t^2 D_1^2\otimes D_2^2))$ —— 注意原图片中是“moeq_{t(D⊗D), D_1⊗D_2}”？不，原图片是“moeq_{\mathbb{t}(D_1\otimes D_2)}(m_0)=id(d\otimes d)+D_1\otimes D_2 + 1/H_2 (t^2 D_1^2⊗D_2^2)”，可能\mathbb{t}是某个空间，比如时间空间。
+
+第八行：$\sum_{n\geq1} \mu_n^2 T_n = \mathcal{I} <\infty$ —— 求和，μₙ²，Tₙ，I是某个指标，比如I=1？或者\mathcal{I}是某个集合，<∞表示和有限。
+
+第九行：$\lambda_1 = -2k\frac{\rho}{p}\partial_{\mu} = -2k\sum_{z=1}^{\infty}\frac{z}{t}\partial_{z} \partial_{zg},$ —— 分式，求和，偏导。
+
+第十行：$\lambda_2 = \frac{k^2|z/x|^2\langle z\rangle - \kappa}{\langle z\rangle^3} + \frac{\kappa|z/x|\cosh|z|}{\langle z\rangle \sinh|z|}$ —— 分式，cosh和sinh，绝对值，内积<z>。
+
+现在需要确保每个公式的LaTeX语法正确，比如：
+
+- 分数用\frac{分子}{分母}
+- 上标用^，下标用_
+- 求和用\sum_{n\geq1}
+- 极限用\limsup_{t\to\infty}
+- 积分用\int_0^{\infty}
+- 张量积用\otimes
+- 内积用\langle \rangle
+- 偏导用\partial_t, \partial_z等
+- 绝对值用|z|, |x|等
+- 双曲函数用\cosh, \sinh
+- 全称量词用\forall
+- 差集用\setminus
+- 恒等算子用\text{id}
+- 常数用H_2等
+
+现在把所有公式按顺序列出，确保没有遗漏：
+
+1. $F_{\pm}=4\langle (\Delta \hat{n})^2 \rangle$
+2. $\partial_t u_t(x)=\frac{1}{2}\Delta u_t(x)+\sigma(u_t, u_{\hat{t}}) \dot{W}_t(x),\ t\in[0,T],\ x\in\mathbb{R},$
+3. $\overline{D}u(z)=0\ \forall z\in\mathbb{R}\setminus\partial\mathbb{V}.$
+4. $A\otimes B\in SC(\mathbb{X}\times\mathbb{X}\times\mathbb{R})$
+5. $\limsup_{t\to\infty} \tilde{f}^{\pm}\frac{1}{t}+\frac{1}{t}|\mathcal{I}_{\tilde{f}}^{\

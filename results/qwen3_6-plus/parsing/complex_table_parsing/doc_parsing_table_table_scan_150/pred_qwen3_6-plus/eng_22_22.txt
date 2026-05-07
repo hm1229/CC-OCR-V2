@@ -1,0 +1,109 @@
+Here is the HTML transcription of Table 5 from the provided image, using `<tr>` and `<td>` tags to reflect the layout. Since there are no merged cells in this table (each row has exactly 9 columns corresponding to the headers), we do not need `colspan` or `rowspan`.
+
+We’ll preserve the checkmarks (✓) as Unicode characters and bold the best values as shown in the original (FID-R↓, F↑, LA↑ for Exp. 1 and 5).
+
+```html
+<table>
+  <caption>Table 5: Ablation study for LVTR. We investigate the role of region masks, auxiliary losses, and optimal values of hyperparameters.</caption>
+  <thead>
+    <tr>
+      <th>Exp.</th>
+      <th>Region masks</th>
+      <th>$L_{fore}$</th>
+      <th>$\lambda_f$</th>
+      <th>$L_{back}$</th>
+      <th>$\lambda_b$</th>
+      <th>FID-R↓</th>
+      <th>F↑</th>
+      <th>LA↑</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>0.01</td>
+      <td>✓</td>
+      <td>1.0</td>
+      <td>33.34</td>
+      <td><b>75.73</b></td>
+      <td><b>53.21</b></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td></td>
+      <td>✓</td>
+      <td>0.01</td>
+      <td>✓</td>
+      <td>1.0</td>
+      <td>40.75</td>
+      <td>68.17</td>
+      <td>47.64</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>✓</td>
+      <td></td>
+      <td></td>
+      <td>✓</td>
+      <td>1.0</td>
+      <td>39.66</td>
+      <td>70.41</td>
+      <td>49.15</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>0.03</td>
+      <td>✓</td>
+      <td>1.0</td>
+      <td>38.01</td>
+      <td>73.77</td>
+      <td>49.79</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>0.003</td>
+      <td>✓</td>
+      <td>1.0</td>
+      <td><b>32.75</b></td>
+      <td>75.04</td>
+      <td>53.01</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>0.01</td>
+      <td></td>
+      <td></td>
+      <td>36.96</td>
+      <td>75.71</td>
+      <td>52.63</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>0.01</td>
+      <td>✓</td>
+      <td>0.3</td>
+      <td>37.32</td>
+      <td>74.88</td>
+      <td>50.99</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes:
+- Empty cells (where a component is ablated out) are left blank (`<td></td>`).
+- Bold formatting (`<b>`) is applied to the best-performing values in FID-R↓ (lower is better → 32.75 in Exp. 5), F↑ (higher is better → 75.73 in Exp. 1), and LA↑ (higher is better → 53.21 in Exp. 1).
+- Mathematical notation like `$L_{fore}$`, `$\lambda_f$`, etc., is preserved as LaTeX-style text within the HTML — if rendering in a browser that supports MathJax or similar, it will display properly; otherwise, it will appear as plain text.
+- The caption is included via `<caption>` tag for semantic correctness.
+
+This structure faithfully reproduces the table’s content and visual emphasis from the image.

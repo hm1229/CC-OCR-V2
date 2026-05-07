@@ -1,0 +1,79 @@
+Looking at the image, it’s not a traditional table with rows and columns in a grid — it’s an income statement formatted with dotted lines leading to amounts on the right. However, since you’ve asked to transcribe it using `<tr>` and `<td>` tags while reflecting the layout from top-left to bottom-right and representing merged cells accurately, I’ll interpret this as a two-column layout:
+
+- Left column: Line items (with indentation for sub-items)
+- Right column: Amounts (aligned to the right, sometimes spanning multiple lines or grouped)
+
+Also note:
+- The header “The Alpine House, Inc.” and “Traditional Income Statement” are centered above the main body.
+- Some line items have calculations in parentheses.
+- There’s a footnote marked with `*` at the bottom.
+- The final net operating income is double-underlined.
+
+I’ll structure this as a table with 2 columns. For visual alignment, I’ll use `colspan` where appropriate for headers, and nest indented items within their parent row logically.
+
+Here’s the HTML transcription:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" style="text-align:center; font-weight:bold;">The Alpine House, Inc.</th>
+    </tr>
+    <tr>
+      <th colspan="2" style="text-align:center; font-weight:bold;">Traditional Income Statement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sales</td>
+      <td style="text-align:right;">$150,000</td>
+    </tr>
+    <tr>
+      <td>Cost of goods sold<br>($30,000 + $100,000 – $40,000)</td>
+      <td style="text-align:right;">90,000</td>
+    </tr>
+    <tr>
+      <td>Gross margin</td>
+      <td style="text-align:right;">60,000</td>
+    </tr>
+    <tr>
+      <td>Selling and administrative expenses:</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="padding-left:20px;">Selling expenses (($50 per unit × 200 pairs of skis*) + $20,000)</td>
+      <td style="text-align:right;">$30,000</td>
+    </tr>
+    <tr>
+      <td style="padding-left:20px;">Administrative expenses (($10 per unit × 200 pairs of skis) + $20,000)</td>
+      <td style="text-align:right;">22,000</td>
+    </tr>
+    <tr>
+      <td style="padding-left:20px;"></td>
+      <td style="text-align:right; border-top:1px solid black;">52,000</td>
+    </tr>
+    <tr>
+      <td>Net operating income</td>
+      <td style="text-align:right; border-top:1px solid black; border-bottom:3px double black;">$ 8,000</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="font-size:smaller; padding-top:10px;">
+        *$150,000 sales ÷ $750 per pair of skis = 200 pairs of skis.
+      </td>
+    </tr>
+  </tbody>
+</table>
+```
+
+### Notes on Structure:
+
+- **Headers**: Used `colspan="2"` for centering the company name and statement title.
+- **Indentation**: Used `padding-left:20px` for sub-items under “Selling and administrative expenses” to visually represent hierarchy.
+- **Amount Alignment**: All monetary values are right-aligned in the second column.
+- **Underlines**: Simulated the single underline before total expenses and double underline under net income using CSS borders (`border-top`, `border-bottom:3px double`).
+- **Footnote**: Placed in a full-width row at the bottom with smaller font size.
+- **Merged Cells**: Only used `colspan` for headers and footnote — no vertical merging needed since each line item occupies its own row.
+
+This preserves the logical flow and visual hierarchy of the original document while conforming to your request for `<tr>`/`<td>` structure.
+
+Let me know if you’d like to add classes for styling or convert this into a more semantic HTML structure with `<dl>` or `<div>`s instead — but per your instruction, we’re sticking with tables.

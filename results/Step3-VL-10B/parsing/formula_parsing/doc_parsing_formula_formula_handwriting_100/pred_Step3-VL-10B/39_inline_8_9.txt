@@ -1,0 +1,73 @@
+用户现在需要把图片中的公式提取成LaTeX。首先看第一个公式：π(k, z, θ, y, p, p, r) ∝ (2π)^(-n/2) / (V^(k+1) n) p^k (1-p)^(n-1)。然后是R'^(n)(t)的表达式，要仔细看每个部分。还有gen_H(f^(c)) ≤ gen_H(f^(e)) + #... 这些。需要逐行处理，注意符号和上下标。
+
+先处理第一个公式：
+
+π(k, z, \theta, y, p, p, r) \propto \frac{(2\pi)^{-n/2}}{V^{k+1} n} p^k (1 - p)^{n - 1}
+
+然后是R'^(n)(t)的定义：
+
+R'^n(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 这里可能图片里的符号要准确，看图片中的R'^(n)(t)：
+
+图片中R'^(n)(t) := [r(2n + p_n^N)/4] * [( (1+2n-1)y_n^N / (1+2n)y_n^N )² - 1] * (p_{n+1}^N - p_n^N) - μ_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) * [( (1+2n+1)y_{n+1}^N / (1+2n)y_n^N ) - 1] * (p_n^N - p_{n+1}^N), 这里可能需要更准确，看图片中的符号：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 不对，图片中的R'^(n)(t)是：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 可能图片中的符号是：
+
+看图片中的R'^(n)(t)部分：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 不对，图片中的R'^(n)(t)是：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 可能更准确的是看图片中的符号，比如：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 可能图片中的R'^(n)(t)是：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N), 这部分可能比较复杂，先处理其他公式。
+
+然后是gen_H(f^(c)) ≤ gen_H(f^(e)) + # { (-u_i, u_i) : G ≤ f(u_i) ≤ C_2, f'(u_i) = 0 }, 这里图片中的符号是gen_H(f^(c)) ≤ gen_H(f^(e)) + # { (-u_i, u_i) : G ≤ f(u_i) ≤ C_2, f'(u_i) = 0 }, 对吗？图片中是gen_H(f^(c)) ≤ gen_H(f^(e)) + # { (-u_i, u_i) : G ≤ f(u_i) ≤ C_2, f'(u_i) = 0 }, 是的。
+
+接下来是P(T_* ∈ A | min_{a ≤ t ≤ b} X(t) > u) = [∫₀^∞ exp{-u x (l_0^* (a,b))} P(Y ≤ x, min_{a ≤ t ≤ b} X(t) > 0, T_* ∈ A) dx] / [∫₀^∞ exp{-u x (l_0^* (a,b))} P(Y ≤ x, min_{a ≤ t ≤ b} X(t) > 0) dx]
+
+然后是S_j ≥ (c + 9ε / 10 d - 2^j)/2^j ≥ (1 + 9ε / 10 - d_j - 1) Σ (1 + 7ε / 10) d_j
+
+然后是1^syn(α, □ α₂) ⊆ 1^syn(α', □ α₂) and 0^syn(α, □ α₂) ⊆ 0^syn(α', □ α₂)
+
+然后是X = (0, 0, ..., 0, x_{i+1}, ..., x_n)
+
+然后是t_i / [64(1 + t_i d (X_i, ∂B_R))^{-4}] f_{k,i}(X, t) ≤ [ (t_i + ε/2) / (1 + (t_i + ε/2) d (X_i + ε/2, ∂B_R))^{-4} ] f_{k,i}(X, t) ≤ t_i / [1 + t_i d (X_i, ∂B_R))^{-4}] f_{k,i}(0, 0)
+
+现在需要把每个公式准确转换成LaTeX，注意符号如∂B_R是\partial B_R，上标下标，分式，指数等。
+
+现在逐个处理：
+
+1. 第一个公式：
+π(k, z, \theta, y, p, p, r) \propto \frac{(2\pi)^{-n/2}}{V^{k+1} n} p^k (1 - p)^{n - 1}
+
+2. R'^(n)(t)的公式，看图片中的R'^(n)(t)：
+R'^n(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N)
+不对，图片中的R'^(n)(t)是：
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N)
+可能图片中的R'^(n)(t)是：
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N)
+另外图片中还有指数部分：exp{ -1/2 (ss_j + μ₀² / v² - (s_j + μ₀ / v²)² / (T_j - T_j -1 + 1/2)) }，这部分是R'^(n)(t)中的指数项？看图片中的R'^(n)(t)右边有exp{...}，所以可能R'^(n)(t)的完整表达式是：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N) \times \exp\left\{ -\frac{1}{2} \left( ss_j + \frac{\mu_0^2}{v^2} - \frac{\left( s_j + \frac{\mu_0}{v^2} \right)^2}{T_j - T_j - 1 + \frac{1}{2}} \right) \right\}
+不对，图片中R'^(n)(t)的表达式是：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N) \times \exp\left\{ -\frac{1}{2} \left( ss_j + \frac{\mu_0^2}{v^2} - \frac{\left( s_j + \frac{\mu_0}{v^2} \right)^2}{T_j - T_j - 1 + \frac{1}{2}} \right) \right\}
+可能图片中的R'^(n)(t)是：
+
+R'^(n)(t) := \frac{r(2n + p_n^N)}{4} \left( \frac{(1 + 2n - 1) y_n^N}{(1 + 2n) y_n^N} \right)^2 - 1 \right) (p_{n+1}^N - p_n^N) - \mu_n(A^N(A^N(t), p_N(t)) r(2n + p_{n+1}^N) \left( \frac{(1 + 2n + 1) y_{n+1}^N}{(1 + 2n) y_n^N} - 1 \right) (p_n^N - p_{n+1}^N) \exp\left\{ -\frac{1}{2} \left( ss_j + \frac{\mu_0^2}{v^2} - \frac{\left( s_j + \frac{\mu_0}{v^2} \right)^2}{T_j - T_{j-1} - 1 + \frac{1}{2}} \right) \right\}
+因为图片中T_j - T_j -1可能是T_j - T_{j-1} -1，可能下标错误，比如T_j - T_{j-1} -1 + 1/2，所以修正为T_j - T_{j-1} - 1 + \frac{1}{2}。
+
+然后是gen_H(f^(c))的公式：
+
+\mathrm{gen}_H(f^{(c)}) \leq \mathrm{gen}_H(f^{(e)}) + \#\{ (-u_i, u_i) : G \leq f(u_i) \leq C_2, f'(u_i) = 0 \},
+
+接下来是概率P(T_* ∈ A | min_{a ≤ t ≤ b} X(t) > u)的公式：
+
+P(T_* \in A \mid \min_{a \leq t \leq b} X(t) > u) = \frac{\int_0^\infty \exp\left\{ -u x \, l_0^*(a, b) \right\} P(Y \leq x, \min_{a \leq t \leq b} X(t) > 0, T_* \in A) \, dx}{\int_0^\infty \exp\left\{ -u x \, l_0^*(a, b) \right\} P(Y \leq x, \min_{a \leq t \leq b} X(t) > 0) \, dx}
+
+然后是S_j的不等式：
+
+S_j \geq \frac{c + \frac{9\varepsilon}{10} d - 2^j}{2^j} \geq \frac{1 + \frac{9\varepsilon}{10} - d_j - 1}{1 + \frac{\varepsilon}{10}} d_j \quad \text{（可能图片中的分母是

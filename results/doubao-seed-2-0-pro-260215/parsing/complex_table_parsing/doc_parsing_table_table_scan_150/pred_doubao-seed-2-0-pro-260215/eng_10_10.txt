@@ -1,0 +1,67 @@
+```html
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th># Existing</th>
+      <th># New</th>
+    </tr>
+    <tr>
+      <th>Datasets</th>
+      <th># Nodes</th>
+      <th># Edges</th>
+      <th>e-types</th>
+      <th>e-types</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>YouTube</td>
+      <td>2,000</td>
+      <td>1,310,617</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Taobao</td>
+      <td>267,869</td>
+      <td>258,306</td>
+      <td>20</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+```
+You can also represent the multi-line column headers as single cells with line breaks if you prefer matching the visual text grouping:
+```html
+<table>
+  <thead>
+    <tr>
+      <th>Datasets</th>
+      <th># Nodes</th>
+      <th># Edges</th>
+      <th># Existing<br>e-types</th>
+      <th># New<br>e-types</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>YouTube</td>
+      <td>2,000</td>
+      <td>1,310,617</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>Taobao</td>
+      <td>267,869</td>
+      <td>258,306</td>
+      <td>20</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+```
+Both versions preserve the structure and all content from the source table accurately.

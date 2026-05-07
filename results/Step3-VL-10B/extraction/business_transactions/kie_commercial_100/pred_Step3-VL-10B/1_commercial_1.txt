@@ -1,0 +1,65 @@
+用户现在需要从三张发票图片中提取信息到给定的JSON schema里。首先得分析每张图的信息，然后整合。首先看date_issue，看发票上的日期，比如第一张图右上角INVOICE的DATE是07-APR-1999，第二张也是07-APR-1999（第2 of 3），第三张也是07-APR-1999。所以date_issue应该是07-APR-1999。
+
+然后date_due，看TERMS里的DUE DATE，第一张是7 OF 9 07-MAY-1999，所以date_due是07-MAY-1999。
+
+vendor_order_id：看PURCHASE ORDER NUMBER，图中是21119，三张图都有这个，所以vendor_order_id是21119。
+
+customer_order_id：SALES ORDER NUMBER是11248，三张图都有，所以customer_order_id是11248。
+
+vendor_name：BioReliance Testing & Development, Inc.，看抬头部分。
+
+vendor_address：14920 Brochart Road, Rockville, MD 20850-3349 USA，还有Formerly Microbiological Associates, Inc. MA BioServices, Inc. 但主要地址是上面的。
+
+customer_id：CUSTOMER NUMBER是2112，三张图右上角INVOICE部分的CUSTOMER NUMBER是2112。
+
+customer_billing_name：Attn: Accounts Payable, Lorillard Tobacco Company，看Bill To部分。
+
+customer_billing_address：420 English Street, P.O. Box 21688, Greensboro, NC, 27420-1688，和Ship To地址一样？因为Ship To也是Lorillard，所以billing和delivery可能相同。
+
+customer_delivery_name：Lorillard Tobacco Company，Ship To的名称。
+
+customer_delivery_address：420 English Street, P.O. Box 21688, Greensboro, NC, 27420-1688，和billing地址相同。
+
+amount_total_net：看SUBTOTAL是18,333.70，因为TAX是0.00，SHIPPING是0.00，所以total是18,333.70，即amount_total_gross也是这个，因为tax是0。所以amount_total_net是18333.70，amount_total_tax是0.00，amount_total_gross是18333.70。
+
+amount_due：可能和total一样？或者看INVOICE TOTAL，比如第二张图INVOICE TOTAL是220,000.00？不对，这里可能混淆了。哦，看每张图的项目，第一张图有一个项目是220,000.00，另外两个是0。然后INVOICE SUBTOTAL在第二张图是220,000.00，TAX 0，SHIPPING 0，INVOICE TOTAL 220,000.00。但下面的SUBTOTAL是18,333.70？哦，看第三张图的底部，SUBTOTAL是18,333.70，TAX 0，SHIPPING 0，TOTAL 18,333.70。这可能是因为三张图是同一份发票的三页？比如第1 of 3，第2 of 3，第3 of 3。看第一张图右上角INVOICE的PAGE是1 of 3，第二张是2 of 3，第三张是3 of 3。所以需要看每页的总金额。比如第一张图的EXTENDED AMOUNT总和是220,000.00（第一个项目）+0+0=220,000.00。然后下面的SUBTOTAL是18,333.70？这可能是因为其他费用？或者可能我搞错了。再仔细看：
+
+第一张图的项目：
+
+1. 订单号AA06Y.7D82 06.BTL，数量ordered 1，shipped 1，unit price 220,000.00，extended amount 220,000.00
+
+2. AA06Y.7D82 06.BTL，数量ordered 3，shipped 1，unit price 0，extended 0
+
+3. AA06Y.7D82 06.BTL，数量ordered 1，shipped 1，unit price 0，extended 0
+
+所以这部分的总和是220,000.00。然后看INVOICE SUBTOTAL在第二张图是220,000.00（因为第二张图的项目4是D58，extended amount 0，而INVOICE SUBTOTAL是220,000.00？不，第二张图的INVOICE SUBTOTAL是220,000.00？看第二张图的INVOICE SUBTOTAL行，下面写的是220,000.00，TAX 0，SHIPPING 0，INVOICE TOTAL 220,000.00。然后底部的SUBTOTAL是18,333.70，这可能是另一部分？或者可能三张图是同一发票的不同部分，总金额是220,000.00加上其他？不对，可能我搞混了。或者看第三张图，第三张图的TERMS是BTL7D82，DUE DATE是7 OF 9 07-MAY-1999，然后项目是“85% OR TINVOICE TOTAL, DUE IN THIS INSTITUTION **”，没有具体项目，所以可能三张图是同一发票的三页，总金额是220,000.00，而底部的18,333.70是其他费用？或者可能18,333.70是服务费之类的？比如第一张图的底部有SUBTOTAL 18,333.70，TAX 0，SHIPPING 0，TOTAL 18,333.70。而项目中的220,000.00是另一个部分？这可能是因为发票分为两部分：一个是220,000.00的 assay 服务，另一个是18,333.70的其他费用？比如可能项目1是220,000.00，然后其他项目是0，而底部的18,333.70是另一个子账单？或者可能我理解错了。现在需要确定每个字段的正确值。
+
+再看schema中的字段：
+
+date_issue：发票的日期，看INVOICE的DATE，三张图都是07-APR-1999，所以date_issue是"07-APR-1999"。
+
+date_due：TERMS中的DUE DATE，是"07-MAY-1999"。
+
+vendor_order_id：PURCHASE ORDER NUMBER，图中是21119，三张图都有，所以vendor_order_id是"21119"。
+
+customer_order_id：SALES ORDER NUMBER，是11248，三张图都有，所以customer_order_id是"11248"。
+
+vendor_name：BioReliance Testing & Development, Inc.，正确。
+
+vendor_address：14920 Brochart Road, Rockville, MD 20850-3349 USA，还有Formerly... 但主要地址是这个，所以vendor_address是"14920 Brochart Road, Rockville, MD 20850-3349 USA"。
+
+customer_id：CUSTOMER NUMBER，图中是2112，三张图右上角INVOICE部分的CUSTOMER NUMBER是2112，所以customer_id是"2112"。
+
+customer_billing_name：Bill To的Attn: Accounts Payable, Lorillard Tobacco Company，所以是"Accounts Payable, Lorillard Tobacco Company"。
+
+customer_billing_address：420 English Street, P.O. Box 21688, Greensboro, NC, 27420-1688，正确。
+
+customer_delivery_name：Ship To的Lorillard Tobacco Company，所以是"Lorillard Tobacco Company"。
+
+customer_delivery_address：和billing地址相同，因为Ship To也是这个地址，所以是"420 English Street, P.O. Box 21688, Greensboro, NC, 27420-1688"。
+
+amount_total_net：看底部的SUBTOTAL是18,333.70，因为TAX是0，所以net是18333.70。另外项目中的220,000.00可能是另一个部分？但看第二张图的INVOICE TOTAL是220,000.00，而底部的SUBTOTAL是18,333.70。这可能是因为发票有两个部分：一个是220,000.00的 assay 服务（可能在项目中），另一个是18,333.70的其他费用（比如管理费等）。但需要看schema中的amount_total_net，可能是指总净额，即所有项目的net总和。或者可能我搞错了，因为三张图是同一发票的三页，总金额应该是220,000.00 + 18,333.70？不，看第一张图的EXTENDED AMOUNT总和是220,000.00（项目1）+0+0=220,000.00。第二张图的项目4是0，INVOICE SUBTOTAL是220,000.00（因为项目4的extended是0，而之前的项目可能在第一页？比如项目1-3在第一页，项目4在第二页。然后第三页可能没有项目。然后底部的SUBTOTAL 18,333.70可能是另一个费用项，比如“Other Charges”？比如第一张图底部有“SUBTOTAL 18,333.70”，而项目中的220,000.00是另一个子账单。所以总金额应该是220,000.00 + 18,333.70？但看第二张图的INVOICE TOTAL是220,000.00，而底部的SUBTOTAL是18,333.70。这可能是因为发票的结构是：项目部分的总和是220,000.00，然后有一个单独的子账单是18,333.70，比如服务费、税费等，但税费是0。所以总金额（gross）是220,000.00 + 18,333.70？但看第三张图的底部SUBTOTAL是18,333.70，TAX 0，SHIPPING 0，TOTAL 18,333.70。而第二张图的INVOICE TOTAL是220,000.00，TAX 0，SHIPPING 0，所以INVOICE TOTAL是220,000.00。这说明可能三张图是同一发票的不同部分，第一页是项目1-3，第二页是项目4，第三页是其他。而总金额应该是所有项目的总和加上底部的18,333.70？这可能不太对。或者可能底部的18,333.70是重复的，或者我误解了。另一种可能是，amount_total_net是18,333.70，因为TAX是0，所以net和gross都是18,333.70，而220,000.00是另一个订单？不，因为三张图是同一发票（PAGE 1 of 3, 2 of 3, 3 of 3），所以应该总金额是220,000.00（项目总和）加上其他？或者可能项目中的220,000.00是唯一的收费项，而底部的18,333.70是错误？或者可能我看反了。再看第一张图的“EXTENDED AMOUNT”列，项目1是220,000.00，项目2是0，项目3是0，所以这部分总和是220,000.00。然后看“INVOICE SUBTOTAL”在第二张图中是220,000.00（因为项目4的EXTENDED是0，而之前的项目总和是220,000.00），然后TAX是0，SHIPPING是0，所以INVOICE TOTAL是220,000.00。而底部的“SUBTOTAL”是18,333.70，这可能是另一个费用，比如“Other Services”或者“Administrative Fee”？比如可能发票有两个部分：一个是220,000.00的 assay 服务，另一个是18,333.70的其他服务，所以总金额是220,000.00 + 18,333.70 = 238,333.70？但看三张图的底部，第三张图的TOTAL是18,333.70，而第二张图的INVOICE TOTAL是220,000.00。这说明可能三张图是分开的？不，因为PAGE是1 of 3，2 of 3，3 of 3，所以是同一发票的三页。可能第一页的项目1是220,000.00，第二页的项目4是另一个服务，但项目4的EXTENDED是0，所以可能项目4是未收费？或者可能项目4的unit price是0，所以没有金额。然后底部的18,333.70是所有项目的总和？比如项目1的220,000.00加上其他项目的费用？不，项目2和3的unit price是0，所以它们的extended是0。项目4的unit price是0，extended是0。所以所有项目的extended总和是220,000.00。然后底部的SUBTOTAL是18,333.70，这可能是另一个费用项，比如“Tax”？但tax是0。或者可能“SUBTOTAL”是项目总和，而“INVOICE TOTAL”是项目总和加上其他？比如第二张图的INVOICE SUBTOTAL是220,000.00，然后TAX 0，SHIPPING 0，所以INVOICE TOTAL是220,000.00。而底部的SUBTOTAL是18,333.70，这可能是另一个子账单，比如“Service Fee”？比如可能发票有两个部分：一个是220,000.00的 assay，另一个是18,333.70的管理费，所以总金额是220,000.00 + 18,333.70 = 238,333.70。但看三张图的底部，第三张图的TOTAL是18,333.70，而第二张图的INVOICE TOTAL是220,000.00。这说明可能我搞混了，或者可能amount_total_net是18,333.70，因为TAX是0，所以amount_total_tax是0.00，amount_total_gross是18,333.70。而220,000.00是另一个订单？不，因为三张图是同一发票，所以可能220,000.00是项目金额，而18,333.70是其他费用，比如折扣或退款？但没有显示。或者可能我错误地认为底部的SUBTOTAL是总金额，而实际上INVOICE TOTAL是总金额。比如第二张图的INVOICE TOTAL是220,000.00，而底部的SUBTOTAL是18,333.70是错误？或者可能底部的SUBTOTAL是另一个部分，比如“Net Amount”而INVOICE TOTAL是“Gross”。比如，假设220,000.00是gross，而net是18,333.70？这显然不合理，因为220k比18k大很多。所以可能我搞反了。或者可能项目中的220,000.00是错误，而实际是18,333.70？不，看项目1的unit price是220,000.00，extended amount是220,000.00，所以这个是正确的。那为什么底部的SUBTOTAL是18,333.70？可能底部的SUBTOTAL是“Other Charges”比如“Shipping”或其他，但shipping是0。或者可能三张图是不同的发票？比如第一页是发票1，第二页是发票2，第三页是发票3？但PAGE是1 of 3，2 of 3，3 of 3，所以是同一发票的三页。现在可能需要重新检查每个字段，可能有些字段在图中没有，或者我漏看了。
+
+另外，tax_detail_net、tax_detail_tax、tax_detail_gross：因为TAX是0.00，所以这三个都是0.00。
+
+amount_due：可能等于amount_total_gross，即18,333.70或者220,000.00？但需要看。或者可能amount_due是客户需要支付的金额，即总金额。如果总金额是220,000.00 + 18,333.70？但不确定。或者可能项目中的220,000.00是唯一的收费项，而底部的18,333.70是重复的，或者我搞错了。另一种可能是，底部的SUBTOTAL是18,333.70，而项目中的220,000.0

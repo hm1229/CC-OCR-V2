@@ -1,0 +1,93 @@
+```latex
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{xeCJK} % For Chinese characters. Requires XeLaTeX or LuaLaTeX.
+\setCJKmainfont{SimSun} % Set a font that supports Chinese characters.
+
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\cfoot{Sheet 1 \hfill (病毒室)}
+
+\begin{document}
+
+\begin{center}
+    \fontsize{16}{18}\selectfont \textbf{Ruijin Hospital Shanghai Jiaotong University School of Medicine} \\
+    \vspace{0.2cm}
+    \fontsize{14}{16}\selectfont \textbf{Clinical Laboratory Report}
+\end{center}
+
+\vspace{0.5cm}
+
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    \begin{tabular}[t]{@{}l@{}}
+        Name : \\
+        Gender : \\
+        Age :
+    \end{tabular}
+    &
+    \begin{tabular}[t]{@{}r@{}}
+        Sample Number: 17143 \\
+        PatientNo/PassportNo : 1320021... \\
+        Birthday: 1 \\
+        Clinical Diagnosis : Regular inspection \\
+        Sample Type : Nasopharynx swab \\
+        Testing Time : 2021-08-14
+    \end{tabular}
+\end{tabular*}
+
+\vspace{0.2cm}
+\noindent Application Section Office : Ruijin Hospital Shanghai Jiaotong University School of Medicine
+\vspace{0.3cm}
+
+\hrule
+\vspace{0.1cm}
+\noindent
+\begin{tabularx}{\textwidth}{@{} l X X X @{}}
+    \textbf{Test Name} & \textbf{Result} & \textbf{Reference Value} & \textbf{Testing Method} \\
+    \hline
+    SARS-COV-2 & Neg(-) & Neg(-) & e.g. Real-time Fluorescent PCR(500copies/ml) \\
+    ORF1AB GENE & Neg(-) & Neg(-) & e.g. Real-time Fluorescent PCR(500copies/ml) \\
+    N GENE & Neg(-) & Neg(-) & e.g. Real-time Fluorescent PCR(500copies/ml) \\
+    E GENE & Neg(-) & Neg(-) & e.g. Real-time Fluorescent PCR(500copies/ml) \\
+\end{tabularx}
+\vspace{0.1cm}
+\hrule
+
+\vspace{0.5cm}
+\noindent \textbf{Statement:}
+\begin{enumerate}
+    \item The testing result may be affected by the sampling time, sampling body part(s) as well as the methodology limitations. The result should be analyzed with clinical manifestations.
+    \item The testing result in this report is only applicable to the delivered specimen.
+\end{enumerate}
+
+\vspace{0.5cm}
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}l@{}}
+    Sampling Time : 21-08-14 09:52 & Reporting Time : 21-08-14 13:26 \\
+    Received Time : 21-08-14 11:03 & Printing Time : 21-08-15 07:59 \\
+\end{tabular*}
+
+\vspace{0.5cm}
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}l@{}}
+    Inspector: [Signature/Stamp] & Auditor: [Signature] \\
+\end{tabular*}
+
+\vspace{0.5cm}
+\noindent The test results are just responsible for the sample;and used only for reference by clinical doctors.
+
+\vfill
+
+\noindent
+\begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+    add.:No.197 Ruijin 2 Road,Huangpu district,Shanghai & Tel.: 8621-64370045 \\
+\end{tabular*}
+
+\end{document}
+```

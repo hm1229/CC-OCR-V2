@@ -1,0 +1,10 @@
+```latex
+\int_{\mathbb{R}^2} \Lambda^{\frac{2}{3}} (u_i \cdot \nabla \theta) \Lambda^{\frac{2}{3}} \theta dx = \int_{\mathbb{R}^2} \Lambda^{\frac{2}{3}} (u_i \partial_i \theta) \Lambda^{\frac{2}{3}} \theta dx \\
+= \int_{\mathbb{R}^2} \Lambda (u_i \partial_i \theta) \Lambda^{\frac{1}{3}} \theta dx \\
+= \int_{\mathbb{R}^2} [\Lambda, u_i] \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx + \int_{\mathbb{R}^2} u_i \Lambda \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx \\
+= \int_{\mathbb{R}^2} [\Lambda, u_i] \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx + \int_{\mathbb{R}^2} \Lambda^{\frac{1}{3}} (u_i \Lambda \partial_i \theta) \Lambda^{\frac{1}{3}} \theta dx \\
+= \int_{\mathbb{R}^2} [\Lambda, u_i] \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx + \int_{\mathbb{R}^2} [\Lambda^{\frac{1}{3}}, u_i] \Lambda \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx \\
++ \int_{\mathbb{R}^2} u_i \partial_i \Lambda^{\frac{2}{3}} \theta \Lambda^{\frac{2}{3}} \theta dx \\
+= \int_{\mathbb{R}^2} [\Lambda, u_i] \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx + \int_{\mathbb{R}^2} [\Lambda^{\frac{1}{3}}, u_i] \Lambda \partial_i \theta \Lambda^{\frac{1}{3}} \theta dx \\
+\triangleq I_1 + I_2.
+```

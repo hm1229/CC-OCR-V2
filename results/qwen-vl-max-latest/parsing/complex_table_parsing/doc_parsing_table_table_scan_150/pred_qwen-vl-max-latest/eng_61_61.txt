@@ -1,0 +1,245 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ELECTRICAL CHARACTERISTICS</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: left;
+        }
+        th {
+            background-color: #d3e0f0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <img src="awinic_logo.png" alt="awinic logo" style="height: 40px;">
+            <span style="color: #5cb85c; font-weight: bold;">上海艾为电子技术股份有限公司</span><br>
+            <span style="font-size: 10px;">shanghai awinic technology co., ltd.</span>
+        </div>
+        <div>
+            <strong>AW35121</strong><br>
+            Jan. 2023 V1.1
+        </div>
+    </div>
+
+    <h2 style="color: blue;">ELECTRICAL CHARACTERISTICS</h2>
+    <p>TA = -40°C to 85°C unless otherwise noted. Typical values are guaranteed for VIN = 5V, CIN = 1µF, IINS ≤ 1.5A and TA = 25°C.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>PARAMETER</th>
+                <th>TEST CONDITION</th>
+                <th>MIN</th>
+                <th>TYP</th>
+                <th>MAX</th>
+                <th>UNIT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="6">INPUT CURRENTS</td>
+            </tr>
+            <tr>
+                <td rowspan="4">I<sub>Q</sub></td>
+                <td rowspan="4">Input quiescent current</td>
+                <td>VIN=3.3V, VEN=3.3V, IOUT=0A, TA=25°C</td>
+                <td>2</td>
+                <td>12</td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=3.3V, VEN=3.3V, IOUT=0A, TA=85°C</td>
+                <td>9</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=5.5V, VEN=5.5V, IOUT=0A, TA=25°C</td>
+                <td>5</td>
+                <td>25</td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=5.5V, VEN=5.5V, IOUT=0A, TA=85°C</td>
+                <td>10</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td rowspan="8">I<sub>SD</sub></td>
+                <td rowspan="8">Shutdown current from IN to GND</td>
+                <td>VIN=1.2V, VEN=0V, TA=25°C</td>
+                <td>2</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=1.8V, VEN=0V, TA=25°C</td>
+                <td>2</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=3.3V, VEN=0V, TA=25°C</td>
+                <td>4</td>
+                <td>44</td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=4.0V, VEN=0V, TA=25°C</td>
+                <td>7</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=4.5V, VEN=0V, TA=25°C</td>
+                <td>22</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=5.0V, VEN=0V, TA=25°C</td>
+                <td>62</td>
+                <td>970</td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=5.0V, VEN=0V, TA=55°C</td>
+                <td>90</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=5.0V, VEN=0V, TA=85°C</td>
+                <td>350</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>VIN=5.5V, VEN=0V, TA=25°C</td>
+                <td>171</td>
+                <td></td>
+                <td>nA</td>
+            </tr>
+            <tr>
+                <td>I<sub>LEAKEN</sub></td>
+                <td>EN pin leakage current</td>
+                <td>VIN=0V, VEN=5.0V</td>
+                <td></td>
+                <td>1.5</td>
+                <td>µA</td>
+            </tr>
+            <tr>
+                <td>R<sub>EN</sub></td>
+                <td>EN pin pull down resistor</td>
+                <td>VEN=5.0V</td>
+                <td></td>
+                <td>6.85</td>
+                <td>MΩ</td>
+            </tr>
+            <tr>
+                <td colspan="6">POWER SWITCH</td>
+            </tr>
+            <tr>
+                <td rowspan="6">R<sub>dson</sub></td>
+                <td rowspan="6">Internal switch MOSFET on-state resistance</td>
+                <td>VIN=5.5V, VEN=high, IOUT=200mA, TA=25°C</td>
+                <td>50</td>
+                <td></td>
+                <td rowspan="6">mΩ</td>
+            </tr>
+            <tr>
+                <td>VIN=4.2V, VEN=high, IOUT=200mA, TA=25°C</td>
+                <td>56</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>VIN=3.3V, VEN=high, IOUT=200mA, TA=25°C</td>
+                <td>64</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>VIN=3.0V, VEN=high, IOUT=200mA, TA=25°C</td>
+                <td>68</td>
+                <td>120</td>
+            </tr>
+            <tr>
+                <td>VIN=1.8V, VEN=high, IOUT=200mA, TA=25°C</td>
+                <td>109</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>VIN=1.2V, VEN=high, IOUT=200mA, TA=25°C</td>
+                <td>225</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>R<sub>DIS</sub></td>
+                <td>Output discharge resistance</td>
+                <td>VIN=3.3V, VEN=low, TA=25°C, IOUT Sinking 2mA</td>
+                <td>50</td>
+                <td>75</td>
+                <td>100</td>
+                <td>Ω</td>
+            </tr>
+            <tr>
+                <td>t<sub>r</sub></td>
+                <td>Output rise time</td>
+                <td>VIN=3.6V, COUT=1µF, ROUT=30Ω</td>
+                <td></td>
+                <td>165</td>
+                <td></td>
+                <td>µs</td>
+            </tr>
+            <tr>
+                <td>t<sub>f</sub></td>
+                <td>Output fall time</td>
+                <td>VIN=3.6V, COUT=1µF, ROUT=30Ω</td>
+                <td></td>
+                <td>42</td>
+                <td></td>
+                <td>µs</td>
+            </tr>
+            <tr>
+                <td>t<sub>ON</sub></td>
+                <td>Switch turn on time</td>
+                <td>VIN=3.6V, COUT=1µF, ROUT=30Ω</td>
+                <td></td>
+                <td>238</td>
+                <td></td>
+                <td>µs</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <div>www.awinic.com</div>
+        <div>5</div>
+        <div>©2023 Shanghai Awinic Technology Co., Ltd. All Rights Reserved</div>
+    </div>
+</body>
+</html>
+```

@@ -1,0 +1,24 @@
+To find the region of the text '5%' in the image, we need to identify the exact location of the text and then normalize these coordinates based on the image's width and height.
+
+1. **Identify the Coordinates:**
+   - The text '5%' appears in the section where the items are listed, specifically next to the item "铝碳酸镁咀嚼片".
+
+2. **Estimate the Coordinates:**
+   - The text '5%' is located approximately in the middle-right section of the image.
+   - Let's assume the bounding box coordinates for the text '5%' are roughly:
+     - Top-left corner: (x1, y1)
+     - Bottom-right corner: (x2, y2)
+
+3. **Normalize the Coordinates:**
+   - The image width and height need to be considered for normalization. Let's assume the image dimensions are approximately 1000 pixels wide and 600 pixels tall (these are typical dimensions for such documents).
+
+4. **Normalized Coordinates Calculation:**
+   - If the bounding box coordinates are approximately (450, 200) for the top-left and (500, 220) for the bottom-right, the normalized coordinates would be:
+     - x1 = 450 / 1000 = 0.45
+     - y1 = 200 / 600 = 0.333
+     - x2 = 500 / 1000 = 0.5
+     - y2 = 220 / 600 = 0.367
+
+Thus, the normalized coordinates of the bounding box for the text '5%' are approximately:
+
+(0.45, 0.333, 0.5, 0.367)

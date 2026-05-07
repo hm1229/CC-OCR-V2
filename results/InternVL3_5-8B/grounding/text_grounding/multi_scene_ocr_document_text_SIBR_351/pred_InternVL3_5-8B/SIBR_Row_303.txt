@@ -1,0 +1,29 @@
+To determine the coordinates of the text '10' in the image, we need to identify the bounding box that contains this text and then normalize these coordinates based on the image's width and height.
+
+1. **Identify the text '10':**
+   The text '10' appears in the section labeled "社会保障号码" (Social Security Number).
+
+2. **Locate the bounding box:**
+   The text '10' is located within a rectangular area in the upper left part of the form.
+
+3. **Estimate the coordinates:**
+   - The top-left corner of the bounding box containing '10' is approximately at (x1, y1).
+   - The bottom-right corner of the bounding box is approximately at (x2, y2).
+
+4. **Normalize the coordinates:**
+   - The image width is approximately 1000 pixels.
+   - The image height is approximately 600 pixels.
+
+   Let's assume the bounding box coordinates are roughly:
+   - Top-left corner: (x1, y1) ≈ (100, 150)
+   - Bottom-right corner: (x2, y2) ≈ (150, 170)
+
+   Normalizing these coordinates:
+   - x1 = 100 / 1000 = 0.1
+   - y1 = 150 / 600 = 0.25
+   - x2 = 150 / 1000 = 0.15
+   - y2 = 170 / 600 = 0.283
+
+Thus, the normalized coordinates of the bounding box are:
+
+(x1, y1, x2, y2) = (0.1, 0.25, 0.15, 0.283)

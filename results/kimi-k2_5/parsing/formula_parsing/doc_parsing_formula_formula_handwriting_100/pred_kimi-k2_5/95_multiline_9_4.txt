@@ -1,0 +1,14 @@
+```latex
+\frac{\partial \alpha}{\partial x}(x,t) = -\int \frac{Z_{xx}(x)-Z_{xx}(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle dy \\
+- \int \frac{Z_{xx}(x)-Z_{xx}(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \log(|Z(x)-Z(x-y)|) dy \\
++ \alpha \int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle \log(|Z(x)-Z(x-y)|) dy \\
+\frac{\partial}{\partial x}\left(\frac{Z_{xx}(x)}{C_\alpha}\right) = -2\int \frac{Z_{xx}(x)-Z_{xx}(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle dy \\
+- \int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle^2 dy \\
++ (2\alpha+2)\int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle^2 dy \\
+- \int \frac{Z_{xx}(x)-Z_{xx}(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_{xx}(x)-Z_{xx}(x-y), Z(x)-Z(x-y)\rangle dy \\
+- \int \frac{Z_{xx}(x)-Z_{xx}(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \log(|Z(x)-Z(x-y)|) dy \\
++ 2\alpha \int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle \log(|Z(x)-Z(x-y)|) dy \\
++ \alpha \int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} |Z_x(x)-Z_x(x-y)|^2 \log(|Z(x)-Z(x-y)|) dy \\
+- \alpha(\alpha+2)\int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{4+\alpha}} \langle Z_x(x)-Z_x(x-y), Z(x)-Z(x-y)\rangle^2 \log(|Z(x)-Z(x-y)|) dy \\
++ \alpha \int \frac{Z_x(x)-Z_x(x-y)}{|Z(x)-Z(x-y)|^{2+\alpha}} \langle Z_{xx}(x)-Z_{xx}(x-y), Z(x)-Z(x-y)\rangle \log(|Z(x)-Z(x-y)|) dy.
+```

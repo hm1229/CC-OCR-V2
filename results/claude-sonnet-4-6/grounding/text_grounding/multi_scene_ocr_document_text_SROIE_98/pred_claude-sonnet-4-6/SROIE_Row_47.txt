@@ -1,0 +1,30 @@
+I need to identify all instances of "5.00" in the receipt and provide their locations.
+
+There are multiple instances of "5.00" in the image:
+
+1. "5.00 SR" in the PVC WALLPLUG line item (Total column)
+2. "5.00" in the Type 1 Total line
+3. "5.00" in Total Inclusive GST line
+4. "5.00" in CASH line
+5. "5.00" in GST Summary Total(RM) column
+
+Let me focus on the most prominent/first instance of "5.00" which appears in the item line:
+
+For the "5.00 SR" in the first item line:
+(620, 390, 780, 420)
+
+For the Type 1 Total "5.00":
+(620, 435, 750, 460)
+
+For "Total Inclusive GST: 5.00":
+(620, 555, 750, 580)
+
+For "CASH 5.00":
+(620, 590, 750, 615)
+
+For GST Summary "5.00":
+(680, 700, 780, 725)
+
+Since the question asks for "the region of the text '5.00'" (singular), I'll provide the most prominent one - the Total Inclusive GST amount:
+
+(635, 553, 755, 578)

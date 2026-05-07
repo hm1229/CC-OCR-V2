@@ -1,0 +1,905 @@
+Here is the HTML transcription of the table from the image, using `<tr>` and `<td>` tags to reflect the layout. The table has 36 data rows plus a header row, with 7 columns: “Serial”, “0” (split into two sub-columns), “1” (split into two sub-columns), “2”, and “B” (split into two sub-columns). Since the image shows merged headers for columns 0, 1, and B (each spanning two sub-columns), we’ll represent that using `colspan` in the header.
+
+Note: In the image, column “0” appears to have two values per row (e.g., 0.960 and 1.060 for Serial 1), similarly for “1” and “B”. Column “2” has only one value per row. So we treat “0”, “1”, and “B” as each having two sub-columns, while “2” is single.
+
+We’ll structure the header as:
+
+- Row 1: “Serial” | “0” (colspan=2) | “1” (colspan=2) | “2” | “B” (colspan=2)
+- Row 2: (empty for Serial) | sub-col1 | sub-col2 | sub-col1 | sub-col2 | (empty for 2) | sub-col1 | sub-col2
+
+But since the image doesn’t show explicit sub-header labels, we’ll just use empty cells or omit them — however, to preserve structure, we’ll include a second header row with blank cells under the main headers except for “2”.
+
+Actually, looking closely at the image: the header row says:
+
+```
+Serial | 0     |       | 1     |       | 2 | B     |
+       |       |       |       |       |   |       |
+```
+
+Wait — no, actually, in the image, the header is:
+
+Top row:  
+`Serial | 0 |   | 1 |   | 2 | B |`
+
+But visually, under “0”, there are two columns of numbers; same for “1” and “B”. And “2” has only one column.
+
+So the correct interpretation is:
+
+- Column 1: Serial
+- Columns 2–3: under header “0”
+- Columns 4–5: under header “1”
+- Column 6: under header “2”
+- Columns 7–8: under header “B”
+
+Thus, total 8 columns.
+
+Header row 1:
+- Serial (rowspan=2)
+- 0 (colspan=2)
+- 1 (colspan=2)
+- 2 (rowspan=2)
+- B (colspan=2)
+
+Header row 2:
+- (nothing under Serial or 2)
+- two empty cells under 0
+- two empty cells under 1
+- two empty cells under B
+
+But since the image doesn’t label the sub-columns, we can leave them blank.
+
+Alternatively, to match the visual exactly, we can do:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Serial</th>
+      <th colspan="2">0</th>
+      <th colspan="2">1</th>
+      <th rowspan="2">2</th>
+      <th colspan="2">B</th>
+    </tr>
+    <tr>
+      <!-- empty cells for sub-columns -->
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    ... 36 rows ...
+  </tbody>
+</table>
+```
+
+Now, transcribing the data row by row.
+
+I’ll go row by row, copying the handwritten values as accurately as possible. Some digits are ambiguous (e.g., 0 vs 6, 1 vs 7, etc.), but I’ll do my best based on context and handwriting style.
+
+Let’s begin:
+
+Row 1: Serial=1 → 0.960, 1.060 | 1.888, 2.133 | (blank? Wait, column 2 is present — in row 1, column 2 is empty? Looking at image: for row 1, under “2” it’s blank? Actually, no — in the image, for row 1, under “2” there is nothing written? Let me check.
+
+Looking at the image:
+
+For Serial 1:
+- 0: 0.960 and 1.060
+- 1: 1.888 and 2.133
+- 2: [blank?] — actually, in the image, for row 1, under “2” it seems empty? But for row 2, under “2” it’s also empty? Wait no — let's look again.
+
+Actually, in the image, column “2” has values starting from row 1? Let me re-examine.
+
+Upon close inspection of the image:
+
+In row 1 (Serial 1):
+- Under “0”: 0.960 and 1.060
+- Under “1”: 1.888 and 2.133
+- Under “2”: [no value written? Or is it implied?] — actually, looking at the grid, for row 1, the cell under “2” is empty? But for row 2, same? That can't be right.
+
+Wait — I think I misread. Let me look at the actual image description.
+
+The user provided an image, and in the image, for each row, there are values under:
+
+- Serial
+- Then two columns under "0"
+- Then two columns under "1"
+- Then one column under "2"
+- Then two columns under "B"
+
+And for row 1, under "2", it appears to be blank? But that doesn't make sense because later rows have values.
+
+Actually, looking at row 1 in the image: after "1.888 2.133" (under 1), then under "2" it's blank, then under "B" it's "1.508 1.708".
+
+Similarly, row 2: under "2" is blank? No — wait, in row 2, under "2" it's also blank? That can't be.
+
+Perhaps I'm misaligning. Let me count the columns in the image.
+
+From left to right:
+
+Column 1: Serial number (1 to 36)
+
+Column 2: first value under "0"
+
+Column 3: second value under "0"
+
+Column 4: first value under "1"
+
+Column 5: second value under "1"
+
+Column 6: value under "2" — but in many rows, this is blank? Or is it that "2" is not always filled?
+
+Looking at row 1: after column 5 (2.133), then column 6 is empty, then column 7 and 8 are 1.508 and 1.708.
+
+Row 2: same — column 6 empty.
+
+Row 3: column 6 empty.
+
+...
+
+Row 13: under "2" it's 1.756? Let's see.
+
+Actually, upon closer inspection of the image, for rows 1 to 12, the "2" column is empty? But that seems odd.
+
+Perhaps the "2" column is only filled for some rows? Or maybe I'm misreading the grid.
+
+Another possibility: the "2" column is the sixth column, and in the image, for row 1, it's blank, but for row 13, it's 1.756, etc.
+
+Let me list a few rows to verify.
+
+From the image:
+
+Row 1: Serial 1 | 0.960 | 1.060 | 1.888 | 2.133 | [blank] | 1.508 | 1.708
+
+Row 2: Serial 2 | 0.983 | 1.149 | 1.698 | 2.418 | [blank] | 1.567 | 1.721
+
+Row 3: Serial 3 | 1.044 | 1.189 | 1.894 | 2.511 | [blank] | 1.725 | 1.808
+
+Row 4: Serial 4 | 0.975 | 1.177 | 1.623 | 2.184 | [blank] | 1.530 | 1.661
+
+Row 5: Serial 5 | 0.469 | 1.051 | 1.786 | 2.124 | [blank] | 1.519 | 1.630
+
+Row 6: Serial 6 | 0.454 | 0.451 | 1.747 | 1.983 | [blank] | 1.503 | 1.707
+
+Row 7: Serial 7 | 1.116 | 1.049 | 2.184 | 1.944 | [blank] | 1.869 | 1.517
+
+Row 8: Serial 8 | 1.135 | 1.195 | 2.353 | 2.363 | [blank] | 1.979 | 1.630
+
+Row 9: Serial 9 | 1.186 | 1.087 | 2.437 | 2.255 | [blank] | 1.938 | 1.556
+
+Row 10: Serial 10 | 1.160 | 1.062 | 2.364 | 2.027 | [blank] | 1.904 | 1.451
+
+Row 11: Serial 11 | 1.206 | 1.032 | 2.726 | 1.964 | [blank] | 2.014 | 1.477
+
+Row 12: Serial 12 | 0.492 | 1.105 | 2.012 | 2.187 | [blank] | 1.629 | 1.715
+
+Row 13: Serial 13 | 1.202 | 1.190 | 1.814 | 1.756 | [blank] | 1.538 | 1.388  — wait, here under "1" it's 1.814 and 1.756, so "2" is still blank? But in the image, for row 13, under "2" it might be blank.
+
+Actually, looking at row 13 in the image: after "1.814 1.756" (under 1), then under "2" it's blank, then under "B" it's 1.538 and 1.388.
+
+But for row 14: Serial 14 | 1.322 | 1.437 | 3.054 | 2.993 | [blank] | 1.842 | 1.618
+
+Still blank under "2".
+
+Row 15: Serial 15 | 1.300 | 1.537 | 2.548 | 3.561 | [blank] | 1.533 | 1.707
+
+Row 16: Serial 16 | 1.569 | 1.377 | 3.966 | 3.020 | [blank] | 2.108 | 1.640
+
+Row 17: Serial 17 | 0.696 | 1.060 | 3.511 | 4.199 | [blank] | 2.869 | 2.219
+
+Row 18: Serial 18 | 0.583 | 1.492 | 2.533 | 4.133 | [blank] | 1.679 | 2.409
+
+Row 19: Serial 19 | 1.135 | 1.271 | 1.564 | 2.076 | [blank] | 1.412 | 1.596
+
+Row 20: Serial 20 | 1.228 | 1.295 | 2.387 | 2.191 | [blank] | 1.660 | 1.524
+
+Row 21: Serial 21 | 1.164 | 1.348 | 1.786 | 2.179 | [blank] | 1.387 | 1.554
+
+Row 22: Serial 22 | 1.247 | 1.164 | 2.278 | 1.865 | [blank] | 1.616 | 1.375
+
+Row 23: Serial 23 | 0.631 | 1.287 | 2.841 | 2.485 | [blank] | 1.741 | 1.664
+
+Row 24: Serial 24 | 1.141 | 1.167 | 1.742 | 1.952 | [blank] | 1.464 | 1.506
+
+Row 25: Serial 25 | 1.686 | 1.738 | 2.007 | 2.570 | [blank] | 1.903 | 2.022
+
+Row 26: Serial 26 | 1.790 | 2.050 | 3.081 | 5.787 | [blank] | 2.213 | 2.527
+
+Row 27: Serial 27 | 2.004 | 1.867 | 4.095 | 2.777 | [blank] | 2.495 | 2.024
+
+Row 28: Serial 28 | 2.414 | 2.131 | 9.605 | 7.500 | [blank] | 3.291 | 3.352
+
+Row 29: Serial 29 | 1.187 | 1.845 | 27.703 | 4.258 | [blank] | 5.379 | 2.607
+
+Row 30: Serial 30 | 0.903 | 1.779 | 3.838 | 2.737 | [blank] | 2.385 | 2.322
+
+Row 31: Serial 31 | 1.827 | 1.851 | 2.728 | 3.468 | [blank] | 2.213 | 2.222
+
+Row 32: Serial 32 | 1.928 | 1.821 | 3.859 | 3.135 | [blank] | 2.434 | 2.198
+
+Row 33: Serial 33 | 2.087 | 1.763 | 3.997 | 3.153 | [blank] | 2.388 | 1.919
+
+Row 34: Serial 34 | 2.451 | 1.775 | 7.013 | 2.380 | [blank] | 2.820 | 2.014
+
+Row 35: Serial 35 | 0.958 | 2.243 | 6.318 | 9.745 | [blank] | 2.720 | 5.161
+
+Row 36: Serial 36 | 0.900 | 1.775 | 3.342 | 2.478 | [blank] | 2.221 | 2.206
+
+In all rows, the "2" column is blank? That seems suspicious. Perhaps in the image, the "2" column is not used, or maybe it's a mistake.
+
+But looking back at the image, for row 13, under "1" it's "1.814" and "1.756", and then under "2" it's blank, but perhaps "2" is meant to be the next column, but in the header, "2" is a single column, and in the data, it's empty for all rows? That doesn't make sense.
+
+Another possibility: perhaps the "2" column is the sixth column, and in the image, for some rows, it has values, but in my initial reading, I missed them.
+
+Let me look at row 13 again in the image: after "1.814 1.756" (which are under "1"), then the next cell is under "2", and it's empty, then under "B" it's "1.538 1.388".
+
+But for row 14: "3.054 2.993" under "1", then under "2" empty, then "1.842 1.618" under "B".
+
+Perhaps the "2" column is intentionally left blank for all rows? Or maybe it's a typo in the image.
+
+Maybe "2" is not a data column but part of the header? No, the header has "2" as a separate column.
+
+Another idea: perhaps the "2" column is for a different purpose, and in this dataset, it's not filled, so we leave it as empty string.
+
+To be faithful to the image, I'll transcribe it as is, with the "2" column being empty for all rows.
+
+But let's double-check with a row where it might have a value. For example, row 28: under "1" it's "9.605 7.500", then under "2" it's blank, then under "B" "3.291 3.352".
+
+Similarly, row 29: "27.703 4.258" under "1", then blank under "2", then "5.379 2.607" under "B".
+
+So yes, it seems the "2" column is empty for all 36 rows.
+
+Perhaps it's a placeholder or for future use.
+
+So in the HTML, for each data row, the sixth <td> (under "2") will be empty.
+
+Now, let's write the HTML.
+
+I'll create the table with the header as described, and then 36 data rows.
+
+For accuracy, I'll copy the values as written, including any corrections or strikethroughs if visible, but in this case, most are clear.
+
+Some values have corrections, e.g., in row 13, under "1", it was "1.814" but might have been corrected, but in the image, it's written as "1.814" and "1.756", so I'll use that.
+
+In row 24, under "1", it's "1.742" and "1.952", but "1.952" might be "1.952" or "1.952" — looks like 1.952.
+
+In row 33, under "1", it's "3.997" and "3.153", but "3.153" might be "3.153" or "3.153" — looks like 3.153.
+
+In row 34, under "1", "7.013" and "2.380".
+
+In row 35, under "1", "6.318" and "9.745".
+
+In row 36, under "1", "3.342" and "2.478".
+
+Also, in row 1, under "0", "0.960" and "1.060" — the "0.960" might be "0.960" or "0.960", but it's written as 0.960.
+
+Similarly, row 2: "0.983" and "1.149".
+
+Row 3: "1.044" and "1.189".
+
+Row 4: "0.975" and "1.177".
+
+Row 5: "0.469" and "1.051".
+
+Row 6: "0.454" and "0.451" — note, both are less than 1.
+
+Row 7: "1.116" and "1.049".
+
+Row 8: "1.135" and "1.195".
+
+Row 9: "1.186" and "1.087".
+
+Row 10: "1.160" and "1.062".
+
+Row 11: "1.206" and "1.032".
+
+Row 12: "0.492" and "1.105".
+
+Row 13: "1.202" and "1.190".
+
+Row 14: "1.322" and "1.437" — the "1.322" might be "1.322" or "1.322", but in image, it's "1.322" with a dot, so 1.322.
+
+In row 14, under "0", it's "1.322" and "1.437", but in the image, the first value is "1.322" with a small circle or something, but I think it's 1.322.
+
+Similarly, row 15: "1.300" and "1.537".
+
+Row 16: "1.569" and "1.377".
+
+Row 17: "0.696" and "1.060".
+
+Row 18: "0.583" and "1.492".
+
+Row 19: "1.135" and "1.271".
+
+Row 20: "1.228" and "1.295".
+
+Row 21: "1.164" and "1.348".
+
+Row 22: "1.247" and "1.164".
+
+Row 23: "0.631" and "1.287".
+
+Row 24: "1.141" and "1.167".
+
+Row 25: "1.686" and "1.738".
+
+Row 26: "1.790" and "2.050".
+
+Row 27: "2.004" and "1.867".
+
+Row 28: "2.414" and "2.131".
+
+Row 29: "1.187" and "1.845".
+
+Row 30: "0.903" and "1.779".
+
+Row 31: "1.827" and "1.851".
+
+Row 32: "1.928" and "1.821".
+
+Row 33: "2.087" and "1.763".
+
+Row 34: "2.451" and "1.775".
+
+Row 35: "0.958" and "2.243".
+
+Row 36: "0.900" and "1.775".
+
+For "1" column:
+
+Row 1: "1.888" and "2.133"
+
+Row 2: "1.698" and "2.418"
+
+Row 3: "1.894" and "2.511"
+
+Row 4: "1.623" and "2.184"
+
+Row 5: "1.786" and "2.124"
+
+Row 6: "1.747" and "1.983"
+
+Row 7: "2.184" and "1.944" — note, "2.184" might be "2.184" or "2.184", but in image, it's "2.184" for the first, and "1.944" for the second.
+
+In row 7, under "1", it's "2.184" and "1.944", but "2.184" might be "2.184" or "2.184", but it's written as 2.184.
+
+Row 8: "2.353" and "2.363"
+
+Row 9: "2.437" and "2.255"
+
+Row 10: "2.364" and "2.027"
+
+Row 11: "2.726" and "1.964"
+
+Row 12: "2.012" and "2.187"
+
+Row 13: "1.814" and "1.756" — in image, it's "1.814" and "1.756", but "1.814" might be "1.814" or "1.814", and "1.756" is clear.
+
+Row 14: "3.054" and "2.993"
+
+Row 15: "2.548" and "3.561"
+
+Row 16: "3.966" and "3.020"
+
+Row 17: "3.511" and "4.199"
+
+Row 18: "2.533" and "4.133"
+
+Row 19: "1.564" and "2.076"
+
+Row 20: "2.387" and "2.191"
+
+Row 21: "1.786" and "2.179"
+
+Row 22: "2.278" and "1.865"
+
+Row 23: "2.841" and "2.485"
+
+Row 24: "1.742" and "1.952" — "1.952" might be "1.952" or "1.952", but in image, it's "1.952".
+
+Row 25: "2.007" and "2.570"
+
+Row 26: "3.081" and "5.787"
+
+Row 27: "4.095" and "2.777"
+
+Row 28: "9.605" and "7.500"
+
+Row 29: "27.703" and "4.258" — "27.703" is large, but written as such.
+
+Row 30: "3.838" and "2.737"
+
+Row 31: "2.728" and "3.468"
+
+Row 32: "3.859" and "3.135"
+
+Row 33: "3.997" and "3.153" — "3.153" might be "3.153" or "3.153", but in image, it's "3.153".
+
+Row 34: "7.013" and "2.380"
+
+Row 35: "6.318" and "9.745"
+
+Row 36: "3.342" and "2.478"
+
+For "B" column:
+
+Row 1: "1.508" and "1.708"
+
+Row 2: "1.567" and "1.721"
+
+Row 3: "1.725" and "1.808"
+
+Row 4: "1.530" and "1.661"
+
+Row 5: "1.519" and "1.630"
+
+Row 6: "1.503" and "1.707"
+
+Row 7: "1.869" and "1.517"
+
+Row 8: "1.979" and "1.630"
+
+Row 9: "1.938" and "1.556"
+
+Row 10: "1.904" and "1.451"
+
+Row 11: "2.014" and "1.477"
+
+Row 12: "1.629" and "1.715"
+
+Row 13: "1.538" and "1.388"
+
+Row 14: "1.842" and "1.618"
+
+Row 15: "1.533" and "1.707"
+
+Row 16: "2.108" and "1.640"
+
+Row 17: "2.869" and "2.219" — in image, "2.869" might be "2.869" or "2.869", but it's "2.869".
+
+Row 18: "1.679" and "2.409"
+
+Row 19: "1.412" and "1.596"
+
+Row 20: "1.660" and "1.524"
+
+Row 21: "1.387" and "1.554"
+
+Row 22: "1.616" and "1.375"
+
+Row 23: "1.741" and "1.664"
+
+Row 24: "1.464" and "1.506"
+
+Row 25: "1.903" and "2.022"
+
+Row 26: "2.213" and "2.527"
+
+Row 27: "2.495" and "2.024"
+
+Row 28: "3.291" and "3.352"
+
+Row 29: "5.379" and "2.607"
+
+Row 30: "2.385" and "2.322"
+
+Row 31: "2.213" and "2.222"
+
+Row 32: "2.434" and "2.198"
+
+Row 33: "2.388" and "1.919"
+
+Row 34: "2.820" and "2.014"
+
+Row 35: "2.720" and "5.161"
+
+Row 36: "2.221" and "2.206"
+
+Now, for the "2" column, all are empty, so we'll put an empty <td>.
+
+Also, in the header, we have to handle the colspan and rowspan.
+
+Let's write the HTML code.
+
+Note: In the image, there is text at the top left: "2539/09 M7GE", but that's outside the table, so we won't include it in the table.
+
+The table starts with the header.
+
+So, here is the complete HTML:
+
+```html
+<table border="1">
+  <thead>
+    <tr>
+      <th rowspan="2">Serial</th>
+      <th colspan="2">0</th>
+      <th colspan="2">1</th>
+      <th rowspan="2">2</th>
+      <th colspan="2">B</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>0.960</td>
+      <td>1.060</td>
+      <td>1.888</td>
+      <td>2.133</td>
+      <td></td>
+      <td>1.508</td>
+      <td>1.708</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.983</td>
+      <td>1.149</td>
+      <td>1.698</td>
+      <td>2.418</td>
+      <td></td>
+      <td>1.567</td>
+      <td>1.721</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1.044</td>
+      <td>1.189</td>
+      <td>1.894</td>
+      <td>2.511</td>
+      <td></td>
+      <td>1.725</td>
+      <td>1.808</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>0.975</td>
+      <td>1.177</td>
+      <td>1.623</td>
+      <td>2.184</td>
+      <td></td>
+      <td>1.530</td>
+      <td>1.661</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.469</td>
+      <td>1.051</td>
+      <td>1.786</td>
+      <td>2.124</td>
+      <td></td>
+      <td>1.519</td>
+      <td>1.630</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.454</td>
+      <td>0.451</td>
+      <td>1.747</td>
+      <td>1.983</td>
+      <td></td>
+      <td>1.503</td>
+      <td>1.707</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>1.116</td>
+      <td>1.049</td>
+      <td>2.184</td>
+      <td>1.944</td>
+      <td></td>
+      <td>1.869</td>
+      <td>1.517</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>1.135</td>
+      <td>1.195</td>
+      <td>2.353</td>
+      <td>2.363</td>
+      <td></td>
+      <td>1.979</td>
+      <td>1.630</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>1.186</td>
+      <td>1.087</td>
+      <td>2.437</td>
+      <td>2.255</td>
+      <td></td>
+      <td>1.938</td>
+      <td>1.556</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>1.160</td>
+      <td>1.062</td>
+      <td>2.364</td>
+      <td>2.027</td>
+      <td></td>
+      <td>1.904</td>
+      <td>1.451</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>1.206</td>
+      <td>1.032</td>
+      <td>2.726</td>
+      <td>1.964</td>
+      <td></td>
+      <td>2.014</td>
+      <td>1.477</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>0.492</td>
+      <td>1.105</td>
+      <td>2.012</td>
+      <td>2.187</td>
+      <td></td>
+      <td>1.629</td>
+      <td>1.715</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>1.202</td>
+      <td>1.190</td>
+      <td>1.814</td>
+      <td>1.756</td>
+      <td></td>
+      <td>1.538</td>
+      <td>1.388</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>1.322</td>
+      <td>1.437</td>
+      <td>3.054</td>
+      <td>2.993</td>
+      <td></td>
+      <td>1.842</td>
+      <td>1.618</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>1.300</td>
+      <td>1.537</td>
+      <td>2.548</td>
+      <td>3.561</td>
+      <td></td>
+      <td>1.533</td>
+      <td>1.707</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td>1.569</td>
+      <td>1.377</td>
+      <td>3.966</td>
+      <td>3.020</td>
+      <td></td>
+      <td>2.108</td>
+      <td>1.640</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td>0.696</td>
+      <td>1.060</td>
+      <td>3.511</td>
+      <td>4.199</td>
+      <td></td>
+      <td>2.869</td>
+      <td>2.219</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>0.583</td>
+      <td>1.492</td>
+      <td>2.533</td>
+      <td>4.133</td>
+      <td></td>
+      <td>1.679</td>
+      <td>2.409</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td>1.135</td>
+      <td>1.271</td>
+      <td>1.564</td>
+      <td>2.076</td>
+      <td></td>
+      <td>1.412</td>
+      <td>1.596</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>1.228</td>
+      <td>1.295</td>
+      <td>2.387</td>
+      <td>2.191</td>
+      <td></td>
+      <td>1.660</td>
+      <td>1.524</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td>1.164</td>
+      <td>1.348</td>
+      <td>1.786</td>
+      <td>2.179</td>
+      <td></td>
+      <td>1.387</td>
+      <td>1.554</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td>1.247</td>
+      <td>1.164</td>
+      <td>2.278</td>
+      <td>1.865</td>
+      <td></td>
+      <td>1.616</td>
+      <td>1.375</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td>0.631</td>
+      <td>1.287</td>
+      <td>2.841</td>
+      <td>2.485</td>
+      <td></td>
+      <td>1.741</td>
+      <td>1.664</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td>1.141</td>
+      <td>1.167</td>
+      <td>1.742</td>
+      <td>1.952</td>
+      <td></td>
+      <td>1.464</td>
+      <td>1.506</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td>1.686</td>
+      <td>1.738</td>
+      <td>2.007</td>
+      <td>2.570</td>
+      <td></td>
+      <td>1.903</td>
+      <td>2.022</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td>1.790</td>
+      <td>2.050</td>
+      <td>3.081</td>
+      <td>5.787</td>
+      <td></td>
+      <td>2.213</td>
+      <td>2.527</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td>2.004</td>
+      <td>1.867</td>
+      <td>4.095</td>
+      <td>2.777</td>
+      <td></td>
+      <td>2.495</td>
+      <td>2.024</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td>2.414</td>
+      <td>2.131</td>
+      <td>9.605</td>
+      <td>7.500</td>
+      <td></td>
+      <td>3.291</td>
+      <td>3.352</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td>1.187</td>
+      <td>1.845</td>
+      <td>27.703</td>
+      <td>4.258</td>
+      <td></td>
+      <td>5.379</td>
+      <td>2.607</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td>0.903</td>
+      <td>1.779</td>
+      <td>3.838</td>
+      <td>2.737</td>
+      <td></td>
+      <td>2.385</td>
+      <td>2.322</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td>1.827</td>
+      <td>1.851</td>
+      <td>2.728</td>
+      <td>3.468</td>
+      <td></td>
+      <td>2.213</td>
+      <td>2.222</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td>1.928</td>
+      <td>1.821</td>
+      <td>3.859</td>
+      <td>3.135</td>
+      <td></td>
+      <td>2.434</td>
+      <td>2.198</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td>2.087</td>
+      <td>1.763</td>
+      <td>3.997</td>
+      <td>3.153</td>
+      <td></td>
+      <td>2.388</td>
+      <td>1.919</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td>2.451</td>
+      <td>1.775</td>
+      <td>7.013</td>
+      <td>2.380</td>
+      <td></td>
+      <td>2.820</td>
+      <td>2.014</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td>0.958</td>
+      <td>2.243</td>
+      <td>6.318</td>
+      <td>9.745</td>
+      <td></td>
+      <td>2.720</td>
+      <td>5.161</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td>0.900</td>
+      <td>1.775</td>
+      <td>3.342</td>
+      <td>2.478</td>
+      <td></td>
+      <td>2.221</td>
+      <td>2.206</td>
+    </tr>
+  </tbody>
+</table>
+```
+
+This should accurately represent the table from the image.
+
+Note: In row 14, under "0", I have "1.322" — in the image, it might be "1.322" with a small mark, but I think it's 1.322.
+
+Similarly, in row 17, under "B", "2.869" — in image, it might be "2.869" or "2.869", but it's written as 2.869.
+
+Also, in row 29, under "1", "27.703" is correct as per image.
+
+I believe this is a faithful transcription.

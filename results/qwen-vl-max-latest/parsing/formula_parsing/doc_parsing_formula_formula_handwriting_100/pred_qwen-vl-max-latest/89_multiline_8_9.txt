@@ -1,0 +1,12 @@
+```latex
+\begin{aligned}
+&\|(\alpha\in K_j)\ast(\omega_0^n-\omega_0^m)\|_{L^2}^2 = \int_{\mathbb{R}^2}\left|\int_{B_{2\epsilon}(x)}\alpha_\epsilon(x-y)K_j(x-y)(\omega_0^n(y)-\omega_0^m(y))dy\right|^2dx \\
+&\leq \int_{\mathbb{R}^2}\left(\int_{B_{2\epsilon}(x)}\frac{1}{|x-y|}|\omega_0^n(y)-\omega_0^m(y)|dy\right)^2dx \\
+&= \int_{\mathbb{R}^2}\left(\int_{B_{2\epsilon}(x)}\frac{1}{|x-y|}(\log(1/|x-y|))^{\alpha}\sqrt{|\omega_0^n(y)-\omega_0^m(y)|}(\log(e+|\omega_0^n(y)-\omega_0^m(y)|))^{\alpha}\right. \\
+&\quad\times\left.\left(\log\left(\frac{1}{|x-y|}\right)\right)^{\alpha}\frac{\sqrt{|\omega_0^n(y)-\omega_0^m(y)|}}{(\log(e+|\omega_0^n(y)-\omega_0^m(y)|))^{\alpha}}dy\right)^2dx \\
+&\leq \int_{\mathbb{R}^2}\int_{B_{2\epsilon}(x)}\frac{1}{|x-y|^2}(\log(1/|x-y|))^{2\alpha}\frac{|\omega_0^n(y)-\omega_0^m(y)|}{(\log(e+|\omega_0^n(y)-\omega_0^m(y)|))^{\alpha}}dydx \\
+&\quad\times\sup_x\int_{B_{2\epsilon}(x)}\left(\log\left(\frac{1}{|x-y|}\right)\right)^{2\alpha}\frac{(\log(e+|\omega_0^n(y)-\omega_0^m(y)|))^{\alpha}}{|\omega_0^n(y)-\omega_0^m(y)|}dy \\
+&\quad\times\int_{\mathbb{R}^2}\int_{B_{2\epsilon}(x)}\frac{1}{|x-y|^2(\log(1/|x-y|))^{2\alpha}}|\omega_0^n(y)-\omega_0^m(y)|(\log(e+|\omega_0^n(y)-\omega_0^m(y)|))^{\alpha}dydx \\
+&\quad\text{(II*)}
+\end{aligned}
+```

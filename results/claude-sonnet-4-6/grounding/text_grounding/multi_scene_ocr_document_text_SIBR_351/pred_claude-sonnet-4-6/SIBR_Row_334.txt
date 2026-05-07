@@ -1,0 +1,21 @@
+I need to find the text '201908' in the image.
+
+Looking at the receipt, I can see '2019-08' appears in two places:
+1. Near the top right area: "挂号: 2019-08"
+2. Near the bottom: "2019-08 15:44:05"
+
+The question asks about '201908' which corresponds to '2019-08'.
+
+Looking at the bottom area where "2019-08" appears near the cashier information line at the bottom of the receipt, around the "收费员: 4925 2019-08 15:44:05" line.
+
+The text '2019-08' at the bottom appears to be located approximately:
+- Horizontally: roughly from x=430 to x=590 out of the image width (~1008px)
+- Vertically: roughly around y=1080 to y=1110 out of the image height (~1176px)
+
+Normalizing:
+- x1 = 430/1008 * 1000 ≈ 427
+- y1 = 1075/1176 * 1000 ≈ 914
+- x2 = 595/1008 * 1000 ≈ 590
+- y2 = 1110/1176 * 1000 ≈ 944
+
+(427, 914, 590, 944)

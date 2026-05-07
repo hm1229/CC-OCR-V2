@@ -1,0 +1,54 @@
+Based on the provided image, here is the HTML table representation using `<tr>` and `<td>` tags. The table has 4 rows and 4 columns, with no merged cells visible — each cell corresponds to a unique row-column intersection.
+
+The first column contains row headers: “No. of Faculty”, “Attended”, “Presented papers”, “Resource Persons”.  
+The remaining three columns are data columns labeled: “International level”, “National level”, “State level”.
+
+Note: The first row’s first cell (“No. of Faculty”) appears to be a header for the row labels, while the other cells in that row are column headers. In standard HTML table structure, we can treat the entire first row as header row (`<th>`) or keep it as data rows with semantic meaning. Since the instruction says to reflect layout from top-left to bottom-right without assuming semantics beyond structure, we’ll use `<td>` for all cells unless specified otherwise — but note that in practice, the first row and first column often serve as headers.
+
+However, looking closely at the image:
+
+- Row 1: “No. of Faculty” | “International level” | “National level” | “State level” → This is clearly the header row.
+- Rows 2–4: Data rows with row labels in first column.
+
+To accurately represent the *layout* (not necessarily semantic HTML), we’ll use `<td>` for all, as per instruction to transcribe layout. But if we were to follow best practices, we’d use `<th>` for headers. Since the task says “reflecting the image's layout”, and doesn’t specify semantic markup, I’ll use `<td>` for consistency with pure transcription.
+
+But wait — the instruction says: “Transcribe each table using <tr> and <td> tags, reflecting the image's layout from top-left to bottom-right.” It does not forbid `<th>`, but since it specifically mentions `<td>`, and to be safe, I’ll use `<td>` for all cells.
+
+Actually, re-reading: “using <tr> and <td> tags” — this likely means those are the required tags, but doesn’t prohibit `<th>`. However, to strictly follow “using <tr> and <td>”, I will avoid `<th>`.
+
+Final decision: Use only `<tr>` and `<td>` as instructed, even for header-like cells.
+
+Here is the HTML:
+
+```html
+<table>
+  <tr>
+    <td>No. of Faculty</td>
+    <td>International level</td>
+    <td>National level</td>
+    <td>State level</td>
+  </tr>
+  <tr>
+    <td>Attended</td>
+    <td>25</td>
+    <td>100</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>Presented papers</td>
+    <td>17</td>
+    <td>128</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>Resource Persons</td>
+    <td>5</td>
+    <td>51</td>
+    <td>2</td>
+  </tr>
+</table>
+```
+
+This matches the visual layout exactly: 4 rows, 4 columns, no merged cells, values as shown.
+
+✅ Transcription complete.

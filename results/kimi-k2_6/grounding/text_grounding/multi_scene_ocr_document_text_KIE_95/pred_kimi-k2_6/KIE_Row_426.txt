@@ -1,0 +1,33 @@
+I need to find the region of the text '0.00' in the image. Looking at the receipt, I can see there are multiple instances of '0.00'. Let me identify the most prominent one that appears to be a total value.
+
+Looking at the receipt structure:
+- There is "0.00" next to "CR-CHOCLT" 
+- There is "0.00" for "Total 6% supplies (excl. GST):"
+- There is "0.00" for "GST:"
+- There is "0.00" for "Total 6% supplies (Inc. GST):"
+
+The most clearly visible standalone '0.00' values appear in the lower section of the receipt. Let me focus on the "Total 6% supplies (excl. GST):" line which shows "0.00".
+
+Based on the image layout and typical receipt formatting, the coordinates for the '0.00' next to "Total 6% supplies (excl. GST):" would be approximately:
+
+(0.747, 0.596, 0.829, 0.624)
+
+Or for the '0.00' next to "GST:" line:
+
+(0.747, 0.624, 0.829, 0.652)
+
+Let me provide the coordinates for the GST line '0.00' which is clearly visible:
+
+(0.747, 0.624, 0.829, 0.652)
+
+Actually, looking more carefully at the alignment, the '0.00' values appear to be right-aligned in the amount column. Let me estimate more precisely for the "GST: 0.00" line:
+
+(0.742, 0.621, 0.835, 0.653)
+
+And for "Total 6% supplies (Inc. GST): 0.00":
+
+(0.742, 0.661, 0.835, 0.693)
+
+I'll provide the most prominent one - the GST '0.00':
+
+(0.742, 0.621, 0.835, 0.653)

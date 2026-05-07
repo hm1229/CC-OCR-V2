@@ -1,0 +1,85 @@
+```latex
+\documentclass{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage{fancyhdr}
+
+% --- Header and Footer Setup ---
+\pagestyle{fancy}
+\fancyhf{} % Clear all header and footer fields
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Header content
+\fancyhead[L]{%
+    \begin{tabular}{@{}l@{}}
+        \textbf{\textcolor[rgb]{0.0, 0.5, 0.5}{awinic}} \quad \textcolor[rgb]{0.0, 0.5, 0.5}{上海艾为电子技术股份有限公司} \\
+        \small \textcolor[rgb]{0.0, 0.5, 0.5}{shanghai awinic technology co., ltd.}
+    \end{tabular}%
+}
+\fancyhead[R]{%
+    \begin{tabular}{@{}r@{}}
+        \textbf{AW32905E} \\
+        Mar. 2023 V1.0
+    \end{tabular}%
+}
+
+% Footer content
+\fancyfoot[L]{www.awinic.com}
+\fancyfoot[C]{5}
+\fancyfoot[R]{\textcopyright\ 2023 Shanghai Awinic Technology Co. Ltd All Rights Reserved}
+
+\begin{document}
+\thispagestyle{fancy} % Apply fancy style to the first page
+
+\section*{Ordering Information}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|l|c|c|c|c|c|c|}
+\hline
+\textbf{Part Number} & \textbf{Temperature} & \textbf{Package} & \textbf{Marking} & \textbf{\begin{tabular}[c]{@{}c@{}}Moisture\\ Sensitivity\\ Level\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Environmental\\ Information\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Delivery\\ Form\end{tabular}} \\ \hline
+AW32905EFCR & -40\textdegree C -- 85\textdegree C & \begin{tabular}[c]{@{}c@{}}FCQFN\\ 1.3mm$\times$1.8mm\\ -12L\end{tabular} & RZR & MSL1 & ROHS+HF & \begin{tabular}[c]{@{}c@{}}3000 units/\\ Tape and\\ Reel\end{tabular} \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{1cm}
+
+\section*{Absolute Maximum Ratings \textsuperscript{(NOTE 1)}}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{|l|l|l|c|c|c|}
+\hline
+\textbf{Symbol} & \textbf{Parameter} & \textbf{Condition} & \textbf{Min.} & \textbf{Max.} & \textbf{Unit} \\ \hline
+$V_{\text{IN}}$ & Input voltage & & -0.3 & 29 & V \\ \hline
+$V_{\text{OUT}}$ & Output voltage & & -0.3 & See\textsuperscript{(NOTE 2)} & V \\ \hline
+$V_{\text{OVLO}}$ & OVLO voltage & & -0.3 & 6 & V \\ \hline
+$V_{\overline{\text{ACOK}}}$ & $\overline{\text{ACOK}}$ voltage & & -0.3 & 6 & V \\ \hline
+$V_{\overline{\text{EN}}}$ & $\overline{\text{EN}}$ voltage & & -0.3 & 6 & V \\ \hline
+$I_{\text{SW}}$ & \begin{tabular}[c]{@{}l@{}}Continuous current of switch\\ IN-OUT\textsuperscript{(NOTE 3)}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Continuous current on IN and\\ OUT pin\end{tabular} & & 5 & A \\ \hline
+$I_{\text{PEAK}}$ & Peak current & \begin{tabular}[c]{@{}l@{}}Peak input and output current\\ on IN and OUT pin(10ms)\end{tabular} & & 8 & A \\ \hline
+$I_{\text{DIODE}}$ & Continuous diode current & \begin{tabular}[c]{@{}l@{}}Continuous forward current\\ through the nFET body diode\end{tabular} & & 1.5 & A \\ \hline
+$T_{\text{A}}$ & Ambient temperature & & -40 & 85 & \textdegree C \\ \hline
+$T_{\text{J}}$ & Junction temperature & & -40 & 150 & \textdegree C \\ \hline
+$T_{\text{STG}}$ & Storage temperature & & -65 & 150 & \textdegree C \\ \hline
+$T_{\text{LEAD}}$ & Soldering temperature & At leads, 10 seconds & & 260 & \textdegree C \\ \hline
+Surge & Input surge protection & \begin{tabular}[c]{@{}l@{}}IEC61000-4-5 test with 2$\Omega$\\ equivalent series resistance\end{tabular} & 120 & & V \\ \hline
+\end{tabular}
+\end{center}
+
+\vspace{0.5cm}
+\noindent\textit{NOTE1: Conditions out of those ranges listed in “absolute maximum ratings” may cause permanent damages to the device. In spite of the limits above, functional operation conditions of the device should within the ranges listed in “recommended operating conditions”. Exposure to absolute-maximum-rated conditions for prolonged periods may affect device reliability.}
+
+\vspace{0.2cm}
+\noindent\textit{NOTE2: 29V or $V_{\text{IN}}$+0.3V, whichever is smaller.}
+
+\vspace{0.2cm}
+\noindent\textit{NOTE3: Limited by thermal design.}
+
+\end{document}
+```

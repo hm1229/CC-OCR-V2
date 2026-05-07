@@ -1,0 +1,23 @@
+Looking at the image (rotated 90° counterclockwise), I can extract the mathematical derivation:
+
+$$\int_{\mathbb{R}^2} |\nabla^2 (u \cdot \nabla \Delta \cdot u)|^2 \partial_x^5 \theta \, dx = \int_{\mathbb{R}^2} |\nabla^2 (u_1 \partial_1 + u_2 \partial_2) \partial_x^5 \theta \, dx$$
+
+$$= \int_{\mathbb{R}^2} \Lambda^2 (u_1 \partial_1) \partial_1^2 \theta \, dx$$
+
+$$= \int_{\mathbb{R}^2} \Lambda^2 (u_1 \partial_1) \partial_1^2 \theta \, dx + \int_{\mathbb{R}^2} u_1 \Lambda_2 \partial_1 \partial_x \theta \, dx$$
+
+$$= \int_{\mathbb{R}^2} (\Lambda u_1 \partial_1) \partial_x^2 \theta \, dx + \int_{\mathbb{R}^2} \Lambda^2 (u_1 \Lambda \partial_1) \partial_1^2 \theta \, dx$$
+
+$$= \int_{\mathbb{R}^2} (\Lambda u_1 \partial_1) \partial_1^2 \theta \, dx + \int_{\mathbb{R}^2} |\nabla^2 u_1 \Lambda_2| (\Lambda \partial_2 \theta) \Lambda^5 \theta \, dx$$
+
+$$+ \int_{\mathbb{R}^2} u_1 \Lambda^3 \Lambda \partial_2 \theta \Lambda^5 \theta \, dx$$
+
+$$= \int_{\mathbb{R}^2} [(\Lambda u_1] \partial_1) \partial_1^2 \theta \, dx + \int_{\mathbb{R}^2} u_1 \Lambda \partial_2 \Lambda^2 \theta \, dx$$
+
+$$+ \int_{\mathbb{R}^2} |\nabla^2 u_1 \Lambda \partial_2 \Lambda^2 \theta \, dx + \int_{\mathbb{R}^2} |\nabla^2 u_1 \Lambda \partial_2 \Lambda^2 \theta \, dx$$
+
+$$+ \int_{\mathbb{R}^2} [(\Lambda u_1] \partial_1) \Lambda^3 \theta \Lambda^5 \theta \, dx$$
+
+$$= \int_{\mathbb{R}^2} \Lambda u_1 \partial_1 \Lambda^2 \theta \, dx + \int_{\mathbb{R}^2} [\Lambda^2, u_1] \partial_1 \partial_1 \Lambda^2 \theta \, dx$$
+
+$$\triangleq I_1^* + I_2^*.$$

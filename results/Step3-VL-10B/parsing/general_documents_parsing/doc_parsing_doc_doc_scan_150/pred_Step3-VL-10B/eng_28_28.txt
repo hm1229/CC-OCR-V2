@@ -1,0 +1,331 @@
+Got it, let's transcribe the image into LaTeX. First, I need to structure the table. The image has rows for different categories (Perimeter, Circumference, Area, Surface Area, Volume, Pythagoras, Distance, Slope, Midpoint) and columns for shapes and formulas.
+
+Let's start by setting up the LaTeX table. Use a tabular environment. Let's check the columns: the first column is the category (Perimeter, etc.), then the second column has shapes (Square, Rectangle, etc.), third column is the formula column.
+
+First, Perimeter row:
+- Category: Perimeter
+- Shapes: Square, Rectangle
+- Formulas: P = 4a; P = 2(l + b)
+
+Circumference:
+- Category: Circumference
+- Shapes: Circle
+- Formulas: C = 2πi*r (wait, in the image it's C = 2*pi*r, so π is pi, maybe use \pi)
+
+Area:
+- Category: Area
+- Shapes: Square, Rectangle, Triangle, Trapezoid, Circle
+- Formulas: A = a²; A = l*b; A = bh/2; A = (b + b)h/2? Wait, no, trapezoid is (b1 + b2)h/2. Let me check the image: "A = (b+b)h/2" – maybe a typo, but transcribe as is. Then Circle: A = πr².
+
+Surface Area:
+- Category: Surface Area
+- Shapes: Cube, Cylinder, Cone, Sphere
+- Formulas: S = 6a²; S = 2*pi*r*h; S = pi*r*l; S = 4*pi*r²
+
+Volume:
+- Category: Volume
+- Shapes: Cylinder, Cone, Sphere
+- Formulas: V = bh; V = bh/3; V = 4 * pi * r³/3
+
+Pythagoras Theorem: a² + b² = c²
+
+Distance Formula: d = sqrt[(x2 - x1)² + (y2 - y1)²]
+
+Slope of a line: m = (y2 - y1)/(x2 - x1)
+
+Midpoint Formula: M = ((x1 + x2)/2, (y1 + y2)/2)
+
+Now, structure the LaTeX. Let's use a tabular with three columns. Let's align the columns properly.
+
+First, the Perimeter row:
+
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Perimeter} & \multicolumn{2}{c|}{Shapes} \\
+\hline
+ & Square & Rectangle \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $P = 4a$; $P = 2(l + b)$} \\
+\hline
+\textbf{Circumference} & \multicolumn{2}{c|}{Circle} \\
+\hline
+ & & \multicolumn{2}{c|}{Formula: $C = 2\pi r$} \\
+\hline
+\textbf{Area} & \multicolumn{2}{c|}{Square, Rectangle, Triangle, Trapezoid, Circle} \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $A = a^2$; $A = l \times b$; $A = \frac{bh}{2}$; $A = \frac{(b_1 + b_2)h}{2}$; $A = \pi r^2$} \\
+\hline
+\textbf{Surface Area} & \multicolumn{2}{c|}{Cube, Cylinder, Cone, Sphere} \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $S = 6a^2$; $S = 2\pi r h$; $S = \pi r l$; $S = 4\pi r^2$} \\
+\hline
+\textbf{Volume} & \multicolumn{2}{c|}{Cylinder, Cone, Sphere} \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $V = bh$; $V = \frac{bh}{3}$; $V = \frac{4}{3}\pi r^3$} \\
+\hline
+\textbf{Pythagoras Theorem} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$a^2 + b^2 = c^2$} \\
+\hline
+\textbf{Distance Formula} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$} \\
+\hline
+\textbf{Slope of a line} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$m = \frac{y_2 - y_1}{x_2 - x_1}$} \\
+\hline
+\textbf{Midpoint Formula} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$M = \left( \frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2} \right)$} \\
+\hline
+\end{tabular}
+
+Wait, let's check the original image's structure. The image has a table where each row is a category, and the second column lists the shapes (for some categories, multiple shapes in one cell), and the third column has the formulas for those shapes.
+
+In the image, for Perimeter:
+
+- First column: Perimeter
+- Second column: Square, Rectangle (so two shapes in the second column cell)
+- Third column: P = 4a; P = 2(l + b) (formulas for each shape)
+
+Circumference:
+
+- First column: Circumference
+- Second column: Circle
+- Third column: C = 2*pi*r
+
+Area:
+
+- First column: Area
+- Second column: Square, Rectangle, Triangle, Trapezoid, Circle (all shapes in one cell)
+- Third column: formulas for each shape, separated by semicolons.
+
+Surface Area:
+
+- First column: Surface Area
+- Second column: Cube, Cylinder, Cone, Sphere
+- Third column: formulas for each.
+
+Volume:
+
+- First column: Volume
+- Second column: Cylinder, Cone, Sphere
+- Third column: formulas.
+
+Then the other rows (Pythagoras, Distance, Slope, Midpoint) have no shapes column, just the formula in the third column.
+
+So in LaTeX, the tabular should have three columns. Let's make sure the alignment is correct. Let's use a tabular with three columns, and for rows where the second column has multiple shapes, we can use a cell that spans both shape columns? Wait, no, the image's table has two columns for shapes: one for "Square Rectangle" (so two shapes in the second column), and the third column is the formulas. Let's check the image's layout:
+
+The image's table has:
+
+- First column: category (Perimeter, Circumference, etc.)
+- Second column: shapes (for Perimeter: Square, Rectangle; for Circumference: Circle; for Area: Square, Rectangle, Triangle, Trapezoid, Circle; etc.)
+- Third column: formulas (for each shape in the second column)
+
+So in LaTeX, the tabular should be three columns. Let's structure each row:
+
+For Perimeter:
+
+- Column 1: Perimeter
+- Column 2: Square \\ Rectangle (using line break)
+- Column 3: $P = 4a$ \\ $P = 2(l + b)$
+
+Circumference:
+
+- Column 1: Circumference
+- Column 2: Circle
+- Column 3: $C = 2\pi r$
+
+Area:
+
+- Column 1: Area
+- Column 2: Square, Rectangle, Triangle, Trapezoid, Circle
+- Column 3: $A = a^2$; $A = l \times b$; $A = \frac{bh}{2}$; $A = \frac{(b_1 + b_2)h}{2}$; $A = \pi r^2$
+
+Surface Area:
+
+- Column 1: Surface Area
+- Column 2: Cube, Cylinder, Cone, Sphere
+- Column 3: $S = 6a^2$; $S = 2\pi r h$; $S = \pi r l$; $S = 4\pi r^2$
+
+Volume:
+
+- Column 1: Volume
+- Column 2: Cylinder, Cone, Sphere
+- Column 3: $V = bh$; $V = \frac{bh}{3}$; $V = \frac{4}{3}\pi r^3$
+
+Then the other rows (Pythagoras, Distance, Slope, Midpoint) have column 2 empty (or maybe a single cell), and column 3 has the formula.
+
+Let's write the LaTeX code with proper alignment. Use a tabular with three columns, and use \multirow or just line breaks. Let's use a simple tabular without multirow, since the image doesn't have multirow (each row is a single row in the table).
+
+Wait, the image's table has each category as a row, so each row is a single row in the LaTeX tabular.
+
+Let's start:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Perimeter} & \multicolumn{2}{c|}{Shapes} \\
+\hline
+ & Square & Rectangle \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $P = 4a$; $P = 2(l + b)$} \\
+\hline
+\textbf{Circumference} & \multicolumn{2}{c|}{Circle} \\
+\hline
+ & & \multicolumn{2}{c|}{Formula: $C = 2\pi r$} \\
+\hline
+\textbf{Area} & \multicolumn{2}{c|}{Square, Rectangle, Triangle, Trapezoid, Circle} \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $A = a^2$; $A = l \times b$; $A = \frac{bh}{2}$; $A = \frac{(b_1 + b_2)h}{2}$; $A = \pi r^2$} \\
+\hline
+\textbf{Surface Area} & \multicolumn{2}{c|}{Cube, Cylinder, Cone, Sphere} \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $S = 6a^2$; $S = 2\pi r h$; $S = \pi r l$; $S = 4\pi r^2$} \\
+\hline
+\textbf{Volume} & \multicolumn{2}{c|}{Cylinder, Cone, Sphere} \\
+\hline
+ & & \multicolumn{2}{c|}{Formulas: $V = bh$; $V = \frac{bh}{3}$; $V = \frac{4}{3}\pi r^3$} \\
+\hline
+\textbf{Pythagoras Theorem} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$a^2 + b^2 = c^2$} \\
+\hline
+\textbf{Distance Formula} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$} \\
+\hline
+\textbf{Slope of a line} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$m = \frac{y_2 - y_1}{x_2 - x_1}$} \\
+\hline
+\textbf{Midpoint Formula} & \multicolumn{2}{c|}{} \\
+\hline
+ & & \multicolumn{2}{c|}{$M = \left( \frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2} \right)$} \\
+\hline
+\end{tabular}
+\end{table}
+
+Wait, but in the image, the "Perimeter" row has the first column as "Perimeter", second column "Square Rectangle" (so two shapes in the second column cell), and third column the formulas. Let's check the image again:
+
+Looking at the image:
+
+- First row (Perimeter): left cell "Perimeter", middle cell "Square Rectangle", right cell "P = 4a; P = 2(l+b)"
+
+- Second row (Circumference): left "Circumference", middle "Circle", right "C = 2*pi*r"
+
+- Third row (Area): left "Area", middle "Square Rectangle Triangle Trapezoid Circle", right "A = a²; A = l*b; A = bh/2; A = (b+b)h/2; A = pi*r²"
+
+- Fourth row (Surface Area): left "Surface Area", middle "Cube Cylinder Cone Sphere", right "S = 6a²; S = 2*pi*r*h; S = pi*r*l; S = 4*pi*r²"
+
+- Fifth row (Volume): left "Volume", middle "Cylinder Cone Sphere", right "V = bh; V = bh/3; V = 4 * pi * r³/3"
+
+- Then the next rows (Pythagoras, Distance, Slope, Midpoint) have left cell as the name, middle cell empty, right cell the formula.
+
+So in LaTeX, the middle column for Perimeter is "Square Rectangle" (so two shapes in one cell, separated by space), not two separate cells. So the tabular should have three columns: Category, Shapes, Formulas.
+
+So each row is:
+
+Category | Shapes | Formulas
+
+For Perimeter:
+
+Category: Perimeter
+
+Shapes: Square Rectangle
+
+Formulas: P = 4a; P = 2(l + b)
+
+Circumference:
+
+Category: Circumference
+
+Shapes: Circle
+
+Formulas: C = 2πr
+
+Area:
+
+Category: Area
+
+Shapes: Square Rectangle Triangle Trapezoid Circle
+
+Formulas: A = a²; A = l*b; A = bh/2; A = (b+b)h/2; A = πr²
+
+Surface Area:
+
+Category: Surface Area
+
+Shapes: Cube Cylinder Cone Sphere
+
+Formulas: S = 6a²; S = 2πr h; S = πr l; S = 4πr²
+
+Volume:
+
+Category: Volume
+
+Shapes: Cylinder Cone Sphere
+
+Formulas: V = bh; V = bh/3; V = 4 * π * r³/3
+
+Pythagoras Theorem:
+
+Category: Pythagoras Theorem
+
+Shapes: (empty)
+
+Formulas: a² + b² = c²
+
+Distance Formula:
+
+Category: Distance Formula
+
+Shapes: (empty)
+
+Formulas: d = sqrt[(x2 - x1)² + (y2 - y1)²]
+
+Slope of a line:
+
+Category: Slope of a line
+
+Shapes: (empty)
+
+Formulas: m = (y2 - y1)/(x2 - x1)
+
+Midpoint Formula:
+
+Category: Midpoint Formula
+
+Shapes: (empty)
+
+Formulas: M = ((x1 + x2)/2, (y1 + y2)/2)
+
+So the LaTeX tabular should have three columns, with the middle column for shapes (which can be multiple shapes in one cell) and the right column for formulas.
+
+Let's write that:
+
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Perimeter} & Square \; Rectangle & $P = 4a$; $P = 2(l + b)$ \\
+\hline
+\textbf{Circumference} & Circle & $C = 2\pi r$ \\
+\hline
+\textbf{Area} & Square \; Rectangle \; Triangle \; Trapezoid \; Circle & $A = a^2$; $A = l \times b$; $A = \frac{bh}{2}$; $A = \frac{(b + b)h}{2}$; $A = \pi r^2$ \\
+\hline
+\textbf{Surface Area} & Cube \; Cylinder \; Cone \; Sphere & $S = 6a^2$; $S = 2\pi r h$; $S = \pi r l$; $S = 4\pi r^2$ \\
+\hline
+\textbf{Volume} & Cylinder \; Cone \; Sphere & $V = bh$; $V = \frac{bh}{3}$; $V = \frac{4\pi r^3}{3}$ \\
+\hline
+\textbf{Pythagoras Theorem} &  & $a^2 + b^2 = c^2$ \\
+\hline
+\textbf{Distance Formula} &  & $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$ \\
+\hline
+\textbf{Slope of a line} &  & $m = \frac{y_2 - y_1}{x_2 - x_1}$ \\
+\hline
+\textbf{Midpoint Formula} &  & $M = \left( \frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2} \right)$ \\
+\hline
+\end{tabular}
+
+Wait, in the image, the "Area" row's trapezoid formula is written as "A = (b+b)h/2" – that's probably a typo, should be (b1 + b2)h/2, but we transcribe as is. Also, the volume for sphere in the image is "V = 4 * pi * r³/3" which is the same as (4/3)πr

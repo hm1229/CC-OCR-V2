@@ -1,0 +1,15 @@
+```latex
+\begin{aligned}
+\mathrm{Tr}\left[(A_{m}\otimes A_{n})R_{AB}\right] & =\mathrm{Tr}\left\{(A_{m}\otimes A_{n})\left[(\rho_{A}\otimes\frac{1}{2})E_{AB}+E_{AB}(\rho_{A}\otimes\frac{1}{2})\right]\right\} \\
+& =\frac{1}{2}\left[\mathrm{Tr}\left((A_{m}\rho\otimes A_{n})E_{AB}\right)+\mathrm{Tr}\left((A_{m}\otimes A_{n})E_{AB}(\rho\otimes I)\right)\right] \\
+& =\frac{1}{2}\left[\sum_{i,j}\langle j|(A_{m}\rho|i\rangle|\mathrm{Tr}\left(A_{n}E_{AB}(|j\rangle\langle i|)\right)+\sum_{i}\mathrm{Tr}\left(A_{m}|i\rangle\langle i|\rho\right)\mathrm{Tr}\left(A_{n}E_{AB}(|i\rangle\langle i|)\right)\right] \\
+& =\frac{1}{2}\left[\sum_{i,j}\langle j|(A_{m}\rho+\rho A_{m})|i\rangle\mathrm{Tr}\left(A_{n}E_{AB}(|j\rangle\langle i|)\right)\right] \\
+& =\frac{1}{2}\left[\sum_{i,j}\langle j|(A_{m}\rho+\rho A_{m})|i\rangle\mathrm{Tr}\left(A_{n}\sum_{k}V_{k}|i\rangle\langle k|V_{k}^{\dagger}\right)\right] \\
+& =\frac{1}{2}\left[\sum_{i,j}\langle j|(A_{m}\rho+\rho A_{m})|i\rangle\sum_{k}V_{k}^{\dagger}A_{n}V_{k}\langle j|i\rangle\right] \\
+& =\frac{1}{2}\mathrm{Tr}\left[\sum_{i}|i\rangle\langle i|(A_{m}\rho+\rho A_{m})\sum_{k}V_{k}^{\dagger}A_{n}V_{k}|i\rangle\langle i|\right] \\
+& =\frac{1}{2}\mathrm{Tr}\left[\sum_{i}|i\rangle\langle i|(A_{m}\rho+\rho A_{m})\sum_{k}V_{k}^{\dagger}A_{n}V_{k}\right] \\
+& =\frac{1}{2}\mathrm{Tr}\left[(A_{m}\rho+\rho A_{m})\sum_{k}V_{k}^{\dagger}A_{n}V_{k}\right] \\
+& =\frac{1}{2}\mathrm{Tr}\left[(A_{m}\rho+\rho A_{m})\sum_{k}V_{k}^{\dagger}A_{n}V_{k}\right] \\
+& =\langle A_{m}A_{n}\rangle_{seq}
+\end{aligned}
+```

@@ -1,0 +1,110 @@
+<html>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<body class="bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <div class="bg-white p-4 rounded-lg shadow-md">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Disinfection Report</h1>
+        <img src="https://source.unsplash.com/random/100x50/?logo" alt="Company Logo" class="h-10">
+      </div>
+      <table class="w-full">
+        <tr>
+          <td class="border px-4 py-2">Disinfection Unit</td>
+          <td class="border px-4 py-2">GDD Property Service Management Co., Ltd.</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Client Unit Name</td>
+          <td class="border px-4 py-2">Wan Sheng - Guohui</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Related Number</td>
+          <td class="border px-4 py-2">FSCU05756221</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Project Name/Product Name</td>
+          <td class="border px-4 py-2">Intelligent Disinfection</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Location</td>
+          <td class="border px-4 py-2">Jiangkou Market, Macau Cross-border Cargo Parking Area</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Quantity/Weight</td>
+          <td class="border px-4 py-2">2400 pieces</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Scope</td>
+          <td class="border px-4 py-2">Carton surface, product outer packaging</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Object Identifier</td>
+          <td class="border px-4 py-2">BKP752</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Method</td>
+          <td class="border px-4 py-2">
+            <input type="checkbox" id="fumigation" name="disinfection_method" value="fumigation">
+            <label for="fumigation">Fumigation</label>
+            <input type="checkbox" id="spray_disinfection" name="disinfection_method" value="spray_disinfection" checked>
+            <label for="spray_disinfection">Spray Disinfection</label>
+            <input type="checkbox" id="fog_disinfection" name="disinfection_method" value="fog_disinfection" checked>
+            <label for="fog_disinfection">Fog Disinfection</label>
+            <input type="checkbox" id="exterminate_pests" name="disinfection_method" value="exterminate_pests">
+            <label for="exterminate_pests">Exterminate Pests</label>
+            <input type="checkbox" id="other" name="disinfection_method" value="other">
+            <label for="other">Other</label>
+          </td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfectant</td>
+          <td class="border px-4 py-2">Disinfectant WS TM Bubble Disinfection Tablet, i.e. Trialkylamine</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Concentration</td>
+          <td class="border px-4 py-2">1000mg/L</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Time</td>
+          <td class="border px-4 py-2">30 minutes</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Start Time</td>
+          <td class="border px-4 py-2">2022.02.28 00:00</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection End Time</td>
+          <td class="border px-4 py-2">2022.02.28 02:00</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Disinfection Procedure</td>
+          <td class="border px-4 py-2">Add 2 pieces of tablets to 1000ml of tap water to make a disinfectant solution, and spray the entire cargo area with the prepared disinfectant solution for 30 minutes.</td>
+        </tr>
+        <tr>
+          <td class="border px-4 py-2">Personal Protective Level</td>
+          <td class="border px-4 py-2">
+            <input type="radio" id="level1" name="personal_protection" value="level1" checked>
+            <label for="level1">Level 1 Protection</label>
+            <input type="radio" id="level2" name="personal_protection" value="level2">
+            <label for="level2">Level 2 Protection</label>
+            <input type="radio" id="level3" name="personal_protection" value="level3">
+            <label for="level3">Level 3 Protection</label>
+            <input type="radio" id="workwear" name="personal_protection" value="workwear">
+            <label for="workwear">Workwear</label>
+          </td>
+        </tr>
+      </table>
+      <p class="mt-4">
+        This company holds the "Four Disinfection Service Enterprise Qualification Certificate". The operators hold the "Four Disinfection Qualification Certificate" within the validity period. The disinfection process is carried out under the premise of ensuring the health and safety of the disinfection personnel. The disinfection procedures comply with the disinfection site management regulations. The disinfection procedures are normal. The quantitative results are accurate. The technical standards meet the relevant processing standards. The detected toxic substances are below the allowable concentration.
+      </p>
+      <div class="mt-4">
+        <p>Authorized Signatory: <signature>Signature</signature></p>
+        <p>Date: 2022.2.28</p>
+      </div>
+      <div class="mt-4">
+        <p>Note: Sample has been extracted</p>
+        <p>Authorized Signature: <signature>Signature</signature></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

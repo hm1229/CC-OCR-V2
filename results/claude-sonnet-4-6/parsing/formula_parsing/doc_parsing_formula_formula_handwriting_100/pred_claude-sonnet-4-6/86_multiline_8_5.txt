@@ -1,0 +1,17 @@
+$$\frac{1}{2}\frac{d}{dt}\|\partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\|_{L^2_{x,v}}^2$$
+
+$$\leq \frac{\delta_1}{\varepsilon^2}\sum_{\substack{\alpha'\leq\alpha\\\beta'\leq\beta}}\|\partial_x^{\alpha'}\partial_v^{\beta'}(I-P)g^{n+1}\|_{L^2_{x,v}}^2 + \frac{\delta_1}{\varepsilon^2}\|\partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\|_{L^2_{x,v}}^2$$
+
+$$+\frac{1}{\varepsilon}\sum_{|\beta|=1}C_\beta\langle\partial_v^\beta v\cdot\nabla_x\partial_x^\alpha\partial_v^\beta, \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}$$
+
+$$\underbrace{-\chi\langle\partial_x^\alpha\partial_v^\beta(I-P)(\nabla_x\phi^n\cdot\nabla_v g^{n+1}), \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}}_{S_2}$$
+
+$$\underbrace{+\chi\langle\partial_x^\alpha\partial_v^\beta(I-P)(\nabla_v\cdot(I-P)g^{n+1}), \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}}_{S_3}$$
+
+$$\underbrace{+\frac{1}{\varepsilon}\langle\partial_x^\alpha\partial_v^\beta(I-P)(\Omega[g^n]g^n), \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}}_{S_4}$$
+
+$$\underbrace{+\chi\langle\partial_x^\alpha\partial_v^\beta(I-P)(v\cdot\nabla_x g^{n+1}), \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}}_{S_5}$$
+
+$$\underbrace{=\frac{1}{\varepsilon}\langle\partial_x^\alpha\partial_v^\beta(I-P)(v\cdot\nabla_x Pg^{n+1}), \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}}_{S_6}$$
+
+$$\underbrace{+\frac{1}{\varepsilon}\langle\partial_x^\alpha\partial_v^\beta P(v\cdot\nabla_x(I-P)g^{n+1}), \partial_x^\alpha\partial_v^\beta(I-P)g^{n+1}\rangle_{L^2_{x,v}}}_{S_7}$$

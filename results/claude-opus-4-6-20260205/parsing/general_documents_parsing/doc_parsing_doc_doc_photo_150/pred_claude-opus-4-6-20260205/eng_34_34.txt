@@ -1,0 +1,90 @@
+Here is the LaTeX transcription of the image:
+
+```latex
+\documentclass[12pt]{article}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{tabular}{|p{4cm}|p{4cm}|p{4.5cm}|}
+\hline
+110 -- withdrawn socially & 460 -- can't sleep at night & 43 -- become asthmatic \\
+\hline
+ & & 566 -- have frequent headache and stomach ache \\
+20 -- become deaf & 21 -- become blind & \\
+\hline
+1,164 -- can't concentrate & 117 -- refuse to go to school & 276 -- are in shock \\
+\hline
+\end{tabular}
+
+\bigskip
+
+2. The natural calamities have tragically affected the lives of about 15000 children in recent years in India. The tsunami waves and earthquakes created havoc on a large scale. About 5430 children became homeless due to the tsunami and 5438 were the victims of the earthquakes. Floods displaced 2602 and droughts affected 2036 children. Epidemics affected 1313 children.
+
+Out of these figures, 1093 children live constantly in general fear; 110 children have withdrawn socially; 20 children have become deaf and 16 of them can't speak any more. More than 450 children can't sleep at night while 1164 can't concentrate on anything. The tragedy is that 21 of them have become blind, 43 asthmatic and 276 are still in shock. 566 suffer from frequent headache and stomachache. About 850 children fear water and sound and 117 have refused to go to school.
+
+\bigskip
+
+3. Disaster management programmes have not proved up to the mark and up to the task. The Government and the concerned agencies should provide comprehensive aids and help to the survivors, particularly the children. They must provide nutritious food, clothes, shelters and medical aids to them. The efforts should be made to wipe out the scars left by these disasters.
+
+\bigskip
+
+\begin{center}
+\textbf{Number of Children Surviving various Disasters}
+
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    symbolic x coords={Tsunami, Earthquake, Floods, Drought, Epidemic},
+    xtick=data,
+    x tick label style={rotate=0, anchor=north},
+    nodes near coords,
+    ymin=0,
+    ymax=6500,
+    bar width=15pt,
+    width=10cm,
+    height=7cm,
+    legend style={at={(1.0,0.5)},anchor=west},
+]
+\addplot coordinates {(Tsunami,5430) (Earthquake,5438) (Floods,2602) (Drought,2035) (Epidemic,1313)};
+\end{axis}
+\end{tikzpicture}
+
+\textbf{Children haunted with fear, out of the\\16,818 surveyed:}
+\end{center}
+
+\bigskip
+
+Based on your understanding of the passage, answer the following questions.
+
+\bigskip
+
+(i) Based on your understanding of the passage, choose the option that lists the statements that are TRUE.
+
+\bigskip
+
+1.
+
+\bigskip
+
+\begin{tabular}{|p{10cm}|}
+\hline
+Some people are hugely benefited by a natural calamity. \\
+\hline
+\end{tabular}
+
+\bigskip
+
+\hfill CL X/ PB-1 /ENG/PAGE 3 OF
+
+\begin{center}
+\textcircled{3}
+\end{center}
+
+\end{document}
+```

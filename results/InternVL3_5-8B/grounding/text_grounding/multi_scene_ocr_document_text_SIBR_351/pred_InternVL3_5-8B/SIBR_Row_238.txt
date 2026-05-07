@@ -1,0 +1,19 @@
+To determine the coordinates of the region containing the text "上海市胸科医院医疗门（急）诊收费票据," we need to analyze the image and identify the bounding box that encloses this text.
+
+1. **Identify the Text Region:**
+   The text "上海市胸科医院医疗门（急）诊收费票据" is located near the top center of the image, just below the red stamp.
+
+2. **Estimate the Coordinates:**
+   - **Left-Top Corner (x1, y1):** This point is slightly to the right of the start of the text and a bit below the top edge of the image. Let's approximate this to be around (300, 100).
+   - **Right-Bottom Corner (x2, y2):** This point is slightly to the left of the end of the text and a bit above the bottom edge of the text area. Let's approximate this to be around (700, 150).
+
+3. **Normalize the Coordinates:**
+   - The image width and height should be considered for normalization. Assuming the image dimensions are approximately 1000x800 pixels:
+     - x1 = 300 / 1000 = 0.3
+     - y1 = 100 / 800 = 0.125
+     - x2 = 700 / 1000 = 0.7
+     - y2 = 150 / 800 = 0.1875
+
+Thus, the normalized coordinates of the bounding box are:
+
+(0.3, 0.125, 0.7, 0.1875)

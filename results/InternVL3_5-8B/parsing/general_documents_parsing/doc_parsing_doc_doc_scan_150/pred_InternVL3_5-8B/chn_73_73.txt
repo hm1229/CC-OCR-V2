@@ -1,0 +1,56 @@
+Certainly! Here is the transcription of the text, tables, and equations from the image into LaTeX format:
+
+```latex
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{变频串联谐振在变压器交流耐压试验中的应用}
+\author{林梅芬$^{1}$ 许晶$^{2}$}
+\date{2010年2月}
+\maketitle
+
+\section*{摘要}
+采用变频串联谐振对大中型变压器进行交流耐压试验, 并与常规的交流耐压试验方法进行比较。结果表明, 变频串联谐振耐压试验技术电容量小, 试验设备体积小、不对试验品造成损伤, 可完成常规试验变压器不能解决的试验。
+
+\textit{关键词}: 变频; 串联谐振; 大中型变压器; 耐压试验; 容量
+
+\textit{中图分类号}: TM406 \hspace{1cm} \textit{文献标志码}: A
+
+\section*{1 原理}
+图1为串联谐振基本原理图。串联回路电流:
+\begin{equation}
+I = \frac{U}{\sqrt{R^2 + \left(\omega L - \frac{1}{\omega C}\right)^2}}
+\end{equation}
+式中, $R$ 为电阻; $\omega$ 为角频率; $L$ 为电感; $C$ 为电容。
+
+对串联回路, 流过各元件的电流相等。当 $\omega L = \frac{1}{\omega C}$ 时, 回路即处于串联谐振状态, 此时的频率称为谐振频率:
+\begin{equation}
+f_0 = \frac{1}{2\pi \sqrt{LC}}
+\end{equation}
+
+根据不同调节方式, 串联谐振装置分为工频串联谐振装置(带可调电抗器或带固定电抗器和调谐用电容器组, 工作频率 $50 \, \text{Hz}$) 和变频串联谐振装置(带固定电抗器, 工作频率一般 $10 \sim 300 \, \text{Hz}$) 两大类。本文采用变频串联谐振装置, 其原理如图2所示。装置由变频电源、励磁变、高压电抗器(组, 每台额定电压 $55 \, \text{kV}$, 额定电流 $1 \, \text{A}$, 额定电感量 $200 \, \text{H}$, 共4台); 分压器(电容量 $1000 \, \text{pF}$), 高压补偿电容器、被试品电容等组成。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{fig1.png}
+\caption{串联谐振基本原理图}
+\label{fig:1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{fig2.png}
+\caption{变频串联谐振成套试验装置原理图}
+\label{fig:2}
+\end{figure}
+
+\section*{2 实例}
+以浙江绍兴电力局现有设备对变压器进行交
+
+\end{document}
+```
+
+Note: The images `fig1.png` and `fig2.png` are placeholders for the actual figures. You would need to replace these with the correct paths to the images in your actual LaTeX document.

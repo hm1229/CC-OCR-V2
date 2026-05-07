@@ -1,0 +1,21 @@
+Looking at this handwritten mathematical document, I'll transcribe the formulas line by line:
+
+$$\frac{\partial}{\partial x} z_{\alpha}(x) = -\int \frac{z_x(x) - z_x(x+y)}{z(x) - z(x-y)} \frac{z_{x}(x) - z_{x}(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} (z_x(x) - z(x-y)) \, z(x) - z(x-y)) dy$$
+
+$$- \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|z(x) - z(x-y)|^{\alpha}} \log(|z(x) - z(x-y)|) dy$$
+
+$$+ \alpha \int \frac{z_x(x) - z_x(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} \langle z_x(x) - z_x(x-y), z(x) - z(x-y) \rangle \log(|z(x) - z(x-y)|) dy$$
+
+$$\frac{\partial}{\partial x} \left(\frac{z_{xx}(x) - z_{xx}(x+y)}{|z(x) - z(x-y)|^{\alpha}}\right) = -\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} \langle z_x(x) - z_x(x-y), z(x) - z(x-y) \rangle dy$$
+
+$$- \int (2\alpha+2) \int \frac{z_x(x) - z_x(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} \langle z_x(x) - z_x(x-y), z(x) - z(x-y) \rangle^2 dy$$
+
+$$- \int \frac{z_{xxx}(x) - z_x(x-y)}{|z(x) - z(x-y)|^{\alpha}} \langle (z_{xx}(x) - z_{xx}(x-y), z(x) - z(x-y)) + (z_x(x) - z(x-y))^2 \rangle dy$$
+
+$$+ 2\alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} \langle z_x(x) - z(x-y), z(x) - z(x-y) \rangle \log(|z(x) + z(x^2)|) dy$$
+
+$$+ \alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} \langle z_{xx}(x) + z_x(x-y), z(x) - z(x-y) \rangle \log(|z(x) + z(x-y)|) dy$$
+
+$$- \alpha(\alpha+2) \int \frac{z_x(x) - z_x(x-y)}{z(x) - z(x-y)} \langle z_x(x) - z_x(x-y) \rangle^2 \log(|z(x) - z(x-y)|) dy$$
+
+$$+ \alpha \int \frac{z_{xx}(x) - z_{xx}(x-y)}{|z(x) - z(x-y)|^{2+\alpha}} \langle z_{xx}(x) - z_{xx}(x-y), z(x) - z(x-y) \rangle \log(|z(x) - z(x-y)|) dy.$$

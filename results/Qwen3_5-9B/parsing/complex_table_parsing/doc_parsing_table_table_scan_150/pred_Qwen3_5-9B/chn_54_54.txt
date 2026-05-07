@@ -1,0 +1,359 @@
+```html
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <script async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+   window.MathJax = {
+                        tex: {
+                        inlineMath: [
+                            ["$", "$"],
+                            ["\\(", "\\)"],
+                        ],
+                        displayMath: [
+                            ["$$", "$$"],
+                            ["\\[", "\\]"],
+                        ],
+                        processEscapes: true,
+                        processEnvironments: true,
+                        },
+                        options: {
+                        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+                        },
+                    };
+                    if(window.MathJax && window.MathJax.typeset) {
+                        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                    }
+  </script>
+  <style>
+   table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 15px;
+        }
+        th, td {
+            border: 1px solid #236496;
+            padding: 10px 15px;
+        }
+        th {
+            background-color: #6ab;
+            color: #000;
+        }
+        tr:nth-child(even) td {
+            background-color: #f8faec;
+        }
+        tr:nth-child(odd) td {
+            background-color: #fefeff;
+        }
+  </style>
+ </head>
+ <body>
+  <table>
+   <thead><tr><th colspan="10">9-9 按行业分能源消费量（2012年）</th>
+    </tr>
+    <tr>
+     <th rowspan="2">行 业</th>
+     <th>能源消费总量<br/>(万吨标准煤)</th>
+     <th>煤炭消费量<br/>(万吨)</th>
+     <th>焦炭消费量<br/>(万吨)</th>
+     <th>原油消费量<br/>(万吨)</th>
+     <th>汽油消费量<br/>(万吨)</th>
+     <th>煤油消费量<br/>(万吨)</th>
+     <th>柴油消费量<br/>(万吨)</th>
+     <th>燃料油消费量<br/>(万吨)</th>
+     <th>天然气消费量<br/>(亿立方米)</th>
+     <th>电力消费量<br/>(亿千瓦时)</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <td><b>消 费 总 量</b></td>
+     <td><b>361732.01</b></td>
+     <td><b>352647.07</b></td>
+     <td><b>39373.04</b></td>
+     <td><b>46678.92</b></td>
+     <td><b>8140.90</b></td>
+     <td><b>1956.60</b></td>
+     <td><b>16966.05</b></td>
+     <td><b>3683.29</b></td>
+     <td><b>1463.00</b></td>
+     <td><b>49762.64</b></td>
+    </tr>
+    <tr>
+     <td>农、林、牧、渔、水利业</td>
+     <td>6784.43</td>
+     <td>1766.12</td>
+     <td>57.48</td>
+     <td></td>
+     <td>192.86</td>
+     <td>1.19</td>
+     <td>1335.50</td>
+     <td>1.98</td>
+     <td>0.64</td>
+     <td>1012.57</td>
+    </tr>
+    <tr>
+     <td><b>工业</b></td>
+     <td><b>252462.78</b></td>
+     <td><b>335714.65</b></td>
+     <td><b>39262.62</b></td>
+     <td><b>46559.52</b></td>
+     <td><b>581.06</b></td>
+     <td><b>32.04</b></td>
+     <td><b>1747.70</b></td>
+     <td><b>2241.69</b></td>
+     <td><b>946.75</b></td>
+     <td><b>36232.21</b></td>
+    </tr>
+    <tr>
+     <td>采掘业</td>
+     <td>21176.92</td>
+     <td>27760.18</td>
+     <td>250.86</td>
+     <td><b>1074.08</b></td>
+     <td>58.02</td>
+     <td>2.64</td>
+     <td>631.77</td>
+     <td><b>16.44</b></td>
+     <td>139.50</td>
+     <td>2391.90</td>
+    </tr>
+    <tr>
+     <td>煤炭开采和洗选业</td>
+     <td>12339.12</td>
+     <td>26163.30</td>
+     <td>65.41</td>
+     <td></td>
+     <td>16.33</td>
+     <td>2.16</td>
+     <td>215.21</td>
+     <td>0.92</td>
+     <td>7.48</td>
+     <td>879.14</td>
+    </tr>
+    <tr>
+     <td>石油和天然气开采业</td>
+     <td>3807.89</td>
+     <td>477.89</td>
+     <td></td>
+     <td>1050.41</td>
+     <td>14.24</td>
+     <td></td>
+     <td>63.41</td>
+     <td>13.27</td>
+     <td>122.94</td>
+     <td>396.81</td>
+    </tr>
+    <tr>
+     <td>黑色金属矿采选业</td>
+     <td>1842.98</td>
+     <td>200.86</td>
+     <td>125.54</td>
+     <td>0.01</td>
+     <td>6.32</td>
+     <td>0.03</td>
+     <td>112.98</td>
+     <td>0.04</td>
+     <td>0.03</td>
+     <td>438.42</td>
+    </tr>
+    <tr>
+     <td>有色金属矿采选业</td>
+     <td>1180.82</td>
+     <td>112.06</td>
+     <td>13.81</td>
+     <td></td>
+     <td>8.04</td>
+     <td>0.41</td>
+     <td>35.36</td>
+     <td>0.05</td>
+     <td></td>
+     <td>327.82</td>
+    </tr>
+    <tr>
+     <td>非金属矿采选业</td>
+     <td>1217.00</td>
+     <td>619.99</td>
+     <td>46.10</td>
+     <td></td>
+     <td>5.32</td>
+     <td>0.04</td>
+     <td>65.78</td>
+     <td>0.16</td>
+     <td>0.54</td>
+     <td>224.23</td>
+    </tr>
+    <tr>
+     <td>开采辅助活动</td>
+     <td>483.92</td>
+     <td>184.17</td>
+     <td></td>
+     <td>23.66</td>
+     <td>7.69</td>
+     <td></td>
+     <td>139.01</td>
+     <td>2.00</td>
+     <td>8.51</td>
+     <td>28.56</td>
+    </tr>
+    <tr>
+     <td>其他采矿业</td>
+     <td>305.20</td>
+     <td>1.91</td>
+     <td></td>
+     <td></td>
+     <td>0.08</td>
+     <td></td>
+     <td>0.02</td>
+     <td></td>
+     <td></td>
+     <td>96.92</td>
+    </tr>
+    <tr>
+     <td><b>制造业</b></td>
+     <td><b>205667.69</b></td>
+     <td><b>132542.86</b></td>
+     <td><b>39003.74</b></td>
+     <td><b>45482.98</b></td>
+     <td><b>489.14</b></td>
+     <td><b>29.37</b></td>
+     <td><b>1037.70</b></td>
+     <td><b>2202.55</b></td>
+     <td><b>572.72</b></td>
+     <td><b>26822.46</b></td>
+    </tr>
+    <tr>
+     <td>农副食品加工业</td>
+     <td>2750.55</td>
+     <td>1753.25</td>
+     <td>11.52</td>
+     <td>0.07</td>
+     <td>31.08</td>
+     <td>0.12</td>
+     <td>50.83</td>
+     <td>4.67</td>
+     <td>1.62</td>
+     <td>526.15</td>
+    </tr>
+    <tr>
+     <td>食品制造业</td>
+     <td>1621.32</td>
+     <td>1296.99</td>
+     <td>1.90</td>
+     <td></td>
+     <td>10.48</td>
+     <td>0.03</td>
+     <td>22.62</td>
+     <td>5.59</td>
+     <td>6.10</td>
+     <td>220.97</td>
+    </tr>
+    <tr>
+     <td>酒、饮料和精制茶制造业</td>
+     <td>1180.09</td>
+     <td>736.99</td>
+     <td>0.97</td>
+     <td>0.01</td>
+     <td>8.58</td>
+     <td>0.01</td>
+     <td>13.90</td>
+     <td>3.18</td>
+     <td>3.43</td>
+     <td>155.76</td>
+    </tr>
+    <tr>
+     <td>烟草制品业</td>
+     <td>247.42</td>
+     <td>62.98</td>
+     <td></td>
+     <td></td>
+     <td>0.86</td>
+     <td></td>
+     <td>3.36</td>
+     <td>0.97</td>
+     <td>1.74</td>
+     <td>51.22</td>
+    </tr>
+    <tr>
+     <td>纺织业</td>
+     <td>6357.01</td>
+     <td>2065.59</td>
+     <td>3.08</td>
+     <td></td>
+     <td>16.89</td>
+     <td>0.12</td>
+     <td>20.20</td>
+     <td>8.80</td>
+     <td>2.15</td>
+     <td>1448.70</td>
+    </tr>
+    <tr>
+     <td>纺织服装、服饰业</td>
+     <td>861.09</td>
+     <td>228.41</td>
+     <td>2.69</td>
+     <td>0.05</td>
+     <td>17.03</td>
+     <td>0.41</td>
+     <td>20.85</td>
+     <td>2.81</td>
+     <td>0.87</td>
+     <td>198.42</td>
+    </tr>
+    <tr>
+     <td>皮革、毛皮、羽毛及其制品和制鞋业</td>
+     <td>574.23</td>
+     <td>79.50</td>
+     <td>0.80</td>
+     <td>0.10</td>
+     <td>7.94</td>
+     <td>0.21</td>
+     <td>8.69</td>
+     <td>3.35</td>
+     <td>0.17</td>
+     <td>151.03</td>
+    </tr>
+    <tr>
+     <td>木材加工和木、竹、藤、棕、草制品业</td>
+     <td>1152.64</td>
+     <td>421.05</td>
+     <td>0.37</td>
+     <td>0.17</td>
+     <td>7.47</td>
+     <td>0.08</td>
+     <td>14.32</td>
+     <td>0.17</td>
+     <td>0.35</td>
+     <td>264.08</td>
+    </tr>
+    <tr>
+     <td>家具制造业</td>
+     <td>199.41</td>
+     <td>34.09</td>
+     <td>3.79</td>
+     <td></td>
+     <td>5.28</td>
+     <td>0.05</td>
+     <td>7.68</td>
+     <td>0.32</td>
+     <td>0.68</td>
+     <td>45.83</td>
+    </tr>
+    <tr>
+     <td>造纸和纸制品业</td>
+     <td>3846.14</td>
+     <td>4523.89</td>
+     <td>0.51</td>
+     <td>0.10</td>
+     <td>9.05</td>
+     <td>0.09</td>
+     <td>20.71</td>
+     <td>7.18</td>
+     <td>4.14</td>
+     <td>579.00</td>
+    </tr>
+    <tr>
+     <td>印刷和记录媒介复制业</td>
+    

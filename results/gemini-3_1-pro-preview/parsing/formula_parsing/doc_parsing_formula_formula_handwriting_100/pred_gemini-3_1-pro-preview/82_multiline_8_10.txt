@@ -1,0 +1,15 @@
+\begin{aligned}
+e_{i;j}(\Delta \tilde{V}) &= (\|\hat{h}\|^2)_{;i} \tilde{V} \\
+&+ \|\hat{h}\|^2 \sum_{r=n+1}^{m-1} \sum_{k=1}^n \varepsilon_r h_{ik}^r X \wedge e_1 \wedge \cdots \wedge e_{k-1} \wedge e_r \wedge e_{k+1} \wedge \cdots \wedge e_n \\
+&+ 2n D_{e_i} \hat{A} \wedge e_1 \wedge \cdots \wedge e_n + n \sum_{k=1}^n \sum_{r=n+1}^{m-1} \varepsilon_r h_{ik}^r \hat{A} \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge e_n \\
+&- n \sum_{k=1}^n \varepsilon_j \delta_{ik} A \wedge e_1 \wedge \cdots \wedge e_{k-1} \wedge X \wedge e_{k+1} \wedge \cdots \wedge e_n \\
+&- n \sum_{\substack{j,k,l=1 \\ j \neq k}}^n \varepsilon_l \omega_{jk}(e_i) X \wedge e_1 \wedge \cdots \wedge \underbrace{e_l}_{j\text{-th}} \wedge \cdots \wedge \underbrace{D_{e_k} \hat{A}}_{k\text{-th}} \wedge \cdots \wedge e_n \\
+&- n \sum_{\substack{j,k=1 \\ j \neq k}}^n \sum_{r=n+1}^{m-1} \varepsilon_r h_{rj}^r X \wedge e_1 \wedge \cdots \wedge \underbrace{e_l}_{j\text{-th}} \wedge \cdots \wedge \underbrace{D_{e_k} \hat{A}}_{k\text{-th}} \wedge \cdots \wedge e_n \\
+&+ n \sum_{k=1}^n \varepsilon_k \langle A_{D_{e_k} \hat{A}}(e_i), e_k \rangle X \wedge e_1 \wedge \cdots \wedge e_n \\
+&- n \sum_{k=1}^n X \wedge e_1 \wedge \cdots \wedge \underbrace{D_{e_k} D_{e_k} \hat{A}}_{k\text{-th}} \wedge \cdots \wedge e_n \\
+&+ \sum_{\substack{r,s=n+1 \\ r < s}}^{m-1} \sum_{\substack{j,k=1 \\ j \neq k}}^n \varepsilon_r \varepsilon_s \{ e_i(R_{sjk}^r) + R_{sjk}^r e_i \} \wedge e_1 \wedge \cdots \wedge \underbrace{e_r}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_s}_{k\text{-th}} \wedge \cdots \wedge e_n \\
+&+ \sum_{\substack{r,s=n+1 \\ r < s}}^{m-1} \sum_{\substack{j,k=1 \\ j \neq k}}^n \varepsilon_r \varepsilon_s R_{sjk}^r \{ \sum_{l=1}^n \varepsilon_l \omega_{lh}(e_i) X \wedge e_1 \wedge \cdots \wedge \underbrace{e_l}_{l\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_s}_{k\text{-th}} \\
+&\wedge \cdots \wedge e_n + \sum_{t=n+1}^{m-1} \varepsilon_t h_{it}^t X \wedge e_1 \wedge \cdots \wedge \underbrace{e_t}_{l\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_s}_{k\text{-th}} \wedge \cdots \wedge e_n \} \\
+&+ \sum_{\substack{r,s,t=n+1 \\ r < s, t \neq r,s}}^{m-1} \sum_{\substack{j,k=1 \\ j \neq k}}^n \varepsilon_r \varepsilon_s \varepsilon_t R_{sjk}^r h_{it}^t X \wedge e_1 \wedge \cdots \wedge \underbrace{e_l}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge e_n \\
+&- \sum_{\substack{r,s,t=n+1 \\ r < s, t \neq r,s}}^{m-1} \sum_{\substack{j,k=1 \\ j \neq k}}^n \varepsilon_r \varepsilon_s \varepsilon_t R_{sjk}^r \omega_{st}(e_i) X \wedge e_1 \wedge \cdots \wedge \underbrace{e_t}_{j\text{-th}} \wedge \cdots \wedge \underbrace{e_r}_{k\text{-th}} \wedge \cdots \wedge e_n
+\end{aligned}

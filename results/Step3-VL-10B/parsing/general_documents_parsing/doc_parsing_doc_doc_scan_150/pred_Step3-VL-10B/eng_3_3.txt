@@ -1,0 +1,120 @@
+用户现在需要把图片中的文字、表格等转换成LaTeX格式。首先得仔细看图片内容，分部分处理：标题、各个词汇表部分，注意左右两栏（Algonquin和Malay-Polynesian）。
+
+首先看页面顶部：50 AFFILIATION OF THE ALGONQUIN LANGUAGES. 然后是VOCABULARY III. Comparison of Pronouns. 然后是两个列，Algonquin和Malay-Polynesian。然后是Prepositions and Adverbs部分，再是VOCABULARY OF MISCELLANEOUS TERMS. 另一个两栏，Algonquin and Malay-Polynesian。
+
+需要逐行转录，注意缩进、换行、标点。比如第一部分VOCABULARY III下的Comparison of Pronouns，左边Algonquin列，右边Malay-Polynesian列。每个代词（I, Thou, He, We, you, they）对应的两边词汇。
+
+先处理VOCABULARY III部分：
+
+标题：VOCABULARY III. \hfill Comparison of Pronouns.
+
+然后分两栏，Algonquin和Malay-Polynesian。用tabular环境，可能用l和r列？或者用multicolumn。不过先看内容：
+
+I Thou: 左边Algonquin是neya, Cree; keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree; oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... 右边Malay-Polynesian是naak, Pelew; kow, Pelew; koe, New Zealand; coy, Tonga; koai, Malay; iya, Tagala, Malay; aia, Tonga; cami, Tagala; kami, Malay; gimowooa, Tonga; mow, Tonga; kita, Ponape; keeta, Malay; naie, Malagasy; koe-ee-oo, Malay; kamo, Tagala; kamo, Malay; gimoowa, Tonga; now,; ginowooa, Tonga.
+
+然后He: 左边是keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree; 右边？不，看图片中He对应的Algonquin是keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree; 然后We对应的是oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... 可能需要更仔细看图片中的排版。
+
+另外，Prepositions and Adverbs部分，左边是before, below, behind, at, against, about, concerning. 对应的Algonquin词汇：before是amooya, Cree; below是utamik, Cree; behind是ootak, "chupuses, Cree; tabassish, Ojibbeway; at是teck, Algonquin; cheke, Cree; against, about, concerning.是ooche, Cree. 右边Malay-Polynesian是mua, Tahiti; gi-mooa, Tonga; dee-mooea, Malay; atas, da-baoua, "tooa, Tonga; dekay, Malay; ka, "gi, Tonga.
+
+然后VOCABULARY OF MISCELLANEOUS TERMS. 标题下是Algonquin and Malay-Polynesian两栏。比如all对应的是misaew, mamo, Cree; pikoo, Cree; ayik, "kanouans, anwi, Algonquin; wepema, Miami; utoos, attouche, Cree; pekekoato, Cree; pingwi, Ojibbeway; 右边Malay-Polynesian是mahu, Tahiti; be, Tonga; kakai, Amblaw; osea, Celebes; gnahow, Malay; Java; pana, Malay; Java; dota, Ombay; ati, Bougu; autfa, Sula; kapok, Galela; peekeesi, Pelew; bangu, Malay; togi, Tonga; kiseem, Bismar; itikam, Bismar; tamapt, Malay; ada, Malay; wutan, Java; buta, Bajau; motni, Myosol; koknatea, Amblaw; wog, Gani; vaka, Marianne, Tonga; oti, Tidore; mallayae, Pelew; aoh, Menado; awah, Java; ininawallah, Sarapura; nanau, Amblaw; jobi-jobi, Tidore; dubb, Sula; macunnan, Malay; fafangan, Tonga; tetai, Malay; toot, Pelew; naman-bangou, Tidore; pitek, Java (fowl); manok, Java, &c.
+
+现在需要把这些内容用LaTeX的tabular或者分栏来排版，注意原文的结构，比如每个部分的标题，然后两栏的对比。另外，注意原文中的换行和缩进，比如代词I Thou下面的Algonquin列是neya, Cree; keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree; oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... 可能原文中的“Prepar”是Preparatory？不过图片中是“Prepar”可能截断了，需要保留。
+
+现在开始组织LaTeX代码：
+
+首先页面顶部：
+
+\begin{center}
+50 \hfill AFFILIATION OF THE ALGONQUIN LANGUAGES.
+\end{center}
+
+然后VOCABULARY III部分：
+
+\section*{VOCABULARY III. Comparison of Pronouns.}
+
+\begin{tabular}{ll}
+\textbf{Algonquin.} & \textbf{Malay-Polynesian.} \\
+I \textit{Thou} & naak, Pelew \\
+& kow, Pelew; kope, New Zealand; coy, Tonga \\
+& koai, Malay \\
+& iya, Tagala, Malay \\
+& aia, Tonga \\
+& cami, Tagala; kami, Malay \\
+& gimowooa, Tonga \\
+& mow, Tonga \\
+& kita, Ponape; keeta, Malay \\
+& naie, Malagasy \\
+& koe-ee-oo, Malay \\
+& kamo, Tagala; kamo, Malay \\
+& gimoowa, Tonga \\
+& now, \\
+& ginowooa, Tonga \\
+He & keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree \\
+We & oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... \\
+you & neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... \\
+& （这里可能原文中you对应的Algonquin是neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...？需要再看图片。图片中you对应的是neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...？可能图片中you的Algonquin列是：neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... 而they对应的是？图片中they可能没有显示？不，看图片中的VOCABULARY III部分，左边列是I Thou, He, We, you, they。看图片中的左边列：
+
+I Thou: neya, Cree; keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree; oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...
+
+He: keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree;
+
+We: oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...
+
+you: neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... （可能图片中you的行是neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...）
+
+they: （图片中they可能没有？不，看图片中的VOCABULARY III部分，左边列有I Thou, He, We, you, they。看图片中的“they”行，左边Algonquin是？图片中“they”对应的是：（可能图片中they的Algonquin是？看图片中的文字，they下面的Algonquin是：（可能图片中they的行是：winawa, Ojibbeway, Prepar...？不，可能图片中的“they”在VOCABULARY III部分的左边列是：（可能我之前看漏了，需要再检查图片。图片中VOCABULARY III部分的左边列：
+
+I Thou
+
+He
+
+We
+
+you
+
+they
+
+每个下面对应Algonquin的词汇。比如：
+
+I Thou: neya, Cree; keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree; oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...
+
+He: keya, ki, Delaware; kee, Shawno; ki, Ojibbeway; noh, Natick; neha, Delaware; weya, Cree;
+
+We: oo, Shawno; keyanow, Cree; kenawun, Natick; kenawun, Natick; mow, Micmac; kistahnon, Blackfoot; neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...
+
+you: neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar... （可能you的行是neyounow, Cree; keyuwow, Cree; kenaau, Natick; kinawa, Ojibbeway; nahoh, Natick; winawa, Ojibbeway, Prepar...）
+
+they: （图片中they的Algonquin是？看图片中的“they”行，左边是：（可能图片中they的行是：winawa, Ojibbeway, Prepar...？不，可能图片中they的行是：（可能我之前看的图片中VOCABULARY III部分的“they”在左边列，对应的Algonquin是：（可能图片中“they”下面的Algonquin是：（比如图片中的“they”行，Algonquin列是：（可能图片中“they”是：（看图片中的文字，“they”下面是：winawa, Ojibbeway, Prepar...？不，可能图片中的“they”在VOCABULARY III部分的左边列是：（可能我需要更仔细看图片中的内容。图片中的VOCABULARY III部分，左边列的“they”对应的是：（可能图片中“they”的Algonquin是：（比如图片中的“they”行，Algonquin列是：（可能图片中的“they”是：（看图片中的文字，“they”在左边列，下面是：winawa, Ojibbeway, Prepar...？不，可能图片中的“they”行在VOCABULARY III部分的左边列是：（可能我之前混淆了，先处理Prepositions and Adverbs部分，因为这部分更清晰。
+
+Prepositions and Adverbs部分：
+
+\subsection*{Prepositions and Adverbs.}
+
+\begin{tabular}{ll}
+\textbf{Algonquin.} & \textbf{Malay-Polynesian.} \\
+before & mua, Tahiti; gi-mooa, Tonga \\
+& dee-mooea, Malay; atas, da-baoua, `` \\
+& tooa, Tonga; dekay, Malay; ka, `` \\
+below & utamik, Cree; chupuses, Cree; tabassish, Ojibbeway \\
+behind & ootak, `` \\
+at & teck, Algonquin; cheke, Cree \\
+against, about, concerning. & ooche, Cree; gi, Tonga \\
+\end{tabular}
+
+然后是VOCABULARY OF MISCELLANEOUS TERMS. 部分：
+
+\section*{VOCABULARY OF MISCELLANEOUS TERMS. Algonquin and Malay-Polynesian.}
+
+\begin{tabular}{ll}
+\textbf{Algonquin.} & \textbf{Malay-Polynesian.} \\
+all & mahu, Tahiti; be, Tonga \\
+& kakai, Amblaw; osea, Celebes; gnahow, Malay; Java; pana, Malay; Java; dota, Ombay; ati, Bougu; autfa, Sula; kapok, Galela; peekeesi, Pelew; bangu, Malay; togi, Tonga; kiseem, Bismar; itikam, Bismar; tamapt, Malay; ada, Malay; wutan, Java; buta, Bajau; motni, Myosol; koknatea, Amblaw; wog, Gani; vaka, Marianne, Tonga; oti, Tidore; mallayae, Pelew; aoh, Menado; awah, Java; ininawallah, Sarapura; nanau, Amblaw; jobi-jobi, Tidore; dubb, Sula; macunnan, Malay; fafangan, Tonga; tetai, Malay; toot, Pelew; naman-bangou, Tidore; pitek, Java (fowl); manok, Java, \&c. \\
+all alone & misaew, mamo, Cree; pikoo, Cree; ayik, `` \\
+ant arrow & kanouans, anwi, Algonquin; wepema, Miami; utoos, attouche, Cree; pekekoato, Cree; pingwi, Ojibbeway; \\
+ashes & pakoonao, Cree; togkunk, Algonquin; kooksakin, Blackfoot; aguweow, Cree; wutepuwet, Cree; itow, Cree; wachtey, Delaware; mutai, Cree; ochkunnow, Shawno; oot, Cree; \\
+ashes awake & \\
+axe & \\
+basket & \\
+to be belly & \\
+bone boat, canoe & \\
+body & missole, Miami; eeio, Ottawa; yo, Ojibbeway; iniwia, Blackfoot; uchape, Cree; mechim, ``; ayukoonow, Cree;

@@ -1,0 +1,26 @@
+$$
+\begin{align*}
+&\frac{1}{2}\begin{bmatrix}D_{F0} \\ X^U \\ I_{F1}\end{bmatrix}^T
+\begin{bmatrix}
+Q_{F0F0} & Q_{F0U} & Q_{F0F1} \\
+Q_{UF0} & Q_{UU} & Q_{UF1} \\
+Q_{F1F0} & Q_{F1U} & Q_{F1F1}
+\end{bmatrix}
+\begin{bmatrix}D_{F0} \\ X^U \\ I_{F1}\end{bmatrix}
++
+\begin{bmatrix}c_{F0} \\ c^U \\ c_{F1}\end{bmatrix}^T
+\begin{bmatrix}D_{F0} \\ X^U \\ I_{F1}\end{bmatrix}
+\\
+=&\frac{1}{2}\begin{bmatrix}X^U \\ I_{F1}\end{bmatrix}^T
+\begin{bmatrix}
+Q_{UU} & Q_{UF1} \\
+Q_{F1U} & Q_{F1F1}
+\end{bmatrix}
+\begin{bmatrix}X^U \\ I_{F1}\end{bmatrix}
++
+\begin{bmatrix}c^U \\ c_{F1}\end{bmatrix}^T
+\begin{bmatrix}X^U \\ I_{F1}\end{bmatrix}
+\\
+=&\frac{1}{2}(X^U)^T Q_{UU} X^U + (X^U)^T Q_{UF1} I_{F1} + (c^U)^T X^U + c_{F1}I_{F1} + \xi_{F,U}
+\end{align*}
+$$

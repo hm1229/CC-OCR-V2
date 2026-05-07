@@ -1,0 +1,96 @@
+用户现在需要从收据中提取信息到指定的JSON schema里。首先看每个字段：
+
+date：收据里的Date是21/12/16 9:29:44 AM，所以提取日期部分21/12/16。
+
+doc_no_receipt_no：Bill No是POS/266870，所以这个是收据号。
+
+seller_address：地址是NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR。
+
+seller_gst_id：(GST ID No : 002006163436) 这里提取002006163436。
+
+seller_name：KEDAI UEAT & RUNCIT HONG NING SDN. BHD.
+
+seller_phone：Tol: 03-6273 2163，所以是03-6273 2163。
+
+total_amount：Net Amt @ GST6%是3.80？看Net Amt那行是3.80？然后看Cash Paid是8.00？不对，Net Amt是3.80？然后看Gst Summary里的Amount总和？或者看Net Amt是3.80？然后总支付是Cash Paid 8.00？不对，可能total_amount是Net Amt加上税？或者看Net Amt是3.80，然后Gst是0.17，所以总金额是3.80 + 0.17？但看Cash Paid是8.00？不对，可能我搞错了。再看收据里的Net Amt @ GST6% : 3.80？然后Cash Paid是8.00？这显然有问题，可能Net Amt是3.80？然后看商品的Amount总和：BROWN CANDY是3.00 ZRL，罗汉果是3.00 SR，所以总和是3+3=6？然后Net Amt是6？因为GST是6%，所以6*1.06=6.36？但收据里Net Amt写的是3.80？可能我看错了。再看收据中的Item部分：
+
+第一项BROWN CANDY 400G @2.50，数量2，所以2*2.50=5？但Amount是3.00 ZRL？可能ZRL是货币单位，比如Ringgit？然后第二项罗汉果是2个，每个1.50，所以2*1.50=3.00 SR。所以两个商品的Amount总和是3+3=6。然后Net Amt @ GST6% 应该是6*(1+6%)=6.36？但收据里Net Amt写的是3.80？这可能我看错了数字。再看收据中的Net Amt那行，原文是“Net Amt @ GST6% : 3.80”？然后Cash Paid是8.00？这显然不对，可能图片中的数字是模糊的，比如Net Amt是6.00？因为3.00+3.00=6.00，然后GST是6%的话，6*0.06=0.36，所以总税是0.36？但看Gst Summary里的SR@6%是2.83，税0.17？这可能图片中的数字是OCR错误，比如SR是另一个项目？或者可能我需要按收据上的Net Amt来取。看收据中的“Net Amt @ GST6% : 3.80”？然后Cash Paid是8.00？这显然有问题，可能Cash Paid是总支付，而Net Amt是商品总金额。然后total_amount应该是Net Amt加上税？或者看Gst Summary里的Amount总和：SR@6%是2.83，ZRL@0%是3.00，所以总Amount是2.83+3.00=5.83？然后税是0.17。但可能total_amount是Net Amt，即3.80？或者看Cash Paid是8.00？这可能需要再检查。
+
+另外total_tax：看Gst Summary里的Tax总和是0.17（因为SR@6%的税是0.17，ZRL@0%的税是0.00，所以总税是0.17）。
+
+现在再整理每个字段：
+
+date：21/12/16 （从Date: 21/12/16 9:29:44 AM提取日期部分）
+
+doc_no_receipt_no：POS/266870 （Bill No）
+
+seller_address：NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR
+
+seller_gst_id：002006163436 （GST ID No : 002006163436）
+
+seller_name：KEDAI UEAT & RUNCIT HONG NING SDN. BHD.
+
+seller_phone：03-6273 2163 （Tol: 03-6273 2163）
+
+total_amount：看Net Amt是3.80？或者看Cash Paid是8.00？但Cash Paid是支付的现金，而Net Amt是商品金额。可能total_amount是Net Amt，即3.80？或者看两个商品的Amount总和是3.00 +3.00=6.00，然后GST是6%，所以6.00是Net Amt？因为6.00*6%=0.36，税是0.36？但Gst Summary里的SR@6%是2.83，税0.17，ZRL@0%是3.00，税0.00。总税是0.17。可能Net Amt是（2.83 +3.00）=5.83？然后5.83*6%≈0.35，接近0.17？可能OCR错误，比如SR@6%的Amount是2.83，税是0.17（2.83*6%≈0.17），ZRL@0%的Amount是3.00，税0.00。所以总Amount是2.83+3.00=5.83，总税是0.17。那total_amount应该是5.83？而Net Amt可能是5.83？因为Net Amt @ GST6% 应该是总金额（含税？不，Net Amt是不含税的，然后加上税是总支付？可能我搞混了。但根据schema中的total_amount，可能是指总支付金额？Cash Paid是8.00？但Change是0.00，Card Paid是0.00，所以Cash Paid是8.00，即总支付是8.00。但Net Amt是3.80？这显然矛盾，可能图片中的数字是模糊的，比如Net Amt是6.00，Cash Paid是6.36（6*1.06），但收据中Cash Paid是8.00，Change是0.00，所以可能OCR错误。但作为信息提取，只能按图片中的文字提取。
+
+现在再看图片中的“Net Amt @ GST6% : 3.80”？然后“Cash Paid : 8.00”。那total_amount可能是指总支付，即Cash Paid是8.00？或者Net Amt是3.80，然后税是0.17，总金额是3.80+0.17=3.97？但Gst Summary里的总Amount是2.83+3.00=5.83，税是0.17，所以总支付应该是5.83+0.17=6.00？但Cash Paid是8.00，这显然有问题。可能图片中的数字是：比如BROWN CANDY的Price是2.50，Qty是2，所以Amount是5.00 ZRL？但图片中写的是3.00 ZRL？可能OCR错误，比如“3.00”是“5.00”？或者“2.50”是“1.50”？比如BROWN CANDY @1.50，Qty2，Amount3.00 ZRL；罗汉果@1.50，Qty2，Amount3.00 SR。这样总Amount是6.00，Net Amt是6.00，GST6%是0.36，总支付6.36。但Cash Paid是8.00，Change是1.64？但收据中Change是0.00，所以可能不是。或者可能图片中的“Cash Paid : 8.00”是错误，应该是6.36？但不管怎样，作为提取，按图片中的文字。
+
+现在回到schema的total_amount，可能是指Net Amt，即3.80？或者看Gst Summary的总Amount是2.83+3.00=5.83，所以total_amount是5.83？total_tax是0.17（因为SR@6%的税是0.17，ZRL@0%的税是0.00，总和0.17）。
+
+现在再检查每个字段：
+
+date：21/12/16 （正确，Date字段是21/12/16 9:29:44 AM，取日期部分）
+
+doc_no_receipt_no：POS/266870 （Bill No: POS/266870）
+
+seller_address：NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR （正确，地址部分）
+
+seller_gst_id：002006163436 （GST ID No : 002006163436，提取数字部分）
+
+seller_name：KEDAI UEAT & RUNCIT HONG NING SDN. BHD. （正确，公司名称）
+
+seller_phone：03-6273 2163 （Tol: 03-6273 2163，提取电话）
+
+total_amount：看Net Amt是3.80？或者看Cash Paid是8.00？但可能Net Amt是总商品金额，即3.80？或者看两个商品的Amount总和是3.00 +3.00=6.00，所以total_amount是6.00？因为Net Amt @ GST6% 应该是总商品金额（不含税），然后加上税是总支付。但图片中Net Amt写的是3.80，可能OCR错误，比如是6.00？比如“3.80”是“6.00”的模糊。或者看Gst Summary的Amount总和是2.83+3.00=5.83，所以total_amount是5.83？
+
+另外total_tax：看Gst Summary中的Tax列，SR@6%的Tax是0.17，ZRL@0%的Tax是0.00，所以总Tax是0.17。
+
+现在再确认total_amount，可能是指总支付金额，即Cash Paid是8.00？因为Cash Paid是顾客支付的现金，而Change是找零，所以总支付是Cash Paid。但Change是0.00，所以总支付是8.00。但Net Amt是3.80，这显然不匹配，可能图片中的Cash Paid是6.36？但OCR错误显示为8.00。但作为提取，只能按图片中的文字。比如Cash Paid : 8.00，所以total_amount是8.00？但这样Net Amt是3.80，税是0.17，总金额是3.80+0.17=3.97，不等于8.00，所以可能total_amount是Net Amt，即3.80，而total_tax是0.17。
+
+现在综合所有信息，填写每个字段：
+
+date: "21/12/16"
+
+doc_no_receipt_no: "POS/266870"
+
+seller_address: "NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR"
+
+seller_gst_id: "002006163436"
+
+seller_name: "KEDAI UEAT & RUNCIT HONG NING SDN. BHD."
+
+seller_phone: "03-6273 2163"
+
+total_amount: "3.80" （因为Net Amt @ GST6% 是3.80，可能这是总商品金额，不含税？或者看Gst Summary的总Amount是5.83，所以可能total_amount是5.83？这里可能需要再检查图片中的Net Amt。看图片中的“Net Amt @ GST6% : 3.80”后面的数字，可能是“6.00”？比如OCR错误，把6.00看成3.80？或者看商品的Amount总和是3.00 +3.00=6.00，所以Net Amt是6.00，然后GST6%是0.36，总支付6.36。但Cash Paid是8.00，这显然有问题。可能图片中的“Net Amt @ GST6% : 3.80”是正确的，而其他数字是错误。但作为信息提取，必须按图片中的内容。比如图片中的Net Amt是3.80，所以total_amount是3.80。total_tax是0.17（来自Gst Summary的Tax总和）。
+
+现在确定total_tax：看Gst Summary部分，SR@6%的Tax是0.17，ZRL@0%的Tax是0.00，所以总Tax是0.17。
+
+现在整理所有字段：
+
+{
+  "date": "21/12/16",
+  "doc_no_receipt_no": "POS/266870",
+  "seller_address": "NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR",
+  "seller_gst_id": "002006163436",
+  "seller_name": "KEDAI UEAT & RUNCIT HONG NING SDN. BHD.",
+  "seller_phone": "03-6273 2163",
+  "total_amount": "3.80",
+  "total_tax": "0.17"
+}
+
+需要确认total_amount是否正确。另一种可能是total_amount是Cash Paid，即8.00，因为总支付是8.00，而Net Amt是商品金额，税是0.17，所以总金额（含税）是Net Amt + tax = 3.80 +0.17=3.97，不等于8.00，所以这说明可能Net Amt是总金额（含税？不，GST是消费税，所以Net Amt是不含税的，总支付是Net Amt + tax。但Cash Paid是8.00，Change是0.00，所以总支付是8.00，即Net Amt + tax =8.00。如果tax是0.17，那么Net Amt是7.83？但图片中Net Amt是3.80，这明显不匹配。可能图片中的数字有错误，比如Net Amt是7.83，tax是0.17，总支付8.00。但OCR可能把7.83看成3.80？比如“7.83”和“3.80”在模糊图片中可能混淆。或者“Net Amt @ GST6% : 7.83”，然后tax是0.47（7.83*6%≈0.47），但Gst Summary中的tax是0.17，所以可能不是。另一种可能是Gst Summary中的SR@6%的Amount是2.83，tax是0.17（2.83*6%≈0.17），ZRL@0%的Amount是3.00，tax是0.00，所以总Amount是2.83+3.00=5.83，总tax是0.17，总支付是5.83+0.17=6.00。而Cash Paid是6.00，Change是0.00，这样就匹配了。所以可能图片中的“Cash Paid : 8.00”是OCR错误，应该是6.00。而Net Amt @ GST6% 应该是5.83（因为5.83是不含税的，加上tax 0.17得到6.00）。所以可能Net Amt是5.83，而OCR错误显示为3.80。这种情况下，total_amount是5.83（Net Amt），total_tax是0.17。
+
+现在再看图片中的“Net Amt @ GST6% : 3.80”可能是“5.83”的错误，比如数字模糊。而Gst Summary中的总Amount是2.83+3.00=5.83，所以Net Amt是5.83。这样total_amount是5.83，total_tax是0.17。
+
+现在需要确定哪个是正确的。因为Gst Summary的Amount是商品的含税还是不含税？通常，GST是消费税，所以Amount是不含税的，Tax是税额。所以总支付是Amount总和 + Tax总和。比如SR@6%的Amount是2.83（不含税），Tax是0.17（2.83*6%），ZRL@0%的Amount是3.00（不含税），Tax是0.00。所以总支付是2.83+3.00 +0.17=6.00。而Cash

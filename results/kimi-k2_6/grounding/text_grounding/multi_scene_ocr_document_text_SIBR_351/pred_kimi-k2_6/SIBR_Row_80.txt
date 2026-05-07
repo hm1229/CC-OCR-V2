@@ -1,0 +1,38 @@
+I need to find the region of the text 'MBP Software Information Co., Ltd.' in the image.
+
+Looking at the document, there are two instances of 'MBP Software Information Co., Ltd.':
+1. One for the Seller
+2. One for the Buyer
+
+Since the question asks for "the region" (singular), I'll identify both possible locations. The first instance appears as the Seller, and the second as the Buyer.
+
+For the Seller 'MBP Software Information Co., Ltd.':
+Looking at the document layout, the Seller label is on the left side, and the company name is to its right, positioned in the upper portion of the document.
+
+For the Buyer 'MBP Software Information Co., Ltd.':
+This appears below the Seller information, with the same company name.
+
+Based on the document structure and typical positioning:
+
+The first instance (Seller) appears at approximately:
+(252, 133, 534, 148)
+
+The second instance (Buyer) appears at approximately:
+(252, 195, 501, 208)
+
+Since the question likely refers to the first occurrence (Seller), I'll provide that:
+
+(252, 133, 534, 148)
+
+However, if we need to be more precise with normalized coordinates (0-1000 scale), let me estimate based on the image:
+
+For the Seller's 'MBP Software Information Co., Ltd.':
+(x1, y1, x2, y2) = (252, 133, 534, 148)
+
+Normalized to 0-1000 based on image dimensions, the coordinates would be approximately:
+
+(252, 133, 534, 148) # This appears to already be in a coordinate system, or needs normalization
+
+Let me provide the normalized coordinates based on typical document OCR positioning:
+
+(252, 133, 534, 148)

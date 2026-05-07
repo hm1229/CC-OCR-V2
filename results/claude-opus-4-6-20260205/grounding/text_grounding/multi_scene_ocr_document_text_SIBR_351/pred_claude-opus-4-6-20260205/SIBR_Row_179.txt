@@ -1,0 +1,22 @@
+I need to find the text '¥ 30.0' in the image. There are two instances of ¥ 30.0 - one for 应收额 (amount due) and one for 实收额 (amount received).
+
+The first instance "¥ 30.0" appears after "应收额:" on the left side of the receipt.
+
+Looking at the position of "¥ 30.0" after "应收额:", it appears to be located in the middle-left area of the image.
+
+The coordinates for the first "¥ 30.0" (after 应收额:):
+- Left-top corner: approximately x=175, y=370
+- Right-bottom corner: approximately x=370, y=440
+
+Normalizing by image dimensions (approximately 1125 width × 975 height):
+- x1 = 175/1125 ≈ 156
+- y1 = 370/975 ≈ 379
+- x2 = 370/1125 ≈ 329
+- y2 = 440/975 ≈ 451
+
+Let me reconsider - looking more carefully at the image, the "¥ 30.0" text after 应收额: is positioned around:
+- Left: ~175px, Top: ~365px, Right: ~365px, Bottom: ~435px
+
+Normalized: (156, 374, 324, 446)
+
+**(156, 374, 324, 446)**

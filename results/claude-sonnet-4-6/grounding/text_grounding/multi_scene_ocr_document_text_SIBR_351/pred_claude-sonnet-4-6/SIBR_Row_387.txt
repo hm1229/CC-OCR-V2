@@ -1,0 +1,17 @@
+(1098, 243, 1243, 275)
+
+Wait, I need to normalize these to 0-1000 range based on image dimensions.
+
+Looking at the image, '康复中心' appears in the upper right area of the form, in the row with '科别'.
+
+The image appears to be approximately 1456 x 816 pixels based on typical document scan ratios.
+
+'康复中心' is located at roughly x: 1098-1243, y: 243-275 in pixel coordinates.
+
+Normalizing to 1000:
+- x1: 1098/1456 * 1000 ≈ 754
+- y1: 243/816 * 1000 ≈ 298
+- x2: 1243/1456 * 1000 ≈ 854
+- y2: 275/816 * 1000 ≈ 337
+
+(754, 298, 854, 337)

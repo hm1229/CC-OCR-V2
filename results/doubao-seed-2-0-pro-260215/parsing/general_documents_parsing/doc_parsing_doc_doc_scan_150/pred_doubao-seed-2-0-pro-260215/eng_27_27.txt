@@ -1,0 +1,223 @@
+```latex
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\begin{document}
+
+% Page header
+\noindent
+\begin{minipage}{0.3\linewidth}
+Vol. 27, 2007
+\end{minipage}
+\begin{minipage}{0.55\linewidth}
+\centering
+A NOVEL DNA INTERACTION MOTIF IN TCF-1 AND TCF-4
+\end{minipage}
+\begin{minipage}{0.1\linewidth}
+\hfill 8355
+\end{minipage}
+
+\vspace{1em}
+
+% Figure 2 grid
+\begin{figure}[h!]
+\centering
+% Panel A
+\begin{minipage}{0.47\linewidth}
+\centering
+\textbf{A}\\
+\vspace{0.5em}
+\includegraphics[width=\linewidth]{fig2a_schema.png} % Schema: TOPtk (3 black circles = binding sites) arrow to Luciferase
+\vspace{0.3em}
+\begin{tikzpicture}
+\begin{axis}[
+    ylabel={Fold Activation},
+    ymin=0, ymax=1200,
+    xtick={1,2,3,4},
+    xticklabels={TOP, TCF-1E, LEF-1, LEF-1E},
+    ytick={0,200,400,600,800,1000,1200},
+    width=\linewidth,
+    bar width=20pt,
+    symbolic x coords={TOP, TCF-1E, LEF-1, LEF-1E},
+    xtick=data,
+]
+\addplot[ybar, fill=black] coordinates {
+    (TOP, 0)
+    (TCF-1E, 520)
+    (LEF-1, 920)
+    (LEF-1E, 880)
+};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\hfill
+% Panel B
+\begin{minipage}{0.47\linewidth}
+\centering
+\textbf{B}\\
+\vspace{0.5em}
+\includegraphics[width=\linewidth]{fig2b_schema.png} % Schema: LOPtk (3 grey circles = binding sites) arrow to Luciferase
+\vspace{0.3em}
+\begin{tikzpicture}
+\begin{axis}[
+    ylabel={Fold Activation},
+    ymin=0, ymax=20,
+    xtick={1,2,3,4},
+    xticklabels={LOP, TCF-1E, LEF-1, LEF-1E},
+    ytick={0,2,4,6,8,10,12,14,16,18,20},
+    width=\linewidth,
+    bar width=20pt,
+    symbolic x coords={LOP, TCF-1E, LEF-1, LEF-1E},
+    xtick=data,
+]
+\addplot[ybar, fill=black] coordinates {
+    (LOP, 1)
+    (TCF-1E, 16)
+    (LEF-1, 3)
+    (LEF-1E, 11)
+};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\vspace{1em}
+% Panel C
+\begin{minipage}{0.47\linewidth}
+\centering
+\textbf{C}\\
+\vspace{0.5em}
+\includegraphics[width=\linewidth]{fig2c_schema.png} % Schema: LOP/TOPtk (3 crosshatched circles) arrow to Luciferase
+\vspace{0.3em}
+\begin{tikzpicture}
+\begin{axis}[
+    ylabel={Fold Activation},
+    ymin=0, ymax=16,
+    xtick={1,2,3,4},
+    xticklabels={LOP/TOP, TCF-1E, LEF-1, LEF-1E},
+    ytick={0,2,4,6,8,10,12,14,16},
+    width=\linewidth,
+    bar width=20pt,
+    symbolic x coords={LOP/TOP, TCF-1E, LEF-1, LEF-1E},
+    xtick=data,
+]
+\addplot[ybar, fill=black] coordinates {
+    (LOP/TOP, 1)
+    (TCF-1E, 14)
+    (LEF-1, 1)
+    (LEF-1E, 6)
+};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+\hfill
+% Panel D
+\begin{minipage}{0.47\linewidth}
+\centering
+\textbf{D}\\
+\vspace{0.5em}
+\begin{tikzpicture}
+\begin{axis}[
+    ylabel={Fold Activation},
+    ymin=0, ymax=350,
+    xtick={1,2,3,4,6,7,8,9},
+    xticklabels={0,200,400,800,0,200,400,800},
+    ytick={0,50,100,150,200,250,300,350},
+    width=\linewidth,
+    bar width=10pt,
+    xtick align=outside,
+    xtick pos=left,
+    extra x ticks={2.5,7.5},
+    extra x tick labels={TOP, LOP},
+    extra x tick style={tick label style={yshift=-2em}},
+]
+\addplot[ybar, fill=black] coordinates {
+    (1, 0)
+    (2, 90)
+    (3, 180)
+    (4, 240)
+    (5, 280)
+    (6, 0)
+    (7, 0)
+    (8, 0)
+    (9, 0)
+    (10, 0)
+};
+\node at (axis cs:2.5, -70) {LEF-VP16};
+\node at (axis cs:7.5, -70) {LEF-VP16};
+\end{axis}
+\end{tikzpicture}
+\end{minipage}
+
+\caption{The E-tail is necessary to activate transcription from weak Wnt response elements. Cos-1 cells were transiently transfected with TOP (A), LOP (B), or LOP/TOP (C) luciferase reporters with expression vectors for the indicated LEF/TCFs and $\beta$-catenin (cotransfected in all conditions). (D) TOP and LOP were cotransfected with increasing concentrations (200, 400, 800, and 1,000 ng) of LEF-VP16 expression vector. At the highest concentration of LEF-VP16, activation of LOP was increased twofold. Error bars represent standard deviations derived from the results of three or more experiments.}
+\label{fig:2}
+\end{figure}
+
+\noindent tains a strict requirement for both the HMG DNA binding
+domain and the E-tail.
+
+\vspace{1em}
+\noindent An independent interaction between the E-tail of human
+TCF-4E and the transcription coactivator p300 has been pre-
+viously reported (20). The CRARF domain of the TCF-4 E-tail
+was shown to be involved in this interaction and subsequent
+activation of the $CDX1$ promoter. We explored the possibility
+that the E-tail recruits a coactivator independently and/or is
+itself recruited by another protein to the $LEF1$ promoter. To
+address the former possibility, we coexpressed a Gal4/E-tail
+fusion protein with full-length TCF-1E and $\beta$-catenin in tran-
+sient transfections (Fig. 3B). Gal4/E-tail cannot bind to the
+$LEF1$ reporter, because there are no Gal4 sites, but it could
+potentially inhibit reporter activation if it competes for an
+E-tail interacting protein (squelching). We observed that ex-
+cess Gal4/E-tail was not able to reduce $LEF1$ reporter activa-
+tion. While lack of squelching is not definitive evidence, it is
+suggestive that the E-tail is not independently engaged with
+proteins bound to the $LEF1$ promoter.
+
+\vspace{1em}
+\noindent \textbf{The E-tail contains a novel cysteine motif.} The five-amino-
+acid CRARF substitution that destroys transcription activation
+removes basic residues and the first of four conserved cysteine
+residues (Fig. 3C). The four cysteines are 100\% conserved in
+their sequences and spacing between all TCF orthologs (except
+for TCF-3), suggesting that these residues are important for
+functioning. The spacing between cysteines does not conform
+to known metal chelating finger motifs but could be important
+for a novel structure or finger. To determine whether individ-
+ual cysteines are essential for activity and whether histidine
+residues could perform substitutions, the second and third
+conserved cysteines were individually changed to either alanine
+or histidine within the context of full-length TCF-1E and tested
+for activity in transient transfection assays. Single amino acid
+substitution of the cysteines completely abrogates the ability of
+these mutants to activate the $LEF1$ promoter but not TOPtk
+(Fig. 3C). Histidine substitution also completely inactivated
+the proteins, suggesting that replacing cysteines with alterna-
+tive residues that can chelate metals is either not sufficient or
+not compatible with a functional structure. These results sug-
+gest that the cysteines play a fundamental role in TCF-1E
+action by establishing a tertiary structure optimal for reporter
+gene activation.
+
+\vspace{1em}
+\noindent \textbf{The E-tail is a novel DNA interaction domain.} An alterna-
+tive possibility for a mechanism for E-tail action is that it
+augments binding of the HMG DNA binding domain to nu-
+cleic acids. Support for this possibility was provided by a recent
+study which identified Huntington's Disease Binding Protein 1
+(HDBP1) and HDBP2, two highly related transcription factors
+that bind to a unique GC motif (GCCGGCG) in the $HD$
+promoter (37). The DNA binding domain was delimited to a
+region that has remarkable amino acid sequence similarity to
+the 30-amino-acid cysteine motif in the TCF-1 and TCF-4
+E-tails (see alignment in Fig. 1A). Interestingly, GC-rich se-
+quences are near each of the two WREs in the $LEF1$ promoter
+(CCCCGGG shown in Fig. 1B and GCCGGCG seven nucleo-
+tides downstream of the second WRE element in the $LEF1$
+promoter; see Fig. 5). Thus, a novel type of DNA binding
+domain may lie very close to the well-described HMG DNA
+binding domain and may have sequence-specific recognition
+properties.
+
+\end{document}
+```

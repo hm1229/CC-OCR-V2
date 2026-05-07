@@ -1,0 +1,13 @@
+$$
+\begin{align*}
+&\mathbb{E} \int_a \int_a \left| K_g(t,x) - K_g(s,y) \right|^p dtdxdsdy \\
+=& \mathbb{E} \int_a \int_a \left| \int_0^t \int_{\mathbb{R}^d} K(t-r,z)g(x-z)dzdW(r) - \int_0^s \int_{\mathbb{R}^d} K(s-r,z)g(y-z)dzdW(r) \right|^p dtdxdsdy \\
+\leq& N(p)\mathbb{E} \int_a \int_a \left| \int_0^s \int_{\mathbb{R}^d} \left(K(t-r,z)-K(s-r,z)\right)g(y-z)dzdW(r) \right|^p \\
+&+ N(p)\mathbb{E} \int_a \int_a \left| \int_0^s \int_{\mathbb{R}^d} K(t-r,z)\left(g(x-z)-g(y-z)\right)dzdW(r) \right|^p \\
+&+ N(p)\mathbb{E} \int_a \int_a \left| \int_s^t \int_{\mathbb{R}^d} K(t-r,z)g(x-z)dzdW(r) \right|^p dtdxdsdy \\
+\leq& N(p)\mathbb{E} \int_a \int_a \left( \int_0^s \left| \int_{\mathbb{R}^d} \left(K(t-r,z)-K(s-r,z)\right)g(y-z)dz \right|^2 dr \right)^{\frac{p}{2}} \\
+&+ N(p)\mathbb{E} \int_a \int_a \left( \int_0^s \left| \int_{\mathbb{R}^d} K(t-r,z)\left(g(x-z)-g(y-z)\right)dz \right|^2 dr \right)^{\frac{p}{2}} \\
+&+ N(p)\mathbb{E} \int_a \int_a \left( \int_s^t \left| \int_{\mathbb{R}^d} K(t-r,z)g(x-z)dz \right|^2 dr \right)^{\frac{p}{2}} \\
+=:& I_1 + I_2 + I_3.
+\end{align*}
+$$

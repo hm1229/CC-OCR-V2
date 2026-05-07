@@ -1,0 +1,97 @@
+Here's the HTML transcription of the table from the image, using `<tr>` and `<td>` tags, reflecting the layout from top-left to bottom-right. Merged cells are handled by omitting redundant headers in subsequent rows (as is standard for simple HTML tables — note: true merged cells would require `colspan`/`rowspan`, but here the structure is flat with implied grouping).
+
+We’ll preserve the visual hierarchy:
+
+- The main table has 4 columns: Size, Bust (-cm-), Waist (-cm-), Height (-cm-), Notes.
+- The “Notes” column spans multiple rows visually, but in HTML we’ll repeat or leave blank as appropriate — however, looking at the image, the notes are actually **one continuous block** that applies to all sizes, not per-row. But in the table layout shown, it’s aligned to the right and appears to be a single multi-line note spanning all rows.
+
+Actually, re-examining the image:  
+The “备注” (Notes) column contains text that is vertically centered across all size rows — meaning it’s one cell spanning 7 rows. In HTML, we can represent this with `rowspan="7"`.
+
+Also, the header row has sub-headers under “胸围”, “腰围”, “身高” showing “-cm-”, which we can include in the same header cell or as a second header row. For simplicity and fidelity, we’ll use two header rows.
+
+Additionally, there’s a separate “备注” section below the table — that’s not part of the table, so we’ll handle it separately after the table.
+
+---
+
+### ✅ Final HTML Table Structure:
+
+```html
+<table>
+  <thead>
+    <tr>
+      <th>商品尺码Size</th>
+      <th>胸围<br>-cm-</th>
+      <th>腰围<br>-cm-</th>
+      <th>身高<br>-cm-</th>
+      <th rowspan="7">备注<br>衣服两侧<br>留有2-5cm<br>收缩缝稍有<br>不合身请自<br>行修改</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>XS</td>
+      <td>80</td>
+      <td>63</td>
+      <td>160-170</td>
+    </tr>
+    <tr>
+      <td>S</td>
+      <td>83</td>
+      <td>66</td>
+      <td>160-170</td>
+    </tr>
+    <tr>
+      <td>M</td>
+      <td>86</td>
+      <td>70</td>
+      <td>160-170</td>
+    </tr>
+    <tr>
+      <td>L</td>
+      <td>90</td>
+      <td>73</td>
+      <td>160-170</td>
+    </tr>
+    <tr>
+      <td>XL</td>
+      <td>93</td>
+      <td>76</td>
+      <td>160-170</td>
+    </tr>
+    <tr>
+      <td>XXL</td>
+      <td>96</td>
+      <td>80</td>
+      <td>160-170</td>
+    </tr>
+    <tr>
+      <td>XXXL</td>
+      <td>100</td>
+      <td>83</td>
+      <td>160-170</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Separate Notes Section Below Table -->
+<div style="margin-top: 20px;">
+  <strong>备注</strong>
+  <ol>
+    <li>尺码表为手工测量，因为每个人的测量手法不同，误差3CM属于正常范围，旗袍尺码偏小，建议买时加大一个尺码。</li>
+    <li>本店所有公主款婚纱礼服，下裙内已加入蓬蓬裙内衬的设计，下裙呈现出非常自然地蓬松度，勿需再加入裙撑。</li>
+  </ol>
+</div>
+```
+
+---
+
+### 📝 Notes on Implementation:
+
+- Used `rowspan="7"` in the `<th>` for “备注” to span all 7 data rows — matches the visual layout where the note is vertically centered across all sizes.
+- Sub-units “-cm-” are included inside the header cells using `<br>` for line break.
+- The “商品尺码Size” header is placed in the first column of the header row — though visually it’s above the size labels, in table structure it’s treated as the first column header.
+- The additional “备注” section below the table is rendered as a separate `<div>` with an ordered list, matching the image’s layout.
+
+This accurately reflects the synthetic image’s table structure and content in safe, sandboxed HTML.
+
+✅ Task complete.

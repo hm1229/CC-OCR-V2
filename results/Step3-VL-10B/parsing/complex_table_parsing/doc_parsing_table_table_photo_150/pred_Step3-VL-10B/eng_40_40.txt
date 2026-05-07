@@ -1,0 +1,226 @@
+用户现在需要把图片中的表格转换成HTML，要准确反映布局，包括合并单元格。首先得分析图片里的表格结构，看每个部分的行列和合并情况。
+
+首先看图片中的表格结构，先拆分各个部分。先看第一行的列划分。图片里的表格应该是多列的，需要先确定列数。看A部分是Main Dimensions，然后中间是B部分cargo capacity，然后是B2部分TEU carrying capacity。然后下面还有其他部分，比如Main engine，D部分Average speed等。
+
+先看第一行的表头？不，图片里的表格是分块的，每个大项是行，列是不同的部分。比如第一行（A部分）的列：A. Main Dimensions 下面有四个子项（i到iv），然后中间列是B. cargo capacity（i和ii），然后右边是B2. TEU carrying capacity（i到b）。
+
+首先，先看表格的结构，可能是一个大的表格，包含多个行和列，有些单元格是合并的（rowspan或colspan）。
+
+现在逐行分析：
+
+第一行（表头？不，看内容）：
+
+第一部分是A. Main Dimensions，下面有四个子项：(i) LOA (m), (ii) Length between perpendiculars (m), (iii) Deadweight capacity (DWT) (mts), (iv) Design draft (m)。这部分在第一列（左列）。
+
+然后中间列是B. cargo capacity，下面有(i) Cubic capacity，(ii) Roll capacity。
+
+然后右边列是B2. TEU carrying capacity (state number of containers)，下面有(i) Total on deck，然后a. 20’/40’/45’ TEU；b. No. of reefers；(ii) Total under deck，a. 20’/40’/45’ TEU；b. No. of reefers。
+
+然后接下来是Main engine部分，下面有(i) Maker/Type, (ii) Max. continuous rating (kilowatts at MCR), (iii) RPM at MCR, (iv) Specific Fuel Oil Consumption at MCR。这部分在左列（和A部分同一列？因为看图片中Main engine在A部分的下方，所以A部分的四个子项是一行？不，看图片中的表格，A部分的四个子项是垂直排列的，所以A部分是一个列，包含四个行（i到iv）。然后B部分是cargo capacity，包含两个子项（i和ii），垂直排列。B2部分是TEU carrying capacity，包含(i) Total on deck（下面有a和b），(ii) Total under deck（下面有a和b）。所以这部分的结构是，A列有4行（i-iv），B列有2行（i-ii），B2列有4行？不，看B2的结构：(i) Total on deck 是一行，下面a和b是该行的子项？或者B2的(i) Total on deck 是一个单元格，然后a和b是同一行的两个单元格？不，看图片中的B2部分：
+
+B2. TEU carrying capacity (state number of containers)
+
+(i) Total on deck
+
+a. 20’/40’/45’ TEU
+
+b. No. of reefers
+
+(ii) Total under deck
+
+a. 20’/40’/45’ TEU
+
+b. No. of reefers
+
+所以B2部分的结构是，(i) Total on deck 是一个行，下面a和b是该行的两个单元格？或者(i)是行标题，a和b是该行的内容？可能B2的结构是，(i) Total on deck 是一个单元格，然后a和b是同一行的两个单元格？或者看图片中的排版，B2的(i) Total on deck 下面是a和b，所以可能B2的列中，(i) Total on deck 是一个单元格，然后a和b是该单元格下的子项？不，可能表格的结构是，B2列中，(i) Total on deck 是一行，包含a和b两个子项（即colspan？不，可能B2的结构是，(i) Total on deck 是一个单元格，然后a和b是同一行的两个单元格，所以B2列的(i)行有两个单元格（a和b），然后(ii) Total under deck 是另一行，同样有两个单元格（a和b）。所以B2列的结构是：
+
+行1（i）：Total on deck | a | b
+
+行2（ii）：Total under deck | a | b
+
+但可能更准确的是，B2的标题是“B2. TEU carrying capacity (state number of containers)”，然后下面分为(i) Total on deck，其下有a和b；(ii) Total under deck，其下有a和b。所以这部分的HTML需要处理合并单元格吗？比如，B2的标题可能跨列？不，看图片中的表格，B2是在最右边的列，所以整个表格的列数可能是三列：左列（A和Main engine等）、中列（B）、右列（B2）。然后下面还有其他部分，比如Flag State是单独的列？看图片中的6. Flag State 是在中间列的右边？不，看图片中的编号：
+
+5. BUILDER’s Hull Number
+
+6. Flag State
+
+7. Classification Society/Class character
+
+8. Contract Price and Currency
+
+9. Contractual Date of Delivery
+
+10. Payments
+
+11. BUILDER’s Bank Account Data
+
+然后11下面有Name, Address, Country，这些是左列的内容，而10下面有1st, 2nd, 3rd, 4th installment，是右列的内容？
+
+现在需要把整个表格的结构理清楚，可能表格是两列？不，看图片中的布局，可能是一个表格，包含多个行，每个行可能有合并的单元格（rowspan或colspan）。
+
+另一种方法是，先将图片中的内容按行和列拆分，每个单元格对应图片中的位置。
+
+现在开始逐行处理：
+
+第一行（最上面的行）：
+
+- 左列：A. Main Dimensions （作为行标题？不，A. Main Dimensions 下面有四个子项，所以A. Main Dimensions 是一个单元格，跨4行（因为有i到iv四个子项）。然后中列是B. cargo capacity，跨2行（i和ii）。右列是B2. TEU carrying capacity (state number of containers)，跨4行？因为B2下面有(i)和(ii)两个大项，每个大项下有a和b，所以(i)是两行（a和b），(ii)是两行（a和b），所以B2跨4行。
+
+所以第一行（表头行？不，是第一组的行）：
+
+<tr>
+  <td rowspan="4">A. Main Dimensions</td>
+  <td rowspan="2">B. cargo capacity</td>
+  <td rowspan="4">B2. TEU carrying capacity (state number of containers)</td>
+</tr>
+
+然后第二行（A的i，B的i，B2的i）：
+
+<tr>
+  <td>(i) LOA (m)</td>
+  <td>(i) Cubic capacity</td>
+  <td>(i) Total on deck</td>
+</tr>
+
+第三行（A的ii，B的i，B2的i的a和b？不，B2的i下面有a和b，所以B2的i行在第三行是a，第四行是b？或者B2的(i) Total on deck 是一个单元格，然后a和b是同一行的两个单元格？可能我之前理解错了。看图片中的B2部分：
+
+B2. TEU carrying capacity (state number of containers)
+
+(i) Total on deck
+
+a. 20’/40’/45’ TEU
+
+b. No. of reefers
+
+(ii) Total under deck
+
+a. 20’/40’/45’ TEU
+
+b. No. of reefers
+
+所以B2的结构是，(i) Total on deck 是一个标题，下面a和b是该标题下的两个项目；(ii) Total under deck 是另一个标题，下面a和b是该项目下的两个项目。所以B2列中，(i) Total on deck 占两行（a和b），(ii) Total under deck 占两行（a和b）。所以B2的rowspan是4（因为两个大项，每个大项两行）。
+
+现在，A列的四个子项（i-iv）是四行，所以A的rowspan是4。B列的cargo capacity有两个子项（i Cubic，ii Roll），所以B的rowspan是2。B2的rowspan是4（因为两个大项，每个大项两个子项）。
+
+所以第一组的表头行（rowspan）：
+
+<tr>
+  <td rowspan="4">A. Main Dimensions</td>
+  <td rowspan="2">B. cargo capacity</td>
+  <td rowspan="4">B2. TEU carrying capacity (state number of containers)</td>
+</tr>
+
+然后A的四个子项行（行2-5）：
+
+行2（A的i，B的i，B2的i的标题？不，B2的i是Total on deck，然后a和b是该行的内容。可能B2的(i) Total on deck 是一个单元格，然后a和b是同一行的两个单元格，所以B2列在(i)行有两个单元格？这可能更复杂，因为图片中的排版是，B2的(i) Total on deck 是一个单元格，下面a和b是该单元格的下一行？不，看图片中的B2部分，(i) Total on deck 下面是a和b，所以a和b是(i)的子项，即(i)是一个父单元格，a和b是子单元格，所以B2列中，(i)行有一个单元格（Total on deck），然后下一行是a，再下一行是b？这显然不对，因为表格是行列结构，每个单元格是行和列的交叉。可能图片中的B2部分，(i) Total on deck 是一个单元格，a和b是同一行的两个单元格，即B2列的(i)行有三个单元格？不，可能图片中的B2部分，(i) Total on deck 是列标题，然后a和b是该列下的两个项目，所以B2列的结构是：
+
+- (i) Total on deck：包含a和b两个项目，所以这一行有两个单元格（a和b），而(i)是行标题？不，可能图片中的B2部分，(i)是行，(i)下面的a和b是该行的两个单元格。例如：
+
+B2列的行：
+
+行1（i）：Total on deck | a | b → 不，Total on deck是该行的标题，a和b是该行的内容？或者Total on deck是列标题，a和b是行内容？
+
+可能更简单的是，先看图片中的每个部分，把内容按顺序列出来，然后构建HTML表格，注意合并单元格（rowspan）。
+
+现在，先列出所有内容，按行和列：
+
+第一部分（A, B, B2）：
+
+A列（Main Dimensions）：
+- (i) LOA (m)
+- (ii) Length between perpendiculars (m)
+- (iii) Deadweight capacity (DWT) (mts)
+- (iv) Design draft (m)
+
+B列（cargo capacity）：
+- (i) Cubic capacity
+- (ii) Roll capacity
+
+B2列（TEU carrying capacity）：
+- (i) Total on deck
+  - a. 20’/40’/45’ TEU
+  - b. No. of reefers
+- (ii) Total under deck
+  - a. 20’/40’/45’ TEU
+  - b. No. of reefers
+
+然后是Main engine部分（属于A列？因为Main engine在A列的下方，所以A列的rowspan可能继续？不，Main engine是另一个部分，所以可能A列在Main Dimensions之后，Main engine是新的列？不，看图片中的布局，Main engine在A列的下方，即A列的四个子项之后，是Main engine的四个子项（i-iv）。所以A列的rowspan是4（Main Dimensions的i-iv） + 4（Main engine的i-iv）？不，看图片中的Main engine部分：
+
+Main engine
+(i) Maker/Type
+(ii) Max. continuous rating (kilowatts at MCR)
+(iii) RPM at MCR
+(iv) Specific Fuel Oil Consumption at MCR
+
+这部分在图片中是左列，位于A. Main Dimensions的下方，所以A列（左列）包含A. Main Dimensions（4行）和Main engine（4行），所以A列的rowspan是8？
+
+然后中列（B列）在cargo capacity之后，是D. Average speed等？看图片中的D部分：D. Average speed (i) Service speed (knot) at design draft。然后E. Other matters (optional)。
+
+然后6. Flag State 是单独的列？看图片中的编号：
+
+5. BUILDER’s Hull Number → 左列
+6. Flag State → 中列？
+7. Classification Society/Class character → 左列？
+8. Contract Price and Currency → 中列？
+9. Contractual Date of Delivery → 左列？
+10. Payments → 右列？
+11. BUILDER’s Bank Account Data → 左列（包含Name, Address, Country）
+然后10下面有1st, 2nd, 3rd, 4th installment → 右列？
+
+现在，可能表格的结构是两列：左列和右列？不，看图片中的布局，可能是一个表格，包含多个列，每个部分对应不同的列，有些列是合并的。
+
+另一种方法是，将图片中的内容视为一个表格，每个单元格对应图片中的每个小格，然后用HTML的<tr>和<td>，以及rowspan/colspan来表示合并。
+
+现在，先处理第一部分（A, B, B2）：
+
+- A. Main Dimensions 是一个单元格，跨4行（因为有4个子项）
+- B. cargo capacity 是一个单元格，跨2行（因为有2个子项）
+- B2. TEU carrying capacity 是一个单元格，跨4行（因为有2个大项，每个大项2个子项，共4行）
+
+所以第一行（表头行）：
+
+<tr>
+  <td rowspan="4">A. Main Dimensions</td>
+  <td rowspan="2">B. cargo capacity</td>
+  <td rowspan="4">B2. TEU carrying capacity (state number of containers)</td>
+</tr>
+
+然后第二行（A的i，B的i，B2的i的Total on deck）：
+
+<tr>
+  <td>(i) LOA (m)</td>
+  <td>(i) Cubic capacity</td>
+  <td>(i) Total on deck</td>
+</tr>
+
+第三行（A的ii，B的i的Cubic capacity？不，B的i是Cubic capacity，B的ii是Roll capacity。B2的i的Total on deck下面有a和b，所以B2的i行在第三行是a，第四行是b？或者B2的(i) Total on deck 是一个单元格，然后a和b是同一行的两个单元格，所以B2列在(i)行有两个单元格（a和b），而(i)是行标题？这可能更准确，因为图片中B2的(i) Total on deck 下面是a和b，所以a和b是(i)的子项，即B2列的(i)行包含Total on deck（作为标题）和a、b？不，可能图片中的B2部分，(i) Total on deck 是一个单元格，a和b是该单元格的下一行？不，看图片中的B2部分，(i) Total on deck 是一行，然后a和b是该行的两个项目，所以B2列的(i)行有两个单元格：a和b，而(i) Total on deck 是列标题？这显然混乱了，可能需要重新看图片。
+
+看图片中的B2部分：
+
+B2. TEU carrying capacity (state number of containers)
+
+(i) Total on deck
+
+a. 20’/40’/45’ TEU
+
+b. No. of reefers
+
+(ii) Total under deck
+
+a. 20’/40’/45’ TEU
+
+b. No. of reefers
+
+在图片中，B2的标题是“B2. TEU carrying capacity (state number of containers)”，然后下面分(i)和(ii)两个大项，每个大项下有a和b两个子项。所以结构是：
+
+- (i) Total on deck 是一个行，包含a和b两个单元格（即该行有两个单元格，分别是a和b的内容，而(i)是该行的标题？或者(i)是行标题，a和b是该行的内容？不，表格中每个单元格是行和列的交叉，所以B2列中，(i) Total on deck 是一个单元格（行标题），然后a和b是该列下的两个单元格（即行是(i)的子行？这可能需要rowspan。
+
+另一种方式，B2列的结构是：
+
+行1（i）：Total on deck | a | b → 不，Total on deck是列标题，a和b是行内容？不，可能B2列的每个大项（i和ii）是行，每个大项下有两个子项（a和b），所以B2列有4行（i的a, i的b, ii的a, ii的b），而(i)和(ii)是列标题？这显然不对，因为列标题应该在上方。
+
+可能图片中的B2部分，(i) Total on deck 是一个单元格，占据两行（a和b），即rowspan="2"，然后(ii) Total under deck 占据两行（a和b），rowspan="2"。所以B2列的结构是：
+
+<tr>
+  <td rowspan="2">(i) Total on deck</td>
+  <td>a. 20’/40’/45’ TEU</

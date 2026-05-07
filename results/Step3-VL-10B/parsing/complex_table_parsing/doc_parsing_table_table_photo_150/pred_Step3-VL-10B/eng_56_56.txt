@@ -1,0 +1,149 @@
+Got it, let's tackle this problem. First, I need to parse the image of Amazon's consolidated statements of operations. Let's start by identifying the structure. The table has years 2018, 2019, 2020. Let's list out each row and column.
+
+First, the header: "AMAZON.COM, INC. CONSOLIDATED STATEMENTS OF OPERATIONS (in millions, except per share data)" — that's a title, maybe a <th> spanning columns. Then the year headers: Year Ended December 31, 2018, 2019, 2020.
+
+Then the rows: Net product sales, Net service sales, Total net sales, Operating expenses (with sub-rows: Cost of sales, Fulfillment, etc.), Total operating expenses, Operating income, Interest income, Interest expense, Other income (expense), net, Total non-operating income (expense), Income before income taxes, Provision for income taxes, Equity-method investment activity, net of tax, Net income, Basic earnings per share, Diluted earnings per share, Weighted-average shares used in computation of earnings per share: Basic, Diluted.
+
+Also, the weighted-average shares have Basic and Diluted rows, with numbers for each year.
+
+Let's start building the HTML table. First, the main table. Let's check the columns: the first column is the line item, then three columns for 2018, 2019, 2020. Then some rows like "Weighted-average shares..." have two sub-rows (Basic, Diluted) for each year, so those might be merged or separate rows.
+
+Wait, looking at the image:
+
+For "Weighted-average shares used in computation of earnings per share: Basic" — the numbers are 487 (2018), 494 (2019), 500 (2020). Then "Diluted" is 500 (2018), 504 (2019), 510 (2020). So those are separate rows under that header.
+
+Let's structure each part.
+
+First, the title row: "AMAZON.COM, INC." — maybe a <tr> with a <th> spanning all columns. Then "CONSOLIDATED STATEMENTS OF OPERATIONS" — another <th> spanning all. Then "(in millions, except per share data)" — maybe a <th> or a note.
+
+Then the year headers: "Year Ended December 31," then 2018, 2019, 2020. So the first row after title would be the year headers. Let's check the image: the year is labeled above the columns, so the first row of the table (after title) is the year headers. Let's see:
+
+The image shows:
+
+Year Ended December 31,
+2018    2019    2020
+
+So the first row of the table (data rows) would have the year labels as column headers.
+
+Now, let's list each line item:
+
+1. Net product sales: 2018: $141,915; 2019: $160,408; 2020: $215,915
+2. Net service sales: 2018: $90,972; 2019: $120,114; 2020: $170,149
+3. Total net sales: 2018: $232,887; 2019: $280,522; 2020: $386,064
+4. Operating expenses:
+   - Cost of sales: 139,156; 165,536; 233,307
+   - Fulfillment: 34,027; 40,232; 58,517
+   - Technology and content: 28,837; 35,931; 42,740
+   - Marketing: 13,814; 18,878; 22,008
+   - General and administrative: 4,336; 5,203; 6,668
+   - Other operating expense (income), net: 296; 201; (75) — note the negative in 2020
+   - Total operating expenses: 220,466; 265,981; 363,165
+5. Operating income: same as Total operating expenses? Wait, no: Operating income is Total net sales - Total operating expenses. Let's check: 232,887 - 296? Wait no, Total operating expenses for 2018: let's sum the operating expenses. Let's check the image: Total operating expenses row has 296 (2018), 201 (2019), (75) (2020). Then Operating income is 220,466 (2018), 265,981 (2019), 363,165 (2020). Yes, that's correct.
+6. Interest income: 12,421; 14,541; 22,899
+7. Interest expense: 440; 832; 555
+8. Other income (expense), net: (1,417); (183); (1,647)
+9. Total non-operating income (expense): sum of interest income, interest expense, other income (expense). Let's check: 12,421 - 440 -1,417 = 10,564? Wait no, the image shows Total non-operating income (expense) as (183) for 2018. Wait, let's check the image:
+
+For 2018:
+Interest income: 12,421
+Interest expense: 440
+Other income (expense), net: (1,417)
+Total non-operating income (expense): (183) — let's calculate: 12,421 - 440 -1,417 = 10,564. But the image says (183). Wait, maybe I misread. Let's check the image again.
+
+Looking at the image:
+
+Under "Total non-operating income (expense)":
+
+2018: (183)
+2019: 203
+2020: 2,371
+
+Ah, maybe the "Other income (expense), net" is already net, and then Total non-operating is sum of interest income, interest expense, other income (expense). Let's check 2019:
+
+Interest income:14,541; Interest expense:832; Other income (expense): (1,600). So 14,541 - 832 -1,600 = 12,109. But the image says 203. That can't be. Wait, maybe the "Other income (expense), net" is the total non-operating? No, the labels are:
+
+- Interest income
+- Interest expense
+- Other income (expense), net
+- Total non-operating income (expense)
+
+So Total non-operating is the sum of those three. Let's check 2018:
+
+Interest income:12,421
+
+Interest expense:440
+
+Other income (expense), net: (1,417)
+
+Sum: 12,421 - 440 -1,417 = 10,564. But the image shows (183) for Total non-operating. That's a discrepancy. Wait, maybe the image has a typo, but I need to transcribe as per the image. Let's check the image's numbers:
+
+Looking at the image:
+
+For 2018:
+
+Interest income: 12,421
+
+Interest expense: 440
+
+Other income (expense), net: (1,417)
+
+Total non-operating income (expense): (183) — so maybe the image's numbers are correct, and my calculation is wrong. Let's check the image again. Oh, maybe "Other income (expense), net" is already the total non-operating? No, the labels are separate. Let's proceed to transcribe the numbers as they appear in the image, regardless of calculation, since the task is to transcribe the table.
+
+Continuing:
+
+10. Income before income taxes: (1,160) (2018), (565) (2019), 1,279 (2020)
+11. Provision for income taxes: 11,261 (2018), 13,976 (2019), 24,178 (2020)
+12. Equity-method investment activity, net of tax: (1,197) (2018), (2,374) (2019), (2,863) (2020)
+13. Net income: 9 (2018), (14) (2019), 16 (2020)
+14. Basic earnings per share: $10,073 (2018), $11,588 (2019), $21,331 (2020)
+15. Diluted earnings per share: $20.68 (2018), $23.01 (2019), $42.64 (2020)
+16. Weighted-average shares used in computation of earnings per share: Basic: 487 (2018), 494 (2019), 500 (2020); Diluted: 500 (2018), 504 (2019), 510 (2020)
+
+Now, let's structure the HTML table. The table will have a header row for the title, then the year headers, then each data row.
+
+First, the title: "AMAZON.COM, INC." — this should span all columns. Then "CONSOLIDATED STATEMENTS OF OPERATIONS" — also span all. Then "(in millions, except per share data)" — maybe a row with a single cell spanning all columns.
+
+Then the year headers: "Year Ended December 31," — maybe a cell that spans, then 2018, 2019, 2020.
+
+Let's outline the rows:
+
+1. Title row: <tr><th colspan="4">AMAZON.COM, INC.</th></tr>
+2. Subtitle: <tr><th colspan="4">CONSOLIDATED STATEMENTS OF OPERATIONS</th></tr>
+3. Note: <tr><th colspan="4">(in millions, except per share data)</th></tr>
+4. Year header: <tr><th>Year Ended December 31,</th><th>2018</th><th>2019</th><th>2020</th></tr>
+5. Net product sales: <tr><td>Net product sales</td><td>$141,915</td><td>$160,408</td><td>$215,915</td></tr>
+6. Net service sales: <tr><td>Net service sales</td><td>$90,972</td><td>$120,114</td><td>$170,149</td></tr>
+7. Total net sales: <tr><td>Total net sales</td><td>$232,887</td><td>$280,522</td><td>$386,064</td></tr>
+8. Operating expenses: <tr><td>Operating expenses:</td><td></td><td></td><td></td></tr> — this is a header for the sub-rows, so maybe a row with "Operating expenses:" in the first column, and empty in others.
+9. Cost of sales: <tr><td>Cost of sales</td><td>139,156</td><td>165,536</td><td>233,307</td></tr>
+10. Fulfillment: <tr><td>Fulfillment</td><td>34,027</td><td>40,232</td><td>58,517</td></tr>
+11. Technology and content: <tr><td>Technology and content</td><td>28,837</td><td>35,931</td><td>42,740</td></tr>
+12. Marketing: <tr><td>Marketing</td><td>13,814</td><td>18,878</td><td>22,008</td></tr>
+13. General and administrative: <tr><td>General and administrative</td><td>4,336</td><td>5,203</td><td>6,668</td></tr>
+14. Other operating expense (income), net: <tr><td>Other operating expense (income), net</td><td>296</td><td>201</td><td>(75)</td></tr>
+15. Total operating expenses: <tr><td>Total operating expenses</td><td>220,466</td><td>265,981</td><td>363,165</td></tr>
+16. Operating income: <tr><td>Operating income</td><td>220,466</td><td>265,981</td><td>363,165</td></tr>
+17. Interest income: <tr><td>Interest income</td><td>12,421</td><td>14,541</td><td>22,899</td></tr>
+18. Interest expense: <tr><td>Interest expense</td><td>440</td><td>832</td><td>555</td></tr>
+19. Other income (expense), net: <tr><td>Other income (expense), net</td><td>(1,417)</td><td>(183)</td><td>(1,647)</td></tr>
+20. Total non-operating income (expense): <tr><td>Total non-operating income (expense)</td><td>(183)</td><td>203</td><td>2,371</td></tr>
+21. Income before income taxes: <tr><td>Income before income taxes</td><td>(1,160)</td><td>(565)</td><td>1,279</td></tr>
+22. Provision for income taxes: <tr><td>Provision for income taxes</td><td>11,261</td><td>13,976</td><td>24,178</td></tr>
+23. Equity-method investment activity, net of tax: <tr><td>Equity-method investment activity, net of tax</td><td>(1,197)</td><td>(2,374)</td><td>(2,863)</td></tr>
+24. Net income: <tr><td>Net income</td><td>9</td><td>(14)</td><td>16</td></tr>
+25. Basic earnings per share: <tr><td>Basic earnings per share</td><td>$10,073</td><td>$11,588</td><td>$21,331</td></tr>
+26. Diluted earnings per share: <tr><td>Diluted earnings per share</td><td>$20.68</td><td>$23.01</td><td>$42.64</td></tr>
+27. Weighted-average shares used in computation of earnings per share: Basic: <tr><td>Weighted-average shares used in computation of earnings per share: Basic</td><td>487</td><td>494</td><td>500</td></tr>
+28. Weighted-average shares used in computation of earnings per share: Diluted: <tr><td>Weighted-average shares used in computation of earnings per share: Diluted</td><td>500</td><td>504</td><td>510</td></tr>
+
+Wait, in the image, the "Weighted-average shares..." has two rows: Basic and Diluted. Let's check the image:
+
+"Weighted-average shares used in computation of earnings per share:
+Basic: 487 (2018), 494 (2019), 500 (2020)
+Diluted: 500 (2018), 504 (2019), 510 (2020)"
+
+So the first row under that header is "Basic" with the numbers, then "Diluted" with the numbers. So in the table, those are two separate rows, each with the label "Basic" and "Diluted" in the first column.
+
+Now, let's check if there are any merged cells. The title rows (AMAZON.COM, etc.) span all columns (4 columns: the line item and three years). So those <th> should have colspan="4".
+
+Also, the "Year Ended December 31," is a header that spans the first column? No, the year headers are for the three years, so the first column is the line item, then three columns for years. So the year

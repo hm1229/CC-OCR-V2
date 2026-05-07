@@ -1,0 +1,95 @@
+用户现在需要从销售合同里提取指定类别的对象，每个对象要标bbox和label。首先得逐个看每个类别在图中的位置。
+
+首先看TITLE是“SALES CONTRACT”，所以TITLE的bbox是顶部的大标题。然后NO是TS21F035，DATE是2021-09-28，SITE是SHIJIAZHUANG,CHINA。COMPANY NAME有卖方和买方，卖方是Jingxin Information Co., Ltd.，买方也是？不，买方的COMPANY NAME可能没有明确写，但卖方是Jingxin Information Co., Ltd.。然后ADDRESS是卖方和买方的地址。E-MAIL是卖方的ganderson@walker.com，买方的E-MAIL可能没填？看图片里买方的E-MAIL是空的？不，看图片里THE BUYERS下面的E-MAIL是空的？不，看图片中卖方的E-MAIL是ganderson@walker.com，买方的E-MAIL字段是空的？然后FAX是卖方的9057-33318517，买方的FAX是2640-33005608。TEL是卖方的7088-31515373，买方的TEL？不，买方的TEL可能没填？看图片里THE BUYERS的TEL字段？不，看图片中卖方的TEL是7088-31515373，买方的FAX是2640-33005608，买方的TEL可能没有？然后WEBSITE是卖方的http://gill.com/。然后表格里的1.Description of Goods是COLISTIN SULPHATE，2.Standard是EP10，3.Packing是20KG/DRUM，4.Quantity是5000 KG，5.Unit Price是USD 14.900/KG，6.Amount是USD 74500.00，TOTAL也是USD 74500.00。然后7.Price Terms是FCA CHINA MAIN PORT，8.Shipment是To be made before NOV.30,2021.，9.Insurance是To be covered by the buyer.，10.Payment Terms是T/T IN ADVANCE。然后A/C NO.是50 3691 0104 0021 579（看图片里的A/C NO.: 50 3691 0104 0021 579？不，图片里是A/C NO.: 50 3691 0104 0021 579？看图片中的BANK部分：A/C NO.: 50 3691 0104 0021 579？然后SWIFT CODE是ABOCCNB0J30。ADDRESS有卖方的地址和买方的地址，还有银行的地址。现在需要把每个类别对应的位置找出来。
+
+现在逐个处理：
+
+1. TITLE: "SALES CONTRACT"，bbox是顶部，比如[333, 2, 666, 50]左右？看图片中SALES CONTRACT在最上方，所以bbox是[250, 2, 750, 50]（大概）。
+
+2. NO: TS21F035，位置在右上角，NO: 后面的内容，bbox是[600, 25, 725, 38]。
+
+3. DATE: 2021-09-28，和NO同一行，DATE: 后面，bbox是[600, 30, 725, 43]。
+
+4. SITE: SHIJIAZHUANG,CHINA，和DATE同一行，SITE: 后面，bbox是[600, 35, 850, 48]。
+
+5. COMPANY NAME: 卖方是Jingxin Information Co., Ltd.，在THE SELLERS: 后面，bbox是[200, 110, 433, 128]（卖方的公司名），买方的公司名？看THE BUYERS: 后面，买方的公司名也是Jingxin Information Co., Ltd.？不，看图片中THE BUYERS: 后面是空的？不，图片中THE BUYERS: 下面没有公司名？不，看图片里THE SELLERS: 是Jingxin Information Co., Ltd.，THE BUYERS: 后面没有公司名？不，看图片中的内容：THE SELLERS: Jingxin Information Co., Ltd.；THE BUYERS: （后面没有公司名？不，看图片里THE BUYERS: 下面是ADDRESS: ...，所以买方的COMPANY NAME可能没有，只有卖方的。所以COMPANY NAME有两个？不，可能卖方和买方的公司名，这里卖方是Jingxin Information Co., Ltd.，买方可能没有显示？或者可能买方的公司名在其他地方？不，看图片中THE BUYERS: 后面没有公司名，所以可能只有卖方的COMPANY NAME。但需要看图片中的内容。图片中THE SELLERS: 后面是Jingxin Information Co., Ltd.，THE BUYERS: 后面没有公司名，所以COMPANY NAME是卖方的那个。
+
+6. ADDRESS: 卖方的地址是Unit 5484 Box 1330 DPO AA 03769 PSC 0450, Box 5818 APO AP 49593，bbox是[190, 140, 490, 170]（大概）；买方的地址是USNV Dunn FPO AE 85524 USNS Dorsey FPO AA 58405，bbox是[490, 145, 790, 165]；银行的地址是SHIJIAZHUANG DONGGANG ROAD SUB-BR. 614 Kevin Islands Suite 318 Port Bradchester, MD 39655 USNV Ballard FPO AE 78321，bbox是[190, 720, 590, 750]（大概）。
+
+7. E-MAIL: 卖方的E-MAIL是ganderson@walker.com，bbox是[190, 220, 360, 235]；买方的E-MAIL字段是空的？看图片中THE BUYERS: 的E-MAIL是空的，所以只有卖方的E-MAIL。
+
+8. FAX: 卖方的FAX是9057-33318517，bbox是[190, 240, 300, 255]；买方的FAX是2640-33005608，bbox是[500, 245, 680, 260]。
+
+9. TEL: 卖方的TEL是7088-31515373，bbox是[190, 260, 320, 275]；买方的TEL？看图片中THE BUYERS: 的TEL字段？不，图片中THE BUYERS: 的TEL可能没有，因为右边是FAX: 2640-33005608，然后E-MAIL: 是空的？所以买方的TEL可能没有，只有卖方的TEL。
+
+10. WEBSITE: 卖方的WEBSITE是http://gill.com/，bbox是[190, 275, 330, 290]；买方的WEBSITE没有，所以只有卖方的。
+
+11. 1.Description of Goods: 表格第一列，COLISTIN SULPHATE，bbox是[100, 320, 250, 340]（表格内的单元格）。
+
+12. 2.Standard: 表格第二列，EP10，bbox是[270, 320, 350, 340]。
+
+13. 3.Packing: 表格第三列，20KG/DRUM，bbox是[370, 320, 470, 340]。
+
+14. 4.Quantity: 表格第四列，5000 KG，bbox是[490, 320, 570, 340]。
+
+15. 5.Unit Price: 表格第五列，USD 14.900/KG，bbox是[610, 320, 730, 340]。
+
+16. 6.Amount: 表格第六列，USD 74500.00，bbox是[750, 320, 850, 340]；TOTAL行的Amount是USD 74500.00，bbox是[750, 350, 850, 365]。
+
+17. 7.Price Terms: FCA CHINA MAIN PORT，bbox是[190, 600, 490, 615]（看图片中7. Price Terms:...）。
+
+18. 8.Shipment: To be made before NOV.30,2021.，bbox是[190, 620, 490, 635]。
+
+19. 9.Insurance: To be covered by the buyer.，bbox是[190, 640, 490, 655]。
+
+20. 10.Payment Terms: T/T IN ADVANCE.，bbox是[190, 660, 490, 675]。
+
+21. A/C NO.: 50 3691 0104 0021 579（看图片中A/C NO.: 50 3691 0104 0021 579？图片中是A/C NO.: 50 3691 0104 0021 579？看图片里的BANK部分：A/C NO.: 50 3691 0104 0021 579？是的，所以bbox是[190, 780, 490, 795]。
+
+22. SWIFT CODE: ABOCCNB0J30，bbox是[190, 760, 400, 775]。
+
+23. ADDRESS: 除了卖方和买方的地址，还有银行的地址，所以需要确认每个ADDRESS。比如卖方的ADDRESS是Unit 5484 Box 1330 DPO AA 03769 PSC 0450, Box 5818 APO AP 49593，bbox是[190, 145, 490, 160]；买方的ADDRESS是USNV Dunn FPO AE 85524 USNS Dorsey FPO AA 58405，bbox是[490, 145, 790, 160]；银行的ADDRESS是SHIJIAZHUANG DONGGANG ROAD SUB-BR. 614 Kevin Islands Suite 318 Port Bradchester, MD 39655 USNV Ballard FPO AE 78321，bbox是[190, 725, 590, 740]。
+
+现在需要把所有这些类别都列出来，每个对应一个bbox和label。需要注意不要遗漏。
+
+现在开始整理每个类别：
+
+- TITLE: "SALES CONTRACT" → bbox大概[250, 10, 750, 40]
+- NO: TS21F035 → bbox[605, 28, 720, 38]
+- DATE: 2021-09-28 → bbox[605, 33, 720, 43]
+- SITE: SHIJIAZHUANG,CHINA → bbox[605, 38, 845, 48]
+- COMPANY NAME: 卖方Jingxin Information Co., Ltd. → bbox[205, 115, 430, 130]
+- ADDRESS: 卖方地址 → bbox[195, 148, 485, 165]
+- ADDRESS: 买方地址 → bbox[495, 153, 785, 168]
+- ADDRESS: 银行地址 → bbox[195, 728, 585, 745]
+- E-MAIL: 卖方ganderson@walker.com → bbox[195, 225, 355, 240]
+- FAX: 卖方9057-33318517 → bbox[195, 245, 300, 260]
+- FAX: 买方2640-33005608 → bbox[505, 248, 675, 263]
+- TEL: 卖方7088-31515373 → bbox[195, 265, 315, 280]
+- WEBSITE: 卖方http://gill.com/ → bbox[195, 280, 325, 295]
+- 1.Description of Goods: COLISTIN SULPHATE → bbox[105, 325, 245, 340]
+- 2.Standard: EP10 → bbox[275, 325, 345, 340]
+- 3.Packing: 20KG/DRUM → bbox[375, 325, 465, 340]
+- 4.Quantity: 5000 KG → bbox[495, 325, 565, 340]
+- 5.Unit Price: USD 14.900/KG → bbox[615, 325, 725, 340]
+- 6.Amount: USD 74500.00（第一行） → bbox[755, 325, 845, 340]
+- 6.Amount: USD 74500.00（TOTAL行） → bbox[755, 355, 845, 365]
+- 7.Price Terms: FCA CHINA MAIN PORT → bbox[195, 605, 485, 620]
+- 8.Shipment: To be made before NOV.30,2021. → bbox[195, 625, 485, 640]
+- 9.Insurance: To be covered by the buyer. → bbox[195, 645, 485, 660]
+- 10.Payment Terms: T/T IN ADVANCE. → bbox[195, 665, 485, 680]
+- A/C NO.: 50 3691 0104 0021 579 → bbox[195, 785, 485, 800]
+- SWIFT CODE: ABOCCNB0J30 → bbox[195, 765, 405, 780]
+
+现在需要检查每个类别是否都覆盖了。比如COMPANY NAME是否还有买方的？看图片中THE BUYERS: 后面没有公司名，所以只有卖方的。然后WEBSITE只有卖方的。E-MAIL只有卖方的。TEL只有卖方的？因为买方的TEL字段在图片中是空的吗？看图片中THE BUYERS: 的TEL字段？不，图片中THE BUYERS: 下面是ADDRESS: ...，然后FAX: 2640-33005608，E-MAIL: （空），WEBSITE: （空）。所以买方没有TEL，只有卖方的TEL。所以TEL只有卖方的。
+
+现在把所有这些整理成JSON数组，每个元素是bbox和label。需要注意bbox的坐标是相对的，比如图片的宽度和高度，这里假设图片的坐标是基于整个图像的像素，但因为是示例，大概估计。
+
+现在开始构建每个条目：
+
+1. TITLE: "SALES CONTRACT" → bbox [250, 5, 750, 45], label "TITLE"
+2. NO: "TS21F035" → bbox [602, 25, 725, 38], label "NO"
+3. DATE: "2021-09-28" → bbox [602, 30, 725, 43], label "DATE"
+4. SITE: "SHIJIAZHUANG,CHINA" → bbox [602, 35, 845, 48], label "SITE"
+5. COMPANY NAME: "Jingxin Information Co., Ltd."（卖方）→ bbox [202, 112, 432, 132], label "COMPANY NAME"
+6. ADDRESS（卖方）: "Unit 5484 Box 1330 DPO AA 0

@@ -1,0 +1,38 @@
+To determine the coordinates of the region containing the text '65.00', we need to analyze the image and identify the bounding box around this text. Let's break down the process step-by-step:
+
+1. **Identify the Text Location:**
+   The text '65.00' appears in the table under the "金额" (Amount) column, next to the item "新型冠状病毒核酸检测".
+
+2. **Estimate the Coordinates:**
+   - The text '65.00' is located in the second row of the table.
+   - We need to find the bounding box that encloses this text.
+
+3. **Normalize the Coordinates:**
+   - The image width and height need to be considered for normalization.
+
+### Detailed Steps:
+
+1. **Image Dimensions:**
+   - Assume the image width is approximately 1000 pixels and the height is approximately 1200 pixels.
+
+2. **Bounding Box Coordinates:**
+   - **Left-Top Corner (x1, y1):** The text '65.00' starts around the middle of the row. Let's estimate it to be at approximately (350, 450).
+   - **Right-Bottom Corner (x2, y2):** The text '65.00' ends a few pixels to the right and slightly downwards. Let's estimate it to be at approximately (450, 500).
+
+### Normalized Coordinates:
+
+To normalize these coordinates, we use the formula:
+\[ \text{Normalized Coordinate} = \left( \frac{\text{Pixel Coordinate}}{\text{Image Dimension}} \right) \times 1000 \]
+
+- **x1:** \( \frac{350}{1000} \times 1000 = 350 \)
+- **y1:** \( \frac{450}{1200} \times 1000 \approx 375 \)
+- **x2:** \( \frac{450}{1000} \times 1000 = 450 \)
+- **y2:** \( \frac{500}{1200} \times 1000 \approx 417 \)
+
+### Final Coordinates:
+
+(x1, y1, x2, y2) = (350, 375, 450, 417)
+
+So, the normalized coordinates of the bounding box for the text '65.00' are:
+
+(350, 375, 450, 417)

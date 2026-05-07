@@ -1,0 +1,35 @@
+I need to find all instances of '1.00' in the image and provide their normalized coordinates.
+
+Looking at the receipt, I can see '1.00' appears multiple times in the itemized list at the bottom. Let me identify each occurrence:
+
+1. First '1.00' - next to "裂隙灯检查" (Slit lamp exam): approximately at (0.382, 0.517)
+2. Second '1.00' - next to "角膜荧光素染色检查" (Corneal fluorescein staining): approximately at (0.382, 0.542)
+3. Third '1.00' - next to "沙眼衣原体测定" (Chlamydia trachomatis test): approximately at (0.382, 0.566)
+4. Fourth '1.00' - next to "冲洗结膜囊" (Conjunctival sac irrigation): approximately at (0.382, 0.589)
+
+Since the question asks for "the region" (singular), I'll provide the first occurrence. If multiple are needed, they are all in approximately the same horizontal position with slight vertical variations.
+
+First '1.00':
+(0.375, 0.510, 0.405, 0.535)
+
+However, if we're looking at all instances, they are very close together. Let me provide a more precise bounding box for the first '1.00':
+
+(0.374, 0.512, 0.404, 0.533)
+
+Or if we consider the general area where '1.00' appears (all instances are in the "数量" column):
+
+The most prominent first '1.00' at around y-coordinate 0.517 (first item row):
+(0.375, 0.512, 0.403, 0.532)
+
+Second '1.00':
+(0.375, 0.535, 0.403, 0.555)
+
+Third '1.00':
+(0.375, 0.558, 0.403, 0.578)
+
+Fourth '1.00':
+(0.375, 0.580, 0.403, 0.600)
+
+Since the question uses singular "the region", I'll provide the first occurrence:
+
+(0.375, 0.512, 0.403, 0.532)

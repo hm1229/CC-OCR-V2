@@ -254,7 +254,7 @@ done
 
 echo "" | tee -a "${LOG_FILE}"
 echo "### 3) VQA (QA) ###" | tee -a "${LOG_FILE}"
-for task_group in dashboard_qa financial_documents_qa scientific_documents_qa user_interface_qa; do
+for task_group in blueprint_qa dashboards_fact_qa dashboards_numeric_qa financial_documents_qa; do
   eval_dir_task "vqa" "${task_group}" \
     "${RESULT_ROOT}/qa/${task_group}" \
     "${DATA_ROOT}/qa/${task_group}/answer"
@@ -349,10 +349,10 @@ echo "" | tee -a "${LOG_FILE}"
 echo "[VQA (QA)]" | tee -a "${LOG_FILE}"
 print_metric "vqa.mean_score"
 echo "  --- By task (Level 2) ---" | tee -a "${LOG_FILE}"
-print_metric "vqa.dashboard_qa.mean_score"
+print_metric "vqa.blueprint_qa.mean_score"
+print_metric "vqa.dashboards_fact_qa.mean_score"
+print_metric "vqa.dashboards_numeric_qa.mean_score"
 print_metric "vqa.financial_documents_qa.mean_score"
-print_metric "vqa.scientific_documents_qa.mean_score"
-print_metric "vqa.user_interface_qa.mean_score"
 
 # 4. Grounding
 echo "" | tee -a "${LOG_FILE}"

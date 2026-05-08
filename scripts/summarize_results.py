@@ -101,18 +101,15 @@ def main():
             
         model_name = model_dir.name
         logs = get_all_logs_sorted(model_dir)
-        
+
         if not logs:
             continue
-            
-        # 1. 提取大任务汇总得分 (从新到旧合并，保留最新的有效分数)
-        combined_metrics = {}
-        for log in logs:
-            metrics = parse_log(log)
-            for k, v in metrics.items():
-                if k not in combined_metrics:
-                    combined_metrics[k] = v
-                    
+
+        latest_log = logs[0]
+
+        # 1. 提取大任务汇总得分 (只取最新 log)
+        combined_metrics = parse_log(latest_log)
+
         if combined_metrics:
             rec_score = combined_metrics.get('recognition.mean_micro_f1', combined_metrics.get('recognition.mean_macro_f1', None))
             parse_score = combined_metrics.get('parsing.mean_score', None)
@@ -140,83 +137,73 @@ def main():
                 '_avg_sort': avg_score if avg_score is not None else -1
             })
 
-        # 2. 提取单样本明细得分 (从新到旧合并，避免重复提取相同的 dataset)
-        seen_datasets = set()
-        for log in logs:
-            blocks = extract_json_blocks(log)
-            for block in blocks:
-                # Handle Grounding which has nested tasks
-                if "text_grounding" in block or "object_grounding" in block:
-                    if "grounding" in seen_datasets:
-                        continue
-                    seen_datasets.add("grounding")
-                    
-                    for t in ["text_grounding", "object_grounding"]:
-                        if t in block and "per_file" in block[t]:
-                            for item in block[t]["per_file"]:
-                                all_sample_rows.append({
-                                    "Model": model_name,
-                                    "Task": "grounding",
-                                    "Dataset": item.get("subset", "unknown"),
-                                    "File": item.get("file", "unknown"),
-                                    "Score_Type": "iou",
-                                    "Score": item.get("iou", None)
-                                })
-                    continue
+        # 2. 提取单样本明细得分 (只取最新 log)
+        blocks = extract_json_blocks(latest_log)
+        for block in blocks:
+            # Handle Grounding which has nested tasks
+            if "text_grounding" in block or "object_grounding" in block:
+                for t in ["text_grounding", "object_grounding"]:
+                    if t in block and "per_file" in block[t]:
+                        for item in block[t]["per_file"]:
+                            all_sample_rows.append({
+                                "Model": model_name,
+                                "Task": "grounding",
+                                "Dataset": item.get("subset", "unknown"),
+                                "File": item.get("file", "unknown"),
+                                "Score_Type": "iou",
+                                "Score": item.get("iou", None)
+                            })
+                continue
 
-                # Handle other tasks
-                gt_dir = Path(block.get("gt_dir", ""))
-                dataset_name = gt_dir.name if gt_dir.name else "unknown"
-                
-                if dataset_name in seen_datasets:
-                    continue
-                seen_datasets.add(dataset_name)
-                
-                task = "unknown"
-                if "parsing" in str(gt_dir): task = "parsing"
-                elif "kie" in str(gt_dir): task = "kie"
-                elif "vqa" in str(gt_dir): task = "vqa"
-                elif "recognition" in str(gt_dir): task = "recognition"
-                
-                per_file_list = block.get("per_file", [])
-                if not per_file_list and "results" in block:
-                    per_file_list = block["results"].get("per_file", [])
-                
-                for item in per_file_list:
-                    filename = item.get("file", "unknown")
-                    
-                    score = None
-                    score_type = None
-                    if "combined" in item:
-                        score = item["combined"]
-                        score_type = "combined"
-                    elif "text_f1" in item:
-                        score = item["text_f1"]
-                        score_type = "text_f1"
-                    elif "teds" in item:
-                        score = item["teds"]
-                        score_type = "teds"
-                    elif "edit_similarity" in item:
-                        score = item["edit_similarity"]
-                        score_type = "edit_similarity"
-                    elif "score" in item:  # VQA
-                        score = item["score"]
-                        score_type = "score"
-                    elif "macro_f1" in item:  # Recognition
-                        score = item["macro_f1"]
-                        score_type = "macro_f1"
-                    elif "f1_score" in item:  # KIE
-                        score = item["f1_score"]
-                        score_type = "f1_score"
-                        
-                    all_sample_rows.append({
-                        "Model": model_name,
-                        "Task": task,
-                        "Dataset": dataset_name,
-                        "File": filename,
-                        "Score_Type": score_type,
-                        "Score": score
-                    })
+            # Handle other tasks
+            gt_dir = Path(block.get("gt_dir", ""))
+            dataset_name = gt_dir.name if gt_dir.name else "unknown"
+
+            task = "unknown"
+            if "parsing" in str(gt_dir): task = "parsing"
+            elif "kie" in str(gt_dir): task = "kie"
+            elif "vqa" in str(gt_dir): task = "vqa"
+            elif "recognition" in str(gt_dir): task = "recognition"
+
+            per_file_list = block.get("per_file", [])
+            if not per_file_list and "results" in block:
+                per_file_list = block["results"].get("per_file", [])
+
+            for item in per_file_list:
+                filename = item.get("file", "unknown")
+
+                score = None
+                score_type = None
+                if "combined" in item:
+                    score = item["combined"]
+                    score_type = "combined"
+                elif "text_f1" in item:
+                    score = item["text_f1"]
+                    score_type = "text_f1"
+                elif "teds" in item:
+                    score = item["teds"]
+                    score_type = "teds"
+                elif "edit_similarity" in item:
+                    score = item["edit_similarity"]
+                    score_type = "edit_similarity"
+                elif "score" in item:  # VQA
+                    score = item["score"]
+                    score_type = "score"
+                elif "macro_f1" in item:  # Recognition
+                    score = item["macro_f1"]
+                    score_type = "macro_f1"
+                elif "f1_score" in item:  # KIE
+                    score = item["f1_score"]
+                    score_type = "f1_score"
+
+                all_sample_rows.append({
+                    "Model": model_name,
+                    "Task": task,
+                    "Dataset": dataset_name,
+                    "File": filename,
+                    "Score_Type": score_type,
+                    "Score": score
+                })
 
     if not all_data:
         print("没有可用的评测结果。")

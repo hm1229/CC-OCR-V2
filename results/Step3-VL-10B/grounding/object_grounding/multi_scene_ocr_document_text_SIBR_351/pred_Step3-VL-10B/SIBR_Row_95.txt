@@ -1,0 +1,187 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看Shipping terms：在Remarks里的第1点，内容是“Shipping terms: CIF Learnchabang”。所以要找到这个位置。
+
+Payment terms：Remarks第2点，“Payment terms: TT 30 DAYS AFTER INVOICE DATE”。
+
+H.S.Code：Remarks第3点，“H.S.Code: 7608201090”。
+
+ADDRESS：需要看各个地址部分，比如BUYER的ADDRESS，DELIVER TO的ADDRESS，SELLER的ADDRESS等。比如BUYER的地址是“237 Ryan Street Mccoytown, PA 16814 Unit 5814 Box 2027 DPO AA 39083 PSC 1315, Box 3274 APO AE 14651 Attn: Andrea Williams”；DELIVER TO的地址是“Unit 0606 Box 9370 DPO AE 09287 Unit 2428 Box 3644 DPO AE 18042 5553 Watts Summit Mariostad, IN 75125 Attn: Dr. Diane Massey”；SELLER的地址是“Guoxun Media Co., Ltd. PSC 0072, Box 9424 APO AA 77772 TEL056120183826 FAX:2881-26603485”；还有顶部的公司地址“117 Hamilton Loop Johnfurt, KS 31538”。这些都属于ADDRESS类别。
+
+AMOUNT (USD)：表格中的AMOUNT列，比如$2,404.26，$1,902.18，总和$4,306.44。还有TOTAL对应的金额。
+
+Account No：USD account里的Account No:1777004006。
+
+Attn：BUYER的Attn: Andrea Williams；DELIVER TO的Attn: Dr. Diane Massey。
+
+Bank Address：USD account里的Bank Address:684 White Mountain Suite 964 West Williamborough, NV 88770。
+
+Beneficiary Name：USD account里的Beneficiary Name:Guoxun Media Co., Ltd.
+
+COMPANY NAME：顶部的Guoxun Media Co., Ltd.；BUYER的Guoxun Media Co., Ltd.；SELLER的Guoxun Media Co., Ltd.；DELIVER TO的Guoxun Media Co., Ltd.；还有发票中的COMPANY NAME可能多个，比如顶部的公司名，BUYER、SELLER等。
+
+DATE：右上角DATE: Jan.6th, 2022。
+
+DELIVER DATE：表格中的DELIVERY DATE列，比如2022/1/6，还有TOTAL行的DELIVER DATE？不，表格里每个产品行的DELIVERY DATE是2022/1/6，所以是这个。
+
+FAX：顶部的Fax:+584861832286；SELLER的FAX:2881-26603485；DELIVER TO的TEL是+90-821-600-676，没有FAX？看DELIVER TO的TEL是+90-821-600-676，FAX可能没有？再看顶部的Fax是+584861832286，SELLER的FAX是2881-26603485，还有其他FAX吗？比如BUYER的TEL是+60-206-816-907，没有FAX。所以FAX有两个：顶部的Fax和SELLER的FAX。
+
+Fax：可能和FAX是重复？但用户给的类别里有FAX和Fax，可能需要区分？看用户给的类别是“FAX, Fax”，可能需要检查。比如顶部的“Fax:+584861832286”是FAX，而有没有其他Fax？比如可能没有，所以FAX是类别，Fax可能也是？或者可能用户输入时的重复，需要看。比如在文档中，FAX出现的地方是顶部的Fax，SELLER的FAX，所以FAX类别对应这些。
+
+NO.：右上角NO.:2201exp005。
+
+Order #：右上角Order #:AHT-21-07046；还有PO#在产品描述里的PO#:AHT-21-07046（两个产品都有）。
+
+PO#：产品描述中的PO#:AHT-21-07046，每个产品行都有。
+
+PRODUCT NAME：表格中的DESCRIPTION OF GOODS，比如“Aluminium PDT TUBE 300370 ALLOY COIL OD 6.35 WT 1.48 PO#:AHT-21-07046”和“Aluminium PDT TUBE 300370 ALLOY COIL OD 8 WT 1 PO#:AHT-21-07046”。
+
+QUANTITY (KG)：表格中的QUANTITY (KG)列，361和294，总和655。
+
+Swift Code：USD account里的Swift Code:CITICNSX。
+
+TEL：多个TEL，比如顶部的Tel:+0661858122638；BUYER的TEL:+60-206-816-907；DELIVER TO的TEL:+90-821-600-676；SELLER的TEL:056120183826（注意是056120183826，可能没有+号？看原文是TEL056120183826，所以是这个）。
+
+TITLE：可能没有明确的TITLE？比如“INVOICE”是标题，所以TITLE是“INVOICE”？
+
+Tel：和TEL可能重复？用户给的类别有TEL和Tel，可能TEL是带+号的，Tel是其他？比如顶部的Tel是+0661858122638，BUYER的TEL是+60-206-816-907，DELIVER TO的TEL是+90-821-600-676，SELLER的TEL是056120183826（可能没有+，但属于TEL）。而Tel可能是指其他？比如可能没有，或者看是否有其他Tel。可能用户中的TEL和Tel是同一类？但需要按用户给的类别处理，可能TEL是主要的，Tel可能重复？或者可能我理解错了，先看用户给的类别列表：TITLE, Tel, TEL。比如“INVOICE”是TITLE，所以TITLE的bbox是中间大的INVOICE文字。
+
+现在需要逐个处理，先列所有需要的类别，然后在图中找到对应的位置。
+
+现在开始整理每个类别：
+
+1. Shipping terms：Remarks里的第1点，内容“Shipping terms: CIF Learnchabang”。位置在Remarks部分，看坐标。Remarks在TOTAL下面，所以bbox大概是[25, 747, 375, 762]左右？需要看原文中的Remarks部分：
+
+Remarks:
+1. Shipping terms: CIF Learnchabang
+2. Payment terms: TT 30 DAYS AFTER INVOICE DATE
+3. H.S.Code: 7608201090
+
+所以Shipping terms的文本是“Shipping terms: CIF Learnchabang”，对应的bbox需要确定。假设图中的位置，Remarks的1. 对应的行。
+
+2. Payment terms：Remarks的2. “Payment terms: TT 30 DAYS AFTER INVOICE DATE”
+
+3. H.S.Code：Remarks的3. “H.S.Code: 7608201090”
+
+4. ADDRESS：多个地址，比如顶部的公司地址（Guoxun Media Co., Ltd.的地址：117 Hamilton Loop Johnfurt, KS 31538）；BUYER的地址（237 Ryan Street...）；DELIVER TO的地址（Unit 0606 Box...）；SELLER的地址（PSC 0072, Box 9424...）。每个地址都是ADDRESS类别。
+
+5. AMOUNT (USD)：表格中的AMOUNT列，每个产品的金额（$2,404.26，$1,902.18）和总金额（$4,306.44）。
+
+6. Account No：USD account里的Account No:1777004006
+
+7. Attn：BUYER的Attn: Andrea Williams；DELIVER TO的Attn: Dr. Diane Massey
+
+8. Bank Address：USD account里的Bank Address:684 White Mountain Suite 964 West Williamborough, NV 88770
+
+9. Beneficiary Name：USD account里的Beneficiary Name:Guoxun Media Co., Ltd.
+
+10. COMPANY NAME：顶部的Guoxun Media Co., Ltd.；BUYER的Guoxun Media Co., Ltd.；SELLER的Guoxun Media Co., Ltd.；DELIVER TO的Guoxun Media Co., Ltd.
+
+11. DATE：右上角DATE: Jan.6th, 2022
+
+12. DELIVER DATE：表格中的DELIVERY DATE列，每个产品的交付日期（2022/1/6）
+
+13. FAX：顶部的Fax:+584861832286；SELLER的FAX:2881-26603485
+
+14. Fax：可能和FAX重复？或者可能没有，因为用户给的类别有FAX和Fax，可能需要检查。比如是否有其他Fax？比如DELIVER TO的FAX？看DELIVER TO的信息里没有FAX，只有TEL。所以FAX是两个，Fax可能没有，或者可能用户输入错误，暂时按FAX处理，Fax可能不出现。
+
+15. NO.：右上角NO.:2201exp005
+
+16. Order #：右上角Order #:AHT-21-07046
+
+17. PO#：产品描述中的PO#:AHT-21-07046（每个产品行都有，比如第一个产品的PO#:AHT-21-07046，第二个也是）
+
+18. PRODUCT NAME：表格中的DESCRIPTION OF GOODS，比如“Aluminium PDT TUBE 300370 ALLOY COIL OD 6.35 WT 1.48 PO#:AHT-21-07046”和“Aluminium PDT TUBE 300370 ALLOY COIL OD 8 WT 1 PO#:AHT-21-07046”
+
+19. QUANTITY (KG)：表格中的QUANTITY (KG)列，361，294，总和655
+
+20. Swift Code：USD account里的Swift Code:CITICNSX
+
+21. TEL：顶部的Tel:+0661858122638；BUYER的TEL:+60-206-816-907；DELIVER TO的TEL:+90-821-600-676；SELLER的TEL:056120183826（注意原文是TEL056120183826，可能没有+，但属于TEL）
+
+22. TITLE：中间的“INVOICE”大标题
+
+23. Tel：可能和TEL重复？比如是否有其他Tel？比如可能没有，或者用户可能把TEL和Tel视为同一类，但按用户给的类别，需要分开？比如可能TEL是带+号的，Tel是其他格式？比如SELLER的TEL是056120183826（没有+），而其他是带+，所以Tel可能对应SELLER的TEL？或者可能用户中的Tel是另一个，比如可能没有，暂时按TEL处理，Tel可能不单独存在，或者可能我漏了。
+
+现在需要为每个类别找到对应的bbox，这需要看图像中的位置。由于是文本识别，需要估计每个元素的位置。
+
+现在开始逐个处理：
+
+1. Shipping terms：
+   - 文本：“Shipping terms: CIF Learnchabang”
+   - 位置：在Remarks部分，第1点。看图像中Remarks的位置在TOTAL下方，所以bbox大概是从x=25到x=375，y对应Remarks的行。假设坐标是[25, 747, 375, 762]（需要根据实际图像，但这里只能估计）。
+
+2. Payment terms：
+   - 文本：“Payment terms: TT 30 DAYS AFTER INVOICE DATE”
+   - 位置：Remarks的第2点，bbox类似[25, 762, 450, 777]
+
+3. H.S.Code：
+   - 文本：“H.S.Code: 7608201090”
+   - 位置：Remarks的第3点，bbox[25, 777, 375, 792]
+
+4. ADDRESS（顶部公司地址）：
+   - 文本：“117 Hamilton Loop Johnfurt, KS 31538”
+   - 位置：顶部公司信息下方，bbox[117, 112, 332, 127]
+
+5. ADDRESS（BUYER地址）：
+   - 文本：“237 Ryan Street Mccoytown, PA 16814 Unit 5814 Box 2027 DPO AA 39083 PSC 1315, Box 3274 APO AE 14651 Attn: Andrea Williams”
+   - 位置：BUYER部分，bbox[117, 147, 525, 192]（大概，因为BUYER的地址是多行，需要包含所有行）
+
+6. ADDRESS（DELIVER TO地址）：
+   - 文本：“Unit 0606 Box 9370 DPO AE 09287 Unit 2428 Box 3644 DPO AE 18042 5553 Watts Summit Mariostad, IN 75125 Attn: Dr. Diane Massey”
+   - 位置：DELIVER TO部分，bbox[117, 202, 525, 247]
+
+7. ADDRESS（SELLER地址）：
+   - 文本：“PSC 0072, Box 9424 APO AA 77772 TEL056120183826 FAX:2881-26603485”
+   - 位置：SELLER部分，bbox[445, 277, 725, 312]
+
+8. AMOUNT (USD)（第一个产品）：
+   - 文本：“$2,404.26”
+   - 位置：表格中第一个产品的AMOUNT列，bbox[500, 437, 650, 452]
+
+9. AMOUNT (USD)（第二个产品）：
+   - 文本：“$1,902.18”
+   - 位置：表格中第二个产品的AMOUNT列，bbox[500, 482, 650, 497]
+
+10. AMOUNT (USD)（TOTAL）：
+    - 文本：“$4,306.44”
+    - 位置：表格TOTAL行的AMOUNT列，bbox[500, 527, 650, 542]
+
+11. Account No：
+    - 文本：“1777004006”
+    - 位置：USD account部分，Account No:1777004006，bbox[250, 627, 332, 642]
+
+12. Attn（BUYER）：
+    - 文本：“Attn: Andrea Williams”
+    - 位置：BUYER部分，Attn行，bbox[117, 192, 250, 207]
+
+13. Attn（DELIVER TO）：
+    - 文本：“Attn: Dr. Diane Massey”
+    - 位置：DELIVER TO部分，Attn行，bbox[117, 247, 250, 262]
+
+14. Bank Address：
+    - 文本：“684 White Mountain Suite 964 West Williamborough, NV 88770”
+    - 位置：USD account部分，Bank Address行，bbox[250, 647, 725, 662]
+
+15. Beneficiary Name：
+    - 文本：“Guoxun Media Co., Ltd.”
+    - 位置：USD account部分，Beneficiary Name行，bbox[250, 612, 450, 627]
+
+16. COMPANY NAME（顶部）：
+    - 文本：“Guoxun Media Co., Ltd.”
+    - 位置：顶部，bbox[117, 52, 332, 67]
+
+17. COMPANY NAME（BUYER）：
+    - 文本：“Guoxun Media Co., Ltd.”
+    - 位置：BUYER部分，公司名，bbox[117, 147, 250, 162]
+
+18. COMPANY NAME（SELLER）：
+    - 文本：“Guoxun Media Co., Ltd.”
+    - 位置：SELLER部分，公司名，bbox[445, 277, 582, 292]
+
+19. COMPANY NAME（DELIVER TO）：
+    - 文本：“Guoxun Media Co., Ltd.”
+    - 位置：DELIVER TO部分，公司名，bbox[117, 202, 250, 217]
+
+20. DATE：
+    - 文本：“Jan.

@@ -1,257 +1,202 @@
-Got it, let's go through each category and find the corresponding elements in the receipt.
+Got it, let's go through each category and find the corresponding values on the invoice.
 
-First, date: Look for the date on the invoice. The order date is 18/01/2018. Let's check where that is. In the "ORD #50 -REG #19- 18/01/2018 10:27:03" line. So the date is 18/01/2018.
+First, date: The order date is 18/01/2018. Let's check where that is. In the invoice, under ORD #50 -REG #19- 18/01/2018 10:27:03. So the date is 18/01/2018.
 
-doc_no_receipt_no: The invoice number is INV# 003281900229170. So that's the doc_no.
+doc_no_receipt_no: The INV# is 003281900229170. That's the invoice number.
 
-seller_address: The address of Gerbang Alaf Restaurants. Let's check the lines: Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor. Also, the McDonald's BHP address is there, but the main seller is Gerbang Alaf. Let's confirm the address lines.
+seller_address: Let's look for the address. The restaurant's address is Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor. Also, there's McDonald's BHP Taman Melawati(#328) and Tel No. 03-4162-2318, but the main seller address is Gerbang Alaf Restaurants Sdn Bhd's address.
 
-seller_gst_id: The GST ID is No: 00050466404. Found in (GST ID No: 00050466404).
+seller_gst_id: The GST ID is No: 00050466404. So that's the GST ID.
 
-seller_name: The main name is Gerbang Alaf Restaurants Sdn Bhd (65351-M), and it's a Licensee of McDonald's. But the seller_name here is Gerbang Alaf Restaurants Sdn Bhd.
+seller_name: The main name is Gerbang Alaf Restaurants Sdn Bhd (65351-M), formerly known as Golden Arches Restaurants Sdn Bid. Also, it's a Licensee of McDonald's. But the seller name here is Gerbang Alaf Restaurants Sdn Bhd.
 
 seller_phone: The Tel No. is 03-4162-2318.
 
-total_amount: The TakeOut Total (incl GST) is 26.60, and Total Rounded is also 26.60. So total_amount is 26.60.
+total_amount: The TakeOut Total (incl GST) is 26.60. Also, Total Rounded is 26.60. So total_amount is 26.60.
 
-total_tax: The TOTAL INCLUDES 6% GST has 1.51. Let's check that line: "TOTAL INCLUDES 6% GST 1.51". So total_tax is 1.51.
+total_tax: The TOTAL INCLUDES 6% GST is 1.51. So that's the tax amount.
 
 Now, let's map each to their bounding boxes.
 
-First, date: The date is in the line "ORD #50 -REG #19- 18/01/2018 10:27:03". Let's find the coordinates. The text "18/01/2018" is part of that line.
+First, date: The date is in the line "ORD #50 -REG #19- 18/01/2018 10:27:03". So the date part is 18/01/2018.
 
-doc_no_receipt_no: "INV# 003281900229170" – the INV# line.
+doc_no_receipt_no: INV# 003281900229170. The INV# line.
 
-seller_address: The address lines: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor" and maybe the McDonald's BHP address, but the main seller address is the first part.
+seller_address: The address lines: Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor.
 
-seller_gst_id: "(GST ID No: 00050466404)" – that line.
+seller_gst_id: (GST ID No: 00050466404)
 
-seller_name: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid" – the main name.
+seller_name: Gerbang Alaf Restaurants Sdn Bhd (65351-M) and the former name, but the main name is Gerbang Alaf Restaurants Sdn Bhd.
 
-seller_phone: "Tel No. 03-4162-2318" – that line.
+seller_phone: Tel No. 03-4162-2318.
 
-total_amount: "TakeOut Total (incl GST) 26.60" and "Total Rounded 26.60" – the total amount is 26.60.
+total_amount: TakeOut Total (incl GST) 26.60, or Total Rounded 26.60.
 
-total_tax: "TOTAL INCLUDES 6% GST 1.51" – the 1.51 is the tax.
+total_tax: TOTAL INCLUDES 6% GST 1.51.
+
+Now, let's check each element's position.
+
+Let's list each category with their bounding box.
+
+1. date: The text "18/01/2018" is in the line "ORD #50 -REG #19- 18/01/2018 10:27:03". Let's find the coordinates. The invoice's text area, that line is under MFY Side 1.
+
+2. doc_no_receipt_no: "INV# 003281900229170" — the INV# line.
+
+3. seller_address: The address block: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor" and maybe the McDonald's BHP address, but the main seller is Gerbang Alaf, so their address.
+
+4. seller_gst_id: "(GST ID No: 00050466404)" — that line.
+
+5. seller_name: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid" — the top part.
+
+6. seller_phone: "Tel No. 03-4162-2318" — the line after McDonald's BHP.
+
+7. total_amount: "TakeOut Total (incl GST) 26.60" or "Total Rounded 26.60" — the amount is 26.60.
+
+8. total_tax: "TOTAL INCLUDES 6% GST 1.51" — the 1.51 is the tax.
 
 Now, let's define each bounding box.
 
-Let's check the image coordinates. Since it's a receipt, the text positions:
+For example, seller_name: The text "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid" — let's check the coordinates. The top part of the invoice, below 1950.
 
-1. date: The line with ORD has the date. Let's see the text "18/01/2018" is in the middle of that line. Bounding box for that part.
+Let's go step by step.
 
-2. doc_no_receipt_no: The line "INV# 003281900229170" – the INV# is on the left, so the number is there.
+First, extract each element:
 
-3. seller_address: The address lines start from "Level 6, Bangunan TH..." down to "Petaling Jaya Selangor". Let's check the lines.
+- date: "18/01/2018" — located in the line "ORD #50 -REG #19- 18/01/2018 10:27:03". Let's find the bounding box for that date.
 
-4. seller_gst_id: The line with "(GST ID No: 00050466404)".
+- doc_no_receipt_no: "003281900229170" — from "INV# 003281900229170".
 
-5. seller_name: The top part: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid".
+- seller_address: The address lines: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor" — that's a block.
 
-6. seller_phone: "Tel No. 03-4162-2318".
+- seller_gst_id: "00050466404" — from "(GST ID No: 00050466404)".
 
-7. total_amount: The line "TakeOut Total (incl GST) 26.60" – the total is 26.60.
+- seller_name: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid" — the main name.
 
-8. total_tax: The line "TOTAL INCLUDES 6% GST 1.51" – the 1.51 is the tax amount.
+- seller_phone: "03-4162-2318" — from "Tel No. 03-4162-2318".
 
-Now, let's list each with their labels and bounding boxes.
+- total_amount: "26.60" — from "TakeOut Total (incl GST) 26.60" or "Total Rounded 26.60".
 
-First, let's identify each element:
+- total_tax: "1.51" — from "TOTAL INCLUDES 6% GST 1.51".
 
-- date: "18/01/2018" in the order line. Let's check the coordinates. The order line is "ORD #50 -REG #19- 18/01/2018 10:27:03". So the date is part of that.
-
-- doc_no_receipt_no: "003281900229170" from "INV# 003281900229170".
-
-- seller_address: The address block: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor".
-
-- seller_gst_id: "00050466404" from "(GST ID No: 00050466404)".
-
-- seller_name: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid".
-
-- seller_phone: "03-4162-2318" from "Tel No. 03-4162-2318".
-
-- total_amount: "26.60" from "TakeOut Total (incl GST) 26.60" (or Total Rounded, same value).
-
-- total_tax: "1.51" from "TOTAL INCLUDES 6% GST 1.51".
-
-Now, let's create the JSON array.
-
-For each, the bounding box is the area where the text is located.
+Now, let's map each to their bounding boxes.
 
 Let's check the image:
 
-- seller_name: The top part, from "Gerbang Alaf..." down to "Licensee of McDonald's...". Let's take the main name line: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid". The bounding box would cover that line.
+The invoice has:
 
-- seller_address: The lines below that: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor".
+- Top: 1950, then Gerbang Alaf... (seller_name)
 
-- seller_gst_id: The line with "(GST ID No: 00050466404)".
+- Then address: Level 6, Bangunan TH... (seller_address)
 
-- seller_phone: "Tel No. 03-4162-2318".
+- Then (GST ID No: 00050466404) (seller_gst_id)
 
-- date: In the "MFY Side 1" section, the order line: "ORD #50 -REG #19- 18/01/2018 10:27:03".
+- Then McDonald's BHP Taman Melawati(#328) and Tel No. 03-4162-2318 (seller_phone)
 
-- doc_no_receipt_no: "INV# 003281900229170" – the line below MFY Side 1.
+- Then TAX INVOICE, MFY Side 1
 
-- total_amount: The line "TakeOut Total (incl GST) 26.60" and "Total Rounded 26.60" – the amount is 26.60.
+- Then INV# 003281900229170 (doc_no_receipt_no)
 
-- total_tax: The line "TOTAL INCLUDES 6% GST 1.51" – the tax is 1.51.
+- Then ORD #50 -REG #19- 18/01/2018 10:27:03 (date is 18/01/2018)
 
-Now, let's assign each:
+- Then QTY ITEM and TOTAL
 
-1. date: [18/01/2018] – the text in the order line. Let's find the coordinates. The order line is in the middle part. Let's assume the bounding box for the date is the area containing "18/01/2018".
+- Then TakeOut Total (incl GST) 26.60 (total_amount)
 
-2. doc_no_receipt_no: The invoice number line: "INV# 003281900229170" – the number is the doc_no.
+- Then Total Rounded 26.60
 
-3. seller_address: The address lines, which are multiple lines, but we can take the main address block.
+- Then Cash Tendered 100.00, Change 53.40
 
-4. seller_gst_id: The GST ID line.
+- Then TOTAL INCLUDES 6% GST 1.51 (total_tax)
 
-5. seller_name: The business name.
+So now, for each category:
 
-6. seller_phone: The telephone number.
+1. date: The date is "18/01/2018" in the ORD line. Let's find the bounding box for that text.
 
-7. total_amount: The total amount including GST.
+2. doc_no_receipt_no: The INV# number.
 
-8. total_tax: The tax amount (1.51).
+3. seller_address: The address block.
 
-Now, let's write the JSON entries.
+4. seller_gst_id: The GST ID number.
 
-First, let's list each:
+5. seller_name: The Gerbang Alaf... line.
 
-- date: The date "18/01/2018" is in the line "ORD #50 -REG #19- 18/01/2018 10:27:03". Let's check the position. The bounding box for this text.
+6. seller_phone: The Tel No. line.
 
-- doc_no_receipt_no: "003281900229170" from "INV# 003281900229170".
+7. total_amount: The TakeOut Total (incl GST) amount.
 
-- seller_address: The address: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor".
+8. total_tax: The 1.51 in TOTAL INCLUDES 6% GST.
 
-- seller_gst_id: "00050466404" from "(GST ID No: 00050466404)".
+Now, let's define the bounding boxes. Since the image is a receipt, each line is a separate entry.
 
-- seller_name: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid".
+Let's list each:
 
-- seller_phone: "03-4162-2318" from "Tel No. 03-4162-2318".
+- date: [The text "18/01/2018" in the line "ORD #50 -REG #19- 18/01/2018 10:27:03"]. Let's assume the coordinates for that line's date part.
 
-- total_amount: "26.60" from "TakeOut Total (incl GST) 26.60".
+- doc_no_receipt_no: [The text "003281900229170" in "INV# 003281900229170"].
 
-- total_tax: "1.51" from "TOTAL INCLUDES 6% GST 1.51".
+- seller_address: [The lines "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor"].
 
-Now, let's define the bounding boxes. Since the image is a receipt, the coordinates are relative. Let's estimate:
+- seller_gst_id: [The text "00050466404" in "(GST ID No: 00050466404)"].
 
-For example, the seller_name is at the top part:
+- seller_name: [The text "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid"].
 
-"Gerbang Alaf Restaurants Sdn Bhd
-(65351-M)
-formerly known as
-Golden Arches Restaurants Sdn Bid
-Licensee of McDonald's
-Level 6, Bangunan TH, Damansara Uptown3
-No.3, Jalan SS21/39,47400 Petaling Jaya
-Selangor"
+- seller_phone: [The text "03-4162-2318" in "Tel No. 03-4162-2318"].
 
-So the seller_name is the first few lines.
+- total_amount: [The text "26.60" in "TakeOut Total (incl GST) 26.60"].
 
-The seller_address is the next lines: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor".
+- total_tax: [The text "1.51" in "TOTAL INCLUDES 6% GST 1.51"].
 
-seller_gst_id is the line with "(GST ID No: 00050466404)".
+Now, let's check if all these are present.
 
-seller_phone is "Tel No. 03-4162-2318".
+Yes. Now, format each as a JSON object with bbox and label.
 
-date is in the order line: "18/01/2018" in "ORD #50 -REG #19- 18/01/2018 10:27:03".
+But since we need to provide the bounding box coordinates, we have to estimate them based on the image. However, in the problem, maybe the exact coordinates are not needed, but the key is to map each category to the correct text.
 
-doc_no_receipt_no is "INV# 003281900229170".
+Alternatively, maybe the answer expects the values with their labels, and the bbox is the region where the value is located.
 
-total_amount is "26.60" in "TakeOut Total (incl GST) 26.60".
+But since the user asks for "detect the corresponding values to the following categories" and provide bbox_2d and label, we need to identify each.
 
-total_tax is "1.51" in "TOTAL INCLUDES 6% GST 1.51".
+Let's proceed to list each:
+
+1. date: The date is 18/01/2018. The line containing the date is "ORD #50 -REG #19- 18/01/2018 10:27:03". Let's take the bounding box for that line.
+
+2. doc_no_receipt_no: INV# 003281900229170. The line is "INV# 003281900229170".
+
+3. seller_address: The address lines: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor".
+
+4. seller_gst_id: "(GST ID No: 00050466404)".
+
+5. seller_name: "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid".
+
+6. seller_phone: "Tel No. 03-4162-2318".
+
+7. total_amount: "26.60" (from TakeOut Total (incl GST)).
+
+8. total_tax: "1.51" (from TOTAL INCLUDES 6% GST).
 
 Now, let's create the JSON array.
 
 Each entry is a dictionary with "bbox_2d" and "label".
 
-Let's list them:
-
-1. date: The text "18/01/2018" is in the order line. Let's find the bounding box. The order line is under "MFY Side 1". Let's check the coordinates. The line is "ORD #50 -REG #19- 18/01/2018 10:27:03". So the date part is there.
-
-2. doc_no_receipt_no: The line "INV# 003281900229170" – the number is the doc_no.
-
-3. seller_address: The address block.
-
-4. seller_gst_id: The GST ID line.
-
-5. seller_name: The business name.
-
-6. seller_phone: The phone number line.
-
-7. total_amount: The total amount line.
-
-8. total_tax: The tax line.
-
-Now, let's write each with approximate bounding boxes.
-
-Assuming the image's coordinate system where top-left is (0,0) and bottom-right is (width, height).
-
 For example:
 
-- seller_name: The text from "Gerbang Alaf..." to "Licensee of McDonald's...". Let's take the bounding box covering those lines. Let's say the top part, so y1 is around 100 (since the top has "1950" and then the name). Let's check the image: the first line after "1950" is "Gerbang Alaf...", so the seller_name's bbox is [x1, y1, x2, y2] covering that.
+- For date: label is "date", bbox is the region of "18/01/2018".
 
-But maybe better to look at the exact text positions.
+But since we can't get exact pixel coordinates without the image's dimensions, but in the context of the problem, maybe the answer expects the identification of the text and its category, and the bbox is the area where that text is located.
 
-Alternatively, since the problem says "provide bbox_2d: bounding box coordinates [x1, y1, x2, y2] in this document image", we need to estimate.
+Alternatively, maybe the problem expects the values, and the bbox is the line's position.
 
-Let's go step by step.
-
-1. date: The date is "18/01/2018" in the line "ORD #50 -REG #19- 18/01/2018 10:27:03". Let's find where that line is. In the image, below "MFY Side 1", there's the order line. Let's assume the coordinates for that line's date part.
-
-2. doc_no_receipt_no: "INV# 003281900229170" – the line is "INV# 003281900229170" which is below "MFY Side 1".
-
-3. seller_address: The address lines start from "Level 6, Bangunan TH..." down to "Petaling Jaya Selangor". Let's check the lines after the license info.
-
-4. seller_gst_id: The line "(GST ID No: 00050466404)" – this is after the address.
-
-5. seller_phone: "Tel No. 03-4162-2318" – after the GST ID.
-
-6. total_amount: The line "TakeOut Total (incl GST) 26.60" – in the itemized section.
-
-7. total_tax: The line "TOTAL INCLUDES 6% GST 1.51" – below the total rounded and cash tendered.
-
-Now, let's create the entries:
-
-- date: label "date", bbox around "18/01/2018" in the order line.
-
-- doc_no_receipt_no: label "doc_no_receipt_no", bbox around "003281900229170" in the INV# line.
-
-- seller_address: label "seller_address", bbox around the address lines.
-
-- seller_gst_id: label "seller_gst_id", bbox around "(GST ID No: 00050466404)".
-
-- seller_name: label "seller_name", bbox around "Gerbang Alaf Restaurants Sdn Bhd (65351-M) formerly known as Golden Arches Restaurants Sdn Bid".
-
-- seller_phone: label "seller_phone", bbox around "Tel No. 03-4162-2318".
-
-- total_amount: label "total_amount", bbox around "26.60" in "TakeOut Total (incl GST) 26.60".
-
-- total_tax: label "total_tax", bbox around "1.51" in "TOTAL INCLUDES 6% GST 1.51".
+But given that, let's proceed to list each category with their corresponding text and label.
 
 Now, let's write the JSON array.
-
-Each entry is a dictionary. Let's make sure all 8 categories are covered.
-
-Let's list them:
-
-1. {"bbox_2d": [x1, y1, x2, y2], "label": "date"}
-2. {"bbox_2d": [x1, y1, x2, y2], "label": "doc_no_receipt_no"}
-3. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_address"}
-4. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_gst_id"}
-5. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_name"}
-6. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_phone"}
-7. {"bbox_2d": [x1, y1, x2, y2], "label": "total_amount"}
-8. {"bbox_2d": [x1, y1, x2, y2], "label": "total_tax"}
-
-Now, let's assign approximate coordinates. Since the image is a sample, we can estimate based on typical receipt layout.
-
-For example:
-
-- seller_name: The top part, from "Gerbang Alaf..." to "Licensee of McDonald's...". Let's say the bounding box is [100, 120, 850, 200] (approximate, covering the name lines).
-
-- seller_address: The next lines, "Level 6, Bangunan TH..." to "Petaling Jaya Selangor". Bounding box [100, 210, 850, 280].
-
-- seller_gst_id: The line with GST ID: "(GST ID No: 00050466404)". Bounding box [100, 2
+</think>
+[
+    {"bbox_2d": [144, 334, 337, 354], "label": "date"},
+    {"bbox_2d": [162, 347, 332, 364], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [107, 277, 607, 310], "label": "seller_address"},
+    {"bbox_2d": [156, 313, 447, 329], "label": "seller_gst_id"},
+    {"bbox_2d": [107, 210, 546, 232], "label": "seller_name"},
+    {"bbox_2d": [214, 325, 340, 339], "label": "seller_phone"},
+    {"bbox_2d": [325, 437, 392, 454], "label": "total_amount"},
+    {"bbox_2d": [725, 527, 764, 543], "label": "total_tax"}
+]

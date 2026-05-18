@@ -1,0 +1,153 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看公司名称（COMPANY NAME）：Philipin Network Co., Ltd. 这个是顶部的公司名，对应TITLE？不，公司名是COMPANY NAME。看顶部的公司信息，Philipin Network Co., Ltd. 是公司名，所以COMPANY NAME的bbox是包含这个文字的区域。
+
+然后ADDRESS：70294 Catherine Locks Apt. 064 Brandonfort, R1 33957 这是公司地址，属于ADDRESS。
+
+ADDRESS OF THE BANK：A RUITONG SQUARE, 847 JIANS 015, P.R.C 这是银行地址，对应ADDRESS OF THE BANK。
+
+AMOUNT：USD2807.20 出现在表格里的AMOUNT列，还有TOTAL下面的AMOUNT是USD2807.20，所以要找这两个？看表格里的AMOUNT单元格是USD2807.20，TOTAL行的AMOUNT也是USD2807.20。需要确认。
+
+BANK A/C NO.：4218633081463000001580 这个是银行账号，对应BANK A/C NO.
+
+BANK NAME：BANK OF COMMUNICATIONS, WUHAN BRANCH 对应BANK NAME.
+
+BRANCH LOCATION (CITY)：WUHAN 对应这个类别。
+
+DESCRIPTION：Glutaraldehyde50% (CAS No.:111-30-8) 这是描述列的内容。
+
+FAX：USNS Lewis FPO AAE 64654 下面的Fax:823-6-28316218？不，SOLD TO部分的Fax是823-6-28316218，还有顶部的FAX:+94-38-65278461。需要看FAX类别，可能有两个？但用户给的类别是FAX和Fax，可能重复？看用户给的类别里有FAX和Fax，可能需要区分。比如顶部的FAX是公司自己的FAX，SOLD TO的Fax是对方的。但先看每个出现的。
+
+INV.DATE.：Nov 18th,2021 对应INV.DATE.
+
+INV.NO.：2021111801 对应INV.NO.
+
+PAYMENT：100% TT In Advance. 对应PAYMENT.
+
+PO NO.：GC111702-21 对应PO NO.
+
+QUANTITY：880kg 对应QUANTITY.
+
+SWIFT：COMM C N S H W H N？看图片中的SWIFT: COMM C N S H W H N？图片里是SWIFT: COMM C N S H W H N？看图片中的SWIFT是COMM C N S H W H N？原图片中SWIFT: COMM C N S H W H N？看用户提供的图片中的SWIFT行是“SWIFT: COMM C N S H W H N”？不，原图片中是“SWIFT: COMM C N S H W H N”？看图片里的SWIFT是“COMM C N S H W H N”？原图片中的SWIFT是“COMM C N S H W H N”？看用户提供的图片中的SWIFT部分：“SWIFT: COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？可能我看错了，原图片中的SWIFT是“COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？看用户提供的图片里的SWIFT行是“SWIFT: COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？可能实际是“COMM C N S H W H N”？不管，先提取。
+
+TEL：顶部的TEL:+81-23-11287876，还有SOLD TO的Tel:632-8-1348 2639。所以TEL有两个，对应TEL类别。
+
+TITLE：Invoice是标题，所以TITLE是“INVOICE”这个标题。
+
+Tel：和TEL可能重复？用户给的类别里有TEL和Tel，可能TEL是公司自己的电话，Tel是对方的？比如顶部的TEL是公司电话，SOLD TO的Tel是对方的，所以可能分开。但看用户给的类别里有TEL和Tel，需要看。
+
+UNIT PRICE：USD3.19/kg 对应UNIT PRICE.
+
+现在逐个处理：
+
+1. COMPANY NAME：Philipin Network Co., Ltd. 的bbox。看顶部的大标题，文字是“Philipin Network Co., Ltd.”，所以bbox是包含这个文字的区域。坐标大概在上方，比如x1=150, y1=100, x2=750, y2=130左右（需要估计，因为是图片，但根据布局）。
+
+2. ADDRESS：70294 Catherine Locks Apt. 064 Brandonfort, R1 33957。这是公司地址，在公司名下面。
+
+3. ADDRESS OF THE BANK：A RUITONG SQUARE, 847 JIANS 015, P.R.C。在银行地址部分，最后一行。
+
+4. AMOUNT：表格中的AMOUNT列是USD2807.20，TOTAL行的AMOUNT也是USD2807.20。需要看哪个。表格里的AMOUNT单元格是“USD2807.20”，TOTAL行的AMOUNT也是“USD2807.20”。所以可能有两个，但先看主要的。
+
+5. BANK A/C NO.：4218633081463000001580，在BANK A/C NO.行。
+
+6. BANK NAME：BANK OF COMMUNICATIONS, WUHAN BRANCH。
+
+7. BRANCH LOCATION (CITY)：WUHAN。
+
+8. DESCRIPTION：Glutaraldehyde50% (CAS No.:111-30-8)。
+
+9. FAX：顶部的FAX:+94-38-65278461；SOLD TO的Fax:823-6-28316218。用户类别有FAX和Fax，可能FAX是公司自己的，Fax是对方的？比如顶部的FAX是FAX类别，SOLD TO的Fax是Fax类别？或者看用户给的类别里有FAX和Fax，可能需要都提取。
+
+10. INV.DATE.：Nov 18th,2021。
+
+11. INV.NO.：2021111801。
+
+12. PAYMENT：100% TT In Advance.
+
+13. PO NO.：GC111702-21。
+
+14. QUANTITY：880kg。
+
+15. SWIFT：COMM C N S H W H N（看图片中的SWIFT是“COMM C N S H W H N”？原图片中是“SWIFT: COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？看用户提供的图片中的SWIFT行是“SWIFT: COMM C N S H W H N”？可能实际是“COMM C N S H W H N”？或者看图片中的SWIFT是“COMM C N S H W H N”？可能我需要再看图片。原图片中的SWIFT是“COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？可能用户提供的图片中SWIFT是“COMM C N S H W H N”？不管，提取文字。
+
+16. TEL：顶部的TEL:+81-23-11287876；SOLD TO的Tel:632-8-1348 2639。用户类别有TEL和Tel，可能TEL是公司电话，Tel是对方的电话？比如顶部的TEL是TEL，SOLD TO的Tel是Tel？
+
+17. TITLE：INVOICE，是发票的标题。
+
+18. UNIT PRICE：USD3.19/kg。
+
+现在需要把每个类别对应到具体的bbox。因为是图片，需要估计每个元素的位置。例如：
+
+- COMPANY NAME: "Philipin Network Co., Ltd." 的bbox，位于图像上方，文字较大，所以bbox大概是[145, 105, 750, 135]（假设）。
+
+- ADDRESS: "70294 Catherine Locks Apt. 064 Brandonfort, R1 33957" 的bbox，位于公司名下面，所以[140, 140, 755, 160]。
+
+- ADDRESS OF THE BANK: "A RUITONG SQUARE, 847 JIANS 015, P.R.C" 的bbox，在银行地址部分，最后一行，所以[140, 950, 890, 970]（假设）。
+
+- AMOUNT: 表格中的AMOUNT列的值“USD2807.20”，在表格的AMOUNT列，对应行的单元格，bbox比如[650, 460, 800, 480]。
+
+- BANK A/C NO.: "4218633081463000001580" 的bbox，在BANK A/C NO.行，所以[140, 830, 500, 850]。
+
+- BANK NAME: "BANK OF COMMUNICATIONS, WUHAN BRANCH" 的bbox，[140, 860, 600, 880]。
+
+- BRANCH LOCATION (CITY): "WUHAN" 的bbox，[140, 885, 200, 905]。
+
+- DESCRIPTION: "Glutaraldehyde50% (CAS No.:111-30-8)" 的bbox，在表格的DESCRIPTION列，所以[140, 430, 400, 450]。
+
+- FAX: 顶部的FAX "+94-38-65278461" 的bbox，[330, 160, 660, 175]；SOLD TO的Fax "823-6-28316218" 的bbox，[300, 600, 420, 615]。但用户类别有FAX和Fax，可能FAX是顶部的，Fax是SOLD TO的？或者看用户给的类别里有FAX和Fax，可能需要都算。比如FAX对应顶部的FAX，Fax对应SOLD TO的Fax。
+
+- INV.DATE.: "Nov 18th,2021" 的bbox，[140, 320, 280, 335]。
+
+- INV.NO.: "2021111801" 的bbox，[140, 335, 260, 350]。
+
+- PAYMENT: "100% TT In Advance." 的bbox，[140, 370, 350, 385]。
+
+- PO NO.: "GC111702-21" 的bbox，[600, 320, 720, 335]。
+
+- QUANTITY: "880kg" 的bbox，[300, 460, 360, 475]。
+
+- SWIFT: "COMM C N S H W H N" 的bbox，[140, 800, 400, 815]（看图片中的SWIFT行是“SWIFT: COMM C N S H W H N”？原图片中的SWIFT是“COMM C N S H W H N”？可能实际是“COMM C N S H W H N”？需要看图片中的文字，原图片中的SWIFT是“COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？可能用户提供的图片中SWIFT是“COMM C N S H W H N”？或者看图片中的SWIFT是“COMM C N S H W H N”？可能我之前看错了，原图片中的SWIFT是“COMM C N S H W H N”？不管，提取文字。
+
+- TEL: 顶部的TEL "+81-23-11287876" 的bbox，[330, 175, 520, 190]；SOLD TO的Tel "632-8-1348 2639" 的bbox，[300, 580, 430, 595]。用户类别有TEL和Tel，可能TEL是顶部的，Tel是SOLD TO的？
+
+- TITLE: "INVOICE" 的bbox，[440, 250, 560, 270]（因为中间大写的INVOICE）。
+
+- UNIT PRICE: "USD3.19/kg" 的bbox，[420, 460, 520, 475]。
+
+现在需要把所有这些整理成JSON数组，每个元素是bbox和label。需要注意不要重复，每个类别出现的实例都要列出来吗？比如FAX有两个（顶部和SOLD TO），但用户给的类别是FAX和Fax，可能FAX是顶部的，Fax是SOLD TO的，所以两个都要。同样TEL有两个，分别对应TEL和Tel？
+
+现在开始逐个列出：
+
+1. COMPANY NAME: "Philipin Network Co., Ltd." → label: COMPANY NAME
+2. ADDRESS: "70294 Catherine Locks Apt. 064 Brandonfort, R1 33957" → label: ADDRESS
+3. ADDRESS OF THE BANK: "A RUITONG SQUARE, 847 JIANS 015, P.R.C" → label: ADDRESS OF THE BANK
+4. AMOUNT: "USD2807.20"（表格中的AMOUNT）→ label: AMOUNT
+5. BANK A/C NO.: "4218633081463000001580" → label: BANK A/C NO.
+6. BANK NAME: "BANK OF COMMUNICATIONS, WUHAN BRANCH" → label: BANK NAME
+7. BRANCH LOCATION (CITY): "WUHAN" → label: BRANCH LOCATION (CITY)
+8. DESCRIPTION: "Glutaraldehyde50% (CAS No.:111-30-8)" → label: DESCRIPTION
+9. FAX: "+94-38-65278461"（顶部的FAX）→ label: FAX
+10. Fax: "823-6-28316218"（SOLD TO的Fax）→ label: Fax
+11. INV.DATE.: "Nov 18th,2021" → label: INV.DATE.
+12. INV.NO.: "2021111801" → label: INV.NO.
+13. PAYMENT: "100% TT In Advance." → label: PAYMENT
+14. PO NO.: "GC111702-21" → label: PO NO.
+15. QUANTITY: "880kg" → label: QUANTITY
+16. SWIFT: "COMM C N S H W H N"（看图片中的SWIFT是“COMM C N S H W H N”？原图片中的SWIFT是“COMM C N S H W H N”？可能实际是“COMM C N S H W H N”？或者看图片中的SWIFT是“COMM C N S H W H N”？原图片中的SWIFT行是“SWIFT: COMM C N S H W H N”？不，原图片中的SWIFT是“COMM C N S H W H N”？可能用户提供的图片中SWIFT是“COMM C N S H W H N”？不管，提取文字，假设是“COMM C N S H W H N”）→ label: SWIFT
+17. TEL: "+81-23-11287876"（顶部的TEL）→ label: TEL
+18. Tel: "632-8-1348 2639"（SOLD TO的Tel）→ label: Tel
+19. TITLE: "INVOICE" → label: TITLE
+20. UNIT PRICE: "USD3.19/kg" → label: UNIT PRICE
+
+现在需要为每个确定bbox。因为是图片，需要估计每个元素的位置。例如：
+
+- COMPANY NAME: [142, 102, 752, 132]
+- ADDRESS: [140, 142, 755, 162]
+- ADDRESS OF THE BANK: [140, 952, 888, 972]
+- AMOUNT: [652, 462, 800, 482]（表格中AMOUNT列的单元格）
+- BANK A/C NO.: [142, 832, 500, 852]
+- BANK NAME: [142, 862, 602, 882]
+- BRANCH LOCATION (CITY): [142, 885, 202, 905]
+- DESCRIPTION: [142, 432, 402, 452]
+- FAX: [332, 172, 660, 187]（顶部FAX）
+- Fax: [302, 602, 422, 617

@@ -1,189 +1,153 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看公司名称（COMPANY NAME）：顶部的Tai Qilin Media Co., Ltd.，还有SHIP TO里的Tai Qilin Media Co., Ltd.，以及Notify Party的Tai Qilin Media Co., Ltd.。需要确认每个出现的位置。
+首先看COMPANY NAME，发票顶部是Tai Qilin Media Co., Ltd.，所以这个是公司名。然后ADDRESS，可能有多个地址，比如SHIP TO ADDRESS里的地址，还有BILL TO ADDRESS。先整理每个标签：
 
-然后BILL TO ADDRESS：图中BILL TO ADDRESS下的USNS Lee FP0 AA 22816。
+1. ADDRESS：可能需要看各个地址部分。比如SHIP TO ADDRESS里的Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492；还有BILL TO ADDRESS的USNS Lee FP0 AA 22816；另外Notify Party的地址Unit 0171 Box 8199 DPO AP 30671。但可能需要确定哪个是ADDRESS。不过先看每个标签对应的内容。
 
-SHIP TO ADDRESS：Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492。
+现在逐个处理：
 
-CONTACT INFORMATION：Frau Edmeier Tel:81671/6102-89，Susanne Herbest 0651-900355，wallacechristina@mora.com，84307 EGENFELDEN，Germany。这些属于联系信息。
+- COMPANY NAME：Tai Qilin Media Co., Ltd.，在发票顶部，所以bbox是顶部的文字。
+- BILL TO ADDRESS：USNS Lee FP0 AA 22816，对应BILL TO ADDRESS部分。
+- CONTACT INFORMATION：Frau Edmeier Tel: 81671/6102-89；Susanne Herbest 0651-900355；wallacechristina@mora.com；84307 EGENFELDEN；Germany。这些是联系信息。
+- CUSTOMER PO：2204013868，在右上角表格里的CUSTOMER PO。
+- Country of Origin：CN，在表格里的Country of Origin列。
+- Currency：EUR，因为TOTAL PRICE是EUR，看表格里的Currency列。
+- DESCRIPTION：ProcessMaster Integral FEP631，表格里的DESCRIPTION列。
+- EMAIL：wallacechristina@mora.com，属于联系信息里的邮箱。
+- Frau Edmeier Tel：81671/6102-89，对应联系信息里的电话。
+- HS CODE：9026100000，表格里的HS CODE列。
+- INVOICE DATE：2021.11.05，右上角表格里的INVOICE DATE。
+- INVOICE NO.：0090341257，右上角表格里的INVOICE NO.
+- Item：10，表格里的Item列。
+- PART NO.：FEP631，表格里的PART NO.列。
+- PAYMENT TERMS：T/T 30 DAYS AFTER INVOICE，表格上方的PAYMENT TERMS。
+- QTY：2.000，表格里的QTY列。
+- SALES ORDER：0503305808，右上角表格里的SALES ORDER。
+- SHIPPING MODE：Sea，表格上方的SHIPPING MODE。
+- TITLE：可能没有明确的TITLE，或者看INVOICE是标题？不过可能不需要，或者看其他。不过可能用户给的类别里TITLE是否存在？看用户给的类别列表里有TITLE，可能需要检查。不过发票中可能没有明确的TITLE字段，或者可能是指INVOICE的标题？不过可能这里可能没有，或者可能我漏了。不过先继续。
+- TOTAL PRICE：1,614.20，表格里的TOTAL PRICE列，以及下面的合计也是1,614.20。
+- UNIT PRICE：807.10，表格里的UNIT PRICE列。
 
-CUSTOMER PO：2204013868。
+现在需要为每个类别找到对应的bbox。需要看每个元素在图中的位置。
 
-Country of Origin：CN（在表格里的Country of Origin列）。
+现在开始逐个构建：
 
-Currency：EUR（表格里的Currency列）。
+1. COMPANY NAME：Tai Qilin Media Co., Ltd.，位于发票顶部，文字是“Tai Qilin Media Co., Ltd.”，所以bbox是顶部的公司名称区域。看图片中顶部的文字，坐标大概是x从520到750左右，y在顶部。所以bbox可能是[517, 6, 750, 32]（假设）。
 
-DESCRIPTION：ProcessMaster Integral FEP631。
+2. ADDRESS：可能需要看SHIP TO ADDRESS的地址，即“Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492”，这个是SHIP TO ADDRESS里的地址，属于ADDRESS类别？或者BILL TO ADDRESS是另一个ADDRESS。可能需要区分。但用户要求的是ADDRESS类别，可能需要看是否有多个，但先处理每个标签。
 
-EMAIL：wallacechristina@mora.com。
+3. BILL TO ADDRESS：USNS Lee FP0 AA 22816，对应BILL TO ADDRESS部分，文字在左侧，所以bbox是[107, 142, 225, 156]左右（看图片中的BILL TO ADDRESS下面的内容）。
 
-Frau Edmeier Tel：81671/6102-89。
+4. CONTACT INFORMATION：包含Frau Edmeier的电话、邮箱等，这部分在SHIP TO ADDRESS下面，所以bbox是包含这些信息的区域，比如从“Frau Edmeier Tel:”到“Germany”的部分。
 
-HS CODE：9026100000。
+5. CUSTOMER PO：2204013868，在右上角表格里的CUSTOMER PO行，对应bbox是表格中CUSTOMER PO列的内容，即“2204013868”。
 
-INVOICE DATE：2021.11.05。
+6. Country of Origin：CN，在表格中对应行的Country of Origin列，即“CN”。
 
-INVOICE NO.：0090341257。
+7. Currency：EUR，在表格中Currency列，因为TOTAL PRICE是EUR，所以Currency是EUR。
 
-Item：10（表格里的Item列）。
+8. DESCRIPTION：ProcessMaster Integral FEP631，在表格的DESCRIPTION列，对应行的内容。
 
-PART NO.：FEP631。
+9. EMAIL：wallacechristina@mora.com，在联系信息部分，属于CONTACT INFORMATION里的邮箱。
 
-PAYMENT TERMS：T/T 30 DAYS AFTER INVOICE。
+10. Frau Edmeier Tel：81671/6102-89，在联系信息部分，对应“Frau Edmeier Tel:”后面的号码。
 
-QTY：2.000。
+11. HS CODE：9026100000，在表格的HS CODE列，对应行的内容。
 
-SALES ORDER：0503305808。
+12. INVOICE DATE：2021.11.05，在右上角表格的INVOICE DATE行。
 
-SHIPPING MODE：Sea。
+13. INVOICE NO.：0090341257，在右上角表格的INVOICE NO.行。
 
-TITLE：可能是指Invoice的标题？不过图中INVOICE是大标题，可能TITLE对应INVOICE的标题？不过看用户给的类别里有TITLE，可能需要检查。不过图中主要标题是INVOICE，可能TITLE是这个？不过先看其他。
+14. Item：10，在表格的Item列，对应行的Item值。
 
-TOTAL PRICE：1,614.20（表格里的TOTAL PRICE列，以及下方的合计）。
+15. PART NO.：FEP631，在表格的PART NO.列，对应行的值。
 
-UNIT PRICE：807.10。
+16. PAYMENT TERMS：T/T 30 DAYS AFTER INVOICE，在表格上方的PAYMENT TERMS行。
 
-现在需要逐个定位每个元素的bbox。需要注意图中的各个部分。
+17. QTY：2.000，在表格的QTY列，对应行的值。
 
-先处理公司名称（COMPANY NAME）：顶部的Tai Qilin Media Co., Ltd.，坐标是顶部中间。另外SHIP TO里的公司名称，Notify Party的公司名称。但可能需要看主要的公司名称，比如顶部的公司名称是公司抬头，所以第一个COMPANY NAME是顶部的“Tai Qilin Media Co., Ltd.”，其bbox是[514, 6, 747, 28]左右？需要看图像的布局。图像中顶部的公司名称是“Tai Qilin Media Co., Ltd.”，下面的地址是USNS Ramirez FPO AE 67892等。所以公司名称的bbox是[514, 6, 747, 28]。
+18. SALES ORDER：0503305808，在右上角表格的SALES ORDER行。
 
-然后BILL TO ADDRESS：标签是BILL TO ADDRESS，下面的地址是USNS Lee FP0 AA 22816。所以BILL TO ADDRESS的标签位置和内容。标签“BILL TO ADDRESS”的bbox是[101, 247, 237, 265]，内容是USNS Lee FP0 AA 22816，其bbox是[101, 267, 237, 282]。但需要把BILL TO ADDRESS作为一个对象，还是内容？用户要求的是“detect all objects matching these categories”，每个类别对应一个对象。比如BILL TO ADDRESS这个类别，对应的是该部分的地址内容？或者标签？不，应该是该部分的信息，比如BILL TO ADDRESS的地址内容。或者看用户给的类别是“BILL TO ADDRESS”作为类别，对应的是该部分的地址信息。所以需要把BILL TO ADDRESS的地址内容作为一个对象，label是BILL TO ADDRESS。
+19. SHIPPING MODE：Sea，在表格上方的SHIPPING MODE行。
 
-然后SHIP TO ADDRESS：标签是SHIP TO ADDRESS，下面的地址是Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492。所以SHIP TO ADDRESS的label对应这个地址内容。
+20. TITLE：可能没有明确的TITLE，或者可能是指INVOICE的标题？但用户给的类别里有TITLE，可能需要检查。或者可能我漏看了。不过可能这里的TITLE不存在，或者可能是指公司名称？但公司名称已经单独列了。可能用户提供的类别中TITLE是多余的，或者可能我哪里错了。不过先继续，可能没有TITLE的实例，或者可能在其他地方。暂时先处理其他。
 
-CONTACT INFORMATION：包含Frau Edmeier的电话、Susanne的电话、邮箱、地址等。这些属于CONTACT INFORMATION，所以需要把这部分作为一个对象？或者每个联系信息项？但用户给的类别是CONTACT INFORMATION，所以整体这部分属于该类别。
+21. TOTAL PRICE：1,614.20，在表格的TOTAL PRICE列，以及下方的合计行。
 
-CUSTOMER PO：2204013868，对应标签CUSTOMER PO下的内容。
+22. UNIT PRICE：807.10，在表格的UNIT PRICE列，对应行的值。
 
-Country of Origin：表格中的CN，对应Country of Origin列的值。
+现在需要将每个标签对应到具体的bbox。由于是图片，需要估计每个元素的位置。例如：
 
-Currency：表格中的EUR，对应Currency列的值。
-
-DESCRIPTION：表格中的ProcessMaster Integral FEP631，对应DESCRIPTION列的内容。
-
-EMAIL：wallacechristina@mora.com，对应EMAIL类别。
-
-Frau Edmeier Tel：81671/6102-89，对应这个电话。
-
-HS CODE：9026100000，对应HS CODE列的值。
-
-INVOICE DATE：2021.11.05，对应INVOICE DATE的内容。
-
-INVOICE NO.：0090341257，对应INVOICE NO.的内容。
-
-Item：10，对应Item列的值。
-
-PART NO.：FEP631，对应PART NO.列的值。
-
-PAYMENT TERMS：T/T 30 DAYS AFTER INVOICE，对应PAYMENT TERMS的内容。
-
-QTY：2.000，对应QTY列的值。
-
-SALES ORDER：0503305808，对应SALES ORDER的内容。
-
-SHIPPING MODE：Sea，对应SHIPPING MODE的内容。
-
-TITLE：可能是指Invoice的标题“INVOICE”，所以TITLE对应“INVOICE”这个标题。
-
-TOTAL PRICE：1,614.20，对应TOTAL PRICE列的值和合计值。
-
-UNIT PRICE：807.10，对应UNIT PRICE列的值。
-
-现在需要逐个确定每个类别的bbox。由于图像是扫描件，需要估计坐标。假设图像的宽度是整个页面，高度是垂直方向。先看各个部分的位置：
-
-1. COMPANY NAME（顶部）：文字“Tai Qilin Media Co., Ltd.”，位于图像上方，bbox大约是[510, 10, 750, 30]。
-
-2. BILL TO ADDRESS：标签“BILL TO ADDRESS”在左侧，内容是“USNS Lee FP0 AA 22816”。标签的bbox是[100, 245, 240, 265]，内容的bbox是[100, 265, 240, 285]。但作为BILL TO ADDRESS类别，应该包含内容，所以对象是内容部分，label是BILL TO ADDRESS，bbox是[100, 265, 240, 285]。
-
-3. SHIP TO ADDRESS：标签“SHIP TO ADDRESS”在左侧，内容是“Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492”。标签的bbox是[100, 315, 250, 335]，内容的bbox是[100, 335, 490, 355]。所以SHIP TO ADDRESS的label对应内容，bbox是[100, 335, 490, 355]。
-
-4. CONTACT INFORMATION：包含Frau Edmeier Tel:81671/6102-89，Susanne Herbest 0651-900355，wallacechristina@mora.com，84307 EGENFELDEN，Germany。这部分在SHIP TO ADDRESS下方，所以CONTACT INFORMATION的bbox是[260, 365, 490, 410]左右（需要看文字位置）。
-
-5. CUSTOMER PO：在右侧表格中，标签“CUSTOMER PO”对应内容“2204013868”。标签的bbox是[670, 305, 750, 320]，内容的bbox是[670, 320, 750, 335]。所以CUSTOMER PO的label对应内容，bbox是[670, 320, 750, 335]。
-
-6. Country of Origin：在表格中，列是“Country of Origin”，对应值“CN”。该列的单元格中，值的bbox是表格中对应行的Country of Origin列，即[670, 460, 700, 480]左右（因为表格中该行的Country of Origin是CN）。
-
-7. Currency：表格中“Currency”列，值是“EUR”。该列的单元格，bbox是[540, 460, 570, 480]。
-
-8. DESCRIPTION：表格中“DESCRIPTION”列，值是“ProcessMaster Integral FEP631”。该列的单元格，bbox是[420, 460, 590, 480]。
-
-9. EMAIL：wallacechristina@mora.com，位于CONTACT INFORMATION部分，bbox是[300, 385, 460, 400]。
-
-10. Frau Edmeier Tel：81671/6102-89，位于CONTACT INFORMATION，bbox是[260, 375, 390, 390]。
-
-11. HS CODE：9026100000，表格中“HS CODE”列的值，bbox是[720, 460, 790, 480]。
-
-12. INVOICE DATE：2021.11.05，右侧表格中“INVOICE DATE”对应的内容，bbox是[670, 275, 750, 290]。
-
-13. INVOICE NO.：0090341257，右侧表格中“INVOICE NO.”对应的内容，bbox是[670, 255, 750, 270]。
-
-14. Item：10，表格中“Item”列的值，bbox是[100, 480, 150, 500]（因为Item列第一行是10）。
-
-15. PART NO.：FEP631，表格中“PART NO.”列的值，bbox是[280, 480, 350, 500]。
-
-16. PAYMENT TERMS：T/T 30 DAYS AFTER INVOICE，位于左侧，标签“PAYMENT TERMS”对应内容，bbox是[100, 435, 250, 450]（内容是T/T 30 DAYS AFTER INVOICE）。
-
-17. QTY：2.000，表格中“QTY”列的值，bbox是[180, 480, 250, 500]。
-
-18. SALES ORDER：0503305808，右侧表格中“SALES ORDER”对应的内容，bbox是[670, 340, 750, 355]。
-
-19. SHIPPING MODE：Sea，表格中“SHIPPING MODE”对应的内容，bbox是[420, 435, 470, 450]（因为SHIPPING MODE在表格上方，值是Sea）。
-
-20. TITLE：INVOICE，大标题，位于图像上方，bbox是[460, 150, 540, 170]（因为INVOICE在中间上方）。
-
-21. TOTAL PRICE：1,614.20，表格中“TOTAL PRICE”列的值，以及下方的合计，bbox是[590, 480, 660, 500]（该行的TOTAL PRICE是1,614.20，另外下方还有合计1,614.20）。
-
-22. UNIT PRICE：807.10，表格中“UNIT PRICE”列的值，bbox是[540, 480, 600, 500]（该行的UNIT PRICE是807.10）。
-
-现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意有些类别可能有多个实例，比如COMPANY NAME出现多次（顶部、SHIP TO、Notify Party），但用户可能需要所有出现的。不过看用户给的类别，可能每个类别取主要的或所有。比如顶部的公司名称是公司抬头，SHIP TO里的公司名称是发货地址的公司，Notify Party里的也是。但可能需要检查。
-
-另外，Notify Party是Tai Qilin Media Co., Ltd.，Unit 0171 Box 8199 DPO AP 30671。这部分属于Notify Party，但用户给的类别中没有Notify Party，所以不需要处理。
-
-现在开始逐个列出：
-
-1. COMPANY NAME（顶部）：bbox [514, 8, 747, 28], label "COMPANY NAME"
-2. BILL TO ADDRESS：内容是USNS Lee FP0 AA 22816，bbox [101, 267, 237, 282], label "BILL TO ADDRESS"
-3. SHIP TO ADDRESS：内容是Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492，bbox [101, 337, 489, 355], label "SHIP TO ADDRESS"
-4. CONTACT INFORMATION：包含Frau Edmeier Tel等，bbox [260, 367, 490, 410], label "CONTACT INFORMATION"
-5. CUSTOMER PO：2204013868，bbox [671, 322, 750, 337], label "CUSTOMER PO"
-6. Country of Origin：CN，bbox [671, 462, 700, 482], label "Country of Origin"
-7. Currency：EUR，bbox [541, 462, 570, 482], label "Currency"
-8. DESCRIPTION：ProcessMaster Integral FEP631，bbox [421, 462, 590, 482], label "DESCRIPTION"
-9. EMAIL：wallacechristina@mora.com，bbox [301, 387, 460, 402], label "EMAIL"
-10. Frau Edmeier Tel：81671/6102-89，bbox [261, 377, 390, 392], label "Frau Edmeier Tel"
-11. HS CODE：9026100000，bbox [721, 462, 790, 482], label "HS CODE"
-12. INVOICE DATE：2021.11.05，bbox [671, 277, 750, 292], label "INVOICE DATE"
-13. INVOICE NO.：0090341257，bbox [671, 257, 750, 272], label "INVOICE NO."
-14. Item：10，bbox [101, 482, 150, 502], label "Item"
-15. PART NO.：FEP631，bbox [281, 482, 350, 502], label "PART NO."
-16. PAYMENT TERMS：T/T 30 DAYS AFTER INVOICE，bbox [101, 437, 250, 452], label "PAYMENT TERMS"
-17. QTY：2.000，bbox [181, 482, 250, 502], label "QTY"
-18. SALES ORDER：0503305808，bbox [671, 342, 750, 357], label "SALES ORDER"
-19. SHIPPING MODE：Sea，bbox [421, 437, 470, 452], label "SHIPPING MODE"
-20. TITLE：INVOICE，bbox [461, 152, 540, 167], label "TITLE"
-21. TOTAL PRICE：1,614.20（表格内），bbox [591, 482, 660, 502], label "TOTAL PRICE"
-22. UNIT PRICE：807.10，bbox [541, 482, 600, 502], label "UNIT PRICE"
-
-另外，Notify Party中的公司名称也是COMPANY NAME，所以还有Notify Party的公司名称：Tai Qilin Media Co., Ltd.，Unit 0171 Box 8199 DPO AP 30671。其bbox是[260, 447, 420, 462]，label "COMPANY NAME"。所以需要添加这个。
-
-现在检查是否有遗漏。比如，表格中的“INCO TERMS”可能没有被要求，用户给的类别中没有，所以不处理。
-
-现在整理所有可能的：
-
-- COMPANY NAME（顶部）：是
-- COMPANY NAME（SHIP TO）：是
-- COMPANY NAME（Notify Party）：是
-- BILL TO ADDRESS：是
-- CONTACT INFORMATION：是
-- CUSTOMER PO：是
-- Country of Origin：是
-- Currency：是
-- DESCRIPTION：是
-- EMAIL：是
-- Frau Edmeier Tel：是
-- HS CODE：是
-- INVOICE DATE：是
-- INVOICE NO.：是
-- Item：是
-- PART NO.：是
+- COMPANY NAME: [514, 7, 752, 30] （顶部公司名称）
+- ADDRESS: 可能有多个，比如SHIP TO ADDRESS的地址是“Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492”，所以bbox是[105, 200, 425, 220]（SHIP TO ADDRESS部分的地址）
+- BILL TO ADDRESS: [107, 140, 227, 155] （BILL TO ADDRESS下面的USNS Lee...）
+- CONTACT INFORMATION: compound of multiple lines, e.g., from "Frau Edmeier Tel:..." to "Germany", so bbox [275, 230, 525, 300]（大致范围）
+- CUSTOMER PO: [675, 305, 795, 325] （表格中CUSTOMER PO列的内容）
+- Country of Origin: [690, 460, 725, 480] （表格中对应行的CN）
+- Currency: [695, 460, 730, 480] （EUR，因为TOTAL PRICE是EUR，看Currency列）
+- DESCRIPTION: [430, 460, 600, 480] （ProcessMaster...）
+- EMAIL: [325, 250, 465, 265] （wallacechristina@mora.com）
+- Frau Edmeier Tel: [275, 240, 395, 255] （81671/6102-89）
+- HS CODE: [800, 460, 895, 480] （9026100000）
+- INVOICE DATE: [675, 315, 795, 330] （2021.11.05）
+- INVOICE NO.: [675, 325, 795, 340] （0090341257）
+- Item: [100, 460, 130, 480] （10）
+- PART NO.: [330, 460, 400, 480] （FEP631）
+- PAYMENT TERMS: [105, 340, 325, 355] （T/T 30 DAYS AFTER INVOICE）
+- QTY: [150, 460, 190, 480] （2.000）
+- SALES ORDER: [675, 345, 795, 360] （0503305808）
+- SHIPPING MODE: [340, 340, 410, 355] （Sea）
+- TITLE: 可能没有，或者可能是指INVOICE的标题？但INVOICE是大标题，可能TITLE是“INVOICE”？但用户给的类别里有TITLE，可能需要检查。不过可能这里没有明确的TITLE，或者可能我漏了。暂时假设没有，或者可能在其他位置。但根据用户提供的类别，必须包含，所以可能需要再检查。或者可能“INVOICE”是TITLE？但INVOICE是大标题，可能属于另一个类别。不过用户给的类别里有TITLE，可能需要看是否有。比如发票的标题是“INVOICE”，所以TITLE的bbox是[445, 120, 555, 140]（中间的INVOICE大标题）。
+- TOTAL PRICE: [695, 480, 795, 500] （1,614.20，表格中TOTAL PRICE列的值，以及下方的合计）
+- UNIT PRICE: [600, 460, 670, 480] （807.10）
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意的是，有些类别可能在图中没有对应内容，比如TITLE如果是指“INVOICE”作为标题，那么可以包含。现在逐一处理：
+
+1. COMPANY NAME: 标签是COMPANY NAME，内容是Tai Qilin Media Co., Ltd.，bbox是顶部的公司名称，比如[512, 6, 754, 32]
+2. ADDRESS: 这里可能需要确定，比如SHIP TO ADDRESS的地址是“Tai Qilin Media Co., Ltd. 190 Karen Well North Peter, AL 77492”，所以bbox是[104, 202, 426, 222]（SHIP TO ADDRESS部分的地址行）
+3. BILL TO ADDRESS: 内容是USNS Lee FP0 AA 22816，bbox是[106, 142, 226, 156]
+4. CONTACT INFORMATION: 包含Frau Edmeier的电话、邮箱、地址等，bbox是[273, 232, 526, 302]（从Frau Edmeier到Germany的部分）
+5. CUSTOMER PO: 内容是2204013868，bbox是[674, 306, 794, 326]
+6. Country of Origin: 内容是CN，bbox是[689, 462, 724, 482]
+7. Currency: 内容是EUR，bbox是[694, 462, 729, 482]（因为TOTAL PRICE是EUR，Currency列对应）
+8. DESCRIPTION: 内容是ProcessMaster Integral FEP631，bbox是[428, 462, 602, 482]
+9. EMAIL: 内容是wallacechristina@mora.com，bbox是[324, 252, 464, 266]
+10. Frau Edmeier Tel: 内容是81671/6102-89，bbox是[274, 242, 394, 256]
+11. HS CODE: 内容是9026100000，bbox是[800, 462, 894, 482]
+12. INVOICE DATE: 内容是2021.11.05，bbox是[674, 316, 794, 330]
+13. INVOICE NO.: 内容是0090341257，bbox是[674, 326, 794, 340]
+14. Item: 内容是10，bbox是[100, 462, 130, 482]
+15. PART NO.: 内容是FEP631，bbox是[330, 462, 400, 482]
+16. PAYMENT TERMS: 内容是T/T 30 DAYS AFTER INVOICE，bbox是[104, 342, 324, 356]
+17. QTY: 内容是2.000，bbox是[150, 462, 190, 482]
+18. SALES ORDER: 内容是0503305808，bbox是[674, 346, 794, 360]
+19. SHIPPING MODE: 内容是Sea，bbox是[340, 342, 410, 356]
+20. TITLE: 内容是“INVOICE”（大标题），bbox是[446, 122, 554, 142]
+21. TOTAL PRICE: 内容是1,614.20，bbox是[694, 482, 794, 502]（表格中TOTAL PRICE列的值，以及下方的合计行也是这个值）
+22. UNIT PRICE: 内容是807.10，bbox是[600, 462, 670, 482]
+
+现在需要检查是否有遗漏的类别。用户提供的类别列表是：
+
+ADDRESS, BILL TO ADDRESS, COMPANY NAME, CONTACT INFORMATION, CUSTOMER PO, Country of Origin, Currency, DESCRIPTION, EMAIL, Frau Edmeier Tel, HS CODE, INVOICE DATE, INVOICE NO., Item, PART NO., PAYMENT TERMS, QTY, SALES ORDER, SHIPPING MODE, TITLE, TOTAL PRICE, UNIT PRICE。
+
+共22个类别，上面列了22个，现在需要确保每个都覆盖。
+
+现在将这些整理成JSON数组。注意bbox的坐标是相对图片的，需要大致估计，因为没有实际图片的像素数据，但根据布局来。
+
+例如，INVOICE的标题“INVOICE”在图片中间偏上，所以TITLE的bbox是[445, 120, 555, 140]。
+
+现在编写每个条目：
+
+[
+  {"bbox_2d": [514, 7, 752, 30], "label": "COMPANY NAME"},
+  {"bbox_2d": [104, 202, 426, 222], "label": "ADDRESS"},
+  {"bbox_2d": [106, 142, 226, 156], "label": "BILL TO ADDRESS"},
+  {"bbox_2d": [273, 232, 526, 302], "label": "CONTACT INFORMATION"},
+  {"bbox_2d": [674, 306, 794, 326], "label": "CUSTOMER PO"},
+  {"bbox_2d": [689, 462, 724, 482], "label": "Country of Origin"},
+  {"bbox_2d": [694, 462, 729, 482], "label": "Currency"},
+  {"bbox_2d": [428, 462, 602, 482], "label": "DESCRIPTION"},
+  {"bbox_2d": [324, 252, 464, 266], "label": "EMAIL"},
+  {"bbox_2d": [274, 242, 394, 256], "label": "

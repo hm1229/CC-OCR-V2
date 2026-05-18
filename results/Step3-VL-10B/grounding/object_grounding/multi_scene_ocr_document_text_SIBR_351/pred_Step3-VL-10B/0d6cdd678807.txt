@@ -1,251 +1,227 @@
-用户现在需要检测图像中的各个指定对象，然后输出对应的bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个看每个类别在图中的位置。
 
-首先看A/R Number 应收号码：图中左侧有“A/R Number 应收号码 ： LT00009”，所以找到这个区域。
+首先看A/R Number 应收号码：图中A/R Number 应收号码 : LT00009，所以找到这个位置。
 
-Arrival 入住日期：右侧“Arrival 入住日期 ： 30-OCT-20 23:59:00”。
+Arrival 入住日期：Arrival 入住日期 : 30-OCT-20 23:59:00。
 
-Balance 余额：在总计下面“Balance 余额 0.00 CNY”。
+Balance 余额：Balance 余额 对应的是0.00 CNY，看下面的Balance 余额行。
 
-Cashier No. 出纳员：右侧“Cashier No. 出纳员 ： 7016”。
+Cashier No. 出纳员：Cashier No. 出纳员 : 7016。
 
-Charges 消费 CNY：表格中的Charges列，对应数值列。
+Charges 消费 CNY：看表格里的Charges CNY列，比如500.00等，总总计是1,000.00。
 
-Company Name 公司：左侧“Company Name 公司 ： Jingxin Network Hotel”。
+Company Name 公司：Company Name 公司 : Jingxin Network Hotel。
 
-Confirmation确认号：左侧“Confirmation 确认号 ： 497138”。
+Confirmation确认号：Confirmation 确认号 : 497138。
 
-Credits 付款 CNY：表格中的Credits列，数值列。
+Credits 付款 CNY：Credits 付款 CNY列，这里总总计是1,000.00，余额是0.00，所以Credits对应的是1,000.00？看表格里的Credits列，可能需要看总行。
 
-Date 日期：表格的Date列，比如10-30-20等。
+Date 日期：表格里的Date列，比如10-30-20等，还有右侧的Date 日期 : 02-NOV-20 10:02 AM。
 
-Departure 退房日期：右侧“Departure 退房日期 ： 01-NOV-20 12:58:00”。
+Departure 退房日期：Departure 退房日期 : 01-NOV-20 12:58:00。
 
-Description 项目：表格中的Description列，比如Room Charge等。
+Description 项目：表格里的Description列，比如Room Charge, City Ledger等。
 
-Fax 传真：底部“Fax 传真：(6101)26640518”。
+Fax 传真：底部Fax 传真 : (6101) 26640518。
 
-Folio No. 账单号码：右侧“Folio No. 账单号码 ： 703823”。
+Folio No. 账单号码：Folio No. 账单号码 : 703823。
 
-Page No.页码：右侧“Page No. 页码 ： 1 of 1”。
+Page No.页码：Page No. 页码 : 1 of 1。
 
-Room No.房号：右侧“Room No.房号 ： 5610”。
+Room No.房号：Room No.房号 : 5610。
 
-Tel 电话：底部“Tel 电话：(2246)88820661”。
+Tel 电话：底部Tel 电话 : (2246) 88820661。
 
-User ID：右侧“User ID ： FOUNAZ”。
+User ID：User ID : FOUNAZ。
 
-人名：左侧“Brett Vance”是人名。
+人名：Brett Vance，图中左上方的Brett Vance。
 
-地址：顶部“浙江省桂花县兴山石家庄街v座 727039”是地址。
+地址：浙江省桂花县兴山石家庄街v座 727039，图中上方的地址。
 
-标题：可能“INFORMATION INVOICE”是标题？
+标题：INFORMATION INVOICE，右侧的标题。
 
-邮政编码：底部“邮政编码：100028”。
+邮政编码：底部邮政编码 : 100028。
 
-现在需要逐个确定每个元素的bbox。需要看图像中的位置，每个标签对应的位置。
+现在需要逐个对应每个标签，找到它们的bbox。需要看每个元素在图中的位置，确定坐标。
 
-现在开始逐个处理：
+现在开始整理每个条目：
 
-1. A/R Number 应收号码：看左侧，文字是“A/R Number 应收号码 ： LT00009”，所以bbox范围是包含这个文本的区域。在图中左侧部分，对应坐标大概是x从100左右，y在确认号下面。需要看图像中的位置，假设图像的坐标系统，先看各个元素的位置。
-
-另外，可能需要更准确的定位。比如，先看图像中的各个字段：
-
-- 地址：浙江省桂花县兴山石家庄街v座 727039，位于左上方，所以bbox是包含这个文本的区域。
-
-- 人名：Brett Vance，在地址下面，所以是“Brett Vance”这个文本。
-
-- Confirmation确认号：在Brett Vance下面，是“Confirmation 确认号 ： 497138”。
-
-- A/R Number 应收号码：在Confirmation下面，“A/R Number 应收号码 ： LT00009”。
-
-- Group Code 团队代码：可能不需要，因为用户没列，但用户需要的是指定的类别，所以不处理。
-
-- Company Name 公司：在Group Code下面，“Company Name 公司 ： Jingxin Network Hotel”。
-
-- Membership No.：不需要，用户没列。
-
-右侧的Room No.房号：右侧“Room No.房号 ： 5610”。
-
-Arrival 入住日期：右侧“Arrival 入住日期 ： 30-OCT-20 23:59:00”。
-
-Departure 退房日期：右侧“Departure 退房日期 ： 01-NOV-20 12:58:00”。
-
-Page No.页码：右侧“Page No. 页码 ： 1 of 1”。
-
-Folio No. 账单号码：右侧“Folio No. 账单号码 ： 703823”。
-
-Date 日期：在表格的Date列，比如“10-30-20”等，对应的是表格的Date列标题。
-
-Cashier No. 出纳员：右侧“Cashier No. 出纳员 ： 7016”。
-
-User ID：右侧“User ID ： FOUNAZ”。
-
-Date 日期（另一个Date日期是右侧的Date 日期：02-NOV-20 10:02 AM，这个是结账日期？需要看用户给的类别中的Date 日期，可能有两个？不，用户给的类别是“Date 日期”，看表格中的Date列是“Date 日期”，而右侧还有一个“Date 日期 ： 02-NOV-20 10:02 AM”，所以需要区分。但用户要求的是检测所有匹配的类别，所以需要看每个出现的Date 日期。
-
-现在，先列出所有需要的类别，然后找每个的实例：
-
-现在开始逐个：
-
-1. A/R Number 应收号码：存在，对应文本“A/R Number 应收号码 ： LT00009”。bbox需要确定位置。在图中左侧，Brett Vance下面，Confirmation下面。假设图像的坐标，比如x1=105, y1=220, x2=250, y2=240左右（需要估计，因为没有实际坐标，但根据图像布局）。
-
-2. Arrival 入住日期：右侧，Arrival 入住日期 ： 30-OCT-20 23:59:00。bbox是右侧对应位置。
-
-3. Balance 余额：在Total总计下面，Balance 余额 0.00 CNY。位置在表格下方。
-
-4. Cashier No. 出纳员：右侧，Cashier No. 出纳员 ： 7016。
-
-5. Charges 消费 CNY：表格中的Charges列，比如500.00等，列标题是Charges 消费 CNY。
-
-6. Company Name 公司：左侧，Company Name 公司 ： Jingxin Network Hotel。
-
-7. Confirmation确认号：左侧，Confirmation 确认号 ： 497138。
-
-8. Credits 付款 CNY：表格中的Credits列，列标题是Credits 付款 CNY。
-
-9. Date 日期：表格中的Date列（比如10-30-20等）和右侧的Date 日期（02-NOV-20 10:02 AM）。需要看用户给的类别是“Date 日期”，所以两个都算？但看用户给的类别中的“Date 日期”是表格中的Date列，还是右侧的？看用户提供的类别列表中的“Date 日期”应该是指表格中的Date列，因为右侧的“Date 日期”是结账日期，可能也属于。但需要看图像中的内容。表格的表头有“Date 日期”，所以表格中的Date列是“Date 日期”；右侧还有一个“Date 日期 ： 02-NOV-20 10:02 AM”，所以这两个都是Date 日期吗？需要看用户的要求，用户给的类别是“Date 日期”，所以只要出现“Date 日期”标签的都算。所以右侧的“Date 日期”也是一个实例，表格中的“Date 日期”是另一个实例？不，表格的表头是“Date 日期”，所以表格中的Date列的标题是“Date 日期”，而右侧的“Date 日期”是另一个字段。所以需要都检测。
-
-不过可能用户希望的是每个类别出现的所有实例，但需要看图像中的内容。现在先处理每个明确的：
-
-- 表格中的Date列：表头是“Date 日期”，所以这个是Date 日期。
-
-- 右侧的“Date 日期 ： 02-NOV-20 10:02 AM”也是Date 日期。
-
-所以需要两个？但可能用户给的类别中的“Date 日期”是指表格中的，或者右侧的？需要看图像中的内容。现在先继续。
-
-10. Departure 退房日期：右侧，Departure 退房日期 ： 01-NOV-20 12:58:00。
-
-11. Description 项目：表格中的Description列，比如Room Charge等，表头是“Description 项目”。
-
-12. Fax 传真：底部，Fax 传真：(6101)26640518。
-
-13. Folio No. 账单号码：右侧，Folio No. 账单号码 ： 703823。
-
-14. Page No.页码：右侧，Page No. 页码 ： 1 of 1。
-
-15. Room No.房号：右侧，Room No.房号 ： 5610。
-
-16. Tel 电话：底部，Tel 电话：(2246)88820661。
-
-17. User ID：右侧，User ID ： FOUNAZ。
-
-18. 人名：Brett Vance，在地址下面。
-
-19. 地址：浙江省桂花县兴山石家庄街v座 727039，左上方。
-
-20. 标题：INFORMATION INVOICE，在右侧下方，是标题。
-
-21. 邮政编码：底部，邮政编码：100028。
-
-现在需要为每个类别生成对应的bbox和label。由于是图像，需要估计每个元素的位置。例如：
-
-- 地址：位于图像左上方，文字是“浙江省桂花县兴山石家庄街v座 727039”，所以bbox大概是[114, 82, 395, 98]（假设图像的坐标，x从左到右，y从上到下）。
-
-- 人名：Brett Vance，在地址下面，所以bbox是[110, 140, 260, 160]。
-
-- Confirmation确认号：在Brett Vance下面，文字“Confirmation 确认号 ： 497138”，bbox是[110, 170, 320, 190]。
-
-- A/R Number 应收号码：在Confirmation下面，“A/R Number 应收号码 ： LT00009”，bbox是[110, 195, 320, 215]。
-
-- Group Code 团队代码：不需要，因为用户没列。
-
-- Company Name 公司：在Group Code下面，“Company Name 公司 ： Jingxin Network Hotel”，bbox是[110, 220, 420, 240]。
-
-- Membership No.：不需要。
-
-右侧的Room No.房号：右侧，“Room No.房号 ： 5610”，bbox是[660, 100, 780, 120]。
-
-Arrival 入住日期：右侧，“Arrival 入住日期 ： 30-OCT-20 23:59:00”，bbox是[660, 125, 880, 145]。
-
-Departure 退房日期：右侧，“Departure 退房日期 ： 01-NOV-20 12:58:00”，bbox是[660, 150, 880, 170]。
-
-Page No.页码：右侧，“Page No. 页码 ： 1 of 1”，bbox是[660, 175, 780, 195]。
-
-Folio No. 账单号码：右侧，“Folio No. 账单号码 ： 703823”，bbox是[660, 195, 780, 215]。
-
-Date 日期（右侧的）：右侧，“Date 日期 ： 02-NOV-20 10:02 AM”，bbox是[660, 220, 880, 240]。
-
-Cashier No. 出纳员：右侧，“Cashier No. 出纳员 ： 7016”，bbox是[660, 245, 780, 265]。
-
-User ID：右侧，“User ID ： FOUNAZ”，bbox是[660, 265, 780, 285]。
-
-表格中的Date 日期：表格的表头“Date 日期”，在表格的第一行，对应日期列，比如“10-30-20”所在的列，表头是“Date 日期”，bbox是[100, 320, 250, 340]（假设表格的表头行）。
-
-Charges 消费 CNY：表格中的Charges列，表头是“Charges 消费 CNY”，对应数值列，bbox是[450, 320, 600, 340]。
-
-Credits 付款 CNY：表格中的Credits列，表头是“Credits 付款 CNY”，对应数值列，bbox是[650, 320, 750, 340]。
-
-Description 项目：表格中的Description列，表头是“Description 项目”，对应项目列，bbox是[250, 320, 400, 340]。
-
-Total 总计：表格中的Total 总计，可能不是用户需要的类别，用户没列，所以不处理。
-
-Balance 余额：在Total下面，“Balance 余额 0.00 CNY”，bbox是[450, 360, 600, 380]（假设位置）。
-
-Fax 传真：底部，“Fax 传真：(6101)26640518”，bbox是[450, 960, 650, 980]。
-
-Tel 电话：底部，“Tel 电话：(2246)88820661”，bbox是[450, 975, 650, 990]。
-
-邮政编码：底部，“邮政编码：100028”，bbox是[650, 975, 750, 990]。
-
-标题：INFORMATION INVOICE，在右侧，表格下方，bbox是[580, 380, 750, 395]（假设）。
-
-现在需要将所有这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-需要注意的是，有些类别可能在图像中只出现一次，比如A/R Number 应收号码只出现一次，Arrival 入住日期一次，等等。
-
-现在开始列出所有需要的类别及其对应项：
-
-1. A/R Number 应收号码：存在，对应文本。
-2. Arrival 入住日期：存在。
-3. Balance 余额：存在。
-4. Cashier No. 出纳员：存在。
-5. Charges 消费 CNY：存在（列标题和数值）。
-6. Company Name 公司：存在。
-7. Confirmation确认号：存在。
-8. Credits 付款 CNY：存在（列标题和数值）。
-9. Date 日期：存在（表格中的Date列和右侧的Date日期，共两个？但需要看用户给的类别是“Date 日期”，所以两个都算？但可能用户希望的是每个类别出现的所有实例，所以需要检查。不过可能表格中的Date列是“Date 日期”，右侧的“Date 日期”也是，所以两个实例。但需要看图像中的内容，右侧的“Date 日期”是结账日期，表格中的Date是入住和离店的日期。所以两个都是Date 日期。
-10. Departure 退房日期：存在。
-11. Description 项目：存在（列标题和项目内容）。
-12. Fax 传真：存在。
-13. Folio No. 账单号码：存在。
-14. Page No.页码：存在。
-15. Room No.房号：存在。
-16. Tel 电话：存在。
-17. User ID：存在。
-18. 人名：存在（Brett Vance）。
-19. 地址：存在。
-20. 标题：存在（INFORMATION INVOICE）。
-21. 邮政编码：存在。
-
-现在需要为每个类别生成一个条目，即使有些类别在图像中出现多次，比如Date 日期出现两次，那么需要两个条目？但用户要求“Detect all objects matching these categories”，所以每个匹配的实例都要检测。但可能有些类别在图像中只出现一次，比如A/R Number 应收号码只出现一次，所以一个条目。
-
-现在开始逐个处理，假设每个类别在图像中出现一次（除了Date 日期可能两次，但需要看图像）：
-
-现在看图像中的Date 日期：
-
-- 表格中的表头是“Date 日期”，对应列，比如第一行是10-30-20，所以这个是Date 日期（表格中的）。
-
-- 右侧有一个“Date 日期 ： 02-NOV-20 10:02 AM”，这也是Date 日期。
-
-所以Date 日期有两个实例，需要两个条目。
-
-现在开始构建JSON：
-
-首先，地址：
-
-{"bbox_2d": [112, 80, 396, 98], "label": "地址"}
-
-人名（Brett Vance）：
-
-{"bbox_2d": [110, 142, 262, 162], "label": "人名"}
-
-Confirmation确认号：
-
-{"bbox_2d": [110, 172, 322, 192], "label": "Confirmation确认号"}
-
-A/R Number 应收号码：
-
-{"bbox_2d": [110, 197, 322, 217], "label": "A/R Number 应收号码"}
-
-Company Name 公司：
-
-{"bbox_2d": [110, 222, 422, 242
+1. A/R Number 应收号码：对应图中“A/R Number 应收号码 : LT00009”，位置在左侧信息区，找到这个文本的区域。
+2. Arrival 入住日期：右侧“Arrival 入住日期 : 30-OCT-20 23:59:00”
+3. Balance 余额：“Balance 余额 0.00 CNY”在总总计下面。
+4. Cashier No. 出纳员：“Cashier No. 出纳员 : 7016”
+5. Charges 消费 CNY：表格中Charges CNY列的数值，比如总总计是1,000.00，或者看每行的Charges，比如500.00等，但总总计的Charges是1,000.00。
+6. Company Name 公司：“Company Name 公司 : Jingxin Network Hotel”
+7. Confirmation确认号：“Confirmation 确认号 : 497138”
+8. Credits 付款 CNY：表格中Credits CNY列的总总计是1,000.00（因为总总计的Credits是1,000.00，Balance是0.00）
+9. Date 日期：有两个Date，一个是表格里的Date列（如10-30-20等），另一个是右侧“Date 日期 : 02-NOV-20 10:02 AM”。需要看用户需要的是哪个？可能是指右侧的Date日期，因为表格里的Date是项目日期，而右侧的Date是出纳日期。需要确认。看问题中的“Date 日期”可能指的是右侧的Date 日期字段，即“Date 日期 : 02-NOV-20 10:02 AM”。
+10. Departure 退房日期：“Departure 退房日期 : 01-NOV-20 12:58:00”
+11. Description 项目：表格中的Description列，如Room Charge等。
+12. Fax 传真：底部“Fax 传真 : (6101) 26640518”
+13. Folio No. 账单号码：“Folio No. 账单号码 : 703823”
+14. Page No.页码：“Page No. 页码 : 1 of 1”
+15. Room No.房号：“Room No.房号 : 5610”
+16. Tel 电话：底部“Tel 电话 : (2246) 88820661”
+17. User ID：“User ID : FOUNAZ”
+18. 人名：“Brett Vance”在左上方。
+19. 地址：“浙江省桂花县兴山石家庄街v座 727039”在上方。
+20. 标题：“INFORMATION INVOICE”在右侧信息区。
+21. 邮政编码：“邮政编码 : 100028”在底部。
+
+现在需要为每个标签确定bbox。因为是图片中的位置，需要估计每个文本的位置。例如：
+
+- 人名（Brett Vance）：在左侧，Brett Vance的位置，bbox大概是[109, 138, 250, 158]左右（假设图中的坐标，需要看实际布局）。
+- 地址：浙江省桂花县兴山石家庄街v座 727039，位于图的上方偏左，bbox是[118, 72, 395, 92]。
+- 标题（INFORMATION INVOICE）：在右侧，Folio No.下面，bbox是[600, 238, 767, 256]左右。
+- 邮政编码：在底部，Tel和Fax下面，邮政编码 : 100028，bbox是[690, 975, 835, 992]。
+- Tel 电话：底部Tel 电话 : (2246) 88820661，bbox是[455, 972, 625, 988]。
+- Fax 传真：底部Fax 传真 : (6101) 26640518，bbox是[635, 972, 805, 988]。
+- User ID：User ID : FOUNAZ，在右侧，Cashier No.下面，bbox是[595, 262, 695, 278]。
+- Room No.房号：Room No.房号 : 5610，在右侧上方，bbox是[595, 142, 665, 158]。
+- Departure 退房日期：Departure 退房日期 : 01-NOV-20 12:58:00，右侧，Arrival下面，bbox是[595, 162, 765, 178]。
+- Arrival 入住日期：Arrival 入住日期 : 30-OCT-20 23:59:00，右侧，Room No.下面，bbox是[595, 122, 765, 138]。
+- Page No.页码：Page No. 页码 : 1 of 1，右侧，Departure下面，bbox是[595, 182, 665, 198]。
+- Folio No. 账单号码：Folio No. 账单号码 : 703823，右侧，Page No.下面，bbox是[595, 198, 695, 214]。
+- Date 日期（右侧的）：Date 日期 : 02-NOV-20 10:02 AM，Folio下面，bbox是[595, 222, 765, 238]。
+- Confirmation确认号：Confirmation 确认号 : 497138，左侧，Brett Vance下面，bbox是[118, 172, 250, 188]。
+- A/R Number 应收号码：A/R Number 应收号码 : LT00009，左侧，Confirmation下面，bbox是[118, 190, 250, 206]。
+- Group Code 团队代码：不过用户没要求这个，所以不管。Company Name 公司：Company Name 公司 : Jingxin Network Hotel，左侧，A/R下面，bbox是[118, 210, 395, 226]。
+- Membership No.：用户没要求，不管。Description 项目：表格中的Description列，比如第一行是Room Charge，日期10-30-20，所以Description的bbox是表格中的第二列，比如“Room Charge”在10-30-20行，bbox是[150, 300, 350, 320]（假设）。
+- Charges 消费 CNY：表格中Charges CNY列，比如500.00在10-30-20行，总总计是1,000.00，所以Charges的总总计是1,000.00，bbox是[500, 330, 650, 350]（总总计行的Charges）。
+- Credits 付款 CNY：表格中Credits CNY列，总总计是1,000.00，所以Credits的总总计是1,000.00，bbox是[660, 330, 750, 350]（总总计行的Credits）。
+- Balance 余额：Balance 余额 0.00 CNY，在总总计下面，bbox是[500, 360, 650, 380]。
+- 现在需要把所有21个标签都列出来，每个对应一个条目。
+
+现在开始构建JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意每个标签的准确性和bbox的估计。因为是图片，可能需要大致定位。
+
+现在逐个处理：
+
+1. A/R Number 应收号码：
+   - 文本：A/R Number 应收号码 : LT00009
+   - 位置：左侧，Brett Vance下方，Confirmation下方。
+   - bbox估计：[115, 200, 305, 220]（假设x1,y1是左上，x2,y2是右下）
+   - label: A/R Number 应收号码
+
+2. Arrival 入住日期：
+   - 文本：Arrival 入住日期 : 30-OCT-20 23:59:00
+   - 位置：右侧，Room No.下方
+   - bbox：[590, 120, 770, 140]
+   - label: Arrival 入住日期
+
+3. Balance 余额：
+   - 文本：Balance 余额 0.00 CNY
+   - 位置：总总计下方
+   - bbox：[500, 360, 650, 380]
+   - label: Balance 余额
+
+4. Cashier No. 出纳员：
+   - 文本：Cashier No. 出纳员 : 7016
+   - 位置：右侧，User ID上方
+   - bbox：[590, 240, 690, 260]
+   - label: Cashier No. 出纳员
+
+5. Charges 消费 CNY：
+   - 文本：总总计的Charges是1,000.00
+   - 位置：总总计行的Charges列
+   - bbox：[500, 330, 650, 350]
+   - label: Charges 消费 CNY
+
+6. Company Name 公司：
+   - 文本：Company Name 公司 : Jingxin Network Hotel
+   - 位置：左侧，A/R Number下方
+   - bbox：[115, 215, 400, 235]
+   - label: Company Name 公司
+
+7. Confirmation确认号：
+   - 文本：Confirmation 确认号 : 497138
+   - 位置：左侧，Brett Vance下方
+   - bbox：[115, 170, 250, 190]
+   - label: Confirmation确认号
+
+8. Credits 付款 CNY：
+   - 文本：总总计的Credits是1,000.00
+   - 位置：总总计行的Credits列
+   - bbox：[660, 330, 750, 350]
+   - label: Credits 付款 CNY
+
+9. Date 日期（右侧的Date 日期）：
+   - 文本：Date 日期 : 02-NOV-20 10:02 AM
+   - 位置：右侧，Folio No.下方
+   - bbox：[590, 220, 770, 240]
+   - label: Date 日期
+
+10. Departure 退房日期：
+    - 文本：Departure 退房日期 : 01-NOV-20 12:58:00
+    - 位置：右侧，Arrival下方
+    - bbox：[590, 160, 770, 180]
+    - label: Departure 退房日期
+
+11. Description 项目：
+    - 文本：例如Room Charge（10-30-20行）
+    - 位置：表格的Description列
+    - bbox：[150, 300, 350, 320]（取其中一个项目，比如第一行）
+    - label: Description 项目
+
+12. Fax 传真：
+    - 文本：Fax 传真 : (6101) 26640518
+    - 位置：底部，Tel下方
+    - bbox：[630, 970, 800, 990]
+    - label: Fax 传真
+
+13. Folio No. 账单号码：
+    - 文本：Folio No. 账单号码 : 703823
+    - 位置：右侧，Page No.下方
+    - bbox：[590, 195, 690, 215]
+    - label: Folio No. 账单号码
+
+14. Page No.页码：
+    - 文本：Page No. 页码 : 1 of 1
+    - 位置：右侧，Departure下方
+    - bbox：[590, 180, 660, 200]
+    - label: Page No.页码
+
+15. Room No.房号：
+    - 文本：Room No.房号 : 5610
+    - 位置：右侧，最上方
+    - bbox：[590, 140, 660, 160]
+    - label: Room No.房号
+
+16. Tel 电话：
+    - 文本：Tel 电话 : (2246) 88820661
+    - 位置：底部，左侧
+    - bbox：[450, 970, 620, 990]
+    - label: Tel 电话
+
+17. User ID：
+    - 文本：User ID : FOUNAZ
+    - 位置：右侧，Cashier No.下方
+    - bbox：[590, 260, 690, 280]
+    - label: User ID
+
+18. 人名：
+    - 文本：Brett Vance
+    - 位置：左侧，上方
+    - bbox：[110, 135, 250, 155]
+    - label: 人名
+
+19. 地址：
+    - 文本：浙江省桂花县兴山石家庄街v座 727039
+    - 位置：上方，左侧
+    - bbox：[115, 70, 395, 90]
+    - label: 地址
+
+20. 标题：
+    - 文本：INFORMATION INVOICE
+    - 位置：右侧，中间
+    - bbox：[600, 235, 770, 255]
+    - label: 标题
+
+21. 邮政编码：
+    - 文本：邮政编码 : 100028
+    - 位置：底部，右侧
+    - bbox：[690, 970, 835, 990]
+    - label: 邮政编码
+
+现在需要检查是否所有21个类别都覆盖了。用户列出的类别有：A/R Number 应收号码, Arrival 入住日期, Balance 余额, Cashier

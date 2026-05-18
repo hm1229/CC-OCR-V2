@@ -1,1 +1,173 @@
-[{"bbox_2d": [385, 10, 615, 35], "label": "Title"}, {"bbox_2d": [35, 85, 300, 105], "label": "Supplier"}, {"bbox_2d": [635, 85, 890, 105], "label": "Address"}, {"bbox_2d": [635, 105, 890, 125], "label": "Contract No."}, {"bbox_2d": [635, 125, 890, 145], "label": "Date"}, {"bbox_2d": [130, 222, 295, 292], "label": "Name"}, {"bbox_2d": [305, 222, 445, 292], "label": "Manufactory Code"}, {"bbox_2d": [455, 222, 595, 292], "label": "Commodity"}, {"bbox_2d": [595, 222, 695, 292], "label": "Quantity"}, {"bbox_2d": [695, 222, 795, 292], "label": "Unit Price (USD)"}, {"bbox_2d": [795, 222, 905, 292], "label": "Total price (USD)"}, {"bbox_2d": [35,
+用户现在需要从销售合同中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
+
+首先看Title，标题是Sales Contract，对应图上方的标题。然后Supplier是诺依曼软件传媒有限公司，Buyer是空的。Address是SHANGHAI。Contract No.是TTL2021082。Date是01th JUL. 2021。Destination ports是USS Ray FPO AA 72142。Inspection standards是According to standard TTL-QB-01-07。Manufactory Code是9126394。Name是TOTOLE Liquid Concentrated Chicken Bouillon。Price term是FOB SHANGHAI。Quantity是472。Remark是下面的四条备注。Shipment time是As soon as possible after the packaging are confirmed。Terms of payment是T/T within 10 days after receipt of the copies of the entire shipping documents as confirmed separately。Total price (USD)是11,611.20。Unit Price (USD)是24.60。
+
+现在需要确定每个元素的bbox。先看图片中的各个部分：
+
+Title: "Sales Contract" 在顶部，所以bbox大概是[39, 1, 961, 50]左右？看原图的标题位置，Sales Contract在上方，所以标题的bbox是包含这个文字的区域。
+
+Supplier: 左边Supplier: 后面的内容是诺依曼软件传媒有限公司，所以Supplier的label对应的内容是这个公司名，bbox是Supplier: 后面的文本区域，即[39, 57, 347, 77]左右（因为Supplier: 是标签，内容是诺依曼...）。
+
+Address: 右边Address: 后面是SHANGHAI，所以Address的label对应的内容是SHANGHAI，bbox是Address: 后面的区域，比如[677, 57, 892, 75]。
+
+Contract No.: Contract No.: 后面是TTL2021082，所以Contract No.的label对应的内容是TTL2021082，bbox是Contract No.: 后面的区域，比如[677, 77, 922, 95]。
+
+Date: Date: 后面是01th JUL. 2021，所以Date的label对应的内容是01th JUL. 2021，bbox是Date: 后面的区域，比如[677, 95, 922, 113]。
+
+Destination ports: 文本是USS Ray FPO AA 72142，对应Destination port: 后面的内容，所以label是Destination ports，内容是这个港口，bbox是Destination port: 后面的区域，比如[505, 325, 725, 343]（看原图中的Destination port: USS Ray FPO AA 72142）。
+
+Inspection standards: According to standard TTL-QB-01-07，对应Inspection standard: 后面的内容，所以label是Inspection standards，内容是这个标准，bbox是Inspection standard: 后面的区域，比如[505, 300, 725, 318]（因为Inspection standard: 后面是According to...）。
+
+Manufactory Code: 表格中的Manufactory Code列，对应产品行的9126394，所以Manufactory Code的label对应的内容是9126394，bbox是表格中该单元格，比如[205, 230, 337, 295]（看表格结构，Name是TOTOLE...，Manufactory Code是9126394，所以该单元格的bbox）。
+
+Name: 表格中的Name列，内容是TOTOLE Liquid Concentrated Chicken Bouillon，所以Name的label对应的内容是这个名称，bbox是表格中Name单元格，比如[105, 230, 205, 295]。
+
+Price term: FOB SHANGHAI，对应Price term: 后面的内容，所以label是Price term，内容是FOB SHANGHAI，bbox是Price term: 后面的区域，比如[505, 360, 625, 378]（看原图中的Price term: FOB SHANGHAI）。
+
+Quantity: 表格中的Quantity列，内容是472，所以Quantity的label对应的内容是472，bbox是表格中Quantity单元格，比如[425, 230, 495, 295]。
+
+Remark: 备注部分的四条内容，所以label是Remark，内容是这四条，bbox是Remark: 后面的区域，比如[39, 405, 495, 525]（看原图中Remark: 后面的四条说明）。
+
+Shipment time: As soon as possible after the packaging are confirmed，对应Shipment time: 后面的内容，所以label是Shipment time，内容是这个时间，bbox是Shipment time: 后面的区域，比如[39, 295, 495, 313]（看原图中Shipment time: 后面的文本）。
+
+Terms of payment: T/T within 10 days after receipt of the copies of the entire shipping documents as confirmed separately，对应Terms of payment: 后面的内容，所以label是Terms of payment，内容是这个支付条款，bbox是Terms of payment: 后面的区域，比如[39, 335, 495, 353]（看原图中Terms of payment: 后面的文本）。
+
+Title: Sales Contract，标题，所以label是Title，内容是Sales Contract，bbox是顶部的标题，比如[39, 1, 961, 50]（因为标题在最上方）。
+
+Total price (USD): 表格中的Total price (USD)列的总和，是11,611.20，所以Total price (USD)的label对应的内容是11,611.20，bbox是表格中Total price (USD)的总行，比如[635, 295, 755, 313]（看表格底部Total amount对应的Total price (USD)是11,611.20）。
+
+Unit Price (USD): 表格中的Unit Pirce (USD)列，内容是24.60，所以Unit Price (USD)的label对应的内容是24.60，bbox是表格中该单元格，比如[555, 230, 635, 295]（看表格中Unit Pirce (USD)列的数值24.60）。
+
+现在需要逐个确认每个类别，然后生成对应的JSON数组。需要注意每个元素的label和对应的bbox。
+
+现在开始整理：
+
+1. Title: "Sales Contract" → bbox是标题区域，比如[39, 1, 961, 50]（因为标题在最上方，居中？看原图的Sales Contract在上方，所以bbox范围是包含这个文字的区域）。
+
+2. Supplier: 诺依曼软件传媒有限公司 → Supplier: 后面的内容，bbox是[39, 57, 347, 77]（因为Supplier: 是标签，内容是公司名，所以这个区域）。
+
+3. Address: SHANGHAI → Address: 后面的内容，bbox是[677, 57, 892, 75]（Address: 在右侧，对应SHANGHAI）。
+
+4. Contract No.: TTL2021082 → Contract No.: 后面的内容，bbox是[677, 77, 922, 95]（Contract No.: 对应TTL2021082）。
+
+5. Date: 01th JUL. 2021 → Date: 后面的内容，bbox是[677, 95, 922, 113]（Date: 对应日期）。
+
+6. Destination ports: USS Ray FPO AA 72142 → Destination port: 后面的内容，bbox是[505, 325, 725, 343]（Destination port: 对应这个港口）。
+
+7. Inspection standards: According to standard TTL-QB-01-07 → Inspection standard: 后面的内容，bbox是[505, 300, 725, 318]（Inspection standard: 对应这个标准）。
+
+8. Manufactory Code: 9126394 → 表格中Manufactory Code列的单元格，bbox是[205, 230, 337, 295]（该单元格内容是9126394）。
+
+9. Name: TOTOLE Liquid Concentrated Chicken Bouillon → 表格中Name列的单元格，bbox是[105, 230, 205, 295]（该单元格内容是产品名称）。
+
+10. Price term: FOB SHANGHAI → Price term: 后面的内容，bbox是[505, 360, 625, 378]（Price term: 对应FOB SHANGHAI）。
+
+11. Quantity: 472 → 表格中Quantity列的单元格，bbox是[425, 230, 495, 295]（该单元格内容是472）。
+
+12. Remark: 四条备注内容 → Remark: 后面的区域，bbox是[39, 405, 495, 525]（Remark: 对应四条说明）。
+
+13. Shipment time: As soon as possible after the packaging are confirmed → Shipment time: 后面的内容，bbox是[39, 295, 495, 313]（Shipment time: 对应这个时间）。
+
+14. Terms of payment: T/T within 10 days after receipt of the copies of the entire shipping documents as confirmed separately → Terms of payment: 后面的内容，bbox是[39, 335, 495, 353]（Terms of payment: 对应这个支付条款）。
+
+15. Total price (USD): 11,611.20 → 表格中Total price (USD)的总行，bbox是[635, 295, 755, 313]（Total price (USD)列的总和是11,611.20）。
+
+16. Unit Price (USD): 24.60 → 表格中Unit Pirce (USD)列的单元格，bbox是[555, 230, 635, 295]（该单元格内容是24.60）。
+
+现在需要检查每个类别是否都覆盖了，用户要求的类别列表是：Address, Commodity, Contract No., Date, Destination ports, Inspection standards, Manufactory Code, Name, Price term, Quantity, Remark, Shipment time, Supplier, Terms of payment, Title, Total price (USD), Unit Price (USD)。共17个类别。
+
+现在检查Commodity：表格中的Commodity列是1kg*6bags，所以Commodity的label对应的内容是1kg*6bags，bbox是表格中Commodity列的单元格，比如[337, 230, 425, 295]（该单元格内容是1kg*6bags）。
+
+哦，刚才漏了Commodity！用户要求的类别中有Commodity，所以需要添加。
+
+现在补充Commodity：
+
+17. Commodity: 1kg*6bags → 表格中Commodity列的单元格，bbox是[337, 230, 425, 295]（该单元格内容是1kg*6bags）。
+
+现在确认所有17个类别：
+
+Address ✔️
+
+Commodity ✔️
+
+Contract No. ✔️
+
+Date ✔️
+
+Destination ports ✔️
+
+Inspection standards ✔️
+
+Manufactory Code ✔️
+
+Name ✔️
+
+Price term ✔️
+
+Quantity ✔️
+
+Remark ✔️
+
+Shipment time ✔️
+
+Supplier ✔️
+
+Terms of payment ✔️
+
+Title ✔️
+
+Total price (USD) ✔️
+
+Unit Price (USD) ✔️
+
+现在逐个处理每个类别，生成对应的JSON对象。
+
+现在开始构建每个条目：
+
+1. Title: "Sales Contract" → bbox是标题区域，比如[39, 1, 961, 50]（因为标题在最上方，文字是Sales Contract）。
+
+2. Supplier: 诺依曼软件传媒有限公司 → Supplier: 后面的内容，bbox是[39, 57, 347, 77]（Supplier: 标签右侧的内容）。
+
+3. Address: SHANGHAI → Address: 后面的内容，bbox是[677, 57, 892, 75]（Address: 标签右侧的内容）。
+
+4. Contract No.: TTL2021082 → Contract No.: 后面的内容，bbox是[677, 77, 922, 95]（Contract No.: 标签右侧的内容）。
+
+5. Date: 01th JUL. 2021 → Date: 后面的内容，bbox是[677, 95, 922, 113]（Date: 标签右侧的内容）。
+
+6. Destination ports: USS Ray FPO AA 72142 → Destination port: 后面的内容，bbox是[505, 325, 725, 343]（Destination port: 标签右侧的内容）。
+
+7. Inspection standards: According to standard TTL-QB-01-07 → Inspection standard: 后面的内容，bbox是[505, 300, 725, 318]（Inspection standard: 标签右侧的内容）。
+
+8. Manufactory Code: 9126394 → 表格中Manufactory Code列的单元格，bbox是[205, 230, 337, 295]（该单元格内容）。
+
+9. Name: TOTOLE Liquid Concentrated Chicken Bouillon → 表格中Name列的单元格，bbox是[105, 230, 205, 295]（该单元格内容）。
+
+10. Price term: FOB SHANGHAI → Price term: 后面的内容，bbox是[505, 360, 625, 378]（Price term: 标签右侧的内容）。
+
+11. Quantity: 472 → 表格中Quantity列的单元格，bbox是[425, 230, 495, 295]（该单元格内容）。
+
+12. Remark: 四条备注内容 → Remark: 后面的区域，bbox是[39, 405, 495, 525]（Remark: 标签右侧的内容）。
+
+13. Shipment time: As soon as possible after the packaging are confirmed → Shipment time: 后面的内容，bbox是[39, 295, 495, 313]（Shipment time: 标签右侧的内容）。
+
+14. Terms of payment: T/T within 10 days after receipt of the copies of the entire shipping documents as confirmed separately → Terms of payment: 后面的内容，bbox是[39, 335, 495, 353]（Terms of payment: 标签右侧的内容）。
+
+15. Total price (USD): 11,611.20 → 表格中Total price (USD)的总行，bbox是[635, 295, 755, 313]（Total price (USD)列的总和）。
+
+16. Unit Price (USD): 24.60 → 表格中Unit Pirce (USD)列的单元格，bbox是[555, 230, 635, 295]（该单元格内容）。
+
+17. Commodity: 1kg*6bags → 表格中Commodity列的单元格，bbox是[337, 230, 425, 295]（该单元格内容）。
+
+现在需要确保每个bbox的坐标是相对的，比如在图像中的位置。因为原图是销售合同，需要根据图像中的布局来确定每个元素的位置。
+
+另外，注意有些标签是“Destination port”（单数）还是“Destination ports”（复数），用户要求的是“Destination ports”，所以对应的是“Destination port:”后面的内容，因为原文是“Destination port: USS Ray FPO AA 72142”，所以label是Destination ports，内容是这个港口。
+
+现在将所有条目整理成JSON数组：
+
+[
+  {"bbox_2d": [39, 1, 961, 50], "label": "Title"},
+  {"bbox_2d": [39, 57, 347, 77], "label": "Supplier"},
+  {"bbox_2d": [677, 57, 892, 75], "label": "Address"},
+  {"bbox_2d": [677, 77, 922, 95], "label": "Contract No."},
+  {"bbox_2d": [677, 95, 922, 113], "label": "Date"},
+  {"bbox_2d": [505, 

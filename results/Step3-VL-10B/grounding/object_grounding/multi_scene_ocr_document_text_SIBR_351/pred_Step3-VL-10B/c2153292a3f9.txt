@@ -1,227 +1,205 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值，先逐个看每个类别。首先得先识别每个字段在图中的位置。
 
-首先看A/C No：在Bank Infor of Beneficiary部分，A/C No: 454662135461，所以找到这个位置。
+首先看A/C No：在Bank Infor of Beneficiary部分，A/C No: 454662135461，所以找这个位置。
 
-Actual Buyer：在Consignee下面，Actual Buyer: **Only If Not Consignee**，所以标注。
+Actual Buyer：图中有“Actual Buyer: **Only If Not Consignee**”，所以提取这个。
 
-Address：多个地址，比如Exporter的地址，Consignee的地址，Notify的地址，Bank Add等。需要看每个Address对应的。比如Exporter的Address是42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745，要确认。
+Address：需要看各个地址，比如Exporter的地址是42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745；Consignee是2162 Laura Harbor Suite 915 East Ruth, WY 37541；Notify是622 Charles Lodge Suite 901 East Morgan, DC 64716。可能需要看哪个Address，但用户可能需要所有？不过先看每个类别对应。
 
-Amount US$：在表格里的Amount US$列，还有Sub Total等的Amount US$，比如最后一行Total的US$11,572.32等。
+Amount US$：在表格里的Amount US$列，还有Sub Total的US$11,572.32，Total Amount也是US$11,572.32。需要看对应的。
 
-BRN：Exporter的BRN: 91310113574176486H，所以找到。
+BRN：Exporter的BRN: 91310113574176486H。
 
-Bank Add：Bank Infor里的Bank Add: PSC 1422, Box 2981 APO AA 24413。
+Bank Add：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch的Bank Add: PSC 1422, Box 2981 APO AA 24413。
 
 Bank Name：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch。
 
-Beneficiary：多个地方，比如Bill To是Easy Power Network Co., Ltd.，Beneficiary也是这个，还有Bank Infor里的Beneficiary。
+Beneficiary：Easy Power Network Co., Ltd.（在Bank Infor里，还有Bill To也是这个）。
 
-Bill To：Bill To: Easy Power Network Co., Ltd.
+Bill To：Easy Power Network Co., Ltd.
 
-Buyer PO No：Buyer PO No: HWLPO037CA
+Buyer PO No：HWLPO037CA（在右侧Buyer PO No: HWLPO037CA）。
 
-Colourway：表格中的Colourway列，比如Black, Camo, Pink等。
+Colourway：表格中的Colourway列，比如Black, Camo, Pink, Black等。
 
-Company Name：比如Exporter是Easy Power Network Co., Ltd.，Consignee也是，Notify也是，Bank Infor里的Beneficiary也是，所以Company Name对应这些公司的名称。
+Company Name：Exporter是Easy Power Network Co., Ltd.；Consignee也是这个，所以Company Name是这个公司。
 
-Currency：Currency: US Dollars
+Currency：US Dollars（在右侧Currency: US Dollars）。
 
-Date：Date: 09-Dec-21
+Date：09-Dec-21（右侧Date: 09-Dec-21）。
 
 Description of Goods：表格中的Description of Goods列，比如Cap Luggage, Cap Duffle Bag等。
 
-ETD：ETD: 25-Aug-21
+ETD：25-Aug-21（右侧ETD: 25-Aug-21）。
 
-Email：多个Email，比如Consignee的Email: vspencler@wallen.info（注意可能拼写，图中是vspencler@wallen.info？看原文是vspencler@wallen.info？原文Consignee的Email是vspencler@wallen.info？看图片中的Consignee部分：Email: vspencler@wallen.info？对，然后Notify的Email是daniellynn@fields.com，还有其他Email吗？
+Email：比如Exporter的Email？不，看Notify的Email是daniellynn@fields.com；Consignee的Email是vspencler@wallen.info？看Consignee部分Email: vspencler@wallen.info？图中Consignee的Email是vspencler@wallen.info？看原文Consignee的Email: vspencler@wallen.info？是的，Consignee部分有Email: vspencler@wallen.info。还有Notify的Email是daniellynn@fields.com。需要看哪个Email对应，可能用户需要所有？但先看每个类别。
 
-Freight Mode：Freight Mode: SEA
+Freight Mode：SEA（右侧Freight Mode: SEA）。
 
-INV No：INV No: P0037CA-1
+INV No：P0037CA-1（右侧INV No: P0037CA-1）。
 
-KA SKU：表格中的KA SKU列，比如HWLPO002等。
+KA SKU：表格中的KA SKU列，比如HWLPO002, HWLPO007等。
 
-Payment Term：Payment Term: Delivery against Payment
+Payment Term：Delivery against Payment（右侧Payment Term: Delivery against Payment）。
 
-Ph：Exporter的Ph: (6216) 56606817，Consignee的Tel是+23216129521（注意Tel和Ph可能区分，Ph是Exporter的电话，Tel是Consignee的电话？看标签里的Ph是Exporter的电话，所以Ph对应(6216) 56606817。
+Ph：Exporter的Ph: (6216) 56606817；Consignee的Tel是+23216129521（注意Tel和Ph可能不同，Ph是Exporter的电话）。
 
-SO NO：SO NO: SSHAA/ MTR/ 00053443
+SO NO：SSHA/ MTR/ 00053443（右上角SO NO: SSHA/ MTR/ 00053443）。
 
-SWIFT Code：SWIFT Code: BKCHCNBJ300
+SWIFT Code：BKCHCNBJ300（在Bank Infor里的SWIFT Code: BKCHCNBJ300）。
 
-Tel：Consignee的Tel: +23216129521，Notify的Tel: +21615223129等。
+Tel：Consignee的Tel: +23216129521；Notify的Tel: +21615223129。需要看哪个Tel，可能Consignee的Tel是主要的？
 
-Title：Invoice的Title是INVOICE，所以Title对应INVOICE。
+Title：Invoice（顶部有INVOICE）。
 
-Total Amount Chargeable (In Capital words)：USD ELEVEN THOUSAND FIVE HUNDREDS AND SEVENTY-TWO AND CENTS THIRTY-TWO ONLY
+Total Amount Chargeable (In Capital words)：USD ELEVEN THOUSAND FIVE HUNDREDS AND SEVENTY-TWO AND CENTS THIRTY-TWO ONLY（在下方）。
 
-Total value：Total Value: US$11,572.32（黄色背景的Total Value）
+Total value：US$11,572.32（右侧Total Value: US$11,572.32，黄色背景）。
 
-Trade Term：Trade Term: EXW
+Trade Term：EXW（右侧Trade Term: EXW）。
 
 Unit Price：表格中的Unit Price列，比如3.32, 3.49等。
 
 Units：表格中的Units列，比如528, 576等。
 
-现在需要逐个确认每个类别，然后找到对应的bbox。因为是图片，需要估计每个元素的位置。比如：
-
-先列所有类别，然后找每个的出现：
-
-1. A/C No：在Bank Infor部分，A/C No: 454662135461 → 找到，bbox大概在银行信息部分的下方。
-
-2. Actual Buyer：Consignee下方，Actual Buyer: **Only If Not Consignee** → 标注。
-
-3. Address：多个地址，比如Exporter的地址是42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745 → 找到。
-
-4. Amount US$：表格中的Amount US$列，以及Sub Total的US$11,572.32等 → 多个位置，比如最后一行Total的Amount US$是US$11,572.32。
-
-5. BRN：Exporter的BRN: 91310113574176486H → 找到。
-
-6. Bank Add：Bank Infor里的Bank Add: PSC 1422, Box 2981 APO AA 24413 → 找到。
-
-7. Bank Name：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch → 找到。
-
-8. Beneficiary：多个地方，比如Bill To是Easy Power Network Co., Ltd.，Beneficiary也是这个，Bank Infor里的Beneficiary也是 → 找到。
-
-9. Bill To：Bill To: Easy Power Network Co., Ltd. → 找到。
-
-10. Buyer PO No：Buyer PO No: HWLPO037CA → 找到。
-
-11. Colourway：表格中的Colourway列，比如Black, Camo, Pink等 → 找到。
-
-12. Company Name：比如Exporter是Easy Power Network Co., Ltd.，Consignee也是，Notify也是，Bank Infor里的Beneficiary也是 → 找到。
-
-13. Currency：Currency: US Dollars → 找到。
-
-14. Date：Date: 09-Dec-21 → 找到。
-
-15. Description of Goods：表格中的Description of Goods列，比如Cap Luggage, Cap Duffle Bag等 → 找到。
-
-16. ETD：ETD: 25-Aug-21 → 找到。
-
-17. Email：Consignee的Email: vspencler@wallen.info；Notify的Email: daniellynn@fields.com → 找到。
-
-18. Freight Mode：Freight Mode: SEA → 找到。
-
-19. INV No：INV No: P0037CA-1 → 找到。
-
-20. KA SKU：表格中的KA SKU列，比如HWLPO002等 → 找到。
-
-21. Payment Term：Payment Term: Delivery against Payment → 找到。
-
-22. Ph：Exporter的Ph: (6216) 56606817 → 找到。
-
-23. SO NO：SO NO: SSHAA/ MTR/ 00053443 → 找到。
-
-24. SWIFT Code：SWIFT Code: BKCHCNBJ300 → 找到。
-
-25. Tel：Consignee的Tel: +23216129521；Notify的Tel: +21615223129 → 找到。
-
-26. Title：INVOICE → 找到。
-
-27. Total Amount Chargeable (In Capital words)：USD ELEVEN THOUSAND FIVE HUNDREDS AND SEVENTY-TWO AND CENTS THIRTY-TWO ONLY → 找到。
-
-28. Total value：Total Value: US$11,572.32（黄色背景）→ 找到。
-
-29. Trade Term：Trade Term: EXW → 找到。
-
-30. Unit Price：表格中的Unit Price列，比如3.32等 → 找到。
-
-31. Units：表格中的Units列，比如528等 → 找到。
-
-现在需要为每个类别生成一个条目，注意有些类别可能有多个实例，但题目要求“detect all objects matching these categories”，所以每个出现的都要？不过可能每个类别只要存在就列一个？或者看是否有多个。但可能每个类别在文档中出现一次或多次，需要都列出？不过可能用户希望每个类别对应一个实例，只要存在。现在需要确定每个类别的位置，然后给出bbox。
-
-由于是文本分析，需要估计每个元素的坐标。比如：
-
-- Title: "INVOICE"在顶部右侧，所以bbox大概在上方中间偏右，比如x1=660, y1=100, x2=740, y2=120（假设）。
-
-- SO NO: SSHAA/ MTR/ 00053443在右上角，SO NO: ... → bbox是右上角的文本。
-
-- Date: 09-Dec-21在右侧上方，Date: ... → 找到。
-
-- INV No: P0037CA-1在Date下面，INV No: ... → 找到。
-
-- Buyer PO No: HWLPO037CA在INV No下面，Buyer PO No: ... → 找到。
-
-- Payment Term: Delivery against Payment在Buyer PO No下面，Payment Term: ... → 找到。
-
-- Freight Mode: SEA在Payment Term下面，Freight Mode: ... → 找到。
-
-- Trade Term: EXW在Freight Mode下面，Trade Term: ... → 找到。
-
-- Port of Loading: （空？）在Trade Term下面，可能没有内容。
-
-- Port of Discharge: （空？）
-
-- Country Of Origin: （空？）
-
-- Vessel Name: （空？）
-
-- Voyage No: （空？）
-
-- ETD: 25-Aug-21在Voyage No下面，ETD: ... → 找到。
-
-- ETA: （空？）
-
-- Bill To: Easy Power Network Co., Ltd.在ETA下面，Bill To: ... → 找到。
-
-- Beneficiary: Easy Power Network Co., Ltd.在Bill To下面，Beneficiary: ... → 找到。
-
-- Currency: US Dollars在Beneficiary下面，Currency: ... → 找到。
-
-- Total Value: US$11,572.32在Currency下面，黄色背景，Total Value: ... → 找到。
-
-- Exporter: Easy Power Network Co., Ltd. [BRN: ...]在左侧，Exporter: ... → 找到BRN。
-
-- Consignee: Easy Power Network Co., Ltd.在左侧，Consignee: ... → 找到Address（Consignee的地址）。
-
-- Actual Buyer: **Only If Not Consignee**在Consignee下面，Actual Buyer: ... → 找到。
-
-- Notify: Easy Power Network Co., Ltd.在左侧，Notify: ... → 找到Address（Notify的地址）和Email（Notify的Email）。
-
-- KA SKU表格：包含KA SKU, Description of Goods, Colourway, Unit Price, Units, Amount US$等列，所以这些列的标题和内容都要对应。
+现在需要逐个对应，确保每个类别都找到。然后整理成JSON数组，每个元素是bbox和label。
 
 现在开始逐个处理：
 
-1. A/C No: 在Bank Infor of Beneficiary部分，A/C No: 454662135461 → 找到，bbox大概在银行信息的下方，比如x1=65, y1=950, x2=420, y2=970（假设）。
+1. A/C No：看Bank Infor部分，A/C No: 454662135461。位置在图中下方Bank Infor里的A/C No行。bbox需要确定。图中该部分是“Bank Infor of Beneficiary: ... A/C No: 454662135461”。所以bbox大概在图的下方偏左，对应坐标。
 
-2. Actual Buyer: Consignee下方，Actual Buyer: **Only If Not Consignee** → bbox是Consignee部分下面的文本，比如x1=10, y1=240, x2=250, y2=260。
+2. Actual Buyer：图中“Actual Buyer: **Only If Not Consignee**”在Consignee部分下方。bbox是Consignee部分下面的Actual Buyer行。
 
-3. Address: 多个，比如Exporter的地址：42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745 → bbox是Exporter部分的地址行，x1=30, y1=140, x2=480, y2=160；Consignee的地址：2162 Laura Harbor Suite 915 East Ruth, WY 37541 → x1=30, y1=200, x2=450, y2=220；Notify的地址：622 Charles Lodge Suite 901 East Morgan, DC 64716 → x1=30, y1=300, x2=500, y2=320；Bank Add的地址是PSC 1422, Box 2981 APO AA 24413，属于Bank Add，所以Address类别可能指公司地址，比如Exporter、Consignee、Notify的地址，每个都是Address。
+3. Address：需要看各个地址，比如Exporter的地址是42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745。Consignee的地址是2162 Laura Harbor Suite 915 East Ruth, WY 37541。Notify的地址是622 Charles Lodge Suite 901 East Morgan, DC 64716。可能需要分别提取，但用户可能需要所有？不过先看每个类别，可能Address对应其中一个，比如Exporter的Address。
 
-4. Amount US$: 表格中的Amount US$列，比如第一行1752.96，第二行2010.24等，还有Sub Total的US$11,572.32，Total的US$11,572.32 → 比如Sub Total的Amount US$是US$11,572.32，bbox在表格下方，x1=600, y1=700, x2=800, y2=720。
+4. Amount US$：在表格中的Amount US$列，比如第一行是1752.96，还有Sub Total的US$11,572.32。需要看哪个，可能Total的Amount US$是US$11,572.32，在Sub Total行的Amount US$列。
 
-5. BRN: Exporter的BRN: 91310113574176486H → x1=120, y1=120, x2=400, y2=140。
+5. BRN：Exporter的BRN: 91310113574176486H。在Exporter行的BRN字段。
 
-6. Bank Add: Bank Infor里的Bank Add: PSC 1422, Box 2981 APO AA 24413 → x1=60, y1=920, x2=400, y2=940。
+6. Bank Add：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch的Bank Add: PSC 1422, Box 2981 APO AA 24413。在Bank Infor部分的Bank Add行。
 
-7. Bank Name: Bank of China, Shanghai Branch Hengfeng Rd Sub-branch → x1=60, y1=900, x2=450, y2=920。
+7. Bank Name：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch。在Bank Infor的Bank Name行。
 
-8. Beneficiary: 多个，比如Bill To是Easy Power Network Co., Ltd.，Beneficiary也是这个；Bank Infor里的Beneficiary也是 → 比如Bill To的Beneficiary是Easy Power Network Co., Ltd.，bbox在Bill To行，x1=620, y1=400, x2=800, y2=420。
+8. Beneficiary：Easy Power Network Co., Ltd.（在Bank Infor的Beneficiary行，以及Bill To也是这个）。
 
-9. Bill To: Easy Power Network Co., Ltd. → x1=620, y1=380, x2=800, y2=400。
+9. Bill To：Easy Power Network Co., Ltd.（在右侧Bill To: ...）。
 
-10. Buyer PO No: HWLPO037CA → x1=620, y1=220, x2=750, y2=240。
+10. Buyer PO No：HWLPO037CA（右侧Buyer PO No: HWLPO037CA）。
 
-11. Colourway: 表格中的Colourway列，比如Black, Camo, Pink, Black → 表格的Colourway列标题，x1=350, y1=450, x2=450, y2=470；以及各行的Colourway值，比如第一行Black，x1=350, y1=470, x2=400, y2=490等。
+11. Colourway：表格中的Colourway列，比如Black（对应HWLPO002行）。
 
-12. Company Name: Exporter是Easy Power Network Co., Ltd.；Consignee是Easy Power Network Co., Ltd.；Notify是Easy Power Network Co., Ltd.；Bank Infor里的Beneficiary是Easy Power Network Co., Ltd. → 比如Exporter的Company Name是Easy Power Network Co., Ltd.，x1=30, y1=100, x2=250, y2=120。
+12. Company Name：Easy Power Network Co., Ltd.（Exporter、Consignee、Beneficiary等都是这个公司）。
 
-13. Currency: US Dollars → x1=620, y1=440, x2=750, y2=460。
+13. Currency：US Dollars（右侧Currency: US Dollars）。
 
-14. Date: 09-Dec-21 → x1=620, y1=150, x2=720, y2=170。
+14. Date：09-Dec-21（右侧Date: 09-Dec-21）。
 
-15. Description of Goods: 表格中的Description of Goods列，比如Cap Luggage, Cap Luggage, Cap Luggage, Cap Duffle Bag等 → 列标题x1=200, y1=450, x2=350, y2=470；各行内容x1=200, y1=470, x2=350, y2=490等。
+15. Description of Goods：表格中的Description of Goods列，比如Cap Luggage（HWLPO002行）。
 
-16. ETD: 25-Aug-21 → x1=620, y1=300, x2=720, y2=320。
+16. ETD：25-Aug-21（右侧ETD: 25-Aug-21）。
 
-17. Email: Consignee的Email: vspencler@wallen.info；Notify的Email: daniellynn@fields.com → Consignee的Email x1=100, y1=230, x2=300, y2=250；Notify的Email x1=100, y1=330, x2=350, y2=350。
+17. Email：比如Consignee的Email: vspencler@wallen.info（在Consignee部分的Email行）。
 
-18. Freight Mode: SEA → x1=620, y1=260, x2=700, y2=280。
+18. Freight Mode：SEA（右侧Freight Mode: SEA）。
 
-19. INV No: P0037CA-1 → x1=620, y1=180, x2=750, y2=200。
+19. INV No：P0037CA-1（右侧INV No: P0037CA-1）。
 
-20. KA SKU: 表格中的KA SKU列，比如HWLPO002, HWLPO007等 → 列标题x1=100, y1=450, x2=200, y2=470；各行内容x1=100, y1=470, x2=200, y2=490等。
+20. KA SKU：HWLPO002（表格中的KA SKU列第一行）。
 
-21. Payment Term: Delivery against Payment → x1=620, y1=200, x2=850, y2=220。
+21. Payment Term：Delivery against Payment（右侧Payment Term: ...）。
 
-22. Ph: (6216) 56606817 → x1=30, y
+22. Ph：(6216) 56606817（Exporter的Ph行）。
+
+23. SO NO：SSHA/ MTR/ 00053443（右上角SO NO: ...）。
+
+24. SWIFT Code：BKCHCNBJ300（Bank Infor的SWIFT Code行）。
+
+25. Tel：+23216129521（Consignee的Tel行）。
+
+26. Title：INVOICE（顶部的INVOICE字样）。
+
+27. Total Amount Chargeable (In Capital words)：USD ELEVEN THOUSAND FIVE HUNDREDS AND SEVENTY-TWO AND CENTS THIRTY-TWO ONLY（在下方的总金额大写）。
+
+28. Total value：US$11,572.32（右侧Total Value: ...，黄色背景）。
+
+29. Trade Term：EXW（右侧Trade Term: EXW）。
+
+30. Unit Price：3.32（表格中HWLPO002行的Unit Price）。
+
+31. Units：528（表格中HWLPO002行的Units）。
+
+现在需要为每个类别生成对应的bbox和label。需要注意图中的坐标，因为是图片，需要估计每个元素的位置。但可能有些元素在图中的位置需要准确。
+
+现在开始构建每个条目：
+
+1. A/C No：
+   - label: A/C No
+   - bbox: 找到A/C No的位置，在Bank Infor部分，A/C No: 454662135461。图中该部分在下方，Bank Infor of Beneficiary下的A/C No行。假设坐标范围是图中下方偏左，比如x从某个位置到另一个，y在下方。具体看图片中的位置，可能需要看原文中的位置。原文中“Bank Infor of Beneficiary: ... A/C No: 454662135461” 所以bbox大概是[117, 957, 377, 973]（假设图的坐标，需要根据实际图的布局，但这里只能大致估计）。
+
+2. Actual Buyer：
+   - label: Actual Buyer
+   - bbox: 在Consignee部分下方，“Actual Buyer: **Only If Not Consignee**” 所以位置在Consignee的Email下面，大概x是117, y是300左右（需要看原文中的位置）。
+
+3. Address：这里可能需要选一个，比如Exporter的Address：42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745。在Exporter部分的地址行。bbox是Exporter的地址行，即“42079 Curtis Skyway Apt. 297 Lake Tammycheستر, TX 44745” 对应的bbox。
+
+4. Amount US$：在Sub Total行的Amount US$列，即“US$11,572.32” 对应的bbox。或者看表格中的Amount US$列的总和。比如Sub Total行的Amount US$是US$11,572.32，所以bbox是该单元格。
+
+5. BRN：Exporter的BRN: 91310113574176486H，在Exporter行的BRN字段，即“[BRN: 91310113574176486H]” 对应的bbox。
+
+6. Bank Add：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch的Bank Add: PSC 1422, Box 2981 APO AA 24413。在Bank Infor部分的Bank Add行，即“Bank Add: PSC 1422, Box 2981 APO AA 24413” 对应的bbox。
+
+7. Bank Name：Bank of China, Shanghai Branch Hengfeng Rd Sub-branch，在Bank Infor的Bank Name行，即“Bank Name: Bank of China, Shanghai Branch Hengfeng Rd Sub-branch” 对应的bbox。
+
+8. Beneficiary：Easy Power Network Co., Ltd.，在Bank Infor的Beneficiary行，即“Beneficiary: Easy Power Network Co., Ltd.” 对应的bbox。
+
+9. Bill To：Easy Power Network Co., Ltd.，在右侧“Bill To: Easy Power Network Co., Ltd.” 对应的bbox。
+
+10. Buyer PO No：HWLPO037CA，在右侧“Buyer PO No: HWLPO037CA” 对应的bbox。
+
+11. Colourway：比如表格中HWLPO002行的Colourway是Black，对应的单元格。bbox是该单元格。
+
+12. Company Name：Easy Power Network Co., Ltd.，在Exporter部分的公司名，即“Easy Power Network Co., Ltd.” 对应的bbox。
+
+13. Currency：US Dollars，在右侧“Currency: US Dollars” 对应的bbox。
+
+14. Date：09-Dec-21，在右侧“Date: 09-Dec-21” 对应的bbox。
+
+15. Description of Goods：比如HWLPO002行的Description of Goods是Cap Luggage，对应的单元格。bbox是该单元格。
+
+16. ETD：25-Aug-21，在右侧“ETD: 25-Aug-21” 对应的bbox。
+
+17. Email：Consignee的Email是vspencler@wallen.info，在Consignee部分的Email行，即“Email: vspencler@wallen.info” 对应的bbox。
+
+18. Freight Mode：SEA，在右侧“Freight Mode: SEA” 对应的bbox。
+
+19. INV No：P0037CA-1，在右侧“INV No: P0037CA-1” 对应的bbox。
+
+20. KA SKU：HWLPO002，在表格中KA SKU列的第一行，即“HWLPO002” 对应的bbox。
+
+21. Payment Term：Delivery against Payment，在右侧“Payment Term: Delivery against Payment” 对应的bbox。
+
+22. Ph：(6216) 56606817，在Exporter部分的Ph行，即“Ph: (6216) 56606817” 对应的bbox。
+
+23. SO NO：SSHA/ MTR/ 00053443，在右上角“SO NO: SSHA/ MTR/ 00053443” 对应的bbox。
+
+24. SWIFT Code：BKCHCNBJ300，在Bank Infor的SWIFT Code行，即“SWIFT Code: BKCHCNBJ300” 对应的bbox。
+
+25. Tel：Consignee的Tel是+23216129521，在Consignee部分的Tel行，即“Tel: +23216129521” 对应的bbox。
+
+26. Title：INVOICE，在发票顶部的“INVOICE”字样，即“INVOICE” 对应的bbox。
+
+27. Total Amount Chargeable (In Capital words)：USD ELEVEN THOUSAND FIVE HUNDREDS AND SEVENTY-TWO AND CENTS THIRTY-TWO ONLY，在发票下方的总金额大写部分，即“USD ELEVEN THOUSAND FIVE HUNDREDS AND SEVENTY-TWO AND CENTS THIRTY-TWO ONLY” 对应的bbox。
+
+28. Total value：US$11,572.32，在右侧“Total Value: US$11,572.32” 对应的bbox（黄色背景）。
+
+29. Trade Term：EXW，在右侧“Trade Term: EXW” 对应的bbox。
+
+30. Unit Price：3.32，在表格中HWLPO002行的Unit Price列，即“3.32” 对应的bbox。
+
+31. Units：528，在表格中HWLPO002行的Units列，即“528” 对应的bbox。
+
+现在需要将这些整理成JSON数组。注意每个条目是独立的，所以需要列出所有31个类别（因为用户列出的类别数量需要数一下：用户列出的类别有A/C No, Actual Buyer, Address, Amount US$, BRN, Bank Add, Bank Name, Beneficiary, Bill To, Buyer PO No, Colourway, Company Name, Currency, Date, Description of Goods, ETD, Email, Freight Mode, INV No, KA SKU, Payment Term, Ph, SO NO, SWIFT Code, Tel, Title, Total Amount Chargeable (In Capital words), Total value, Trade Term, Unit Price, Units。数一下：1.A/C No,2.Actual Buyer,3.Address,4.Amount US$,5.BRN,6.Bank Add,7.Bank Name,8.Beneficiary,9.Bill To,10.Buyer PO No,11.Colourway,12.Company Name,13.Currency,14.Date,15.Description of Goods,16.ETD,17.Email,18.Freight Mode,19.INV No,20.KA SKU,21.Payment Term,22.Ph,23.SO NO,24.SWIFT Code,25.Tel,26.Title,27.Total Amount Chargeable (In Capital words),28.Total value,29.Trade Term,30.Unit Price,31.Units。共31个类别，所以需要31个条目。
+
+现在需要为每个类别分配bbox，由于是图片，需要估计每个元素的位置。例如：
+
+- SO NO: 右上角，SO NO: SSHA/ MTR/ 00053443 → bbox大概在图的右上角，x

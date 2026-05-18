@@ -1,6 +1,33 @@
-[
-    {"bbox_2d": [234, 124, 765, 147], "label": "company"},
-    {"bbox_2d": [234, 150, 765, 167], "label": "address"},
-    {"bbox_2d": [234, 237, 429, 254], "label": "date"},
-    {"bbox_2d": [234, 317, 327, 334], "label": "total"}
-]
+Got it, let's look at the receipt. First, find each category.
+
+Address: The address is "15. JALAN PERMAS 10/7, PERMAS 81750 MASAI JOHOR". Let's check the text.
+
+Company: The company name is "CONTENTO (JNO7061170-K)". That's the business name.
+
+Date: The date is "20/03/18 17:19". That's the transaction date.
+
+Total: The total is "RM 21.60" as per the ***TOTAL line.
+
+Now, identify each part's bounding box.
+
+First, company: "CONTENTO (JNO7061170-K)" is the company line.
+
+Address: The next lines are the address.
+
+Date: The line with 20/03/18 17:19.
+
+Total: The line with ***TOTAL RM 21.60.
+
+Let's map each.
+
+For company: The text "CONTENTO (JNO7061170-K)" is the company. Let's check the coordinates.
+
+Address: "15. JALAN PERMAS 10/7, PERMAS 81750 MASAI JOHOR" is the address.
+
+Date: "20/03/18 17:19 00000#001429" — the date part is 20/03/18 17:19.
+
+Total: "***TOTAL RM 21.60" — the total amount is RM 21.60.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [174, 124, 825, 160], "label": "company"}, {"bbox_2d": [174, 162, 825, 182], "label": "address"}, {"bbox_2d": [204, 244, 377, 262], "label": "date"}, {"bbox_2d": [234, 537, 332, 557], "label": "total"}]

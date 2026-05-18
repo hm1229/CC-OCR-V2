@@ -1,1 +1,114 @@
-[{"bbox_2d": [144, 12, 855, 40], "label": "TITLE"}, {"bbox_2d": [692, 22, 825, 34], "label": "NO."}, {"bbox_2d": [692, 34, 825, 46], "label": "DATE"}, {"bbox_2d": [102, 87, 527, 106], "label": "COMPANY NAME"}, {"bbox_2d": [102, 212, 527, 231], "label": "COMPANY NAME"}, {"bbox_2d": [102, 112, 527, 140], "label": "ADD"}, {"bbox_2d": [102, 240, 527, 259], "label": "ADD"}, {"bbox_2d": [102, 300, 425, 360], "label": "Description"}, {"bbox_2d": [102, 362
+用户现在需要从采购合同中提取各个类别的值，先逐个看每个类别。首先看TITLE是PURCHASE CONTRACT，然后NO.是NUB1C003，DATE是2021.12.10。COMPANY NAME是BUYER和SELLER都是Tuolong Information Technology Co., Ltd.。ADD的话，BUYER的ADD是35537 Castillo Coves Suite 464 Port Mathewsshire, MI 09500，SELLER的ADD是6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845。Amount是表格里的两个金额总和是40,462.63，还有每个行的Amount。Description是两个产品描述。Quantity是18,954.0和1,752.8。SWIFT CODE是ABOCCNBJ103。Port of Loading是SHANGHAI, CHINA。二、Port of Destination是HAI PHONG, VIETNAM。五、Shipment是BEFORE12/30/2021。六、BENEFICIARY BANK是AGRICULTURAL BANK OF CHINA ,KUNSHAN SUB-BRANCH。四、Payment是100% T/T AGAINST COPY OF THE B/L。TaiwanTEI是+125-2670-8285#1783。TOTAL是USD 40,462.63。现在要逐个对应每个类别，确保每个都找到。
+
+现在开始整理每个类别：
+
+1. TITLE: "PURCHASE CONTRACT" → 对应bbox是标题部分。
+2. NO.: "NUB1C003" → 右上角NO.后面。
+3. DATE: "2021.12.10" → 右上角DATE后面。
+4. COMPANY NAME: BUYER和SELLER都是Tuolong Information Technology Co., Ltd.，所以两个地方的公司名。
+5. ADD: BUYER的ADD是35537 Castillo Coves Suite 464 Port Mathewsshire, MI 09500；SELLER的ADD是6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845。
+6. Amount: 表格中的两个Amount分别是37,149.84和3,312.79，还有TOTAL的40,462.63。需要看用户要的是哪个，可能TOTAL是总和，所以TOTAL对应的是总金额。
+7. Description: 两个产品描述，分别是“RECYCLED 100% POLYESTER PARTIALLY ORIENTED YARN 125/72/1 SEMI DULL, GRADE A1”和“RECYCLED 100% POLYESTER PARTIALLY ORIENTED YARN 125/72/1 SEMI DULL, GRADE A2”。
+8. Quantity: 18,954.0 和 1,752.8。
+9. SWIFT CODE: "ABOCCNBJ103" → 六、BENEFICIARY BANK下面的SWIFT CODE。
+10. Port of Loading: "SHANGHAI, CHINA" → 三、Trade Term上面的Port of Loading。
+11. 二、Port of Destination: "HAI PHONG, VIETNAM" → 第二点。
+12. 五、Shipment: "BEFORE12/30/2021" → 第五点。
+13. 六、BENEFICIARY BANK: "AGRICULTURAL BANK OF CHINA ,KUNSHAN SUB-BRANCH" → 第六点。
+14. 四、Payment: "100% T/T AGAINST COPY OF THE B/L" → 第四点。
+15. TaiwanTEI: "+125-2670-8285#1783" → BUYER的ADD里的TaiwanTEL。
+16. TOTAL: "USD 40,462.63" → 表格下面的TOTAL。
+
+现在需要为每个类别生成对应的bbox和label。需要确定每个元素在图中的位置。
+
+先看各个部分的坐标（假设图的坐标，需要看每个文本的位置）：
+
+- TITLE: "PURCHASE CONTRACT" 在顶部，bbox大概是[140, 10, 860, 40]（因为标题居中）。
+- NO.: "NUB1C003" 在右上角，DATE上面，bbox是[705, 15, 825, 30]。
+- DATE: "2021.12.10" 在NO.下面，bbox是[705, 32, 825, 47]。
+- BUYER的COMPANY NAME: "Tuolong Information Technology Co., Ltd." 在BUYER:后面，bbox是[105, 105, 525, 125]。
+- SELLER的COMPANY NAME: "Tuolong Information Technology Co., Ltd." 在SELLER:后面，bbox是[105, 225, 525, 245]。
+- BUYER的ADD: "35537 Castillo Coves Suite 464 Port Mathewsshire, MI 09500" 在ADD:后面，bbox是[105, 135, 525, 155]；还有下面的TaiwanTEL是[105, 155, 375, 170]（因为TaiwanTEL是下划线的）。
+- SELLER的ADD: "6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845" 在ADD:后面，bbox是[105, 250, 525, 270]（可能需要看实际换行，图中SELLER的ADD是两行？看原文：SELLER的ADD是“6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845” 可能是一行？）
+- Amount: 表格中的Amount列，第一行是37,149.84，第二行是3,312.79，TOTAL是40,462.63。TOTAL的bbox是[695, 300, 825, 320]（因为TOTAL:USD 40,462.63）。
+- Description: 第一行描述是“RECYCLED 100% POLYESTER PARTIALLY ORIENTED YARN 125/72/1 SEMI DULL, GRADE A1”，在表格第一行Description列；第二行是“RECYCLED 100% POLYESTER PARTIALLY ORIENTED YARN 125/72/1 SEMI DULL, GRADE A2”。
+- Quantity: 第一行是18,954.0，第二行是1,752.8，对应表格的Quantity列。
+- Unit Price: 第一行是USD 1.96 /KG，第二行是USD 1.89 /KG，对应表格的Unit Price列。
+- 三、Trade Term: "FOB SHANGHAI" 在第三点，Port of Loading是SHANGHAI, CHINA，所以三、Trade Term的文本是“三、Trade Term ： FOB SHANGHAI”。
+- 二、Port of Destination: "二、Port of Destination ： HAI PHONG, VIETNAM"。
+- 五、Shipment: "五、Shipment ： BEFORE12/30/2021"。
+- 四、Payment: "四、Payment ： 100% T/T AGAINST COPY OF THE B/L"。
+- 六、BENEFICIARY BANK: "六、BENEFICIARY BANK ： AGRICULTURAL BANK OF CHINA ,KUNSHAN SUB-BRANCH SWIFT CODE ： ABOCCNBJ103"。
+- SWIFT CODE: "ABOCCNBJ103" 在六、BENEFICIARY BANK下面。
+- TaiwanTEI: "+125-2670-8285#1783" 是BUYER的ADD中的TaiwanTEL部分，即“TaiwanTEL:+125-2670-8285#1783”中的电话部分。
+
+现在需要把每个类别对应到具体的bbox。因为图中的元素位置，需要大致确定每个文本的位置。
+
+现在开始逐个列出：
+
+1. TITLE: "PURCHASE CONTRACT" → bbox [142, 20, 858, 48], label "TITLE"
+2. NO.: "NUB1C003" → bbox [706, 16, 824, 32], label "NO."
+3. DATE: "2021.12.10" → bbox [706, 34, 824, 50], label "DATE"
+4. BUYER COMPANY NAME: "Tuolong Information Technology Co., Ltd." → bbox [106, 107, 524, 127], label "COMPANY NAME"
+5. SELLER COMPANY NAME: "Tuolong Information Technology Co., Ltd." → bbox [106, 227, 524, 247], label "COMPANY NAME"
+6. BUYER ADD: "35537 Castillo Coves Suite 464 Port Mathewsshire, MI 09500" → bbox [106, 137, 524, 157], label "ADD"
+7. BUYER TaiwanTEI: "+125-2670-8285#1783" → bbox [106, 157, 374, 175], label "TaiwanTEI"
+8. SELLER ADD: "6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845" → bbox [106, 252, 524, 272], label "ADD"
+9. Amount (first row): "USD 37,149.84" → bbox [696, 312, 824, 332], label "Amount"（但可能更准确的是看表格中的Amount列，第一行的Amount是37,149.84，对应单元格）
+10. Amount (second row): "USD 3,312.79" → bbox [696, 342, 824, 362], label "Amount"
+11. TOTAL: "USD 40,462.63" → bbox [696, 302, 824, 322], label "TOTAL"
+12. Description (first product): "RECYCLED 100% POLYESTER PARTIALLY ORIENTED YARN 125/72/1 SEMI DULL, GRADE A1" → bbox [106, 322, 524, 342], label "Description"
+13. Description (second product): "RECYCLED 100% POLYESTER PARTIALLY ORIENTED YARN 125/72/1 SEMI DULL, GRADE A2" → bbox [106, 362, 524, 382], label "Description"
+14. Quantity (first product): "18,954.0" → bbox [336, 322, 494, 342], label "Quantity"
+15. Quantity (second product): "1,752.8" → bbox [336, 362, 494, 382], label "Quantity"
+16. Unit Price (first product): "USD 1.96 /KG" → bbox [546, 322, 694, 342], label "Unit Price"
+17. Unit Price (second product): "USD 1.89 /KG" → bbox [546, 362, 694, 382], label "Unit Price"
+18. 二、Port of Destination: "二、Port of Destination ： HAI PHONG, VIETNAM" → bbox [106, 387, 524, 407], label "二、Port of Destination"
+19. Port of Loading: "Port of Loading ： SHANGHAI, CHINA" → bbox [106, 407, 524, 427], label "Port of Loading"
+20. 三、Trade Term: "三、Trade Term ： FOB SHANGHAI" → bbox [106, 427, 524, 447], label "三、Trade Term"
+21. 四、Payment: "四、Payment ： 100% T/T AGAINST COPY OF THE B/L" → bbox [106, 447, 524, 467], label "四、Payment"
+22. 五、Shipment: "五、Shipment ： BEFORE12/30/2021" → bbox [106, 467, 524, 487], label "五、Shipment"
+23. 六、BENEFICIARY BANK: "六、BENEFICIARY BANK ： AGRICULTURAL BANK OF CHINA ,KUNSHAN SUB-BRANCH SWIFT CODE ： ABOCCNBJ103" → bbox [106, 487, 524, 507], label "六、BENEFICIARY BANK"
+24. SWIFT CODE: "ABOCCNBJ103" → bbox [336, 507, 494, 527], label "SWIFT CODE"
+
+现在需要检查每个类别是否都覆盖了。用户要求的类别列表是：ADD, Amount, COMPANY NAME, DATE, Description, NO., Port of Loading, Quantity, SWIFT CODE, TITLE, TOTAL, TaiwanTEI, Unit Price, 三、Trade Term, 二、Port of Destination, 五、Shipment, 六、BENEFICIARY BANK, 四、Payment。
+
+现在逐个确认：
+
+- ADD：有BUYER和SELLER的ADD，所以两个ADD条目。
+- Amount：有三个Amount（两个行的Amount和TOTAL），但用户可能需要所有Amount相关的，这里TOTAL是总和，所以TOTAL对应。
+- COMPANY NAME：BUYER和SELLER的公司名，两个。
+- DATE：有一个。
+- Description：两个产品描述。
+- NO.：一个。
+- Port of Loading：一个。
+- Quantity：两个数量。
+- SWIFT CODE：一个。
+- TITLE：一个。
+- TOTAL：一个。
+- TaiwanTEI：一个（BUYER的）。
+- Unit Price：两个单价。
+- 三、Trade Term：一个。
+- 二、Port of Destination：一个。
+- 五、Shipment：一个。
+- 六、BENEFICIARY BANK：一个。
+- 四、Payment：一个。
+
+现在需要将每个类别对应到一个或多个条目，但用户要求的是“detect the corresponding values”，每个检测到的对象提供bbox和label。所以需要列出所有存在的对应项。
+
+现在整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意图中的实际坐标，可能需要根据图像的像素来估算，但这里假设大致位置。
+
+现在开始编写每个条目：
+
+1. TITLE: "PURCHASE CONTRACT" → bbox [140, 18, 860, 42], label "TITLE"
+2. NO.: "NUB1C003" → bbox [704, 14, 826, 30], label "NO."
+3. DATE: "2021.12.10" → bbox [704, 28, 826, 44], label "DATE"
+4. BUYER COMPANY NAME: "Tuolong Information Technology Co., Ltd." → bbox [104, 104, 526, 126], label "COMPANY NAME"
+5. SELLER COMPANY NAME: "Tuolong Information Technology Co., Ltd." → bbox [104, 224, 526, 246], label "COMPANY NAME"
+6. BUYER ADD: "35537 Castillo Coves Suite 464 Port Mathewsshire, MI 09500" → bbox [104, 134, 526, 156], label "ADD"
+7. BUYER TaiwanTEI: "+125-2670-8285#1783" → bbox [104, 154, 376, 174], label "TaiwanTEI"
+8. SELLER ADD: "6356 David Crossroad Suite 770 Singletonfurt, NM 72191 USNV Thompson FPO AP 51845" → bbox [104, 250, 526, 272], label "ADD"
+9. Amount (first product): "USD 37,149.84" → bbox [694, 310, 824, 332], label "Amount"
+10. Amount (second

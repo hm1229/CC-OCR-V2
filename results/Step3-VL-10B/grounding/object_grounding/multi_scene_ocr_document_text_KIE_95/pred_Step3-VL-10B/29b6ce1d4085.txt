@@ -1,10 +1,68 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is on the invoice, "Date: 21/09/2017". Let's check where that is. The line with "Date: 21/09/2017" is present.
+
+doc_no_receipt_no: The Cash Inv No. is 7921F714. So that's the document number.
+
+seller_address: The seller is GARDENIA BAKERIES (KL) SDN BHD. Their address is "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Let's confirm that.
+
+seller_gst_id: The GST ID is 000381399040. Look for "GST ID:" on the invoice.
+
+seller_name: The seller name is "GARDENIA BAKERIES (KL) SDN BHD (139386 X)".
+
+seller_phone: The phone number is "Tel: 03-55423228".
+
+total_amount: The Total Payable is 43.36. That's the total amount to pay.
+
+total_tax: The GST is 1.14. Let's check the GST line.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The text "Date: 21/09/2017" is in the section above the vendor info. Let's find the coordinates. The date line is "Date: 21/09/2017" which is part of the top section.
+
+2. doc_no_receipt_no: "Cash Inv No.: 7921F714" — that's the document number.
+
+3. seller_address: The address of GARDENIA BAKERIES: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Let's check the top part.
+
+4. seller_gst_id: "GST ID: 000381399040" — that's the GST ID.
+
+5. seller_name: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — the top line.
+
+6. seller_phone: "Tel: 03-55423228" — the telephone line.
+
+7. total_amount: "Total Payable: 43.36" — that's the total amount.
+
+8. total_tax: "GST: 1.14" — the GST amount.
+
+Now, let's extract each with their bounding boxes.
+
+Let's check each element:
+
+- seller_name: The first line "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — coordinates would be the top part.
+
+- seller_address: The address lines below the seller name: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+
+- seller_gst_id: "GST ID: 000381399040" — below the address and phone.
+
+- seller_phone: "Tel: 03-55423228" — next to the fax line.
+
+- date: "Date: 21/09/2017" — next to Cash Inv No.
+
+- doc_no_receipt_no: "Cash Inv No.: 7921F714" — the invoice number.
+
+- total_amount: "Total Payable: 43.36" — near the bottom.
+
+- total_tax: "GST: 1.14" — above the total 6% supplies (inc. GST).
+
+Now, let's structure each as a JSON object with bbox and label.
+</think>
 [
-    {"bbox_2d": [214, 298, 328, 317], "label": "date"},
-    {"bbox_2d": [295, 298, 422, 317], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [44, 117, 594, 148], "label": "seller_name"},
-    {"bbox_2d": [104, 148, 328, 167], "label": "seller_address"},
-    {"bbox_2d": [144, 167, 246, 186], "label": "seller_gst_id"},
-    {"bbox_2d": [144, 186, 236, 205], "label": "seller_phone"},
-    {"bbox_2d": [425, 532, 527, 551], "label": "total_amount"},
-    {"bbox_2d": [527, 572, 556, 591], "label": "total_tax"}
+    {"bbox_2d": [214, 437, 332, 458], "label": "date"},
+    {"bbox_2d": [244, 447, 425, 466], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [100, 34, 598, 52], "label": "seller_name"},
+    {"bbox_2d": [100, 53, 494, 71], "label": "seller_address"},
+    {"bbox_2d": [100, 72, 434, 89], "label": "seller_phone"},
+    {"bbox_2d": [144, 80, 325, 97], "label": "seller_gst_id"},
+    {"bbox_2d": [425, 602, 520, 622], "label": "total_tax"},
+    {"bbox_2d": [425, 632, 532, 652], "label": "total_amount"}
 ]

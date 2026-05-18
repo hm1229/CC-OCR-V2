@@ -1,10 +1,184 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: Look for the date on the receipt. At the bottom, there's "01/04/2018 12:53". So that's the date.
+
+doc_no_receipt_no: The invoice number is "2018040110100050063" and the receipt number is "1010 005 0050063" maybe? Wait, the line says "01/04/2018 12:53 1010 005 0050063". Also, the invoice no is "2018040110100050063". Let me check. The receipt number is probably the one after the date. Let's check the line: "01/04/2018 12:53 1010 005 0050063". So doc_no_receipt_no would be that.
+
+seller_address: The top part has "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR". That's the address.
+
+seller_gst_id: "GST ID : 002017394688" — so that's the GST ID.
+
+seller_name: "AEON CO. (M) BHD (126926-H)" — the company name.
+
+seller_phone: "TEL 1-300-80-AEON (2366)" — that's the phone number.
+
+total_amount: Look for the total. The "Total After Adj Incl GST" is 122.80, but wait, the cash is 200.00, change is 77.20. But the total amount paid is the total after adjustment. Wait, the "Total After Adj Incl GST" is 122.80. Let me check the labels. The "Total Sales Incl GST" is 122.78, then rounding adj 0.02, so total after adj is 122.80. That's the total amount for the transaction.
+
+total_tax: In the GST Summary, "SR @ 6%" is 3.01. Let's check. The GST Summary has "Amount" and "Tax". The SR @6% amount is 50.13, tax is 3.01. Then ZR @0% is 69.64, tax 0.00. Total tax is 3.01. So total_tax is 3.01.
+
+Now, let's map each:
+
+date: "01/04/2018 12:53" — find the bounding box for that line.
+
+doc_no_receipt_no: The receipt number is "1010 005 0050063" (from the line "01/04/2018 12:53 1010 005 0050063") and the invoice no is "2018040110100050063". But the question says doc_no_receipt_no, so maybe the receipt number is the one with the barcode, but the text has "0306651 PJ NUR AYU" which might be the cashier, but the main receipt number is the one after the date. Let's check the line: "01/04/2018 12:53 1010 005 0050063" — that's the receipt number.
+
+seller_address: The address block at the top.
+
+seller_gst_id: The line "GST ID : 002017394688"
+
+seller_name: "AEON CO. (M) BHD (126926-H)"
+
+seller_phone: "TEL 1-300-80-AEON (2366)"
+
+total_amount: "Total After Adj Incl GST 122.80"
+
+total_tax: "3.01" from the GST Summary's total tax.
+
+Now, let's find the bounding boxes for each.
+
+First, date: The line "01/04/2018 12:53" is in the lower part. Let's check the coordinates.
+
+Looking at the image, the date is part of the line: "01/04/2018 12:53 1010 005 0050063". So the date is the first part.
+
+doc_no_receipt_no: The receipt number is "1010 005 0050063" (the part after the date).
+
+seller_address: The top section: "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR"
+
+seller_gst_id: "GST ID : 002017394688"
+
+seller_name: "AEON CO. (M) BHD (126926-H)"
+
+seller_phone: "TEL 1-300-80-AEON (2366)"
+
+total_amount: "Total After Adj Incl GST 122.80" — the line where it says "Total After Adj Incl GST" and the amount.
+
+total_tax: The total tax in GST Summary is 3.01 (the "Total" tax column).
+
+Now, let's list each with their bounding boxes.
+
+Let's go step by step.
+
+1. date: The text "01/04/2018 12:53" is located in the lower section, above the barcode. Let's check the coordinates. The line is "01/04/2018 12:53 1010 005 0050063". So the date part is the first segment.
+
+2. doc_no_receipt_no: The receipt number is "1010 005 0050063" (the part after the date in that line).
+
+3. seller_address: The address is from "3RD FLR, AEON TAMAN MALURI SC" down to "55100 KUALA LUMPUR". Let's check the top part.
+
+4. seller_gst_id: The line "GST ID : 002017394688" — find that line.
+
+5. seller_name: The first line "AEON CO. (M) BHD (126926-H)".
+
+6. seller_phone: The line "TEL 1-300-80-AEON (2366)" at the bottom.
+
+7. total_amount: The line "Total After Adj Incl GST 122.80" — look for that.
+
+8. total_tax: The line in GST Summary where "Total" tax is 3.01. The GST Summary section has "Total" row with tax 3.01.
+
+Now, let's define each bounding box.
+
+For example, seller_name: The text "AEON CO. (M) BHD (126926-H)" is at the top, so the bounding box would cover that line.
+
+Let's check each:
+
+- seller_name: [329, 10, 669, 29] (approx, since the top line is "AEON CO. (M) BHD (126926-H)")
+
+- seller_gst_id: The line "GST ID : 002017394688" — find that. The text is "GST ID : 002017394688" so the bounding box around that line.
+
+- seller_address: The address lines: "3RD FLR, AEON TAMAN MALURI SC", "JLN JEJAKA, TAMAN MALURI", "CHERAS, 55100 KUALA LUMPUR" — combine these lines.
+
+- seller_phone: "TEL 1-300-80-AEON (2366)" — at the bottom, above "THANK YOU...".
+
+- date: "01/04/2018 12:53" — in the line before the barcode, part of "01/04/2018 12:53 1010 005 0050063".
+
+- doc_no_receipt_no: "1010 005 0050063" — the receipt number part.
+
+- total_amount: "Total After Adj Incl GST 122.80" — the line where total after adjustment is shown.
+
+- total_tax: The tax amount in the GST Summary, which is 3.01. The line "Total" under GST Summary has "3.01" in the Tax column.
+
+Now, let's map each with their labels.
+
+Let's create the JSON array.
+
+First, list all 8 items:
+
+1. date: bbox for "01/04/2018 12:53"
+2. doc_no_receipt_no: bbox for "1010 005 0050063"
+3. seller_address: bbox for the address block
+4. seller_gst_id: bbox for "GST ID : 002017394688"
+5. seller_name: bbox for "AEON CO. (M) BHD (126926-H)"
+6. seller_phone: bbox for "TEL 1-300-80-AEON (2366)"
+7. total_amount: bbox for "Total After Adj Incl GST 122.80"
+8. total_tax: bbox for "3.01" in GST Summary total tax.
+
+Now, let's find the exact positions.
+
+Looking at the image:
+
+- seller_name: The first line after the top (handwritten "A04004" is above, then the company name). The text "AEON CO. (M) BHD (126926-H)" is centered. Let's assume the coordinates.
+
+- seller_gst_id: Below the address, "GST ID : 002017394688" — that's a line.
+
+- seller_address: The lines from "3RD FLR..." to "55100 KUALA LUMPUR".
+
+- seller_phone: At the bottom, "TEL 1-300-80-AEON (2366)" is above "THANK YOU...".
+
+- date: The line "01/04/2018 12:53" is in the lower part, above the barcode and the "0306651 PJ NUR AYU".
+
+- doc_no_receipt_no: The receipt number is "1010 005 0050063" which is next to the date.
+
+- total_amount: The line "Total After Adj Incl GST 122.80" is above the cash and change.
+
+- total_tax: In the GST Summary section, the last line "Total" has tax 3.01.
+
+Now, let's write the JSON entries.
+
+For example:
+
+{
+  "bbox_2d": [325, 92, 672, 110],
+  "label": "seller_name"
+}
+
+But need to check each.
+
+Alternatively, let's list each with their approximate bounding boxes.
+
+Let's go through each category:
+
+1. date: The text "01/04/2018 12:53" is in the line: "01/04/2018 12:53 1010 005 0050063". Let's find the coordinates. The y-coordinate is around the lower part, maybe y1=950, y2=970. x1=325, x2=475.
+
+2. doc_no_receipt_no: The receipt number is "1010 005 0050063" — same line, x1=500, x2=680.
+
+3. seller_address: The address is from y=40 to y=70. The lines are:
+
+"3RD FLR, AEON TAMAN MALURI SC"
+
+"JLN JEJAKA, TAMAN MALURI"
+
+"CHERAS, 55100 KUALA LUMPUR"
+
+So the bounding box covers these lines.
+
+4. seller_gst_id: The line "GST ID : 002017394688" — y=120, x=325 to 672.
+
+5. seller_name: "AEON CO. (M) BHD (126926-H)" — y=20, x=325 to 672.
+
+6. seller_phone: "TEL 1-300-80-AEON (2366)" — y=980, x=325 to 672.
+
+7. total_amount: "Total After Adj Incl GST 122.80" — y=800, x=325 to 672.
+
+8. total_tax: The GST Summary's total tax is 3.01. The line "Total" in GST Summary has "3.01" in the Tax column. The GST Summary is in the lower middle part. The line for total tax is under "Total" row, so the value 3.01 is there.
+
+Now, let's construct the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [39, 953, 960, 973], "label": "date"},
-    {"bbox_2d": [424, 953, 634, 971], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [444, 43, 606, 62], "label": "seller_name"},
-    {"bbox_2d": [444, 63, 606, 82], "label": "seller_address"},
-    {"bbox_2d": [452, 84, 598, 102], "label": "seller_gst_id"},
-    {"bbox_2d": [444, 962, 634, 980], "label": "seller_phone"},
-    {"bbox_2d": [424, 732, 598, 750], "label": "total_amount"},
-    {"bbox_2d": [514, 975, 546, 993], "label": "total_tax"}
+    {"bbox_2d": [325, 95, 672, 112], "label": "date"},
+    {"bbox_2d": [500, 95, 685, 112], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [325, 42, 672, 70], "label": "seller_address"},
+    {"bbox_2d": [325, 130, 672, 147], "label": "seller_gst_id"},
+    {"bbox_2d": [325, 22, 672, 40], "label": "seller_name"},
+    {"bbox_2d": [325, 975, 672, 992], "label": "seller_phone"},
+    {"bbox_2d": [325, 810, 672, 827], "label": "total_amount"},
+    {"bbox_2d": [635, 985, 665, 998], "label": "total_tax"}
 ]

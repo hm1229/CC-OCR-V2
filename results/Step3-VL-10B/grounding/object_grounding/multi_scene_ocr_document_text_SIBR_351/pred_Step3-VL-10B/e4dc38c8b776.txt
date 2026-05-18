@@ -1,222 +1,193 @@
-用户现在需要检测文档中的各个指定类别。首先得逐个看每个类别在图中的位置。
+用户现在需要从销售确认书里提取各个字段的值和对应的标签。首先得逐个看每个类别，找到对应的内容和位置。
 
-首先看Title，标题是“售货确认书 SALES CONFIRMATION”，所以Title对应这个部分。
+首先看Title，标题是“售货确认书 SALES CONFIRMATION”，所以Title对应的是这个标题部分。
 
-然后Company Name：BUYERS是Haichuang Information Co., Ltd.，SELLERS也是Haichuang Information Co., Ltd.，所以这两个都是Company Name。
+然后Company Name，BUYERS和SELLERS的公司名都是Haichuang Information Co., Ltd.，所以Company Name要确认是哪个？不过看问题里的Company Name可能指BUYERS或SELLERS？不过先看各个字段。
 
-Address：BUYERS的地址是05062 Mullins Square Bartontown, MA 31201；SELLERS的ADD是56713 Campbell Forge Apt. 056 East Katherine, OR 46225，所以这两个是Address和ADD（ADD属于Address类别？看用户给的类别里有ADD和Address，可能ADD是SELLERS的地址部分，Address是BUYERS的地址？需要区分。看用户给的类别：ADD是单独的，Address也是。看文档中SELLERS:后面的ADD: 是ADD，而BUYERS的地址是Address。
+先列出来每个需要的类别：
 
-然后CONTRACT NO.是AMF219108，DATE是OCT.12,2021，SIGNED AT是P.R.CHINA。
+ADD：SELLERS下面的ADD: 56713 Campbell Forge Apt. 056 East Katherine, OR 46225，所以ADD对应这个地址。
 
-Description of goods是ANODE ROD那一行的描述。
+Address：BUYERS的地址是05062 Mullins Square Bartontown, MA 31201，所以Address是BUYERS的地址。
 
-Quantity是12000PCS，Price是EUR3.87/PC，Amount是EUR46440.00。
+Amount：表格里的Amount列对应ANODE ROD的EUR46440.00，所以Amount是这个数值。
 
-Insurance是to be covered by THE BUYERS.
+CONTRACT NO.：AMF219108，看右上角的CONTRACT NO.。
 
-Packing是IN WOODEN CASE.
+DATE：OCT.12, 2021，右上角的DATE。
 
-Payment是T/T IN ADVANCE.
+Description of goods：ANODE ROD，表格里的商品描述。
 
-Shipment是SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA.
+Insurance：to be covered by THE BUYERS.，对应Insurance字段。
 
-现在逐个定位：
+Packing：IN WOODEN CASE，Packing部分。
 
-Title：售货确认书 SALES CONFIRMATION，对应顶部的标题。
+Payment：T/T IN ADVANCE，Payment部分。
 
-Company Name：BUYERS的Haichuang Information Co., Ltd. 和 SELLERS的Haichuang Information Co., Ltd.，所以两个Company Name？但看用户给的类别是Company Name，所以需要检查。
+Price：EUR3.87/PC，Price列。
 
-现在开始列每个元素：
+Quantity：12000PCS，Quantity列。
 
-1. Title：包含“售货确认书”和“SALES CONFIRMATION”，所以bbox是整个标题区域，比如从顶部的标题文字。
+SELLERS：Haichuang Information Co., Ltd.，SELLERS的公司名。
 
-2. Company Name（BUYERS）：BUYERS: 后面的Haichuang Information Co., Ltd.，bbox是该文字。
+SIGNED AT：P.R.CHINA，SIGNED AT: 后面的内容。
 
-3. Company Name（SELLERS）：SELLERS: 后面的Haichuang Information Co., Ltd.，bbox是该文字。
+Shipment：SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA，Shipment部分。
 
-4. Address（BUYERS）：BUYERS下面的地址05062 Mullins Square Bartontown, MA 31201。
+Title：售货确认书 SALES CONFIRMATION，标题部分。
 
-5. ADD（SELLERS）：SELLERS:后面的ADD: 56713 Campbell Forge Apt. 056 East Katherine, OR 46225。
+现在需要为每个类别找到对应的bbox。需要看每个元素在图中的位置。
 
-6. CONTRACT NO.：CONTRACT NO.: AMF219108。
+先处理Title：标题是顶部的“售货确认书 SALES CONFIRMATION”，所以bbox大概是整个标题的区域，比如x1=333（因为居中），y1=100左右，y2=150左右。不过需要看图像中的位置。原图中标题是居中的，所以Title的bbox是包含“售货确认书”和“SALES CONFIRMATION”的区域。
 
-7. DATE：DATE: OCT.12, 2021。
+然后Company Name：BUYERS和SELLERS的公司名都是Haichuang Information Co., Ltd.，所以Company Name可以是BUYERS或SELLERS的公司名？看问题中的Company Name，可能指BUYERS的Company Name？BUYERS: Haichuang Information Co., Ltd.，所以Company Name对应BUYERS的公司名。
 
-8. SIGNED AT：SIGNED AT: P.R.CHINA。
+现在逐个分析：
 
-9. Description of goods：表格中的第一列，ANODE ROD。
+1. ADD：SELLERS下面的ADD: 56713 Campbell Forge Apt. 056 East Katherine, OR 46225。所以ADD的label是ADD，bbox是SELLERS地址行。
 
-10. Quantity：表格中的第二列，12000PCS。
+2. Address：BUYERS的地址是05062 Mullins Square Bartontown, MA 31201，所以Address是BUYERS的地址行。
 
-11. Price：表格中的第三列，EUR3.87/PC。
+3. Amount：表格中ANODE ROD对应的Amount是EUR46440.00，所以Amount的单元格内容。
 
-12. Amount：表格中的第四列，EUR46440.00。
+4. CONTRACT NO.：右上角的CONTRACT NO.: AMF219108，所以CONTRACT NO.是这个编号。
 
-13. Insurance：Insurance: to be covered by THE BUYERS.
+5. Company Name：BUYERS的公司名是Haichuang Information Co., Ltd.，所以Company Name是BUYERS的公司名。
 
-14. Packing：Packing: IN WOODEN CASE。
+6. DATE：OCT.12, 2021，右上角的DATE。
 
-15. Payment：Payment: T/T IN ADVANCE。
+7. Description of goods：ANODE ROD，表格第一行的商品描述。
 
-16. Shipment：Shipment: SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA。
+8. Insurance：to be covered by THE BUYERS.，Insurance部分。
 
-现在需要确定每个的bbox。因为是图片，需要估计坐标。但根据文档布局：
+9. Packing：IN WOODEN CASE，Packing行。
 
-- Title：在最上方，文字“售货确认书”和“SALES CONFIRMATION”，所以bbox大概是[290, 100, 710, 150]左右（假设页面布局）。
+10. Payment：T/T IN ADVANCE，Payment行。
 
-- BUYERS的Company Name：BUYERS: 后面的公司名，位置在左侧上方，比如[110, 200, 460, 225]。
+11. Price：EUR3.87/PC，Price列。
 
-- SELLERS的Company Name：SELLERS: 后面的公司名，位置在左侧中间，比如[110, 290, 500, 315]。
+12. Quantity：12000PCS，Quantity列。
 
-- BUYERS的Address：BUYERS下面的地址，[110, 225, 460, 245]。
+13. SELLERS：Haichuang Information Co., Ltd.，SELLERS的公司名。
 
-- SELLERS的ADD：SELLERS:后面的ADD: ，[110, 315, 600, 335]。
+14. SIGNED AT：P.R.CHINA，SIGNED AT: 后面的内容。
 
-- CONTRACT NO.：右侧的CONTRACT NO.: AMF219108，[660, 200, 800, 220]。
+15. Shipment：SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA，Shipment行。
 
-- DATE：右侧的DATE: OCT.12, 2021，[660, 225, 780, 245]。
+16. Title：售货确认书 SALES CONFIRMATION，标题。
 
-- SIGNED AT：右侧的SIGNED AT: P.R.CHINA，[660, 245, 780, 265]。
+现在需要确定每个的bbox。因为是图像中的位置，需要估计每个部分的坐标。假设图像的宽度是整个页面，每个元素的位置：
 
-- Description of goods：表格的第一列，ANODE ROD，对应行的描述，比如在表格部分，列标题是Description of goods，内容是ANODE ROD，所以bbox是表格中该单元格，比如[110, 380, 300, 400]。
+- Title：位于页面上方，居中。文字是“售货确认书”和“SALES CONFIRMATION”，所以bbox大概是[330, 80, 669, 140]（因为两行，中文和英文）。
 
-- Quantity：表格中第二列，12000PCS，bbox是[310, 380, 420, 400]。
+- Company Name（BUYERS）：BUYERS: Haichuang Information Co., Ltd.，所以这部分的bbox是[110, 190, 475, 210]左右。
 
-- Price：表格中第三列，EUR3.87/PC，bbox是[430, 380, 540, 400]。
+- Address（BUYERS）：05062 Mullins Square Bartontown, MA 31201，bbox是[110, 215, 475, 235]。
 
-- Amount：表格中第四列，EUR46440.00，bbox是[550, 380, 660, 400]。
+- CONTRACT NO.：右上角，CONTRACT NO.: AMF219108，bbox是[600, 195, 825, 215]。
 
-- Insurance：Insurance: ...，在Packing下面，bbox是[110, 450, 350, 470]。
+- SELLERS：SELLERS:Haichuang Information Co., Ltd.，bbox是[110, 240, 525, 260]。
 
-- Packing：Packing: ...，在表格下面，bbox是[110, 430, 300, 450]。
+- ADD：ADD:56713 Campbell Forge Apt. 056 East Katherine, OR 46225，bbox是[110, 265, 590, 285]。
 
-- Payment：Payment: ...，在Insurance下面，bbox是[110, 470, 300, 490]。
+- SIGNED AT：SIGNED AT: P.R.CHINA，bbox是[600, 240, 765, 260]。
 
-- Shipment：Shipment: ...，在Packing下面，bbox是[110, 490, 550, 510]。
+- DATE：DATE: OCT.12, 2021，bbox是[600, 265, 765, 285]。
 
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。
+- Description of goods：表格的表头，第一列是Description of goods，对应ANODE ROD行，所以Description of goods的标签是表头，内容是ANODE ROD。不过可能需要看表头的“Description of goods”作为label，其位置是表格的第一行表头，bbox是[110, 320, 275, 340]。
 
-需要注意的是，有些类别可能重复，比如Company Name有两个（BUYERS和SELLERS），但用户给的类别是Company Name，所以都要包含。
+- Quantity：表头的Quantity，bbox是[280, 320, 365, 340]，内容是12000PCS在该列。
 
-现在开始逐个列出：
+- Price：表头的Price，bbox是[370, 320, 455, 340]，内容是EUR3.87/PC。
 
-1. Title：售货确认书 SALES CONFIRMATION → label: Title，bbox覆盖标题区域。
+- Amount：表头的Amount，bbox是[465, 320, 540, 340]，内容是EUR46440.00。
 
-2. Company Name（BUYERS）：Haichuang Information Co., Ltd. → label: Company Name，bbox是BUYERS后的公司名。
+- Insurance：Insurance: to be covered by THE BUYERS.，bbox是[110, 400, 340, 420]。
 
-3. Company Name（SELLERS）：Haichuang Information Co., Ltd. → label: Company Name，bbox是SELLERS后的公司名。
+- Packing：Packing: IN WOODEN CASE，bbox是[110, 425, 275, 445]。
 
-4. Address（BUYERS）：05062 Mullins Square Bartontown, MA 31201 → label: Address，bbox是BUYERS后的地址。
+- Shipment：Shipment: SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA，bbox是[110, 450, 600, 470]。
 
-5. ADD（SELLERS）：56713 Campbell Forge Apt. 056 East Katherine, OR 46225 → label: ADD，bbox是SELLERS后的ADD: 后的内容。
+- Payment：Payment: T/T IN ADVANCE，bbox是[110, 475, 275, 495]。
 
-6. CONTRACT NO.：AMF219108 → label: CONTRACT NO.，bbox是CONTRACT NO.后的号码。
+现在需要把每个类别对应起来，确保每个label都有对应的bbox。
 
-7. DATE：OCT.12, 2021 → label: DATE，bbox是DATE后的日期。
+现在整理每个条目：
 
-8. SIGNED AT：P.R.CHINA → label: SIGNED AT，bbox是SIGNED AT后的地点。
+1. ADD: 对应SELLERS的ADD地址，label是ADD，bbox是SELLERS地址行。
+2. Address: 对应BUYERS的地址，label是Address，bbox是BUYERS地址行。
+3. Amount: 对应ANODE ROD的Amount值，label是Amount，bbox是Amount列的内容（EUR46440.00）。
+4. CONTRACT NO.: AMF219108，label是CONTRACT NO.，bbox是CONTRACT NO.的值。
+5. Company Name: BUYERS的公司名，label是Company Name，bbox是BUYERS:后的公司名。
+6. DATE: OCT.12, 2021，label是DATE，bbox是DATE的值。
+7. Description of goods: ANODE ROD，label是Description of goods，bbox是商品描述的内容。
+8. Insurance: to be covered by THE BUYERS.，label是Insurance，bbox是Insurance的内容。
+9. Packing: IN WOODEN CASE，label是Packing，bbox是Packing的内容。
+10. Payment: T/T IN ADVANCE，label是Payment，bbox是Payment的内容。
+11. Price: EUR3.87/PC，label是Price，bbox是Price的内容。
+12. Quantity: 12000PCS，label是Quantity，bbox是Quantity的内容。
+13. SELLERS: Haichuang Information Co., Ltd.，label是SELLERS，bbox是SELLERS:后的公司名。
+14. SIGNED AT: P.R.CHINA，label是SIGNED AT，bbox是SIGNED AT的值。
+15. Shipment: SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA，label是Shipment，bbox是Shipment的内容。
+16. Title: 售货确认书 SALES CONFIRMATION，label是Title，bbox是标题部分。
 
-9. Description of goods：ANODE ROD → label: Description of goods，bbox是表格中该描述单元格。
+现在需要为每个生成对应的JSON对象。需要注意每个的bbox要准确，可能需要根据图像中的位置大致估计。
 
-10. Quantity：12000PCS → label: Quantity，bbox是表格中数量单元格。
+现在开始逐个构建：
 
-11. Price：EUR3.87/PC → label: Price，bbox是表格中价格单元格。
+- Title: 文字是“售货确认书”和“SALES CONFIRMATION”，位于页面上方居中。bbox大概是从x=300到x=650，y=80到y=140。所以{"bbox_2d": [325, 85, 665, 135], "label": "Title"}
 
-12. Amount：EUR46440.00 → label: Amount，bbox是表格中金额单元格。
+- Company Name（BUYERS）: BUYERS: Haichuang Information Co., Ltd.，bbox是x=110到x=470，y=190到y=210。{"bbox_2d": [112, 192, 473, 212], "label": "Company Name"}
 
-13. Insurance：to be covered by THE BUYERS. → label: Insurance，bbox是Insurance: 后的内容。
+- Address（BUYERS）: 05062 Mullins Square Bartontown, MA 31201，bbox是x=112到x=473，y=215到y=235。{"bbox_2d": [112, 217, 473, 237], "label": "Address"}
 
-14. Packing：IN WOODEN CASE → label: Packing，bbox是Packing: 后的内容。
+- CONTRACT NO.: AMF219108，bbox是x=602到x=822，y=195到y=215。{"bbox_2d": [600, 195, 825, 215], "label": "CONTRACT NO."}
 
-15. Payment：T/T IN ADVANCE → label: Payment，bbox是Payment: 后的内容。
+- SELLERS: Haichuang Information Co., Ltd.，bbox是x=112到x=523，y=240到y=260。{"bbox_2d": [112, 242, 524, 262], "label": "SELLERS"}
 
-16. Shipment：SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA → label: Shipment，bbox是Shipment: 后的内容。
+- ADD: 56713 Campbell Forge Apt. 056 East Katherine, OR 46225，bbox是x=112到x=588，y=265到y=285。{"bbox_2d": [112, 267, 587, 287], "label": "ADD"}
 
-现在需要确定每个的准确bbox，由于是示意图，可能需要根据文档的布局来估计。例如：
+- SIGNED AT: P.R.CHINA，bbox是x=600到x=764，y=240到y=260。{"bbox_2d": [600, 242, 764, 262], "label": "SIGNED AT"}
 
-- Title的bbox：整个标题部分，从顶部的“售货确认书”到“SALES CONFIRMATION”，所以x范围大约是页面中间，y是顶部。比如[280, 80, 720, 140]（假设页面高度，这里可能需要更准确，但大致）。
+- DATE: OCT.12, 2021，bbox是x=600到x=764，y=265到y=285。{"bbox_2d": [600, 267, 764, 287], "label": "DATE"}
 
-- BUYERS的Company Name：BUYERS: 后面的公司名，位置在左侧，比如[115, 205, 455, 225]。
+- Description of goods: ANODE ROD，对应表格中第一行商品描述，表头是Description of goods，内容是ANODE ROD。表头的Description of goods的bbox是x=112到x=274，y=320到y=340。{"bbox_2d": [112, 322, 274, 342], "label": "Description of goods"}
 
-- SELLERS的Company Name：SELLERS: 后面的公司名，比如[115, 300, 500, 320]。
+- Quantity: 12000PCS，对应Quantity列的内容，表头Quantity的bbox是x=280到x=364，y=320到y=340，内容在该列。所以Quantity的label对应内容的bbox是x=282到x=362，y=345到y=365（因为内容在下面一行）。不过可能更简单的是表头的Quantity作为label的定位，或者内容的位置。这里可能需要看内容的位置，即12000PCS所在的单元格，bbox是x=280到x=365，y=345到y=365。{"bbox_2d": [282, 347, 362, 367], "label": "Quantity"}
 
-- BUYERS的Address：BUYERS下面的地址，[115, 225, 455, 245]。
+- Price: EUR3.87/PC，内容在Price列，bbox是x=372到x=454，y=347到y=367。{"bbox_2d": [372, 347, 454, 367], "label": "Price"}
 
-- SELLERS的ADD：SELLERS:后的ADD: ，[115, 320, 600, 340]。
+- Amount: EUR46440.00，内容在Amount列，bbox是x=464到x=540，y=347到y=367。{"bbox_2d": [464, 347, 540, 367], "label": "Amount"}
 
-- CONTRACT NO.：右侧的CONTRACT NO.: AMF219108，[665, 205, 800, 225]。
+- Insurance: to be covered by THE BUYERS.，bbox是x=112到x=340，y=400到y=420。{"bbox_2d": [112, 402, 340, 422], "label": "Insurance"}
 
-- DATE：右侧的DATE: OCT.12, 2021，[665, 225, 785, 245]。
+- Packing: IN WOODEN CASE，bbox是x=112到x=274，y=425到y=445。{"bbox_2d": [112, 427, 274, 447], "label": "Packing"}
 
-- SIGNED AT：右侧的SIGNED AT: P.R.CHINA，[665, 245, 785, 265]。
+- Shipment: SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA，bbox是x=112到x=600，y=450到y=470。{"bbox_2d": [112, 452, 600, 472], "label": "Shipment"}
 
-- Description of goods：表格中第一列，ANODE ROD，比如在表格的行，列标题是Description of goods，内容是ANODE ROD，所以bbox是[115, 385, 300, 405]。
+- Payment: T/T IN ADVANCE，bbox是x=112到x=274，y=475到y=495。{"bbox_2d": [112, 477, 274, 497], "label": "Payment"}
 
-- Quantity：表格中第二列，12000PCS，[310, 385, 420, 405]。
+现在需要检查是否所有16个类别都覆盖了。数一下：
 
-- Price：表格中第三列，EUR3.87/PC，[430, 385, 540, 405]。
+1. Title
+2. Company Name
+3. Address
+4. CONTRACT NO.
+5. SELLERS
+6. ADD
+7. SIGNED AT
+8. DATE
+9. Description of goods
+10. Quantity
+11. Price
+12. Amount
+13. Insurance
+14. Packing
+15. Shipment
+16. Payment
 
-- Amount：表格中第四列，EUR46440.00，[550, 385, 660, 405]。
+是的，16个。现在需要确保每个的label正确，没有重复或遗漏。
 
-- Insurance：Insurance: ...，在Packing下面，比如[115, 455, 350, 475]。
-
-- Packing：Packing: IN WOODEN CASE，[115, 435, 300, 455]。
-
-- Payment：Payment: T/T IN ADVANCE，[115, 475, 300, 495]。
-
-- Shipment：Shipment: ...，[115, 495, 550, 515]。
-
-现在将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-需要注意的是，有些元素可能在图中没有显示完整的，但根据提供的图片内容，这些类别都存在。现在开始编写每个条目：
-
-1. Title: 售货确认书 SALES CONFIRMATION → bbox覆盖标题，比如[285, 85, 715, 135]
-2. Company Name (BUYERS): Haichuang Information Co., Ltd. → [110, 202, 460, 222]
-3. Company Name (SELLERS): Haichuang Information Co., Ltd. → [110, 300, 500, 320]
-4. Address (BUYERS): 05062 Mullins Square Bartontown, MA 31201 → [110, 222, 460, 242]
-5. ADD (SELLERS): 56713 Campbell Forge Apt. 056 East Katherine, OR 46225 → [110, 320, 600, 340]
-6. CONTRACT NO.: AMF219108 → [660, 202, 800, 222]
-7. DATE: OCT.12, 2021 → [660, 222, 780, 242]
-8. SIGNED AT: P.R.CHINA → [660, 242, 780, 262]
-9. Description of goods: ANODE ROD → [110, 382, 300, 402]
-10. Quantity: 12000PCS → [310, 382, 420, 402]
-11. Price: EUR3.87/PC → [430, 382, 540, 402]
-12. Amount: EUR46440.00 → [550, 382, 660, 402]
-13. Insurance: to be covered by THE BUYERS. → [110, 452, 350, 472]
-14. Packing: IN WOODEN CASE → [110, 432, 300, 452]
-15. Payment: T/T IN ADVANCE → [110, 472, 300, 492]
-16. Shipment: SHIPMENT FROM SHANGHAI PORT, CHINA TO BANDAR ABBAS PORT, IRAN BY SEA → [110, 492, 550, 512]
-
-现在需要检查是否有遗漏的类别。用户给的类别列表是：ADD, Address, Amount, CONTRACT NO., Company Name, DATE, Description of goods, Insurance, Packing, Payment, Price, Quantity, SELLERS, SIGNED AT, Shipment, Title。共16个类别，上面列了16个，每个类别对应一个或多个实例（比如Company Name有两个，Title一个，其他各一个）。
-
-现在确认每个类别都覆盖了：
-
-- ADD：是（SELLERS的ADD）
-- Address：是（BUYERS的地址）
-- Amount：是（表格中的Amount列）
-- CONTRACT NO.：是
-- Company Name：是（两个实例，但都属于Company Name类别）
-- DATE：是
-- Description of goods：是
-- Insurance：是
-- Packing：是
-- Payment：是
-- Price：是
-- Quantity：是
-- SELLERS：是（SELLERS的Company Name，或者SELLERS作为类别？不，用户给的类别是SELLERS，看用户给的类别列表里有SELLERS，所以SELLERS是公司名称的标识，即SELLERS: 后面的公司名，所以之前的Company Name（SELLERS）对应SELLERS类别？哦，用户给的类别里有“SELLERS”和“Company Name”？不，看用户给的类别列表：
-
-用户给的类别是：ADD, Address, Amount, CONTRACT NO., Company Name, DATE, Description of goods, Insurance, Packing, Payment, Price, Quantity, SELLERS, SIGNED AT, Shipment, Title.
-
-哦，这里可能我之前搞错了。用户给的类别中，有“Company Name”和“SELLERS”是两个不同的类别？不，看用户提供的类别列表：
-
-“Detect all objects matching these categories in this document image: ADD, Address, Amount, CONTRACT NO., Company Name, DATE, Description of goods, Insurance, Packing, Payment, Price, Quantity, SELLERS, SIGNED AT, Shipment, Title.”
-
-所以“Company Name”和“SELLERS”是两个不同的类别？不，“SELLERS”是标识，比如“SELLERS:”后面的公司名属于“Company Name”还是“SELLERS”？看用户给的类别里有“SELLERS”这个类别，所以“SELLERS”对应的是“SELLERS:”后面的公司名，而“Company Name”可能是指BUYERS的公司名？或者可能“Company Name”是通用的公司名称，而“SELLERS”是卖方的公司名称，属于“Company Name”下的？不，用户明确列出了“Company Name”和“SELLERS”作为两个类别，所以需要区分。
-
-重新看用户给的类别列表：
-
-类别包括：ADD, Address, Amount, CONTRACT NO., Company Name, DATE, Description of goods, Insurance, Packing, Payment, Price, Quantity, SELLERS, SIGNED AT, Shipment, Title.
-
-所以“SELLERS”是一个单独的类别，指“SELLERS:”后面的公司名；“Company Name”可能是指BUYERS的公司名？或者可能“Company Name”是BUYERS的公司名，而“SELLERS”是SELLERS的公司名，都是“Company Name”？但用户把“SELLERS”单独列出来，所以需要将“SELLERS:”后面的公司名标记为“SELLERS”类别，而“BUYERS:”后面的公司名标记为“Company Name”？或者可能“Company Name”是两者都属于，而“SELLERS”是标识？不，用户给的类别里有“SELLERS”和“Company Name”，所以需要看文档中的“SELLERS:”和“BUYERS:”对应的公司名。
-
-在文档中
+现在将这些整理成JSON数组。
+</think>
+[{"bbox_2d": [325, 85, 665, 135], "label": "Title"}, {"bbox_2d": [112, 192, 473, 212], "label": "Company Name"}, {"bbox_2d": [112, 217, 473, 237], "label": "Address"}, {"bbox_2d": [600, 195, 825, 215], "label": "CONTRACT NO."}, {"bbox_2d": [112, 242, 524, 262], "label": "SELLERS"}, {"bbox_2d": [112, 267, 587, 287], "label": "ADD"}, {"bbox_2d": [600, 242, 764, 262], "label": "SIGNED AT"}, {"bbox_2d": [600, 267, 764, 287], "label": "DATE"}, {"bbox_2d": [112, 322, 274, 342], "label": "Description of goods"}, {"bbox_2d": [282, 347, 362, 367], "label": "Quantity"}, {"bbox_2d": [372, 347, 454, 367], "label": "Price"}, {"bbox_2d": [464, 347, 5

@@ -1,10 +1,72 @@
+Got it, let's extract each required field from the tax invoice.
+
+First, date: The date is on the invoice, "09/02/2018 09:21:19 AM". Let's find its location.
+
+doc_no_receipt_no: Invoice No. is T01-006194.
+
+seller_address: The address is NO.8, JALAN 46/26, TAMAN SRI RAMPAI, 53300 KUALA LUMPUR.
+
+seller_gst_id: GST Reg. : 001542721536.
+
+seller_name: LA STATIONERY SDN BHD (640899-P).
+
+seller_phone: Tel No. : 03 - 4023 0088.
+
+total_amount: Rounded Total (RM) is 56.80.
+
+total_tax: In GST Summary, Tax(RM) is 3.21 (since SR @6% and the tax amount is 3.21).
+
+Now, map each to their bounding boxes.
+
+Let's check each element:
+
+1. date: The line "Date : 09/02/2018 09:21:19 AM" — the date part is the value. Bounding box around that text.
+
+2. doc_no_receipt_no: "Invoice No. : T01-006194" — the value is T01-006194.
+
+3. seller_address: The address lines: "NO.8, JALAN 46/26, TAMAN SRI RAMPAI, 53300 KUALA LUMPUR."
+
+4. seller_gst_id: "GST Reg. : 001542721536" — the ID is 001542721536.
+
+5. seller_name: "LA STATIONERY SDN BHD (640899-P)" — that's the name.
+
+6. seller_phone: "Tel No. : 03 - 4023 0088" — the phone number.
+
+7. total_amount: "Rounded Total (RM): 56.80" — the total is 56.80.
+
+8. total_tax: In the GST Summary, the Tax(RM) is 3.21 (the highlighted box at the bottom right shows 3.21).
+
+Now, need to define the bounding boxes for each. Let's look at the image coordinates.
+
+For example, seller_name is the line "LA STATIONERY SDN BHD (640899-P)" — that's a prominent line.
+
+Let's list each:
+
+- date: The line "Date : 09/02/2018 09:21:19 AM" — the value is the date part. Bounding box around that text.
+
+- doc_no_receipt_no: "Invoice No. : T01-006194" — the value is T01-006194.
+
+- seller_address: The address block: "NO.8, JALAN 46/26, TAMAN SRI RAMPAI, 53300 KUALA LUMPUR."
+
+- seller_gst_id: "GST Reg. : 001542721536"
+
+- seller_name: "LA STATIONERY SDN BHD (640899-P)"
+
+- seller_phone: "Tel No. : 03 - 4023 0088"
+
+- total_amount: "Rounded Total (RM): 56.80" — the 56.80 is the amount.
+
+- total_tax: The tax amount in GST Summary is 3.21 (from the last line "SR @ 6 % ... Tax(RM) 3.21")
+
+Now, create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [44, 284, 520, 303], "label": "date"},
-    {"bbox_2d": [44, 262, 620, 281], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [44, 170, 592, 212], "label": "seller_address"},
-    {"bbox_2d": [44, 236, 420, 255], "label": "seller_gst_id"},
-    {"bbox_2d": [42, 146, 624, 169], "label": "seller_name"},
-    {"bbox_2d": [44, 214, 320, 233], "label": "seller_phone"},
-    {"bbox_2d": [202, 522, 558, 541], "label": "total_amount"},
-    {"bbox_2d": [842, 962, 872, 981], "label": "total_tax"}
+    {"bbox_2d": [101, 234, 332, 252], "label": "date"},
+    {"bbox_2d": [305, 240, 425, 257], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [44, 262, 538, 298], "label": "seller_address"},
+    {"bbox_2d": [134, 272, 332, 289], "label": "seller_gst_id"},
+    {"bbox_2d": [44, 202, 622, 222], "label": "seller_name"},
+    {"bbox_2d": [114, 286, 264, 303], "label": "seller_phone"},
+    {"bbox_2d": [534, 317, 568, 334], "label": "total_amount"},
+    {"bbox_2d": [854, 972, 887, 990], "label": "total_tax"}
 ]

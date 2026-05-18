@@ -1,1 +1,37 @@
-[{"bbox_2d": [162, 105, 837, 137], "label": "company"}, {"bbox_2d": [283, 155, 717, 205], "label": "address"}, {"bbox_2d": [540, 230, 645, 252], "label": "date"}, {"bbox_2d": [500, 532, 602, 552], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is "SYARIKAT PERNIAGAAN GIN KEE" along with the (81109-A) part. Let's check the bounding box for that.
+- Address: The address lines are NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR.
+- Date: The date is 27/01/2018.
+- Total: The total sales inclusive of GST is 22.26, and also the total in GST summary is 21.00 for amount. Wait, the question says "total" which probably refers to the total sales amount. Let's check the invoice. The "Total Sales (Inclusive of GST)" is 22.26, and the cash is also 22.26. Let's confirm.
+
+Now, let's map each:
+
+1. Company: The header part. Bounding box for the company name.
+2. Address: The address lines.
+3. Date: The date field.
+4. Total: The total sales amount, which is 22.26 (Total Sales (Inclusive of GST)).
+
+Let's find the coordinates.
+
+First, company: The text "SYARIKAT PERNIAGAAN GIN KEE" is in the top part. Let's check the bounding box.
+
+Address: The lines from "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR."
+
+Date: "Date: 27/01/2018" — the date value is 27/01/2018.
+
+Total: The "Total Sales (Inclusive of GST) : 22.26" — so the total value is 22.26.
+
+Now, let's check the bounding boxes.
+
+For company: The text is in the upper part. Let's see the coordinates. The company name is in a block. Let's take the main company name.
+
+Address: The address is multiple lines. Let's capture the entire address block.
+
+Date: The date is in the section with Doc No. and Time.
+
+Total: The total sales inclusive of GST is a key total.
+
+Let's structure each entry.
+</think>
+[{"bbox_2d": [190, 109, 809, 132], "label": "company"}, {"bbox_2d": [295, 187, 704, 228], "label": "address"}, {"bbox_2d": [559, 297, 647, 316], "label": "date"}, {"bbox_2d": [105, 527, 300, 547], "label": "total"}]

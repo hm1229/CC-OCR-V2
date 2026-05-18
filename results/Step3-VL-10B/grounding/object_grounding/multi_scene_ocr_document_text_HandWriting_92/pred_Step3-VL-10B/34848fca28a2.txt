@@ -1,1 +1,46 @@
-[{"bbox_2d": [310, 320, 452, 628], "label": "DATE"}, {"bbox_2d": [553, 320, 749, 628], "label": "CITY"}, {"bbox_2d": [751, 320, 834, 628], "label": "STATE"}, {"bbox_2d": [832, 320, 930, 628], "label": "ZIP"}]
+用户现在需要检测CITY、DATE、STATE、ZIP四个字段的值和对应的 bounding box。首先看每个字段的位置：
+
+DATE的框是中间偏左的输入框，里面是9/16/89。CITY是La Luz，对应框是CITY下面的输入框。STATE是NM，ZIP是88337。需要确定每个的坐标。
+
+先看DATE的输入框：在NAME右边，DATE标签下的矩形框，里面手写的是9/16/89。所以DATE的bbox是那个矩形框的范围。
+
+CITY的输入框是CITY标签下的，里面是La Luz。STATE是STATE标签下的，内容是NM。ZIP是ZIP标签下的，内容是88337。
+
+现在要确定每个的bounding box。看图片中的布局：
+
+DATE的框：从DATE标签下的矩形，坐标大概是[297, 325, 447, 625]左右？需要看图片中的位置。原图片中，DATE的输入框是中间的矩形，CITY是右边的矩形，然后STATE和ZIP在CITY右边的同一行？不，看原表单的结构：NAME是左边黑色块，然后DATE是下一个框，CITY是下一个框，然后STATE和ZIP在CITY右边的同一行？看原图片中的标签：CITY、STATE、ZIP是同一行的标签，所以CITY的框，然后STATE在CITY右边，ZIP在STATE右边。所以CITY的输入框是包含La Luz的，STATE是NM，ZIP是88337。
+
+现在逐个分析：
+
+1. DATE：标签是DATE，对应的输入框里的内容是9/16/89。所以bbox是DATE标签下方的矩形框，即[296, 322, 449, 627]（大概范围，看图片中的框）。
+
+2. CITY：标签是CITY，对应的输入框里的内容是La Luz。bbox是CITY标签下方的矩形框，即[397, 322, 625, 627]（因为CITY的框在DATE右边，包含La Luz）。
+
+3. STATE：标签是STATE，对应的输入是NM。bbox是STATE标签下方的区域，即[626, 322, 717, 627]（因为STATE在CITY右边，和CITY同一行，所以这个框是STATE对应的位置，里面是NM）。
+
+4. ZIP：标签是ZIP，对应的是88337。bbox是ZIP标签下方的区域，即[720, 322, 834, 627]（ZIP在STATE右边，同一行，里面是88337）。
+
+现在需要确认每个的坐标是否正确。看原图片中的手写内容：
+
+DATE框里的手写是9/16/89，CITY是La Luz，STATE是NM，ZIP是88337。每个标签对应的输入框的位置。
+
+现在整理每个的条目：
+
+- DATE的label是DATE，bbox是DATE输入框的范围。
+- CITY的label是CITY，bbox是CITY输入框的范围。
+- STATE的label是STATE，bbox是STATE输入框的范围。
+- ZIP的label是ZIP，bbox是ZIP输入框的范围。
+
+现在需要准确提取每个的bbox。看图片中的元素：
+
+DATE的输入框：位于“DATE”标签正下方，是一个矩形，里面手写9/16/89。其坐标可以看作从x约295到x约448，y约320到y约625（因为整个表单的布局，NAME是左边黑色块，然后DATE框，然后CITY框，然后STATE和ZIP在同一行的右侧部分）。
+
+CITY的输入框：在“CITY”标签正下方，矩形，里面是La Luz。x约395到x约623，y约320到y约625。
+
+STATE的输入框：在“STATE”标签正下方，里面是NM。x约625到x约715，y约320到y约625。
+
+ZIP的输入框：在“ZIP”标签正下方，里面是88337。x约718到x约832，y约320到y约625。
+
+现在将这些转化为JSON数组，每个元素包含bbox和label。
+</think>
+[{"bbox_2d": [296, 322, 449, 627], "label": "DATE"}, {"bbox_2d": [397, 322, 625, 627], "label": "CITY"}, {"bbox_2d": [626, 322, 717, 627], "label": "STATE"}, {"bbox_2d": [720, 322, 834, 627], "label": "ZIP"}]

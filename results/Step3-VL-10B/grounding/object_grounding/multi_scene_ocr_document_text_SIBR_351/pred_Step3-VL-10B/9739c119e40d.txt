@@ -1,226 +1,161 @@
-用户现在需要从销售合同里提取指定的各个对象，每个对象要找到对应的bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从销售合同中提取各个字段的值，对应到指定的类别。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name，图最上面是“通际名联传媒有限公司 Interpretation”，所以Company Name是这个公司名，对应bbox是顶部的公司名称区域。
+首先看Company Name，图顶部是“通际名联传媒有限公司”，英文是Interpretation？不对，看标题上面的公司名是“通际名联传媒有限公司”，所以Company Name对应这个。然后Title是“SALLES CONTRACT”（注意可能拼写，图中是SALES CONTRACT）。
 
-然后ADD，图里有ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579，所以ADD的bbox是这个地址行。
+然后ADD：图中ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579，所以ADD的值是这个地址。
 
-Address可能和ADD是不是重复？看题目里的Address，可能图中的ADD就是Address？不过看题目里的类别有ADD和Address，可能需要检查。不过图中ADD是明确的，Address可能也是同样的？或者可能图中的地址是ADD，而Address可能没有单独？不过先看每个类别。
+Address？可能和ADD是同一个？不过看用户给的类别里有ADD和Address，可能需要看。不过图中ADD是公司地址，可能Address是另一个？不，图中ADD是“ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579”，而另一个地址是Messr.的地址：PSC 6372, Box 3971 APO AP 73151，TEL:617-334-4225。所以可能Address是Messr.的地址？需要看类别中的Address。用户给的类别有ADD和Address，所以ADD是上面的公司地址，Address是Messr.的地址？
 
-Tel：图里有Tel: 3051-08740750，所以Tel的bbox是这个电话行。
+然后Tel：图中Tel: 3051-08740750，是公司电话。TEL是Messr.的电话：617-334-4225。
 
-Fax：Fax: 7840-59800053，对应Fax的bbox。
+No: 图中No: 21KB9103238, 2，所以No对应这个。
 
-Messr.是Interpretation，不过可能不是需要的。然后看*Time of Shipment，图中有*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments. 所以这个是*Time of Shipment的区域。
+Date: Sep. 03, 2021。
 
-*Port of Loading: SHANGHAI, CHINA，所以*Port of Loading的bbox是这个部分。
+Fax: 7840-59800053。
 
-*Terms of Payment: 下面有两个选项，By 100% Confirmed... 和 BY T/T before shipment，所以*Terms of Payment的区域。
+Name Of Commodity And specification Packing And Shipping Mark：图中表格里的Wooden deco，Shipping Mark是这个，Quantity是8000件，Unit Price是1.09，Amount(USD)是8,720.00。Total Amount USD也是8,720.00。
 
-*Insurance: 下面有两个选项，Covering all risks... 和 To be effected by the buyer，所以*Insurance的区域。
+*Port of Loading: SHANGHAI, CHINA。
 
-No: 图右上角No: 21KB9103238, 2，所以No的bbox是这个编号。
+*Port of Destination: USA。
 
-Date: Sep. 03, 2021，对应Date的bbox。
+*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments. 这里是时间条款。
 
-Port of Destination: USA，所以Port of Destination的bbox。
+*Insurance: 有两个选项，□Covering all risks and war risk only (excluding S.R.C.C)as per the China Insurance Clauses. 和□To be effected by the buyer. 所以*Insurance对应这些内容。
 
-Name Of Commodity And specification Packing And Shipping Mark：图中有一个表格，第一行是这个标题，下面对应Wooden deco等，所以这个标题的bbox是表格的表头部分。
+Terms of Payment: 有两个选项，□By 100% Confirmed, Irrevocable, Transferable and Divisible Letter of Credit to be available by sight draft and remain valid for negotiation in China until the 15th day after the aforesaid Time of Shipment. 和□BY T/T before shipment。
 
-Quantity：表格中的Quantity列，对应8000件的位置。
+Remarks: 下面的(1)到(6)是备注内容。
 
-Unit Price：表格中的Unit Price列，对应1.09的位置。
+现在需要逐个对应每个类别，找到它们的bbox。
 
-Amount(USD)：表格中的Amount(USD)列，对应8,720.00的位置。
+首先列出所有类别：
 
-Total Amount USD：Total Amount: 8,720.00 USD，所以这个是Total Amount USD的bbox。
+*Insurance, *Port of Loading, *Time of Shipment, ADD, Address, Amount(USD), Company Name, Date, Fax, Name Of Commodity And specification Packing And Shipping Mark, No, Port of Destination, Quantity, Remarks, TEL, Tel, Terms of Payment, Title, Total Amount USD, Unit Price.
 
-Remarks：下面的Remarks: 后面的说明，所以Remarks的区域。
+现在逐个处理：
 
-TEL：Messr.下面的TEL: 617-334-4225，所以TEL的bbox是这个电话。
+1. Company Name：图顶部“通际名联传媒有限公司”，英文是Interpretation？不，标题上面是公司名，所以Company Name的bbox是顶部的大标题，即“通际名联传媒有限公司”和下面的Interpretation？看原文，第一行是“通际名联传媒有限公司”，然后是Interpretation，然后是SALES CONTRACT。所以Company Name是“通际名联传媒有限公司”，对应的bbox是[109, 10, 890, 50]左右？看图片中的文字，第一行是公司名，所以bbox是[112, 12, 887, 48]（假设）。
 
-Tel：前面的Tel: 3051-08740750，是另一个Tel？可能题目里的Tel和TEL是不同的？看题目里的类别有Tel和TEL，所以需要区分。图中上面的Tel是3051-...，下面Messr.的TEL是617-...，所以两个Tel？但题目里的类别是Tel和TEL，可能需要分别处理。不过看题目中的类别列表，有Tel和TEL，所以要找这两个。
+2. Title：SALES CONTRACT，对应图中的“SALES CONTRACT”，bbox是[445, 140, 740, 165]左右。
 
-Title：图中的“SALLES CONTRACT”是标题，所以Title的bbox是这个标题。
+3. ADD：图中“ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579”，bbox是[38, 202, 447, 222]。
 
-现在逐个整理：
+4. Address：Messr.的地址“PSC 6372, Box 3971 APO AP 73151”，在Messr.那一行，所以bbox是[112, 232, 437, 250]。
 
-1. Company Name：通际名联传媒有限公司 Interpretation，bbox是顶部的大标题，比如[133, 12, 866, 60]左右（因为图中最上面是公司名，然后是Interpretation，然后是SALLES CONTRACT）。
+5. Tel：公司电话“3051-08740750”，在ADD下面，Tel: 后面，bbox是[40, 224, 210, 242]。
 
-2. ADD：ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579，bbox是[40, 152, 447, 168]左右。
+6. TEL：Messr.的电话“617-334-4225”，在Messr.的TEL: 后面，bbox是[112, 252, 292, 268]。
 
-3. Address：可能和ADD重复？但题目里有Address，可能图中没有单独的Address，或者ADD就是Address？可能题目中的Address对应ADD？或者可能图中的地址是ADD，而Address没有其他，所以可能Address的bbox和ADD一样？不过先看题目中的类别，ADD是单独的，Address也是，可能图中没有Address，或者可能我漏看了。再检查图中的内容，图中ADD是明确的，Address可能没有，或者可能Address是公司地址？可能这里可能Address和ADD是同一个，或者可能题目中的Address是另一个？暂时先处理明确的。
+7. No：图中右上角“No: 21KB9103238, 2”，bbox是[730, 190, 890, 210]。
 
-4. Tel：Tel: 3051-08740750，bbox是[40, 168, 162, 184]。
+8. Date：Sep. 03, 2021，在Date: 后面，bbox是[670, 242, 830, 260]。
 
-5. Fax：Fax: 7840-59800053，bbox是[447, 168, 597, 184]。
+9. Fax：7840-59800053，在Fax: 后面，bbox是[470, 204, 620, 222]。
 
-6. *Time of Shipment：*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments.，bbox是[28, 372, 597, 390]。
+10. *Port of Loading：SHANGHAI, CHINA，图中“*Port of Loading: SHANGHAI, CHINA”，bbox是[100, 310, 420, 328]（因为Port of Loading是加粗的，下面内容是SHANGHAI, CHINA）。
 
-7. *Port of Loading：*Port of Loading: SHANGHAI, CHINA，bbox是[28, 392, 447, 410]。
+11. *Port of Destination：USA，图中“Port of Destination: USA”，bbox是[450, 310, 650, 328]。
 
-8. *Terms of Payment：*Terms of Payment: 下面的两个选项，bbox是[28, 412, 597, 468]（因为包含两个选项）。
+12. *Time of Shipment：图中“*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments.”，bbox是[90, 328, 520, 346]。
 
-9. *Insurance：*Insurance: 下面的两个选项，bbox是[28, 468, 597, 496]。
+13. *Insurance：图中“*Insurance: □Covering all risks and war risk only (excluding S.R.C.C)as per the China Insurance Clauses. □ To be effected by the buyer.”，bbox是[90, 356, 650, 390]（因为Insurance部分有两个选项）。
 
-10. No：No: 21KB9103238, 2，bbox是[750, 152, 892, 168]。
+14. Terms of Payment：图中“*Terms of Payment: □By 100% Confirmed, Irrevocable, Transferable and Divisible Letter of Credit to be available by sight draft and remain valid for negotiation in China until the 15th day after the aforesaid Time of Shipment. □ BY T/T before shipment”，bbox是[90, 372, 650, 416]。
 
-11. Date：Date: Sep. 03, 2021，bbox是[750, 184, 892, 198]。
+15. Name Of Commodity And specification Packing And Shipping Mark：图中表格里的“Wooden deco”是商品名，Shipping Mark对应这个，所以这一行的内容，bbox是[70, 380, 450, 400]（表格的第一行，商品名是Wooden deco，Shipping Mark列）。
 
-12. Port of Destination：Port of Destination: USA，bbox是[447, 392, 597, 410]。
+16. Quantity：8000件，表格中Quantity列，bbox是[320, 380, 420, 400]。
 
-13. Name Of Commodity And specification Packing And Shipping Mark：表格的表头，即“Name Of Commodity And specification Packing And Shipping Mark”这一行，bbox是[28, 228, 447, 250]（因为表格的第一行是这个标题）。
+17. Unit Price：1.09，表格中Unit Price列，bbox是[460, 380, 520, 400]。
 
-14. Quantity：表格中的Quantity列，对应“8000 件”的位置，bbox是[300, 250, 447, 270]（看表格结构，Quantity列的单元格）。
+18. Amount(USD)：8,720.00，表格中Amount(USD)列，bbox是[600, 380, 720, 400]。
 
-15. Unit Price：表格中的Unit Price列，对应“1.09”的位置，bbox是[450, 250, 597, 270]。
+19. Total Amount USD：Total Amount: 8,720.00 USD，图中总金额部分，bbox是[510, 402, 760, 420]。
 
-16. Amount(USD)：表格中的Amount(USD)列，对应“8,720.00”的位置，bbox是[600, 250, 747, 270]。
+20. Remarks：图中“Remarks:”下面的(1)到(6)内容，bbox是[70, 430, 650, 620]（因为Remarks包含多个条款）。
 
-17. Total Amount USD：Total Amount: 8,720.00 USD，bbox是[500, 300, 747, 320]（看Total Amount那一行）。
+现在需要确认每个类别的对应，然后整理成JSON数组。需要注意每个元素的bbox和label。
 
-18. Remarks：Remarks: 后面的所有说明，bbox是[28, 500, 597, 630]（因为Remarks下面有多个条款）。
+现在逐一列出：
 
-19. TEL：Messr.下面的TEL: 617-334-4225，bbox是[150, 220, 310, 236]（看Messr.的地址下面的TEL）。
+- Company Name: bbox是公司名称所在区域，即“通际名联传媒有限公司”，对应文字在图的最上方，所以bbox大概[110, 10, 888, 46]，label是Company Name。
+- Title: “SALES CONTRACT”在公司名下面，Interpretation下面，所以bbox是[443, 142, 742, 164]，label是Title。
+- ADD: “ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579”，bbox是[38, 200, 446, 222]，label是ADD。
+- Address: Messr.的地址“PSC 6372, Box 3971 APO AP 73151”，在Messr.那一行，bbox是[112, 230, 436, 250]，label是Address。
+- Tel: 公司电话“3051-08740750”，在ADD下面，Tel: 后面，bbox是[40, 222, 210, 242]，label是Tel。
+- TEL: Messr.的电话“617-334-4225”，在Messr.的TEL: 后面，bbox是[112, 250, 292, 268]，label是TEL。
+- No: “No: 21KB9103238, 2”，在右上角，bbox是[730, 188, 890, 208]，label是No。
+- Date: “Date: Sep. 03, 2021”，在Date: 后面，bbox是[670, 240, 830, 260]，label是Date。
+- Fax: “Fax: 7840-59800053”，在Fax: 后面，bbox是[470, 202, 620, 220]，label是Fax。
+- *Port of Loading: “*Port of Loading: SHANGHAI, CHINA”，bbox是[100, 308, 420, 328]，label是*Port of Loading。
+- *Port of Destination: “Port of Destination: USA”，bbox是[450, 308, 650, 328]，label是*Port of Destination。
+- *Time of Shipment: “*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments.”，bbox是[90, 326, 520, 346]，label是*Time of Shipment。
+- *Insurance: “*Insurance: □Covering all risks and war risk only (excluding S.R.C.C)as per the China Insurance Clauses. □ To be effected by the buyer.”，bbox是[90, 354, 650, 390]，label是*Insurance。
+- Terms of Payment: “*Terms of Payment: □By 100% Confirmed, Irrevocable, Transferable and Divisible Letter of Credit to be available by sight draft and remain valid for negotiation in China until the 15th day after the aforesaid Time of Shipment. □ BY T/T before shipment”，bbox是[90, 370, 650, 416]，label是Terms of Payment。
+- Name Of Commodity And specification Packing And Shipping Mark: 表格中“Wooden deco”所在的行，对应商品名、规格、包装、唛头，bbox是[70, 378, 450, 398]，label是Name Of Commodity And specification Packing And Shipping Mark。
+- Quantity: 表格中“8000 件”所在的Quantity列，bbox是[320, 378, 420, 398]，label是Quantity。
+- Unit Price: 表格中“1.09”所在的Unit Price列，bbox是[460, 378, 520, 398]，label是Unit Price。
+- Amount(USD): 表格中“8,720.00”所在的Amount(USD)列，bbox是[600, 378, 720, 398]，label是Amount(USD)。
+- Total Amount USD: “Total Amount: 8,720.00 USD”部分，bbox是[510, 400, 760, 420]，label是Total Amount USD。
+- Remarks: “Remarks:”下面的所有条款，从(1)到(6)，bbox是[70, 428, 650, 620]，label是Remarks。
 
-20. Title：SALLES CONTRACT（注意是SALLES CONTRACT，可能拼写错误，但图中是SALLES CONTRACT），bbox是[447, 100, 747, 128]（因为标题是SALLES CONTRACT在中间上方）。
+现在需要检查是否有遗漏的类别。用户提供的类别列表是：
 
-现在需要确认每个类别的存在和对应的bbox。可能有些类别在图中没有，比如Address，可能图中没有单独的Address，或者Address就是ADD？但题目里有Address，可能需要检查。另外，Company Name是“通际名联传媒有限公司 Interpretation”，所以Company Name的bbox是顶部的公司名称和Interpretation。
+*Insurance, *Port of Loading, *Time of Shipment, ADD, Address, Amount(USD), Company Name, Date, Fax, Name Of Commodity And specification Packing And Shipping Mark, No, Port of Destination, Quantity, Remarks, TEL, Tel, Terms of Payment, Title, Total Amount USD, Unit Price.
 
-现在整理所有需要的类别，确保每个都覆盖：
+现在数一下，共20个类别。上面列出的每个类别都对应了，现在需要确保每个都有对应的bbox和label。
 
-- *Insurance：存在，对应保险条款部分。
-- *Port of Loading：存在，上海。
-- *Time of Shipment：存在，装运时间。
-- ADD：存在，地址行。
-- Address：可能图中没有单独的Address，或者可能ADD就是Address？但题目里有Address，可能需要再检查。图中是否有Address？可能没有，或者可能Address是公司地址，即ADD的内容，所以可能Address的bbox和ADD一样？但题目里ADD和Address是两个类别，可能图中没有Address，或者可能我漏看了。暂时先按图中的内容，可能Address不存在，或者可能题目中的Address是另一个，比如公司地址？可能这里可能Address是图中的ADD，所以可能Address的bbox和ADD相同？但需要看题目要求，可能用户希望提取所有存在的，所以如果图中没有Address，可能不包含。但再看题目中的类别列表，有Address，所以必须找到。可能图中的“ADD: ...”就是Address，所以Address的label对应这个，bbox和ADD一样？或者可能图中没有Address，只有ADD，所以可能Address不存在？这时候可能需要再检查。
+现在整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
 
-另外，Name Of Commodity And specification Packing And Shipping Mark：图中表格的第一行是这个标题，所以存在。
-
-No：右上角的编号，存在。
-
-Port of Destination：存在，USA。
-
-Quantity：存在，8000件。
-
-Remarks：存在，下面的说明。
-
-TEL：Messr.下面的TEL，存在。
-
-Tel：上面的Tel，存在。
-
-Terms of Payment：存在。
-
-Total Amount USD：存在。
-
-Unit Price：存在。
-
-Amount(USD)：存在。
-
-Title：SALLES CONTRACT，存在。
-
-现在开始逐个列出：
-
-1. Company Name: bbox是顶部的“通际名联传媒有限公司 Interpretation”，即[117, 10, 882, 58]（因为图中最上面是公司名，然后是Interpretation，然后是SALLES CONTRACT）。
-
-2. ADD: [42, 152, 446, 168]（ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579）
-
-3. Address: 可能图中没有单独的Address，或者可能Address是公司地址，即ADD的内容，所以可能Address的bbox和ADD相同？但题目里有Address，可能需要确认。或者可能图中没有Address，所以可能不包含？但题目要求检测所有匹配的，所以如果图中没有Address，就不列。但再看题目中的类别，可能Address是另一个，比如公司地址，可能图中没有，所以可能Address不存在。但可能我错了，再看图中的内容，图中只有ADD，没有Address，所以可能Address不包含。
-
-4. Tel: [42, 184, 160, 198]（Tel: 3051-08740750）
-
-5. Fax: [448, 184, 596, 198]（Fax: 7840-59800053）
-
-6. *Time of Shipment: [28, 370, 595, 388]（*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments.）
-
-7. *Port of Loading: [28, 390, 446, 408]（*Port of Loading: SHANGHAI, CHINA）
-
-8. *Terms of Payment: [28, 410, 595, 466]（*Terms of Payment: 包含两个选项：By 100% Confirmed... 和 BY T/T before shipment）
-
-9. *Insurance: [28, 468, 595, 494]（*Insurance: 包含两个选项：Covering all risks... 和 To be effected by the buyer）
-
-10. No: [752, 152, 890, 168]（No: 21KB9103238, 2）
-
-11. Date: [752, 184, 890, 198]（Date: Sep. 03, 2021）
-
-12. Port of Destination: [448, 390, 596, 408]（Port of Destination: USA）
-
-13. Name Of Commodity And specification Packing And Shipping Mark: [28, 226, 446, 244]（表格的表头行，即“Name Of Commodity And specification Packing And Shipping Mark”）
-
-14. Quantity: [302, 248, 444, 266]（表格中Quantity列，对应“8000 件”）
-
-15. Unit Price: [452, 248, 594, 266]（表格中Unit Price列，对应“1.09”）
-
-16. Amount(USD): [602, 248, 744, 266]（表格中Amount(USD)列，对应“8,720.00”）
-
-17. Total Amount USD: [502, 300, 744, 318]（Total Amount: 8,720.00 USD）
-
-18. Remarks: [28, 500, 595, 628]（Remarks: 后面的所有条款说明）
-
-19. TEL: [152, 222, 310, 238]（Messr.下面的TEL: 617-334-4225）
-
-20. Tel: 已经列过，是上面的Tel，即[42, 184, 160, 198]
-
-21. Title: [448, 100, 746, 126]（SALLES CONTRACT）
-
-现在检查是否有遗漏的类别：
-
-- *Insurance ✔️
-- *Port of Loading ✔️
-- *Time of Shipment ✔️
-- ADD ✔️
-- Address：图中没有单独的Address，可能不包含，或者可能Address是公司地址即ADD，但题目里有Address，可能需要再检查。图中是否有Address？可能没有，所以可能不包含。
-- Amount(USD) ✔️
-- Company Name ✔️
-- Date ✔️
-- Fax ✔️
-- Name Of Commodity And specification Packing And Shipping Mark ✔️
-- No ✔️
-- Port of Destination ✔️
-- Quantity ✔️
-- Remarks ✔️
-- TEL ✔️
-- Tel ✔️
-- Terms of Payment ✔️
-- Title ✔️
-- Total Amount USD ✔️
-- Unit Price ✔️
-
-现在确认每个类别的存在，然后生成JSON数组。需要注意每个对象的bbox要准确，可能需要根据图中的位置调整坐标。由于是示意图，坐标是相对的，尽量准确。
+需要注意坐标的准确性，因为是图片中的位置，需要大致估计。例如，Company Name的bbox是顶部的大标题，所以x1=110, y1=10, x2=888, y2=46（假设图片的坐标系统，左上角是(0,0)）。
 
 现在开始构建每个条目：
 
-1. Company Name: bbox是公司名称和Interpretation，即顶部的大标题，范围大约是x从110到880，y从10到60。所以bbox_2d: [115, 8, 885, 56]，label: "Company Name"
+1. Company Name: bbox [112, 12, 886, 46], label "Company Name"
+2. Title: bbox [444, 142, 740, 164], label "Title"
+3. ADD: bbox [38, 200, 446, 222], label "ADD"
+4. Address: bbox [112, 230, 436, 250], label "Address"
+5. Tel: bbox [40, 222, 210, 242], label "Tel"
+6. TEL: bbox [112, 250, 292, 268], label "TEL"
+7. No: bbox [730, 188, 890, 208], label "No"
+8. Date: bbox [670, 240, 830, 260], label "Date"
+9. Fax: bbox [470, 202, 620, 220], label "Fax"
+10. *Port of Loading: bbox [100, 308, 420, 328], label "*Port of Loading"
+11. *Port of Destination: bbox [450, 308, 650, 328], label "*Port of Destination"
+12. *Time of Shipment: bbox [90, 326, 520, 346], label "*Time of Shipment"
+13. *Insurance: bbox [90, 354, 650, 390], label "*Insurance"
+14. Terms of Payment: bbox [90, 370, 650, 416], label "Terms of Payment"
+15. Name Of Commodity And specification Packing And Shipping Mark: bbox [70, 378, 450, 398], label "Name Of Commodity And specification Packing And Shipping Mark"
+16. Quantity: bbox [320, 378, 420, 398], label "Quantity"
+17. Unit Price: bbox [460, 378, 520, 398], label "Unit Price"
+18. Amount(USD): bbox [600, 378, 720, 398], label "Amount(USD)"
+19. Total Amount USD: bbox [510, 400, 760, 420], label "Total Amount USD"
+20. Remarks: bbox [70, 428, 650, 620], label "Remarks"
 
-2. ADD: bbox是ADD行，x从40到445，y从150到168。label: "ADD"
+现在需要确认每个类别都覆盖了，没有重复或遗漏。用户提供的类别中还有“Title”，已经包含。现在检查所有20个类别：
 
-3. Tel: 第一个Tel，x从40到160，y从182到198。label: "Tel"
+*Insurance ✔️
 
-4. Fax: x从446到596，y从182到198。label: "Fax"
+*Port of Loading ✔️
 
-5. *Time of Shipment: x从26到595，y从368到388。label: "*Time of Shipment"
+*Time of Shipment ✔️
 
-6. *Port of Loading: x从26到445，y从388到408。label: "*Port of Loading"
+ADD ✔️
 
-7. *Terms of Payment: x从26到595，y从410到466。label: "*Terms of Payment"
+Address ✔️
 
-8. *Insurance: x从26到595，y从466到494。label: "*Insurance"
+Amount(USD) ✔️
 
-9. No: x从750到890，y从150到168。label: "No"
+Company Name ✔️
 
-10. Date: x从750到890，y从182到198。label: "Date"
+Date ✔️
 
-11. Port of Destination: x从446到596，y从388到408。label: "Port of Destination"
+Fax ✔️
 
-12. Name Of Commodity And specification Packing And Shipping Mark: x从26到445，y从224到244。label: "Name Of Commodity And specification Packing And Shipping Mark"
+Name Of Commodity And specification Packing And Shipping Mark ✔️
 
-13. Quantity: x从300到444，y从246到266。label: "Quantity"
+No ✔️
 
-14. Unit Price: x从450到594，y从246到266。label: "Unit Price"
-
-15. Amount(USD): x从600到744，y从246到266。label: "Amount(USD)"
-
-16. Total Amount USD: x从500到744，y从300到318。label: "Total Amount USD"
-
-17. Remarks: x从26到595，y从500到628。label: "Remarks"
-
-1
+Port of Destination ✔

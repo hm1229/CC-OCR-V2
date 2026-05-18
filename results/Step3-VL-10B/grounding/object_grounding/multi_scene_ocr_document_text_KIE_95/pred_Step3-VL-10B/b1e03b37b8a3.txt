@@ -1,8 +1,52 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date is at the bottom part, "25-03-18". Let me check the coordinates. The line with the date is "25-03-18 18:47 SH01 ZJ86...". So the date is "25-03-18".
+
+Seller_address: The address is the block starting with LOT 1851-A & 1851-B... up to SELANGOR. Let's find that section.
+
+Seller_gst_id: The GST ID is given as (GST ID No :000306020352). So that's the GST ID.
+
+Seller_name: The top part has "MR. D.I.Y. (M) SDN BHD" which is the seller name.
+
+Total_amount: The total incl. GST@6% is RM 50.80. Let's check that line: "Total Incl. GST@6% RM 50.80".
+
+Total_tax: The GST @6% included in total is RM 2.88. That's the tax amount.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is in the line "25-03-18 18:47 SH01 ZJ86 T1 R000112415 OPERATOR TRAINEE CASHIER". The date part is "25-03-18". Let's find the coordinates for that text.
+
+2. seller_address: The address lines are from "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR" — that's the address block.
+
+3. seller_gst_id: The line "(GST ID No :000306020352)" — so the GST ID is 000306020352.
+
+4. seller_name: "MR. D.I.Y. (M) SDN BHD" — that's the name.
+
+5. total_amount: "Total Incl. GST@6% RM 50.80" — the amount is 50.80.
+
+6. total_tax: "GST @6% included in total RM 2.88" — the tax is 2.88.
+
+Now, let's define each bounding box.
+
+For seller_name: The text is at the top, "MR. D.I.Y. (M) SDN BHD" — let's check the coordinates. The line is centered, so the bounding box would cover that line.
+
+Seller_address: The address is multiple lines: LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR. So the bounding box includes all those lines.
+
+Seller_gst_id: The line "(GST ID No :000306020352)" — that's the GST ID line.
+
+Date: The date is in the timestamp line: "25-03-18 18:47 SH01 ZJ86 T1 R000112415 OPERATOR TRAINEE CASHIER" — the date is the first part.
+
+Total_amount: The line "Total Incl. GST@6% RM 50.80" — the amount is 50.80.
+
+Total_tax: The line "GST @6% included in total RM 2.88" — the tax is 2.88.
+
+Now, let's structure each entry.
+</think>
 [
-  {"bbox_2d": [245, 923, 310, 945], "label": "date"},
-  {"bbox_2d": [142, 143, 856, 163], "label": "seller_name"},
-  {"bbox_2d": [112, 171, 887, 239], "label": "seller_address"},
-  {"bbox_2d": [132, 243, 866, 263], "label": "seller_gst_id"},
-  {"bbox_2d": [102, 601, 900, 621], "label": "total_amount"},
-  {"bbox_2d": [102, 651, 900, 671], "label": "total_tax"}
+    {"bbox_2d": [24, 927, 826, 952], "label": "date"},
+    {"bbox_2d": [101, 147, 898, 200], "label": "seller_address"},
+    {"bbox_2d": [124, 227, 366, 247], "label": "seller_gst_id"},
+    {"bbox_2d": [144, 112, 527, 132], "label": "seller_name"},
+    {"bbox_2d": [12, 600, 987, 625], "label": "total_amount"},
+    {"bbox_2d": [12, 667, 987, 692], "label": "total_tax"}
 ]

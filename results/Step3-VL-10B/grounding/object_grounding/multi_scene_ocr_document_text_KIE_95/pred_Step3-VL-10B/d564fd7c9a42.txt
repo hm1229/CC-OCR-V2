@@ -1,9 +1,81 @@
+Got it, let's extract each required category from the receipt.
+
+First, find the date. On the receipt, under "Date :", it's 1/08/2017 03:56:06PM. So the date value is there.
+
+Seller address: The address is "4-20, Jalan Ria 25/62 Taman Sri Muda Seksyen 25, 40400 Shah Alam Selangor". Let's check the top part of the receipt.
+
+Seller GST ID: It's given as GST ID: 000429166592.
+
+Seller name: The company is "TRI SHAAS SDN BHD (728515-M)" and the store is "MYDIN MART SRI MUDA". The seller name is likely the company name, so "TRI SHAAS SDN BHD (728515-M)".
+
+Seller phone: Tel : 03-51217970.
+
+Total amount: The "Total After Rounding" is 109.90. Let's check that section.
+
+Total tax: Looking at the GST section, for S=6%, the Tax(RM) is 6.19. Also, Z=0% has 0.00, so total tax is 6.19.
+
+Now, map each to their bounding boxes.
+
+Let's go step by step.
+
+1. date: The line "Date : 1/08/2017 03:56:06PM" — find the coordinates. The date field is in the receipt details section.
+
+2. seller_address: The address lines: "4-20, Jalan Ria 25/62 Taman Sri Muda Seksyen 25, 40400 Shah Alam Selangor" — that's the address block.
+
+3. seller_gst_id: "GST ID: 000429166592" — that line.
+
+4. seller_name: The top part has "TRI SHAAS SDN BHD (728515-M)" and "MYDIN MART SRI MUDA". The seller name is the company, so "TRI SHAAS SDN BHD (728515-M)".
+
+5. seller_phone: "Tel : 03-51217970" — that line.
+
+6. total_amount: "Total After Rounding 109.90" — the total amount paid after rounding.
+
+7. total_tax: The tax amount is 6.19 (from S=6% row, Tax(RM) column).
+
+Now, need to find the bounding boxes for each.
+
+Let's check the image:
+
+- Seller name: The top part, "TRI SHAAS SDN BHD (728515-M)" is in the upper section. Bounding box would cover that line.
+
+- Seller address: The lines below the name: "4-20, Jalan Ria 25/62 Taman Sri Muda Seksyen 25, 40400 Shah Alam Selangor" — that's the address.
+
+- Seller GST ID: The line "GST ID: 000429166592" — below the address and phone/fax.
+
+- Seller phone: "Tel : 03-51217970" — above the GST ID.
+
+- Date: In the receipt details, "Date : 1/08/2017 03:56:06PM" — under Trans #.
+
+- Total amount: The "Total After Rounding" line shows 109.90.
+
+- Total tax: In the GST Rate section, the Tax(RM) for S=6% is 6.19.
+
+Now, let's define each entry with their bounding boxes.
+
+For example, the date's bounding box: the line where "Date :" is printed. Let's check the coordinates.
+
+Assuming the image's text positions:
+
+- The date is in the section after Trans #. Let's see the receipt structure:
+
+Terminal: 195 - 5505POS011
+
+Trans #: 319242
+
+Date : 1/08/2017 03:56:06PM
+
+Cashier: CH102723
+
+So the Date line is there.
+
+Now, let's list each category with their bounding box and label.
+</think>
 [
-    {"bbox_2d": [144, 227, 325, 242], "label": "date"},
-    {"bbox_2d": [144, 197, 592, 237], "label": "seller_address"},
-    {"bbox_2d": [156, 244, 332, 259], "label": "seller_gst_id"},
-    {"bbox_2d": [225, 152, 447, 167], "label": "seller_name"},
-    {"bbox_2d": [156, 248, 306, 263], "label": "seller_phone"},
-    {"bbox_2d": [156, 497, 325, 512], "label": "total_amount"},
-    {"bbox_2d": [344, 627, 425, 642], "label": "total_tax"}
+    {"bbox_2d": [144, 137, 855, 156], "label": "date"},
+    {"bbox_2d": [144, 102, 855, 160], "label": "seller_address"},
+    {"bbox_2d": [144, 162, 855, 178], "label": "seller_gst_id"},
+    {"bbox_2d": [144, 94, 855, 110], "label": "seller_name"},
+    {"bbox_2d": [144, 170, 855, 186], "label": "seller_phone"},
+    {"bbox_2d": [144, 477, 855, 493], "label": "total_amount"},
+    {"bbox_2d": [605, 607, 855, 623], "label": "total_tax"}
 ]

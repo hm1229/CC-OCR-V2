@@ -1,157 +1,183 @@
-用户现在需要检测图像中的各个指定对象，然后给出每个的bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name：图顶部是Jufeng Company Information Co., Ltd.，所以这个是Company Name。
+首先看Company Name：图顶部是Jufeng Company Information Co., Ltd.，所以Company Name的bbox是顶部的标题。
 
-Date：Invoice No旁边的Date是2021/8/23，所以Date的位置。
+Address：From那里的Address是Putuo District？不对，看Invoice Address是Unit 1681 Box 0568 DPO AP 61707，而Address字段（From的Address）是Putuo District？需要看清楚。看Invoice部分的Address是Putuo District吗？看原文中“Address:”对应的是Putuo District，所以Address（From的地址）是Putuo District。
 
-From：From后面是Jufeng Company Information Co., Ltd.，所以From的标签。
+Amount：在表格里的Amount列，比如SLEW BEARING那一行的Amount是19200.00，还有总EXW BY是19,200.00。需要确定哪个是Amount。看问题中的Amount应该是指总金额，即EXW BY后面的19,200.00。
 
-Address：右边Address对应的是Putuo District，所以Address。
+Attn：是Mark Rodriguez，在TO下面的Attn字段。
 
-Project No：Project No是400575976，找到这个位置。
+CURRENCY：是USD，在Invoice标题下的CURRENCY: USD。
 
-Client order No：OC 147269，对应Client order No。
+Client order No：是OC 147269，在Client order No: 后面。
 
-CURRENCY：CURRENCY: USD，这个是CURRENCY。
+Date：是2021/8/23，在Date: 后面。
 
-Description：表格里的Description列，比如SLEW BEARING 920026505是Description的内容，所以Description的标签对应表格的列标题或者内容？看表格的Description列，所以Description是列标题，里面的内容是SLEW BEARING...。
+Delivery Terms：是EX-WORKS，在Delivery Terms: 后面。
 
-Qty：表格里的Qty列，数值是24等。
+Description：表格中的Description列，比如SLEW BEARING 920026505。
 
-Unit：表格里的Unit列，比如PCE。
+From：是Jufeng Company Information Co., Ltd.，在From: 后面。
 
-Unit Price：表格里的Unit Price列，比如800.00。
+Invoice Address：是Unit 1681 Box 0568 DPO AP 61707，在Invoice Address: 后面。
 
-Amount：表格里的Amount列，比如19200.00，还有总金额EXW BY: 19,200.00也是Amount相关？
+Payment Terms：是30Days After goods and invoice received，在Payment Terms: 后面。
 
-Attn：Attn后面是Mark Rodriguez，所以Attn。
+Project No：是400575976，在Project No: 后面。
 
-Tel No.：Tel No.是+055-221-5770。
+Qty：是24，在Qty列对应SLEW BEARING那一行。
 
-Fax No.：不过用户没要求Fax No.，所以不管。
+SLEW BEARING：是产品名称，比如SLEW BEARING 920026505中的SLEW BEARING，或者看标签是SLEW BEARING，对应描述中的内容。
 
-Invoice Address：Invoice Address是Unit 1681 Box 0568 DPO AP 61707。
+Tel No.：是+055-221-5770，在Tel No: 后面。
 
-The estimated shipping date：图中的The estimate shipping date: 2021/8/23。
+The estimated shipping date：是2021/8/23，在The estimate shipping date: 后面。
 
-Payment Terms：30Days After goods and invoice received。
+Title：可能是指Invoice标题？不过图中Invoice是标题，可能Title对应Invoice的标题？或者看是否有Title字段，可能图中没有明确Title，但可能需要检查。不过可能用户给的类别中的Title是否存在？看问题中的类别有Title，可能是指发票的标题“Invoice”？不过看原文中的“Invoice”是表格上方的标题，所以Title可能是“Invoice”？
 
-Delivery Terms：EX-WORKS。
+Unit：是PCE，在Unit列对应SLEW BEARING那一行。
 
-SLEW BEARING：表格中的描述是SLEW BEARING 920026505，所以SLEW BEARING是这个产品名称。
+Unit Price：是800.00，在Unit Price列对应SLEW BEARING那一行。
 
-Title：可能图中的标题是Jufeng Company Information Co., Ltd.作为Title？不过用户给的类别里有Title，需要看。图顶部的大标题是公司名称，可能Title就是公司名称？或者看是否有其他Title。不过可能Title对应的是文档的标题，即Jufeng Company Information Co., Ltd.，所以Title的bbox是顶部的公司名称。
+现在逐个处理：
 
-现在逐个整理：
+1. Company Name：Jufeng Company Information Co., Ltd.，位置在顶部，bbox大概是[490, 29, 598, 52]左右？看原文顶部是“Jufeng Company Information Co., Ltd.”，所以bbox是[490, 29, 625, 52]（假设）。
 
-1. Company Name：Jufeng Company Information Co., Ltd.，位置在顶部，bbox大概覆盖顶部文字。
-看图像中“Jufeng Company Information Co., Ltd.”是标题，所以Company Name的bbox是[444, 29, 555, 52]左右？需要看图像的布局。原图像中顶部居中是Jufeng Company Information Co., Ltd.，所以bbox是[440, 27, 560, 50]。
+2. Address：From的Address是Putuo District，看原文中“Address:”后面是Putuo District，所以bbox是对应位置。
 
-2. Date：Invoice No旁边的Date: 2021/8/23，所以Date的label对应这个值，bbox是Date: 后面的内容，即Date的标签和值的位置。看图像中Date: 2021/8/23，所以Date的bbox是包含Date: 和日期的区域，比如[405, 142, 527, 160]左右？
+3. Amount：总金额是19,200.00，在EXW BY: 后面，所以bbox是那个数值的位置。
 
-3. From：From: Jufeng Company Information Co., Ltd.，所以From的label是From，对应内容，bbox是From: 后面的公司名称，即[425, 152, 555, 168]。
+4. Attn：Mark Rodriguez，在Attn: 后面，bbox是对应位置。
 
-4. Address：Address: Putuo District，所以Address的label是Address，对应内容，bbox是Address: 后面的Putuo District，即[435, 172, 555, 188]。
+5. CURRENCY：USD，在CURRENCY: USD，bbox是该行。
 
-5. Project No：Project No: 400575976，所以Project No的label是Project No，对应数值，bbox是Project No: 后面的数字，即[420, 202, 555, 218]。
+6. Client order No：OC 147269，对应Client order No: 后面。
 
-6. Client order No：Client order No: OC 147269，所以Client order No的label是Client order No，对应数值，bbox是Client order No: 后面的内容，即[420, 220, 555, 236]。
+7. Date：2021/8/23，Date: 后面。
 
-7. CURRENCY：CURRENCY: USD，所以CURRENCY的label是CURRENCY，对应内容，bbox是CURRENCY: 后面的USD，即[335, 312, 455, 328]。
+8. Delivery Terms：EX-WORKS，Delivery Terms: 后面。
 
-8. Description：表格中的Description列，列标题是Description，所以Description的label是Description，对应列标题的位置，即表格第一列的表头，bbox是[28, 302, 152, 320]（表格的Description列标题）。
+9. Description：SLEW BEARING 920026505，表格中的Description列内容。
 
-9. Qty：表格中的Qty列，列标题是Qty，对应数值24等，所以Qty的label是Qty，列标题的bbox是[152, 302, 192, 320]。
+10. From：Jufeng Company Information Co., Ltd.，From: 后面。
 
-10. Unit：表格中的Unit列，列标题是Unit，对应PCE等，所以Unit的label是Unit，列标题的bbox是[200, 302, 232, 320]。
+11. Invoice Address：Unit 1681 Box 0568 DPO AP 61707，Invoice Address: 后面。
 
-11. Unit Price：表格中的Unit Price列，列标题是Unit Price，对应800.00等，所以Unit Price的label是Unit Price，列标题的bbox是[252, 302, 332, 320]。
+12. Payment Terms：30Days After goods and invoice received，Payment Terms: 后面。
 
-12. Amount：表格中的Amount列，列标题是Amount，对应19200.00等，还有总金额EXW BY: 19,200.00也是Amount。首先表格的Amount列标题的bbox是[362, 302, 452, 320]。另外总金额EXW BY: 19,200.00也是Amount，所以需要看。用户要求的是Amount，所以可能包括列和总金额。但先看表格中的Amount列，以及总金额。
+13. Project No：400575976，Project No: 后面。
 
-13. Attn：Attn: Mark Rodriguez，所以Attn的label是Attn，对应内容，bbox是Attn: 后面的名字，即[105, 192, 155, 208]（Attn:）和后面的Mark Rodriguez，所以Attn的bbox是包含Attn: 和名字的区域，比如[105, 190, 325, 210]。
+14. Qty：24，Qty列对应行。
 
-14. Tel No.：Tel No.: +055-221-5770，所以Tel No.的label是Tel No.，对应内容，bbox是Tel No.: 后面的电话，即[105, 200, 215, 216]（Tel No.:）和电话号码，所以Tel No.的bbox是[105, 198, 325, 218]。
+15. SLEW BEARING：作为产品名称，比如在Description中的SLEW BEARING 920026505，所以标签是SLEW BEARING，对应描述中的产品名部分。
 
-15. Invoice Address：Invoice Address: Unit 1681 Box 0568 DPO AP 61707，所以Invoice Address的label是Invoice Address，对应内容，bbox是Invoice Address: 后面的地址，即[105, 220, 325, 236]（Invoice Address:）和地址内容，所以Invoice Address的bbox是[105, 218, 325, 238]。
+16. Tel No.：+055-221-5770，Tel No: 后面。
 
-16. The estimated shipping date：The estimate shipping date: 2021/8/23，所以The estimated shipping date的label是The estimated shipping date，对应内容，bbox是这句话的位置，即[105, 340, 325, 356]。
+17. The estimated shipping date：2021/8/23，The estimate shipping date: 后面。
 
-17. Payment Terms：Payment Terms: 30Days After goods and invoice received，所以Payment Terms的label是Payment Terms，对应内容，bbox是这句话的位置，即[105, 356, 325, 372]。
+18. Title：可能是指“Invoice”这个标题，即表格上方的“Invoice”字样，所以Title是Invoice，bbox是“Invoice”所在的位置。
 
-18. Delivery Terms：Delivery Terms: EX-WORKS，所以Delivery Terms的label是Delivery Terms，对应内容，bbox是这句话的位置，即[105, 372, 325, 388]。
+19. Unit：PCE，Unit列对应行。
 
-19. SLEW BEARING：表格中的Description内容是SLEW BEARING 920026505，所以SLEW BEARING是这个产品名称，属于Description中的内容，所以SLEW BEARING的label是SLEW BEARING，对应单元格内容，bbox是表格中第一行Description列的内容，即[28, 322, 152, 340]（SLEW BEARING 920026505）。
+20. Unit Price：800.00，Unit Price列对应行。
 
-20. Title：可能图中的标题是Jufeng Company Information Co., Ltd.，作为Title，所以Title的label是Title，对应顶部的公司名称，bbox和Company Name可能重复？但用户要求Title，所以需要确认。图中最上方的标题是Jufeng Company Information Co., Ltd.，所以Title的bbox是[440, 27, 560, 50]，和Company Name可能相同？但用户列中的Title是单独的类别，所以需要包含。
+现在需要为每个类别找到对应的bbox。需要仔细看图片中的每个元素位置。
 
-现在需要检查每个类别是否都覆盖：
+现在开始逐个列出：
 
-用户要求的类别列表：
+- Company Name: 文字是“Jufeng Company Information Co., Ltd.”，位于发票顶部居中。bbox大概是从x=490到x=625，y=30到y=50左右。所以bbox_2d: [490, 29, 625, 52]，label: Company Name。
 
-Address, Amount, Attn, CURRENCY, Client order No, Company Name, Date, Delivery Terms, Description, From, Invoice Address, Payment Terms, Project No, Qty, SLEW BEARING, Tel No., The estimated shipping date, Title, Unit, Unit Price.
+- Address: 看“Address:”后面的内容是“Putuo District”，在From的Address字段。所以bbox是对应“Putuo District”的位置，比如x=420, y=220左右？需要看原文结构。原文中“From: Jufeng Company Information Co., Ltd.”下面有“Address:”，然后是“Putuo District”。所以Address的bbox是包含“Putuo District”的区域。
 
-现在逐个确认：
+- Amount: 总金额是“19,200.00”在“EXW BY: ”后面。所以bbox是该数值的位置，比如x=650, y=700左右。
 
-- Address：存在，对应Address: Putuo District。
-- Amount：存在，表格中的Amount列和总金额。
-- Attn：存在，Attn: Mark Rodriguez。
-- CURRENCY：存在，CURRENCY: USD。
-- Client order No：存在，Client order No: OC 147269。
-- Company Name：存在，Jufeng Company Information Co., Ltd.。
-- Date：存在，Date: 2021/8/23。
-- Delivery Terms：存在，Delivery Terms: EX-WORKS。
-- Description：存在，表格的Description列及内容。
-- From：存在，From: Jufeng Company Information Co., Ltd.。
-- Invoice Address：存在，Invoice Address: Unit 1681 Box 0568 DPO AP 61707。
-- Payment Terms：存在，Payment Terms: 30Days After goods and invoice received。
-- Project No：存在，Project No: 400575976。
-- Qty：存在，表格的Qty列。
-- SLEW BEARING：存在，SLEW BEARING 920026505。
-- Tel No.：存在，Tel No.: +055-221-5770。
-- The estimated shipping date：存在，The estimate shipping date: 2021/8/23。
-- Title：存在，Jufeng Company Information Co., Ltd.（作为标题）。
-- Unit：存在，表格的Unit列。
-- Unit Price：存在，表格的Unit Price列。
+- Attn: “Mark Rodriguez”在Attn: 后面，TO: 下面。所以bbox是该文字的位置。
 
-现在需要为每个类别找到对应的bbox。需要注意图像中的坐标是相对的，因为是图片，所以需要估计每个元素的位置。
+- CURRENCY: “CURRENCY: USD”在Invoice标题下方。所以bbox是该行。
 
-现在开始逐个构建JSON：
+- Client order No: “OC 147269”在Client order No: 后面。bbox是该文字。
 
-1. Company Name：顶部的公司名称，bbox大约是[442, 29, 556, 52]，label: Company Name
-2. Title：可能和Company Name是同一个？但用户要求Title，可能图中的标题就是公司名称，所以Title的bbox也是这个，或者可能Title是文档的标题，即Jufeng Company Information Co., Ltd.，所以Title的label是Title，bbox同上。
-3. Date：Date: 2021/8/23，位置在Invoice No下方，Date标签和值，bbox大约是[406, 144, 526, 160]，label: Date
-4. From：From: Jufeng Company Information Co., Ltd.，bbox大约是[426, 154, 554, 168]，label: From
-5. Address：Address: Putuo District，bbox大约是[436, 174, 554, 188]，label: Address
-6. Project No：Project No: 400575976，bbox大约是[420, 204, 554, 218]，label: Project No
-7. Client order No：Client order No: OC 147269，bbox大约是[420, 222, 554, 236]，label: Client order No
-8. CURRENCY：CURRENCY: USD，bbox大约是[336, 314, 454, 328]，label: CURRENCY
-9. Description：表格的Description列标题，bbox大约是[28, 304, 150, 320]，label: Description；另外SLEW BEARING是Description列的内容，所以SLEW BEARING的bbox是[28, 324, 150, 340]，label: SLEW BEARING
-10. Qty：表格的Qty列标题，bbox大约是[152, 304, 190, 320]，label: Qty；Qty的数值是24，在第一行，bbox大约是[152, 324, 190, 340]，但用户要求的是Qty作为类别，所以列标题即可。
-11. Unit：表格的Unit列标题，bbox大约是[200, 304, 230, 320]，label: Unit；Unit的数值是PCE，在第一行，bbox大约是[200, 324, 230, 340]，但类别是Unit，所以列标题。
-12. Unit Price：表格的Unit Price列标题，bbox大约是[252, 304, 330, 320]，label: Unit Price；Unit Price的数值是800.00，在第一行，bbox大约是[252, 324, 330, 340]，类别是Unit Price，列标题。
-13. Amount：表格的Amount列标题，bbox大约是[362, 304, 450, 320]，label: Amount；总金额EXW BY: 19,200.00，bbox大约是[500, 430, 620, 450]，label: Amount（因为是总金额，属于Amount）
-14. Attn：Attn: Mark Rodriguez，bbox大约是[106, 192, 324, 208]，label: Attn
-15. Tel No.：Tel No.: +055-221-5770，bbox大约是[106, 202, 324, 218]，label: Tel No.
-16. Invoice Address：Invoice Address: Unit 1681 Box 0568 DPO AP 61707，bbox大约是[106, 222, 324, 238]，label: Invoice Address
-17. The estimated shipping date：The estimate shipping date: 2021/8/23，bbox大约是[106, 342, 324, 358]，label: The estimated shipping date
-18. Payment Terms：Payment Terms: 30Days After goods and invoice received，bbox大约是[106, 356, 324, 372]，label: Payment Terms
-19. Delivery Terms：Delivery Terms: EX-WORKS，bbox大约是[106, 372, 324, 388]，label: Delivery Terms
-20. Title：Jufeng Company Information Co., Ltd.作为标题，bbox同Company Name，即[442, 29, 556, 52]，label: Title
+- Date: “2021/8/23”在Date: 后面。bbox是该日期。
 
-现在需要检查是否有重复或遗漏。比如SLEW BEARING是Description中的内容，所以需要单独列出SLEW BEARING的bbox，即表格中第一行Description列的单元格内容，包含SLEW BEARING 920026505，所以其bbox是[28, 322, 152, 342]左右。
+- Delivery Terms: “EX-WORKS”在Delivery Terms: 后面。bbox是该文字。
 
-另外，Amount的总金额EXW BY: 19,200.00也是一个Amount，所以需要包含。
+- Description: 表格中的第一行Description是“SLEW BEARING 920026505”。所以bbox是该单元格的内容。
 
-现在整理所有条目：
+- From: “Jufeng Company Information Co., Ltd.”在From: 后面。bbox是该公司名。
 
-- Company Name: [442, 29, 556, 52]
-- Title: [442, 29, 556, 52] （可能和Company Name重复，但用户要求Title，所以保留）
-- Date: [406, 144, 526, 160]
-- From: [426, 154, 554, 168]
-- Address: [436, 174, 554, 188]
-- Project No: [420, 204, 554, 218]
-- Client order No: [420, 222, 554, 236]
-- CURRENCY: [336, 314, 454, 328]
-- Description: [28, 304, 150, 320] （列标题）
-- SLEW BEARING: [28, 324, 
+- Invoice Address: “Unit 1681 Box 0568 DPO AP 61707”在Invoice Address: 后面。bbox是该地址。
+
+- Payment Terms: “30Days After goods and invoice received”在Payment Terms: 后面。bbox是该文字。
+
+- Project No: “400575976”在Project No: 后面。bbox是该编号。
+
+- Qty: “24”在Qty列对应SLEW BEARING行。bbox是该数量。
+
+- SLEW BEARING: 作为产品名称，比如在Description中的“SLEW BEARING 920026505”，所以标签是SLEW BEARING，对应描述中的产品名部分。可以取该描述中的SLEW BEARING部分，或者整个描述？但标签是SLEW BEARING，所以可能是指产品名称的关键词，所以bbox是描述中的SLEW BEARING部分。
+
+- Tel No.: “+055-221-5770”在Tel No: 后面。bbox是该电话。
+
+- The estimated shipping date: “2021/8/23”在The estimate shipping date: 后面。bbox是该日期。
+
+- Title: “Invoice”是表格上方的标题，所以bbox是“Invoice”字样所在的位置。
+
+- Unit: “PCE”在Unit列对应SLEW BEARING行。bbox是该单位。
+
+- Unit Price: “800.00”在Unit Price列对应SLEW BEARING行。bbox是该单价。
+
+现在需要将这些对应起来，生成JSON数组。需要注意每个条目的bbox要准确，可能需要根据图片中的位置估算。
+
+现在开始构建每个条目：
+
+1. Company Name: bbox是顶部公司名称，文字“Jufeng Company Information Co., Ltd.”。假设在图片中x范围是490到625，y是30到50。所以bbox_2d: [490, 29, 625, 52]，label: Company Name。
+
+2. Address: 对应From的Address，即“Putuo District”。看原文中“Address:”后面是Putuo District，所以bbox是该文字的位置，比如x=420, y=220到x=540, y=240。所以bbox_2d: [420, 220, 540, 240]，label: Address。
+
+3. Amount: 总金额是“19,200.00”在EXW BY: 后面。看图片中EXW BY: 后面的数值，位置大概x=650, y=700到x=780, y=720。所以bbox_2d: [650, 700, 780, 720]，label: Amount。
+
+4. Attn: “Mark Rodriguez”在Attn: 后面，TO: 下面。位置x=150, y=190到x=300, y=210。所以bbox_2d: [150, 190, 300, 210]，label: Attn。
+
+5. CURRENCY: “CURRENCY: USD”在Invoice标题下方。位置x=450, y=450到x=550, y=470。所以bbox_2d: [450, 450, 550, 470]，label: CURRENCY。
+
+6. Client order No: “OC 147269”在Client order No: 后面。位置x=450, y=300到x=550, y=320。所以bbox_2d: [450, 300, 550, 320]，label: Client order No。
+
+7. Date: “2021/8/23”在Date: 后面。位置x=580, y=140到x=680, y=160。所以bbox_2d: [580, 140, 680, 160]，label: Date。
+
+8. Delivery Terms: “EX-WORKS”在Delivery Terms: 后面。位置x=100, y=600到x=200, y=620。所以bbox_2d: [100, 600, 200, 620]，label: Delivery Terms。
+
+9. Description: “SLEW BEARING 920026505”在表格的Description列。位置x=50, y=520到x=350, y=540。所以bbox_2d: [50, 520, 350, 540]，label: Description。
+
+10. From: “Jufeng Company Information Co., Ltd.”在From: 后面。位置x=580, y=150到x=750, y=170。所以bbox_2d: [580, 150, 750, 170]，label: From。
+
+11. Invoice Address: “Unit 1681 Box 0568 DPO AP 61707”在Invoice Address: 后面。位置x=150, y=240到x=350, y=260。所以bbox_2d: [150, 240, 350, 260]，label: Invoice Address。
+
+12. Payment Terms: “30Days After goods and invoice received”在Payment Terms: 后面。位置x=100, y=620到x=400, y=640。所以bbox_2d: [100, 620, 400, 640]，label: Payment Terms。
+
+13. Project No: “400575976”在Project No: 后面。位置x=450, y=280到x=550, y=300。所以bbox_2d: [450, 280, 550, 300]，label: Project No。
+
+14. Qty: “24”在Qty列对应SLEW BEARING行。位置x=300, y=520到x=350, y=540。所以bbox_2d: [300, 520, 350, 540]，label: Qty。
+
+15. SLEW BEARING: 作为产品名称，取Description中的SLEW BEARING部分，比如“SLEW BEARING”在“SLEW BEARING 920026505”中。位置x=50, y=520到x=200, y=540。所以bbox_2d: [50, 520, 200, 540]，label: SLEW BEARING。
+
+16. Tel No.: “+055-221-5770”在Tel No: 后面。位置x=150, y=160到x=250, y=180。所以bbox_2d: [150, 160, 250, 180]，label: Tel No.
+
+17. The estimated shipping date: “2021/8/23”在The estimate shipping date: 后面。位置x=100, y=640到x=250, y=660。所以bbox_2d: [100, 640, 250, 660]，label: The estimated shipping date。
+
+18. Title: “Invoice”是表格上方的标题。位置x=250, y=480到x=350, y=500。所以bbox_2d: [250, 480, 350, 500]，label: Title。
+
+19. Unit: “PCE”在Unit列对应SLEW BEARING行。位置x=350, y=520到x=400, y=540。所以bbox_2d: [350, 520, 400, 540]，label: Unit。
+
+20. Unit Price: “800.00”在Unit Price列对应SLEW BEARING行。位置x=450, y=520到x=550, y=540。所以bbox_2d: [450, 520, 550, 540]，label: Unit Price。
+
+现在需要检查是否有遗漏或错误。比如SLEW BEARING的标签，是否应该对应整个描述还是部分？根据问题中的标签是SLEW BEARING，所以取产品名称中的SLEW BEARING部分。另外，Amount是总金额，即EXW BY后面的19,200.00，而表格中的Amount是19200.00，两者一致，因为是USD，所以总金额是19200.00。
+
+另外，检查每个标签是否都覆盖了问题中的类别。问题中的类别列表：
+
+Address, Amount, Attn, CURRENCY, Client order No, Company Name, Date, Delivery Terms, Description, From, Invoice Address, Payment Terms, Project No, Qty, SLEW BEARING, Tel No., The estimated shipping date, Title, Unit, Unit Price。
+
+共20个类别，上面列了20个，所以数量正确。
+
+现在将这些整理成JSON数组，每个元素是{"bbox_2d": [...], "label": "..."}。
+</think>
+[{"bbox_2d": [490, 29, 625, 52], "label": "Company Name"}, {"bbox_2d": [420, 220, 540, 240], "label": "Address"}, {"bbox_2d": [650, 700, 780, 720], "label": "Amount"}, {"bbox_2d": [150, 190, 300, 210], "label": "Attn"}, {"bbox_2d": [450, 450, 550, 470], "label": "CURRENCY"}, {"bbox_2d": [4

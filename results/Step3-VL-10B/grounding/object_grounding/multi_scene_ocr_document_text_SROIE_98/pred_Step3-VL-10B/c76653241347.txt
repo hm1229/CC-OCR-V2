@@ -1,6 +1,53 @@
-[
-    {"bbox_2d": [101, 92, 897, 122], "label": "company"},
-    {"bbox_2d": [150, 225, 897, 255], "label": "address"},
-    {"bbox_2d": [100, 330, 322, 352], "label": "date"},
-    {"bbox_2d": [450, 600, 540, 625], "label": "total"}
-]
+Got it, let's extract the information. First, identify each category.
+
+Company: The restaurant name is B & BEST RESTAURANT. Let's check the text. The top part has "B & BEST RESTAURANT" so that's the company.
+
+Address: The address line is "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN". Let's find that section.
+
+Date: The bizdate is 19/04/2017, and printed date is also 19/04/2017. Let's check which one. The bill date is 19/04/2017.
+
+Total: The net total is 14.85, which is marked on the receipt. Let's check the net total line.
+
+Now, map each to their bounding boxes.
+
+First, company: The text "B & BEST RESTAURANT" is in the upper part. Let's get the coordinates.
+
+Address: The address lines are below the GST number. Let's check the lines: "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN".
+
+Date: The bizdate is "19/04/2017" under BIZDATE.
+
+Total: The net total is 14.85, which is in the NET TOTAL line, and the circled amount is also 14.85. Let's check the NET TOTAL section.
+
+Now, create the JSON entries.
+
+For company: The text "B & BEST RESTAURANT" is at the top. Let's find the bounding box. The coordinates would be around where the restaurant name is printed.
+
+Address: The address is the line with NO.12, JALAN SS4C/5, etc.
+
+Date: The bizdate is 19/04/2017.
+
+Total: The net total is 14.85, which is the final amount paid (cash 14.85, change 0.00). So the total is 14.85.
+
+Let's check each element:
+
+1. Company: "B & BEST RESTAURANT" – the text is in the header. Let's get the bounding box. The image has the text, so the coordinates for that line.
+
+2. Address: The address lines are "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN" – that's the address.
+
+3. Date: The bizdate is "19/04/2017" (BIZDATE: 19/04/2017) and printed date is same, but bizdate is the transaction date.
+
+4. Total: The net total is 14.85, which is the amount after GST and rounding. The circled number is also 14.85, so that's the total.
+
+Now, let's define the bounding boxes.
+
+For company: The text "B & BEST RESTAURANT" is in the upper part. Let's check the image. The coordinates would be from the top part. Let's assume the bounding box is around that line.
+
+Address: The address is the line starting with NO.12, so the bounding box covers that line.
+
+Date: The BIZDATE line has the date.
+
+Total: The NET TOTAL line shows 14.85, so that's the total.
+
+Now, construct the JSON array.
+</think>
+[{"bbox_2d": [144, 209, 857, 234], "label": "company"}, {"bbox_2d": [144, 254, 857, 280], "label": "address"}, {"bbox_2d": [104, 332, 246, 352], "label": "date"}, {"bbox_2d": [144, 600, 256, 622], "label": "total"}]

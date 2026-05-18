@@ -1,1 +1,37 @@
-[{"bbox_2d": [312, 577, 423, 697], "label": "DATE"}, {"bbox_2d": [467, 577, 682, 697], "label": "CITY"}, {"bbox_2d": [692, 577, 772, 697], "label": "STATE"}, {"bbox_2d": [782, 577, 852, 697], "label": "ZIP"}]
+用户现在需要提取表单中的CITY、DATE、STATE、ZIP四个字段。首先看每个字段的位置和内容。
+
+先看DATE：对应的输入框里的内容是08-03-89，位置是DATE标签下的框。然后CITY是Holland，STATE是Mi，ZIP是49424。需要确定每个的bbox。
+
+先看DATE的框：在NAME右边，DATE标签下的矩形框，里面的内容是08-03-89。所以DATE的bbox是那个框的范围。然后CITY的框是CITY标签下的，内容Holland。STATE是STATE标签下的，内容Mi。ZIP是ZIP标签下的，内容49424。
+
+现在要确定每个元素的坐标。看图片中的布局：
+
+DATE的输入框：从图中看，DATE的框是中间偏左的矩形，里面手写的是08-03-89。CITY的框是Holland所在的框，STATE是Mi，ZIP是49424。
+
+现在逐个分析：
+
+1. DATE：标签是DATE，对应的输入框的坐标。看图片中DATE的框，应该是[297, 575, 392, 687]左右？或者看实际的框位置。图中DATE的框是矩形，里面的内容是08-03-89。所以DATE的bbox是那个输入框的范围，label是DATE。
+
+2. CITY：CITY标签下的输入框，里面是Holland，所以CITY的bbox是包含Holland的框，label是CITY。
+
+3. STATE：STATE标签下的输入，是Mi，所以STATE的bbox是那个区域，label是STATE。
+
+4. ZIP：ZIP标签下的输入，是49424，所以ZIP的bbox是那个区域，label是ZIP。
+
+现在需要准确找到每个的bbox。看图片中的结构：
+
+表单的布局是NAME（被黑块覆盖）、DATE（框）、CITY（框）、STATE（框）、ZIP（框）。
+
+看图片中的各个框：
+
+- DATE的框：在NAME右边，CITY左边。里面的文字是08-03-89。所以DATE的bbox是[296, 572, 394, 690]（大概范围）。
+
+- CITY的框：CITY标签下的框，里面是Holland，所以CITY的bbox是[467, 572, 647, 690]左右？因为Holland的书写在那个框里。
+
+- STATE的框：STATE标签下的，里面是Mi，所以STATE的bbox是[657, 572, 727, 690]。
+
+- ZIP的框：ZIP标签下的，里面是49424，所以ZIP的bbox是[732, 572, 847, 690]。
+
+现在需要确认每个的label和对应的bbox。然后整理成JSON数组。
+</think>
+[{"bbox_2d": [296, 572, 394, 690], "label": "DATE"}, {"bbox_2d": [467, 572, 647, 690], "label": "CITY"}, {"bbox_2d": [657, 572, 727, 690], "label": "STATE"}, {"bbox_2d": [732, 572, 847, 690], "label": "ZIP"}]

@@ -1,1 +1,67 @@
-[{"bbox_2d": [322, 290, 427, 425], "label": "DATE"}, {"bbox_2d": [557, 290, 745, 425], "label": "CITY"}, {"bbox_2d": [685, 300, 740, 425], "label": "STATE"}, {"bbox_2d": [795, 300, 850, 425], "label": "ZIP"}]
+用户现在需要提取表单中的CITY、DATE、STATE、ZIP四个字段。首先看每个字段的位置和内容。
+
+首先看DATE：对应的输入框里的内容是9-16-89，位置是DATE标签下的框。然后CITY是Riverton，STATE是Wy，ZIP是82501。需要确定每个的bbox。
+
+先看DATE的框：在NAME右边，DATE标签下的矩形框，里面的内容是9-16-89。所以DATE的bbox是那个输入框的范围。然后CITY是CITY标签下的框，内容Riverton。STATE是STATE标签下的部分，内容Wy。ZIP是ZIP标签下的部分，内容82501。
+
+现在要确定每个元素的坐标。看图片中的布局：
+
+DATE的输入框：从图中看，DATE的框是中间偏左的矩形，里面手写的9-16-89。CITY的框是中间的矩形，Riverton。STATE是右边的STATE标签下的部分，Wy。ZIP是ZIP标签下的部分，82501。
+
+现在逐个分析：
+
+1. DATE：标签是DATE，对应的输入框的坐标。看图片中DATE的框，应该是[320, 292, 425, 400]左右？需要看图片中的位置。原图片中，DATE的框是矩形，里面手写9-16-89。CITY的框是Riverton所在的框，STATE是Wy，ZIP是82501。
+
+现在看每个字段的对应：
+
+- DATE的label是DATE，内容是9-16-89，其bbox是DATE输入框的范围。看图片中DATE的框是位于NAME右侧，CITY左侧的矩形。所以DATE的bbox是[322, 290, 427, 402]（大概）。
+
+- CITY的label是CITY，内容是Riverton，其bbox是CITY标签下的矩形，即[557, 290, 742, 402]左右，因为CITY的框是Riverton所在的框。
+
+- STATE的label是STATE，内容是Wy，其bbox是STATE标签下的部分，即在CITY框的右边，STATE标签下的区域，内容Wy，所以bbox是[692, 300, 725, 400]左右？
+
+- ZIP的label是ZIP，内容是82501，其bbox是ZIP标签下的部分，即82501所在的框，所以是[792, 300, 845, 400]左右？
+
+现在需要准确对应每个字段的输入框。看原表单的结构：
+
+表单的字段是NAME（被黑色块覆盖），然后是DATE（输入框），CITY（输入框），STATE（输入框），ZIP（输入框）。这五个字段在一行。所以每个输入框是对应的矩形。
+
+看图片中的布局：
+
+- DATE的输入框：位于NAME右侧，是一个矩形，里面手写9-16-89。所以这个输入框的坐标是DATE标签正下方的框，即从DATE标签的下方开始，到CITY标签的上方。所以DATE的bbox是[320, 295, 425, 400]（假设）。
+
+- CITY的输入框：CITY标签正下方的框，里面是Riverton，所以CITY的bbox是[555, 295, 740, 400]。
+
+- STATE的输入框：STATE标签正下方的框，里面是Wy，所以STATE的bbox是[690, 295, 735, 400]。
+
+- ZIP的输入框：ZIP标签正下方的框，里面是82501，所以ZIP的bbox是[790, 295, 845, 400]。
+
+现在需要确认每个标签对应的内容。然后生成每个的JSON对象，包含bbox和label。
+
+现在检查每个字段：
+
+DATE：内容是9-16-89，label是DATE，bbox是DATE输入框的范围。看图片中DATE的框是手写的9-16-89，所以对应的bbox是那个矩形框。
+
+CITY：内容是Riverton，label是CITY，bbox是CITY输入框的范围。
+
+STATE：内容是Wy，label是STATE，bbox是STATE输入框的范围。
+
+ZIP：内容是82501，label是ZIP，bbox是ZIP输入框的范围。
+
+现在需要确定每个输入框的坐标。可能更准确的是看图片中的实际位置。例如，DATE的框是中间偏左，CITY在中间，STATE在CITY右边，ZIP在STATE右边。
+
+现在，把每个字段的bbox和label列出来：
+
+1. DATE：bbox是[322, 292, 427, 402]，label是DATE。
+
+2. CITY：bbox是[557, 292, 742, 402]，label是CITY。
+
+3. STATE：bbox是[692, 292, 735, 402]，label是STATE。
+
+4. ZIP：bbox是[792, 292, 845, 402]，label是ZIP。
+
+现在需要确认这些bbox是否正确。比如，ZIP的数字是82501，所以ZIP的输入框应该包含这些数字，所以ZIP的bbox是包含82501的矩形。看图片中ZIP的框是右边的矩形，里面是82501，所以ZIP的bbox是[800, 300, 845, 400]左右。
+
+现在，将这些整理成JSON数组。
+</think>
+[{"bbox_2d": [320, 290, 425, 400], "label": "DATE"}, {"bbox_2d": [555, 290, 742, 400], "label": "CITY"}, {"bbox_2d": [690, 290, 735, 400], "label": "STATE"}, {"bbox_2d": [790, 290, 845, 400], "label": "ZIP"}]

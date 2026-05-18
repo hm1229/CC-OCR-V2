@@ -1,0 +1,154 @@
+用户现在需要从装箱单中检测指定类别。首先得逐个看每个类别，然后在图中找对应的内容。先理清楚每个类别对应的位置。
+
+首先看Company Name：顶部的Easy Power Network Co., Ltd. 是公司名，还有Ship To和Bill To里的也是。比如顶部的Easy Power Network Co., Ltd. 是Company Name。
+
+Address：比如顶部的US Osborn FPO AA 02958等，还有Bill To的地址，Ship To的地址。这些是Address类别。
+
+C/NO：在Shipping Remark里的C/NO: 1 - 650，所以C/NO是这个。
+
+Carton：在Carton: 部分，比如(B) 1 - 650 这里的Carton相关。
+
+Comments：Comments: 后面的内容，比如BT VAT...这些是Comments。
+
+Description：Part No Description里的描述，比如FRAS A9517046J对应的是Part No，而Description是VDSL CPE GATEWAY...？不，看表格里的Part No Description列，比如第一行的Part No是FRAS A9517046J，Description可能对应下面的VDSL CPE...？或者看表格里的Part No Description列，比如Item No:2对应的是VDSL CPE GATEWAY...，所以Description是这个。
+
+Fax：顶部的Fax:58-552-87618116，是Fax类别。
+
+G.W. (KGS)：表格里的G.W. (KGS)列，数值是7,579.00等。
+
+Invoice：Invoice: VFX22050160，是Invoice类别。
+
+Measurement：Measurement列，比如445*230*410 (mm)。
+
+Model No：Model No列，比如101221。
+
+N.W. (KGS)：N.W. (KGS)列，数值7,150.00。
+
+Order No：Order No: SFX2201940，是Order No。
+
+Origin：可能看Port of Discharge？或者Ship From？不过图中Ship From可能没填？或者看其他。不过可能Origin对应Ship From，但图中Ship From: 后面是空的？或者可能没有明确的Origin，不过先看其他。
+
+Pack No：Pack No:VPK22050167，是Pack No。
+
+Packing Date：Packing Date:2022/5/11，是Packing Date。
+
+Packing No：Packing No: VPK22050167，和Pack No可能重复？看右上角Packing No: VPK22050167，所以Packing No是这个。
+
+Page Number：Page 1 of 1，是Page Number。
+
+Part No：Part No列，比如FRAS A9517046J，是Part No。
+
+Partner P/O：Partner P/O: JTFF22050031，是Partner P/O。
+
+Payment：Payment: O/A 120 days after ac，是Payment。
+
+Phone：Phone:55-780-82818862，是Phone。
+
+Price Term：Price Term: FOB Shanghai，是Price Term。
+
+Print Date：Print Date:2022/5/17 11:17:03，是Print Date。
+
+Qty/CNT：Qty/CNT列，比如6,500 Qty/CNT。
+
+Quantity：Quantity列，和Qty/CNT可能重复？看表格里的Quantity Qty/CNT是6,500，所以Quantity是这个。
+
+Ship Attn：Ship Attn:Adam Ayala，是Ship Attn。
+
+Ship List：Ship List: EFX22001933，是Ship List。
+
+Ship Via：Ship Via: Sea Freight，是Ship Via。
+
+Tel：Tel:80022325316，是Tel。
+
+Title：可能没有明确的Title，或者看其他。比如Invoice是Invoice，可能Title不是主要的，暂时看有没有。
+
+自定义：可能没有，或者看其他。现在逐个处理。
+
+现在开始列每个检测项：
+
+1. Company Name：顶部的Easy Power Network Co., Ltd.，还有Bill To和Ship To的公司名。比如顶部的“Easy Power Network Co., Ltd.”，bbox是[44, 44, 344, 62]左右？看图片顶部的公司名：Easy Power Network Co., Ltd. 是第一行，然后是地址。所以Company Name的bbox是[44, 44, 344, 62]。
+
+2. Address：比如顶部的US Osborn FPO AA 02958，70818 Morrison Mount New Desireeside, TX 95145；Bill To的USNV 01son FPO AP 59828...；Ship To的USS Hernandez FPO AP 88909。这些是Address。比如顶部的地址：US Osborn FPO AA 02958，70818 Morrison Mount New Desireeside, TX 95145，Phone和Fax上面的地址。所以Address的bbox比如[44, 64, 344, 88]（US Osborn...）。
+
+3. C/NO：在Shipping Remark里的C/NO: 1 - 650，看图片下方Shipping Remark部分，C/NO: 1 - 650，bbox是[114, 782, 164, 797]左右？
+
+4. Carton：在Carton: 部分，比如“Carton: : Rd.” 可能是表格上方的Carton标签，或者表格里的Carton列。比如表格的表头有Carton列，所以Carton的标签是“Carton:” 后面的内容，比如(B) 1 - 650 是Carton的数量。所以Carton的bbox是表格上方的“Carton:” 文本，比如[114, 332, 154, 347]。
+
+5. Comments：Comments: 后面的内容，比如“BT VAT GB2457193448, EORI number GB2457193480000”，在Comments: 标题下的内容，bbox是[114, 678, 520, 693]左右？
+
+6. Description：在Part No Description列，比如VDSL CPE GATEWAY GRV9517UAC34-A-SAADSL/EI-FTT，是Item No:2的描述，所以Description的bbox是对应单元格，比如在表格中Part No Description列的内容，比如“VDSL CPE GATEWAY GRV9517UAC34-A-SAADSL/EI-FTT” 对应的bbox。
+
+7. Fax：顶部的Fax:58-552-87618116，bbox是[114, 88, 254, 103]（看图片中Phone和Fax一行：Phone:55-780-82818862 Fax:58-552-87618116）。
+
+8. G.W. (KGS)：表格中的G.W. (KGS)列，数值7,579.00，bbox是表格中对应列的标题和数值，比如列标题“G.W. (KGS)”的bbox，以及数值的bbox。
+
+9. Invoice：Invoice: VFX22050160，在Ship To部分的Invoice: 后面，bbox是[504, 332, 624, 347]（看Ship To右边的Invoice: VFX22050160）。
+
+10. Measurement：表格中的Measurement列，比如445*230*410 (mm)，bbox是列标题和数值的区域。
+
+11. Model No：表格中的Model No列，比如101221，bbox是列标题和数值。
+
+12. N.W. (KGS)：表格中的N.W. (KGS)列，数值7,150.00，bbox是列标题和数值。
+
+13. Order No：Order No: SFX2201940，在L/C No下面的Order No: 后面，bbox是[114, 372, 224, 387]（看Order No: SFX2201940）。
+
+14. Origin：可能Ship From，但图中Ship From: 后面是空的？或者Port of Discharge？Port of Discharge: 后面可能有内容？看图片中Port of Discharge: 后面是空白？可能没有明确的Origin，暂时可能没有，或者看其他。但可能用户需要找的Origin是否存在？比如可能没有，暂时跳过，或者看是否有其他。
+
+15. Pack No：Pack No:VPK22050167，在右上角Packing No: VPK22050167，bbox是[634, 88, 744, 103]（看右上角Packing No: VPK22050167）。
+
+16. Packing Date：Packing Date:2022/5/11，在右上角Packing Date: 后面，bbox是[634, 94, 714, 109]（看Packing Date:2022/5/11）。
+
+17. Packing No：和Pack No可能重复？右上角Packing No: VPK22050167，所以Packing No的bbox是[634, 88, 744, 103]（因为Packing No: VPK22050167）。
+
+18. Page Number：Page 1 of 1，在底部Page 1 of 1，bbox是[34, 978, 134, 993]。
+
+19. Part No：表格中的Part No列，比如FRAS A9517046J，bbox是列标题和数值。
+
+20. Partner P/O：Partner P/O: JTFF22050031，在Ship List下面的Partner P/O: 后面，bbox是[114, 352, 254, 367]（看Partner P/O: JTFF22050031）。
+
+21. Payment：Payment: O/A 120 days after ac，在右上角Payment: 后面，bbox是[634, 144, 764, 159]（看Payment: O/A 120 days after ac）。
+
+22. Phone：Phone:55-780-82818862，在顶部Phone: 后面，bbox是[114, 88, 254, 103]（和Fax同一行）。
+
+23. Price Term：Price Term: FOB Shanghai，在右上角Price Term: 后面，bbox是[634, 149, 754, 164]（看Price Term: FOB Shanghai）。
+
+24. Print Date：Print Date:2022/5/17 11:17:03，在底部Print Date: 后面，bbox是[654, 978, 834, 993]。
+
+25. Qty/CNT：表格中的Qty/CNT列，比如6,500 Qty/CNT，bbox是列标题和数值。
+
+26. Quantity：和Qty/CNT可能重复，因为Quantity Qty/CNT是同一列，所以Quantity的bbox是列标题“Quantity”和数值。
+
+27. Ship Attn：Ship Attn:Adam Ayala，在Ship To部分的Ship Attn: 后面，bbox是[504, 312, 624, 327]（看Ship Attn:Adam Ayala）。
+
+28. Ship List：Ship List: EFX22001933，在L/C No下面的Ship List: 后面，bbox是[114, 342, 254, 357]（看Ship List: EFX22001933）。
+
+29. Ship Via：Ship Via: Sea Freight，在Ship To部分的Ship Via: 后面，bbox是[504, 322, 624, 337]（看Ship Via: Sea Freight）。
+
+30. Tel：Tel:80022325316，在Ship To部分的Tel: 后面，bbox是[504, 302, 624, 317]（看Tel:80022325316）。
+
+31. Title：可能没有明确的Title，比如Invoice是Invoice，可能Title不是主要的，暂时没有。
+
+32. 自定义：可能没有，或者看其他未分类的，但用户要求的是指定类别，所以可能没有自定义项，或者如果有其他需要自定义的，但这里可能没有。
+
+现在需要把每个检测到的类别对应上，然后生成JSON数组。需要注意每个元素的bbox和label。
+
+现在逐个整理：
+
+- Company Name：顶部的Easy Power Network Co., Ltd.，bbox是[44, 44, 344, 62]（看图片中第一行公司名）。
+- Address：US Osborn FPO AA 02958，70818 Morrison Mount New Desireeside, TX 95145，这部分在Phone和Fax上面，bbox是[44, 64, 344, 88]。
+- C/NO：C/NO: 1 - 650，在Shipping Remark里，bbox是[116, 784, 164, 799]。
+- Carton：Carton: 后面的标签，比如“Carton: : Rd.”，bbox是[114, 332, 154, 347]。
+- Comments：Comments: 后面的内容，比如“BT VAT GB2457193448, EORI number GB2457193480000”，bbox是[114, 678, 520, 693]。
+- Description：VDSL CPE GATEWAY GRV9517UAC34-A-SAADSL/EI-FTT（Item No:2的描述），在表格中Part No Description列，对应行的描述，bbox是[204, 478, 520, 493]（看Item No:2的Description）。
+- Fax：Fax:58-552-87618116，bbox是[256, 88, 386, 103]（和Phone同一行，Phone在左，Fax在右）。
+- G.W. (KGS)：G.W. (KGS)列的标题和数值，比如7,579.00，bbox是[544, 422, 684, 437]（列标题）和数值的bbox，比如[624, 452, 724, 467]（数值）。
+- Invoice：Invoice: VFX22050160，在Ship To右边，bbox是[506, 332, 626, 347]。
+- Measurement：Measurement列的标题和数值，比如445*230*410 (mm)，bbox是[744, 422, 884, 437]（列标题）和数值的bbox，比如[824, 452, 924, 467]。
+- Model No：Model No列的标题和数值，比如101221，bbox是[344, 422, 464, 437]（列标题）和数值的bbox，比如[424, 452, 524, 467]。
+- N.W. (KGS)：N.W. (KGS)列的标题和数值，比如7,150.00，bbox是[464, 422, 584, 437]（列标题）和数值的bbox，比如[544, 452, 644, 467]。
+- Order No：Order No: SFX2201940，bbox是[114, 372, 224, 387]。
+- Pack No：Pack No: VPK22050167，右上角的Packing No: VPK22050167，bbox是[634, 88, 744, 103]。
+- Packing Date：Packing Date:2022/5/11，右上角的Packing Date:，bbox是[634, 94, 714, 109]。
+- Packing No：和Pack No可能重复，因为Packing No就是Pack No，所以这里Packing No的bbox也是[634, 88, 744, 103]（因为Packing No: VPK22050167）。
+- Page Number：Page 1 of 1，底部的Page 1 of 1，bbox是[34, 978, 134, 993]。
+- Part No：Part No列的标题和数值，比如FRAS A9517046J，bbox是[184, 4

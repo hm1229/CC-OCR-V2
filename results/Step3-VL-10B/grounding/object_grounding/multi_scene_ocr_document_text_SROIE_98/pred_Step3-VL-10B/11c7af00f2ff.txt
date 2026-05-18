@@ -1,1 +1,31 @@
-[{"bbox_2d": [92, 105, 897, 128], "label": "company"}, {"bbox_2d": [92, 142, 897, 185], "label": "address"}, {"bbox_2d": [92, 225, 897, 248], "label": "date"}, {"bbox_2d": [92, 305, 897, 328], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is "LIM SENG THO HARDWARE TRADING". Let's find its bounding box.
+- Address: The address lines are "No 7, Simpang Off Batu Village, Jalan Ipoah Batu 5, 51200 Kuala Lumpur. MALAYSIA". Need to capture that.
+- Date: The date is "08/02/2018 12:42" from the invoice date field.
+- Total: The total amount is "10.50" under "Total Incl. of GST" or payment. Let's check the total value.
+
+Now, map each to their bounding boxes.
+
+First, company: The text "LIM SENG THO HARDWARE TRADING" is in the upper part. Let's get its coordinates.
+
+Address: The lines below the company name.
+
+Date: The line with "Date :" and the value.
+
+Total: The total amount, which is 10.50 in "Total Incl. of GST" and "Payment".
+
+Let's check each element's position.
+
+For company:
+The text is centered, so the bounding box would be around that line.
+
+Address: The address spans multiple lines: "No 7, Simpang Off Batu Village, Jalan Ipoah Batu 5, 51200 Kuala Lumpur. MALAYSIA"
+
+Date: "08/02/2018 12:42" is under "Date :"
+
+Total: The total is 10.50, which is in "Total Incl. of GST" and "Payment" fields. Let's take the value 10.50.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [144, 102, 855, 127], "label": "company"}, {"bbox_2d": [144, 140, 855, 192], "label": "address"}, {"bbox_2d": [104, 312, 246, 332], "label": "date"}, {"bbox_2d": [325, 332, 432, 352], "label": "total"}]

@@ -1,1 +1,51 @@
-[{"bbox_2d": [312, 375, 427, 647], "label": "DATE"}, {"bbox_2d": [543, 400, 685, 630], "label": "CITY"}, {"bbox_2d": [685, 400, 725, 630], "label": "STATE"}, {"bbox_2d": [725, 400, 870, 630], "label": "ZIP"}]
+用户现在需要从表单中提取CITY、DATE、STATE、ZIP的信息。首先看每个字段的位置。DATE的框里是08-04-89，CITY是Columbus,，STATE是Ga.，ZIP是31907。然后要确定每个的bbox。
+
+先看DATE的输入框：在DATE标签下的矩形，里面的内容是08-04-89。然后CITY、STATE、ZIP在同一个大框里。需要分别识别每个部分。
+
+首先处理DATE：标签是DATE，对应的输入框是[312, 375, 427, 647]左右？看图片中的DATE框，里面的手写是08-04-89。然后CITY是Columbus,，STATE是Ga.，ZIP是31907。这三个在同一个大的CITY到ZIP的框里，所以需要拆分。
+
+看CITY的标签是CITY，对应的内容是Columbus,；STATE是Ga.；ZIP是31907。现在要确定每个的bbox。
+
+先看DATE的框：在表单中，DATE的输入框是中间的矩形，里面的手写是08-04-89。所以DATE的bbox是那个矩形框，即[310, 372, 429, 652]（大概范围）。
+
+然后CITY、STATE、ZIP在右边的大框里。CITY的标签是CITY，对应的内容是Columbus,；STATE是Ga.；ZIP是31907。所以需要把大框内的内容按CITY、STATE、ZIP拆分。
+
+现在看图片中的CITY、STATE、ZIP的标签，CITY在上方，然后是STATE，然后是ZIP。对应的内容在大框内，所以大框的范围是CITY到ZIP的输入框，即从CITY标签下的框到ZIP。大框的坐标大概是[542, 372, 875, 652]左右？然后里面的内容是Columbus, Ga. 31907。所以需要把CITY、STATE、ZIP分别提取。
+
+现在逐个分析：
+
+1. DATE：标签是DATE，输入框内的内容是08-04-89。所以对应的bbox是DATE输入框的矩形，即[312, 375, 427, 647]（看图片中的DATE框，手写内容在其中）。
+
+2. CITY：标签是CITY，对应的内容是Columbus,。在大框内，CITY部分。大框的起始是CITY标签下的位置，内容是Columbus,。所以CITY的bbox是大框内CITY对应的部分，即从CITY标签到STATE标签之间的内容。大框的范围是CITY到ZIP，所以CITY的内容是Columbus,，其在大框内的位置是左侧部分。所以CITY的bbox可以是大框内的CITY部分，比如[542, 375, 680, 647]（因为Columbus, 写在CITY下面）。
+
+3. STATE：标签是STATE，对应的内容是Ga.。在大框内，STATE标签下的内容。所以STATE的bbox是大框内STATE对应的部分，即[670, 375, 705, 647]（Ga.的位置）。
+
+4. ZIP：标签是ZIP，对应的内容是31907。在大框内，ZIP标签下的内容，即[710, 375, 840, 647]（31907的位置）。
+
+现在需要确认每个的坐标。看图片中的手写内容：Columbus, Ga. 31907。所以CITY是Columbus,，STATE是Ga.，ZIP是31907。DATE是08-04-89。
+
+现在整理每个的bbox：
+
+- DATE：输入框是中间的矩形，里面的手写是08-04-89。所以bbox是[310, 372, 429, 652]（因为DATE的标签在上方，输入框是矩形，包含手写内容）。
+
+- CITY：CITY标签下的输入内容是Columbus,，所以CITY的bbox是大框内CITY对应的部分，即大框的起始到STATE之前。大框的范围是CITY到ZIP，所以CITY的bbox是[540, 372, 685, 652]（因为Columbus, 写在这个区域）。
+
+- STATE：STATE标签下的内容是Ga.，所以STATE的bbox是[670, 372, 710, 652]（Ga.的位置）。
+
+- ZIP：ZIP标签下的内容是31907，所以ZIP的bbox是[715, 372, 865, 652]（31907的位置）。
+
+现在需要将这些转换为JSON数组，每个元素包含bbox_2d和label。
+
+现在检查每个部分：
+
+DATE的label是DATE，内容是08-04-89，对应的输入框是DATE下面的矩形，所以bbox是该矩形的坐标。看图片中DATE的框，是中间的矩形，从x约310到x约429，y约370到y约650左右。
+
+CITY的label是CITY，内容是Columbus,，在CITY标签下的框内，即大框的左侧部分，CITY标签在上方，所以CITY的输入区域是大框内CITY对应的部分，即x从540到x约680（因为Columbus, 的长度）。
+
+STATE的label是STATE，内容是Ga.，在STATE标签下的位置，x约670到x约710。
+
+ZIP的label是ZIP，内容是31907，x约715到x约865。
+
+现在确认每个的bbox是否正确。然后生成JSON数组。
+</think>
+[{"bbox_2d": [312, 375, 427, 647], "label": "DATE"}, {"bbox_2d": [542, 375, 682, 647], "label": "CITY"}, {"bbox_2d": [670, 375, 708, 647], "label": "STATE"}, {"bbox_2d": [712, 375, 862, 647], "label": "ZIP"}]

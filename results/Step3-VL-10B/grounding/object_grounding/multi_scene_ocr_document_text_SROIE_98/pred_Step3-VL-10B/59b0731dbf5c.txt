@@ -1,1 +1,24 @@
-[{"bbox_2d": [92, 117, 885, 184], "label": "company"}, {"bbox_2d": [92, 192, 885, 277], "label": "address"}, {"bbox_2d": [682, 322, 767, 342], "label": "date"}, {"bbox_2d": [92, 484, 885, 507], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The top part says "99 SPEED MART S/B (519537-X)". So that's the company.
+- Address: The lines below the company name: LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1299-SUBANG PERMAI. That's the address.
+- Date: The invoice date is 07-02-17 (from the line with 06:34PM, 562004, 07-02-17).
+- Total: The total sales inclusive of GST is RM 37.44, but let's check the credit amount which is the total paid. Wait, the "Total Sales (Inclusive GST) RM 37.44" is the total. Let me confirm.
+
+Now, map each to their bounding boxes.
+
+Let's check the coordinates:
+
+Company: The line "99 SPEED MART S/B (519537-X)" is at the top. Bounding box would cover that line.
+
+Address: The block of address lines: LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1299-SUBANG PERMAI.
+
+Date: The date is 07-02-17 in the line with time and invoice number.
+
+Total: The "Total Sales (Inclusive GST) RM 37.44" is the total amount.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [92, 117, 872, 200], "label": "company"}, {"bbox_2d": [92, 202, 872, 297], "label": "address"}, {"bbox_2d": [682, 325, 825, 347], "label": "date"}, {"bbox_2d": [122, 487, 327, 508], "label": "total"}]

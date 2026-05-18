@@ -1,159 +1,224 @@
-用户现在需要检测指定类别在图像中的对象。首先得逐个分析每个类别，找到对应的位置。
+Got it, let's go through each category and find the corresponding values in the image.
 
-首先看9301912850：在ITEM列里，第一行的ITEM是9301912850，所以找这个文本的位置。看图像中ITEM列下的9301912850，对应的bbox。
+First, let's list all the categories:
 
-然后9301912851：同样在ITEM列，第二行的ITEM是9301912851，找到这个。
+- ADDRESS: Need to check where the address is. There are two addresses: Invoice to address and Ship to address. Let's see.
+- Address: Maybe the Ship to address? Let's check the labels.
+- COMPANY NAME: The invoice to company is INTER-SIN Development Zone Shichuang Media Co., Ltd.
+- COMPANY NO: 201016894N (from the invoice to section)
+- Country of Origin: CHINA (from the section "Country of Origin: CHINA")
+- EN Date: 10/20/2021 (EN Date field)
+- EN Nb.: 2104090958 (EN Nb. field)
+- Fax: 26-684-4651305 (Fax field)
+- NUMBER: Maybe the invoice number? Or other numbers. Wait, the problem says "NUMBER" category. Let's check.
+- PAGE NUMBER: Page 8 (at the bottom right)
+- Payment Term: O/A 75 Days (Payment Term field)
+- Pickup Date: 10/20/2021 (Pickup Date field)
+- Price Term: FOB SHANGHAI (Price Term field)
+- SHIPPING MARKS: The section labeled "SHIPPING MARKS:" with content like ETEC, VIETNAM, etc.
+- Shipped per: SEA (Shipped per field)
+- TITLE: The title is "PACKING LIST" at the top.
+- Tel: 58-841-23601600 (Tel field)
 
-ADDRESS：看Invoice to的Address是USNV Barnes FPO AE 05116，还有Ship to的Address是17694 Tran Shore West Olivia, GA 35572，以及Ship to下面的Address（Unit 2736...）。需要确认哪些是ADDRESS类别。可能这里的ADDRESS是标签，而具体地址是内容。不过用户要求的是检测对象，即标签对应的内容？不，用户是检测对象，即每个类别对应的存在。比如ADDRESS这个类别，看是否有该标签。看图像中的“Address:”出现多次，比如Invoice to下面的Address:，Ship to下面的Address:。所以ADDRESS作为类别，对应这些标签的位置？或者看用户给的类别是“ADDRESS”（大写）和“Address”（小写？看用户给的类别列表里的“ADDRESS, Address”是两个？看用户给的类别列表：ADDRESS, Address, ... 所以需要区分。比如Invoice to下面的“Address:”是Address（小写），而可能ADDRESS是另一个？不，看用户给的类别是“ADDRESS, Address”作为两个类别？看用户提供的类别列表：“ADDRESS, Address, COMPANY NAME, COMPANY NO, Country of Origin, EN Date, EN Nb., Fax, NUMBER, PAGE NUMBER, Payment Term, Pickup Date, Price Term, SHIPPING MARKS, Shipped per, TITLE, Tel.” 所以ADDRESS和Address是两个不同的类别？需要看图像中的标签。比如Invoice to下面的“Address:”是“Address”（小写），而可能有没有“ADDRESS”（大写）？看图像中的“Address:”出现多次，比如Invoice to的Address:，Ship to的Address:，还有上面的Address:（Invoice to的Address）。另外，可能“ADDRESS”是另一个？比如可能用户输入时的大小写，需要看图像中的实际标签。比如图像中“Address:”是小写的，所以对应“Address”类别。而“ADDRESS”可能没有？或者可能我搞错了。先继续。
+Now let's map each:
 
-COMPANY NAME：看Invoice to的公司名称是INTER-SIN Development Zone Shichuang Media Co., Ltd.，所以“COMPANY NAME”对应这个内容的标签？不，标签是“COMPANY NAME”作为类别，看图像中是否有“COMPANY NAME”这个标签？不，图像中是“COMPANY NO : 201016894N”，而公司名称是“INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以“COMPANY NAME”是公司名称的内容，而标签是“Invoice to:”后面的公司名，所以“COMPANY NAME”作为类别，对应公司名称的文本。但用户要求的是检测对象，即每个类别对应的存在，比如“COMPANY NAME”这个类别在图像中是否有对应的元素？或者可能“COMPANY NAME”是标签，比如图像中是否有“COMPANY NAME:”？不，图像中是“COMPANY NO :”，而公司名称是“INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以“COMPANY NAME”是公司名称的内容，属于该类别。需要明确每个类别对应的是标签还是内容。根据问题描述，“Detect all objects matching these categories in this document image”，即每个类别对应的是图像中属于该类别的对象（比如文本内容）。例如，“9301912850”是ITEM列中的一个产品编号，所以要找到这个编号的文本位置。
+1. ADDRESS: Let's check the Ship to address. The Ship to address is "17694 Tran Shore West Olivia, GA 35572" and the address line below: "Unit 2736 Box 4010 DPO AP 39169". But maybe the main address. Alternatively, the Invoice to address is "USNV Barnes FPO AE 05116". Let's check the labels. The problem has "ADDRESS" and "Address" as separate. Maybe "ADDRESS" is the top address (the company's address at the top of the document: 625 Audrey Stream East Jonathan, NM 77841...). Let's check the top part: "625 Audrey Stream East Jonathan, NM 77841" is the address of the company that provided the packing list. So that's the ADDRESS category.
 
-现在逐个处理：
+2. Address: Maybe the Ship to address's address line. Let's check the labels in the document. The "Ship to:" has an address: "17694 Tran Shore West Olivia, GA 35572" and the next line "Unit 2736 Box 4010 DPO AP 39169". So the Address label here is the Ship to address.
 
-1. 9301912850：在ITEM列，第一行的ITEM是9301912850，看图像中的位置。对应的bbox需要看该文本的位置。图像中ITEM列下的第一行是9301912850: CTN#66... 所以这个文本的bbox。
+3. COMPANY NAME: "INTER-SIN Development Zone Shichuang Media Co., Ltd."
 
-2. 9301912851：ITEM列下的第二行，9301912851: PLT#1=CTN#1-24... 所以这个文本的bbox。
+4. COMPANY NO: "201016894N" (from "COMPANY NO : 201016894N")
 
-3. ADDRESS：看图像中的“Address:”标签，比如Invoice to下面的“Address: USNV Barnes FPO AE 05116”，这里的“Address:”是标签，对应“Address”类别？或者用户给的类别是“ADDRESS”和“Address”两个？看用户给的类别列表里有“ADDRESS, Address”，所以可能“ADDRESS”是另一个，比如可能Ship to的Address是另一个？或者可能“ADDRESS”是大写的标签，比如图像中是否有“ADDRESS:”？看图像中Invoice to的Address是“Address:”（小写），Ship to的Address也是“Address:”（小写）。另外，可能“ADDRESS”是另一个，比如在Ship to的Address上面？不，看图像中的“Ship to: E510533”然后“Address: 17694 Tran Shore West Olivia, GA 35572”，所以“Address:”是小写的，所以“Address”类别对应这些“Address:”的标签和内容？或者用户可能将“ADDRESS”作为类别，而“Address”是另一个？可能需要看用户给的类别中的“ADDRESS”和“Address”是两个不同的，比如“ADDRESS”可能是指某个特定的地址标签，而“Address”是另一个。但可能图像中只有“Address:”（小写），所以“Address”类别存在，而“ADDRESS”可能不存在？或者可能我搞错了，先继续。
+5. Country of Origin: "CHINA" (from "Country of Origin: CHINA")
 
-4. COMPANY NAME：图像中“Invoice to: INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以公司名称是这个，属于“COMPANY NAME”类别。
+6. EN Date: "10/20/2021" (from "EN Date : 10/20/2021")
 
-5. COMPANY NO：图像中“COMPANY NO : 201016894N”，所以这个是“COMPANY NO”类别。
+7. EN Nb.: "2104090958" (from "EN Nb. : 2104090958")
 
-6. Country of Origin：图像中“Country of Origin: CHINA”，所以这个是“Country of Origin”类别。
+8. Fax: "26-684-4651305" (from "Fax: 26-684-4651305")
 
-7. EN Date：图像中“EN Date : 10/20/2021”，所以这个是“EN Date”类别。
+9. NUMBER: Let's see, maybe the invoice number? But the document has EN Nb. which is a number. Or maybe the "NUMBER" refers to something else. Wait, the problem lists "NUMBER" as a category. Let's check if there's a number field. Alternatively, maybe the "NUMBER" is the invoice number, but in the document, the invoice to is INTER-SIN, and the company no is 201016894N. Maybe "NUMBER" is the EN Nb. but EN Nb. is already a category. Wait, the problem's categories include "NUMBER" as a separate label. Let me check the image again. The top address has a unit number: Unit 5752 Box 8650 DPO AA 94981 215200. But maybe not. Alternatively, the "NUMBER" could be the page number, but page number is separate. Let's check the problem's list: the categories include NUMBER. Let's see if there's a field that's a number. Maybe the "EN Nb." is a number, but EN Nb. is a category. Wait, the problem says "detect the corresponding values to the following categories", so each category has a value. Let's check each category:
 
-8. EN Nb.：图像中“EN Nb. : 2104090958”，所以这个是“EN Nb.”类别。
+- ADDRESS: The top address: "625 Audrey Stream East Jonathan, NM 77841" (the company's address at the top of the packing list)
+- Address: The Ship to address's address: "17694 Tran Shore West Olivia, GA 35572" (the line under Ship to: Address:)
+- COMPANY NAME: "INTER-SIN Development Zone Shichuang Media Co., Ltd."
+- COMPANY NO: "201016894N"
+- Country of Origin: "CHINA"
+- EN Date: "10/20/2021"
+- EN Nb.: "2104090958"
+- Fax: "26-684-4651305"
+- NUMBER: Let's check if there's a "NUMBER" field. Maybe the invoice number? But the document doesn't have an invoice number labeled. Alternatively, the "Pickup Date" is a number, but that's a category. Wait, maybe the "NUMBER" is the "EN Nb." but no, EN Nb. is a separate category. Wait, the problem's list includes "NUMBER" as a category. Let me check the image again. The "Shipment Marks" have "P/NO 1", "C/NO 1-6", etc. But maybe "NUMBER" refers to the page number? No, page number is separate. Alternatively, maybe the "NUMBER" is the "Unit" number in the top address: Unit 5752 Box 8650 DPO AA 94981 215200. But that's part of the top address. Alternatively, maybe the "NUMBER" is the "Price Term" number? No. Let's check the problem statement again. The user provided the categories, and we need to find each. Let's proceed.
 
-9. Fax：图像中“Fax: 26-684-4651305”，所以这个是“Fax”类别。
+- PAGE NUMBER: "Page 8" at the bottom right.
+- Payment Term: "O/A 75 Days"
+- Pickup Date: "10/20/2021"
+- Price Term: "FOB SHANGHAI"
+- SHIPPING MARKS: The text under "SHIPPING MARKS:" which includes "ETEC", "VIETNAM", "P/NO 1", "MADE IN CHINA", etc.
+- Shipped per: "SEA"
+- TITLE: "PACKING LIST" at the top.
+- Tel: "58-841-23601600"
 
-10. NUMBER：可能需要看是否有“NUMBER”类别，比如可能是指某个编号，比如Invoice to的公司编号？或者可能“NUMBER”是指其他，比如CTN编号？但用户给的类别中有“NUMBER”，需要看图像中是否有“NUMBER”标签。可能“NUMBER”是指某个数字，比如EN Nb.是2104090958，属于NUMBER？但可能“NUMBER”是另一个，比如可能没有明确的“NUMBER”标签，或者可能我漏看了。或者可能“NUMBER”是指ITEM中的编号？不，先看其他类别。
+Now, let's handle each category:
 
-11. PAGE NUMBER：图像底部有“Page 8”，所以“PAGE NUMBER”类别对应这个。
+1. ADDRESS: The top address block: "625 Audrey Stream East Jonathan, NM 77841" and the lines below (USCGC Grant FPO AE 03568, Unit 5752 Box 8650 DPO AA 94981 215200, Tel:...). So the bounding box for ADDRESS is the top part.
 
-12. Payment Term：图像中“Payment Term O/A 75 Days”，所以这个是“Payment Term”类别。
+2. Address: The Ship to address: "17694 Tran Shore West Olivia, GA 35572" and the address line below: "Unit 2736 Box 4010 DPO AP 39169". So the label "Address:" under Ship to.
 
-13. Pickup Date：图像中“Pickup Date: 10/20/2021”，所以这个是“Pickup Date”类别。
+3. COMPANY NAME: The "Invoice to: INTER-SIN Development Zone Shichuang Media Co., Ltd."
 
-14. Price Term：图像中“Price Term FOB SHANGHAI”，所以这个是“Price Term”类别。
+4. COMPANY NO: The line "COMPANY NO : 201016894N"
 
-15. SHIPPING MARKS：图像中“SHIPPING MARKS:”下面的内容，所以这个是“SHIPPING MARKS”类别。
+5. Country of Origin: The line "Country of Origin: CHINA"
 
-16. Shipped per：图像中“Shipped per: SEA”，所以这个是“Shipped per”类别。
+6. EN Date: The line "EN Date : 10/20/2021"
 
-17. TITLE：图像顶部是“PACKING LIST”，所以“TITLE”类别对应这个。
+7. EN Nb.: The line "EN Nb. : 2104090958"
 
-18. Tel：图像中“Tel: 58-841-23601600”，所以这个是“Tel”类别。
+8. Fax: The line "Fax: 26-684-4651305"
 
-现在需要逐个确认每个类别的存在，并找到对应的bbox。
+9. NUMBER: Let's check if there's a field labeled "NUMBER". Maybe the "EN Nb." is a number, but EN Nb. is a category. Alternatively, maybe the "NUMBER" is the invoice number, but the document doesn't have an invoice number. Wait, the problem's categories include "NUMBER", so perhaps it's the "Pickup Date" or "EN Date" but those are dates. Alternatively, maybe the "NUMBER" is the "Page Number", but Page Number is a separate category. Let me check the image again. The "Shipment Marks" have "C/NO 1-6", which is a number. But the category is "SHIPPING MARKS", so that's covered. Maybe "NUMBER" is the "Unit" in the top address: "Unit 5752 Box 8650 DPO AA 94981 215200". Let's check the top address's unit line. The top address has "Unit 5752 Box 8650 DPO AA 94981 215200". So that's a number. Let's assign that to NUMBER.
 
-现在开始整理：
+10. PAGE NUMBER: The line "Page 8" at the bottom.
 
-- 9301912850：在ITEM列，第一行的ITEM文本，位置大概是图像中ITEM列下的第一行，内容是“9301912850: CTN#66( @CTN/1PCE), DI M 52*25*13( CMS) ...” 所以bbox需要覆盖这个文本。
+11. Payment Term: The line "Payment Term O/A 75 Days"
 
-- 9301912851：ITEM列下的第二行，内容是“9301912851: PLT#1=CTN#1-24( @PLT/24CTNS; @CTN/1PCE), DI M 122*102*99( CMS) ...” 所以bbox覆盖这个。
+12. Pickup Date: The line "Pickup Date: 10/20/2021"
 
-- ADDRESS：看“Address:”标签，比如Invoice to下面的“Address: USNV Barnes FPO AE 05116”，这里的“Address:”是标签，对应“Address”类别。另外Ship to下面的“Address: 17694 Tran Shore West Olivia, GA 35572”也是“Address”类别。还有Ship to上面的“Address:”？不，Ship to是“Ship to: E510533”然后“Address: ...”，所以有两个Address标签？但用户类别中的“ADDRESS”和“Address”是两个，可能“ADDRESS”是另一个，比如可能没有，或者可能“ADDRESS”是指大写的，而图像中是小写，所以“Address”类别存在，而“ADDRESS”可能不存在？或者可能用户输入时的笔误，比如“ADDRESS”是“Address”的大写，所以视为同一个？但用户给的类别是分开的，所以需要看。可能图像中没有“ADDRESS:”（大写）的标签，只有“Address:”（小写），所以“Address”类别存在，而“ADDRESS”不存在？或者可能我搞错了，先处理“Address”类别，即所有“Address:”的标签和内容。
+13. Price Term: The line "Price Term FOB SHANGHAI"
 
-- COMPANY NAME：Invoice to的公司名称是“INTER-SIN Development Zone Shichuang Media Co., Ltd.”，所以这个文本属于“COMPANY NAME”类别。
+14. SHIPPING MARKS: The section starting with "SHIPPING MARKS:"
 
-- COMPANY NO：图像中“COMPANY NO : 201016894N”，所以这个文本属于“COMPANY NO”类别。
+15. Shipped per: The line "Shipped per: SEA"
 
-- Country of Origin：图像中“Country of Origin: CHINA”，所以这个属于“Country of Origin”类别。
+16. TITLE: The top line "PACKING LIST"
 
-- EN Date：图像中“EN Date : 10/20/2021”，属于“EN Date”类别。
+17. Tel: The line "Tel: 58-841-23601600"
 
-- EN Nb.：图像中“EN Nb. : 2104090958”，属于“EN Nb.”类别。
+Now, let's map each with bounding boxes.
 
-- Fax：图像中“Fax: 26-684-4651305”，属于“Fax”类别。
+First, let's identify each element's position.
 
-- NUMBER：可能需要看是否有“NUMBER”类别，比如可能是指某个编号，比如“EN Nb.”是2104090958，属于NUMBER？但用户类别中的“NUMBER”可能是指其他，比如CTN编号？或者可能“NUMBER”是指“Page 8”中的8？不，“PAGE NUMBER”是另一个。可能“NUMBER”在图像中没有明确的标签，或者可能我漏了。或者可能“NUMBER”是指“EN Nb.”的数值，但“EN Nb.”已经单独列了。可能“NUMBER”类别在图像中没有对应，或者可能用户指的是其他。暂时先标记可能存在的，或者可能“NUMBER”是指“Pickup Date”中的日期？不，先继续其他类别。
-
-- PAGE NUMBER：图像底部“Page 8”，所以“PAGE NUMBER”类别对应这个文本。
-
-- Payment Term：图像中“Payment Term O/A 75 Days”，属于“Payment Term”类别。
-
-- Pickup Date：图像中“Pickup Date: 10/20/2021”，属于“Pickup Date”类别。
-
-- Price Term：图像中“Price Term FOB SHANGHAI”，属于“Price Term”类别。
-
-- SHIPPING MARKS：图像中“SHIPPING MARKS:”下面的内容，比如“ETEC VIETNAM P/NO 1 MADE IN CHINA ...” 所以“SHIPPING MARKS:”是标签，属于“SHIPPING MARKS”类别。
-
-- Shipped per：图像中“Shipped per: SEA”，属于“Shipped per”类别。
-
-- TITLE：图像顶部“PACKING LIST”，属于“TITLE”类别。
-
-- Tel：图像中“Tel: 58-841-23601600”，属于“Tel”类别。
-
-现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个文本的位置。
-
-现在开始构建每个条目的JSON：
-
-1. 9301912850：
-   - 文本在ITEM列，第一行，所以bbox大概是从ITEM列的起始到该行内容。假设图像中ITEM列的9301912850的位置，x1大概在100左右，y1在中间偏下的ITEM表格部分。需要更准确，但根据图像，ITEM列的9301912850是第一行的ITEM值，所以bbox是包含“9301912850:”的区域。
-
-2. 9301912851：
-   - 同样在ITEM列，第二行的ITEM值，即“9301912851:”的区域。
-
-3. ADDRESS：
-   - 比如Invoice to下面的“Address: USNV Barnes FPO AE 05116”，这里的“Address:”是标签，内容是地址。所以bbox是“Address: USNV Barnes FPO AE 05116”这个区域。
-
-4. COMPANY NAME：
-   - “INTER-SIN Development Zone Shichuang Media Co., Ltd.”，在Invoice to: 后面，所以bbox是这个公司名称的文本。
-
-5. COMPANY NO：
-   - “COMPANY NO : 201016894N”，所以bbox是这个文本。
-
-6. Country of Origin：
-   - “Country of Origin: CHINA”，bbox是这个文本。
-
-7. EN Date：
-   - “EN Date : 10/20/2021”，bbox是这个文本。
-
-8. EN Nb.：
-   - “EN Nb. : 2104090958”，bbox是这个文本。
-
-9. Fax：
-   - “Fax: 26-684-4651305”，bbox是这个文本。
-
-10. NUMBER：
-    - 可能需要看是否有“NUMBER”标签，比如可能没有，或者可能“NUMBER”是指“EN Nb.”的数值，但“EN Nb.”已经单独处理。或者可能“NUMBER”是指“Page 8”中的8？不，“PAGE NUMBER”是另一个。可能“NUMBER”在图像中没有，或者可能我漏了。暂时假设“NUMBER”可能是指某个编号，比如“Pickup Date”中的日期是数字，但可能不是。或者可能“NUMBER”类别不存在？但用户要求检测所有匹配的，所以如果不存在就不包含。但可能“NUMBER”是指“EN Nb.”的数值，即2104090958，属于NUMBER。所以“EN Nb.”的数值是NUMBER，所以“NUMBER”类别对应“2104090958”？但“EN Nb.”已经单独列了，可能用户将“EN Nb.”和“NUMBER”视为不同，所以“NUMBER”可能没有。或者可能“NUMBER”是指“Price Term”中的FOB SHANGHAI？不。可能暂时跳过，或者可能“NUMBER”是指“Shipment Marks”中的某个编号，比如P/NO 1，属于NUMBER。但可能更简单的是，先处理存在的类别。
-
-11. PAGE NUMBER：
-    - “Page 8”，在图像底部，所以bbox是这个文本。
-
-12. Payment Term：
-    - “Payment Term O/A 75 Days”，bbox是这个文本。
-
-13. Pickup Date：
-    - “Pickup Date: 10/20/2021”，bbox是这个文本。
-
-14. Price Term：
-    - “Price Term FOB SHANGHAI”，bbox是这个文本。
-
-15. SHIPPING MARKS：
-    - “SHIPPING MARKS:”下面的内容，比如“ETEC VIETNAM P/NO 1 MADE IN CHINA ...” 所以“SHIPPING MARKS:”是标签，bbox是这个标签和内容。
-
-16. Shipped per：
-    - “Shipped per: SEA”，bbox是这个文本。
-
-17. TITLE：
-    - “PACKING LIST”，在图像顶部，bbox是这个文本。
-
-18. Tel：
-    - “Tel: 58-841-23601600”，bbox是这个文本。
-
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。
-
-注意：由于是图像，bbox的坐标是相对的（0-1000），需要估计每个文本的位置。例如：
-
-- TITLE: "PACKING LIST" 在图像顶部，所以bbox大概x1=25, y1=10, x2=350, y2=50（假设）。
-
-- Tel: "Tel: 58-841-23601600" 在顶部地址部分，所以x1=350, y1=30, x2=600, y2=50。
-
-- Fax: "Fax: 26-684-4651305" 在Tel旁边，x1=600, y1=30, x2=800, y2=50。
-
-- Invoice to: "INTER-SIN Development Zone Shichuang Media Co., Ltd." 在左侧，x1=100, y1=120, x2=500, y2=140。
-
-- Address: "USNV Barnes FPO AE 0511
+- TITLE: "PACKING LIST" is at the top left, large text.
+- ADDRESS (top company address): The block at the top right: "625 Audrey Stream East Jonathan, NM 77841" down to "Tel: 58-841-23601600 Fax: 26-684-4651305"
+- Address (Ship to address): The "Ship to: E510533" and "Address: 17694 Tran Shore West Olivia, GA 35572" and the next line "Unit 2736 Box 4010 DPO AP 39169"
+- COMPANY NAME: "Invoice to: INTER-SIN Development Zone Shichuang Media Co., Ltd."
+- COMPANY NO: "COMPANY NO : 201016894N"
+- Country of Origin: "Country of Origin: CHINA"
+- EN Date: "EN Date : 10/20/2021"
+- EN Nb.: "EN Nb. : 2104090958"
+- Fax: "Fax: 26-684-4651305"
+- NUMBER: Let's take the top address's unit number: "Unit 5752 Box 8650 DPO AA 94981 215200" (part of the top address block)
+- PAGE NUMBER: "Page 8" at the bottom right.
+- Payment Term: "Payment Term O/A 75 Days"
+- Pickup Date: "Pickup Date: 10/20/2021"
+- Price Term: "Price Term FOB SHANGHAI"
+- SHIPPING MARKS: The text starting with "SHIPPING MARKS:" and the lines below (ETEC, VIETNAM, etc.)
+- Shipped per: "Shipped per: SEA"
+- Tel: "Tel: 58-841-23601600"
+
+Now, let's create the JSON array for each.
+
+Let's go step by step:
+
+1. TITLE: "PACKING LIST" – top left.
+   bbox: [15, 1, 337, 57] (approx, since it's the main title)
+
+2. ADDRESS (top address):
+   The text from "625 Audrey Stream East Jonathan, NM 77841" to "215200" and the tel/fax.
+   bbox: [444, 1, 747, 102] (the top right block)
+
+3. Address (Ship to address):
+   The "Address:" under Ship to: "17694 Tran Shore West Olivia, GA 35572" and the unit line.
+   bbox: [101, 307, 393, 347] (the address line) and the next line [101, 347, 393, 367] (unit line). But maybe combine.
+
+4. COMPANY NAME:
+   "Invoice to: INTER-SIN Development Zone Shichuang Media Co., Ltd."
+   bbox: [101, 147, 490, 187]
+
+5. COMPANY NO:
+   "COMPANY NO : 201016894N"
+   bbox: [297, 197, 490, 217]
+
+6. Country of Origin:
+   "Country of Origin: CHINA"
+   bbox: [505, 347, 690, 367]
+
+7. EN Date:
+   "EN Date : 10/20/2021"
+   bbox: [505, 197, 690, 217]
+
+8. EN Nb.:
+   "EN Nb. : 2104090958"
+   bbox: [505, 147, 790, 167]
+
+9. Fax:
+   "Fax: 26-684-4651305"
+   bbox: [305, 77, 490, 97]
+
+10. NUMBER:
+    Let's take the unit number in the top address: "Unit 5752 Box 8650 DPO AA 94981 215200"
+    This is part of the top address block, so the line "Unit 5752 Box 8650 DPO AA 94981 215200"
+    bbox: [444, 77, 747, 97] (the line after the address)
+
+11. PAGE NUMBER:
+    "Page 8" at the bottom right.
+    bbox: [755, 967, 805, 987]
+
+12. Payment Term:
+    "Payment Term O/A 75 Days"
+    bbox: [101, 377, 305, 397]
+
+13. Pickup Date:
+    "Pickup Date: 10/20/2021"
+    bbox: [505, 247, 690, 267]
+
+14. Price Term:
+    "Price Term FOB SHANGHAI"
+    bbox: [101, 357, 305, 377]
+
+15. SHIPPING MARKS:
+    The section starting with "SHIPPING MARKS:" and the content below.
+    bbox: [101, 457, 490, 527] (the text block)
+
+16. Shipped per:
+    "Shipped per: SEA"
+    bbox: [505, 277, 690, 297]
+
+17. Tel:
+    "Tel: 58-841-23601600"
+    bbox: [305, 77, 490, 97] (the Tel line, same as Fax line's top part)
+
+Wait, let's check the Tel line: "Tel: 58-841-23601600" is in the top address block, next to the address.
+
+Now, let's verify each category is covered.
+
+Let's list all 17 categories:
+
+- ADDRESS
+- Address
+- COMPANY NAME
+- COMPANY NO
+- Country of Origin
+- EN Date
+- EN Nb.
+- Fax
+- NUMBER
+- PAGE NUMBER
+- Payment Term
+- Pickup Date
+- Price Term
+- SHIPPING MARKS
+- Shipped per
+- TITLE
+- Tel
+
+Yes, 17 categories. Now, let's make sure each has a bounding box.
+
+Let's create the JSON entries:
+
+1. {"bbox_2d": [15, 10, 335, 60], "label": "TITLE"}  // PACKING LIST
+2. {"bbox_2d": [442, 10, 745, 100], "label": "ADDRESS"}  // Top address block
+3. {"bbox_2d": [100, 305, 392, 345], "label": "Address"}  // Ship to address line
+4. {"bbox_2d": [100, 345, 392, 365], "label": "Address"}  // Ship to unit address line (maybe combine, but separate lines)
+   Wait, but the problem says "Address" as a category. Maybe the main Address is the Ship to address

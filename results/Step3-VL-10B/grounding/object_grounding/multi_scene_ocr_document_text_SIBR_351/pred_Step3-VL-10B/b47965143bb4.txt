@@ -1,169 +1,133 @@
-用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name：图最上方是Jiahe Media Co., Ltd.，所以这个是Company Name。地址是583 Miller Underpass Suite 463 Lake Kristahaven, AK 50185，属于Address。
+首先看Company Name：图最上方是Jiahe Media Co., Ltd.，所以Company Name的bbox是顶部的文字。
 
-Title是COMMERCIAL INVOICE，这个是标题。
+Address：公司地址是583 Miller Underpass Suite 463 Lake Kristahaven, AK 50185，对应Company Name下面的地址。
 
-TO: SMITH-BLAIR INC，所以TO类别。
+Title是COMMERCIAL INVOICE，这个是大标题。
 
-Invoice No: KHT22TAC802，对应Invoice No。
+TO是SMITH-BLAIR INC，在TO: 后面。
 
-Sale Contract No: KH22TAC802，对应Sale Contract No。
+From是SHANGHAI, CHINA，在From那一行。
 
-Date: Dec. 28, 2021，对应Date。
+To是U.S.A.，在To那一行。
 
-From: SHANGHAI, CHINA，对应From。
+Via这一行可能没有内容，但先看其他字段。
 
-Letter of Credit No.: T/T，对应Letter of Credit No.
+Invoice No是KHT22TAC802，在Invoice No: 后面。
 
-Quantities：表格中的Quantities列，比如1431KGS是数量。
+Sale Contract No是KH22TAC802，在Sale Contract No: 后面。
 
-Unit Price：表格中的Unit Price列，比如USD2.25434是单价。
+Date是Dec. 28, 2021，在Date: 后面。
 
-Commodities and Descriptions：表格中的商品描述，比如DUCTILE IRON CASTING PIPE FITTING PARTS。
+Letter of Credit No.是T/T，在Letter of Credit No. 后面。
 
-Amount：表格中的Amount列，比如USD3,225.96是金额。
+Commodities and Descriptions是DUCTILE IRON CASTING PIPE FITTING PARTS，对应表格里的内容。
 
-现在逐个定位每个元素的bbox。需要看每个部分在图中的位置，用相对坐标（因为是图像，假设图的范围是整个页面，所以要确定每个元素的位置）。
+Quantities是1431KGS，表格里的Quantities列。
+
+Unit Price是USD2.25434，表格里的Unit Price列。
+
+Amount是USD3,225.96，表格里的Amount列，还有TOTAL对应的也是这个金额。
+
+现在需要逐个确定每个标签的bbox。需要看每个元素在图中的位置。
 
 先列出来每个类别：
 
-1. Company Name：Jiahe Media Co., Ltd.，位置在顶部，文字是公司名。
-2. Address：583 Miller Underpass Suite 463 Lake Kristahaven, AK 50185，公司名下面的地址。
-3. Title：COMMERCIAL INVOICE，大标题。
-4. TO：TO: SMITH-BLAIR INC，左侧的TO。
-5. Invoice No：Invoice No: KHT22TAC802，右上角。
-6. Sale Contract No：Sale Contract No: KH22TAC802，Invoice No下面。
-7. Date：Date: Dec. 28, 2021，Sale Contract No下面。
-8. From：From SHANGHAI, CHINA，在表格上方的From字段。
-9. To：To U.S.A.，From右边的To字段。
-10. Via：Via 后面的空，不过可能不涉及，这里用户没要求Via，所以不管。
-11. Letter of Credit No.：Letter of Credit No. T/T，From下面的字段。
-12. Issued by：Issued by 后面的空，不涉及。
-13. Commodities and Descriptions：表格中的列标题，以及下面的商品描述行。
-14. Quantities：表格中的列标题，以及数量值1431KGS。
-15. Unit Price：表格中的列标题，以及单价USD2.25434。
-16. Amount：表格中的列标题，以及金额USD3,225.96，还有TOTAL行的金额。
+1. Company Name: "Jiahe Media Co., Ltd." —— 顶部文字，bbox大概是[122, 23, 877, 42]左右（看原图的排版，公司名称在最上方，地址在下面）。
 
-现在需要为每个类别找到对应的元素，注意有些类别可能有多个实例，比如Quantities列有列标题和数值，Amount也有列标题和数值。但用户要求“detect all objects”，所以每个出现的实例都要吗？看问题描述是“all objects matching these categories”，所以每个属于该类别的元素都要列出。
+2. Address: "583 Miller Underpass Suite 463 Lake Kristahaven, AK 50185" —— 公司名称下面的地址，bbox是[144, 28, 877, 45]。
 
-现在开始逐个处理：
+3. Title: "COMMERCIAL INVOICE" —— 大标题，居中，bbox是[333, 200, 666, 237]左右。
 
-- Company Name：文字“Jiahe Media Co., Ltd.”，bbox大概是顶部，x1=212, y1=28, x2=787, y2=48（假设图的坐标，需要看实际位置，不过这里用相对位置，可能需要估计。但根据图像，公司名在最上方，所以bbox是[210, 26, 788, 46]左右。
-- Address：“583 Miller Underpass Suite 463 Lake Kristahaven, AK 50185”，在公司名下面，所以bbox是[210, 48, 788, 64]。
-- Title：“COMMERCIAL INVOICE”，大标题，bbox是[333, 200, 666, 238]（因为标题在中间，字体大）。
-- TO：“TO: SMITH-BLAIR INC”，在Title下面左侧，bbox是[100, 240, 320, 260]。
-- Invoice No：“Invoice No: KHT22TAC802”，在Title右上角，bbox是[720, 238, 990, 256]。
-- Sale Contract No：“Sale Contract No: KH22TAC802”，在Invoice No下面，bbox是[670, 260, 990, 278]。
-- Date：“Date: Dec. 28, 2021”，在Sale Contract No下面，bbox是[670, 278, 990, 296]。
-- From：“From SHANGHAI, CHINA”，在表格上方，From字段，bbox是[100, 330, 330, 348]。
-- To：“To U.S.A.”，From右边，bbox是[360, 330, 520, 348]。
-- Letter of Credit No.：“Letter of Credit No. T/T”，在From下面，bbox是[100, 356, 330, 374]。
-- Commodities and Descriptions：表格中的列标题，以及商品描述行。列标题的bbox是[250, 440, 450, 460]（列标题行），商品描述行是“DUCTILE IRON CASTING PIPE FITTING PARTS”，bbox是[250, 520, 500, 540]。
-- Quantities：列标题的bbox是[460, 440, 540, 460]，数量值“1431KGS”的bbox是[460, 530, 540, 550]，TOTAL行的“1431KGS”是[460, 560, 540, 578]。
-- Unit Price：列标题的bbox是[550, 440, 630, 460]，单价“USD2.25434”的bbox是[550, 530, 630, 550]，TOTAL行没有单价（因为是总计）。
-- Amount：列标题的bbox是[640, 440, 720, 460]，金额“USD3,225.96”的bbox是[640, 530, 720, 550]，TOTAL行的“USD3,225.96”是[640, 560, 720, 578]。
+4. TO: "SMITH-BLAIR INC" —— TO: 后面的内容，bbox是[77, 132, 227, 149]（看TO: SMITH-BLAIR INC 这一行）。
 
-现在需要把每个类别对应的元素都列出来，注意不要遗漏。现在整理每个元素：
+5. From: "SHANGHAI, CHINA" —— From那一行的From字段值，bbox是[117, 312, 333, 329]（From SHANGHAI, CHINA）。
 
-1. Company Name: [212, 28, 787, 48]
-2. Address: [212, 48, 787, 64]
-3. Title: [333, 200, 666, 238]
-4. TO: [102, 242, 322, 260] （TO: SMITH-BLAIR INC）
-5. Invoice No: [722, 238, 988, 256] （Invoice No: KHT22TAC802）
-6. Sale Contract No: [672, 260, 988, 278] （Sale Contract No: KH22TAC802）
-7. Date: [672, 278, 988, 296] （Date: Dec. 28, 2021）
-8. From: [102, 332, 332, 348] （From SHANGHAI, CHINA）
-9. To: [362, 332, 522, 348] （To U.S.A.）
-10. Letter of Credit No.: [102, 356, 332, 374] （Letter of Credit No. T/T）
-11. Commodities and Descriptions: 列标题是[252, 442, 452, 460]；商品描述行是[252, 522, 502, 540]
-12. Quantities: 列标题[462, 442, 542, 460]；数量值1431KGS（行）[462, 532, 542, 550]；TOTAL行数量[462, 562, 542, 578]
-13. Unit Price: 列标题[552, 442, 632, 460]；单价USD2.25434 [552, 532, 632, 550]
-14. Amount: 列标题[642, 442, 722, 460]；金额USD3,225.96（行）[642, 532, 722, 550]；TOTAL行金额[642, 562, 722, 578]
+6. To: "U.S.A." —— To那一行的To字段值，bbox是[337, 312, 425, 329]（To U.S.A.）。
 
-现在需要确认每个类别是否都覆盖。用户要求的类别是：Address, Amount, Commodities and Descriptions, Company Name, Date, From, Invoice No, Letter of Credit No., Quantities, Sale Contract No, TO, Title, To, Unit Price。
+7. Via: 这里可能没有内容，但用户没要求Via，所以不管。
 
-现在检查每个类别：
+8. Invoice No: "KHT22TAC802" —— Invoice No: 后面的值，bbox是[692, 142, 885, 159]（Invoice No KHT22TAC802）。
 
-- Address：有
-- Amount：有（列标题和两个金额值）
-- Commodities and Descriptions：有（列标题和商品描述）
-- Company Name：有
-- Date：有
-- From：有
-- Invoice No：有
-- Letter of Credit No.：有
-- Quantities：有（列标题和两个数量值）
-- Sale Contract No：有
-- TO：有（TO: SMITH-BLAIR INC）
-- Title：有
-- To：有（To U.S.A.）
-- Unit Price：有（列标题和一个单价值）
+9. Sale Contract No: "KH22TAC802" —— Sale Contract No: 后面的值，bbox是[607, 142, 885, 159]？不，看Sale Contract No: KH22TAC802，所以是右边的Sale Contract No对应的内容，bbox是[607, 145, 885, 162]左右。
 
-现在需要将每个实例都作为单独的JSON对象。例如，Commodities and Descriptions有两个部分：列标题和商品描述行，所以两个对象。Quantities有列标题、数量行、TOTAL数量，三个对象。Amount有列标题、金额行、TOTAL金额，三个对象。Unit Price有列标题和单价行，两个对象。其他类别可能只有一个对象。
+10. Date: "Dec. 28, 2021" —— Date: 后面的值，bbox是[627, 155, 885, 172]（Date Dec. 28, 2021）。
 
-现在开始构建JSON数组：
+11. Letter of Credit No.: "T/T" —— Letter of Credit No. 后面的值，bbox是[117, 332, 227, 349]（Letter of Credit No. T/T）。
 
-1. Company Name: bbox是公司名的位置，[210, 26, 788, 46]
-2. Address: [210, 46, 788, 64]
-3. Title: [331, 198, 668, 236]
-4. TO: [100, 240, 320, 260] （TO: SMITH-BLAIR INC）
-5. Invoice No: [720, 236, 990, 254] （Invoice No: KHT22TAC802）
-6. Sale Contract No: [668, 258, 990, 276] （Sale Contract No: KH22TAC802）
-7. Date: [668, 276, 990, 294] （Date: Dec. 28, 2021）
-8. From: [100, 330, 330, 348] （From SHANGHAI, CHINA）
-9. To: [360, 330, 520, 348] （To U.S.A.）
-10. Letter of Credit No.: [100, 354, 330, 372] （Letter of Credit No. T/T）
-11. Commodities and Descriptions - 列标题: [250, 440, 450, 460]
-12. Commodities and Descriptions - 商品描述: [250, 520, 500, 540]
-13. Quantities - 列标题: [460, 440, 540, 460]
-14. Quantities - 数量值: [460, 530, 540, 550]
-15. Quantities - TOTAL数量: [460, 560, 540, 578]
-16. Unit Price - 列标题: [550, 440, 630, 460]
-17. Unit Price - 单价值: [550, 530, 630, 550]
-18. Amount - 列标题: [640, 440, 720, 460]
-19. Amount - 金额值: [640, 530, 720, 550]
-20. Amount - TOTAL金额: [640, 560, 720, 578]
+12. Issued by: 这里可能没有内容，用户没要求，所以不管。
 
-现在需要确认这些bbox是否准确，可能需要根据图像的布局调整。例如，表格的列标题行是“Marks & Numbers”、“Commodities and Descriptions”、“Quantities”、“Unit Price”、“Amount”，所以这些列标题都是表格的表头，属于各自的类别。
+13. Commodities and Descriptions: "DUCTILE IRON CASTING PIPE FITTING PARTS" —— 表格中的Commodities and Descriptions列的内容，bbox是[250, 592, 607, 610]（看表格里的内容，这一行的描述）。
 
-另外，检查是否有重复或遗漏。比如“TO”和“To”是两个不同的类别吗？用户要求的类别中有“TO”和“To”，看用户给的类别列表：“TO, Title, To”，所以TO是“TO: SMITH-BLAIR INC”，To是“To U.S.A.”，所以是两个不同的实例，分别对应TO和To类别。
+14. Quantities: "1431KGS" —— 表格中的Quantities列的值，bbox是[437, 592, 540, 610]（1431KGS）。
 
-现在将所有这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+15. Unit Price: "USD2.25434" —— 表格中的Unit Price列的值，bbox是[592, 592, 695, 610]（USD2.25434）。
 
-现在开始编写：
+16. Amount: "USD3,225.96" —— 表格中的Amount列的值，bbox是[700, 592, 885, 610]（USD3,225.96），还有TOTAL行的Amount也是这个，所以取其中一个。
 
-[
-  {"bbox_2d": [212, 28, 787, 48], "label": "Company Name"},
-  {"bbox_2d": [212, 48, 787, 64], "label": "Address"},
-  {"bbox_2d": [333, 200, 666, 238], "label": "Title"},
-  {"bbox_2d": [102, 242, 322, 260], "label": "TO"},
-  {"bbox_2d": [722, 238, 988, 256], "label": "Invoice No"},
-  {"bbox_2d": [672, 260, 988, 278], "label": "Sale Contract No"},
-  {"bbox_2d": [672, 278, 988, 296], "label": "Date"},
-  {"bbox_2d": [102, 332, 332, 348], "label": "From"},
-  {"bbox_2d": [362, 332, 522, 348], "label": "To"},
-  {"bbox_2d": [102, 356, 332, 374], "label": "Letter of Credit No."},
-  {"bbox_2d": [250, 442, 450, 460], "label": "Commodities and Descriptions"},
-  {"bbox_2d": [250, 522, 500, 540], "label": "Commodities and Descriptions"},
-  {"bbox_2d": [462, 442, 542, 460], "label": "Quantities"},
-  {"bbox_2d": [462, 532, 542, 550], "label": "Quantities"},
-  {"bbox_2d": [462, 562, 542, 578], "label": "Quantities"},
-  {"bbox_2d": [552, 442, 632, 460], "label": "Unit Price"},
-  {"bbox_2d": [552, 532, 632, 550], "label": "Unit Price"},
-  {"bbox_2d": [642, 442, 722, 460], "label": "Amount"},
-  {"bbox_2d": [642, 532, 722, 550], "label": "Amount"},
-  {"bbox_2d": [642, 562, 722, 578], "label": "Amount"}
-]
+现在需要把每个类别对应起来，确保每个标签都有对应的bbox。
 
-需要检查每个类别是否都覆盖了用户要求的列表：
+现在整理每个条目：
 
-用户要求的类别：Address, Amount, Commodities and Descriptions, Company Name, Date, From, Invoice No, Letter of Credit No., Quantities, Sale Contract No, TO, Title, To, Unit Price。
+- Company Name: bbox是公司名称的位置，即最上方的Jiahe Media Co., Ltd.，坐标大概是[120, 21, 877, 40]（因为图中公司名称在顶部，地址在下面）。
 
-现在检查每个类别在数组中是否有至少一个实例：
+- Address: 公司地址，583 Miller Underpass Suite 463 Lake Kristahaven, AK 50185，bbox是[142, 26, 877, 44]。
 
-- Address：有
-- Amount：有（三个实例）
-- Commodities and Descriptions：有（两个实例）
-- Company Name：有
--
+- Title: COMMERCIAL INVOICE，大标题，bbox是[330, 202, 669, 236]（居中显示）。
+
+- TO: SMITH-BLAIR INC，bbox是[75, 130, 229, 148]（TO: 后面的内容）。
+
+- From: SHANGHAI, CHINA，bbox是[115, 310, 335, 328]（From 后面的内容）。
+
+- To: U.S.A.，bbox是[335, 310, 427, 328]（To 后面的内容）。
+
+- Invoice No: KHT22TAC802，bbox是[690, 140, 883, 158]（Invoice No: 后面的内容）。
+
+- Sale Contract No: KH22TAC802，bbox是[605, 142, 883, 160]（Sale Contract No: 后面的内容）。
+
+- Date: Dec. 28, 2021，bbox是[625, 154, 883, 172]（Date: 后面的内容）。
+
+- Letter of Credit No.: T/T，bbox是[115, 330, 229, 348]（Letter of Credit No. 后面的内容）。
+
+- Commodities and Descriptions: DUCTILE IRON CASTING PIPE FITTING PARTS，bbox是[248, 590, 605, 608]（表格中该列的内容）。
+
+- Quantities: 1431KGS，bbox是[435, 590, 542, 608]（表格中Quantities列的值）。
+
+- Unit Price: USD2.25434，bbox是[590, 590, 695, 608]（表格中Unit Price列的值）。
+
+- Amount: USD3,225.96，bbox是[700, 590, 883, 608]（表格中Amount列的值，TOTAL行的也是这个，所以取这个）。
+
+现在需要检查每个标签是否都覆盖了用户要求的类别：Address, Amount, Commodities and Descriptions, Company Name, Date, From, Invoice No, Letter of Credit No., Quantities, Sale Contract No, TO, Title, To, Unit Price。一共14个类别，现在数一下：
+
+1. Address ✔️
+
+2. Amount ✔️
+
+3. Commodities and Descriptions ✔️
+
+4. Company Name ✔️
+
+5. Date ✔️
+
+6. From ✔️
+
+7. Invoice No ✔️
+
+8. Letter of Credit No. ✔️
+
+9. Quantities ✔️
+
+10. Sale Contract No ✔️
+
+11. TO ✔️
+
+12. Title ✔️
+
+13. To ✔️
+
+14. Unit Price ✔️
+
+现在每个类别都要有一个对应的bbox和label。现在把每个的JSON条目列出来。
+</think>
+[{"bbox_2d": [142, 26, 877, 44], "label": "Address"}, {"bbox_2d": [700, 590, 883, 608], "label": "Amount"}, {"bbox_2d": [248, 590, 605, 608], "label": "Commodities and Descriptions"}, {"bbox_2d": [120, 21, 877, 40], "label": "Company Name"}, {"bbox_2d": [625, 154, 883, 172], "label": "Date"}, {"bbox_2d": [115, 310, 335, 328], "label": "From"}, {"bbox_2d": [690, 140, 883, 158], "label": "Invoice No"}, {"bbox_2d": [115, 330, 229, 348], "label": "Letter of Credit No."}, {"bbox_2d": [435, 590, 542, 608], "label": "Quantities"}, {"bbox_2d": [605, 142, 883, 160], "label": "Sale Contract No"}, {"bbox_2d": [75, 130, 229, 148], "label": "TO"}, {"bbox_2d": [330, 202, 669, 236], "label": "Title"}, {"bbox_2d": [335, 310, 427, 328], "label": "To"}, {"bbox_2d": [590, 590, 695, 608], "label": "Unit Price"}]

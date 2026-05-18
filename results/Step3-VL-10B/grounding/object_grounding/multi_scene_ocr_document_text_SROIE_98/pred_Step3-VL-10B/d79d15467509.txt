@@ -1,1 +1,39 @@
-[{"bbox_2d": [292, 104, 708, 128], "label": "company"}, {"bbox_2d": [250, 142, 750, 202], "label": "address"}, {"bbox_2d": [100, 242, 800, 264], "label": "date"}, {"bbox_2d": [100, 322, 500, 344], "label": "total"}]
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The restaurant name is "RESTORAN WAN SHENG". Let's check the text. The top part has that.
+- Address: The address lines are "No.2, Jalan Temenggung 19/9, Seksyen 9, Bandar Mahkota Cheras, 43200 Cheras, Selangor".
+- Date: The date is "07-03-2018 15:34:15".
+- Total: The total amount is "4.80" (TOTAL: 4.80).
+
+Now, find the bounding boxes for each.
+
+Company: The line "RESTORAN WAN SHENG" is the company name. Let's check the coordinates. The text is centered at the top.
+
+Address: The address spans multiple lines from "No.2..." to "Selangor".
+
+Date: The line "Date : 07-03-2018 15:34:15".
+
+Total: The "TOTAL :" line with 4.80.
+
+Let's map each:
+
+1. Company: "RESTORAN WAN SHENG" – bbox around that line.
+2. Address: The block of address text.
+3. Date: The date line.
+4. Total: The total amount line.
+
+Now, check the image's text positions.
+
+For company: The text is at the top, so the bounding box would cover "RESTORAN WAN SHENG".
+
+Address: The lines below the company number: "No.2, Jalan Temenggung 19/9, Seksyen 9, Bandar Mahkota Cheras, 43200 Cheras, Selangor".
+
+Date: "Date : 07-03-2018 15:34:15".
+
+Total: "TOTAL : 4.80" – the line with "TOTAL :" and the amount.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [144, 100, 855, 160], "label": "company"}, {"bbox_2d": [144, 172, 855, 262], "label": "address"}, {"bbox_2d": [89, 282, 855, 304], "label": "date"}, {"bbox_2d": [25, 494, 975, 520], "label": "total"}]

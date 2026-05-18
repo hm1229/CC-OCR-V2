@@ -1,10 +1,57 @@
-[
-    {"bbox_2d": [325, 345, 674, 360], "label": "date"},
-    {"bbox_2d": [325, 330, 674, 345], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [325, 260, 674, 275], "label": "seller_address"},
-    {"bbox_2d": [325, 280, 674, 295], "label": "seller_gst_id"},
-    {"bbox_2d": [325, 235, 674, 255], "label": "seller_name"},
-    {"bbox_2d": [325, 295, 674, 310], "label": "seller_phone"},
-    {"bbox_2d": [325, 470, 674, 485], "label": "total_amount"},
-    {"bbox_2d": [445, 545, 475, 560], "label": "total_tax"}
-]
+Got it, let's extract each required field from the invoice.
+
+First, date: The date is on the invoice under "Date: 20/04/2018 9:01:22 PM". So find that line.
+
+doc_no_receipt_no: Invoice No is 01-428985. That's the document number.
+
+seller_address: The address is "10-18,JLN KEBUDAYAAN 16,TMN U 81300 JOHOR BAHRU."
+
+seller_gst_id: GST ID No: 000902660096.
+
+seller_name: PASARAYA JALAL SDN BHD.
+
+seller_phone: Tel:07-5208680.
+
+total_amount: TOTAL: 6.40 (from the Total section).
+
+total_tax: In GST Summary, Tax(RM) is 0.36.
+
+Now, map each to their bounding boxes. Let's check each part.
+
+For date: The line is "Date : 20/04/2018 9:01:22 PM". So the bounding box around that text.
+
+doc_no_receipt_no: "Invoice No : 01-428985" — that's the receipt number.
+
+seller_address: The address lines: "10-18,JLN KEBUDAYAAN 16,TMN U 81300 JOHOR BAHRU."
+
+seller_gst_id: "GST ID No: 000902660096"
+
+seller_name: "PASARAYA JALAL SDN BHD" — the company name.
+
+seller_phone: "Tel:07-5208680"
+
+total_amount: "TOTAL: 6.40" — the total amount.
+
+total_tax: "Tax(RM) 0.36" in the GST Summary section.
+
+Now, need to get the coordinates for each. Let's look at the image.
+
+First, seller_name: The company name is in the upper part, "PASARAYA JALAL SDN BHD" — that's a prominent line.
+
+seller_address: Below the company name, the address lines.
+
+seller_gst_id: Below the email, "GST ID No: 000902660096"
+
+seller_phone: "Tel:07-5208680 Fax:07-5208680" — take the Tel part.
+
+doc_no_receipt_no: "Invoice No : 01-428985" — in the TAX INVOICE section.
+
+date: "Date : 20/04/2018 9:01:22 PM"
+
+total_amount: The "TOTAL: 6.40" line.
+
+total_tax: In the GST Summary, "Tax(RM) 0.36"
+
+Now, let's structure each entry with bbox and label.
+</think>
+[{"bbox_2d": [229, 320, 327, 334], "label": "date"}, {"bbox_2d": [229, 328, 337, 342], "label": "doc_no_receipt_no"}, {"bbox_2d": [229, 344, 467, 358], "label": "seller_address"}, {"bbox_2d": [229, 358, 367, 372], "label": "seller_gst_id"}, {"bbox_2d": [229, 306, 437, 320], "label": "seller_name"}, {"bbox_2d": [229, 360, 337, 374], "label": "seller_phone"}, {"bbox_2d": [337, 462, 377, 476], "label": "total_amount"}, {"bbox_2d": [445, 687, 482, 699], "label": "total_tax"}]

@@ -1,1 +1,68 @@
-[{"bbox_2d": [312, 300, 423, 622], "label": "DATE"}, {"bbox_2d": [540, 300, 705, 625], "label": "CITY"}, {"bbox_2d": [682, 300, 725, 625], "label": "STATE"}, {"bbox_2d": [757, 300, 840, 625], "label": "ZIP"}]
+用户现在需要从表单中提取CITY、DATE、STATE、ZIP四个字段的值和对应的 bounding box。首先看每个字段的位置：
+
+DATE对应的框是“8-24-89”，所以先找DATE的bbox。然后CITY是Arlington,，STATE是UA.，ZIP是22207。需要确定每个的坐标。
+
+先看DATE的输入框：在表单中，DATE的框是中间偏左的矩形，里面写的是8-24-89。然后CITY的框是大的那个，包含Arlington,。STATE是UA.，ZIP是22207。
+
+现在逐个分析：
+
+1. DATE：对应的输入框是[314, 325, 422, 600]左右？看图片中的DATE标签下的框，里面的文字是8-24-89。所以bbox是DATE的输入框区域，即包含8-24-89的矩形。
+
+2. CITY：标签是CITY，下面的框是包含Arlington,的那个大框，所以CITY的值是Arlington,，对应的bbox是CITY标签下的输入框，即从CITY标签到ZIP之前的框。
+
+3. STATE：标签是STATE，下面的值是UA.，对应的bbox是STATE标签下的区域。
+
+4. ZIP：标签是ZIP，下面的值是22207，对应的bbox是ZIP标签下的区域。
+
+现在需要准确确定每个的坐标。看图片中的布局：
+
+- DATE的框：在NAME右边，CITY左边。框的坐标大概是x从310到425，y从290到590左右（因为表单中的输入框是矩形）。
+
+- CITY的框：从CITY标签（大约x550）到ZIP的左边，框的范围是x540到x830左右，y290到y590。
+
+- STATE的框：在CITY右边，ZIP左边，标签是STATE，值是UA.，所以STATE的输入区域是x680到x730左右，y290到y590。
+
+- ZIP的框：在STATE右边，标签ZIP，值是22207，所以ZIP的输入区域是x740到x835左右，y290到y590。
+
+现在需要把每个字段的label和对应的bbox列出来。
+
+首先处理DATE：
+
+label是DATE，值是8-24-89，对应的bbox是包含这个值的输入框。看图片中DATE的框是矩形，里面的文字是8-24-89，所以bbox是[312, 322, 424, 602]（大概范围）。
+
+然后CITY：label是CITY，值是Arlington,，对应的bbox是CITY标签下的大框，即[538, 322, 832, 602]（因为CITY的框是包含Arlington,的那个大矩形）。
+
+STATE：label是STATE，值是UA.，对应的bbox是STATE标签下的区域，即[682, 322, 736, 602]（因为UA.在STATE下面）。
+
+ZIP：label是ZIP，值是22207，对应的bbox是ZIP标签下的区域，即[742, 322, 835, 602]（22207在ZIP下面）。
+
+现在需要确认每个的坐标是否正确。另外，要确保每个元素的label对应正确。
+
+现在整理成JSON数组：
+
+[
+  {"bbox_2d": [314, 325, 422, 598], "label": "DATE"},
+  {"bbox_2d": [540, 325, 830, 598], "label": "CITY"},
+  {"bbox_2d": [684, 325, 736, 598], "label": "STATE"},
+  {"bbox_2d": [744, 325, 834, 598], "label": "ZIP"}
+]
+
+需要检查每个框的范围是否准确。比如DATE的框是中间的矩形，里面写的是8-24-89，所以DATE的bbox是那个小矩形。CITY的框是大的矩形，包含Arlington,。STATE是UA.在STATE下面，ZIP是22207在ZIP下面。
+
+另外，看图片中的文字：
+
+DATE框内的内容是“8-24-89”，CITY框内是“Arlington,”，STATE是“UA.”，ZIP是“22207”。
+
+现在确认每个的坐标：
+
+- DATE的输入框：位于表单中，NAME右侧，CITY左侧。其左上角大约是x=310，y=300（因为表单的DATE标签在上方，输入框在下方）。右下角大约x=425，y=590。
+
+- CITY的输入框：CITY标签下方，是一个较大的框，从x=535到x=830左右，y=300到y=590。
+
+- STATE的输入框：STATE标签下方，x=680到x=735，y=300到y=590。
+
+- ZIP的输入框：ZIP标签下方，x=740到x=835，y=300到y=590。
+
+这样每个的bbox应该覆盖对应的输入区域。现在将这些信息整理成JSON数组。
+</think>
+[{"bbox_2d": [312, 322, 424, 598], "label": "DATE"}, {"bbox_2d": [538, 322, 832, 598], "label": "CITY"}, {"bbox_2d": [682, 322, 736, 598], "label": "STATE"}, {"bbox_2d": [742, 322, 835, 598], "label": "ZIP"}]

@@ -1,6 +1,33 @@
-[
-    {"bbox_2d": [92, 55, 496, 85], "label": "address"},
-    {"bbox_2d": [92, 145, 592, 165], "label": "company"},
-    {"bbox_2d": [510, 620, 640, 640], "label": "date"},
-    {"bbox_2d": [290, 340, 360, 360], "label": "total"}
-]
+Got it, let's extract the required information from the invoice.
+
+First, address: The shop's address is listed at the top. Let's check the text: "NO. 31G&33G, JALAN SETIA IND AH X, U13/X 40170 SETIA ALAM". So that's the address.
+
+Company: The "Owned By" section says "SANYU SUPPLY SDN BHD (1135772-K)". Also, the shop name is SANYU STATIONERY SHOP, but the company is the owned by part. Let's confirm.
+
+Date: The date on the invoice is "14/10/2017" under the INV NO line.
+
+Total: The final total is 8.70 RM, which is in the "Final Total" section.
+
+Now, let's map each to their bounding boxes.
+
+For address: The address lines are in the top part. Let's find the coordinates. The text starts with "NO. 31G&33G..." so the bounding box would cover that area.
+
+Company: The "Owned By : SANYU SUPPLY SDN BHD (1135772-K)" is the company.
+
+Date: The date is "14/10/2017" next to INV NO.
+
+Total: The final total is 8.70, which is in the "Final Total" line.
+
+Let's check each element's position.
+
+1. Address: The address is in the header section. Let's identify the exact text block.
+
+2. Company: The "Owned By" line.
+
+3. Date: The date field under INV NO.
+
+4. Total: The Final Total amount, which is 8.70.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [101, 52, 492, 98], "label": "address"}, {"bbox_2d": [101, 229, 597, 247], "label": "company"}, {"bbox_2d": [544, 637, 647, 654], "label": "date"}, {"bbox_2d": [500, 457, 577, 474], "label": "total"}]

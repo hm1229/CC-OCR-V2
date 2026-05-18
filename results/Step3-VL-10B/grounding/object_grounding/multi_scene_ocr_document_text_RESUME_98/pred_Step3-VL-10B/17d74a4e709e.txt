@@ -1,1 +1,11 @@
-[{"bbox_2d": [46, 40, 225, 80], "label": "name"}, {"bbox_2d": [472, 82, 622, 102], "label": "email"}]
+用户现在需要提取name和email。先看name是张云帆，位置在顶部大标题。email是yunfan.zhang@sre.lab，看右上角的邮箱图标旁边。然后确定每个的bbox。
+
+首先name：张云帆，文字在左上角，大字体。看坐标范围。然后email是邮箱地址，对应yunfan.zhang@sre.lab。
+
+现在检查每个元素的位置。name的bbox是[33, 56, 293, 90]左右？看图片里的布局，顶部橙色栏下面，张云帆是大标题，所以bbox应该是[33, 56, 293, 90]。然后email是yunfan.zhang@sre.lab，位置在右上角，邮箱图标旁边，所以bbox是[469, 82, 598, 98]左右。
+
+现在整理：
+
+name对应的是“张云帆”，label是name；email是“yunfan.zhang@sre.lab”，label是email。
+</think>
+[{"bbox_2d": [33, 56, 293, 90], "label": "name"}, {"bbox_2d": [469, 82, 598, 98], "label": "email"}]

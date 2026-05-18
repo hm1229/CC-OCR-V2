@@ -1,192 +1,148 @@
-用户现在需要从发票中检测所有指定的类别，然后给出每个的bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看公司名（Nankang Information Co., Ltd.）在左侧上方，还有右侧的公司名？不，主要是左侧的公司名。然后地址部分，Mailing & Correspondence Address是公司地址，SHIP TO是收货地址。然后各个字段：
+首先看公司名（公司名）：图中左上方有“Nankang Information Co., Ltd. 南康信息有限公司”，所以公司名的bbox是包含这部分的区域。看左边的公司名部分，左上角的公司名，坐标大概是[114, 97, 447, 117]左右？需要看图片中的位置。
 
-先列所有需要检测的类别，然后找每个的出现位置。
+然后地址（地址）：Mailing & Correspondence Address是公司地址，Unit 3751 Box 0649 DPO AP 43180，Tel等。所以地址的bbox是Mailing部分的地址。
 
-1. A/C No：在REMIT to部分，A/C No: 519658226095，看位置。
-2. BTD. SHIPDATE(预计出货日期)：在Item行的ETD. SHIPDATE列，值是2021.09.22。
-3. Bank Add：在REMIT to的Bank Add: USS Clark FPO AP 07029。
-4. Bank Name：Bank of China, Suzhou High & New Tech Industrial Development Zone Sub-B ranch。
-5. CS REPRESENTATIVE(客户服务代表)：在Forma Invoice部分，CS REPRESENT(客户服务代表) SALLY.ZHANG。
-6. Contact(联系人)：左侧BILL TO下面的Contact，还有SHIP TO下面的Contact是Christine Hunter，另外左侧Mailing部分的Contact（可能空？看左侧Contact(联系人): 后面是Tel和Fax，可能没有填？但SHIP TO的Contact是Christine Hunter。需要看所有Contact(联系人)的实例。
-7. Country of Org.(原产国)：在Item行的Country of Org.列，值是China。
-8. Cus.Mat.(客户物料)：Item行的Cus.Mat.(客户物料)列，值是155357-43。
-9. Cust. PO/Date(客户采购订单号/日期)：Forma Invoice中的Cust. PO/Date(客户采购订单号/日期) 00004804 / 2021.09.13。
-10. Cust. no./Our order(客户编号/销售订单号)：Forma Invoice中的Cust. no./Our order (客户编号/销售订单号) FNR002-001/0010152401。
-11. Description(产品描述)：Item行的Description列，值是CART DGU 5005 LAND SHR 8/C。
-12. Fax：多个Fax，比如Mailing部分的Fax:27-566-6811-8116；SHIP TO的Fax:241426-4382；还有REMIT部分可能没有？需要找所有Fax。
-13. Fax(传真)：和Fax可能重复？看用户给的类别里有Fax和Fax(传真)，可能需要区分？比如Mailing的Fax是Fax，SHIP TO的Fax是Fax(传真)？或者看标注。用户给的类别里有“Fax”和“Fax(传真)”，可能需要看。比如左侧Mailing的Fax是Fax，SHIP TO的Fax是Fax(传真)？或者可能用户把两个都列了，需要检查。
-14. Final amount：Final amount: USD 壹佰壹拾伍元叁角玖分，值是115.39。
-15. HS Code(海关编码)：Item行的HS Code列，值是5911900090。
-16. Item(序号)：Item(序号)列，值是000010。
-17. Material(产品编号)：Item行的Material(产品编号)列，值是155357-43（注意看，Cus.Mat.是客户物料，Material是产品编号？看表格里的列：Item(序号) | Cus.Mat.(客户物料) | Material(产品编号) | HS Code... 所以Material(产品编号)是155357-43？不，看表格里的内容：000010 对应的Cus.Mat.是155357-43，Material(产品编号)是155357-43？不对，看图片中的表格行：
+标题（标题）：右边的“Proforma Invoice(形式发票)”是标题，所以标题的bbox是右边上方的标题区域。
 
-看图片中的Item部分：
+Page(页码)：左上角“Page(页码): 1 of 1”，所以这个是页码。
 
-000010 | 155357-43 | 5911900090 | CART DGU 5005 LAND SHR 8/C | 80.00 EA | USD | 10,000EA | 2021.09.22 | 115.39
+Number/Date(订单号/日期)：右边的Number/Date(订单号/日期)是85217545 / 2021.09.14，对应这个字段。
 
-所以列标题是：Item(序号)、Cus.Mat.(客户物料)、Material(产品编号)？不，看列标题：
+Cust. PO/Date(客户采购订单号/日期)：右边的Cust. PO/Date是00004804 / 2021.09.13。
 
-Item(序号) | Cus.Mat.(客户物料) | Material(产品编号) | HS Code(海关编码) | Description(产品描述) | Price(价格) | Price unit(价格单位) | ETD. SHIPDATE(预计出货日期) | Value(总价)
+Cust. no./Our order(客户编号/销售订单号)：右边的Cust. no./Our order是PNR002-001/0010152401。
 
-所以Material(产品编号)对应的是第二列？不，看列标题的中文：
+CS REPRESENTATIVE(客户服务代表)：右边的CS REPRESENT是SALLY.ZHANG。
 
-“Item(序号) | Cus.Mat.(客户物料) | Material(产品编号) | HS Code(海关编码) | Description(产品描述) | Price(价格) | Price unit(价格单位) | ETD. SHIPDATE(预计出货日期) | Value(总价)”
+Contact(联系人)：左边BILL TO下面的Contact？不，看SHIP TO的Contact是Christine Hunter，另外左边BILL TO的Contact是空的？看左边“Contact(联系人):”在BILL TO下面，然后SHIP TO的Contact是Christine Hunter。需要看哪个Contact。可能需要区分，但先看所有Contact。
 
-看图片中的列标题，可能“Cus.Mat.(客户物料)”是客户物料，“Material(产品编号)”是产品编号？但图片中的第二列是“Cus.Mat.(客户物料)”，第三列是“Material(产品编号)”？看图片中的表格，第二列是“Cus.Mat.(客户物料)”下面的值是155357-43，第三列是“Material(产品编号)”下面的值也是155357-43？因为图片中第三列的标题是“Material(产品编号)”，然后下面的值是155357-43？不，看图片中的表格行：
+Country of Org.(原产国)：在Item部分的Country of Org.是China，因为下面有China。
 
-在Item行，第一列是000010（Item(序号)），第二列是155357-43（Cus.Mat.(客户物料)），第三列是5911900090？不，看图片中的表格：
+Cus.Mat.(客户物料)：Item(序号)是000010，Cus.Mat.是155357-43？看表格里的Cus.Mat.列，对应000010行的Cus.Mat.是155357-43？不，看表格的列：Item(序号)是000010，Cus.Mat.(客户物料)是155357-43？然后Material(产品编号)是155357-43？不对，看表格的列标题：Item(序号)、Cus.Mat.(客户物料)、Material(产品编号)、HS Code、Qty、Description、Price、Price unit、Value、ETD. SHIPDATE。看表格中000010行的Cus.Mat.是155357-43？然后Material是155357-43？不，看表格里的内容：000010对应的Cus.Mat.是155357-43？然后Material是155357-43？可能看表格中的第二列是Cus.Mat.，第三列是Material。看表格里的内容，000010行的Cus.Mat.是155357-43，Material是155357-43？然后HS Code是5911900090。Qty是80.00 EA。Description是CART DGD 5005 LAND SHR 8/C。Price是14.423.75？不，Price是14.423.75？然后Price unit是USD，Value是115.39。ETD. SHIPDATE是2021.09.22。
 
-看图片中的表格部分：
+A/C No：在REMIT to部分，A/C No: 5196582226095。
 
-Item(序号) | Cus.Mat.(客户物料) | Material(产品编号) | HS Code(海关编码) | Description(产品描述) | Price(价格) | Price unit(价格单位) | ETD. SHIPDATE(预计出货日期) | Value(总价)
+Bank Add：Bank Add: USS Clark FPO AP 07029。
 
-然后下面的行：
+Bank Name：Bank Name: Bank of China, Suzhou High & New Tech Industrial Development Zone Sub-B ranch。
 
-000010 | 155357-43 | 5911900090？不，看图片中的内容：
+Swift Code：Swift Code: BKCHICNBJ95B。
 
-图片中表格里的内容：
+Tel：左边Mailing的Tel是50-662-8966-1671，还有SHIP TO的Tel是852-162-5124，以及左边BILL TO的Tel是空？需要看哪个Tel。可能需要看所有Tel，但用户需要对应每个类别。
 
-000010 | 155357-43 | 5911900090 | CART DGU 5005 LAND SHR 8/C | 80.00 EA | USD | 10,000EA | 2021.09.22 | 115.39
+Tel(电话)：可能区分，比如Mailing的Tel是50-662-8966-1671，SHIP TO的Tel是852-162-5124，还有左边Contact的Tel？比如左边“Tel(电话):”在Contact(联系人)下面，是空的？而SHIP TO的Contact是Christine Hunter，Tel是852-162-5124，所以Tel(电话)可能对应这个。
 
-哦，可能列标题对应的是：
+Fax：Mailing的Fax是27-566-6811-8116，SHIP TO的Fax是241426-4382，还有左边Contact的Fax是空？所以Fax有两个，需要看哪个。另外Fax(传真)是另一个类别？不，用户给的类别中有Fax和Fax(传真)？看用户给的类别里有“Fax”和“Fax(传真)”？不，看用户提供的类别列表：有“Fax”和“Fax(传真)”？看用户给的类别：
 
-Item(序号)：000010
+看用户提供的类别列表中的项：
 
-Cus.Mat.(客户物料)：155357-43
+Fax, Fax(传真) —— 可能是重复？不，看用户给的类别：
 
-Material(产品编号)：这里可能图片中的第三列是“Material(产品编号)”？不，看图片中的列标题，中文是“Cus.Mat.(客户物料)”、“Material(产品编号)”、“HS Code(海关编码)”等。可能图片中的第三列是“Material(产品编号)”的值是155357-43？不，看图片中的文字：
+在用户的问题中，类别列表里有“Fax”和“Fax(传真)”？看原文：
 
-在表格上方的列标题：
+用户提供的类别列表：
 
-Item(序号) | Cus.Mat.(客户物料) | Material(产品编号) | HS Code(海关编码) | Description(产品描述) | Price(价格) | Price unit(价格单位) | ETD. SHIPDATE(预计出货日期) | Value(总价)
+... Fax, Fax(传真), Final amount, ...
 
-然后看表格中的行，第一行数据：
+哦，可能用户输入时的重复？不，看原文中的类别：
 
-000010 | 155357-43 | 5911900090 | CART DGU 5005 LAND SHR 8/C | 80.00 EA | USD | 10,000EA | 2021.09.22 | 115.39
+用户列出的类别有：Fax, Fax(传真) —— 可能是两个不同的？比如左边Mailing的Fax是Fax，而SHIP TO的Fax是Fax(传真)？需要看。
 
-所以：
+现在逐个处理：
 
-Cus.Mat.(客户物料)是155357-43
+1. A/C No：在REMIT to部分，A/C No: 5196582226095。bbox是对应这个数字的区域，看图片中REMIT to下面的A/C No: 5196582226095，位置在下方，所以bbox大概是[114, 975, 325, 995]左右？
 
-Material(产品编号)是？不，可能图片中的“Material(产品编号)”列的值是155357-43？或者可能我搞反了。不管怎样，需要找到每个类别对应的位置。
+2. BTD. SHIPDATE(预计出货日期)：在Item表格中的ETD. SHIPDATE列，对应000010行的2021.09.22。所以这个字段的值是2021.09.22，bbox是表格中该单元格的位置。
 
-继续其他类别：
+3. Bank Add：Bank Add: USS Clark FPO AP 07029。在REMIT to部分，Bank Add对应的内容。
 
-Number/Date(订单号/日期)：Forma Invoice中的Number/Date(订单号/日期) 85217545 / 2021.09.14。
+4. Bank Name：Bank Name: Bank of China, Suzhou High & New Tech Industrial Development Zone Sub-B ranch。在REMIT to部分的Bank Name。
 
-Page(页码)：Page(页码): 1 of 1，在左上角。
+5. CS REPRESENTATIVE(客户服务代表)：右边的CS REPRESENT是SALLY.ZHANG，对应右边的CS REPRESENT(客户服务代表)字段。
 
-Payment Terms(付款方式)：Net 30 days 月末30天付清。
+6. Contact(联系人)：SHIP TO的Contact是Christine Hunter，所以这个Contact是Christine Hunter，bbox是SHIP TO部分的Contact(联系人):Christine Hunter。
 
-Price unit(价格单位)：USD。
+7. Country of Org.(原产国)：在Item表格中的Country of Org.列，对应000010行的China。
 
-Price(价格)：80.00 EA（Price列）。
+8. Cus.Mat.(客户物料)：Item表格中000010行的Cus.Mat.是155357-43？看表格列，Cus.Mat.是第二列，对应000010行的Cus.Mat.是155357-43？
 
-Qty(数量)：10,000EA（Price unit？不，看列，Price是80.00，Price unit是USD，Qty是10,000EA？或者看Value是总价，可能Qty是数量，比如80.00 EA是单价，数量是10,000？因为Value是115.39，可能计算方式是80*10000？不对，可能图片中的Price是80.00，Price unit是USD，Qty是10,000EA，所以数量是10,000。
+9. Cust. PO/Date(客户采购订单号/日期)：右边的Cust. PO/Date是00004804 / 2021.09.13。
 
-Remarks(备注)：下面的备注部分，有三条内容。
+10. Cust. no./Our order(客户编号/销售订单号)：右边的Cust. no./Our order是PNR002-001/0010152401。
 
-Ship Via(运输方式)：Full Container Load 海运整箱。
+11. Description(产品描述)：Item表格中000010行的Description是CART DGD 5005 LAND SHR 8/C。
 
-Swift Code：BKCHICNBJ95B，在REMIT部分的Swift Code。
+12. Fax：Mailing的Fax是27-566-6811-8116，对应Mailing & Correspondence Address下面的Fax: 27-566-6811-8116。
 
-Tel：多个Tel，比如Mailing的Tel:50-662-8966-1671；SHIP TO的Tel:852-162-5124；还有左侧BILL TO的Contact的Tel（可能空？）。
+13. Fax(传真)：SHIP TO的Fax是241426-4382，对应SHIP TO部分的Fax(传真):241426-4382。
 
-Tel(电话)：和Tel可能重复？用户给的类别里有Tel和Tel(电话)，可能需要区分，比如Mailing的Tel是Tel，SHIP TO的Tel是Tel(电话)？
+14. Final amount：在下方Final amount: USD 壹佰壹拾伍元叁角玖分，所以Final amount是115.39 USD。
 
-Terms of delivery：FCASuzhou。
+15. HS Code(海关编码)：Item表格中000010行的HS Code是5911900090。
 
-Value(总价)：115.39。
+16. Item(序号)：000010，对应表格中的Item列。
 
-保险费：0.00。
+17. Material(产品编号)：Item表格中000010行的Material是155357-43？看表格中第三列是Material，对应000010行的Material是155357-43？
 
-公司名：Nankang Information Co., Ltd.（左侧和REMIT部分的公司名）。
+18. Number/Date(订单号/日期)：右边的Number/Date(订单号/日期)是85217545 / 2021.09.14。
 
-地址：Mailing & Correspondence Address（Unit 3751 Box 0649 DPO AP 43180）；SHIP TO的地址（788 Scott Drive Coxmouth, WV 20695）；Bank Add的地址（USS Clark FPO AP 07029）。
+19. Page(页码)：左上角Page(页码): 1 of 1。
 
-标题：Forma Invoice(形式发票) 是标题。
+20. Payment Terms(付款方式)：右边的Payment Terms(付款方式)是Net 30 days 月末30天付清。
 
-订单折扣：0.00。
+21. Price unit(价格单位)：Item表格中Price unit是USD，对应000010行的Price unit列。
 
-运费：0.00。
+22. Price(价格)：Item表格中Price是14.423.75？不，看表格中Price列是14,423.75？然后Value是115.39。Price是单价，Value是总价。看表格中Price列是14.423.75？不，看表格中的Price列对应000010行是14,423.75？然后Price unit是USD，Qty是80.00 EA，所以Value是14,423.75 * 80？不对，可能看表格中的Value列是115.39，而Price是14.423.75？可能图片中的数字是14.423.75是笔误，实际是14.42375？然后Qty是80.00 EA，所以14.42375 * 80 = 1153.9？但Value是115.39，可能Qty是1.000 EA？看表格中的Qty是80.00 EA？不，看表格中的Qty列是80.00 EA，然后Price是14.423.75？可能图片中的数字是14.42375 USD per EA，然后80 EA的话是14.42375*80=1153.9，但Value是115.39，可能Qty是1.000 EA？看表格中的Qty是80.00 EA？不，看图片中的表格：
 
-现在需要逐个确认每个类别的存在和位置，然后生成bbox。
+在Item表格中，000010行的Qty是80.00 EA，Price是14,423.75？不，看图片中的文字：
 
-首先，先处理每个类别：
+“000010 155357-43 5911900090 CART DGD 5005 LAND SHR 8/C 80.00 EA 14,423.75 USD 10,000EA 115.39 2021.09.22”
 
-1. A/C No：在REMIT to部分，A/C No: 519658226095。位置在REMIT to下方，A/C No: 后面的号码。看图片中的REMIT部分：
+哦，可能Price是14.423.75？不，看“14,423.75”是Price，然后Price unit是USD，Qty是80.00 EA，然后Value是115.39？这可能是因为折扣或其他，但不管，Price字段是14,423.75 USD。
 
-REMIT to (汇款至):
-Nankang Information Co., Ltd.
-A/C No: 519658226095
-Bank Name: Bank of China, Suzhou High & New Tech Industrial Development Zone Sub-B ranch
-Bank Add: USS Clark FPO AP 07029
-Swift Code: BKCHICNBJ95B
+23. Qty(数量)：80.00 EA，对应表格中的Qty列。
 
-所以A/C No的bbox是包含“519658226095”的区域。
+24. Remarks(备注)：下面的Remarks部分，包含三条备注，所以Remarks是这部分内容。
 
-2. BTD. SHIPDATE(预计出货日期)：在Item行的ETD. SHIPDATE列，值是2021.09.22。看表格中的该列，对应行的ETD. SHIPDATE是2021.09.22。
+25. Ship Via(运输方式)：右边的Ship Via(运输方式)是Full Container Load 海运整箱。
 
-3. Bank Add：Bank Add: USS Clark FPO AP 07029，在REMIT部分。
+26. Swift Code：BKCHICNBJ95B，对应REMIT to部分的Swift Code。
 
-4. Bank Name：Bank of China, Suzhou High & New Tech Industrial Development Zone Sub-B ranch，在REMIT部分。
+27. Tel：Mailing的Tel是50-662-8966-1671，对应Mailing & Correspondence Address下面的Tel: 50-662-8966-1671。
 
-5. CS REPRESENTATIVE(客户服务代表)：在Forma Invoice部分，CS REPRESENT(客户服务代表) SALLY.ZHANG。看Forma Invoice中的“CS REPRESENT(客户服务代表)”后面是SALLY.ZHANG。
+28. Tel(电话)：SHIP TO的Tel是852-162-5124，对应SHIP TO部分的Tel(电话): 852-162-5124。
 
-6. Contact(联系人)：有两个Contact(联系人)：一个是左侧BILL TO下面的Contact(联系人):（可能没有内容，Tel和Fax是空？）；另一个是SHIP TO下面的Contact(联系人):Christine Hunter。所以需要找到这两个Contact(联系人)的位置。比如SHIP TO的Contact是Christine Hunter，其位置在SHIP TO的Contact(联系人):后面。
+29. Terms of delivery：FCASuzhou，对应Terms of delivery字段。
 
-7. Country of Org.(原产国)：在Item行的Country of Org.列，值是China。看表格中的Country of Org.列，对应行的值是China。
+30. Value(总价)：115.39 USD，对应表格中的Value列，以及Final amount中的115.39。
 
-8. Cus.Mat.(客户物料)：在Item行的Cus.Mat.(客户物料)列，值是155357-43。
+31. 保险费：0.00，对应下方的保险费: 0.00。
 
-9. Cust. PO/Date(客户采购订单号/日期)：Forma Invoice中的Cust. PO/Date(客户采购订单号/日期) 00004804 / 2021.09.13。
+32. 公司名：Nankang Information Co., Ltd. 南康信息有限公司，对应左上方的公司名。
 
-10. Cust. no./Our order(客户编号/销售订单号)：Forma Invoice中的Cust. no./Our order (客户编号/销售订单号) FNR002-001/0010152401。
+33. 地址：Mailing & Correspondence Address的地址：Unit 3751 Box 0649 DPO AP 43180；还有SHIP TO的地址：788 Scott Drive Coxmouth, WV 20695。需要看哪个地址，可能Mailing的地址是公司地址，所以地址是Unit 3751 Box 0649 DPO AP 43180。
 
-11. Description(产品描述)：Item行的Description列，值是CART DGU 5005 LAND SHR 8/C。
+34. 标题：Proforma Invoice(形式发票)，右边的标题。
 
-12. Fax：Mailing部分的Fax:27-566-6811-8116；SHIP TO的Fax:241426-4382；还有REMIT部分没有Fax？所以这两个Fax。
+35. 订单折扣：0.00，对应下方的订单折扣: 0.00。
 
-13. Fax(传真)：可能和Fax是同一个？用户给的类别里有“Fax”和“Fax(传真)”，可能需要看是否有区别。比如Mailing的Fax是Fax，SHIP TO的Fax是Fax(传真)？或者可能用户重复了，需要检查。比如在左侧Mailing的Fax是“Fax:27-566-6811-8116”，SHIP TO的Fax是“Fax(传真):241426-4382”。所以这两个分别属于Fax和Fax(传真)。
+36. 运费：0.00，对应下方的运费: 0.00。
 
-14. Final amount：Final amount: USD 壹佰壹拾伍元叁角玖分，值是115.39。在表格下方，Final amount: USD 后面的金额。
+现在需要为每个类别找到对应的bbox。由于图片是扫描件，需要大致定位每个部分的坐标。以下是一些关键部分的bbox估计（因为是相对位置，需要根据图片布局）：
 
-15. HS Code(海关编码)：Item行的HS Code列，值是5911900090。
-
-16. Item(序号)：Item(序号)列，值是000010。
-
-17. Material(产品编号)：Item行的Material(产品编号)列，值是155357-43？或者看表格中的第三列，可能Material(产品编号)是155357-43？因为Cus.Mat.是客户物料，Material是产品编号，可能两者相同？或者看图片中的列标题，Material(产品编号)下面的值是155357-43？
-
-18. Number/Date(订单号/日期)：Forma Invoice中的Number/Date(订单号/日期) 85217545 / 2021.09.14。
-
-19. Page(页码)：Page(页码): 1 of 1，在左上角。
-
-20. Payment Terms(付款方式)：Net 30 days 月末30天付清，在Forma Invoice的Payment Terms部分。
-
-21. Price unit(价格单位)：USD，在Item行的Price unit列。
-
-22. Price(价格)：80.00 EA，在Item行的Price列。
-
-23. Qty(数量)：10,000EA，在Item行的Price unit？不，看Value是总价，可能Qty是数量，比如10,000是数量，单价80，总价是80*10000？但Value是115.39，可能不是。或者看表格中的“10,000EA”是数量，Price是80.00，所以Qty是10,000。
-
-24. Remarks(备注)：下面的备注部分，包含三条内容，比如“1. The above shipment status is pending payment...”等。
-
-25. Ship Via(运输方式)：Full Container Load 海运整箱，在Forma Invoice的Ship Via部分。
-
-26. Swift Code：BKCHICNBJ95B，在REMIT部分的Swift Code。
-
-27. Tel：Mailing部分的Tel:50-662-8966-1671；SHIP TO的Tel:852-162-5124；还有左侧BILL TO的Contact的Tel（可能空？）。
-
-28. Tel(电话)：可能和Tel是同一个，比如SHIP TO的Tel是Tel(电话)。
-
-29. Terms of delivery：FCASuzhou，在Forma Invoice的Terms of delivery部分。
-
-30. Value(总价)：115.39，在Item行的Value列。
-
-31. 保险费：0.00，在订单折扣、保险费、运费部分，保险费是0.00。
-
-32. 公司名：Nankang Information Co., Ltd.，在左侧和REMIT部分。
-
-33. 地址：Mailing & Correspondence Address（Unit
+- 公司名（公司名）：左上方，Nankang Information Co., Ltd. 南康信息有限公司，bbox大概[110, 95, 445, 115]
+- 地址（地址）：Mailing & Correspondence Address下的地址，Unit 3751 Box 0649 DPO AP 43180，bbox大概[110, 195, 445, 215]
+- 标题（标题）：右边的“Proforma Invoice(形式发票)”，bbox大概[660, 140, 920, 160]
+- Page(页码)：左上角“Page(页码): 1 of 1”，bbox大概[110, 10, 220, 25]
+- Number/Date(订单号/日期)：右边的Number/Date(订单号/日期) 85217545 / 2021.09.14，bbox大概[660, 145, 920, 165]
+- Cust. PO/Date(客户采购订单号/日期)：右边的Cust. PO/Date 00004804 / 2021.09.13，bbox大概[660, 170, 920, 190]
+- Cust. no./Our order(客户编号/销售订单号)：右边的Cust. no./Our order PNR002-001/0010152401，bbox大概[660, 195, 920, 215]
+- CS REPRESENTATIVE(客户服务代表)：右边的CS REPRESENT SALLY.ZHANG，bbox大概[660, 220, 920, 240]
+- Contact(联系人)：SHIP TO的Contact Christine Hunter，bbox大概[110, 340, 445, 360]
+- Country of Org.(原产国)：Item表格中的Country of Org. China，bbox大概[110, 460, 445, 480]
+- Cus.Mat.(客户物料)：Item表格中000010行的Cus.Mat. 155357-43，bbox大概[110, 485, 325, 505]
+- Cust. no./Our order(客户编号/销售订单号)已经处理过，这里Cus.Mat.是客户物料，对应表格中的第二列。
+- Description(产品描述)：Item表格中的CART DGD 5005 LAND SHR 8/C，bbox大概[450, 485, 700, 505]
+- Fax：Mailing的Fax 27-

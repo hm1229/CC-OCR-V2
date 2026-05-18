@@ -1,339 +1,132 @@
-Got it, let's go through the document and identify each category: address, company, date, total.
+Got it, let's tackle this problem step by step. First, I need to identify each category: address, company, date, total. Let's look at the invoice.
 
-First, company: The top part has "KEDAI PAPAN YEW CHUAN" which is the company name. Also, the Bill To is "SUCI ALAM JAYA TRANSPORT" which is another company. Let's check.
+First, the company. The top part says "KEDAI PAPAN YEW CHUAN" which is the company name. Let's check the bounding box for that.
 
-Address: There are multiple addresses. The main company address is "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." Then the Bill To address is "NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR 017-6057770". Also, the GST ID line has the company's address info? Wait, the main company's address is under KEDAI... So need to pick all address instances.
+Then address: The company's address is "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." Also, the Bill To address is for SUCI ALAM JAYA TRANSPORT, but the question is about the company's address? Wait, the problem says "detect the corresponding values to the following categories: address, company, date, total." Let's check each.
+
+Company: The main company is KEDAI PAPAN YEW CHUAN. Let's find its location on the image.
+
+Address: The company's address is listed below the company name: LOT 276 JALAN BANTING... So that's the address for the company.
 
 Date: The date on the invoice is "16/03/2018" under Doc No.
 
-Total: There are multiple totals. The Total Sales (Inclusive of GST) is 135.68, Total Sales (Excluding GST) is 128.00, Total GST is 7.68, and the GST Summary total. Let's check which "total" is required. The problem says "total" category, so likely the main total amounts.
+Total: The total sales inclusive of GST is 135.68, or maybe the total cash? Wait, the "Total Sales (Inclusive of GST)" is 135.68. Let's check the total value.
 
-Let's list each:
+Now, let's map each:
 
-Company:
-- KEDAI PAPAN YEW CHUAN (the main company at the top)
-- SUCI ALAM JAYA TRANSPORT (Bill To company)
+1. Company: "KEDAI PAPAN YEW CHUAN" with its registration number. Bounding box for that line.
 
-Address:
-- KEDAI's address: LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR.
-- Bill To address: NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR
+2. Address: The company's address: "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR."
 
-Date: 16/03/2018
+3. Date: "16/03/2018" which is in the section with Doc No.
 
-Total:
-- Total Sales (Inclusive of GST): 135.68
-- Total Sales (Excluding GST): 128.00
-- Total GST: 7.68
-- Also, the Total in GST SUMMARY: 128.00 and 7.68
+4. Total: The total sales inclusive of GST is 135.68. Let's check where that is. In the invoice, "Total Sales (Inclusive of GST) : 135.68"
 
-Now, need to map each to their bounding boxes.
+Now, let's find the bounding boxes.
 
-Let's check the image:
+First, company: The text "KEDAI PAPAN YEW CHUAN" is at the top. Let's check coordinates. The image's top part:
 
-First, company: "KEDAI PAPAN YEW CHUAN" is at the top, so its bbox is the text block.
+"KEDAI PAPAN YEW CHUAN" is the company name. The bounding box would be around that line.
 
-Address for KEDAI: "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." That's the address.
+Address: The next line is the lot number, then the address line. So "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." That's the address.
 
-Bill To company: "SUCI ALAM JAYA TRANSPORT" is the company in Bill To.
+Date: The date is "16/03/2018" which is on the right side of the Doc No line.
 
-Bill To address: "NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR" and the phone number.
+Total: The total sales inclusive of GST is 135.68. Let's check the line "Total Sales (Inclusive of GST) : 135.68"
 
-Date: "16/03/2018" is in the Doc No line.
+Now, let's list each:
 
-Total: Let's check the "Total Sales (Inclusive of GST) : 135.68" — that's a total. Also, "Total Sales (Excluding GST) : 128.00" is another total. "Total GST : 7.68" is a total. The "Total:" in GST SUMMARY is also a total.
+- Company: [120, 72, 879, 97] (approx, since the text is centered)
+- Address: [150, 157, 849, 197] (the address lines: LOT 276... and 43800...)
+- Date: [562, 312, 727, 332] (the date 16/03/2018)
+- Total: [225, 532, 362, 552] (the Total Sales (Inclusive of GST) value is 135.68, so the total value is 135.68. Let's check the line where total is. The "Total Sales (Inclusive of GST) : 135.68" so the total value is 135.68. The bounding box for the total value would be around that number.
 
-Now, let's extract each with their bounding boxes.
+Wait, the problem says "total" category. Let's confirm which total. The total sales inclusive of GST is the main total. Let's check the line:
 
-First, identify each element:
+"Total Sales (Inclusive of GST) : 135.68" — so the total is 135.68.
 
-1. Company: KEDAI PAPAN YEW CHUAN
-   - Bbox: The text is at the top, so coordinates. Let's see the image: the text is centered. The bounding box would cover that line.
+Now, let's structure each entry.
 
-2. Company: SUCI ALAM JAYA TRANSPORT (Bill To)
-   - Bbox: Under "Bill To:"
+First, company:
 
-3. Address: KEDAI's address (LOT 276...)
-   - Bbox: The line below the company name.
+Label: company, text is "KEDAI PAPAN YEW CHUAN"
 
-4. Address: Bill To address (NO 1 JALAN AMAN...)
-   - Bbox: The lines under Bill To.
+Address: the company's address: "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR."
 
-5. Date: 16/03/2018
-   - Bbox: Next to Doc No.
+Date: "16/03/2018"
 
-6. Total: Total Sales (Inclusive of GST) 135.68
-   - Bbox: The line with that text.
+Total: "135.68" (from Total Sales Inclusive of GST)
 
-7. Total: Total Sales (Excluding GST) 128.00
-   - Bbox: The line above inclusive.
+Now, check the bounding boxes.
 
-8. Total: Total GST 7.68
-   - Bbox: The line below excluding.
+Let's look at the image:
 
-9. Total: GST SUMMARY Total (128.00 and 7.68)
-   - But maybe the main totals are the sales totals.
+- Company name: "KEDAI PAPAN YEW CHUAN" is in the top part, centered. The coordinates would be from the top, the first line. Let's estimate the bounding box.
 
-Now, let's check the problem says "detect all objects matching these categories". So each occurrence.
+The image's text:
 
-Let's list each:
+KEDAI PAPAN YEW CHUAN
 
-- Company: KEDAI PAPAN YEW CHUAN
-- Company: SUCI ALAM JAYA TRANSPORT
-- Address: LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR.
-- Address: NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR
-- Date: 16/03/2018
-- Total: 135.68 (Total Sales Inclusive)
-- Total: 128.00 (Total Sales Excluding)
-- Total: 7.68 (Total GST)
-- Also, the GST SUMMARY Total: 128.00 and 7.68, but maybe those are part of the same.
+(0005583085-K)
 
-Wait, the problem says "total" category. Let's check the image for "Total" labels.
-
-In the invoice, there's:
-
-"Total Qty: 8" — but that's quantity, not total of sales.
-
-"Total Sales (Excluding GST) : 128.00" — this is a total.
-
-"Total GST : 7.68" — total.
-
-"Total Sales (Inclusive of GST) : 135.68" — total.
-
-"Total:" in GST SUMMARY: 128.00 and 7.68 — these are also totals.
-
-So multiple total entries.
-
-Now, let's map each with their bounding boxes.
-
-First, let's parse the image text:
-
-Top section:
-
-KEDAI PAPAN YEW CHUAN (0005583085-K)
 LOT 276 JALAN BANTING
+
 43800 DENGKIL, SELANGOR.
-TEL : 03-87686092 FAX : 03-87686092
-GST ID : 000781500416
 
-Then Bill To:
+So the company is the first line. Bounding box for that line: x1 is around 140, y1 is around 80, x2 around 850, y2 around 100.
 
-Bill To:
-SUCI ALAM JAYA TRANSPORT
-NO 1 JALAN AMAN 2
-TAMAN DESA 43800
-DENGKIL SELANGOR
-017-6057770
+Address: the next two lines: LOT 276... and 43800... So the address is those lines.
 
-Doc No. : CS00010855 Date : 16/03/2018
-Cashier : USER Time : 08:45:00
+Date: in the section "Doc No. : CS00010855 Date: 16/03/2018" — so the date is there.
 
-Then the item table.
-
-Then:
-
-Total Qty: 8 135.68
-
-Total Sales (Excluding GST) : 128.00
-Discount : 0.00
-Total GST : 7.68
-Rounding : 0.00
-Total Sales (Inclusive of GST) : 135.68
-CASH : 150.00
-Change : 14.32
-
-GST SUMMARY
-Tax Code % Amt (RM) Tax (RM)
-SR 6 128.00 7.68
-Total : 128.00 7.68
-
-Now, let's identify each category:
-
-Company:
-- KEDAI PAPAN YEW CHUAN (the main company)
-- SUCI ALAM JAYA TRANSPORT (Bill To company)
-
-Address:
-- LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR. (main company address)
-- NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR (Bill To address)
-
-Date:
-- 16/03/2018 (the date of the invoice)
-
-Total:
-- 128.00 (Total Sales Excluding GST)
-- 7.68 (Total GST)
-- 135.68 (Total Sales Inclusive of GST)
-- 128.00 (GST SUMMARY Total Amt)
-- 7.68 (GST SUMMARY Total Tax)
-
-But maybe the problem expects the main total amounts. Let's check the question: "detect all objects matching these categories in this document image: address, company, date, total."
-
-Each occurrence. Let's list all:
-
-Company entries:
-1. KEDAI PAPAN YEW CHUAN
-2. SUCI ALAM JAYA TRANSPORT
-
-Address entries:
-3. LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR.
-4. NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR
-
-Date entry:
-5. 16/03/2018
-
-Total entries:
-6. 128.00 (Total Sales Excluding GST)
-7. 7.68 (Total GST)
-8. 135.68 (Total Sales Inclusive of GST)
-9. 128.00 (GST SUMMARY Total Amt)
-10. 7.68 (GST SUMMARY Total Tax)
-
-But maybe some of these are duplicates. Let's check the bounding boxes.
-
-Now, let's define the bounding boxes for each.
-
-First, KEDAI PAPAN YEW CHUAN:
-
-The text is at the top, so the bounding box would be around that line. Let's estimate coordinates. The image is a standard receipt, so the top part.
-
-In the image, the text "KEDAI PAPAN YEW CHUAN" is centered. Let's say the bounding box is from x1=100, y1=100 (approx) to x2=500, y2=120.
-
-But since we need to be precise, let's look at the structure.
-
-Alternatively, in the OCR text, the lines are:
-
-Line 1: KEDAI PAPAN YEW CHUAN (0005583085-K)
-Line 2: LOT 276 JALAN BANTING
-Line 3: 43800 DENGKIL, SELANGOR.
-Line 4: TEL : 03-87686092 FAX : 03-87686092
-Line 5: GST ID : 000781500416
-
-Then Bill To:
-
-Line: Bill To:
-Line: SUCI ALAM JAYA TRANSPORT
-Line: NO 1 JALAN AMAN 2
-Line: TAMAN DESA 43800
-Line: DENGKIL SELANGOR
-Line: 017-6057770
-
-Then Doc No. and Date:
-
-Line: Doc No. : CS00010855 Date : 16/03/2018
-
-Then the totals:
-
-Line: Total Sales (Excluding GST) : 128.00
-Line: Total GST : 7.68
-Line: Total Sales (Inclusive of GST) : 135.68
-
-And GST SUMMARY:
-
-Line: Total : 128.00
-Line: Total : 7.68
-
-Now, let's assign each category:
-
-Company:
-- "KEDAI PAPAN YEW CHUAN" — label: company
-- "SUCI ALAM JAYA TRANSPORT" — label: company
-
-Address:
-- "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." — label: address (combining lines 2 and 3)
-- "NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR" — label: address (combining lines under Bill To)
-
-Date:
-- "16/03/2018" — label: date
-
-Total:
-- "128.00" (from Total Sales Excluding GST) — label: total
-- "7.68" (from Total GST) — label: total
-- "135.68" (from Total Sales Inclusive of GST) — label: total
-- "128.00" (from GST SUMMARY Total Amt) — label: total
-- "7.68" (from GST SUMMARY Total Tax) — label: total
-
-But maybe the problem considers each distinct total value, but in the image, the main totals are the sales inclusive, excluding, and GST. The GST summary totals are the same as the sales excluding and GST, so maybe they are duplicates. But the task is to detect all objects, so include all.
+Total: the line "Total Sales (Inclusive of GST) : 135.68" — the total value is 135.68.
 
 Now, let's create the JSON array.
 
-First, list each entry with bbox and label.
+Each entry is a dictionary with bbox_2d and label.
 
-For example:
+Let's check each:
 
-1. Company: KEDAI PAPAN YEW CHUAN
-   - Bbox: Let's check the image. The text is at the top, so the coordinates. Let's assume the bounding box is [105, 110, 525, 135] (approx, since the image is a receipt, the text is centered).
+1. Company: "KEDAI PAPAN YEW CHUAN" — label: company. Bounding box: let's see the text's position. The top part, the first line. Let's take the coordinates as [117, 74, 882, 98] (approx).
 
-2. Company: SUCI ALAM JAYA TRANSPORT
-   - Bbox: Under Bill To, so [95, 290, 495, 315]
+2. Address: The company's address is "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." — label: address. Bounding box: the lines below the company name. Let's check the text: "LOT 276 JALAN BANTING" and "43800 DENGKIL, SELANGOR." So combined, the bounding box would cover those lines. Let's say [152, 159, 847, 200].
 
-3. Address: LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR.
-   - Bbox: The lines below the company name: [100, 140, 520, 165] (combining LOT... and 43800...)
+3. Date: "16/03/2018" — label: date. Bounding box: in the line with Doc No. and Time. The date is on the right side of that line. Let's check the coordinates: the date is at the same line as Doc No., so the bounding box for the date text is [600, 314, 725, 334].
 
-4. Address: NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR
-   - Bbox: The Bill To address lines: [95, 320, 490, 370] (combining NO 1..., TAMAN..., DENGKIL...)
+4. Total: The total sales inclusive of GST is 135.68. Let's find where that is. In the invoice, after the item list, there's "Total Sales (Inclusive of GST) : 135.68". So the total value is 135.68. The label is total, and the value is that number. The bounding box for the total value would be around "135.68" in that line. Let's check the line: "Total Sales (Inclusive of GST) : 135.68" — the number is at the end. So the bounding box for the total is [325, 534, 375, 554] (approx, since the text is centered).
 
-5. Date: 16/03/2018
-   - Bbox: Next to Doc No., so [580, 300, 685, 320]
+Wait, but maybe the total could also refer to the cash total? But the problem says "total" category, and in invoices, the total sales is a key total. Let's confirm.
 
-6. Total: 128.00 (Total Sales Excluding GST)
-   - Bbox: The line "Total Sales (Excluding GST) : 128.00" — the value 128.00 is part of that line. Let's find the position. The line is below the item total. So the bbox for the total value 128.00 is around that number.
+Alternatively, the "Total" in the GST summary is 128.00, but that's the amount before GST. The main total is the inclusive GST total, which is 135.68. So that's the total we need.
 
-7. Total: 7.68 (Total GST)
-   - Bbox: "Total GST : 7.68" — the 7.68.
+Now, let's compile the JSON array.
 
-8. Total: 135.68 (Total Sales Inclusive of GST)
-   - Bbox: "Total Sales (Inclusive of GST) : 135.68" — the 135.68.
+Each entry:
 
-9. Total: 128.00 (GST SUMMARY Total Amt)
-   - Bbox: In GST SUMMARY, "Total : 128.00" — the 128.00.
+- Company: bbox for "KEDAI PAPAN YEW CHUAN"
+- Address: bbox for the company's address lines
+- Date: bbox for "16/03/2018"
+- Total: bbox for "135.68" in Total Sales (Inclusive of GST)
 
-10. Total: 7.68 (GST SUMMARY Total Tax)
-    - Bbox: "Total : 7.68" — the 7.68.
+Let me check the image again.
 
-But maybe the problem expects the main total labels, not each number. Let's check the question: "detect all objects matching these categories". The categories are address, company, date, total. So each instance of these categories.
+For the company:
 
-Alternatively, maybe "total" refers to the total amount fields. Let's proceed.
+The text is "KEDAI PAPAN YEW CHUAN" — the bounding box should enclose this text. Let's assume the coordinates are from the top part.
+
+For address:
+
+The address is "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR." — this is two lines, so the bounding box covers both.
+
+Date: "16/03/2018" is in the line "Doc No. : CS00010855 Date: 16/03/2018 Time: 08:45:00" — so the date is there.
+
+Total: "Total Sales (Inclusive of GST) : 135.68" — the total value is 135.68.
 
 Now, let's write the JSON.
-
-First, company entries:
-
-- KEDAI PAPAN YEW CHUAN: company
-- SUCI ALAM JAYA TRANSPORT: company
-
-Address entries:
-
-- LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR.: address
-- NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR: address
-
-Date entry:
-
-- 16/03/2018: date
-
-Total entries:
-
-- 128.00 (Total Sales Excluding GST): total
-- 7.68 (Total GST): total
-- 135.68 (Total Sales Inclusive of GST): total
-- 128.00 (GST SUMMARY Total Amt): total
-- 7.68 (GST SUMMARY Total Tax): total
-
-Now, assign bounding boxes. Since the image is provided, we need to estimate the coordinates.
-
-Let's assume the image has a width of, say, 800 pixels (approx). Let's map the text positions.
-
-For "KEDAI PAPAN YEW CHUAN":
-
-The text is at the top, centered. Let's say the bounding box is [120, 100, 580, 125].
-
-For "LOT 276 JALAN BANTING 43800 DENGKIL, SELANGOR.":
-
-This is the next line, so [120, 130, 580, 155] (combining two lines).
-
-For "SUCI ALAM JAYA TRANSPORT":
-
-Under Bill To, which is after the company info. Let's say [100, 280, 500, 305].
-
-For "NO 1 JALAN AMAN 2 TAMAN DESA 43800 DENGKIL SELANGOR":
-
-This spans multiple lines under Bill To. Let's take the combined address: [95, 310, 495
+</think>
+[
+    {"bbox_2d": [117, 74, 882, 98], "label": "company"},
+    {"bbox_2d": [152, 159, 847, 200], "label": "address"},
+    {"bbox_2d": [600, 314, 725, 334], "label": "date"},
+    {"bbox_2d": [325, 534, 375, 554], "label": "total"}
+]

@@ -1,168 +1,111 @@
-用户现在需要检测图像中的各个指定对象，先逐个看。首先看每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个看每个类别在图中的位置。
 
-先列出来所有要检测的类别，然后找对应的区域。
+首先看“尊敬的卢淑兰先生”对应“尊敬的”标签。然后Room No.房号是2530，对应Room No.房号。Arrival入住日期是03 NOV 20，对应Arrival 入住日期。Departure退房日期是05 NOV 20，对应Departure 退房日期。Date日期（上面的Date）是05 NOV 20，对应Date 日期。Cashier出纳员是292，对应Cashier 出纳员。Conf No.确认号是41352999，对应Conf No. 确认号。Receipt No.账单号码是960395，对应Receipt No. 账单号码。Membership是536952574BL，对应Membership。Qualifying Nights是2，对应Qualifying Nights。Eligible Spend是1,114.92，对应Eligible Spend。Redemption Eligible是0.00，对应Redemption Eligible。Page No.页码是1 of 2，对应Page No. 页码。Phone是+831223346691，对应Phone。Fax是+66313113293，对应Fax。Food & Beverage餐饮是0.00，对应Food & Beverage 餐饮。Laundry洗衣是0.00，对应Laundry 洗衣。Meeting services会议服务是0.00，对应Meeting services 会议服务。Others其它是0.00，对应Others 其它。Accommodation住宿费用在明细里是1,300.00（因为总和是1300，且住宿费用是1300），对应Accommodation 住宿费用。DEBIT消费在03 NOV 20是650.00，04 NOV 20是650.00，合计1300。CREDIT付款是1300.00（在05 NOV 20那行）。Total总计是1,300.00，对应付款金额？或者看TOTAL总计。BALANCE余额是0.00，对应BALANCE 余额。然后看各个字段的位置，需要把每个标签对应的bbox找出来。
 
-1. Accommodation 住宿费用：看表格里的项目，03 NOV 20和04 NOV 20的项目是Accommodation，还有下面的Accommodation 住宿费用的明细。先看表格里的DESCRIPTION列的Accommodation，以及下面的明细项。比如表格中的行，还有下面的“Accommodation 住宿费用 : CNY 1,300.00”。
-2. Arrival 入住日期：图中有“Arrival 入住日期 : 03 NOV 20”。
-3. BALANCE 余额：图中有“BALANCE 余额: CNY 0.00”。
-4. CREDIT 付款：表格中的CREDIT列，看是否有值，图中CREDIT列在05 NOV 20那行是1,300.00？不，看表格里的CREDIT列，03和04 NOV 20的CREDIT是空，05 NOV 20的CREDIT是1,300.00？看表格结构：DATE、DESCRIPTION、REFERENCE、DEBIT、CREDIT。03 NOV 20的DEBIT是650，CREDIT空；04 NOV 20 DEBIT 650，CREDIT空；05 NOV 20 DEBIT空，CREDIT 1,300.00。所以CREDIT是付款。
-5. Cashier 出纳员：图中有“Cashier 出纳员 : 292”。
-6. Conf No. 确认号：图中有“Conf No. 确认号 : 41352999”。
-7. DATE 日期：表格的DATE列，比如03 NOV 20等，还有上面的“Date 日期 : 05 NOV 20”。
-8. DEBIT 消费：表格中的DEBIT列，03和04 NOV 20的DEBIT是650，05 NOV 20的DEBIT空？不，看表格里的DEBIT列，03 NOV 20 DEBIT 650.00，04 NOV 20 DEBIT 650.00，05 NOV 20 DEBIT空？然后下面TOTAL的DEBIT是1,300.00？
-9. DESCRIPTION 项目：表格中的DESCRIPTION列，比如Accommodation、银联卡等。
-10. Date 日期：上面的“Date 日期 : 05 NOV 20”。
-11. Departure 退房日期：图中有“Departure 退房日期 : 05 NOV 20”。
-12. Eligible Spend：图中有“Eligible Spend:1,114.92”。
-13. Fax：图中有“Fax:+66313113293”。
-14. Food & Beverage 餐饮：下面的明细“Food & Beverage 餐饮 : CNY 0.00”。
-15. Laundry 洗衣：下面的“Laundry 洗衣 : CNY 0.00”。
-16. Meeting services 会议服务：下面的“Meeting services 会议服务 : CNY 0.00”。
-17. Membership：图中有“Membership:536952574L”。
-18. Others 其它：下面的“Others 其它 : CNY 0.00”。
-19. Page No. 页码：图中有“Page No. 页码 : 1 of 2”。
-20. Phone：图中有“Phone:+831223346691”。
-21. Qualifying Nights：图中有“Qualifying Nights:2”。
-22. REFERENCE 备注：表格中的REFERENCE列，比如05 NOV 20的REFERENCE是xxxxxxx6387 XX/XX。
-23. Receipt No. 账单号码：图中有“Receipt No. 账单号码 : 960395”。
-24. Redemption Eligible：图中有“Redemption Eligible:0.00”。
-25. Retail 零售：下面的“Retail 零售 : CNY 0.00”。
-26. Room No. 房号：图中有“Room No. 房号 : 2530”。
-27. SPA水疗：下面的“SPA水疗 : CNY 0.00”。
-28. 付款金额：可能对应CREDIT或者TOTAL？比如TOTAL总计是1,300.00，CREDIT是1,300.00，所以付款金额可能指CREDIT的值。
-29. 传真：图中有“传真:+66313113293”？不，上面的Fax是Fax:+66313113293，而下面还有“传真:+169t13238633”？看底部的“传真:+169t13238633”。
-30. 地址：图上方的USS CoIe FPO AA 25118等是地址，比如“USS CoIe FPO AA 25118”等。
-31. 尊敬的：图中有“尊敬的卢淑兰先生”。
-32. 标题：可能没有明确标题，或者顶部的公司信息？可能没有，或者看是否有标题，比如“Company 公司名称”是标题？或者可能没有，先看。
-33. 消费金额：DEBIT的总和，比如03和04的DEBIT是650+650=1300，所以消费金额是1300.00。
-34. 电话：图中有“电话:+ *”（底部）和“Phone:+831223346691”（上方）。
-35. 邮政编码：图底部有“邮政编码 : 200080”。
-36. 邮箱：图中有“http://stark-huffman.biz/”是网址，不是邮箱，可能没有邮箱？看是否有邮箱，图中没有邮箱，所以可能没有。
+现在逐个处理：
 
-现在需要逐个确认每个类别在图中的存在，并标注bbox。
+1. 尊敬的：图中“尊敬的卢淑兰先生”，所以bbox是对应文字的位置。看图片中“尊敬的卢淑兰先生”的位置，大概在左侧偏上，坐标需要估计。比如x1大概100，y1大概150左右？需要看图片结构。不过可能更准确的是看每个元素的位置。
 
-先处理每个类别：
+另外，先列所有需要的类别，然后找每个的对应位置：
 
-1. Accommodation 住宿费用：有两个地方，表格中的DESCRIPTION列的Accommodation（03和04 NOV 20），以及下面的明细“Accommodation 住宿费用 : CNY 1,300.00”。先看明细部分的“Accommodation 住宿费用 : CNY 1,300.00”。
-   - 找这个文本的位置：在“凯悦天地摘要”下面，项目列表中的第一项。bbox大概在中间偏下的位置，对应行。
+- Accommodation 住宿费用：在明细中03 NOV 20和04 NOV 20的Accommodation，以及下面的Accommodation 住宿费用: CNY 1,300.00。所以对应这个条目的值是1,300.00，标签是Accommodation 住宿费用。
+- Arrival 入住日期：Arrival入住日期 : 03 NOV 20，所以值是03 NOV 20，标签Arrival 入住日期。
+- BALANCE 余额：BALANCE 余额: CNY 0.00，值0.00，标签BALANCE 余额。
+- CREDIT 付款：在05 NOV 20那行的CREDIT列是1,300.00，标签CREDIT 付款。
+- Cashier 出纳员：Cashier 出纳员 : 292，值292，标签Cashier 出纳员。
+- Conf No. 确认号：Conf No. 确认号 : 41352999，值41352999，标签Conf No. 确认号。
+- DATE 日期：在表格的DATE列，比如03 NOV 20等，标签DATE 日期。
+- DEBIT 消费：表格中DEBIT列，比如03 NOV 20是650.00，04 NOV 20是650.00，标签DEBIT 消费。
+- DESCRIPTION 项目：表格中的DESCRIPTION列，比如Accommodation，银联卡等，标签DESCRIPTION 项目。
+- Date 日期：上面的Date 日期 : 05 NOV 20，标签Date 日期。
+- Departure 退房日期：Departure 退房日期 : 05 NOV 20，值05 NOV 20，标签Departure 退房日期。
+- Eligible Spend：Eligible Spend:1,114.92，值1,114.92，标签Eligible Spend。
+- Fax：Fax:+66313113293，值+66313113293，标签Fax。
+- Food & Beverage 餐饮：Food & Beverage 餐饮: CNY 0.00，值0.00，标签Food & Beverage 餐饮。
+- Laundry 洗衣：Laundry 洗衣: CNY 0.00，值0.00，标签Laundry 洗衣。
+- Meeting services 会议服务：Meeting services 会议服务: CNY 0.00，值0.00，标签Meeting services 会议服务。
+- Membership：Membership:536952574BL，值536952574BL，标签Membership。
+- Others 其它：Others 其它: CNY 0.00，值0.00，标签Others 其它。
+- Page No. 页码：Page No. 页码 : 1 of 2，值1 of 2，标签Page No. 页码。
+- Phone：Phone:+831223346691，值+831223346691，标签Phone。
+- Qualifying Nights：Qualifying Nights:2，值2，标签Qualifying Nights。
+- REFERENCE 备注：在05 NOV 20那行的REFERENCE列是xxxxxxxxxx6387 XX/XX，标签REFERENCE 备注。
+- Receipt No. 账单号码：Receipt No. 账单号码 : 960395，值960395，标签Receipt No. 账单号码。
+- Redemption Eligible：Redemption Eligible:0.00，值0.00，标签Redemption Eligible。
+- Retail 零售：Retail 零售: CNY 0.00，值0.00，标签Retail 零售。
+- Room No. 房号：Room No. 房号 : 2530，值2530，标签Room No. 房号。
+- SPA水疗：SPA水疗: CNY 0.00，值0.00，标签SPA水疗。
+- 付款金额：TOTAL 总计: 1,300.00，1,300.00，所以付款金额是1300.00，标签付款金额。
+- 传真：和Fax是同一个，可能重复？但用户列里有“传真”和“Fax”，可能看是否有重复。不过图中Fax是+66313113293，而底部有“传真:+169t13238633”？哦，底部还有传真信息？看图片底部：“传真:+169t13238633”？需要检查图片。看图片底部有“传真:+169t13238633”吗？看用户提供的图片底部：“传真:+169t13238633”？是的，底部有“传真:+169t13238633”，所以可能有两个Fax？但上面的Fax是+66313113293（USCGC Collins FPO AA 37007的Fax），而底部的传真可能是另一个？需要看清楚。图中上方的Fax是“Fax:+66313113293”对应USCGC Collins FPO AA 37007的信息。底部的“传真:+169t13238633”是另一个传真？可能用户需要区分。但先看用户要求的类别中的“Fax”和“传真”是两个类别吗？用户给的类别里有“Fax”和“传真”，所以需要分别处理。上面的Fax是+66313113293，对应“Fax”；底部的“传真:+169t13238633”对应“传真”。
 
-2. Arrival 入住日期：图中“Arrival 入住日期 : 03 NOV 20”在右上方，Room No.下面。bbox是该行的区域。
+然后“地址”：上方的地址是USSS Weber FPO AP 40660等，所以地址是这些信息，标签地址。
 
-3. BALANCE 余额：图中“BALANCE 余额: CNY 0.00”在TOTAL下面。bbox是该行。
+“标题”：可能没有明确标题，或者看“INVOICE”是标题？图中有“INVOICE”字样，所以标题是INVOICE，标签标题。
 
-4. CREDIT 付款：表格中CREDIT列在05 NOV 20行的值是1,300.00，以及TOTAL的CREDIT是1,300.00。看表格中的CREDIT列，05 NOV 20行的CREDIT是1,300.00。另外TOTAL的CREDIT也是1,300.00。需要确定哪个是。可能CREDIT列的标题是“CREDIT 付款”，所以列的标题是CREDIT，对应付款。
+“消费金额”：DEBIT的总和是650+650=1300，所以消费金额是1300.00，标签消费金额。
 
-5. Cashier 出纳员：“Cashier 出纳员 : 292”在Date日期下面。bbox是该行。
+“电话”：上方的Phone是+831223346691，底部的“电话:+ *”？看图片底部“电话:+ *”？是的，底部有“电话:+ *”，所以“电话”对应底部的电话，而“Phone”对应上方的Phone。用户类别中有“Phone”和“电话”，所以“Phone”是上方的+831223346691，“电话”是底部的“电话:+ *”。
 
-6. Conf No. 确认号：“Conf No. 确认号 : 41352999”在Receipt No.下面。bbox是该行。
+“邮政编码”：底部“邮政编码:200080”，标签邮政编码。
 
-7. DATE 日期：表格的DATE列，比如03 NOV 20等，还有上面的“Date 日期 : 05 NOV 20”。需要看哪个是。上面的“Date 日期 : 05 NOV 20”是单独的Date，而表格的DATE是列标题。可能两个都算？但用户给的类别是DATE 日期（表格的列）和Date 日期（上面的单独项）。需要区分。看用户给的类别里有DATE 日期和Date 日期，所以两个都要。
+“邮箱”：图中没有邮箱信息，所以可能没有。
 
-8. DEBIT 消费：表格中的DEBIT列，03和04 NOV 20的DEBIT是650.00，TOTAL的DEBIT是1,300.00。所以DEBIT列的标题是DEBIT 消费，对应列。
+现在需要把每个类别对应的bbox和label列出来。由于是OCR任务，需要确定每个元素的位置。但因为是示例，可能需要列出所有存在的类别。
 
-9. DESCRIPTION 项目：表格中的DESCRIPTION列，包含Accommodation、银联卡等。列标题是DESCRIPTION 项目。
+现在开始整理：
 
-10. Date 日期：上面的“Date 日期 : 05 NOV 20”是单独的Date项，和上面的Arrival、Departure对应。
+1. 尊敬的：文字“尊敬的卢淑兰先生”，bbox大概在左侧，比如x1=30, y1=140, x2=150, y2=160（估计），label: 尊敬的
+2. Room No.房号：Room No. 房号 : 2530，bbox对应位置，label: Room No. 房号
+3. Arrival入住日期：Arrival 入住日期 : 03 NOV 20，label: Arrival 入住日期
+4. Departure退房日期：Departure 退房日期 : 05 NOV 20，label: Departure 退房日期
+5. Date日期（上面的Date）：Date 日期 : 05 NOV 20，label: Date 日期
+6. Cashier出纳员：Cashier 出纳员 : 292，label: Cashier 出纳员
+7. Receipt No.账单号码：Receipt No. 账单号码 : 960395，label: Receipt No. 账单号码
+8. Conf No.确认号：Conf No. 确认号 : 41352999，label: Conf No. 确认号
+9. Company公司名称：Company 公司名称 ：（可能为空，图中是“Company 公司名称 ：”后面没有内容？看图片中“Company 公司名称 ：”后面是空白？可能没有值，但用户没要求这个，所以跳过）
+10. Membership：Membership:536952574BL，label: Membership
+11. Qualifying Nights：Qualifying Nights:2，label: Qualifying Nights
+12. Eligible Spend：Eligible Spend:1,114.92，label: Eligible Spend
+13. Redemption Eligible：Redemption Eligible:0.00，label: Redemption Eligible
+14. Page No.页码：Page No. 页码 : 1 of 2，label: Page No. 页码
+15. Phone：Phone:+831223346691，label: Phone
+16. Fax：Fax:+66313113293，label: Fax
+17. 总计TOTAL：TOTAL 总计: 1,300.00，1,300.00，label: 付款金额（因为是总支付）
+18. BALANCE余额：BALANCE 余额: CNY 0.00，label: BALANCE 余额
+19. Accommodation住宿费用：Accommodation 住宿费用: CNY 1,300.00，label: Accommodation 住宿费用
+20. Food & Beverage餐饮：Food & Beverage 餐饮: CNY 0.00，label: Food & Beverage 餐饮
+21. SPA水疗：SPA水疗: CNY 0.00，label: SPA水疗
+22. Laundry洗衣：Laundry 洗衣: CNY 0.00，label: Laundry 洗衣
+23. Retail零售：Retail 零售: CNY 0.00，label: Retail 零售
+24. Meeting services会议服务：Meeting services 会议服务: CNY 0.00，label: Meeting services 会议服务
+25. Others其它：Others 其它: CNY 0.00，label: Others 其它
+26. REFERENCE备注：在05 NOV 20行的REFERENCE列是xxxxxxxxxx6387 XX/XX，label: REFERENCE 备注
+27. DATE日期（表格中的DATE）：比如03 NOV 20，04 NOV 20，05 NOV 20，label: DATE 日期
+28. DESCRIPTION项目：比如Accommodation，银联卡等，label: DESCRIPTION 项目
+29. DEBIT消费：比如650.00，650.00，label: DEBIT 消费
+30. CREDIT付款：1,300.00（在05 NOV 20行的CREDIT列），label: CREDIT 付款
+31. 地址：上方的USSS Ball FPO AP 77478等，label: 地址
+32. 标题：INVOICE，label: 标题
+33. 消费金额：DEBIT的总和1300.00，label: 消费金额
+34. 电话：底部的“电话:+ *”，label: 电话
+35. 邮政编码：邮政编码:200080，label: 邮政编码
+36. 传真：底部的“传真:+169t13238633”，label: 传真
+37. 邮箱：图中没有，所以不包含
 
-11. Departure 退房日期：“Departure 退房日期 : 05 NOV 20”在Arrival下面。bbox是该行。
+现在需要将这些转化为JSON数组，每个元素是bbox和label。由于实际图片中的坐标需要更准确，但这里只能估计，或者根据常见布局。
 
-12. Eligible Spend：“Eligible Spend:1,114.92”在凯悦天地摘要下面。bbox是该行。
+例如，先处理几个关键项：
 
-13. Fax：图中有两个Fax？上面的“Fax:+66313113293”和底部的“传真:+169t13238633”。需要看哪个是。上面的是Fax，底部的是“传真:”后面的内容。用户类别中有Fax和传真，可能视为两个？但用户给的类别里有Fax和传真，所以需要区分。上面的是Fax（英文），底部的是传真（中文）。
-
-14. Food & Beverage 餐饮：明细中的“Food & Beverage 餐饮 : CNY 0.00”。
-
-15. Laundry 洗衣：明细中的“Laundry 洗衣 : CNY 0.00”。
-
-16. Meeting services 会议服务：明细中的“Meeting services 会议服务 : CNY 0.00”。
-
-17. Membership：“Membership:536952574L”在凯悦天地摘要下面。
-
-18. Others 其它：明细中的“Others 其它 : CNY 0.00”。
-
-19. Page No. 页码：“Page No. 页码 : 1 of 2”在Room No.下面。
-
-20. Phone：上面的“Phone:+831223346691”是英文Phone，底部的“电话:+ *”是中文电话。用户类别中有Phone和电话，所以两个都要？
-
-21. Qualifying Nights：“Qualifying Nights:2”在凯悦天地摘要下面。
-
-22. REFERENCE 备注：表格中的REFERENCE列，比如05 NOV 20行的REFERENCE是xxxxxxx6387 XX/XX。列标题是REFERENCE 备注。
-
-23. Receipt No. 账单号码：“Receipt No. 账单号码 : 960395”在Conf No.上面。
-
-24. Redemption Eligible：“Redemption Eligible:0.00”在凯悦天地摘要下面。
-
-25. Retail 零售：明细中的“Retail 零售 : CNY 0.00”。
-
-26. Room No. 房号：“Room No. 房号 : 2530”在右上方。
-
-27. SPA水疗：明细中的“SPA水疗 : CNY 0.00”。
-
-28. 付款金额：可能对应CREDIT的总和，即TOTAL的CREDIT是1,300.00，或者CREDIT列的值。需要看是否有“付款金额”这个标签，图中可能没有明确的“付款金额”标签，但CREDIT是付款，所以可能CREDIT对应付款金额。
-
-29. 传真：底部的“传真:+169t13238633”。
-
-30. 地址：图上方的USS CoIe FPO AA 25118等，比如“USS CoIe FPO AA 25118”是地址，还有USS Ball FPO AP 77478等，这些是地址信息。
-
-31. 尊敬的：“尊敬的卢淑兰先生”在左侧。
-
-32. 标题：可能没有明确的标题，或者“Company 公司名称”是标题？或者顶部的公司信息？可能没有，暂时不考虑。
-
-33. 消费金额：DEBIT的总和，即03和04的DEBIT是650+650=1300，所以消费金额是1300.00，对应TOTAL的DEBIT是1,300.00。
-
-34. 电话：底部的“电话:+ *”和上面的Phone:+831223346691，用户类别中有电话，所以两个都要？
-
-35. 邮政编码：“邮政编码 : 200080”在底部。
-
-36. 邮箱：图中没有邮箱，只有网址http://stark-huffman.biz/，所以没有邮箱。
-
-现在需要为每个检测到的类别生成bbox。由于是图像，需要估计每个元素的位置。这里可能需要大致划分区域。
-
-现在开始逐个列出：
-
-1. Accommodation 住宿费用（明细项）：在“凯悦天地摘要”下方，第一行“Accommodation 住宿费用 : CNY 1,300.00”。bbox大概在中间偏下，对应行的范围。
-2. Arrival 入住日期：“Arrival 入住日期 : 03 NOV 20”在右上方，Room No.下面。坐标大概是x从对应位置，y在上方信息区。
-3. BALANCE 余额：“BALANCE 余额: CNY 0.00”在TOTAL下面，中间偏右。
-4. CREDIT 付款：表格中CREDIT列的标题是“CREDIT 付款”，列的位置在表格右侧，或者05 NOV 20行的CREDIT值1,300.00。另外TOTAL的CREDIT也是1,300.00。这里可能列标题是CREDIT，所以列的标题区域是“CREDIT 付款”。
-5. Cashier 出纳员：“Cashier 出纳员 : 292”在Date日期下面，右侧信息区。
-6. Conf No. 确认号：“Conf No. 确认号 : 41352999”在Receipt No.下面，右侧信息区。
-7. DATE 日期（表格列）：表格的DATE列标题，即“DATE 日期”在表格最左侧列的标题。
-8. DEBIT 消费（表格列）：表格的DEBIT列标题，即“DEBIT 消费”在表格中DEBIT列的标题。
-9. DESCRIPTION 项目（表格列）：表格的DESCRIPTION列标题，即“DESCRIPTION 项目”在表格中DESCRIPTION列的标题。
-10. Date 日期（单独项）：“Date 日期 : 05 NOV 20”在右侧信息区，Departure上面。
-11. Departure 退房日期：“Departure 退房日期 : 05 NOV 20”在Arrival下面，右侧信息区。
-12. Eligible Spend：“Eligible Spend:1,114.92”在凯悦天地摘要下方，Membership下面。
-13. Fax（上方）：“Fax:+66313113293”在USS信息下面，Phone下面。
-14. Food & Beverage 餐饮：明细中的“Food & Beverage 餐饮 : CNY 0.00”在Accommodation下面。
-15. Laundry 洗衣：明细中的“Laundry 洗衣 : CNY 0.00”在SPA水疗上面？看顺序：Food & Beverage, SPA水疗, Laundry？不，看原文：
-
-下面的明细是：
-
-Accommodation 住宿费用 : CNY 1,300.00
-
-Food & Beverage 餐饮 : CNY 0.00
-
-SPA水疗 : CNY 0.00
-
-Laundry 洗衣 : CNY 0.00
-
-Retail 零售 : CNY 0.00
-
-Meeting services 会议服务 : CNY 0.00
-
-Others 其它 : CNY 0.00
-
-所以Laundry在SPA下面，Retail上面。
-
-16. Meeting services 会议服务：在Retail上面。
-17. Membership：“Membership:536952574L”在凯悦天地摘要第一行。
-18. Others 其它：最后一项。
-19. Page No. 页码：“Page No. 页码 : 1 of 2”在Room No.下面，右侧信息区。
-20. Phone（上方）：“Phone:+831223346691”在USS信息下面，Fax上面。
-21. Qualifying Nights：“Qualifying Nights:2”在Membership下面。
-22. REFERENCE 备注（表格列）：表格的REFERENCE列标题，即“REFERENCE 备注”在表格中REFERENCE列的标题。
-23. Receipt No. 账单号码：“Receipt No. 账单号码 : 960395”在Conf No.上面，右侧信息区。
-24. Redemption Eligible：“Redemption Eligible:0.00”在Qualifying Nights下面。
-25. Retail 零售：在Laundry下面。
-26. Room No. 房号：“Room No. 房号 : 2530”在右上方，Arrival上面。
-27. SPA水疗：在Food & Beverage下面
+- 尊敬的卢淑兰先生：bbox大概在(40, 130, 200, 150)（假设），label: 尊敬的
+- Room No.房号：文字“Room No. 房号 : 2530”，bbox比如(580, 200, 750, 220)，label: Room No. 房号
+- Arrival入住日期：“Arrival 入住日期 : 03 NOV 20”，bbox(580, 220, 750, 240)，label: Arrival 入住日期
+- Departure退房日期：“Departure 退房日期 : 05 NOV 20”，bbox(580, 240, 750, 260)，label: Departure 退房日期
+- Date日期（上面的）：“Date 日期 : 05 NOV 20”，bbox(580, 260, 750, 280)，label: Date 日期
+- Cashier出纳员：“Cashier 出纳员 : 292”，bbox(580, 280, 750, 300)，label: Cashier 出纳员
+- Receipt No.账单号码：“Receipt No. 账单号码 : 960395”，bbox(580, 300, 750, 320)，label: Receipt No. 账单号码
+- Conf No.确认号：“Conf No. 确认号 : 41352999”，bbox(580, 320, 750, 340)，label: Conf No. 确认号
+- Membership：“Membership:536952574BL”，bbox(280, 360, 450, 380)，label: Membership
+- Qualifying Nights：“Qualifying Nights:2”，bbox(280, 380, 450, 400)，label: Qualifying Nights
+- Eligible Spend：“Eligible Spend:1,114.92”，bbox(280, 400, 450, 420)，label: Eligible Spend
+- Redemption Eligible：“Redemption Eligible:0.00”，bbox(280, 420, 450, 440)，label: Redemption Eligible
+- Page No.页码：“Page No. 页码 : 1 of 2”，bbox(580, 340, 750, 360)，label: Page No. 页码

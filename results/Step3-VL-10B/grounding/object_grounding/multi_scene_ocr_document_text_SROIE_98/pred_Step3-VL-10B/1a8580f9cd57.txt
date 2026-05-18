@@ -1,7 +1,61 @@
-[
-    {"bbox_2d": [213, 206, 786, 226], "label": "company"},
-    {"bbox_2d": [293, 215, 437, 232], "label": "date"},
-    {"bbox_2d": [293, 232, 786, 258], "label": "address"},
-    {"bbox_2d": [400, 435, 599, 452], "label": "total"},
-    {"bbox_2d": [400, 460, 599, 476], "label": "total"}
-]
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The top part says "UNIHAKKA INTERNATIONAL SDN BHD". Let's check the bounding box for that.
+- Address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor".
+- Date: The date is "02 Jun 2018 18:23".
+- Total: The net total is "RM10.35" (look at "Nett Total: RM10.35").
+
+Now, find the bounding boxes for each.
+
+Company: The company name is at the top, so the text "UNIHAKKA INTERNATIONAL SDN BHD" is the company. Let's get its coordinates.
+
+Address: The address block includes the lines from "12, Jalan Tampoi..." to "Johor".
+
+Date: The date is "02 Jun 2018 18:23" which is below the company name.
+
+Total: The net total is in the section where it says "Nett Total: RM10.35". Also, check the total amount line: "Total Amount: RM10.36" but the net total is the final amount after rounding. The payment mode shows CASH RM10.35, which matches the net total.
+
+Let's map each:
+
+1. Company: "UNIHAKKA INTERNATIONAL SDN BHD" – find its bounding box.
+2. Address: The address lines.
+3. Date: "02 Jun 2018 18:23"
+4. Total: "RM10.35" (Nett Total)
+
+Now, check the image for each element's position.
+
+For company: The text is centered at the top. Let's see the coordinates. The company name is in the upper part.
+
+Address: Below the company, the address is listed.
+
+Date: Next line after company, "02 Jun 2018 18:23".
+
+Total: Look for the net total. In the invoice, after the items, it says "Nett Total: RM10.35".
+
+Let's define each bounding box.
+
+First, company:
+
+The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's check the coordinates. The text is in the upper section.
+
+Address: The address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru,Johor". Let's capture that.
+
+Date: "02 Jun 2018 18:23" – that's the date.
+
+Total: The net total is "RM10.35". Let's check where that is. In the section:
+
+Total Amount: RM10.36
+
+GST @0%: RM0.00
+
+Rounding: -RM0.01
+
+Nett Total: RM10.35
+
+So the nett total is the total amount to pay, which is the final total.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [229, 207, 344, 224], "label": "company"}, {"bbox_2d": [234, 234, 757, 272], "label": "address"}, {"bbox_2d": [305, 208, 422, 224], "label": "date"}, {"bbox_2d": [434, 300, 547, 314], "label": "total"}]

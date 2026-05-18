@@ -1,1 +1,65 @@
-[{"bbox_2d": [226, 322, 354, 542], "label": "DATE"}, {"bbox_2d": [334, 325, 540, 540], "label": "CITY"}, {"bbox_2d": [540, 325, 710, 540], "label": "STATE"}, {"bbox_2d": [710, 325, 842, 540], "label": "ZIP"}]
+用户现在需要从表单中提取CITY、DATE、STATE、ZIP的信息。首先看每个字段的位置。
+
+先看DATE：对应的框里是09-17-89，所以DATE的bbox是那个矩形框。然后CITY是Vanderbilt, Texas？不，CITY是Vanderbilt，STATE是Texas，ZIP是77991。看表单里的布局：CITY、STATE、ZIP在同一个大框里？看图片中的CITY标签下的框，里面写的是Vanderbilt, Texas 77991？不对，看结构：CITY的输入框，然后STATE，然后ZIP。看图片里的CITY字段的框是包含Vanderbilt, Texas，然后STATE是Texas？不，看原表单的标签：CITY、STATE、ZIP是三个列。看图片中的CITY对应的框是“Vanderbilt, Texas”？不，看图片里的手写内容：在CITY的框里是“Vanderbilt, Texas”？然后STATE是Texas？不对，看原表单的标签，CITY右边是STATE，然后是ZIP。看手写的内容是“Vanderbilt, Texas 77991”，所以CITY是Vanderbilt，STATE是Texas，ZIP是77991。现在要确定每个的bbox。
+
+首先DATE的框：是中间的矩形，里面09-17-89。所以DATE的bbox是[227, 325, 352, 537]左右？看图片中的DATE标签下的框，坐标范围。然后CITY的框是右边的大框，包含Vanderbilt, Texas，然后STATE是Texas？不，看原表单的标签，CITY、STATE、ZIP是三个部分，所以CITY的输入框是“Vanderbilt”，STATE是“Texas”，ZIP是“77991”？但手写的是“Vanderbilt, Texas 77991”在同一个框里？看图片中的CITY、STATE、ZIP是在一个长框里吗？看图片中的布局：CITY的标签下面是框，然后STATE在CITY框的右边？不，看原表单的结构：
+
+表单的字段是NAME（被黑色块覆盖），然后是DATE（一个框），然后是CITY、STATE、ZIP（这三个在一个长框里？因为图片中CITY、STATE、ZIP的标签是并排的，然后下面是一个大的输入框，里面包含了CITY、STATE、ZIP的内容。所以需要拆分这个大框里的内容到CITY、STATE、ZIP。
+
+现在看手写的内容是“Vanderbilt, Texas 77991”。所以CITY是Vanderbilt，STATE是Texas，ZIP是77991。现在要确定每个的bbox。整个CITY-STATE-ZIP的框是那个大的矩形，从CITY标签下的框到ZIP的框。所以：
+
+DATE的框：[229, 322, 354, 537]（里面是09-17-89）
+
+CITY的框：在大框内的CITY部分，即“Vanderbilt,”，但可能整个大框是CITY、STATE、ZIP的组合，所以需要看每个标签对应的位置。或者，可能CITY的输入区域是大框的左半部分，STATE是中间，ZIP是右半。但根据图片中的手写，是“Vanderbilt, Texas 77991”写在同一个框里，所以需要把这三个信息对应到各自的标签。
+
+现在，先处理每个标签：
+
+- DATE：标签是DATE，对应的输入框是中间的小框，内容09-17-89。所以bbox是DATE标签下方的矩形，即[227, 320, 355, 540]左右。
+
+- CITY：标签是CITY，对应的输入内容是Vanderbilt（因为后面是逗号，然后是Texas，所以CITY是Vanderbilt）。CITY标签的位置是上方，对应的输入区域是大框的起始部分。大框的bbox是[557, 320, 845, 550]左右？然后CITY在大框内的部分，所以CITY的label对应的bbox是大框中CITY标签下的区域，即整个大框属于CITY、STATE、ZIP的组合，但需要分别提取。
+
+或者，可能更简单的是，看每个字段的填写内容：
+
+DATE: 09-17-89 → 对应的框是DATE下面的矩形，所以bbox是[229, 325, 352, 535]
+
+CITY: Vanderbilt → 在CITY标签下的内容，即大框内的“Vanderbilt,”
+
+STATE: Texas → 大框内的“Texas”
+
+ZIP: 77991 → 大框内的“77991”
+
+现在需要确定每个的bbox。大框的范围是CITY、STATE、ZIP的输入框，即从CITY标签的下方到ZIP标签的下方，所以大框的坐标是x从555到845左右，y是320到550左右。然后在这个大框内，CITY的内容是“Vanderbilt,”，STATE是“Texas”，ZIP是“77991”。
+
+现在，把每个类别对应：
+
+1. DATE: 内容09-17-89，bbox是DATE的输入框，即[227, 322, 354, 537]
+
+2. CITY: 内容Vanderbilt，bbox是CITY标签下的部分，即大框内的左侧，大概x从557到680左右（因为Vanderbilt, Texas的长度），所以CITY的bbox是[557, 325, 685, 545]（包含Vanderbilt,）
+
+3. STATE: 内容Texas，bbox是大框内中间部分，即从685到760左右，所以STATE的bbox是[685, 325, 765, 545]（包含Texas）
+
+4. ZIP: 内容77991，bbox是大框内右侧，即从765到845左右，所以ZIP的bbox是[765, 325, 845, 545]（包含77991）
+
+现在验证图片中的手写内容：Vanderbilt, Texas 77991，确实是CITY是Vanderbilt，STATE是Texas，ZIP是77991。DATE是09-17-89。
+
+现在需要把每个的bbox和label列出来。
+
+首先看DATE的框：在图片中，DATE标签右边的矩形框，里面是09-17-89。这个框的坐标可以看作是x从225到355，y从320到540左右。
+
+然后CITY、STATE、ZIP的大框是右边的那个长矩形，里面包含了Vanderbilt, Texas 77991。这个大框的x从555到845，y从320到550左右。然后在这个大框内，CITY对应的是“Vanderbilt,”，STATE是“Texas”，ZIP是“77991”。
+
+现在，每个部分的bbox：
+
+- DATE: [227, 322, 354, 537], label: DATE
+
+- CITY: [557, 325, 682, 545], label: CITY （因为Vanderbilt, 这部分在CITY标签下）
+
+- STATE: [685, 325, 762, 545], label: STATE （Texas部分）
+
+- ZIP: [765, 325, 843, 545], label: ZIP （77991部分）
+
+现在检查图片中的手写，Vanderbilt, Texas 77991是连在一起的，所以CITY的结束位置是逗号后，然后是Texas，然后是ZIP。所以CITY的bbox是包含Vanderbilt,，STATE是Texas，ZIP是77991。
+
+现在确认每个的label和bbox。
+</think>
+[{"bbox_2d": [227, 322, 354, 537], "label": "DATE"}, {"bbox_2d": [557, 325, 682, 545], "label": "CITY"}, {"bbox_2d": [685, 325, 762, 545], "label": "STATE"}, {"bbox_2d": [765, 325, 843, 545], "label": "ZIP"}]

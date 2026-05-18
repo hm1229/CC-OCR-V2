@@ -1,0 +1,226 @@
+用户现在需要从销售合同里提取指定的各个对象，每个对象要找到对应的bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name，图最上面是“通际名联传媒有限公司 Interpretation”，所以Company Name是这个公司名，对应bbox是顶部的公司名称区域。
+
+然后ADD，图里有ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579，所以ADD的bbox是这个地址行。
+
+Address可能和ADD是不是重复？看题目里的Address，可能图中的ADD就是Address？不过看题目里的类别有ADD和Address，可能需要检查。不过图中ADD是明确的，Address可能也是同样的？或者可能图中的地址是ADD，而Address可能没有单独？不过先看每个类别。
+
+Tel：图里有Tel: 3051-08740750，所以Tel的bbox是这个电话行。
+
+Fax：Fax: 7840-59800053，对应Fax的bbox。
+
+Messr.是Interpretation，不过可能不是需要的。然后看*Time of Shipment，图中有*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments. 所以这个是*Time of Shipment的区域。
+
+*Port of Loading: SHANGHAI, CHINA，所以*Port of Loading的bbox是这个部分。
+
+*Terms of Payment: 下面有两个选项，By 100% Confirmed... 和 BY T/T before shipment，所以*Terms of Payment的区域。
+
+*Insurance: 下面有两个选项，Covering all risks... 和 To be effected by the buyer，所以*Insurance的区域。
+
+No: 图右上角No: 21KB9103238, 2，所以No的bbox是这个编号。
+
+Date: Sep. 03, 2021，对应Date的bbox。
+
+Port of Destination: USA，所以Port of Destination的bbox。
+
+Name Of Commodity And specification Packing And Shipping Mark：图中有一个表格，第一行是这个标题，下面对应Wooden deco等，所以这个标题的bbox是表格的表头部分。
+
+Quantity：表格中的Quantity列，对应8000件的位置。
+
+Unit Price：表格中的Unit Price列，对应1.09的位置。
+
+Amount(USD)：表格中的Amount(USD)列，对应8,720.00的位置。
+
+Total Amount USD：Total Amount: 8,720.00 USD，所以这个是Total Amount USD的bbox。
+
+Remarks：下面的Remarks: 后面的说明，所以Remarks的区域。
+
+TEL：Messr.下面的TEL: 617-334-4225，所以TEL的bbox是这个电话。
+
+Tel：前面的Tel: 3051-08740750，是另一个Tel？可能题目里的Tel和TEL是不同的？看题目里的类别有Tel和TEL，所以需要区分。图中上面的Tel是3051-...，下面Messr.的TEL是617-...，所以两个Tel？但题目里的类别是Tel和TEL，可能需要分别处理。不过看题目中的类别列表，有Tel和TEL，所以要找这两个。
+
+Title：图中的“SALLES CONTRACT”是标题，所以Title的bbox是这个标题。
+
+现在逐个整理：
+
+1. Company Name：通际名联传媒有限公司 Interpretation，bbox是顶部的大标题，比如[133, 12, 866, 60]左右（因为图中最上面是公司名，然后是Interpretation，然后是SALLES CONTRACT）。
+
+2. ADD：ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579，bbox是[40, 152, 447, 168]左右。
+
+3. Address：可能和ADD重复？但题目里有Address，可能图中没有单独的Address，或者ADD就是Address？可能题目中的Address对应ADD？或者可能图中的地址是ADD，而Address没有其他，所以可能Address的bbox和ADD一样？不过先看题目中的类别，ADD是单独的，Address也是，可能图中没有Address，或者可能我漏看了。再检查图中的内容，图中ADD是明确的，Address可能没有，或者可能Address是公司地址？可能这里可能Address和ADD是同一个，或者可能题目中的Address是另一个？暂时先处理明确的。
+
+4. Tel：Tel: 3051-08740750，bbox是[40, 168, 162, 184]。
+
+5. Fax：Fax: 7840-59800053，bbox是[447, 168, 597, 184]。
+
+6. *Time of Shipment：*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments.，bbox是[28, 372, 597, 390]。
+
+7. *Port of Loading：*Port of Loading: SHANGHAI, CHINA，bbox是[28, 392, 447, 410]。
+
+8. *Terms of Payment：*Terms of Payment: 下面的两个选项，bbox是[28, 412, 597, 468]（因为包含两个选项）。
+
+9. *Insurance：*Insurance: 下面的两个选项，bbox是[28, 468, 597, 496]。
+
+10. No：No: 21KB9103238, 2，bbox是[750, 152, 892, 168]。
+
+11. Date：Date: Sep. 03, 2021，bbox是[750, 184, 892, 198]。
+
+12. Port of Destination：Port of Destination: USA，bbox是[447, 392, 597, 410]。
+
+13. Name Of Commodity And specification Packing And Shipping Mark：表格的表头，即“Name Of Commodity And specification Packing And Shipping Mark”这一行，bbox是[28, 228, 447, 250]（因为表格的第一行是这个标题）。
+
+14. Quantity：表格中的Quantity列，对应“8000 件”的位置，bbox是[300, 250, 447, 270]（看表格结构，Quantity列的单元格）。
+
+15. Unit Price：表格中的Unit Price列，对应“1.09”的位置，bbox是[450, 250, 597, 270]。
+
+16. Amount(USD)：表格中的Amount(USD)列，对应“8,720.00”的位置，bbox是[600, 250, 747, 270]。
+
+17. Total Amount USD：Total Amount: 8,720.00 USD，bbox是[500, 300, 747, 320]（看Total Amount那一行）。
+
+18. Remarks：Remarks: 后面的所有说明，bbox是[28, 500, 597, 630]（因为Remarks下面有多个条款）。
+
+19. TEL：Messr.下面的TEL: 617-334-4225，bbox是[150, 220, 310, 236]（看Messr.的地址下面的TEL）。
+
+20. Title：SALLES CONTRACT（注意是SALLES CONTRACT，可能拼写错误，但图中是SALLES CONTRACT），bbox是[447, 100, 747, 128]（因为标题是SALLES CONTRACT在中间上方）。
+
+现在需要确认每个类别的存在和对应的bbox。可能有些类别在图中没有，比如Address，可能图中没有单独的Address，或者Address就是ADD？但题目里有Address，可能需要检查。另外，Company Name是“通际名联传媒有限公司 Interpretation”，所以Company Name的bbox是顶部的公司名称和Interpretation。
+
+现在整理所有需要的类别，确保每个都覆盖：
+
+- *Insurance：存在，对应保险条款部分。
+- *Port of Loading：存在，上海。
+- *Time of Shipment：存在，装运时间。
+- ADD：存在，地址行。
+- Address：可能图中没有单独的Address，或者可能ADD就是Address？但题目里有Address，可能需要再检查。图中是否有Address？可能没有，或者可能Address是公司地址，即ADD的内容，所以可能Address的bbox和ADD一样？但题目里ADD和Address是两个类别，可能图中没有Address，或者可能我漏看了。暂时先按图中的内容，可能Address不存在，或者可能题目中的Address是另一个，比如公司地址？可能这里可能Address是图中的ADD，所以可能Address的bbox和ADD相同？但需要看题目要求，可能用户希望提取所有存在的，所以如果图中没有Address，可能不包含。但再看题目中的类别列表，有Address，所以必须找到。可能图中的“ADD: ...”就是Address，所以Address的label对应这个，bbox和ADD一样？或者可能图中没有Address，只有ADD，所以可能Address不存在？这时候可能需要再检查。
+
+另外，Name Of Commodity And specification Packing And Shipping Mark：图中表格的第一行是这个标题，所以存在。
+
+No：右上角的编号，存在。
+
+Port of Destination：存在，USA。
+
+Quantity：存在，8000件。
+
+Remarks：存在，下面的说明。
+
+TEL：Messr.下面的TEL，存在。
+
+Tel：上面的Tel，存在。
+
+Terms of Payment：存在。
+
+Total Amount USD：存在。
+
+Unit Price：存在。
+
+Amount(USD)：存在。
+
+Title：SALLES CONTRACT，存在。
+
+现在开始逐个列出：
+
+1. Company Name: bbox是顶部的“通际名联传媒有限公司 Interpretation”，即[117, 10, 882, 58]（因为图中最上面是公司名，然后是Interpretation，然后是SALLES CONTRACT）。
+
+2. ADD: [42, 152, 446, 168]（ADD: 396 Diana Stream Apt. 887 South Christophherhaven, UT 23579）
+
+3. Address: 可能图中没有单独的Address，或者可能Address是公司地址，即ADD的内容，所以可能Address的bbox和ADD相同？但题目里有Address，可能需要确认。或者可能图中没有Address，所以可能不包含？但题目要求检测所有匹配的，所以如果图中没有Address，就不列。但再看题目中的类别，可能Address是另一个，比如公司地址，可能图中没有，所以可能Address不存在。但可能我错了，再看图中的内容，图中只有ADD，没有Address，所以可能Address不包含。
+
+4. Tel: [42, 184, 160, 198]（Tel: 3051-08740750）
+
+5. Fax: [448, 184, 596, 198]（Fax: 7840-59800053）
+
+6. *Time of Shipment: [28, 370, 595, 388]（*Time of Shipment: □Within days after receipt of L/C allowing transhipment and partial shipments.）
+
+7. *Port of Loading: [28, 390, 446, 408]（*Port of Loading: SHANGHAI, CHINA）
+
+8. *Terms of Payment: [28, 410, 595, 466]（*Terms of Payment: 包含两个选项：By 100% Confirmed... 和 BY T/T before shipment）
+
+9. *Insurance: [28, 468, 595, 494]（*Insurance: 包含两个选项：Covering all risks... 和 To be effected by the buyer）
+
+10. No: [752, 152, 890, 168]（No: 21KB9103238, 2）
+
+11. Date: [752, 184, 890, 198]（Date: Sep. 03, 2021）
+
+12. Port of Destination: [448, 390, 596, 408]（Port of Destination: USA）
+
+13. Name Of Commodity And specification Packing And Shipping Mark: [28, 226, 446, 244]（表格的表头行，即“Name Of Commodity And specification Packing And Shipping Mark”）
+
+14. Quantity: [302, 248, 444, 266]（表格中Quantity列，对应“8000 件”）
+
+15. Unit Price: [452, 248, 594, 266]（表格中Unit Price列，对应“1.09”）
+
+16. Amount(USD): [602, 248, 744, 266]（表格中Amount(USD)列，对应“8,720.00”）
+
+17. Total Amount USD: [502, 300, 744, 318]（Total Amount: 8,720.00 USD）
+
+18. Remarks: [28, 500, 595, 628]（Remarks: 后面的所有条款说明）
+
+19. TEL: [152, 222, 310, 238]（Messr.下面的TEL: 617-334-4225）
+
+20. Tel: 已经列过，是上面的Tel，即[42, 184, 160, 198]
+
+21. Title: [448, 100, 746, 126]（SALLES CONTRACT）
+
+现在检查是否有遗漏的类别：
+
+- *Insurance ✔️
+- *Port of Loading ✔️
+- *Time of Shipment ✔️
+- ADD ✔️
+- Address：图中没有单独的Address，可能不包含，或者可能Address是公司地址即ADD，但题目里有Address，可能需要再检查。图中是否有Address？可能没有，所以可能不包含。
+- Amount(USD) ✔️
+- Company Name ✔️
+- Date ✔️
+- Fax ✔️
+- Name Of Commodity And specification Packing And Shipping Mark ✔️
+- No ✔️
+- Port of Destination ✔️
+- Quantity ✔️
+- Remarks ✔️
+- TEL ✔️
+- Tel ✔️
+- Terms of Payment ✔️
+- Title ✔️
+- Total Amount USD ✔️
+- Unit Price ✔️
+
+现在确认每个类别的存在，然后生成JSON数组。需要注意每个对象的bbox要准确，可能需要根据图中的位置调整坐标。由于是示意图，坐标是相对的，尽量准确。
+
+现在开始构建每个条目：
+
+1. Company Name: bbox是公司名称和Interpretation，即顶部的大标题，范围大约是x从110到880，y从10到60。所以bbox_2d: [115, 8, 885, 56]，label: "Company Name"
+
+2. ADD: bbox是ADD行，x从40到445，y从150到168。label: "ADD"
+
+3. Tel: 第一个Tel，x从40到160，y从182到198。label: "Tel"
+
+4. Fax: x从446到596，y从182到198。label: "Fax"
+
+5. *Time of Shipment: x从26到595，y从368到388。label: "*Time of Shipment"
+
+6. *Port of Loading: x从26到445，y从388到408。label: "*Port of Loading"
+
+7. *Terms of Payment: x从26到595，y从410到466。label: "*Terms of Payment"
+
+8. *Insurance: x从26到595，y从466到494。label: "*Insurance"
+
+9. No: x从750到890，y从150到168。label: "No"
+
+10. Date: x从750到890，y从182到198。label: "Date"
+
+11. Port of Destination: x从446到596，y从388到408。label: "Port of Destination"
+
+12. Name Of Commodity And specification Packing And Shipping Mark: x从26到445，y从224到244。label: "Name Of Commodity And specification Packing And Shipping Mark"
+
+13. Quantity: x从300到444，y从246到266。label: "Quantity"
+
+14. Unit Price: x从450到594，y从246到266。label: "Unit Price"
+
+15. Amount(USD): x从600到744，y从246到266。label: "Amount(USD)"
+
+16. Total Amount USD: x从500到744，y从300到318。label: "Total Amount USD"
+
+17. Remarks: x从26到595，y从500到628。label: "Remarks"
+
+1

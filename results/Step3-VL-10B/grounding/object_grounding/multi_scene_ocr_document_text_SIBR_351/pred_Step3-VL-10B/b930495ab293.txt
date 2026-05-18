@@ -1,268 +1,162 @@
-用户现在需要从图片中提取指定类别的信息，每个类别对应一个bbox和label。首先得逐个识别每个字段。
+用户现在需要从图片中提取各个字段的信息，先逐个看每个类别。首先看ARRIVAL/入住日期，对应的是09/26/20。然后CASHIER/收银员是JUDYL, E。CONF.NO/确认号是13773663。DEPARTURE/离店日期是09/30/20。E-MAIL/邮件地址是karen76wbarber.com。GUEST 客人是Luis Young。Marriot Bonvoy#/万豪旅享家号码是538343277。PAGE/帐单页数是2 of 2。RATE/房价是514.58。ROOM/房号是4088。公司名是Tai Chi Technology Hotel。地址的话，客人公司的地址是927 Marcus Crossroad Lake Brentland, KS 88859，还有酒店的地址是广西壮族自治区桂芳县永川通辽路S座 930036？不对，看图片里的地址，客人公司地址是Tai Chi Technology Hotel下面的927 Marcus Crossroad...，而酒店的地址是太极科技酒店的广西...。然后邮政编码是310030（酒店的邮政编码）。
 
-首先看GUEST 客人：对应Luis Young，位置在GUEST/COMPANY下面。然后公司名是Tai Chi Technology Hotel，地址是927 Marcus Crossroad Lake Brentland, KS 88859。然后地址还有上面的广西部分，邮政编码是310030。然后ROOM|房号是4088，CONF.NO|确认号是13773663，DEPARTURE|离店日期是09/30/20，ARRIVAL|入住日期是09/26/20，CASHIER|收银员是JUDYL, E，PAGE|帐单页数是2 of 2，RATE|房价是514.58，E-MAIL|邮件地址是karen76wbarber.com，Marriot Bonvoy#|万豪旅享家号码是538343277。另外还有地址（广西的地址：广西壮族自治区桂芳县永川通辽路S座 930036），邮政编码是310030（客人公司的邮政？不，上面的邮政编码是310030，对应广西的地址。然后公司名是Tai Chi Technology Hotel，地址是927 Marcus Crossroad...，还有上面的太极科技酒店是广西的，公司名可能对应GUEST/COMPANY？不，GUEST是Luis Young，公司名是Tai Chi Technology Hotel。现在要逐个列出来。
+现在要确定每个类别的bbox。先看图片中的文字位置：
 
-现在开始整理每个类别：
+首先，GUEST/COMPANY下的Luis Young是客人，对应GUEST 客人。公司名是Tai Chi Technology Hotel。地址是客人公司的地址：927 Marcus Crossroad Lake Brentland, KS 88859。邮政编码是酒店的邮政编码310030（看图片里“邮政编码：310030”）。
 
-1. ARRIVAL|入住日期：值是09/26/20，看图片中的ARRIVAL|入住日期对应的位置，bbox需要看该行的位置。在中间偏右的列，ARRIVAL|入住日期的标签，对应值的位置。需要确定每个标签的区域。
+然后看右边的列：
 
-先看图片中的结构，右边的列有：
+ROOM/房号：4088，对应标签ROOM/房号。
 
-ROOM|房号：4088 → label是ROOM|房号，bbox是对应这个标签和值的区域。
+CONF.NO/确认号：13773663，标签CONF.NO/确认号。
 
-CONF.NO|确认号：13773663 → label是CONF.NO|确认号
+RATE/房价：514.58，标签RATE/房价。
 
-RATE|房价：514.58 → label是RATE|房价
+PAGE/帐单页数：2 of 2，标签PAGE/帐单页数。
 
-PAGE|帐单页数：2 of 2 → label是PAGE|帐单页数
+CASHIER/收银员：JUDYL, E，标签CASHIER/收银员。
 
-CASHIER|收银员：JUDYL, E → label是CASHIER|收银员
+ARRIVAL/入住日期：09/26/20，标签ARRIVAL/入住日期。
 
-ARRIVAL|入住日期：09/26/20 → label是ARRIVAL|入住日期
+DEPARTURE/离店日期：09/30/20，标签DEPARTURE/离店日期。
 
-DEPARTURE|离店日期：09/30/20 → label是DEPARTURE|离店日期
+E-MAIL/邮件地址：karen76wbarber.com，标签E-MAIL/邮件地址。
 
-E-MAIL|邮件地址：karen76wbarber.com → label是E-MAIL|邮件地址
+Marriot Bonvoy#/万豪旅享家号码：538343277，标签Marriot Bonvoy#/万豪旅享家号码。
 
-Marriot Bonvoy#|万豪旅享家号码：538343277 → label是Marriot Bonvoy#|万豪旅享家号码
-
-GUEST 客人：Luis Young → label是GUEST 客人
-
-公司名：Tai Chi Technology Hotel → label是公司名
-
-地址：这里有两个地址？上面的广西地址是“广西壮族自治区桂芳县永川通辽路S座 930036”，还有客人公司的地址“927 Marcus Crossroad Lake Brentland, KS 88859”。所以地址类别可能有两个？但用户给的类别是“地址, 地址]”？看用户给的类别列表里的“地址, 地址]”可能是输入错误，应该是“地址”。另外邮政编码是310030（广西的邮政编码）和可能客人公司的邮政编码？但客人公司的地址里没有邮政编码，广西的有邮政编码310030。所以邮政编码是310030，对应上面的“邮政编码”类别。
+另外，酒店的地址是“广西壮族自治区桂芳县永川通辽路S座 930036”，但可能公司名是Tai Chi Technology Hotel，地址是客人公司的地址，而酒店的地址是太极科技酒店的地址。需要区分。
 
 现在逐个处理：
 
-- GUEST 客人：Luis Young，位置在GUEST/COMPANY下面，对应文本“Luis Young”，bbox需要看该区域。在图片中，GUEST/COMPANY下面是Luis Young，所以bbox是包含Luis Young的区域。
+1. ARRIVAL/入住日期：看图片中“ARRIVAL|入住日期”对应09/26/20。位置在中间偏右列，ARRIVAL那一行。bbox需要看该行的范围。
 
-- 公司名：Tai Chi Technology Hotel，是Luis Young下面的公司信息，所以公司名是这个。
+2. CASHIER/收银员：“CASHIER|收银员”对应JUDYL, E。位置在CASHIER那一行。
 
-- 地址（广西的）：广西壮族自治区桂芳县永川通辽路S座 930036，还有邮政编码310030（对应这个地址的邮政编码）。
+3. CONF.NO/确认号：“CONF.NO|确认号”对应13773663。
 
-- 地址（客人公司的）：927 Marcus Crossroad Lake Brentland, KS 88859，这个也是地址。
+4. DEPARTURE/离店日期：“DEPARTURE|离店日期”对应09/30/20。
 
-现在需要明确每个类别对应的元素：
+5. E-MAIL/邮件地址：“E-MAIL|邮件地址”对应karen76wbarber.com。
 
-类别列表中的“地址”可能有两个实例？但用户给的类别是“地址, 地址]”可能是重复，或者看用户提供的类别：“公司名, 地址, 地址], 邮政编码”——可能输入时的错误，比如“地址”出现两次？或者可能是“地址”和另一个地址？不管怎样，按图片中的内容提取。
+6. GUEST 客人：“GUEST/COMPANY”下的Luis Young，对应GUEST 客人。
 
-现在开始列出每个需要的类别：
+7. Marriot Bonvoy#/万豪旅享家号码：“Marriott Bonvoy#|万豪旅享家号码”对应538343277。
 
-1. ARRIVAL|入住日期：找到ARRIVAL|入住日期的标签，对应值09/26/20。在图片中，ARRIVAL|入住日期在中间偏右的列，标签是ARRIVAL|入住日期，值是09/26/20。所以bbox是该标签和值的区域。
+8. PAGE/帐单页数：“PAGE|帐单页数”对应2 of 2。
 
-2. CASHIER|收银员：标签是CASHIER|收银员，值是JUDYL, E。
+9. RATE/房价：“RATE|房价”对应514.58。
 
-3. CONF.NO|确认号：标签是CONF.NO|确认号，值是13773663。
+10. ROOM/房号：“ROOM|房号”对应4088。
 
-4. DEPARTURE|离店日期：标签是DEPARTURE|离店日期，值是09/30/20。
+11. 公司名：“GUEST/COMPANY”下的公司是Tai Chi Technology Hotel，所以公司名是这个。
 
-5. E-MAIL|邮件地址：标签是E-MAIL|邮件地址，值是karen76wbarber.com。
+12. 地址：客人公司的地址是“927 Marcus Crossroad Lake Brentland, KS 88859”，而酒店的地址是“广西壮族自治区桂芳县永川通辽路S座 930036”。需要看哪个是公司地址？公司名是Tai Chi Technology Hotel，所以地址是客人公司的地址，即927 Marcus Crossroad...。另外酒店的地址是太极科技酒店的地址，可能属于酒店的地址，但用户需要的是“地址”类别，可能需要看哪个。或者可能公司名对应的地址是Tai Chi Technology Hotel的地址，即927 Marcus Crossroad...。而酒店的地址是另一个地址，但可能“地址”指的是客人公司的地址？需要看图片中的结构。图片中GUEST/COMPANY下面是Luis Young，然后是Tai Chi Technology Hotel，然后是地址927 Marcus Crossroad...，所以公司名是Tai Chi Technology Hotel，地址是927 Marcus Crossroad Lake Brentland, KS 88859。另外酒店的地址是“太极科技酒店 广西壮族自治区桂芳县永川通辽路S座 930036”，邮政编码是310030（“邮政编码：310030”）。
 
-6. GUEST 客人：标签是GUEST/COMPANY（客人/公司），值是Luis Young。
+现在整理每个条目的bbox和label：
 
-7. Marriot Bonvoy#|万豪旅享家号码：标签是Marriott Bonvoy#|万豪旅享家号码，值是538343277。
+- GUEST 客人：Luis Young，位置在GUEST/COMPANY下面，文字是Luis Young。bbox需要看该文字的位置，大概在左侧中间。
+- 公司名：Tai Chi Technology Hotel，位于Luis Young下面。
+- 地址：927 Marcus Crossroad Lake Brentland, KS 88859，位于公司名下面。
+- 邮政编码：310030，位于酒店名称下面（“邮政编码：310030”）。
+- ROOM/房号：4088，位于中间列ROOM那一行。
+- CONF.NO/确认号：13773663，CONF.NO那一行。
+- RATE/房价：514.58，RATE那一行。
+- PAGE/帐单页数：2 of 2，PAGE那一行。
+- CASHIER/收银员：JUDYL, E，CASHIER那一行。
+- ARRIVAL/入住日期：09/26/20，ARRIVAL那一行。
+- DEPARTURE/离店日期：09/30/20，DEPARTURE那一行。
+- E-MAIL/邮件地址：karen76wbarber.com，E-MAIL那一行。
+- Marriot Bonvoy#/万豪旅享家号码：538343277，Marriott Bonvoy#那一行。
 
-8. PAGE|帐单页数：标签是PAGE|帐单页数，值是2 of 2。
+现在需要确定每个的bbox。因为图片是单张，需要估计每个文字的位置。例如：
 
-9. RATE|房价：标签是RATE|房价，值是514.58。
+酒店信息部分：
+“太极科技酒店”是酒店名称，下面“广西壮族自治区桂芳县永川通辽路S座 930036”是酒店地址？不，邮政编码是310030，所以“邮政编码：310030”是酒店的邮政编码。而客人公司的地址是Tai Chi Technology Hotel的地址：927 Marcus Crossroad Lake Brentland, KS 88859。
 
-10. ROOM|房号：标签是ROOM|房号，值是4088。
+现在逐个列出：
 
-11. 公司名：值是Tai Chi Technology Hotel（对应GUEST/COMPANY下面的公司）。
+1. GUEST 客人：Luis Young → 文字位置在左侧，GUEST/COMPANY下方。bbox大概对应该行的范围。
+2. 公司名：Tai Chi Technology Hotel → 位于Luis Young下方。
+3. 地址：927 Marcus Crossroad Lake Brentland, KS 88859 → 公司名下方。
+4. 邮政编码：310030 → 酒店名称（太极科技酒店）下方的“邮政编码：310030”。
+5. ROOM/房号：4088 → 中间列ROOM|房号对应4088。
+6. CONF.NO/确认号：13773663 → CONF.NO|确认号对应13773663。
+7. RATE/房价：514.58 → RATE|房价对应514.58。
+8. PAGE/帐单页数：2 of 2 → PAGE|帐单页数对应2 of 2。
+9. CASHIER/收银员：JUDYL, E → CASHIER|收银员对应JUDYL, E。
+10. ARRIVAL/入住日期：09/26/20 → ARRIVAL|入住日期对应09/26/20。
+11. DEPARTURE/离店日期：09/30/20 → DEPARTURE|离店日期对应09/30/20。
+12. E-MAIL/邮件地址：karen76wbarber.com → E-MAIL|邮件地址对应karen76wbarber.com。
+13. Marriot Bonvoy#/万豪旅享家号码：538343277 → Marriott Bonvoy#|万豪旅享家号码对应538343277。
 
-12. 地址：这里有两个地址？广西的地址“广西壮族自治区桂芳县永川通辽路S座 930036”和客人公司的地址“927 Marcus Crossroad Lake Brentland, KS 88859”。需要看类别中的“地址”是否包含这两个。用户给的类别是“地址, 地址]”可能是输入错误，比如“地址”出现两次，或者可能是“地址”和另一个地址？但按图片中的内容，这两个都是地址，所以需要都提取吗？看用户提供的类别列表中的“地址, 地址]”可能是笔误，比如“地址”和“地址”重复，或者可能是“地址”和“公司地址”？但用户给的类别是“公司名, 地址, 地址], 邮政编码”——可能“地址”是两个不同的地址，比如酒店地址（广西的）和客人公司的地址。所以需要提取这两个地址。
+现在需要为每个生成bbox。因为图片中的文字是印刷体，每个条目对应一行。例如，酒店的邮政编码“邮政编码：310030”在图片的左上方，所以其bbox是包含该文字的区域。
 
-13. 邮政编码：广西地址的邮政编码是310030，所以提取这个。
+现在开始构建每个条目的JSON：
 
-现在需要确定每个元素的bbox。因为是图片中的文本，需要估计每个文本块的位置。
+首先，GUEST 客人：Luis Young。看图片中“GUEST/COMPANY”下面是“Luis Young”，所以bbox是该行的位置。假设图片中该行的坐标，比如x范围是左侧，y在中间偏左。
 
-首先看图片中的内容：
+然后公司名：Tai Chi Technology Hotel，位于Luis Young下面，所以bbox是该行。
 
-左上角是“太极科技酒店 广西壮族自治区桂芳县永川通辽路S座 930036 邮政编码：310030”——这部分是酒店的地址和邮政编码。
+地址：927 Marcus Crossroad Lake Brentland, KS 88859，位于公司名下面。
 
-然后是GUEST/COMPANY部分：
+邮政编码：310030，位于“广西壮族自治区桂芳县永川通辽路S座 930036”下面？不，看图片中的文字：“太极科技酒店 广西壮族自治区桂芳县永川通辽路S座 930036 邮政编码：310030”？不，原图片中“太极科技酒店”下面是“广西壮族自治区桂芳县永川通辽路S座 930036”，然后“邮政编码：310030”。所以邮政编码是310030，对应“邮政编码：310030”这一行。
 
-GUEST/COMPANY
+现在，逐个处理：
 
-Luis Young
+1. GUEST 客人：Luis Young → 标签是GUEST 客人，bbox是包含“Luis Young”的区域。
+2. 公司名：Tai Chi Technology Hotel → 标签是公司名，bbox是包含该酒店名称的区域。
+3. 地址：927 Marcus Crossroad Lake Brentland, KS 88859 → 标签是地址，bbox是包含该地址的区域。
+4. 邮政编码：310030 → 标签是邮政编码，bbox是包含“邮政编码：310030”的区域。
+5. ROOM/房号：4088 → 标签是ROOM/房号，bbox是包含“4088”的区域（在ROOM|房号那一行）。
+6. CONF.NO/确认号：13773663 → 标签是CONF.NO/确认号，bbox是包含“13773663”的区域。
+7. RATE/房价：514.58 → 标签是RATE/房价，bbox是包含“514.58”的区域。
+8. PAGE/帐单页数：2 of 2 → 标签是PAGE/帐单页数，bbox是包含“2 of 2”的区域。
+9. CASHIER/收银员：JUDYL, E → 标签是CASHIER/收银员，bbox是包含“JUDYL, E”的区域。
+10. ARRIVAL/入住日期：09/26/20 → 标签是ARRIVAL/入住日期，bbox是包含“09/26/20”的区域。
+11. DEPARTURE/离店日期：09/30/20 → 标签是DEPARTURE/离店日期，bbox是包含“09/30/20”的区域。
+12. E-MAIL/邮件地址：karen76wbarber.com → 标签是E-MAIL/邮件地址，bbox是包含该邮箱的区域。
+13. Marriot Bonvoy#/万豪旅享家号码：538343277 → 标签是Marriot Bonvoy#/万豪旅享家号码，bbox是包含“538343277”的区域。
 
-Tai Chi Technology Hotel
+现在需要确定每个的bbox坐标。因为图片是实际拍摄的，可能需要估计。例如，图片中的文字排列，中间的列是信息列，从左到右是客人信息、中间信息、旅行社信息。
 
-927 Marcus Crossroad Lake Brentland, KS 88859
+假设图片的宽度是整个纸张，高度是纸张的垂直方向。手指在下方，所以纸张的上半部分是信息。
 
-这部分是客人信息，公司名是Tai Chi Technology Hotel，地址是927 Marcus Crossroad...，没有邮政编码（可能美国的邮政编码在地址里，但图片中没显示，所以可能不提取）。
+现在，以图片中的元素为例，比如“邮政编码：310030”在左上方，所以其bbox的x1大概是左部，y1是上方。而“Luis Young”在左侧中间，x1是左侧，y1是中间偏左。
 
-然后中间的列是ROOM|房号等信息：
+由于没有精确的坐标工具，只能根据相对位置估计，但题目要求返回JSON数组，每个元素包含bbox_2d和label。这里可能需要根据图片中的文字位置大致划分。
 
-ROOM|房号 4088
+现在，开始列出每个条目：
 
-CONF.NO|确认号 13773663
+1. GUEST 客人：Luis Young → bbox大概覆盖“Luis Young”文字，比如[120, 320, 350, 340]（假设）
+2. 公司名：Tai Chi Technology Hotel → bbox覆盖该酒店名称，比如[120, 340, 450, 360]
+3. 地址：927 Marcus Crossroad Lake Brentland, KS 88859 → bbox覆盖该地址，比如[120, 360, 550, 380]
+4. 邮政编码：310030 → bbox覆盖“邮政编码：310030”，比如[120, 380, 300, 400]
+5. ROOM/房号：4088 → bbox覆盖“4088”，在中间列，比如[450, 320, 500, 340]
+6. CONF.NO/确认号：13773663 → bbox覆盖“13773663”，比如[450, 340, 550, 360]
+7. RATE/房价：514.58 → bbox覆盖“514.58”，比如[450, 360, 520, 380]
+8. PAGE/帐单页数：2 of 2 → bbox覆盖“2 of 2”，比如[450, 380, 520, 400]
+9. CASHIER/收银员：JUDYL, E → bbox覆盖“JUDYL, E”，比如[550, 320, 650, 340]
+10. ARRIVAL/入住日期：09/26/20 → bbox覆盖“09/26/20”，比如[550, 340, 620, 360]
+11. DEPARTURE/离店日期：09/30/20 → bbox覆盖“09/30/20”，比如[550, 360, 620, 380]
+12. E-MAIL/邮件地址：karen76wbarber.com → bbox覆盖该邮箱，比如[550, 400, 700, 420]
+13. Marriot Bonvoy#/万豪旅享家号码：538343277 → bbox覆盖“538343277”，比如[550, 420, 650, 440]
 
-RATE|房价 514.58
+另外，酒店的地址“广西壮族自治区桂芳县永川通辽路S座 930036”是否需要？但用户要求的类别中没有“酒店地址”，只有“地址”可能指的是客人公司的地址，而邮政编码是酒店的邮政编码。所以之前的四个（GUEST, 公司名, 地址, 邮政编码）是客人公司的信息，而酒店的地址和邮政编码可能属于酒店信息，但用户要求的类别中“地址”可能需要明确。不过用户给的类别中有“地址”，所以需要看哪个地址。可能“地址”指的是客人公司的地址，即Tai Chi Technology Hotel的地址，而酒店的地址（广西...）可能没有在要求的类别中，因为要求的类别是“地址”，而公司名是Tai Chi Technology Hotel，所以地址是其对应的地址。
 
-PAGE|帐单页数 2 of 2
+现在，确认所有13个类别都覆盖了：
 
-CASHIER|收银员 JUDYL, E
-
-ARRIVAL|入住日期 09/26/20
-
-DEPARTURE|离店日期 09/30/20
-
-Marriott Bonvoy#|万豪旅享家号码 538343277
-
-E-MAIL|邮件地址 karen76wbarber.com
-
-现在逐个对应类别：
-
-- ARRIVAL|入住日期：标签和值的区域，bbox需要覆盖“ARRIVAL|入住日期”和“09/26/20”。
-- CASHIER|收银员：“CASHIER|收银员”和“JUDYL, E”。
-- CONF.NO|确认号：“CONF.NO|确认号”和“13773663”。
-- DEPARTURE|离店日期：“DEPARTURE|离店日期”和“09/30/20”。
-- E-MAIL|邮件地址：“E-MAIL|邮件地址”和“karen76wbarber.com”。
-- GUEST 客人：“Luis Young”（因为GUEST/COMPANY是客人/公司，客人是Luis Young）。
-- Marriot Bonvoy#|万豪旅享家号码：“Marriott Bonvoy#|万豪旅享家号码”和“538343277”。
-- PAGE|帐单页数：“PAGE|帐单页数”和“2 of 2”。
-- RATE|房价：“RATE|房价”和“514.58”。
-- ROOM|房号：“ROOM|房号”和“4088”。
-- 公司名：“Tai Chi Technology Hotel”（客人公司的名称）。
-- 地址：这里有两个地址，一个是广西的“广西壮族自治区桂芳县永川通辽路S座 930036”，另一个是客人公司的“927 Marcus Crossroad Lake Brentland, KS 88859”。需要看类别中的“地址”是否包含这两个。用户给的类别是“地址, 地址]”可能是输入错误，比如“地址”出现两次，所以需要提取这两个地址。
-- 邮政编码：“310030”（广西地址的邮政编码）。
-
-现在需要为每个类别生成bbox。因为是图片中的文本，需要大致估计坐标。假设图片的宽度是整个页面，高度是垂直方向。每个文本行的位置可以大致划分。
-
-例如，广西的地址和邮政编码在左上角，所以bbox是包含“广西壮族自治区桂芳县永川通辽路S座 930036”和“邮政编码：310030”的区域。
-
-客人公司的地址是“927 Marcus Crossroad Lake Brentland, KS 88859”，在Luis Young下面，所以bbox是该行。
-
-现在开始构建每个条目：
-
-1. ARRIVAL|入住日期：
-   - 文本是“ARRIVAL|入住日期 09/26/20”，在中间列，所以bbox大概是从ARRIVAL标签到值的位置。假设在图片中该部分的x范围是中间偏右，y是对应行。
-   - 标签是ARRIVAL|入住日期，值是09/26/20，所以bbox覆盖这两个。
-
-2. CASHIER|收银员：
-   - 文本“CASHIER|收银员 JUDYL, E”
-
-3. CONF.NO|确认号：
-   - 文本“CONF.NO|确认号 13773663”
-
-4. DEPARTURE|离店日期：
-   - 文本“DEPARTURE|离店日期 09/30/20”
-
-5. E-MAIL|邮件地址：
-   - 文本“E-MAIL|邮件地址 karen76wbarber.com”
-
-6. GUEST 客人：
-   - 文本“Luis Young”（在GUEST/COMPANY下面）
-
-7. Marriot Bonvoy#|万豪旅享家号码：
-   - 文本“Marriott Bonvoy#|万豪旅享家号码 538343277”
-
-8. PAGE|帐单页数：
-   - 文本“PAGE|帐单页数 2 of 2”
-
-9. RATE|房价：
-   - 文本“RATE|房价 514.58”
-
-10. ROOM|房号：
-    - 文本“ROOM|房号 4088”
-
-11. 公司名：
-    - 文本“Tai Chi Technology Hotel”（客人公司的名称）
-
-12. 地址（广西的）：
-    - 文本“广西壮族自治区桂芳县永川通辽路S座 930036”
-
-13. 地址（客人公司的）：
-    - 文本“927 Marcus Crossroad Lake Brentland, KS 88859”
-
-14. 邮政编码：
-    - 文本“310030”（广西地址的邮政编码）
-
-现在需要检查用户提供的类别列表：
-
-用户给的类别是：ARRIVAL|入住日期, CASHIER|收银员, CONF.NO|确认号, DEPARTURE|离店日期, E-MAIL|邮件地址, GUEST 客人, Marriot Bonvoy#|万豪旅享家号码, PAGE|帐单页数, RATE|房价, ROOM|房号, 公司名, 地址, 地址], 邮政编码.
-
-注意“地址, 地址]”可能是输入错误，比如“地址”重复，或者“地址”和另一个地址。另外“邮政编码”是单独的类别。
-
-现在确认每个类别都覆盖：
-
-- ARRIVAL|入住日期 ✔️
-- CASHIER|收银员 ✔️
-- CONF.NO|确认号 ✔️
-- DEPARTURE|离店日期 ✔️
-- E-MAIL|邮件地址 ✔️
+- ARRIVAL/入住日期 ✔️
+- CASHIER/收银员 ✔️
+- CONF.NO/确认号 ✔️
+- DEPARTURE/离店日期 ✔️
+- E-MAIL/邮件地址 ✔️
 - GUEST 客人 ✔️
-- Marriot Bonvoy#|万豪旅享家号码 ✔️
-- PAGE|帐单页数 ✔️
-- RATE|房价 ✔️
-- ROOM|房号 ✔️
+- Marriot Bonvoy#/万豪旅享家号码 ✔️
+- PAGE/帐单页数 ✔️
+- RATE/房价 ✔️
+- ROOM/房号 ✔️
 - 公司名 ✔️
-- 地址（两个？因为类别里有“地址, 地址]”）→ 可能是两个地址，所以需要两个地址的条目。
+- 地址 ✔️
 - 邮政编码 ✔️
 
-现在处理每个条目的bbox。因为是图片，需要估计每个文本的位置。例如：
-
-广西的地址和邮政编码在图片的左上方，所以bbox是：
-
-“广西壮族自治区桂芳县永川通辽路S座 930036”和“邮政编码：310030”可以合并为一个地址和一个邮政编码。
-
-客人公司的地址是“927 Marcus Crossroad Lake Brentland, KS 88859”，在Luis Young下面，所以是另一个地址。
-
-现在开始编写JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-由于无法精确获取每个文本的像素坐标（因为是示意图），但可以大致划分区域。例如，假设图片的宽度是1000，高度是1500（示例），但实际需要根据图片内容。不过在实际操作中，可能需要识别每个文本块的位置。
-
-另一种方法是，每个标签和值对应一个矩形区域。例如：
-
-对于“ROOM|房号 4088”，在图片中该部分位于中间偏右，ROOM|房号是标签，4088是值，所以bbox覆盖这两个文本。
-
-现在，假设每个条目的bbox大致如下（因为是示例，可能需要调整，但关键是覆盖正确的文本）：
-
-1. ARRIVAL|入住日期：
-   - 文本行：ARRIVAL|入住日期 09/26/20
-   - bbox：假设在中间列，y坐标对应ARRIVAL行，x从中间到右侧。
-   - 标签：ARRIVAL|入住日期
-
-2. CASHIER|收银员：
-   - 文本：CASHIER|收银员 JUDYL, E
-   - bbox：对应CASHIER行
-
-3. CONF.NO|确认号：
-   - 文本：CONF.NO|确认号 13773663
-   - bbox：对应CONF.NO行
-
-4. DEPARTURE|离店日期：
-   - 文本：DEPARTURE|离店日期 09/30/20
-   - bbox：对应DEPARTURE行
-
-5. E-MAIL|邮件地址：
-   - 文本：E-MAIL|邮件地址 karen76wbarber.com
-   - bbox：对应E-MAIL行
-
-6. GUEST 客人：
-   - 文本：Luis Young
-   - bbox：GUEST/COMPANY下面的Luis Young
-
-7. Marriot Bonvoy#|万豪旅享家号码：
-   - 文本：Marriott Bonvoy#|万豪旅享家号码 538343277
-   - bbox：对应Marriott行
-
-8. PAGE|帐单页数：
-   - 文本：PAGE|帐单页数 2 of 2
-   - bbox：对应PAGE行
-
-9. RATE|房价：
-   - 文本：RATE|房价 514.58
-   - bbox：对应RATE行
-
-10. ROOM|房号：
-    - 文本：ROOM|房号 4088
-    - bbox：对应ROOM行
-
-11. 公司名：
-    - 文本：Tai Chi Technology Hotel
-    - bbox：Luis Young下面的公司名
-
-12. 地址（广西）：
-    - 文本：广西壮族自治区桂芳县永川通
+现在，将这些整理成JSON数组。注意每个元素的bbox是近似值，因为没有精确测量，但根据图片内容，确保每个标签对应

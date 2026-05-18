@@ -1,6 +1,80 @@
+用户现在需要从发票中提取address、company、date、total这几个类别。首先看每个部分：
+
+company：发票上方的FIVE STAR CASH & CARRY，还有编号(1365663-P)。所以company的bbox是包含FIVE STAR CASH & CARRY那行。
+
+address：下面的G.23 & G.22, Plaza Seri Setia, No.1 Jalan SS 9/1, 47300 PJ, Selangor. 这部分是地址。
+
+date：TAX INVOICE里的05/01/17，时间是10:55，所以date是05/01/17。
+
+total：NET TOTAL是90.00，所以total对应的是这个数值。
+
+现在逐个确定每个元素的bbox：
+
+company：看FIVE STAR CASH & CARRY (1365663-P) 这行，坐标大概是x从190到540左右，y在FIVE STAR那行。所以bbox是[200, 230, 790, 256]左右？看原文中的位置，FIVE STAR CASH & CARRY在上方，所以bbox是[202, 232, 792, 258]（因为原文中FIVE STAR CASH & CARRY是大写，下面括号是编号）。
+
+address：G.23 & G.22, Plaza Seri Setia, No.1 Jalan SS 9/1, 47300 PJ, Selangor. 这部分的bbox是[202, 272, 792, 300]左右？看原文中的地址行，Tel/Fax上面的地址。
+
+date：TAX INVOICE右边的05/01/17，所以bbox是[542, 442, 622, 466]（因为RECEIPT NO.后面是05/01/17 10:55，所以日期是05/01/17）。
+
+total：NET TOTAL后面的90.00，看NET TOTAL : 90.00，所以bbox是[442, 606, 556, 632]（因为NET TOTAL那一行的数值是90.00，被圈起来的）。
+
+现在整理每个类别：
+
+company：对应FIVE STAR CASH & CARRY (1365663-P)，bbox是[200, 230, 790, 258]（看原文中的位置，FIVE STAR CASH & CARRY在上方，所以y坐标大概在230左右，x从200到790）。
+
+address：G.23 & G.22, Plaza Seri Setia, No.1 Jalan SS 9/1, 47300 PJ, Selangor. 这部分的bbox是[202, 274, 792, 302]（因为地址行在公司名称下面，Tel/Fax上面）。
+
+date：05/01/17，位于TAX INVOICE的右侧，RECEIPT NO.后面，所以bbox是[544, 444, 620, 464]。
+
+total：NET TOTAL的90.00，bbox是[444, 608, 554, 630]（因为NET TOTAL : 90.00，其中90.00是数值）。
+
+现在检查每个元素：
+
+- company: "FIVE STAR CASH & CARRY (1365663-P)" → bbox覆盖这行文字。
+- address: 包含G.23 & G.22, Plaza Seri Setia, No.1 Jalan SS 9/1, 47300 PJ, Selangor. 的文字。
+- date: "05/01/17" 是日期。
+- total: "90.00" 是NET TOTAL的数值。
+
+现在确定每个的坐标范围，根据图片中的位置：
+
+看图片中的文字：
+
+FIVE STAR CASH & CARRY (1365663-P) → 这行的y坐标大约在230左右（因为上面有手写签名，然后是FIVE STAR...）。
+
+地址行：G.23 & G.22, Plaza Seri Setia, No.1 Jalan SS 9/1, 47300 PJ, Selangor. → 这行在FIVE STAR下面，Tel/Fax上面，所以y坐标在270左右。
+
+日期：05/01/17在TAX INVOICE的右侧，RECEIPT NO.[00519738] 右边，所以x是540左右，y是440左右。
+
+total：NET TOTAL : 90.00，其中90.00在圈里，所以y是600左右，x是440到550左右。
+
+现在构建JSON数组：
+
+每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}
+
+现在具体数值：
+
+company的bbox：看FIVE STAR CASH & CARRY (1365663-P) 这行，文字的左x大约是190，右x大约是790，上y是230，下y是250。所以bbox_2d: [192, 232, 788, 256]
+
+address的bbox：G.23 & G.22, Plaza Seri Setia, No.1 Jalan SS 9/1, 47300 PJ, Selangor. 左x约190，右x约790，上y约272，下y约298。所以bbox_2d: [194, 274, 786, 300]
+
+date的bbox：05/01/17，位于RECEIPT NO.右边，x约542，y约444，宽度是8（05/01/17是8个字符？不，05/01/17是8个字符？05/01/17是日期格式，长度是8？不，05/01/17是8个字符（05,01,17，每个部分两位，所以是8个字符？05/01/17是8个字符：0 5 / 0 1 / 1 7 → 共8个字符？不，是05/01/17，长度是8？不，05是两位，/，01两位，/，17两位，所以总长度是2+1+2+1+2=8。所以x范围是540到558左右，y是442到462。所以bbox_2d: [540, 442, 622, 466]
+
+total的bbox：NET TOTAL后面的90.00，看NET TOTAL : 90.00，其中90.00的位置，x约440到556，y约606到632。所以bbox_2d: [440, 606, 556, 632]
+
+现在确认每个标签：
+
+- company对应FIVE STAR CASH & CARRY
+- address对应地址行
+- date对应05/01/17
+- total对应90.00（NET TOTAL的数值）
+
+现在生成JSON数组：
+
 [
-    {"bbox_2d": [220, 240, 778, 265], "label": "company"},
-    {"bbox_2d": [152, 285, 848, 332], "label": "address"},
-    {"bbox_2d": [542, 322, 622, 345], "label": "date"},
-    {"bbox_2d": [322, 602, 427, 627], "label": "total"}
+  {"bbox_2d": [192, 232, 788, 256], "label": "company"},
+  {"bbox_2d": [194, 274, 786, 300], "label": "address"},
+  {"bbox_2d": [540, 442, 622, 466], "label": "date"},
+  {"bbox_2d": [440, 606, 556, 632], "label": "total"}
 ]
+</think>
+[{"bbox_2d": [192, 232, 788, 256], "label": "company"}, {"bbox_2d": [194, 274, 786, 300], "label": "address"}, {"bbox_2d": [540, 442, 622, 466], "label": "date"}, {"bbox_2d": [440, 606, 556, 632], "label": "total"}]

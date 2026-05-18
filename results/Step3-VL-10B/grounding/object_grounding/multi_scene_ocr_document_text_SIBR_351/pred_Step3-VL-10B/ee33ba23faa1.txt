@@ -1,197 +1,213 @@
-用户现在需要从发票中检测指定类别的对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+Got it, let's go through each category and find the corresponding values in the invoice.
 
-首先看COMPANY NAME：Unicom Timeke Network Co., Ltd. 是公司名，地址是5490 Dwayne Dam Apt. 523 West Heatherhaven, WY 07387，所以公司名的bbox是顶部的公司信息部分。
+First, let's list all the categories:
 
-然后INVOICE No：2205HS16-005，对应INVOICE No的标签。
+- ADDRESS: Need to check where addresses are. There's "FOR ACCOUNT OF" which is an address, and "SHIP TO" address. Let's see. The "FOR ACCOUNT OF" is 93499 Reyes Flat Suite 806 Lake Maria, HI 02054. Also, SHIP TO has two addresses? Wait, SHIP TO has 0147 Martha Cliffs Apt. 835 Lake Matthewview, MI 97125 and 555 Lawrence Gateway Suite 427 West Mary, TX 21908. Let's check which one is the target. Maybe the main address. Let's check each.
 
-FOR ACCOUNT OF的地址是93499 Reyes Flat Suite 806 Lake Maria, HI 02054，属于ADDRESS。
+- ARTICLE: The article is "SOLUTION ADMINISTRATION SET" in the table.
 
-SHIP TO的地址是0147 Martha Cliffs Apt. 835 Lake Matthewview, MI 97125 555 Lawrence Gateway Suite 427 West Mary, TX 21908，也是ADDRESS。
+- COMPANY NAME: The top is Unicom Timeke Network Co., Ltd.
 
-CONTRACT NO.下面SHIPPED PER是GLORY GUANG ZHOU 2221E，SCHEDULED ON是MAY.23.2022，这两个是SHIPPED PER和SCHEDULED ON。
+- CUTOFF DATE: From payment terms: "CUTOFF DATE:END OF THE MONTH EVERY MONTH,PAYMENT:120DAYS LATER" so the cutoff date description.
 
-FROM是SHANGHAI，TO是TOKYO，这两个是FROM和TO。
+- DATE: The invoice date is MAY.20.2022 at the top right.
 
-ARTICLE是SOLUTION ADMINISTRATION SET，对应ARTICLE类别。
+- FAX: There are multiple FAX entries. Let's check the main company's FAX: Fax:(9165) 00983271. Also, other FAX like for FOR ACCOUNT OF: FAX 07-4-8311-6278, SHIP TO FAX: 8087-1-0617-0432. But need to see which one is required. The question says "FAX" category, maybe the company's FAX.
 
-CODE No.这里可能没有内容，但ARTICLE是明确的。
+- FROM: SHANGHAI
 
-QUANTITY是215,370 PIECES，对应QUANTITY。
+- Fax: Maybe another FAX, but let's check.
 
-UNIT-PRICE是IN CNY PER 1,000PCS，对应UNIT-PRICE。
+- IN: The total amount is "IN CNY 1,035,016.00" so "IN" is the currency indicator.
 
-AMOUNT是1,035,016.00，这里可能有IN（货币单位）和CNY，所以IN是货币单位的标签，CNY是金额的货币，但看类别里有IN，所以找IN的位置，比如TOTAL下面的IN CNY 1,035,016.00中的IN。
+- INVOICE No: 2205HS16-005
 
-FAX：公司FAX是(9165)00983271，FOR ACCOUNT OF的FAX是07-4-8311-6278，SHIP TO的FAX是8087-1-0617-0432，这些是FAX。
+- P.C: 310018 (from top: P.C:310018)
 
-Tel：公司Tel是(7751)30488100，FOR ACCOUNT OF的TEL是11-3-8684-6327，SHIP TO的TEL是0448-0-1443-0177，这些是Tel。
+- QUANTITY: 215,370 PIECES (from TOTAL line)
 
-P.C是310018，在公司信息里的P.C:310018。
+- SCHEDULED ON: MAY.23.2022
 
-DATE：MAY.20.2022是发票日期，SCHEDULED ON的MAY.23.2022也是日期，CUTOFF DATE:END OF THE MONTH EVERY MONTH是CUTOFF DATE和MONTH。
+- SHIPPED PER: GLORY GUANG ZHOU 2221E
 
-PAYMENT:120DAYS LATER是PAYMENT。
+- TEL: For the company: Tel:(7751) 30488100. Also, FOR ACCOUNT OF TEL: 11-3-8684-6327, SHIP TO TEL: 0448-0-1443-0177. Need to check which TEL is which category.
 
-CUTOFF DATE是END OF THE MONTH EVERY MONTH。
+- TITLE: Maybe the invoice title is "INVOICE" but not sure. Wait, the categories include TITLE. Let's check if there's a title. The top has "INVOICE" as the title.
 
-现在需要逐个列出每个检测到的对象，确保每个类别都覆盖。
+- TO: TOKYO
 
-现在开始整理：
+- Tel: Another TEL, maybe the FOR ACCOUNT OF TEL or SHIP TO TEL.
 
-1. COMPANY NAME：Unicom Timeke Network Co., Ltd. 的bbox是顶部，包含公司名称和地址等。看原文开头的Unicom Timeke Network Co., Ltd. 所在区域，坐标大概是[37, 23, 337, 42]左右？需要看图像中的位置。原文第一行是Unicom Timeke Network Co., Ltd.，然后是地址，Tel，Fax，P.C。所以COMPANY NAME的bbox是包含公司名称的文本，即“Unicom Timeke Network Co., Ltd.” 这个文本的区域。
+- UNIT-PRICE: IN CNY PER 1,000PCS (from the table's UNIT-PRICE column)
 
-2. INVOICE No：2205HS16-005，对应标签INVOICE No，位置在INVOICE No. 右边的编号。
+Now let's map each:
 
-3. ADDRESS：多个地址，比如FOR ACCOUNT OF的地址，SHIP TO的地址，公司地址等。需要分别找。比如FOR ACCOUNT OF的地址是“93499 Reyes Flat Suite 806 Lake Maria, HI 02054”，SHIP TO的地址是“0147 Martha Cliffs Apt. 835 Lake Matthewview, MI 97125 555 Lawrence Gateway Suite 427 West Mary, TX 21908”，公司地址是“5490 Dwayne Dam Apt. 523 West Heatherhaven, WY 07387”。这些都属于ADDRESS。
+1. ADDRESS: Let's take the "FOR ACCOUNT OF" address: 93499 Reyes Flat Suite 806 Lake Maria, HI 02054. Bounding box for that line.
 
-4. ARTICLE：SOLUTION ADMINISTRATION SET，对应ARTICLE列的内容。
+2. ARTICLE: "SOLUTION ADMINISTRATION SET" in the table's ARTICLE column.
 
-5. CUTOFF DATE：CUTOFF DATE:END OF THE MONTH EVERY MONTH，这部分是CUTOFF DATE。
+3. COMPANY NAME: Unicom Timeke Network Co., Ltd. (top left)
 
-6. DATE：MAY.20.2022（发票日期），MAY.23.2022（SCHEDULED ON的日期）。
+4. CUTOFF DATE: "CUTOFF DATE:END OF THE MONTH EVERY MONTH" (from payment terms section)
 
-7. FAX：公司FAX是(9165)00983271，FOR ACCOUNT OF的FAX是07-4-8311-6278，SHIP TO的FAX是8087-1-0617-0432。这些是FAX。
+5. DATE: "MAY.20.2022" (top right)
 
-8. FROM：SHANGHAI，对应FROM标签。
+6. FAX: The company's FAX: (9165) 00983271 (from top: Fax:(9165) 00983271)
 
-9. Fax：可能和FAX重复？但类别里有FAX和Fax，可能需要注意。看类别中的FAX和Fax，可能FAX是大写的，Fax是另一个？但原文中FAX是大写，比如公司FAX:...，所以FAX类别对应这些。
+7. FROM: "SHANGHAI" (under FROM section)
 
-10. IN：在TOTAL下面的“IN CNY 1,035,016.00”中的IN，是货币单位的标签。
+8. Fax: Maybe another FAX, but let's check if there's a specific one. Wait, the categories have both FAX and Fax? Maybe a typo, but let's check. The problem lists "FAX" and "Fax" as separate categories. Let's check the SHIP TO FAX: 8087-1-0617-0432. Or FOR ACCOUNT OF FAX: 07-4-8311-6278. Let's see.
 
-11. INVOICE No：已经列过。
+9. IN: "IN" in "IN CNY 1,035,016.00" (the currency part)
 
-12. MONTH：CUTOFF DATE中的EVERY MONTH，所以MONTH是EVERY MONTH。
+10. INVOICE No: "2205HS16-005"
 
-13. PAYMENT：PAYMENT:120DAYS LATER，所以PAYMENT是120DAYS LATER。
+11. P.C: "310018" (from P.C:310018 at top)
 
-14. P.C：310018，公司信息中的P.C:310018。
+12. QUANTITY: "215,370 PIECES" (from TOTAL line)
 
-15. QUANTITY：215,370 PIECES，对应QUANTITY。
+13. SCHEDULED ON: "MAY.23.2022"
 
-16. SCHEDULED ON：MAY.23.2022，对应SCHEDULED ON。
+14. SHIPPED PER: "GLORY GUANG ZHOU 2221E"
 
-17. SHIPPED PER：GLORY GUANG ZHOU 2221E，对应SHIPPED PER。
+15. TEL: Company's TEL: (7751) 30488100 (from Tel:(7751) 30488100 at top)
 
-18. TEL：公司Tel (7751)30488100，FOR ACCOUNT OF的TEL 11-3-8684-6327，SHIP TO的TEL 0448-0-1443-0177，这些是Tel。
+16. TITLE: "INVOICE" (top right, the big text)
 
-19. TITLE：可能没有明确的TITLE？看是否有标题，比如INVOICE是标题，但类别中的TITLE可能是指发票标题？但原文中INVOICE是大标题，可能TITLE是INVOICE？但需要看。不过可能图中没有明确的TITLE类别，或者可能其他。暂时先看是否有。
+17. TO: "TOKYO" (under TO section)
 
-20. TO：TOKYO，对应TO标签。
+18. Tel: Let's check the FOR ACCOUNT OF TEL: 11-3-8684-6327. Or SHIP TO TEL: 0448-0-1443-0177. Let's pick one, maybe the FOR ACCOUNT OF TEL.
 
-21. Tel：同TEL，可能重复？但类别中有Tel和TEL，可能TEL是大写，Tel是小写？比如公司Tel是大写TEL，而FOR ACCOUNT OF的TEL是小写？不，原文中是TEL（大写）和FAX（大写）。类别中的Tel是小写，可能需要区分？比如公司信息中的Tel是(7751)30488100，标注为Tel；FOR ACCOUNT OF的TEL是11-3-8684-6327，也是Tel；SHIP TO的TEL是0448-0-1443-0177，也是Tel。所以Tel类别对应这些。
+19. UNIT-PRICE: "IN CNY PER 1,000PCS" (from the table's UNIT-PRICE column)
 
-22. UNIT-PRICE：IN CNY PER 1,000PCS，对应UNIT-PRICE。
+Now let's check each category and find their bounding boxes.
 
-现在需要为每个检测到的实例生成条目。需要注意不要重复，每个出现的都要列。
+Let's go step by step:
 
-现在开始逐个处理：
+- COMPANY NAME: The top line: "Unicom Timeke Network Co., Ltd." Bounding box: [37, 24, 377, 42] (approx, need to check the image. The text is at the top left.)
 
-- COMPANY NAME: "Unicom Timeke Network Co., Ltd." → bbox是包含该文本的区域，比如从x=37到x=337，y=23到y=37左右。看原文第一行是Unicom Timeke Network Co., Ltd.，所以bbox大概[37, 23, 337, 42]。
+- INVOICE No: "2205HS16-005" is under INVOICE No. Bounding box: [101, 475, 244, 495]
 
-- INVOICE No: "2205HS16-005" → 位置在INVOICE No. 右边，bbox比如[225, 308, 307, 328]（假设）。
+- P.C: "310018" is at the top: P.C:310018. Bounding box: [534, 30, 622, 46]
 
-- ADDRESS（公司地址）: "5490 Dwayne Dam Apt. 523 West Heatherhaven, WY 07387" → 公司信息中的地址，bbox是公司名称下面的地址行。
+- DATE: "MAY.20.2022" is top right. Bounding box: [757, 102, 925, 122]
 
-- ADDRESS（FOR ACCOUNT OF）: "93499 Reyes Flat Suite 806 Lake Maria, HI 02054" → FOR ACCOUNT OF下面的地址。
+- TITLE: "INVOICE" is the big text at the top right, above the stars. Bounding box: [692, 10, 925, 36]
 
-- ADDRESS（SHIP TO）: "0147 Martha Cliffs Apt. 835 Lake Matthewview, MI 97125 555 Lawrence Gateway Suite 427 West Mary, TX 21908" → SHIP TO下面的地址。
+- FROM: "SHANGHAI" is under FROM. Bounding box: [37, 332, 122, 352]
 
-- ARTICLE: "SOLUTION ADMINISTRATION SET" → 表格中的ARTICLE列内容。
+- TO: "TOKYO" is under TO. Bounding box: [40, 354, 72, 374]
 
-- CUTOFF DATE: "END OF THE MONTH EVERY MONTH" → PAYMENT TERMS下面的CUTOFF DATE部分。
+- SHIPPED PER: "GLORY GUANG ZHOU 2221E" is under SHIPPED PER. Bounding box: [101, 334, 327, 352]
 
-- DATE（发票日期）: "MAY.20.2022" → 右上角的日期。
+- SCHEDULED ON: "MAY.23.2022" is under SCHEDULED ON. Bounding box: [404, 334, 544, 352]
 
-- DATE（SCHEDULED ON）: "MAY.23.2022" → SCHEDULED ON后面的日期。
+- CONTRACT NO.: Not in the list, but we need the ones listed.
 
-- FAX（公司）: "(9165)00983271" → 公司信息中的Fax。
+- TEL (company's): "Tel:(7751) 30488100" at top. Bounding box: [37, 34, 234, 52]
 
-- FAX（FOR ACCOUNT OF）: "07-4-8311-6278" → FOR ACCOUNT OF下面的FAX。
+- FAX (company's): "Fax:(9165) 00983271" at top. Bounding box: [244, 34, 404, 52]
 
-- FAX（SHIP TO）: "8087-1-0617-0432" → SHIP TO下面的FAX。
+- ADDRESS (FOR ACCOUNT OF): "93499 Reyes Flat Suite 806 Lake Maria, HI 02054" under FOR ACCOUNT OF. Bounding box: [101, 225, 544, 245]
 
-- FROM: "SHANGHAI" → FROM下面的城市。
+- SHIP TO address: "0147 Martha Cliffs Apt. 835 Lake Matthewview, MI 97125 555 Lawrence Gateway Suite 427 West Mary, TX 21908" under SHIP TO. Let's take the first part maybe, but the category is ADDRESS, so maybe this is another address. But let's check if the problem expects one address. Maybe the FOR ACCOUNT OF is the main address.
 
-- IN: "IN"（在“IN CNY 1,035,016.00”中的IN）→ 金额部分的货币单位。
+- ARTICLE: "SOLUTION ADMINISTRATION SET" in the table. Bounding box: [37, 532, 292, 552]
 
-- INVOICE No: 已经处理过，是同一个。
+- QUANTITY: "215,370 PIECES" under TOTAL. Bounding box: [101, 682, 377, 702]
 
-- MONTH: "EVERY MONTH" → CUTOFF DATE中的EVERY MONTH。
+- UNIT-PRICE: "IN CNY PER 1,000PCS" in the table's UNIT-PRICE column. Bounding box: [427, 532, 622, 552]
 
-- PAYMENT: "120DAYS LATER" → PAYMENT:120DAYS LATER中的内容。
+- IN: "IN" in "IN CNY 1,035,016.00" under the total amount. Bounding box: [457, 692, 477, 712]
 
-- P.C: "310018" → 公司信息中的P.C:310018。
+- CUTOFF DATE: "CUTOFF DATE:END OF THE MONTH EVERY MONTH" under PAYMENT TERMS. Bounding box: [457, 742, 837, 762]
 
-- QUANTITY: "215,370 PIECES" → TOTAL下面的数量。
+- FAX (another, maybe FOR ACCOUNT OF FAX): "FAX 07-4-8311-6278" under FOR ACCOUNT OF. Bounding box: [304, 225, 474, 245]
 
-- SCHEDULED ON: "MAY.23.2022" → 已经处理过SCHEDULED ON的日期，这里SCHEDULED ON是标签，对应其值。
+- Tel (another, maybe FOR ACCOUNT OF TEL): "TEL 11-3-8684-6327" under FOR ACCOUNT OF. Bounding box: [101, 245, 304, 265]
 
-- SHIPPED PER: "GLORY GUANG ZHOU 2221E" → SHIPPED PER下面的内容。
+- Tel (SHIP TO TEL): "TEL0448-0-1443-0177" under SHIP TO. Bounding box: [101, 374, 304, 394]
 
-- TEL（公司）: "(7751)30488100" → 公司信息中的Tel。
+- Fax (SHIP TO FAX): "FAX 8087-1-0617-0432" under SHIP TO. Bounding box: [304, 374, 474, 394]
 
-- TEL（FOR ACCOUNT OF）: "11-3-8684-6327" → FOR ACCOUNT OF下面的TEL。
+Now, let's map each category to their entries:
 
-- TEL（SHIP TO）: "0448-0-1443-0177" → SHIP TO下面的TEL。
+1. ADDRESS: Let's take the FOR ACCOUNT OF address. Bounding box: [101, 225, 544, 245], label: ADDRESS
+2. ARTICLE: [37, 532, 292, 552], label: ARTICLE
+3. COMPANY NAME: [37, 24, 377, 42], label: COMPANY NAME
+4. CUTOFF DATE: [457, 742, 837, 762], label: CUTOFF DATE
+5. DATE: [757, 102, 925, 122], label: DATE
+6. FAX: Let's take the company's FAX: [244, 34, 404, 52], label: FAX
+7. FROM: [37, 332, 122, 352], label: FROM
+8. IN: [457, 692, 477, 712], label: IN
+9. INVOICE No: [101, 475, 244, 495], label: INVOICE No
+10. P.C: [534, 30, 622, 46], label: P.C
+11. QUANTITY: [101, 682, 377, 702], label: QUANTITY
+12. SCHEDULED ON: [404, 334, 544, 352], label: SCHEDULED ON
+13. SHIPPED PER: [101, 334, 327, 352], label: SHIPPED PER
+14. TEL: Let's take the company's TEL: [37, 34, 234, 52], label: TEL
+15. TITLE: [692, 10, 925, 36], label: TITLE
+16. TO: [40, 354, 72, 374], label: TO
+17. Tel: Let's take the FOR ACCOUNT OF TEL: [101, 245, 304, 265], label: Tel (since there's a separate Tel category)
+18. UNIT-PRICE: [427, 532, 622, 552], label: UNIT-PRICE
 
-- TO: "TOKYO" → TO下面的城市。
+Wait, the problem lists "FAX" and "Fax" as separate categories. Let's check the original problem:
 
-- UNIT-PRICE: "IN CNY PER 1,000PCS" → 表格中的UNIT-PRICE列内容。
+The categories are: ADDRESS, ARTICLE, COMPANY NAME, CUTOFF DATE, DATE, FAX, FROM, Fax, IN, INVOICE No, P.C, QUANTITY, SCHEDULED ON, SHIPPED PER, TEL, TITLE, TO, Tel, UNIT-PRICE.
 
-- TITLE: 可能是“INVOICE”大标题，即右上角的INVOICE，所以TITLE是“INVOICE” → bbox是右上角的INVOICE文本。
+Ah, there's both FAX and Fax. So maybe FAX is the company's FAX, and Fax is another FAX (like the one for FOR ACCOUNT OF or SHIP TO). Let's check:
 
-现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意bbox的坐标是相对图像的，需要估计每个文本的位置。
+- FAX: company's FAX (top) → label FAX
+- Fax: maybe the FOR ACCOUNT OF FAX → label Fax
 
-现在开始构建每个条目：
+Let's adjust:
 
-1. COMPANY NAME: 文本“Unicom Timeke Network Co., Ltd.”，bbox大概[37, 23, 337, 42]（因为第一行是公司名，下面一行是地址，Tel等）。
+- FAX: [244, 34, 404, 52] (company's FAX)
+- Fax: [304, 225, 474, 245] (FOR ACCOUNT OF FAX)
 
-2. INVOICE No: 文本“2205HS16-005”，在INVOICE No. 右边，bbox比如[222, 306, 308, 326]。
+Also, Tel and TEL: TEL is company's TEL, Tel is another TEL (like FOR ACCOUNT OF TEL).
 
-3. ADDRESS（公司地址）: “5490 Dwayne Dam Apt. 523 West Heatherhaven, WY 07387”，在公司名下面，bbox[37, 44, 337, 62]。
+Now, let's list all required categories and ensure each is covered:
 
-4. ADDRESS（FOR ACCOUNT OF）: “93499 Reyes Flat Suite 806 Lake Maria, HI 02054”，在FOR ACCOUNT OF下面，bbox[305, 252, 737, 272]。
+Categories to cover:
 
-5. ADDRESS（SHIP TO）: “0147 Martha Cliffs Apt. 835 Lake Matthewview, MI 97125 555 Lawrence Gateway Suite 427 West Mary, TX 21908”，在SHIP TO下面，bbox[102, 332, 717, 372]（因为SHIP TO下面有两行地址？看原文SHIP TO下面是两行：0147...MI 97125，然后555...TX 21908，所以合并）。
+1. ADDRESS
+2. ARTICLE
+3. COMPANY NAME
+4. CUTOFF DATE
+5. DATE
+6. FAX
+7. FROM
+8. Fax
+9. IN
+10. INVOICE No
+11. P.C
+12. QUANTITY
+13. SCHEDULED ON
+14. SHIPPED PER
+15. TEL
+16. TITLE
+17. TO
+18. Tel
+19. UNIT-PRICE
 
-6. ARTICLE: “SOLUTION ADMINISTRATION SET”，在表格的ARTICLE列，bbox[25, 532, 225, 572]（表格内的内容）。
+Now, let's assign each:
 
-7. CUTOFF DATE: “END OF THE MONTH EVERY MONTH”，在PAYMENT TERMS下面，bbox[595, 652, 925, 672]。
-
-8. DATE（发票日期）: “MAY.20.2022”，在右上角，bbox[805, 20, 925, 38]。
-
-9. DATE（SCHEDULED ON）: “MAY.23.2022”，在SCHEDULED ON后面，bbox[445, 338, 545, 356]。
-
-10. FAX（公司）: “(9165)00983271”，在公司信息中的Fax，bbox[185, 46, 325, 62]。
-
-11. FAX（FOR ACCOUNT OF）: “07-4-8311-6278”，在FOR ACCOUNT OF的FAX，bbox[535, 274, 705, 292]。
-
-12. FAX（SHIP TO）: “8087-1-0617-0432”，在SHIP TO的FAX，bbox[455, 374, 635, 392]。
-
-13. FROM: “SHANGHAI”，在FROM下面，bbox[37, 472, 102, 490]。
-
-14. IN: “IN”（在“IN CNY 1,035,016.00”中的IN），bbox[675, 692, 695, 710]（因为TOTAL下面的IN CNY...中的IN）。
-
-15. MONTH: “EVERY MONTH”，在CUTOFF DATE中，bbox[695, 654, 835, 672]。
-
-16. PAYMENT: “120DAYS LATER”，在PAYMENT:120DAYS LATER中，bbox[695, 674, 885, 692]。
-
-17. P.C: “310018”，在公司信息中的P.C:310018，bbox[345, 48, 395, 62]。
-
-18. QUANTITY: “215,370 PIECES”，在TOTAL下面，bbox[152, 698, 332, 716]。
-
-19. SCHEDULED ON: 标签“SCHEDULED ON”对应其值，但SCHEDULED ON是标签，其内容是MAY.23.2022，所以SCHEDULED ON的标签是“SCHEDULED ON”，bbox[435, 330, 545, 348]（SCHEDULED ON的文本）。
-
-20. SHIPPED PER: “GLORY GUANG ZHOU 2221E”，在SHIPPED PER下面，bbox[305, 338, 435, 356]。
-
-21. TEL（公司）: “(7751)30488100”，在公司信息中的Tel，bbox[37, 48, 185, 62]。
-
-22. TEL（FOR ACCOUNT OF）: “11-3-8684-6327”，在FOR ACCOUNT OF的TEL，bbox[305, 276, 435, 294]。
-
-23. TEL（SHIP TO）: “0448-0-1443-0177”，在SHIP TO的TEL，bbox[102, 376, 272, 394]。
-
-24. TO: “TOKYO”，在TO下面，bbox[102, 472, 142, 490]。
-
-25. UNIT-PRICE: “IN CNY PER 1,000PCS”，在表格的UNIT-PRICE列，bbox[435, 532, 635, 572]。
-
-26. TITLE: “INVOICE”（右上角
+1. ADDRESS: FOR ACCOUNT OF address → [101, 225, 544, 245]
+2. ARTICLE: SOLUTION ADMINISTRATION SET → [37, 532, 292, 552]
+3. COMPANY NAME: Unicom Timeke Network Co., Ltd. → [37, 24, 377, 42]
+4. CUTOFF DATE: CUTOFF DATE:END OF THE MONTH EVERY MONTH → [457, 742, 837, 762]
+5. DATE: MAY.20.2022 → [757, 102, 925, 122]
+6. FAX: company's FAX (9165) → [244, 34, 404, 52]
+7. FROM: SHANGHAI → [37, 332, 122, 352]
+8. Fax: FOR ACCOUNT OF FAX (07-4-8311-6278) → [304, 225, 474, 245]
+9. IN: IN (from IN CNY) → [457, 692, 477, 712]
+10. INVOICE No: 2205HS16-005 → [101, 475, 244, 495]
+11. P.C: 310018 → [534, 30, 622, 46]
+12. QUANTITY: 215,370 PIECES → [101, 682, 377, 702]
+13. SCHEDULED ON: MAY.23.2022 → [404, 334, 544, 352]
+14. SHIPPED PER: GLORY GUANG ZHOU 2221E → [101, 334, 327, 352]
+15. TEL: company's TEL (7751) → [37, 34, 234, 52]
+16. TITLE: INVOICE → [692, 10, 925, 36]
+17. TO: TOKYO → [40, 354, 72, 374]
+18. Tel: FOR ACCOUNT OF TEL (11-3-8684-6327) → [101, 245,

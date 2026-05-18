@@ -1,8 +1,142 @@
-[
-    {"bbox_2d": [108, 12, 892, 34], "label": "company"},
-    {"bbox_2d": [108, 36, 892, 100], "label": "address"},
-    {"bbox_2d": [422, 226, 625, 248], "label": "date"},
-    {"bbox_2d": [106, 520, 326, 542], "label": "total"},
-    {"bbox_2d": [344, 620, 496, 642], "label": "total"},
-    {"bbox_2d": [110, 920, 320, 942], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part has "SATU KAMPUNG ENTERPRISE SDN BHD" which is the company name.
+- Address: The address lines are "NO.42, PASAR BORONG SELANGOR. JALAN PUTRA PERMAI, 43300 SERI KEMBANGAN, SELANGOR."
+- Date: The date on the invoice is "13/01/2013" (from the Date field: 13/01/2013)
+- Total: The total sales inclusive of GST is 20.00, which is highlighted. Also, check other totals, but the main total is the circled 20.00.
+
+Now, map each to their bounding boxes.
+
+First, company: The company name is at the top. Let's check the text: "SATU KAMPUNG ENTERPRISE SDN BHD" with the GST ID below. The bounding box for company would be the header section.
+
+Address: The address lines are below the company name. Let's find the coordinates.
+
+Date: The date is in the "Date: 13/01/2013" part.
+
+Total: The total sales (inclusive of GST) is 20.00, which is in the section where it's circled.
+
+Let's go step by step.
+
+1. Company: The text "SATU KAMPUNG ENTERPRISE SDN BHD" is the company. Let's get its bounding box. The top part of the invoice.
+
+2. Address: The address lines: "NO.42, PASAR BORONG SELANGOR. JALAN PUTRA PERMAI, 43300 SERI KEMBANGAN, SELANGOR." These are the address details.
+
+3. Date: The date field is "Date: 13/01/2013" — the date value is 13/01/2013.
+
+4. Total: The total sales inclusive of GST is 20.00, which is in the line "Total Sales (Inclusive of GST) : 20.00" and it's circled.
+
+Now, determine the bounding boxes for each.
+
+For company: The text is at the top, so the bounding box would cover the company name line. Let's check the image's top section.
+
+The company name is "SATU KAMPUNG ENTERPRISE SDN BHD" with (1127686-K) below. So the company's bbox is from the top lines.
+
+Address: The address is the lines starting from "NO.42, PASAR BORONG SELANGOR..." down to "SELANGOR."
+
+Date: The date is in the "Doc No" and "Date" section. The Date field is "13/01/2013".
+
+Total: The total amount is the circled 20.00 in "Total Sales (Inclusive of GST)".
+
+Now, let's structure each entry.
+
+First, company:
+
+- Text: SATU KAMPUNG ENTERPRISE SDN BHD
+- Bounding box: Let's see the image. The company name is at the top, so the coordinates would be the area containing that text.
+
+Address:
+
+- The address lines: NO.42, PASAR BORONG SELANGOR. JALAN PUTRA PERMAI, 43300 SERI KEMBANGAN, SELANGOR.
+
+Date:
+
+- The date value is 13/01/2013, from the Date field.
+
+Total:
+
+- The total sales inclusive of GST is 20.00, which is the circled value.
+
+Now, let's check the positions.
+
+For the company, the text is in the header. Let's define the bbox.
+
+Looking at the image, the company name is the first line, so:
+
+Company: [x1, y1, x2, y2] — the top part.
+
+Address: The next lines: address lines.
+
+Date: The Date field is in the upper right of the invoice section, next to Doc No.
+
+Total: The circled 20.00 is in the middle-right section.
+
+Let's create the JSON entries.
+
+First, company:
+
+{
+  "bbox_2d": [109, 10, 890, 32],  // approximate, since the text is "SATU KAMPUNG ENTERPRISE SDN BHD" at the top
+  "label": "company"
+}
+
+Address:
+
+The address lines are:
+
+"NO.42, PASAR BORONG SELANGOR.
+JALAN PUTRA PERMAI,
+43300 SERI KEMBANGAN, SELANGOR."
+
+So the bbox would cover these lines.
+
+{
+  "bbox_2d": [109, 34, 890, 102],  // approximate, the address block
+  "label": "address"
+}
+
+Date:
+
+The date is "13/01/2013" in the Date field. Let's check the position: Doc No is CS00039038, Date is 13/01/2013. So the Date's value is in that area.
+
+{
+  "bbox_2d": [520, 228, 644, 250],  // approximate, the Date field's value
+  "label": "date"
+}
+
+Total:
+
+The total sales inclusive of GST is 20.00, which is circled. Let's find that line: "Total Sales (Inclusive of GST) : 20.00" — the 20.00 is circled.
+
+{
+  "bbox_2d": [225, 600, 325, 625],  // approximate, the circled 20.00
+  "label": "total"
+}
+
+Wait, need to check the exact positions. Let's look at the image:
+
+- The "Total Sales (Inclusive of GST) :" is followed by a circled 20.00. So the total value is that 20.00.
+
+Also, check if there's another total, but the main total is that.
+
+Now, verify each category:
+
+- company: correct, the business name.
+- address: the physical address of the company.
+- date: the invoice date.
+- total: the total amount paid (20.00).
+
+Now, let's make sure the bounding boxes are accurate. Since the image is a bit low-res, but we can estimate.
+
+Alternatively, check the text elements:
+
+Company: "SATU KAMPUNG ENTERPRISE SDN BHD" — topmost text.
+
+Address: The lines below company: "NO.42, PASAR BORONG SELANGOR. JALAN PUTRA PERMAI, 43300 SERI KEMBANGAN, SELANGOR."
+
+Date: The date is "13/01/2013" in the header section of the invoice (Doc No and Date fields).
+
+Total: The circled "20.00" under "Total Sales (Inclusive of GST)".
+
+Now, construct the JSON array with these four entries.
+</think>
+[{"bbox_2d": [106, 11, 892, 33], "label": "company"}, {"bbox_2d": [106, 35, 892, 101], "label": "address"}, {"bbox_2d": [522, 229, 642, 251], "label": "date"}, {"bbox_2d": [227, 601, 326, 626], "label": "total"}]

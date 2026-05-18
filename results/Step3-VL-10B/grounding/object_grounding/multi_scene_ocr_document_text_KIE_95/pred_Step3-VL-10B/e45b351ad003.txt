@@ -1,9 +1,59 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date on the invoice is 05-05-17. Let's check where that is. In the receipt, there's a line with 02:49PM, 565287, 05-05-17. So the date is 05-05-17.
+
+doc_no_receipt_no: The invoice number is 18023/103/T0052. Let's confirm. The line says "INVOICE NO : 18023/103/T0052". So that's the doc_no_receipt_no.
+
+seller_address: The address lines are LOT P.T. 2811, JALAN ANGSA, TAKAN BERKELEY 41150 KLANG, SELANGOR 1313-SUBANG BESTARI. Let's check the text. The seller address is the block starting from LOT P.T. to 1313-SUBANG BESTARI.
+
+seller_gst_id: The GST ID NO is 000181747712. Look for "GST ID. NO : 000181747712".
+
+seller_name: The top line is "99 SPEED MART S/B (519537-X)". That's the seller name.
+
+total_amount: The total sales (inclusive GST) is RM42.33. Let's check the line "Total Sales (Inclusive GST) RM 42.33".
+
+total_tax: In the GST Summary, the Tax(RM) is 2.41. Let's check the GST Summary section: "s = 6% ... Tax(RM) 2.41".
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is "05-05-17" which is in the line with 02:49PM and 565287. Let's find the coordinates. The text "05-05-17" is on the right side of that line.
+
+2. doc_no_receipt_no: "18023/103/T0052" from the invoice no line.
+
+3. seller_address: The address block includes multiple lines: LOT P.T. 2811, JALAN ANGSA, TAKAN BERKELEY, 41150 KLANG, SELANGOR, 1313-SUBANG BESTARI.
+
+4. seller_gst_id: "000181747712" from "GST ID. NO : 000181747712".
+
+5. seller_name: "99 SPEED MART S/B (519537-X)" at the top.
+
+6. total_amount: "42.33" from "Total Sales (Inclusive GST) RM 42.33".
+
+7. total_tax: "2.41" from the GST Summary's Tax(RM) column.
+
+Now, let's define each bounding box.
+
+For seller_name: The top line is "99 SPEED MART S/B (519537-X)". Let's check the coordinates. The text is centered at the top.
+
+seller_address: The lines below the name: LOT P.T. 2811, JALAN ANGSA, TAKAN BERKELEY, 41150 KLANG, SELANGOR, 1313-SUBANG BESTARI. So the bounding box covers these lines.
+
+seller_gst_id: The line "GST ID. NO : 000181747712" — the ID number is the value.
+
+doc_no_receipt_no: "INVOICE NO : 18023/103/T0052" — the number is 18023/103/T0052.
+
+date: "05-05-17" in the timestamp line.
+
+total_amount: The "RM 42.33" in Total Sales.
+
+total_tax: The "2.41" in GST Summary under Tax(RM).
+
+Let's structure each entry.
+</think>
 [
-  {"bbox_2d": [322, 302, 425, 322], "label": "date"},
-  {"bbox_2d": [293, 232, 523, 252], "label": "doc_no_receipt_no"},
-  {"bbox_2d": [207, 143, 792, 202], "label": "seller_address"},
-  {"bbox_2d": [325, 247, 493, 265], "label": "seller_gst_id"},
-  {"bbox_2d": [207, 103, 792, 123], "label": "seller_name"},
-  {"bbox_2d": [403, 543, 523, 563], "label": "total_amount"},
-  {"bbox_2d": [543, 633, 593, 653], "label": "total_tax"}
+    {"bbox_2d": [598, 300, 727, 324], "label": "date"},
+    {"bbox_2d": [325, 300, 527, 324], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [229, 228, 770, 300], "label": "seller_address"},
+    {"bbox_2d": [325, 324, 727, 348], "label": "seller_gst_id"},
+    {"bbox_2d": [229, 18, 770, 36], "label": "seller_name"},
+    {"bbox_2d": [425, 332, 538, 356], "label": "total_amount"},
+    {"bbox_2d": [645, 672, 695, 696], "label": "total_tax"}
 ]

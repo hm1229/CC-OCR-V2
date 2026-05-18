@@ -1,9 +1,49 @@
-[
-    {"bbox_2d": [125, 142, 875, 172], "label": "seller_name"},
-    {"bbox_2d": [125, 227, 875, 247], "label": "seller_gst_id"},
-    {"bbox_2d": [238, 275, 875, 345], "label": "seller_address"},
-    {"bbox_2d": [450, 300, 875, 320], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [125, 310, 325, 330], "label": "date"},
-    {"bbox_2d": [125, 495, 875, 520], "label": "total_amount"},
-    {"bbox_2d": [125, 535, 875, 555], "label": "total_tax"}
-]
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is 06/03/2018. Let's check where that is. On the invoice, under TAX INVOICE, there's 06/03/2018. So that's the date.
+
+doc_no_receipt_no: The receipt number is No:0100122617. Let's confirm. The line has "No:0100122617" so that's the document number.
+
+seller_address: The address is 28-G, Ground Floor, Jalan Dinar A U3/A, Tmn Subang Perdana, 40150 Shah Alam, Selangor. Let's check the lines above the TAX INVOICE.
+
+seller_gst_id: The GST ID is (GST ID No. : 002017808384). So that's the GST ID.
+
+seller_name: The company name is SWC ENTERPRISE SDN BHD. That's at the top.
+
+total_amount: The total amount is 4.00, as shown in "TOTAL AMOUNT 4.00".
+
+total_tax: The GST amount is 0.22, labeled as "GST @6% Included In Total 0.22". So that's the total tax.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The text "06/03/2018" is in the section below TAX INVOICE. Let's find its coordinates. The line is "06/03/2018" on the left, cashier on the right.
+
+2. doc_no_receipt_no: "No:0100122617" is the receipt number.
+
+3. seller_address: The address lines from "28-G, Ground Floor..." down to "Shah Alam, Selangor."
+
+4. seller_gst_id: "(GST ID No. : 002017808384)".
+
+5. seller_name: "SWC ENTERPRISE SDN BHD" at the top.
+
+6. total_amount: "TOTAL AMOUNT 4.00".
+
+7. total_tax: "GST @6% Included In Total 0.22".
+
+Now, need to define the bounding boxes for each. Let's check the positions.
+
+For seller_name: The text is at the top, "SWC ENTERPRISE SDN BHD" and the (1125830-V) below. So the bounding box would cover that area.
+
+Let's list each:
+
+- date: [58, 327, 213, 348] (the line 06/03/2018)
+- doc_no_receipt_no: [325, 327, 625, 348] (No:0100122617)
+- seller_address: The address lines: from "28-G, Ground Floor," to "Shah Alam, Selangor." Let's check the coordinates. The address is in the middle part, above TAX INVOICE.
+- seller_gst_id: The line "(GST ID No. : 002017808384)" which is below TAX INVOICE.
+- seller_name: The top part, "SWC ENTERPRISE SDN BHD" and the (1125830-V).
+- total_amount: The line "TOTAL AMOUNT 4.00" – the amount is 4.00.
+- total_tax: The line "GST @6% Included In Total 0.22" – the tax is 0.22.
+
+Now, let's create the JSON array with each entry.
+</think>
+[{"bbox_2d": [58, 327, 213, 348], "label": "date"}, {"bbox_2d": [325, 327, 625, 348], "label": "doc_no_receipt_no"}, {"bbox_2d": [234, 292, 765, 362], "label": "seller_address"}, {"bbox_2d": [106, 444, 506, 464], "label": "seller_gst_id"}, {"bbox_2d": [125, 177, 593, 200], "label": "seller_name"}, {"bbox_2d": [125, 512, 325, 534], "label": "total_amount"}, {"bbox_2d": [132, 582, 425, 599], "label": "total_tax"}]

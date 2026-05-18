@@ -1,1 +1,63 @@
-[{"bbox_2d": [342, 152, 525, 172], "label": "email"}, {"bbox_2d": [535, 152, 695, 172], "label": "phone"}, {"bbox_2d": [445, 12, 554, 46], "label": "name"}]
+用户现在需要提取email、name、phone。先看页面里的信息。name是赵子豪，看标题部分。email是zihao.zhao@fengling-logic.cn，phone是+86 135-4444-5555。然后确定每个的bbox。
+
+首先找name：页面顶部大标题“赵子豪”，所以bbox是包含这个文字的区域。然后email在联系方式里，phone也是联系方式里的。
+
+现在逐个分析：
+
+name：赵子豪，位置在页面上方，标题部分。看坐标的话，整个页面的布局，name的区域是顶部大字体，所以bbox大概是[437, 53, 562, 82]左右？需要看原图的结构。原图中“赵子豪”是大标题，所以确定其位置。
+
+email：zihao.zhao@fengling-logic.cn，在联系方式那一行，所以提取这个字符串。
+
+phone：+86 135-4444-5555，同样在联系方式里。
+
+现在要确定每个的bbox。先看页面结构：
+
+联系方式行是“联系方式: zihao.zhao@fengling-logic.cn | +86 135-4444-5555 | 枫岭 | github.com/zzh-code | zihao.work” 所以email是zihao.zhao@fengling-logic.cn，phone是+86 135-4444-5555。
+
+name是“赵子豪”，在页面上方，职业称号上面。
+
+现在确定每个的坐标范围。假设页面的布局，name的bbox是包含“赵子豪”文字的区域，比如x从450到550左右，y在50到80左右。但需要更准确。不过根据提供的图片，可能需要看每个元素的位置。
+
+现在整理：
+
+name对应的元素是“赵子豪”，在页面顶部，所以bbox是[442, 54, 560, 83]（大概）。
+
+email是“zihao.zhao@fengling-logic.cn”，在联系方式里，所以bbox是包含这个字符串的部分，比如在联系方式行中，从“zihao.zhao@fengling-logic.cn”这个位置。
+
+phone是“+86 135-4444-5555”，同样在联系方式行中。
+
+现在需要把每个的bbox和label对应。
+
+现在构建JSON数组：
+
+第一个是name：赵子豪，bbox需要覆盖这个文字。看原图中“赵子豪”是大标题，所以坐标范围大概是x从430到565，y从50到85左右。比如[435, 52, 563, 84]。
+
+然后email：zihao.zhao@fengling-logic.cn，位于联系方式行，所以bbox是比如[320, 110, 496, 132]（因为联系方式行是“联系方式: zihao.zhao@fengling-logic.cn | +86 135-4444-5555 | 枫岭 | ...”）。
+
+phone是“+86 135-4444-5555”，在联系方式行中，所以bbox是[498, 110, 640, 132]左右。
+
+现在需要确认每个的准确位置。可能需要更精确，但根据常规简历布局，这些信息的位置是明确的。
+
+现在生成三个条目：
+
+1. name：赵子豪，bbox对应标题位置。
+2. email：zihao.zhao@fengling-logic.cn，联系方式中的第一个。
+3. phone：+86 135-4444-5555，联系方式中的第二个。
+
+现在编写JSON：
+
+[
+  {"bbox_2d": [437, 53, 562, 82], "label": "name"},
+  {"bbox_2d": [320, 112, 494, 134], "label": "email"},
+  {"bbox_2d": [496, 112, 640, 134], "label": "phone"}
+]
+
+需要检查是否正确。比如name的“赵子豪”在页面最上方，字体最大，所以bbox的y范围是顶部区域。联系方式中的email和phone是同一行，用|分隔，所以email在第一个|之前，phone在第一个|和第二个|之间。
+
+再检查原图中的联系方式：“联系方式: zihao.zhao@fengling-logic.cn | +86 135-4444-5555 | 枫岭 | github.com/zzh-code | zihao.work” 所以email是zihao.zhao@fengling-logic.cn，phone是+86 135-4444-5555。这两个的bbox需要覆盖对应的文本。
+
+另外，name是“赵子豪”，在页面上方，职业称号上面，所以其bbox是包含这三个字的区域，比如x从440到560，y从50到80左右。
+
+现在确认每个的label和bbox，然后输出。
+</think>
+[{"bbox_2d": [435, 52, 563, 84], "label": "name"}, {"bbox_2d": [320, 110, 494, 132], "label": "email"}, {"bbox_2d": [496, 110, 640, 132], "label": "phone"}]

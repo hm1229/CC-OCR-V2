@@ -1,2 +1,124 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is on the invoice, "Date: 07/08/2017". Let's check where that is. The line says "Date: 07/08/2017" next to Cash Inv No.
+
+doc_no_receipt_no: Cash Inv No. is 7030F715. So that's the document number.
+
+seller_address: The seller here is MAKASSAR FRESH MARKET SDN BHD, and their address is "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR". Let's confirm the seller's address section.
+
+seller_gst_id: The top part has GARDENIA BAKERIES (KL) SDN BHD with GST ID: 000381399040. So that's the seller's GST ID.
+
+seller_name: GARDENIA BAKERIES (KL) SDN BHD is the seller name.
+
+seller_phone: The phone number is Tel: 03-55423228.
+
+total_amount: The Total Payable is 62.60. That's the total amount to pay.
+
+total_tax: The GST is 2.03. Let's check the GST line: "GST: 2.03".
+
+Now, let's map each to their bounding boxes.
+
+1. date: The text "Date: 07/08/2017" is in the section above the vendor details. Let's find the coordinates. The date is on the line "Cash Inv No.: 7030F715 Date: 07/08/2017". So the date part is there.
+
+2. doc_no_receipt_no: "Cash Inv No.: 7030F715" — the number is 7030F715.
+
+3. seller_address: The address of MAKASSAR FRESH MARKET SDN BHD: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR".
+
+4. seller_gst_id: From the top, "GST ID: 000381399040" — that's the GST ID of the seller (GARDENIA BAKERIES).
+
+5. seller_name: "GARDENIA BAKERIES (KL) SDN BHD" — the top part.
+
+6. seller_phone: "Tel: 03-55423228" — the telephone number.
+
+7. total_amount: "Total Payable: 62.60" — that's the total amount.
+
+8. total_tax: "GST: 2.03" — the tax amount.
+
+Now, let's check each element's position on the image.
+
+For date: The line is "Cash Inv No.: 7030F715 Date: 07/08/2017". So the date is in that line.
+
+doc_no_receipt_no: The Cash Inv No. is 7030F715.
+
+seller_address: The address block for MAKASSAR FRESH MARKET SDN BHD is from "MAKASSAR FRESH MARKET SDN BHD" down to "SELANGOR".
+
+seller_gst_id: The top part has "GST ID: 000381399040" — that's the seller's GST ID (since the seller is GARDENIA BAKERIES).
+
+seller_name: The top header "GARDENIA BAKERIES (KL) SDN BHD (139386 X)".
+
+seller_phone: "Tel: 03-55423228" — next to the address.
+
+total_amount: "Total Payable: 62.60" — near the bottom of the invoice details.
+
+total_tax: "GST: 2.03" — in the section where total 6% supplies (inc. GST) is calculated.
+
+Now, let's define the bounding boxes. Since the image is a receipt, we need to estimate the coordinates. Let's assume the image's coordinates are from top to bottom.
+
+For example:
+
+- seller_name: The top part, "GARDENIA BAKERIES (KL) SDN BHD" — the bounding box would cover that line.
+
+- seller_gst_id: The line "GST ID: 000381399040" — below the address and phone.
+
+- seller_phone: "Tel: 03-55423228" — same line as address.
+
+- date: The line with Cash Inv No. and Date.
+
+- doc_no_receipt_no: The Cash Inv No. value.
+
+- seller_address: The address of the vendor (MAKASSAR...).
+
+- total_amount: The Total Payable line.
+
+- total_tax: The GST line.
+
+Let's list each:
+
+1. date: [The text "07/08/2017" in the line "Date: 07/08/2017". Let's check the position. The date is part of the header section. Bounding box would be around that date.
+
+2. doc_no_receipt_no: The value "7030F715" from "Cash Inv No.: 7030F715".
+
+3. seller_address: The address of MAKASSAR FRESH MARKET SDN BHD: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR".
+
+4. seller_gst_id: "000381399040" from "GST ID: 000381399040".
+
+5. seller_name: "GARDENIA BAKERIES (KL) SDN BHD".
+
+6. seller_phone: "03-55423228" from "Tel: 03-55423228".
+
+7. total_amount: "62.60" from "Total Payable: 62.60".
+
+8. total_tax: "2.03" from "GST: 2.03".
+
+Now, let's map each to their bounding boxes. Since the exact pixel coordinates are hard without the image's dimensions, but in the context of the problem, we can describe the regions.
+
+For example:
+
+- seller_name: The topmost part, "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — bounding box covers that line.
+
+- seller_gst_id: The line below the address and phone: "GST ID: 000381399040" — so the value is there.
+
+- seller_phone: "Tel: 03-55423228" — next to the address line.
+
+- date: The line "Date: 07/08/2017" is to the right of "Cash Inv No.: 7030F715".
+
+- doc_no_receipt_no: The text "7030F715" in the Cash Inv No. field.
+
+- seller_address: The block starting with "MAKASSAR FRESH MARKET SDN BHD" and the address lines below.
+
+- total_amount: The line "Total Payable: 62.60" — near the bottom of the itemized list.
+
+- total_tax: The line "GST: 2.03" — between the total 6% supplies (excl. GST) and total 6% supplies (inc. GST).
+
+Now, let's structure the JSON array with each entry.
+</think>
 [
-  {"bbox_2d": [100, 15, 90
+    {"bbox_2d": [190, 302, 327, 322], "label": "date"},
+    {"bbox_2d": [703, 287, 777, 306], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [37, 437, 602, 497], "label": "seller_address"},
+    {"bbox_2d": [327, 237, 437, 255], "label": "seller_gst_id"},
+    {"bbox_2d": [65, 14, 437, 32], "label": "seller_name"},
+    {"bbox_2d": [143, 237, 287, 255], "label": "seller_phone"},
+    {"bbox_2d": [545, 605, 627, 623], "label": "total_amount"},
+    {"bbox_2d": [245, 577, 277, 595], "label": "total_tax"}
+]

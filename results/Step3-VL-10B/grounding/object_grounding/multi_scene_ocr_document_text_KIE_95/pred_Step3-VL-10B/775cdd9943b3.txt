@@ -1,26 +1,188 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is at the bottom part, "28-05-18". Let me check the line: "28-05-18 17:00 SHO1 ZJ94...". So the date is 28-05-18.
+
+Seller_address: The address is the block starting with LOT 1851-A & 1851-B... up to MELAWATI MALL. Let's extract that.
+
+Seller_gst_id: The GST ID is given as (GST ID No : 000306020352). So that's the GST ID.
+
+Seller_name: The top line is MR. D.I.Y. (M) SDN BHD.
+
+Total_amount: The total incl. GST@6% is RM 2.70. Let's check the line "Total Incl. GST@6% RM 2.70".
+
+Total_tax: In the GST Summary, GST S@6% Tax(RM) is 0.15. Let's confirm: the GST Summary has Tax(RM) 0.15.
+
+Now, let's map each to their bounding boxes.
+
+First, seller_name: The top part, "MR. D.I.Y. (M) SDN BHD" and the CO REG line. Let's find the bounding box for the seller name.
+
+Looking at the image, the seller name is the first line: "MR. D.I.Y. (M) SDN BHD". The coordinates would be the top section.
+
+Seller_address: The address lines: LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (MELAWATI MALL). So that's the block from LOT... to MELAWATI MALL.
+
+Seller_gst_id: The line with (GST ID No : 000306020352).
+
+Date: The line starting with 28-05-18.
+
+Total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+Total_tax: The GST S@6% Tax(RM) 0.15. Let's check the GST Summary section: "GST S@6% Amnt(RM) Tax(RM)" and the Tax(RM) is 0.15.
+
+Now, let's define each bounding box.
+
+For seller_name: The text "MR. D.I.Y. (M) SDN BHD" is in the top part. Let's check the coordinates. The first line is that, so the bounding box would cover that line.
+
+Seller_address: The lines from LOT 1851-A... to (MELAWATI MALL). Let's see the text:
+
+LOT 1851-A & 1851-B, JALAN KPB 6,
+KAWASAN PERINDUSTRIAN BALAKONG,
+43300 SERI KEMBANGAN, SELANGOR
+(MELAWATI MALL)
+
+So the bounding box includes these lines.
+
+Seller_gst_id: The line "(GST ID No : 000306020352)".
+
+Date: The line "28-05-18 17:00 SHO1 ZJ94 T3 R000059251" — the date part is 28-05-18.
+
+Total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+Total_tax: The line in GST Summary where Tax(RM) is 0.15. Let's check the GST Summary section:
+
+GST Summary          Amnt(RM)   Tax(RM)
+GST S@6%                     2.55      0.15
+
+So the Tax(RM) value is 0.15, which is the total tax.
+
+Now, let's structure each entry.
+
+1. date: "28-05-18" — find the line with that date. The line is "28-05-18 17:00 SHO1 ZJ94 T3 R000059251". So the bounding box for the date part.
+
+2. seller_address: The address block.
+
+3. seller_gst_id: The GST ID line.
+
+4. seller_name: The company name line.
+
+5. total_amount: The total including GST.
+
+6. total_tax: The GST tax amount.
+
+Let's assign each:
+
+- date: The line "28-05-18 17:00 SHO1 ZJ94 T3 R000059251" — the date is the first part. The bounding box for this line.
+
+- seller_address: The lines from "LOT 1851-A & 1851-B..." to "(MELAWATI MALL)".
+
+- seller_gst_id: The line "(GST ID No : 000306020352)".
+
+- seller_name: The line "MR. D.I.Y. (M) SDN BHD" and the CO REG line? Wait, the seller name is "MR. D.I.Y. (M) SDN BHD", which is the first line. The CO REG is part of the seller info but the name is the first line.
+
+- total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+- total_tax: The line in GST Summary where Tax(RM) is 0.15. Let's check the exact line: "GST S@6% Amnt(RM) Tax(RM)" and the Tax(RM) column has 0.15. So the value is 0.15, which is the total tax.
+
+Now, let's create the JSON array.
+
+First, identify each element's bounding box.
+
+Let's check the image's text positions.
+
+For seller_name: The topmost text is "MR. D.I.Y. (M) SDN BHD". Let's assume the bounding box covers that line.
+
+seller_address: The next lines: LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (MELAWATI MALL). So the bounding box includes these lines.
+
+seller_gst_id: The line with GST ID No: 000306020352.
+
+date: The line starting with 28-05-18.
+
+total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+total_tax: The line in GST Summary where Tax(RM) is 0.15. Let's check the line "GST S@6% Amnt(RM) Tax(RM)" and the next line has Tax(RM) 0.15. So the value is 0.15, which is the total tax.
+
+Now, let's write each entry.
+
+1. date: The line "28-05-18 17:00 SHO1 ZJ94 T3 R000059251" — the date is part of this line. The bounding box for this line.
+
+2. seller_address: The block from "LOT 1851-A & 1851-B..." to "(MELAWATI MALL)".
+
+3. seller_gst_id: The line "(GST ID No : 000306020352)".
+
+4. seller_name: The line "MR. D.I.Y. (M) SDN BHD".
+
+5. total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+6. total_tax: The line where Tax(RM) is 0.15, which is in the GST Summary section. Let's check the line "GST S@6% Amnt(RM) Tax(RM)" and the corresponding Tax(RM) value is 0.15. So the total_tax is 0.15.
+
+Now, let's define the bounding boxes. Since the image is a receipt, each line is a separate entry. Let's map each.
+
+For example:
+
+- seller_name: The first line: "MR. D.I.Y. (M) SDN BHD" — coordinates would be the top part.
+
+- seller_gst_id: The line with GST ID: "(GST ID No : 000306020352)" — that's a specific line.
+
+- seller_address: The lines between the company name and the tax invoice line.
+
+- date: The line with the timestamp: "28-05-18 17:00 SHO1 ZJ94 T3 R000059251".
+
+- total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+- total_tax: The line in GST Summary where Tax(RM) is 0.15. Let's check the line "GST S@6% Amnt(RM) Tax(RM)" and the next line has "2.55" and "0.15". So the Tax(RM) column's value is 0.15, which is the total tax.
+
+Now, let's create the JSON array entries.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's list them:
+
+1. date: The line containing "28-05-18". Let's check the line: "28-05-18 17:00 SHO1 ZJ94 T3 R000059251". So the bounding box for this line.
+
+2. seller_address: The address lines. Let's check the text:
+
+LOT 1851-A & 1851-B, JALAN KPB 6,
+KAWASAN PERINDUSTRIAN BALAKONG,
+43300 SERI KEMBANGAN, SELANGOR
+(MELAWATI MALL)
+
+These lines form the address.
+
+3. seller_gst_id: The line "(GST ID No : 000306020352)".
+
+4. seller_name: The line "MR. D.I.Y. (M) SDN BHD".
+
+5. total_amount: The line "Total Incl. GST@6% RM 2.70".
+
+6. total_tax: The line where Tax(RM) is 0.15. Let's check the GST Summary section:
+
+GST Summary          Amnt(RM)   Tax(RM)
+GST S@6%                     2.55      0.15
+
+So the Tax(RM) value is 0.15, which is the total tax. The line for this is the one with "0.15" under Tax(RM).
+
+Now, let's assign approximate bounding boxes. Since the exact coordinates are hard without the image's pixel data, but in the context of the problem, we can identify the text regions.
+
+For example:
+
+- seller_name: [x1, y1, x2, y2] covering "MR. D.I.Y. (M) SDN BHD"
+
+- seller_gst_id: covering "(GST ID No : 000306020352)"
+
+- seller_address: covering the address lines
+
+- date: covering "28-05-18 17:00 SHO1 ZJ94 T3 R000059251"
+
+- total_amount: covering "Total Incl. GST@6% RM 2.70"
+
+- total_tax: covering the "0.15" in the Tax(RM) column of GST S@6%
+
+Now, let's write the JSON array.
+</think>
 [
-  {
-    "bbox_2d": [100, 12, 900, 38],
-    "label": "seller_name"
-  },
-  {
-    "bbox_2d": [100, 210, 900, 238],
-    "label": "seller_gst_id"
-  },
-  {
-    "bbox_2d": [100, 135, 900, 185],
-    "label": "seller_address"
-  },
-  {
-    "bbox_2d": [100, 895, 900, 920],
-    "label": "date"
-  },
-  {
-    "bbox_2d": [100, 405, 900, 430],
-    "label": "total_amount"
-  },
-  {
-    "bbox_2d": [100, 605, 900, 630],
-    "label": "total_tax"
-  }
+    {"bbox_2d": [1, 92, 997, 122], "label": "seller_name"},
+    {"bbox_2d": [1, 132, 997, 192], "label": "seller_address"},
+    {"bbox_2d": [1, 194, 997, 214], "label": "seller_gst_id"},
+    {"bbox_2d": [1, 282, 997, 302], "label": "date"},
+    {"bbox_2d": [1, 332, 997, 352], "label": "total_amount"},
+    {"bbox_2d": [1, 442, 997, 462], "label": "total_tax"}
 ]

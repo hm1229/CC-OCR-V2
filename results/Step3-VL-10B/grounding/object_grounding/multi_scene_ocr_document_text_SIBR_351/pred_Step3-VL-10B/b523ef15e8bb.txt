@@ -1,122 +1,145 @@
-用户现在需要检测指定类别在发票中的各个元素，要逐个找。首先看每个类别对应的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-先看ADD：在顶部公司信息下面，ADD:59532... 这里ADD是标签，对应内容。然后ADDRESS在BILL TO和SHIP TO里的地址部分。ATTN是BILL TO和SHIP TO里的注意人。Amount (USD)是表格里的Amount列。Bank Account(USD)是Beneficiary Bank下面的Bank Account(USD)。Bank Name是Bank Name:...。Beneficiary Name是Beneficiary Name:...。COMPANY NAME是顶部的济南亿次元传媒有限公司。Cinderson Invoice No是右边的Cinderson Invoice No. XDS21670。DATE是右边的DATE:22-Jul-2021。DESTINATION是DESTINATION: KOREA。Delivery Method是Delivery Method: Sea LCL。Description of goods是表格里的Description of goods列。ETD date是右边的ETD date 6-Aug-2021。FAX在BILL TO和SHIP TO里的FAX。P/C是Manufacturer下面的P/C:215122。Packing是Packing:Export standard sea-worthy .。Payment是Payment:100% before shipment。Quantity (PCS)是表格里的Quantity (PCS)列。SHIPMENT TERM是SHIPMNET TERM: CIF。Shipping port/ Destination是Shipping port/Destination:Shanghai port,China/INCHON, KOREA.。Swift Code是Swift Code: BKCHHCNBJ95B。TEL在BILL TO、SHIP TO、Manufacturer等的TEL。TITLE？看有没有TITLE，可能标题是COMMERCIAL INVOICE？不过用户给的类别里有TITLE吗？看用户给的类别列表里有TITLE，可能需要检查。不过先看其他。Unit Price (USD)是表格里的Unit Price (USD)列。
+首先看COMPANY NAME，是顶部的“济南亿次元传媒有限公司 Jinan Yijiyuan Media Co., Ltd.”，所以ADD是上面的ADD:59532...，ADDRESS在BILL TO里的地址，ATTN是BILL TO的ATTN:Sharon Roberts。然后Amount (USD)是表格里的24096.00。Bank Account(USD)是Beneficiary Bank下面的Bank Account(USD):517058231250。Bank Name是Bank of China Suzhou Industrial Park Sub-BR。Beneficiary Name是Jinan Yijiyuan Media Co., Ltd.。Cinderson Invoice No是XDS21670。DATE是22-Jul-2021。DESTINATION是KOREA。Delivery Method是Sea LCL。Description of goods是CDS-LFAQ15-010 220V 450W 105TP。ETD date是6-Aug-2021。FAX在BILL TO里的FAX:2358-60-280-5822，还有SHIP TO里的FAX:8850-25-863-0222？不过看问题里的FAX应该对应哪个？可能看BILL TO的FAX。P/C是215122（在Manufacturer下面的P/C:215122）。Packing是Export standard sea-worthy .。Payment是100% before shipment。Quantity (PCS)是4800。SHIPMENT TERM是CIF。Shipping port/ Destination是Shanghai port,China/INCHON, KOREA.。Swift Code是BKCHHCNBJ95B。TEL在BILL TO是1750-23-0430-8708，SHIP TO是USS Romero FPO AA 34117。TITLE可能没有？看发票里有没有TITLE，可能没有，或者看其他。Unit Price (USD)是5.02。另外ADD是顶部的ADD:59532 Salinas Freeway Suite 027 West Frankberg, MI 91469。
 
-现在逐个处理：
+现在需要逐个确认每个标签对应的bbox。
 
-1. ADD：在顶部公司信息下方，ADD:59532... 所以bbox是ADD:对应的位置，看原文ADD:59532 Salinas Freeway Suite 027 West Frankberg, MI 91469，所以ADD的标签位置，bbox是[50, 157, 922, 175]左右？需要看坐标。不过可能更准确的是看每个元素的位置。
+先列所有需要的标签：
 
-先列所有需要检测的类别，然后找每个的实例。
+1. ADD：顶部的ADD:59532...，对应位置是公司信息下面的ADD行。
+2. ADDRESS：BILL TO下的ADDRESS:USNS Lopez FPO AE 87583...（注意有两个ADDRESS？不，BILL TO的ADDRESS是USNS Lopez FPO AE 87583，然后下面还有USNS Martinez FPO AE 35035？不，看BILL TO的结构：ADDRESS:USNS Lopez FPO AE 87583；然后下一行是PSC 5795, Box 8964 APO AE 05414；然后USNS Martinez FPO AE 35035。所以ADDRESS是第一行的USNS Lopez FPO AE 87583。
+3. ATTN：BILL TO的ATTN:Sharon Roberts。
+4. Amount (USD)：表格里的Amount列的24096.00。
+5. Bank Account(USD)：Beneficiary Bank下的Bank Account(USD):517058231250。
+6. Bank Name：Bank of China Suzhou Industrial Park Sub-BR。
+7. Beneficiary Name：Jinan Yijiyuan Media Co., Ltd.。
+8. COMPANY NAME：顶部的济南亿次元传媒有限公司 Jinan Yijiyuan Media Co., Ltd.。
+9. Cinderson Invoice No：XDS21670。
+10. DATE：22-Jul-2021。
+11. DESTINATION：KOREA。
+12. Delivery Method：Sea LCL。
+13. Description of goods：CDS-LFAQ15-010 220V 450W 105TP。
+14. ETD date：6-Aug-2021。
+15. FAX：看BILL TO的FAX:2358-60-280-5822（因为SHIP TO的FAX是另一个，但问题里的FAX可能指BILL TO的？需要看。或者看哪个更明显。）
+16. P/C：215122（在Manufacturer下面的P/C:215122）。
+17. Packing：Export standard sea-worthy .。
+18. Payment：100% before shipment。
+19. Quantity (PCS)：4800。
+20. SHIPMENT TERM：CIF。
+21. Shipping port/ Destination：Shanghai port,China/INCHON, KOREA.。
+22. Swift Code：BKCHHCNBJ95B。
+23. TEL：BILL TO的TEL:1750-23-0430-8708（或者SHIP TO的TEL？看问题里的TEL，可能需要看哪个。）
+24. TITLE：可能没有，或者看发票中的TITLE？可能没有，暂时忽略？但问题里有TITLE，可能需要检查。看发票中是否有TITLE，可能没有，或者可能我漏了。或者可能TITLE是“COMMERCIAL INVOICE”？但标签是TITLE，可能对应标题。不过看问题中的TITLE，可能需要找。或者可能没有，但必须处理。或者可能用户给的标签中TITLE是否存在？看问题里的列表有TITLE，所以需要找。可能“COMMERCIAL INVOICE”是标题，所以TITLE对应这个。
+25. Unit Price (USD)：5.02。
 
-现在开始逐个：
+现在逐个处理每个标签的bbox：
 
-- ADD：在公司信息下面，ADD:59532... 所以标签是ADD，内容是地址。bbox是[50, 157, 922, 175]（假设）。
-- ADDRESS：在BILL TO下的ADDRESS:USNS Lopez FPO...；SHIP TO下的ADDRESS:USNS Espinoza FPO...；Manufacturer下的地址？不，Manufacturer是制造商，其地址是712 Allen Stravenue...，但ADDRESS在BILL TO和SHIP TO里。所以有两个ADDRESS？但用户要检测所有匹配的，所以每个ADDRESS都要列。比如BILL TO的ADDRESS，SHIP TO的ADDRESS。
-- ATTN：BILL TO的ATTN:Sharon Roberts；SHIP TO的ATTN:Lacey Phillips。
-- Amount (USD)：表格里的Amount列，值是24096.00，对应单元格。
-- Bank Account(USD)：Beneficiary Bank下的Bank Account(USD):517058231250。
-- Bank Name：Bank Name:Bank of China Suzhou Industrial Park Sub-BR。
-- Beneficiary Name：Beneficiary Name:Jinan Yijiyuan Media Co., Ltd.
-- COMPANY NAME：顶部的济南亿次元传媒有限公司，Jinan Yijiyuan Media Co., Ltd.
-- Cinderson Invoice No：Cinderson Invoice No. XDS21670。
-- DATE：DATE:22-Jul-2021。
-- DESTINATION：DESTINATION: KOREA。
-- Delivery Method：Delivery Method: Sea LCL。
-- Description of goods：表格里的Description of goods列，内容是CDS-LFAQ15-010 220V 450W 105TP。
-- ETD date：ETD date 6-Aug-2021。
-- FAX：BILL TO的FAX:2358-60-280-5822；SHIP TO的FAX:8850-25-863-0222。
-- P/C：P/C:215122（在Manufacturer下面）。
-- Packing：Packing:Export standard sea-worthy .
-- Payment：Payment:100% before shipment。
-- Quantity (PCS)：表格里的Quantity (PCS)列，值是4800。
-- SHIPMENT TERM：SHIPMNET TERM: CIF。
-- Shipping port/ Destination：Shipping port/Destination:Shanghai port,China/INCHON, KOREA.
-- Swift Code：Swift Code: BKCHHCNBJ95B。
-- TEL：BILL TO的TEL:1750-23-0430-8708；SHIP TO的TEL:USS Romero FPO AA 34117；Manufacturer的TEL？不，Manufacturer的TEL可能没有，看SHIP TO的TEL是USS Romero FPO AA 34117，BILL TO的TEL是1750-23-0430-8708，还有顶部公司的TEL:6901-26129305？但用户给的类别是TEL，所以所有TEL都要列吗？看用户给的类别是TEL，所以需要找所有TEL标签。
-- TITLE：可能COMMERCIAL INVOICE是TITLE？因为标题是COMMERCIAL INVOICE，所以TITLE对应这个。
-- Unit Price (USD)：表格里的Unit Price (USD)列，值是5.02。
+1. ADD：公司信息下方的ADD行，文字是“ADD:59532 Salinas Freeway Suite 027 West Frankberg, MI 91469”。位置在顶部公司信息下面，所以bbox是[44, 150, 922, 170]左右？看原图，ADD:59532...在公司名称下面，TEL和FAX上面。所以坐标范围：x从ADD开始，到地址结束。需要看图像中的位置。
 
-现在需要把每个检测到的元素用bbox和label表示。需要注意每个实例，比如ADDRESS在BILL TO和SHIP TO各有一个，所以两个ADDRESS。ATTN在BILL TO和SHIP TO各一个，两个ATTN。FAX在BILL TO和SHIP TO各一个，两个FAX。TEL在BILL TO、SHIP TO、顶部公司？顶部公司的TEL是TEL:6901-26129305，所以三个TEL？需要看原文：
+2. ADDRESS（BILL TO的）：BILL TO下的ADDRESS:USNS Lopez FPO AE 87583。位置在BILL TO:右边的ADDRESS行。bbox是[142, 202, 634, 222]（大概）。
 
-顶部公司信息：TEL:6901-26129305，这是公司的TEL。然后BILL TO的TEL:1750-23-0430-8708；SHIP TO的TEL:USS Romero FPO AA 34117。所以三个TEL。
+3. ATTN（BILL TO的）：ATTN:Sharon Roberts。在BILL TO的FAX下面，所以bbox是[142, 290, 634, 310]。
 
-现在开始整理每个元素：
+4. Amount (USD)：表格中最后一行的Amount列，值是24096.00。表格的Amount列是第四列（从左数，PO NO, Description, Quantity, Unit Price, Amount）。所以bbox是[650, 500, 820, 520]左右，值是24096.00。
 
-1. ADD：公司信息下的ADD:59532... → bbox是[50, 157, 922, 175]（假设，需要看实际位置，原文中ADD:59532 Salinas Freeway Suite 027 West Frankberg, MI 91469，所以ADD标签的位置，x1,y1到x2,y2。）
-2. ADDRESS（BILL TO）：BILL TO下的ADDRESS:USNS Lopez FPO AE 87583... → bbox是[140, 202, 650, 220]左右。
-3. ADDRESS（SHIP TO）：SHIP TO下的ADDRESS:USNS Espinoza FPO AA 53828... → bbox是[140, 310, 650, 328]左右。
-4. ATTN（BILL TO）：BILL TO下的ATTN:Sharon Roberts → bbox是[140, 290, 650, 308]左右。
-5. ATTN（SHIP TO）：SHIP TO下的ATTN:Lacey Phillips → bbox是[140, 370, 650, 388]左右。
-6. Amount (USD)：表格中Amount列的值24096.00 → 对应单元格，bbox是[650, 500, 922, 570]左右（因为表格的Amount列是最后一列，值是24096.00）。
-7. Bank Account(USD)：Beneficiary Bank下的Bank Account(USD):517058231250 → bbox是[50, 600, 650, 618]左右。
-8. Bank Name：Bank Name:Bank of China Suzhou Industrial Park Sub-BR → bbox是[50, 610, 650, 628]左右。
-9. Beneficiary Name：Beneficiary Name:Jinan Yijiyuan Media Co., Ltd. → bbox是[50, 625, 650, 643]左右。
-10. COMPANY NAME：顶部的济南亿次元传媒有限公司，Jinan Yijiyuan Media Co., Ltd. → bbox是[200, 10, 790, 30]（公司名称的中英文）。
-11. Cinderson Invoice No：Cinderson Invoice No. XDS21670 → bbox是[750, 230, 922, 248]左右（右边的Cinderson Invoice No. XDS21670）。
-12. DATE：DATE:22-Jul-2021 → bbox是[750, 245, 922, 263]左右。
-13. DESTINATION：DESTINATION: KOREA → bbox是[750, 268, 922, 286]左右。
-14. Delivery Method：Delivery Method: Sea LCL → bbox是[650, 400, 922, 418]左右。
-15. Description of goods：表格中的Description of goods列，内容是CDS-LFAQ15-010 220V 450W 105TP → bbox是[200, 490, 650, 570]左右（表格的Description列）。
-16. ETD date：ETD date 6-Aug-2021 → bbox是[650, 340, 922, 358]左右（右边的ETD date 6-Aug-2021）。
-17. FAX（BILL TO）：BILL TO下的FAX:2358-60-280-5822 → bbox是[140, 300, 650, 318]左右。
-18. FAX（SHIP TO）：SHIP TO下的FAX:8850-25-863-0222 → bbox是[140, 385, 650, 403]左右。
-19. P/C：P/C:215122 → 在Manufacturer下面，bbox是[450, 460, 550, 478]左右（原文中Manufacturer下面有P/C:215122）。
-20. Packing：Packing:Export standard sea-worthy . → bbox是[50, 650, 650, 668]左右。
-21. Payment：Payment:100% before shipment。 → bbox是[50, 665, 650, 683]左右。
-22. Quantity (PCS)：表格中的Quantity (PCS)列，值是4800 → bbox是[400, 490, 550, 570]左右（表格的Quantity列）。
-23. SHIPMENT TERM：SHIPMNET TERM: CIF → bbox是[750, 300, 922, 318]左右（右边的SHIPMNET TERM: CIF）。
-24. Shipping port/ Destination：Shipping port/Destination:Shanghai port,China/INCHON, KOREA. → bbox是[50, 690, 650, 708]左右。
-25. Swift Code：Swift Code: BKCHHCNBJ95B → bbox是[50, 688, 650, 706]左右（在Bank Account下面）。
-26. TEL（顶部公司）：TEL:6901-26129305 → bbox是[200, 160, 790, 178]左右（公司信息中的TEL）。
-27. TEL（BILL TO）：BILL TO下的TEL:1750-23-0430-8708 → bbox是[140, 225, 650, 243]左右。
-28. TEL（SHIP TO）：SHIP TO下的TEL:USS Romero FPO AA 34117 → bbox是[140, 325, 650, 343]左右。
-29. TITLE：COMMERCIAL INVOICE → bbox是[320, 220, 670, 240]左右（大标题COMMERCIAL INVOICE）。
-30. Unit Price (USD)：表格中的Unit Price (USD)列，值是5.02 → bbox是[550, 490, 650, 570]左右（表格的Unit Price列）。
+5. Bank Account(USD)：Beneficiary Bank下的Bank Account(USD):517058231250。位置在Beneficiary Bank部分，Bank Account(USD)行。bbox是[100, 820, 520, 840]（大概）。
 
-现在需要确认每个类别是否都覆盖，然后生成JSON数组。需要注意有些类别可能只有一个实例，比如COMPANY NAME是顶部的公司名称，Cinderson Invoice No是右边的编号，等等。
+6. Bank Name：Bank of China Suzhou Industrial Park Sub-BR。在Beneficiary Bank下的Bank Name行。bbox是[100, 845, 520, 865]。
+
+7. Beneficiary Name：Jinan Yijiyuan Media Co., Ltd.。在Beneficiary Name行。bbox是[100, 870, 520, 890]。
+
+8. COMPANY NAME：顶部的“济南亿次元传媒有限公司 Jinan Yijiyuan Media Co., Ltd.”。bbox是[120, 20, 840, 50]（公司名称的两行）。
+
+9. Cinderson Invoice No：XDS21670。在发票右上方，Cinderson Invoice No: XDS21670。bbox是[680, 230, 820, 250]。
+
+10. DATE：22-Jul-2021。在Cinderson Invoice No右边的DATE:22-Jul-2021。bbox是[680, 255, 820, 275]。
+
+11. DESTINATION：KOREA。在DATE下面的DESTINATION: KOREA。bbox是[680, 280, 820, 295]。
+
+12. Delivery Method：Sea LCL。在右侧Delivery Method: Sea LCL。bbox是[500, 430, 820, 450]。
+
+13. Description of goods：CDS-LFAQ15-010 220V 450W 105TP。在表格的Description of goods列。bbox是[200, 520, 620, 540]。
+
+14. ETD date：6-Aug-2021。在右侧ETD date:6-Aug-2021。bbox是[600, 455, 820, 475]。
+
+15. FAX（BILL TO的）：2358-60-280-5822。在BILL TO的FAX行。bbox是[142, 315, 634, 335]。
+
+16. P/C：215122。在Manufacturer下面的P/C:215122。Manufacturer是Jinan Yijiyuan Media Co., Ltd.下面的地址，然后P/C:215122。bbox是[460, 460, 520, 475]（大概，在地址下面）。
+
+17. Packing：Export standard sea-worthy .。在底部Packing:Export standard sea-worthy .。bbox是[100, 770, 520, 785]。
+
+18. Payment：100% before shipment。在Packing下面的Payment:100% before shipment。bbox是[100, 785, 520, 800]。
+
+19. Quantity (PCS)：4800。在表格的Quantity (PCS)列，值是4800。bbox是[420, 500, 480, 520]。
+
+20. SHIPMENT TERM：CIF。在DESTINATION下面的SHIPMENT TERM: CIF。bbox是[680, 300, 820, 315]。
+
+21. Shipping port/ Destination：Shanghai port,China/INCHON, KOREA.。在底部Shipping port/ Destination:Shanghai port,China/INCHON, KOREA.。bbox是[100, 970, 520, 985]。
+
+22. Swift Code：BKCHHCNBJ95B。在Bank Account(USD)下面的Swift Code: BKCHHCNBJ95B。bbox是[100, 895, 520, 910]。
+
+23. TEL（BILL TO的）：1750-23-0430-8708。在BILL TO的TEL行。bbox是[142, 240, 634, 260]。
+
+24. TITLE：COMMERCIAL INVOICE。在发票上方的大标题，黑色粗体。bbox是[380, 250, 620, 280]（因为COMMERCIAL INVOICE是大标题，所以TITLE对应这个）。
+
+25. Unit Price (USD)：5.02。在表格的Unit Price (USD)列，值是5.02。bbox是[520, 500, 580, 520]。
+
+现在需要将每个标签对应到这些内容，然后生成JSON数组。需要注意每个条目是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+现在逐个整理：
+
+1. ADD: 对应顶部的ADD行，文字是“ADD:59532 Salinas Freeway Suite 027 West Frankberg, MI 91469”。bbox大概是从ADD开始到地址结束，位置在公司名称下方，TEL上方。所以坐标范围：x1=44, y1=152, x2=922, y2=170（假设图像的坐标，需要根据实际图像，但这里尽量估计）。
+
+2. ADDRESS（BILL TO的）：BILL TO下的第一个ADDRESS，即“ADDRESS:USNS Lopez FPO AE 87583”。bbox是[140, 200, 636, 222]。
+
+3. ATTN（BILL TO的）：“ATTN:Sharon Roberts”。bbox是[140, 290, 636, 312]。
+
+4. Amount (USD)：“24096.00”在Amount列。bbox是[652, 502, 818, 522]。
+
+5. Bank Account(USD)：“517058231250”在Bank Account(USD)行。bbox是[102, 822, 518, 842]。
+
+6. Bank Name：“Bank of China Suzhou Industrial Park Sub-BR”。bbox是[102, 846, 518, 866]。
+
+7. Beneficiary Name：“Jinan Yijiyuan Media Co., Ltd.”。bbox是[102, 872, 518, 892]。
+
+8. COMPANY NAME：“济南亿次元传媒有限公司 Jinan Yijiyuan Media Co., Ltd.”。bbox是[122, 22, 838, 48]（两行文字）。
+
+9. Cinderson Invoice No：“XDS21670”。bbox是[682, 232, 818, 252]。
+
+10. DATE：“22-Jul-2021”。bbox是[682, 256, 818, 276]。
+
+11. DESTINATION：“KOREA”。bbox是[682, 282, 818, 298]。
+
+12. Delivery Method：“Sea LCL”。bbox是[502, 432, 818, 452]。
+
+13. Description of goods：“CDS-LFAQ15-010 220V 450W 105TP”。bbox是[202, 522, 622, 542]。
+
+14. ETD date：“6-Aug-2021”。bbox是[602, 456, 818, 476]。
+
+15. FAX（BILL TO的）：“2358-60-280-5822”。bbox是[142, 316, 636, 336]。
+
+16. P/C：“215122”。在Manufacturer下面，P/C:215122。Manufacturer的地址是“712 Allen Stravenue Apt. 195 Port Adam, AL 47252 363 Lee Burgs Riosland, VA 50409”，然后P/C:215122。所以bbox是[462, 462, 522, 480]。
+
+17. Packing：“Export standard sea-worthy .”。bbox是[102, 772, 522, 788]。
+
+18. Payment：“100% before shipment”。bbox是[102, 786, 522, 802]。
+
+19. Quantity (PCS)：“4800”。bbox是[422, 502, 482, 522]。
+
+20. SHIPMENT TERM：“CIF”。bbox是[682, 302, 818, 318]。
+
+21. Shipping port/ Destination：“Shanghai port,China/INCHON, KOREA.”。bbox是[102, 972, 522, 988]。
+
+22. Swift Code：“BKCHHCNBJ95B”。bbox是[102, 896, 522, 912]。
+
+23. TEL（BILL TO的）：“1750-23-0430-8708”。bbox是[142, 242, 636, 262]。
+
+24. TITLE：“COMMERCIAL INVOICE”。这是大标题，所以bbox是[382, 252, 620, 278]（因为COMMERCIAL INVOICE在发票上方，黑色大写）。
+
+25. Unit Price (USD)：“5.02”。bbox是[522, 502, 582, 522]。
+
+现在需要将这些整理成JSON数组，每个元素是对象，包含bbox_2d和label。注意bbox_2d的坐标是[x1, y1, x2, y2]，需要确保每个的坐标范围正确。由于是示意图，可能需要根据实际图像调整，但这里尽量准确。
 
 现在开始构建每个条目：
 
-比如：
-
-- ADD: [50, 155, 925, 175], "ADD"
-- ADDRESS (BILL TO): [138, 200, 652, 220], "ADDRESS"
-- ADDRESS (SHIP TO): [138, 310, 652, 330], "ADDRESS"
-- ATTN (BILL TO): [138, 290, 652, 310], "ATTN"
-- ATTN (SHIP TO): [138, 370, 652, 390], "ATTN"
-- Amount (USD): [652, 500, 922, 570], "Amount (USD)"
-- Bank Account(USD): [50, 600, 650, 620], "Bank Account(USD)"
-- Bank Name: [50, 610, 650, 630], "Bank Name"
-- Beneficiary Name: [50, 625, 650, 645], "Beneficiary Name"
-- COMPANY NAME: [200, 9, 790, 30], "COMPANY NAME"
-- Cinderson Invoice No: [750, 230, 922, 250], "Cinderson Invoice No"
-- DATE: [750, 245, 922, 265], "DATE"
-- DESTINATION: [750, 268, 922, 288], "DESTINATION"
-- Delivery Method: [650, 400, 922, 420], "Delivery Method"
-- Description of goods: [200, 490, 650, 570], "Description of goods"
-- ETD date: [650, 340, 922, 360], "ETD date"
-- FAX (BILL TO): [138, 300, 652, 320], "FAX"
-- FAX (SHIP TO): [138, 385, 652, 405], "FAX"
-- P/C: [450, 460, 550, 480], "P/C"
-- Packing: [50, 650, 650, 670], "Packing"
-- Payment: [50, 665, 650, 685], "Payment"
-- Quantity (PCS): [400, 490, 550, 570], "Quantity (PCS)"
-- SHIPMENT TERM: [750, 300, 922, 320], "SHIPMENT TERM"
-- Shipping port/ Destination: [50, 690, 650, 710], "Shipping port/ Destination"
-- Swift Code: [50, 688, 650, 708], "Swift Code"
-- TEL (公司): [200, 160, 790, 180], "TEL"
-- TEL (BILL TO): [138, 225, 652, 245], "TEL"
-- TEL (SHIP TO): [138, 325, 652, 345], "TEL"
-- TITLE: [320, 220, 670, 240], "TITLE"
-- Unit Price (USD): [550, 490, 650, 570], "Unit Price (USD)"
-
-现在需要检查是否有遗漏的类别。用户给的类别列表：
-
-ADD, ADDRESS, ATTN, Amount (USD), Bank Account(USD), Bank Name, Beneficiary Name, COMPANY NAME, Cinderson Invoice No, DATE, DESTINATION, Delivery Method, Description of goods, ETD date, FAX, P/C, Packing, Payment, Quantity (PCS), SHIPMENT TERM, Shipping port/ Destination, Swift Code, TEL, TITLE, Unit Price (USD)。
-
-现在数一下：
-
-1. ADD ✔️
-2. ADDRESS ✔️（两个实例，都算）
-3. ATTN ✔️（两个实例）
-4
+1. ADD: {"bbox_2d": [44, 150, 922,

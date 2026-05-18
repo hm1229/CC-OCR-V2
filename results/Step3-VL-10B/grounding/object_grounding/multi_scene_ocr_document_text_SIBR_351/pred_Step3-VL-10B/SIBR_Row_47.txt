@@ -1,0 +1,125 @@
+用户现在需要检测图像中的各个指定类别对象。首先得逐个分析每个类别在图中的位置。
+
+首先看Additional Notes：图中下方有“Additional Notes:”部分，包含三条说明，所以这个区域是Additional Notes。
+
+Address：多个Address字段，比如Vendor Information里的Address，Ship To的Address，Bill To的Address。需要分别找。比如Vendor Information的Address是“PSC 0934, Box 1011 APO AA 64182”，Ship To的Address是“40505 Donovan Way New Katherine, SD 74493...”，Bill To的Address是“03256 Powell Heights East John, ME 15325...”。每个Address都要标记。
+
+Approve Date：在Vendor Acknowledgement表格里有“Approve By Date”和“Approve Date”，比如最后一列“Approve Date:2021-09-15”，所以这个是Approve Date。
+
+Attn：Vendor Information里的Attn是“USNV Carlson FPO AE 66874”，Ship To的Attn是“Jesus Duke / Brian Farmer”，Bill To的Attn是“Karl Rose”。这些Attn字段。
+
+Company Name：右上角有“群英信息有限公司”，还有Ship To和Bill To的公司名“Qunying Information Co., Ltd.”，所以Company Name包括这些。
+
+Delivery/Freight Terms：图中“Delivery/Freight Terms:”对应的是“EXW”，所以这个字段。
+
+Description：表格中的Description列，比如“PEI Single Lens, 2.4*3*1.2”。
+
+NO.：表格中的NO.列，比如第10行的NO.是10。
+
+Name：多个Name，比如Vendor Information的Name（可能空白？看原文Vendor Information的Name是空白？不，看Ship To的Name是Qunying Information Co., Ltd.？不，Ship To的Name字段是“Qunying Information Co., Ltd.”？看Ship To部分：Name: Qunying Information Co., Ltd.。Bill To的Name也是Qunying Information Co., Ltd.。Vendor Information的Name是空白？看原文Vendor Information的Name: 后面是空白？可能需要看。另外PO NO.是单据编号，PO NO.:4500036659。
+
+Part No.：表格中的Part No.列，比如280-0848。
+
+Payment Terms：图中“Payment Terms:”对应的是“Net 30 days”。
+
+Qty：表格中的Qty列，比如77.000.000（可能是77,000,000？）。
+
+Rev.：表格中的Rev.列，比如1A。
+
+Tax：可能是指Tax Rate？或者Total Price里的Tax？看Tax Rate是0%，Total Price (TAX incl.)是30,800.00。另外Total Amount (Exclude Tax)是30800.00，Total Amount (Include Tax)也是30800.00。
+
+Total Amount (Exclude Tax)：图中“Total Amount (Exclude T...”对应的是30800.00。
+
+Total Amount (Include Tax)：图中“Total Amount (Include T...”对应的是30800.00。
+
+Total Price (TAX incl.)：表格中的Total Price (TAX incl.)列，比如30,800.00。
+
+UM：表格中的UM列，比如PC。
+
+Unit Net Price：表格中的Unit Net Price列，比如0.40/1。
+
+Unit Price (TAX incl.)：表格中的Unit Price (TAX incl.)列，比如0.4000。
+
+Vendor Acknowledgement：图中“Vendor Acknowledgement: Please acknowledge order...”这部分。
+
+Vendor NO.：图中“Vendor NO.:200039”。
+
+日期：图中“日期:2021-09-14”。
+
+第1行-Pr #：表格中Pr #列，比如第1行（NO.10）的Pr #是3792（右边的Pr #列，对应行的Pr #是3792？看右边Pr #列，第10行的Pr #是3792？图中Pr #列在表格最右边，第10行的Pr #是3792？看原文表格右边Pr #列，第10行对应的是3792？另外右边有个3792在Pr #列上方？可能需要看。图中Pr #列的标题是“Pr #”，第1行（NO.10）的Pr #是3792？或者看右边的红色圈旁边的数字，可能Pr #是3792。
+
+邮编：右上角“邮编:215126”，还有Ship To的Address里的邮编？Ship To的Address是“40505 Donovan Way New Katherine, SD 74493”？SD是South Dakota，邮编是74493？Bill To的Address是“03256 Powell Heights East John, ME 15325”，ME是Maine，邮编15325？Vendor Information的Address是“PSC 0934, Box 1011 APO AA 64182”，APO是Armed Forces Post Office，邮编可能没有？但右上角的邮编是215126，属于群英信息有限公司的邮编。所以邮编是右上角的“邮编:215126”。
+
+现在需要逐个列出每个类别对应的bbox。需要仔细看图像中的每个元素。
+
+首先，先处理每个类别：
+
+1. Additional Notes：位于图像下方，文字“Additional Notes:”及下面的三条说明。bbox大概是[20, 697, 979, 767]（需要看实际位置，图中Additional Notes在备注下方，Vender Acknowledgement上方）。
+
+2. Address：多个Address，比如：
+   - Vendor Information的Address：“PSC 0934, Box 1011 APO AA 64182” → 在Vendor Information框内，Address行。bbox：[33, 140, 297, 158]
+   - Ship To的Address：“40505 Donovan Way New Katherine, SD 74493 USCGC Cordova FPO AA 13061” → Ship To框内的Address行。bbox：[447, 200, 727, 238]
+   - Bill To的Address：“03256 Powell Heights East John, ME 15325 Unit 8189 Box 3564 DP AP 42548” → Bill To框内的Address行。bbox：[607, 300, 907, 338]
+
+3. Approve Date：在Vendor Acknowledgement表格的“Approve Date”列，值是2021-09-15。bbox：[857, 957, 967, 975]（看表格最后一列“Approve Date:2021-09-15”）。
+
+4. Attn：
+   - Vendor Information的Attn：“USNV Carlson FPO AE 66874” → Vendor Information框内的Attn行。bbox：[33, 162, 297, 178]
+   - Ship To的Attn：“Jesus Duke / Brian Farmer” → Ship To框内的Attn行。bbox：[447, 240, 727, 256]
+   - Bill To的Attn：“Karl Rose” → Bill To框内的Attn行。bbox：[607, 338, 907, 354]
+
+5. Company Name：
+   - 右上角“群英信息有限公司” → bbox：[820, 10, 922, 28]
+   - Ship To的Name：“Qunying Information Co., Ltd.” → Ship To框内的Name行。bbox：[447, 190, 727, 206]
+   - Bill To的Name：“Qunying Information Co., Ltd.” → Bill To框内的Name行。bbox：[607, 310, 907, 326]
+
+6. Delivery/Freight Terms：“EXW” → 在中间部分，Delivery/Freight Terms: 后面的内容。bbox：[447, 300, 597, 316]（看Ship Via和Delivery/Freight Terms行，Delivery/Freight Terms: EXW）
+
+7. Description：表格中的Description列，比如第10行的“PEI Single Lens, 2.4*3*1.2”。bbox：[133, 600, 447, 628]（表格的Description列标题，以及对应行的内容）
+
+8. NO.：表格中的NO.列，比如第10行的“10”。bbox：[47, 590, 87, 616]（表格的NO.列标题，以及行中的数值）
+
+9. Name：除了Ship To和Bill To的Name，还有Vendor Information的Name（可能空白？看原文Vendor Information的Name: 后面是空白？图中Vendor Information的Name: 后面是空白，所以可能Name在Ship To和Bill To中是公司名，另外可能还有其他Name？比如Additional Notes里的？不，主要是Ship To和Bill To的Name，以及可能的其他。比如Ship To的Name是Qunying Information Co., Ltd.，Bill To的Name也是，Vendor Information的Name可能没有填写。所以Name的实例是Ship To和Bill To的Name字段。
+
+10. PO NO.：“PO NO.:4500036659” → 右上角单据编号部分。bbox：[677, 230, 827, 246]
+
+11. Part No.：表格中的Part No.列，比如“280-0848”。bbox：[107, 590, 167, 616]（表格的Part No.列标题，以及行中的数值）
+
+12. Payment Terms：“Net 30 days” → 在Payment Terms: 后面的内容。bbox：[607, 340, 907, 356]（看Payment Terms行）
+
+13. Qty：表格中的Qty列，比如“77.000.000”（可能是77000000）。bbox：[333, 590, 393, 616]（表格的Qty列标题，以及行中的数值）
+
+14. Rev.：表格中的Rev.列，比如“1A”。bbox：[177, 590, 217, 616]（表格的Rev.列标题，以及行中的数值）
+
+15. Tax：可能是指Tax Rate？或者Total Price中的Tax？看Tax Rate是0%，在表格中的Tax Rate列。另外Total Price (TAX incl.)是包含税的总价。这里Tax可能对应Tax Rate？或者看是否有Tax字段。图中“Tax Rate”是0%，所以Tax Rate是类别中的Tax Rate，而Tax可能是指是否有税？但类别中有Tax Rate，所以Tax可能是指Tax Rate？或者看用户给的类别中的“Tax”和“Tax Rate”是两个类别。用户给的类别有Tax和Tax Rate，所以需要区分。比如Tax Rate是0%，属于Tax Rate类别。Tax可能是指是否有税，比如Total Price (TAX incl.)中的TAX。但可能图中的“Tax”是指Tax Rate？需要看用户提供的类别列表：用户给的类别有Tax, Tax Rate。所以需要找这两个。
+
+16. Tax Rate：表格中的Tax Rate列，值为0%。bbox：[497, 590, 557, 616]（表格的Tax Rate列标题，以及行中的数值）
+
+17. Tel/Fax：
+    - Vendor Information的Tel/Fax：“43-1050182834” → Vendor Information框内的Tel/Fax行。bbox：[33, 180, 297, 196]
+    - Ship To的Tel/Fax：“(858)62812669 //69692869” → Ship To框内的Tel/Fax行。bbox：[447, 258, 727, 274]
+    - Bill To的Tel/Fax：“(268)19868625//26699968” → Bill To框内的Tel/Fax行。bbox：[607, 358, 907, 374]
+
+18. Total Amount (Exclude Tax)：图中“Total Amount (Exclude T...”对应的是30800.00。bbox：[677, 660, 907, 676]
+
+19. Total Amount (Include Tax)：图中“Total Amount (Include T...”对应的是30800.00。bbox：[677, 676, 907, 692]
+
+20. Total Price (TAX incl.)：表格中的Total Price (TAX incl.)列，值为30,800.00。bbox：[577, 590, 667, 616]（表格的Total Price (TAX incl.)列标题，以及行中的数值）
+
+21. UM：表格中的UM列，比如“PC”。bbox：[393, 590, 423, 616]（表格的UM列标题，以及行中的数值）
+
+22. Unit Net Price：表格中的Unit Net Price列，比如“0.40/1”。bbox：[447, 590, 527, 616]（表格的Unit Net Price列标题，以及行中的数值）
+
+23. Unit Price (TAX incl.)：表格中的Unit Price (TAX incl.)列，比如“0.4000”。bbox：[557, 590, 637, 616]（表格的Unit Price (TAX incl.)列标题，以及行中的数值）
+
+24. Vendor Acknowledgement：图中“Vendor Acknowledgement: Please acknowledge order...”这部分。bbox：[20, 807, 979, 845]
+
+25. Vendor NO.：“Vendor NO.:200039” → 在Vendor Information下方的Vendor NO.行。bbox：[25, 320, 135, 336]
+
+26. 日期：“日期:2021-09-14” → 右上角单据信息中的日期。bbox：[677, 246, 827, 262]
+
+27. 第1行-Pr #：表格中的Pr #列，第1行（NO.10）的Pr #是3792？看表格最右边的Pr #列，第10行的Pr #是3792？图中Pr #列的标题是“Pr #”，对应行的Pr #是3792（在表格右侧，红色圈旁边的数字是3792？或者看右边的“3792”在Pr #列的上方？图中右侧有个“3792”在Pr #列的上方，可能第1行的Pr #是3792。bbox：[877, 600, 927, 628]（表格的Pr #列标题，以及行中的数值，第10行的Pr #是3792？或者看Pr #列的单元格，第10行的Pr #是空白？不，图中Pr #列在表格最右边，第10行的Pr #是3792？可能需要看。另外图中右侧有个“3792”在Pr #列的上方，可能是列标题？不，Pr #是列名，然后对应行的Pr #值。可能图中Pr #列的第1行（NO.10）的Pr #是空白，而右边有个3792是其他？或者看“第1行-Pr #”指的是表格第一行（NO.10）的Pr #列的值。图中Pr #列在表格最右侧，第10行的Pr #单元格内是否有值？看图像中Pr #列在表格的最右边，第10行的Pr #列有一个红色圈，可能Pr #是3792？或者图中右侧有个“3792”在Pr #列的上方，可能是列的标识。可能需要确认。另外图中“第1行-Pr #”可能指的是表格中第一行（即NO.10那一行）的Pr #列，其值在图中右侧显示为3792（比如在Pr #列的上方有3792？看图像右侧，Pr #列的上方有个“3792”？是的，图中右侧有个“3792”在Pr #列的上方，所以第1行（NO.10）的Pr #是3792。bbox：[877, 600, 927, 628]（Pr #列的标题，以及对应行的值？或者Pr #列的标题是“Pr #”，然后第1行的Pr #值是3792，所以bbox是该单元格的位置。）
+
+28. 邮编：“邮编:215126” → 右上角公司信息中的邮编。bbox：[677, 130, 727, 146]
+
+现在需要将这些整理成JSON数组，每个对象包含bbox和label。需要注意每个实例都要列出，可能有些类别有多个实例（

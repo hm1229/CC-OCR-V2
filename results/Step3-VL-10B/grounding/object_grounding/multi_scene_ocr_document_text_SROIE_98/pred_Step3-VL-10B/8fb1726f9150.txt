@@ -1,6 +1,40 @@
-[
-    {"bbox_2d": [144, 92, 855, 140], "label": "company"},
-    {"bbox_2d": [144, 142, 855, 228], "label": "address"},
-    {"bbox_2d": [64, 302, 322, 322], "label": "date"},
-    {"bbox_2d": [64, 952, 992, 980], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+Company: The Cut Steakhouse &Burger's. Let's check the top part. The company name is there.
+
+Address: The address lines are Lot L1-4 Star Avenue Mall, Jalan Zuhal U5/179 Seksyen U5, Pusat Komersial Arena Bintang, 40150 Shah Alam, Selangor.
+
+Date: 01-01-2017 (from the invoice date field).
+
+Total: The total amount is 167.55, which is in the TOTAL: section.
+
+Now, find the bounding boxes for each.
+
+Company: The text "The Cut Steakhouse &Burger's" is at the top. Let's get its coordinates.
+
+Address: The multiple lines of address. Let's check the block.
+
+Date: The line with "Date : 01-01-2017 21:14:17".
+
+Total: The "TOTAL: 167.55" part.
+
+Let's map each:
+
+1. Company: "The Cut Steakhouse &Burger's" – bbox around that line.
+2. Address: The address block (all the lines from Lot L1-4... to Selangor).
+3. Date: The date line.
+4. Total: The total amount.
+
+Now, check the image's text positions.
+
+For company: The first line after the top is the company name. Let's see the coordinates.
+
+Address: The lines below the company name: Lot L1-4 Star Avenue Mall, Jalan Zuhal U5/179 Seksyen U5, Pusat Komersial Arena Bintang, 40150 Shah Alam, Selangor.
+
+Date: The line "Date : 01-01-2017 21:14:17".
+
+Total: The line "TOTAL: 167.55".
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [101, 109, 898, 194], "label": "company"}, {"bbox_2d": [101, 120, 898, 242], "label": "address"}, {"bbox_2d": [101, 297, 327, 317], "label": "date"}, {"bbox_2d": [101, 952, 898, 977], "label": "total"}]

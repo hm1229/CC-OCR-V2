@@ -1,1 +1,117 @@
-[{"bbox_2d": [192, 110, 807, 133], "label": "company"}, {"bbox_2d": [144, 144, 856, 190], "label": "address"}, {"bbox_2d": [884, 234, 978, 256], "label": "date"}, {"bbox_2d": [26, 304, 874, 326], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The top part has "99 SPEED MART S/B (519537-X)". That's the company name.
+- Address: The lines below the company, like LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1572-TMN BKT PANDAN. So the address block.
+- Date: The date is "10-03-18" which is in the middle section.
+- Total: The total sales inclusive of GST is RM 5.35. Let's check where that is. The line "Total Sales (Inclusive GST) RM 5.35".
+
+Now, let's map each to their bounding boxes.
+
+For company: The text "99 SPEED MART S/B (519537-X)" is the company. Let's find its coordinates.
+
+Address: The block from "LOT P.T. 2811..." down to "1572-TMN BKT PANDAN" and GST ID, etc. But maybe the main address lines. Let's check the receipt's text.
+
+Date: "10-03-18" is in the line with time and invoice number.
+
+Total: The total sales amount is 5.35.
+
+Let's check each element's position.
+
+First, company: The first line after the top quotes is the company. So the bounding box for company is the line "99 SPEED MART S/B (519537-X)".
+
+Address: The lines below company: LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1572-TMN BKT PANDAN. So that's the address.
+
+Date: The date is "10-03-18" which is in the section with time (02:27PM) and invoice number (570285). So the date is on the right side of that line.
+
+Total: The line "Total Sales (Inclusive GST) RM 5.35" — the total amount is 5.35.
+
+Now, let's define the bounding boxes.
+
+For company: The text is at the top, so the coordinates would be the area covering "99 SPEED MART S/B (519537-X)". Let's assume the bounding box is around that line.
+
+Address: The block from "LOT P.T. 2811..." to "1572-TMN BKT PANDAN" and maybe the GST ID line? But the address is the physical location, so the lines up to 1572-TMN BKT PANDAN.
+
+Date: The date "10-03-18" is in the line with 02:27PM and 570285. So the rightmost part of that line.
+
+Total: The total sales line, the amount is 5.35.
+
+Let's structure each entry.
+
+1. Company: "99 SPEED MART S/B (519537-X)" — label company.
+2. Address: The address lines. Let's check the text: "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY 41150 KLANG, SELANGOR 1572-TMN BKT PANDAN" — that's the address.
+3. Date: "10-03-18"
+4. Total: "5.35" (from Total Sales)
+
+Now, find the bounding boxes for each.
+
+Looking at the image:
+
+- Company line: top part, so [140, 110, 860, 135] (approx, since the text is centered)
+- Address: the lines below company. Let's see the text: "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY 41150 KLANG, SELANGOR 1572-TMN BKT PANDAN" — this spans multiple lines. The bounding box would cover those lines.
+- Date: "10-03-18" is in the line with time and invoice number. The time is 02:27PM, invoice 570285, date 10-03-18. So the date is on the right side of that line.
+- Total: The line "Total Sales (Inclusive GST) RM 5.35" — the total amount is 5.35, so the value is there.
+
+Let's create the JSON entries.
+
+First, company:
+
+{
+  "bbox_2d": [142, 112, 858, 136],
+  "label": "company"
+}
+
+Address:
+
+The address includes multiple lines. Let's check the text:
+
+"LOT P.T. 2811, JALAN ANGSA,
+TAMAN BERKELEY
+41150 KLANG, SELANGOR
+1572-TMN BKT PANDAN"
+
+So the bounding box would cover from "LOT P.T. 2811..." to "1572-TMN BKT PANDAN". Let's estimate the coordinates.
+
+{
+  "bbox_2d": [142, 140, 858, 200],
+  "label": "address"
+}
+
+Date:
+
+The date is "10-03-18" in the line with 02:27PM and 570285. Let's find that line. The line is:
+
+02:27PM          570285          10-03-18
+
+So the date is the rightmost part. Bounding box around "10-03-18".
+
+{
+  "bbox_2d": [750, 230, 890, 255],
+  "label": "date"
+}
+
+Total:
+
+The total sales line: "Total Sales (Inclusive GST) RM 5.35". The total amount is 5.35. So the value is in that line.
+
+{
+  "bbox_2d": [500, 300, 590, 325],
+  "label": "total"
+}
+
+Wait, need to check the exact positions. Let's verify the receipt's content.
+
+Looking at the receipt:
+
+After the invoice number line (02:27PM 570285 10-03-18), there's a product line: 104 SUNQUICK OREN 330ML RM5.35 s
+
+Then Total Sales (Inclusive GST) RM 5.35
+
+So the total is 5.35. The line for total sales has "Total Sales (Inclusive GST) RM" and then the amount 5.35. So the total value is 5.35.
+
+Thus, the total's bounding box is around the 5.35 in that line.
+
+Now, let's compile all four entries.
+</think>
+[{"bbox_2d": [144, 114, 856, 136], "label": "company"}, {"bbox_2d": [142, 142, 858, 202], "label": "address"}, {"bbox_2d": [752, 232, 888, 254], "label": "date"}, {"bbox_2d": [510, 302, 592, 324], "label": "total"}]

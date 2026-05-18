@@ -1,111 +1,245 @@
-用户现在需要从运输发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从运输发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看PAGE NUMBER，图右上角是Page 1，所以PAGE NUMBER的bbox是[800, 5, 837, 22]左右？看图片里的Page 1在右上角，所以坐标要确定。
+首先看PAGE NUMBER，图右上角是Page 1，所以PAGE NUMBER对应的是右上角的Page 1。
 
-然后Consignee部分，图中Consignee下面的地址：USCGC Taylor FPO AP 67912和USCGC Odonne11 FPO AP 49111，所以Consignee的bbox是包含这两个地址的区域，比如[33, 202, 237, 242]左右？
+然后Consignee部分，图中Consignee下面的地址是USCGC Taylor FPO AP 67912和USCGC Odonne11 FPO AP 49111，所以Consignee的bbox要覆盖这两个地址。
 
-Customer No是8210048，在右上角Customer No下面，所以Customer No的bbox是[672, 102, 767, 120]。
+Customer No是8210048，在右上角Customer No下面。
 
-Date是24 January 2022，在Date标签下面，所以Date的bbox是[672, 142, 790, 160]。
+Date是24 January 2022，对应Date标签。
 
-Due date是23 February 2022，在Terms of payment下面，Due date的标签和日期，所以Due date的bbox是[502, 232, 637, 250]。
+Due date是23 February 2022，在Terms of payment下面。
 
-Invoice no是1001446287，在Invoice no标签下面，所以Invoice no的bbox是[502, 82, 637, 100]。
+Invoice address是USNS Shaw FPO AP 91600等三个地址，看Invoice address部分。
 
-Our reference是Pau1 Carey，在Our reference标签下面，所以Our reference的bbox是[502, 112, 637, 130]。
+Invoice no是1001446287，对应Invoice no。
 
-Invoice address是下面的USNS Shaw FPO AP 91600等，所以Invoice address的bbox是[502, 162, 790, 242]左右，包含多个地址。
+Mode of transportation是SEA - CROSS OCEAN，看Mode of transportation部分。
 
-Mode of transportation是SEA - CROSS OCEAN，所以Mode of transportation的bbox是[25, 242, 297, 260]。
+Our reference是Pau1 Carey，在Our reference下面。
 
-Terms of delivery是CIF Incheon，所以Terms of delivery的bbox是[25, 262, 297, 280]。
+FAX NO：看SOLD BY部分的FAX NO是+6105218132766？不对，看SOLD BY的FAX NO是+6105218132766？不，看SOLD BY的FAX NO是+6105218132766？再看SUPPLIED FROM的TAX REG NO是913205947909067264P。然后CONTACT的FAX NO是+236381522637。还有SOLD BY的FAX NO是+6105218132766？需要检查每个FAX NO的位置。
 
-Terms of payment是50% PIA, 50%-30 d，所以Terms of payment的bbox是[502, 252, 790, 270]。
+然后BANK ACCOUNT NO是10-551314040010322，在BANK INFORMATION部分。
 
-Mode of transportation已经列了，然后看其他类别：
+SWIFT是ABOCNBJ103，在BANK INFORMATION的SWIFT。
 
-COMPANY NAME：比如SOLD BY下面的Easy Power Media Co., Ltd.，SUPPLIED FROM下面的Easy Power Media Co., Ltd.，CONTACT下面的Easy Power Media Co., Ltd.，还有BANK INFORMATION里的Suzhou Bank等？需要看每个COMPANY NAME的实例。比如SOLD BY的公司名是Easy Power Media Co., Ltd.，SUPPLIED FROM也是这个，CONTACT也是。所以每个出现的公司名都要标注。
+TAX REG NO是SUPPLIED FROM下面的TAX REG NO: 913205947909067264P。
 
-ADDRESS：比如Consignee的地址，Invoice address的地址，SOLD BY的地址（104 Kenneth Corners...），SUPPLIED FROM的地址（53698 Moore Road...），CONTACT的地址（Unit 2224 Box 1306...），BANK INFORMATION里的地址（SUZHOU BRANCH...）等。
+PRODUCT/DESCRIPTION是每个POS对应的产品描述，比如第1行（POS 009）的产品描述是200T V200THx76/1P-SC-M 28U+54.3&60+2xR2"等。
 
-BANK ACCOUNT NO：在BANK INFORMATION里的10-551314040010322，所以BANK ACCOUNT NO的bbox是[750, 952, 867, 970]左右。
+QTY SHIPPED是每个行的数量，比如009对应的是5，001是50，008是10，007是6。
 
-FAX NO：比如SOLD BY的FAX NO: +6105218132766，SUPPLIED FROM没有FAX？看CONTACT的FAX NO: +2336381522637，SOLD BY的FAX NO: +6105218132766，所以FAX NO的实例有两个，要分别找。
+UNIT PRICE是每个行的单价，比如009是777.700，001是49.800，008是777.700，007是705.000。
 
-PHONE NO：SOLD BY的PHONE NO: +6752363238126，CONTACT的PHONE NO: +2336576828126，所以这两个是PHONE NO。
+TOTAL PRICE是每个行的总价，比如009是3888.50，001是2490.00，008是7777.00，007是4230.00。
 
-TAX REG NO：SUPPLIED FROM下面的TAX REG NO: 913205947909067264P，所以TAX REG NO的bbox是[300, 972, 457, 988]。
+PRODUCT DETAILS-第1行-TOTAL PRICE对应的是第1行（POS 009）的TOTAL PRICE，即3888.50。
 
-SWIFT：BANK INFORMATION里的SWIFT: ABACCNEBJ103，所以SWIFT的bbox是[750, 982, 847, 998]。
+现在需要逐个确定每个标签的bbox。
 
-PRODUCT/DESCRIPTION：表格中的列，每个产品的描述，比如009对应的产品描述，001、008、007的描述，所以PRODUCT/DESCRIPTION的列标题是表格的第二列，bbox是[102, 312, 492, 338]（列标题）。
+先列所有需要的标签：
 
-QTY SHIPPED：表格中的第三列，列标题是QTY SHIPPED，bbox是[322, 312, 392, 338]。
+ADDRESS：可能有多个，比如Consignee的地址，Invoice address的地址，SOLD BY的地址，SUPPLIED FROM的地址，CONTACT的地址，BANK INFORMATION的地址（SUZHOU BRANCH等）。需要看哪个是ADDRESS。比如Invoice address是USNS Shaw FPO AP 91600等，属于Invoice address，而ADDRESS可能指其他？不过用户给的类别中有ADDRESS，需要看是否有。比如SOLD BY的地址是104 Kenneth Corners Kirbymouth, FL 96884等，属于ADDRESS（SOLD BY的地址）。
 
-UNIT PRICE：表格中的UNIT PRICE列，列标题是UNIT PRICE，bbox是[402, 312, 482, 338]。
+BANK ACCOUNT NO：在BANK INFORMATION里的10-551314040010322。
 
-TOTAL PRICE：表格中的TOTAL PRICE列，列标题是TOTAL PRICE，bbox是[602, 312, 722, 338]。另外每个产品的TOTAL PRICE是该行的数值，比如009行的3888.50，属于PRODUCT DETAILS-第1行-TOTAL PRICE？或者TOTAL PRICE列的每个单元格。这里可能需要区分列标题和行内容。但用户要求的类别是TOTAL PRICE（列标题）和PRODUCT DETAILS-第1行-TOTAL PRICE（行中的总价格）。不过先看用户给的类别列表中的“TOTAL PRICE”是列标题，而“PRODUCT DETAILS-第1行-TOTAL PRICE”是行中的总价格。比如009行的TOTAL PRICE是3888.50，属于PRODUCT DETAILS-第1行-TOTAL PRICE。
+COMPANY NAME：比如SOLD BY是Easy Power Media Co., Ltd.；SUPPLIED FROM是Easy Power Media Co., Ltd.；CONTACT是Easy Power Media Co., Ltd.；BANK是AGRICULTURAL BANK OF CHINA。
 
-POS：表格中的第一列，列标题是POS，每个行的POS是009、001等，所以POS的列标题是[38, 312, 92, 338]，而每个行的POS是该列的数值，比如009是POS的值，属于POS类别（行中的POS）。
+Consignee：USCGC Taylor FPO AP 67912和USCGC Odonne11 FPO AP 49111。
 
-现在需要逐个识别每个类别在图中的位置，然后生成对应的bbox和label。
+Customer No：8210048。
 
-先整理每个类别：
+Date：24 January 2022。
 
-1. PAGE NUMBER：图右上角“Page 1”，bbox大约是[802, 6, 835, 23]。
-2. Consignee：Consignee标题下的地址，包括USCGC Taylor FPO AP 67912和USCGC Odonne11 FPO AP 49111，bbox是[33, 200, 236, 243]（包含两个地址）。
-3. Customer No：Customer No标签下的8210048，bbox是[670, 100, 766, 118]。
-4. Date：Date标签下的24 January 2022，bbox是[670, 140, 790, 158]。
-5. Due date：Due date标签下的23 February 2022，bbox是[500, 230, 636, 248]。
-6. Invoice no：Invoice no标签下的1001446287，bbox是[500, 80, 636, 98]。
-7. Our reference：Our reference标签下的Pau1 Carey，bbox是[500, 110, 636, 128]。
-8. Invoice address：Invoice address标题下的多个地址（USNS Shaw FPO AP 91600等），bbox是[500, 160, 790, 242]。
-9. Mode of transportation：SEA - CROSS OCEAN，bbox是[25, 240, 296, 258]。
-10. Terms of delivery：CIF Incheon，bbox是[25, 260, 296, 278]。
-11. Terms of payment：50% PIA, 50%-30 d，bbox是[500, 250, 790, 268]。
-12. COMPANY NAME：多个实例，比如SOLD BY的Easy Power Media Co., Ltd.（bbox是[25, 942, 242, 998]？不，SOLD BY部分的公司名是“Easy Power Media Co., Ltd.”，在SOLD BY标题下，所以SOLD BY的公司名bbox是[25, 940, 240, 958]；SUPPLIED FROM的公司名是“Easy Power Media Co., Ltd.”，在SUPPLIED FROM标题下，bbox是[300, 940, 492, 958]；CONTACT的公司名是“Easy Power Media Co., Ltd.”，在CONTACT标题下，bbox是[500, 940, 742, 958]；BANK INFORMATION中的“CHINA AGRICULTURAL BANK OF CHINA”是银行名，也算COMPANY NAME？可能需要看。另外，图中的SOLD BY、SUPPLIED FROM、CONTACT都是Easy Power Media Co., Ltd.，所以这三个位置的公司名都是COMPANY NAME。
-13. ADDRESS：多个，比如Consignee的地址（属于Consignee，但ADDRESS是更泛的，比如SOLD BY的地址：104 Kenneth Corners...，bbox是[25, 958, 242, 998]；SUPPLIED FROM的地址：53698 Moore Road...，bbox是[300, 958, 492, 998]；CONTACT的地址：Unit 2224 Box 1306...，bbox是[500, 958, 742, 976]；BANK INFORMATION的地址：SUZHOU BRANCH...，bbox是[750, 940, 867, 958]；Invoice address中的地址（USNS Shaw等）也属于ADDRESS，所以Invoice address的bbox是[500, 160, 790, 242]也是ADDRESS的一部分。
-14. BANK ACCOUNT NO：BANK INFORMATION中的10-551314040010322，bbox是[750, 960, 867, 978]。
-15. FAX NO：SOLD BY的FAX NO: +6105218132766，bbox是[25, 996, 132, 1012]；CONTACT的FAX NO: +2336381522637，bbox是[500, 976, 742, 992]。
-16. PHONE NO：SOLD BY的PHONE NO: +6752363238126，bbox是[25, 982, 132, 998]；CONTACT的PHONE NO: +2336576828126，bbox是[500, 962, 742, 978]。
-17. TAX REG NO：SUPPLIED FROM下面的TAX REG NO: 913205947909067264P，bbox是[300, 982, 492, 998]。
-18. SWIFT：BANK INFORMATION中的SWIFT: ABACCNEBJ103，bbox是[750, 986, 847, 1002]。
-19. PRODUCT/DESCRIPTION：表格的列标题，bbox是[102, 310, 492, 336]（列标题行）。
-20. QTY SHIPPED：表格的列标题，bbox是[320, 310, 392, 336]。
-21. UNIT PRICE：表格的列标题，bbox是[400, 310, 482, 336]。
-22. TOTAL PRICE（列标题）：表格的列标题，bbox是[600, 310, 722, 336]。
-23. POS：表格的列标题，bbox是[36, 310, 94, 336]；同时每个行的POS（如009、001等）也属于POS，比如009行的POS是009，bbox是[38, 340, 92, 358]（行中的POS）。
-24. PRODUCT DETAILS-第1行-TOTAL PRICE：比如009行的TOTAL PRICE是3888.50，bbox是[602, 340, 720, 358]（该行的TOTAL PRICE单元格）。
+Due date：23 February 2022。
 
-现在需要确保每个类别都被覆盖，然后生成JSON数组。需要注意有些类别可能有多个实例，比如COMPANY NAME有三个（SOLD BY、SUPPLIED FROM、CONTACT），FAX NO有两个，PHONE NO有两个，ADDRESS有很多，需要逐个列出。
+FAX NO：有多个，比如SOLD BY的FAX NO: +6105218132766；SUPPLIED FROM没有FAX？看SUPPLIED FROM的TAX REG NO，然后CONTACT的FAX NO: +236381522637；还有SOLD BY的FAX NO是+6105218132766（看SOLD BY部分的FAX NO: +6105218132766）。
+
+Invoice address：USNS Shaw FPO AP 91600；USNV Ross FPO AP 83334；USS Johnson FPO AE 71023。
+
+Invoice no：1001446287。
+
+Mode of transportation：SEA - CROSS OCEAN。
+
+Our reference：Pau1 Carey。
+
+PAGE NUMBER：Page 1（右上角）。
+
+PHONE NO：SOLD BY的PHONE NO: +6752363238126；CONTACT的PHONE NO: +2336576828126；SUPPLIED FROM没有PHONE？看SUPPLIED FROM的信息里没有PHONE，SOLD BY有PHONE NO，CONTACT有PHONE NO。
+
+POS：每个行的POS，比如009，001，008，007。
+
+PPOS：图中没有PPOS，可能不存在？用户给的类别有PPOS，但图中没有，可能忽略？
+
+PRODUCT DETAILS-第1行-TOTAL PRICE：第1行（POS 009）的TOTAL PRICE是3 888.50。
+
+PRODUCT/DESCRIPTION：每个行的产品描述，比如POS 009的产品描述。
+
+QTY SHIPPED：每个行的数量，比如POS 009是5。
+
+SWIFT：ABOCNBJ103（BANK INFORMATION里的SWIFT）。
+
+TAX REG NO：SUPPLIED FROM下面的TAX REG NO: 913205947909067264P。
+
+TITLE：图中没有TITLE？可能没有，或者看标题是SHIPPING INVOICE，但TITLE可能不是。用户给的类别有TITLE，可能没有对应，暂时忽略？
+
+TOTAL PRICE：每个行的TOTAL PRICE，比如所有行的总和？或者每个行的TOTAL PRICE。但用户给的类别有TOTAL PRICE，可能指每个行的，或者整体？但图中是每个行的TOTAL PRICE列。
+
+Terms of delivery：CIF Incheon。
+
+Terms of payment：50% PIA, 50%-30 d。
+
+现在需要为每个类别找到对应的bbox。
 
 现在开始逐个处理：
 
-1. PAGE NUMBER: [802, 6, 835, 23], label: PAGE NUMBER
-2. Consignee: [33, 200, 236, 243], label: Consignee
-3. Customer No: [670, 100, 766, 118], label: Customer No
-4. Date: [670, 140, 790, 158], label: Date
-5. Due date: [500, 230, 636, 248], label: Due date
-6. Invoice no: [500, 80, 636, 98], label: Invoice no
-7. Our reference: [500, 110, 636, 128], label: Our reference
-8. Invoice address: [500, 160, 790, 242], label: Invoice address
-9. Mode of transportation: [25, 240, 296, 258], label: Mode of transportation
-10. Terms of delivery: [25, 260, 296, 278], label: Terms of delivery
-11. Terms of payment: [500, 250, 790, 268], label: Terms of payment
-12. COMPANY NAME (SOLD BY): [25, 940, 240, 958], label: COMPANY NAME
-13. COMPANY NAME (SUPPLIED FROM): [300, 940, 492, 958], label: COMPANY NAME
-14. COMPANY NAME (CONTACT): [500, 940, 742, 958], label: COMPANY NAME
-15. ADDRESS (SOLD BY): [25, 958, 242, 998], label: ADDRESS
-16. ADDRESS (SUPPLIED FROM): [300, 958, 492, 998], label: ADDRESS
-17. ADDRESS (CONTACT): [500, 958, 742, 976], label: ADDRESS
-18. ADDRESS (BANK INFORMATION): [750, 940, 867, 958], label: ADDRESS
-19. ADDRESS (Consignee): [33, 200, 236, 243] 已经包含在Consignee里，但Consignee是特定类别，ADDRESS是更泛，可能Consignee的地址也属于ADDRESS，但用户要求中Consignee是单独类别，所以Consignee作为单独，ADDRESS是其他地址。
-20. BANK ACCOUNT NO: [750, 960, 867, 978], label: BANK ACCOUNT NO
-21. FAX NO (SOLD BY): [25, 996, 132, 1012], label: FAX NO
-22. FAX NO (CONTACT): [500, 976, 742, 992], label: FAX NO
-23. PHONE NO (SOLD BY): [25, 982, 132, 998], label: PHONE NO
-24. PHONE NO (CONTACT): [500, 962, 742, 978], label: PHONE NO
-25. TAX REG NO: [300, 982, 492, 998], label: TAX REG NO
-26. SWIFT: [750, 986, 847, 1002], label: SWIFT
-27. PRODUCT/DESCRIPTION (列标题): [102, 310, 492, 336], label: PRODUCT/DESCRIPTION
-28. QTY SHIPPED (列标题): [320, 310, 392, 
+1. ADDRESS：比如SOLD BY的地址是“104 Kenneth Corners Kirbymouth, FL 96884 Unit 3091 Box 2324 DPO AE 07244 637 Deleon Loop Lake Grant, MA 90616”，属于ADDRESS（SOLD BY的地址）。另外SUPPLIED FROM的地址是“53698 Moore Road Michealsde, NM 69385 Unit 1558 Box 1249 DPO AA 34106 PSC 8330, Box 4845 APO AE 33385 19243 Boyd Wells Lake Paul, OK 77093”，也是ADDRESS。CONTACT的地址是“Unit 2224 Box 1306 DPO AA 73862 USS Brown FPO AE 67847”，也是ADDRESS。BANK INFORMATION的地址是“SUZHOU BRANCH USS Walters FPO AP 75435”，也是ADDRESS。需要确定哪个是用户需要的，可能多个，但先找明显的。
+
+2. BANK ACCOUNT NO：在BANK INFORMATION里的“BANK ACCOUNT NO: 10-551314040010322”，所以bbox是这个位置。
+
+3. COMPANY NAME：比如SOLD BY的“Easy Power Media Co., Ltd.”；SUPPLIED FROM的“Easy Power Media Co., Ltd.”；CONTACT的“Easy Power Media Co., Ltd.”；BANK的“AGRICULTURAL BANK OF CHINA”。需要选其中一个，比如SOLD BY的公司名。
+
+4. Consignee：图中Consignee下面的两行地址：“USCGC Taylor FPO AP 67912”和“USCGC Odonne11 FPO AP 49111”，所以bbox覆盖这两个。
+
+5. Customer No：右上角“Customer No 8210048”，所以bbox是这个。
+
+6. Date：右上角“Date 24 January 2022”。
+
+7. Due date：在Terms of payment下面“Due date 23 February 2022”。
+
+8. FAX NO：比如SOLD BY的“FAX NO: +6105218132766”；CONTACT的“FAX NO: +236381522637”。需要选其中一个，比如SOLD BY的FAX。
+
+9. Invoice address：图中Invoice address下面的三个地址：“USNS Shaw FPO AP 91600”、“USNV Ross FPO AP 83334”、“USS Johnson FPO AE 71023”。
+
+10. Invoice no：右上角“Invoice no 1001446287”。
+
+11. Mode of transportation：“Mode of transportation SEA - CROSS OCEAN”。
+
+12. Our reference：“Our reference Pau1 Carey”。
+
+13. PAGE NUMBER：右上角“Page 1”。
+
+14. PHONE NO：SOLD BY的“PHONE NO: +6752363238126”；CONTACT的“PHONE NO: +2336576828126”。
+
+15. POS：表格中的POS列，比如009、001、008、007。
+
+16. PPOS：图中没有，可能不存在，跳过。
+
+17. PRODUCT DETAILS-第1行-TOTAL PRICE：第1行（POS 009）的TOTAL PRICE列的值“3 888.50”。
+
+18. PRODUCT/DESCRIPTION：表格中PRODUCT/DESCRIPTION列的内容，比如POS 009的产品描述。
+
+19. QTY SHIPPED：表格中QTY SHIPPED列的数值，比如POS 009是5。
+
+20. SWIFT：BANK INFORMATION中的“SWIFT: ABOCNBJ103”。
+
+21. TAX REG NO：SUPPLIED FROM下面的“TAX REG NO: 913205947909067264P”。
+
+22. TITLE：图中标题是“SHIPPING INVOICE”，但用户给的类别有TITLE，可能对应这个。
+
+23. TOTAL PRICE：每个行的TOTAL PRICE，比如所有行的TOTAL PRICE列，或者总和？图中是每个行的TOTAL PRICE，比如009是3888.50，001是2490.00等。
+
+24. Terms of delivery：“Terms of delivery CIF Incheon”。
+
+25. Terms of payment：“Terms of payment 50% PIA, 50%-30 d”。
+
+现在需要为每个标签生成对应的bbox和label。需要注意每个元素的准确位置。
+
+现在开始构建JSON数组：
+
+首先处理PAGE NUMBER：
+
+- bbox：右上角“Page 1”，坐标大概是[963, 7, 989, 25]（假设页面右上角）。
+
+然后Consignee：
+
+- Consignee的标题是“Consignee”，下面的地址是两行，所以bbox覆盖Consignee标题和下面的地址。比如Consignee的bbox是[37, 200, 247, 240]（大概位置，看原文中的Consignee部分）。
+
+Customer No：
+
+- 右上角“Customer No 8210048”，bbox是[803, 137, 925, 155]。
+
+Date：
+
+- 右上角“Date 24 January 2022”，bbox是[803, 160, 925, 178]。
+
+Invoice no：
+
+- 右上角“Invoice no 1001446287”，bbox是[803, 100, 925, 118]。
+
+Our reference：
+
+- “Our reference Pau1 Carey”，在Invoice no下面，bbox是[803, 130, 925, 148]。
+
+Mode of transportation：
+
+- “Mode of transportation SEA - CROSS OCEAN”，在Consignee下面，bbox是[37, 300, 247, 320]。
+
+Terms of delivery：
+
+- “Terms of delivery CIF Incheon”，在Mode of transportation下面，bbox是[37, 325, 247, 343]。
+
+Terms of payment：
+
+- “Terms of payment 50% PIA, 50%-30 d”，在Terms of delivery右边，bbox是[600, 350, 775, 370]。
+
+Due date：
+
+- “Due date 23 February 2022”，在Terms of payment下面，bbox是[600, 375, 775, 393]。
+
+Invoice address：
+
+- “Invoice address”下面的三个地址，bbox是[600, 220, 925, 280]（大概覆盖三个地址）。
+
+Mode of transportation已经处理。
+
+Our reference处理。
+
+FAX NO：比如SOLD BY的FAX NO，看SOLD BY部分的FAX NO: +6105218132766，位置在SOLD BY的底部，bbox是[37, 975, 247, 995]（大概）。
+
+PHONE NO：SOLD BY的PHONE NO: +6752363238126，bbox是[37, 960, 247, 978]。
+
+BANK ACCOUNT NO：在BANK INFORMATION里的“BANK ACCOUNT NO: 10-551314040010322”，bbox是[803, 950, 925, 968]。
+
+SWIFT：在BANK INFORMATION里的“SWIFT: ABOCNBJ103”，bbox是[803, 985, 925, 1003]。
+
+TAX REG NO：在SUPPLIED FROM下面的“TAX REG NO: 913205947909067264P”，bbox是[375, 970, 590, 988]。
+
+TITLE：图中的标题“SHIPPING INVOICE”，在最上方，bbox是[37, 10, 963, 30]。
+
+PRODUCT/DESCRIPTION：表格中的列，比如第1行（POS 009）的产品描述，bbox是[100, 450, 590, 490]（大概覆盖该行的产品描述）。
+
+QTY SHIPPED：表格中的列，比如POS 009的QTY SHIPPED是5，bbox是[320, 450, 380, 470]（对应列的位置）。
+
+UNIT PRICE：表格中的列，比如POS 009的UNIT PRICE是777.700，bbox是[490, 450, 560, 470]。
+
+TOTAL PRICE：表格中的列，比如POS 009的TOTAL PRICE是3888.50，bbox是[620, 450, 720, 470]。
+
+PRODUCT DETAILS-第1行-TOTAL PRICE：即第1行（POS 009）的TOTAL PRICE，值为3888.50，bbox同TOTAL PRICE列的第1行。
+
+POS：表格中的POS列，比如009，bbox是[70, 440, 100, 460]（对应列的位置）。
+
+现在需要确保每个标签都有对应的条目。可能有些标签在图中没有，比如PPOS，所以可以不包含。
+
+现在整理所有需要的标签，然后生成对应的JSON：
+
+注意：需要准确识别每个元素，可能有些需要合并或调整。
+
+现在列出所有需要的标签及其对应：
+
+1. ADDRESS：比如SUPPLIED FROM的地址，bbox是[375, 920, 590, 940]（SUPPLIED FROM的地址部分）。
+
+2. BANK ACCOUNT NO：[803, 950, 925, 968]
+
+3. COMPANY NAME：SOLD BY的公司名“Easy Power Media Co., Ltd.”，bbox是[37, 940, 247, 958]
+
+4. Consignee：[37, 200, 247, 240]（包含地址）
+
+5. Customer No：[803, 137, 925, 155]
+
+6. Date：[803, 160, 925, 178]
+
+7. Due date：[600, 375, 775, 393]
+
+8. FAX NO：SOLD BY的FAX NO

@@ -1,9 +1,65 @@
+Got it, let's extract each required field from the receipt.
+
+First, date: The date is "06/02/2018 07:11:54 PM". Let's find where that is. On the receipt, under "Date : 06/02/2018 07:11:54 PM". So the bounding box for date.
+
+doc_no_receipt_no: Document No. : T03-18/199913. So that's the document number.
+
+seller_address: The address lines: NO.17, 18 & 41, JALAN BE SAR, 39100 BRINCHANG, CAMERON HIGHLANDS, PAHANG. Let's check the lines.
+
+seller_gst_id: GST Reg.:002120876032.
+
+seller_name: SINNATHAMBY HOLDINGS SDN. BHD.
+
+total_amount: Rounded Total (RM): 113.50. The highlighted amount.
+
+total_tax: In GST Summary, Tax(RM) is 0.76. Let's check that.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The line with "Date : 06/02/2018 07:11:54 PM". Let's get the coordinates.
+
+2. doc_no_receipt_no: "Document No. : T03-18/199913"
+
+3. seller_address: The address block from "NO.17, 18 & 41, JALAN BE SAR," down to "PAHANG"
+
+4. seller_gst_id: "GST Reg.:002120876032"
+
+5. seller_name: "SINNATHAMBY HOLDINGS SDN. BHD."
+
+6. total_amount: "Rounded Total (RM): 113.50" (the value is 113.50)
+
+7. total_tax: The tax amount in GST Summary, which is 0.76 (from "SR @ 6% ... Tax(RM) 0.76")
+
+Now, let's define each bounding box.
+
+For seller_name: The text "SINNATHAMBY HOLDINGS SDN. BHD." is in bold, so the bounding box covers that line.
+
+Let's check each element's position.
+
+Let's list each:
+
+- date: The line starting with "Date : " and the time. The coordinates would be around where that text is.
+
+- doc_no_receipt_no: "Document No. : T03-18/199913" — the document number.
+
+- seller_address: The address lines: "249336-T", "NO.17, 18 & 41, JALAN BE SAR,", "39100 BRINCHANG,", "CAMERON HIGHLANDS,", "PAHANG" — these are the address parts.
+
+- seller_gst_id: "GST Reg.:002120876032"
+
+- seller_name: "SINNATHAMBY HOLDINGS SDN. BHD."
+
+- total_amount: The "Rounded Total (RM): 113.50" — the amount is 113.50, which is highlighted.
+
+- total_tax: The tax value in GST Summary, which is 0.76.
+
+Now, let's create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [109, 237, 927, 258], "label": "date"},
-    {"bbox_2d": [109, 258, 927, 278], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [109, 282, 927, 362], "label": "seller_address"},
-    {"bbox_2d": [109, 365, 927, 385], "label": "seller_gst_id"},
-    {"bbox_2d": [109, 117, 927, 140], "label": "seller_name"},
-    {"bbox_2d": [237, 562, 927, 585], "label": "total_amount"},
-    {"bbox_2d": [805, 925, 927, 945], "label": "total_tax"}
+    {"bbox_2d": [101, 237, 920, 262], "label": "date"},
+    {"bbox_2d": [101, 249, 920, 272], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [244, 282, 920, 367], "label": "seller_address"},
+    {"bbox_2d": [244, 304, 920, 327], "label": "seller_gst_id"},
+    {"bbox_2d": [101, 117, 920, 146], "label": "seller_name"},
+    {"bbox_2d": [325, 562, 920, 592], "label": "total_amount"},
+    {"bbox_2d": [634, 932, 920, 962], "label": "total_tax"}
 ]

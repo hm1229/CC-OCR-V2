@@ -1,105 +1,118 @@
-用户现在需要识别发票中的各个元素，按照要求分类。首先得逐个看每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的类别。首先得逐个分析每个类别在图中的位置。
 
-首先看TITLE，应该是“INVOICE”这个标题，位置在上方。然后COMPANY NAME是“七喜信息有限公司”和英文Qixi Information Co., Ltd.。然后Messer部分的公司信息也是公司名？不，Messer下面的Qixi Information Co., Ltd.是卖方信息，属于COMPANY NAME吗？可能需要区分。不过先看每个类别。
+首先看TITLE，发票的标题是INVOICE，所以找“INVOICE”这个标题。然后COMPANY NAME是七喜信息有限公司，英文是Qixi Information Co., Ltd.。然后ADDRESS是公司地址390 Maurice Bridge Murraytown, CT 05977。Amount是总金额$17133.58。INVOICE NO.是2022-06-06A。INVOICE DATE是20220606。S/C NO.也是2022-06-06A。Marks & Nos.是Meltblown、Nonwoven、Fabric这些。NAME是Danielle Green。P.C.是Lima 09 15056。RUC是20502790731。Tel是+111-096-0898/957394290。Terms of payment是BY 30% deposit, 70% balance against the copy of BL。Transport details是FOB shanghai。Unit price是usd 2.477/kg等对应每个商品的单价。Quantity是6918 kg等。Description of Goods是PP oil absorbent pad等。
 
-先列出来每个需要检测的类别：ADDRESS, Amount, COMPANY NAME, Description of Goods, INVOICE DATE, INVOICE NO., Marks & Nos., NAME, P.C., Quantity, RUC, S/C NO, TITLE, Tel, Terms of payment, Transport details, Unit price。
+现在需要逐个定位每个元素的bbox。先看各个部分：
 
-现在逐个找：
+1. TITLE: "INVOICE" 这个标题，位置在发票上方，大写。bbox大概是[333, 240, 666, 267]左右？看原图中“INVOICE”是居中的大标题，所以坐标要确定。
 
-1. TITLE：图中的“INVOICE”是标题，所以找这个。位置在公司名下面，大写INVOICE。bbox大概是[333, 240, 666, 265]左右？
+然后COMPANY NAME：顶部的“七喜信息有限公司”和英文，所以bbox是[100, 27, 899, 60]（中文）和[102, 62, 800, 85]（英文）。
 
-2. COMPANY NAME：顶部的“七喜信息有限公司”和“Qixi Information Co., Ltd.”，还有Messer下面的Qixi Information Co., Ltd.？不过可能主要的公司名是顶部的。所以第一个COMPANY NAME是顶部的中文和英文，bbox是[125, 27, 875, 60]（中文）和[125, 62, 875, 85]（英文）。
+ADDRESS：Qixi Information Co., Ltd.下面的地址390 Maurice Bridge Murraytown, CT 05977，所以bbox是[62, 337, 454, 356]。
 
-3. ADDRESS：Messer下面的地址“390 Maurice Bridge Murraytown, CT 05977”，还有P.C.等信息？不，ADDRESS是公司的地址，即390...那部分。所以ADDRESS的bbox是[62, 337, 454, 356]左右。
+Amount：TOTAL AMOUNT: 后面的$17133.58，所以bbox是[102, 742, 897, 760]。
 
-4. INVOICE NO.：图中“INVOICE NO.: 2022-06-06A”，位置在右侧，bbox是[437, 302, 566, 320]。
+INVOICE NO.: 右边的INVOICE NO.: 2022-06-06A，bbox是[592, 292, 866, 312]。
 
-5. INVOICE DATE：右侧“INVOICE DATE: 20220606”，bbox是[437, 325, 566, 343]。
+INVOICE DATE: INVOICE DATE: 20220606，bbox是[590, 314, 864, 334]。
 
-6. S/C NO.：右侧“S/C NO.: 2022-06-06A”，bbox是[437, 348, 566, 366]。
+S/C NO.: S/C NO: 2022-06-06A，bbox是[590, 336, 864, 356]。
 
-7. Marks & Nos.：表格中的第一列，表头是Marks & Nos.，对应内容是Meltblown, Nonwoven, Fabric。所以Marks & Nos.的表头位置，bbox是[62, 532, 182, 550]。
+Marks & Nos.: 表格的第一列，Meltblown、Nonwoven、Fabric，所以bbox是[62, 592, 225, 612]（列标题）。
 
-8. NAME：Messer下面的联系人Danielle Green？看“Danielle Green”是NAME，所以NAME的bbox是[62, 392, 194, 408]。
+NAME: Danielle Green，位置在Tel下面，所以bbox是[62, 392, 234, 408]。
 
-9. P.C.：图中的“P.C.: Lima 09 15056”，bbox是[62, 362, 152, 378]。
+P.C.: Lima 09 15056，bbox是[62, 362, 234, 378]。
 
-10. RUC：图中的“RUC: 20502790731”，bbox是[62, 378, 232, 394]。
+RUC: 20502790731，bbox是[62, 378, 234, 394]。
 
-11. Tel：图中的“Tel:+111-096-0898/957394290”，bbox是[62, 394, 302, 410]。
+Tel: +111-096-0898/957394290，bbox是[62, 394, 454, 410]。
 
-12. Transport details：图中的“Transport details:”下面的“FOB shanghai”，所以Transport details的表头是“Transport details:”，bbox是[62, 475, 225, 491]。
+Terms of payment: BY 30% deposit, 70% balance against the copy of BL，bbox是[500, 592, 864, 612]（列标题）。
 
-13. Terms of payment：图中的“Terms of payment:”下面的“BY 30% deposit...”，表头是“Terms of payment:”，bbox是[402, 475, 602, 491]。
+Transport details: FOB shanghai，bbox是[62, 472, 325, 492]。
 
-14. Description of Goods：表格中的第二列，表头是Description of Goods，对应内容是PP oil absorbent pad等。所以表头的bbox是[232, 532, 422, 550]。
+Unit price: 表格的Unit price列，usd 2.477/kg等，列标题是Unit price，bbox是[425, 592, 562, 612]。
 
-15. Quantity：表格中的第三列，表头是Quantity，对应内容是6918 kg等。表头bbox是[342, 532, 412, 550]。
+Quantity: 表格的Quantity列，6918 kg等，列标题Quantity，bbox是[325, 592, 423, 612]。
 
-16. Unit price：表格中的第四列，表头是Unit price，对应内容是usd 2.477/kg等。表头bbox是[452, 532, 532, 550]。
+Description of Goods: 表格的Description of Goods列，PP oil absorbent pad等，列标题是Description of Goods，bbox是[234, 592, 423, 612]。
 
-17. Amount：表格中的第五列，表头是Amount，对应内容是usd 17133.58等。表头bbox是[572, 532, 642, 550]。另外TOTAL AMOUNT也是Amount吗？TOTAL AMOUNT: $17133.58，所以TOTAL AMOUNT的Amount也算。不过看类别中的Amount，可能包括表格中的Amount列和TOTAL AMOUNT。但先看表格中的Amount列的表头，以及TOTAL AMOUNT的数值。
+现在需要把每个类别对应到正确的bbox。需要仔细检查每个元素。
 
-现在需要把每个类别对应的元素找出来，确保每个类别都有。
+比如，先列所有类别：
 
-现在整理每个类别：
+- ADDRESS: 公司地址390 Maurice Bridge Murraytown, CT 05977 → 对应bbox是[60, 337, 452, 356]
+- Amount: $17133.58 → 对应TOTAL AMOUNT后的金额，bbox是[702, 742, 897, 760]（因为TOTAL AMOUNT: 后面是$17133.58，所以看位置）
+- COMPANY NAME: 七喜信息有限公司（中文）和英文Qixi Information Co., Ltd. → 中文的bbox是[102, 27, 897, 50]，英文是[104, 60, 800, 83]
+- Description of Goods: PP oil absorbent pad, 40*50cm 200pcs/bag, 150g/m2 white → 对应表格中Description列的内容，列标题是Description of Goods，bbox是[236, 594, 421, 614]（列标题），而内容是各行的描述，比如第一行是PP oil absorbent pad，对应bbox是[236, 622, 421, 642]等，但可能需要列标题的bbox。
+- INVOICE DATE: 20220606 → INVOICE DATE: 后面的日期，bbox是[590, 314, 864, 334]
+- INVOICE NO.: 2022-06-06A → INVOICE NO.: 后面的编号，bbox是[592, 292, 866, 312]
+- Marks & Nos.: Meltblown, Nonwoven, Fabric → 列标题是Marks & Nos.，bbox是[62, 592, 224, 612]，内容是各行的Meltblown等，比如Meltblown的bbox是[62, 622, 224, 642]
+- NAME: Danielle Green → 位置在Tel下面，bbox是[62, 392, 234, 408]
+- P.C.: Lima 09 15056 → P.C.: 后面的内容，bbox是[62, 362, 234, 378]
+- Quantity: 6918 kg, （其他行可能没有数量？看表格中Quantity列，第一行是6918 kg，其他行可能空？）列标题Quantity的bbox是[325, 592, 423, 612]
+- RUC: 20502790731 → RUC: 后面的号码，bbox是[62, 378, 234, 394]
+- S/C NO: 2022-06-06A → S/C NO: 后面的编号，bbox是[590, 336, 864, 356]
+- TITLE: INVOICE → 大标题，bbox是[333, 240, 666, 267]
+- Tel: +111-096-0898/957394290 → Tel: 后面的电话，bbox是[62, 394, 454, 410]
+- Terms of payment: BY 30% deposit, 70% balance against the copy of BL → 列标题，bbox是[500, 592, 864, 612]
+- Transport details: FOB shanghai → 列标题，bbox是[62, 472, 325, 492]
+- Unit price: usd 2.477/kg, （其他行的单价）列标题Unit price的bbox是[425, 592, 562, 612]
 
-- TITLE: "INVOICE" → 找到，bbox大概在[333, 240, 666, 265]（因为图中INVOICE是大写，居中）
-- COMPANY NAME: 顶部的“七喜信息有限公司”和“Qixi Information Co., Ltd.” → 中文的bbox是[125, 27, 875, 60]，英文是[125, 62, 875, 85]。另外Messer下面的Qixi Information Co., Ltd.也是公司名？但可能主要的公司名是顶部的，所以选顶部的。
-- ADDRESS: “390 Maurice Bridge Murraytown, CT 05977” → bbox是[62, 337, 454, 356]
-- INVOICE NO.: “2022-06-06A” → 对应INVOICE NO.的行，bbox是[437, 302, 566, 320]（因为INVOICE NO.: 后面的号码）
-- INVOICE DATE: “20220606” → bbox是[437, 325, 566, 343]
-- S/C NO.: “2022-06-06A” → bbox是[437, 348, 566, 366]
-- Marks & Nos.: 表格第一列的表头，内容是Meltblown等 → 表头“Marks & Nos,”的bbox是[62, 532, 182, 550]
-- NAME: “Danielle Green” → bbox是[62, 392, 194, 408]
-- P.C.: “Lima 09 15056” → bbox是[62, 362, 152, 378]（P.C.: 后面的内容）
-- RUC: “20502790731” → bbox是[62, 378, 232, 394]（RUC: 后面的号码）
-- Tel: “+111-096-0898/957394290” → bbox是[62, 394, 302, 410]（Tel: 后面的号码）
-- Transport details: “FOB shanghai” → 对应“Transport details:”的表头，bbox是[62, 475, 225, 491]（因为“Transport details:”是标题，下面内容是FOB shanghai）
-- Terms of payment: “BY 30% deposit...” → 对应“Terms of payment:”的表头，bbox是[402, 475, 602, 491]
-- Description of Goods: 表格第二列的表头，内容是PP oil absorbent pad等 → 表头“Description of Goods”的bbox是[232, 532, 422, 550]
-- Quantity: 表格第三列的表头，内容是6918 kg等 → 表头“Quantity”的bbox是[342, 532, 412, 550]
-- Unit price: 表格第四列的表头，内容是usd 2.477/kg等 → 表头“Unit price”的bbox是[452, 532, 532, 550]
-- Amount: 表格第五列的表头，内容是usd 17133.58等，以及TOTAL AMOUNT的$17133.58 → 表格中Amount列的表头是“Amount”，bbox是[572, 532, 642, 550]；TOTAL AMOUNT的Amount是“$17133.58”，对应TOTAL AMOUNT行的Amount，所以TOTAL AMOUNT的Amount也算，但类别中的Amount可能指表格中的Amount列和总金额。不过先处理表格中的Amount列的表头，以及总金额的数值。但可能用户需要的是每个类别出现的元素，所以Amount的表头是[572, 532, 642, 550]，而TOTAL AMOUNT的数值是“$17133.58”，属于Amount类别吗？是的，因为TOTAL AMOUNT是总金额，属于Amount。所以需要检查TOTAL AMOUNT的bbox：TOTAL AMOUNT: $17133.58，其中$17133.58是Amount，所以TOTAL AMOUNT行的Amount部分的bbox是[225, 662, 642, 680]（因为TOTAL AMOUNT: 后面的金额）。
+现在需要把每个类别对应一个条目，注意有些是列标题，有些是内容。但用户要求是“detect the corresponding values to the following categories”，所以每个category对应一个值，需要找到每个category在图中的位置（即该category的值所在的bbox）。
 
-现在需要确保每个类别都被覆盖。现在列出所有类别并对应：
+比如：
 
-1. ADDRESS: [62, 337, 454, 356]
-2. Amount: 表格中的Amount列表头[572, 532, 642, 550]，以及TOTAL AMOUNT的$17133.58 [662, 662, 862, 680]？不，TOTAL AMOUNT: $17133.58，所以TOTAL AMOUNT的Amount是$17133.58，其bbox是[662, 662, 862, 680]（因为TOTAL AMOUNT: 后面的金额）。另外表格中的Amount列的数值是usd 17133.58（对应Meltblown行的Amount），所以Meltblown行的Amount是usd 17133.58，其bbox是[572, 555, 642, 572]。但可能类别中的Amount指的是列标题和总金额，所以需要确认。不过根据问题描述，“Detect all objects matching these categories”，每个类别可能有多个实例，但需要列出所有。不过可能更简单的是，每个类别对应一个主要的元素，比如：
+- ADDRESS: 值是“390 Maurice Bridge Murraytown, CT 05977”，所以bbox是包含这个地址的区域。
+- Amount: 值是“$17133.58”，对应TOTAL AMOUNT后面的金额。
+- COMPANY NAME: 值是“七喜信息有限公司”（中文）和“Qixi Information Co., Ltd.”（英文），可能需要两个？但看题目中的COMPANY NAME应该是指公司名称，所以中文和英文都可以，但可能取主要的，比如英文的Qixi Information Co., Ltd.，或者中文。看发票顶部的中文是公司名称，所以取中文的bbox。
+- Description of Goods: 值是各个商品的描述，比如“PP oil absorbent pad”、“40*50cm 200pcs/bag”、“150g/m2 white”，这些是Description of Goods列的内容，所以需要找到这些内容的bbox，或者列标题？不，是值，所以每个商品的描述是值，但可能列标题是Description of Goods，而值是对应行的内容。但可能用户需要的是列标题对应的内容？或者可能每个category对应一个值，比如Description of Goods的值是所有描述的集合？但可能更简单的是，每个category对应图中的一个元素，比如列标题是category，而值是该列的内容。但可能题目中的“detect the corresponding values”是指每个category对应的值（即该category在发票中的内容），所以需要为每个category找到其对应的值的bbox。
 
-- Amount: 总金额的$17133.58，即TOTAL AMOUNT: $17133.58中的金额部分，bbox是[662, 662, 862, 680]
-- 另外表格中的Amount列的表头是“Amount”，所以表头也是一个Amount的实例，bbox是[572, 532, 642, 550]
+现在逐个处理：
 
-但可能用户希望每个类别至少有一个实例，所以需要包含。
+1. ADDRESS: 公司地址，即“390 Maurice Bridge Murraytown, CT 05977” → bbox: [60, 337, 452, 356]
+2. Amount: 总金额“$17133.58” → bbox: [702, 742, 897, 760]（因为TOTAL AMOUNT: 后面是这个金额）
+3. COMPANY NAME: 公司名称，中文“七喜信息有限公司” → bbox: [102, 27, 897, 50]；英文“Qixi Information Co., Ltd.” → bbox: [104, 60, 800, 83]。可能需要选其中一个，比如中文的。
+4. Description of Goods: 商品描述，比如第一行“PP oil absorbent pad”，第二行“40*50cm 200pcs/bag”，第三行“150g/m2 white” → 这些是Description of Goods列的内容，所以每个描述对应一个值，但可能列标题是“Description of Goods”，而值是这些内容。但可能用户需要的是列标题的值？不，是值，所以可能取所有描述的集合，或者每个商品的描述。但可能更简单的是，列标题“Description of Goods”对应的值是这些描述，所以bbox是列标题的位置？不，列标题是标签，值是内容。可能这里需要明确，比如Description of Goods的值是表格中该列的所有内容，所以bbox是该列的内容区域，比如第一行描述的bbox是[236, 622, 421, 642]（PP oil absorbent pad），第二行是[236, 644, 421, 664]（40*50cm 200pcs/bag），第三行是[236, 666, 421, 686]（150g/m2 white）。但可能题目希望每个category对应一个主要的值，比如第一个商品的描述？或者可能列标题是category，而值是列标题的文本？不，列标题是标签，值是内容。可能我理解错了，应该是每个category对应发票中的一个字段，比如“Description of Goods”这个字段的值是该列的所有商品描述，所以需要找到该列的标题和内容。但可能更简单的是，按照图中的元素，每个category对应一个明确的区域，比如：
 
-现在继续整理每个类别的bbox和label：
+- Marks & Nos.: 列标题是“Marks & Nos.”，值是Meltblown、Nonwoven、Fabric → 所以Marks & Nos.的值是这些，bbox是列标题的位置[62, 592, 224, 612]，而内容是各行的Meltblown等，比如Meltblown的bbox是[62, 622, 224, 642]
 
-现在开始逐个处理：
+现在可能需要将每个category对应到其在图中的标签（即该category的名称在图中的位置，比如“Marks & Nos.”是列标题，所以该category的label是“Marks & Nos.”，其对应的值是该列的内容，但可能用户需要的是该category的标识（即图中哪个部分是该category的信息）。可能更直接的是，识别图中每个标注的字段，比如：
 
-1. TITLE: "INVOICE" → 找到，图中“INVOICE”在公司名下方，大写，居中。bbox大约是[333, 240, 666, 265]（因为图中INVOICE的位置在中间，上方是公司名，下方是Messer等）
-2. COMPANY NAME: 顶部的“七喜信息有限公司” → 中文，bbox [125, 27, 875, 60]；英文“Qixi Information Co., Ltd.” → bbox [125, 62, 875, 85]。另外Messer下面的“Qixi Information Co., Ltd.”也是公司名，bbox [62, 292, 454, 310]（因为Messer: 下面的公司名）。但可能主要的公司名是顶部的，所以选顶部的两个（中文和英文）。
-3. ADDRESS: “390 Maurice Bridge Murraytown, CT 05977” → bbox [62, 337, 454, 356]
-4. INVOICE NO.: “2022-06-06A” → 对应INVOICE NO.的行，bbox [437, 302, 566, 320]（因为INVOICE NO.: 后面的号码）
-5. INVOICE DATE: “20220606” → bbox [437, 325, 566, 343]
-6. S/C NO.: “2022-06-06A” → bbox [437, 348, 566, 366]
-7. Marks & Nos.: 表格第一列的表头“Marks & Nos,” → bbox [62, 532, 182, 550]；以及内容行的Meltblown, Nonwoven, Fabric，但类别是Marks & Nos.，所以表头是主要的，或者内容？但类别是“Marks & Nos.”，所以表头是该类别。
-8. NAME: “Danielle Green” → bbox [62, 392, 194, 408]
-9. P.C.: “Lima 09 15056” → bbox [62, 362, 152, 378]（P.C.: 后面的内容）
-10. RUC: “20502790731” → bbox [62, 378, 232, 394]（RUC: 后面的号码）
-11. Tel: “+111-096-0898/957394290” → bbox [62, 394, 302, 410]（Tel: 后面的号码）
-12. Transport details: “FOB shanghai” → 对应“Transport details:”的表头，bbox [62, 475, 225, 491]（因为“Transport details:”是标题，下面内容是FOB shanghai，所以表头是该类别）
-13. Terms of payment: “BY 30% deposit...” → 对应“Terms of payment:”的表头，bbox [402, 475, 602, 491]
-14. Description of Goods: 表格第二列的表头“Description of Goods” → bbox [232, 532, 422, 550]；内容是PP oil absorbent pad等，属于该类别。
-15. Quantity: 表格第三列的表头“Quantity” → bbox [342, 532, 412, 550]；内容是6918 kg等。
-16. Unit price: 表格第四列的表头“Unit price” → bbox [452, 532, 532, 550]；内容是usd 2.477/kg等。
-17. Amount: 表格第五列的表头“Amount” → bbox [572, 532, 642, 550]；内容是usd 17133.58（Meltblown行）；另外TOTAL AMOUNT: $17133.58中的金额是总金额，属于Amount，bbox [662, 662, 862, 680]
+- TITLE: “INVOICE” → 找到“INVOICE”这个标题
+- COMPANY NAME: 公司名称（七喜信息有限公司）
+- MESSER: 可能是Mess: 后面的公司信息，但用户给的category中没有Messer，所以忽略
+- INVOICE NO.: 发票编号
+- INVOICE DATE: 发票日期
+- S/C NO: 船运单号
+- Transport details: 运输细节
+- Terms of payment: 付款条款
+- Marks & Nos.: 标记和编号
+- Description of Goods: 商品描述
+- Quantity: 数量
+- Unit price: 单价
+- Amount: 金额
+- NAME: 联系人姓名（Danielle Green）
+- P.C.: 港口代码？
+- RUC: 注册号
+- Tel: 电话
+- ADDRESS: 公司地址
 
-现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+现在，针对每个用户要求的category，找到对应的bbox：
 
-现在需要确定每个元素的准确bbox，可能需要更精确的坐标。例如，图中的元素位置：
-
-- TITLE "INVOICE"：在公司名下方，居中，所以x1≈330, y1≈240, x2≈665, y2≈265。
-- COMPANY NAME（中文）：x1≈120, y1≈27, x2≈870, y2≈55。
-- COMPANY NAME（英文）：x1≈120, y1≈60, x2≈870, y2≈88。
-- ADDRESS：x1≈60, y1≈335, x2≈452, y2≈355。
-- INVOICE NO.：x1≈435, y1≈300, x2≈565, y2≈320（因为INVOICE NO.: 20
+1. ADDRESS: 公司地址“390 Maurice Bridge Murraytown, CT 05977” → bbox: [60, 337, 452, 356]
+2. Amount: 总金额“$17133.58” → bbox: [702, 742, 897, 760]
+3. COMPANY NAME: 中文“七喜信息有限公司” → bbox: [102, 27, 897, 50]
+4. Description of Goods: 商品描述列的内容，比如“PP oil absorbent pad”（第一行）→ bbox: [236, 622, 421, 642]（或者列标题“Description of Goods”的bbox是[234, 592, 423, 612]，但值是内容，所以可能取内容）
+5. INVOICE DATE: “20220606” → bbox: [590, 314, 864, 334]
+6. INVOICE NO.: “2022-06-06A” → bbox: [592, 292, 866, 312]
+7. Marks & Nos.: 列标题“Marks & Nos.” → bbox: [62, 592, 224, 612]（或者内容如Meltblown的bbox是[62, 622, 224, 642]）
+8. NAME: “Danielle Green” → bbox: [62, 392, 234, 408]
+9. P.C.: “Lima 09 15056” → bbox: [62, 362, 234, 378]
+10. Quantity: 列标题“Quantity” → bbox: [325, 592, 423, 612]（或者内容如6918 kg的bbox是[325, 622, 423, 642]）
+11. RUC: “20502790731” → bbox: [62, 378, 234, 394]
+12. S/C NO: “2022-06-06A” → bbox: [590, 336, 864, 356]
+13. TITLE: “INVOICE” → bbox: [333, 240, 666, 267]
+14. Tel: “+111-096-0898/957394290” → bbox: [62, 394, 454, 410]
+15.

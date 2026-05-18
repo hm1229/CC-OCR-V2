@@ -1,1 +1,207 @@
-[{"bbox_2d": [425, 10, 625, 50], "label": "标题"}, {"bbox_2d": [30, 130, 230, 160], "label": "姓名 Guest Name"}, {"bbox_2d": [30, 160, 230, 190], "label": "房号 Room No"}, {"bbox_2d": [30, 190, 230, 220], "label": "人数 Person(s)"}, {"bbox_2d": [30, 220, 340, 250], "label": "入住时间 Arrival Date"}, {"bbox_2d": [30, 250, 340, 280], "label": "退房时间 Departure Date"}, {"bbox_2d": [500, 130, 750, 160], "label": "团队名称 Group Name"}, {"bbox_2d": [500, 160, 750, 190], "label": "账单号 Receipt No."}, {"bbox_2d": [500, 190, 750, 220], "label": "预订号 Reservation No."}, {"bbox_2d": [500, 250, 650, 280], "label": "收银号 Cashier"}, {"bbox_2d": [20, 310, 160, 340], "label": "日期 Date"}, {"bbox_2d": [140, 310, 260, 340], "label": "账目说明 Description"}, {"bbox_2d": [170, 310, 400, 340], "label": "消费 CNY Consumptions"}, {"bbox_2d": [430, 310, 660, 340], "label": "付款 CNY Payment"}, {"bbox_2d": [20, 460, 750, 490], "label": "Balance 余额"}]
+用户现在需要从酒店账单中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
+
+首先看“Balance 余额”：图中下方有“Balance 余额: CNY 0.00”，所以要找到这个区域。看账单里的Balance行，数值是0.00。
+
+然后“人数 Person(s)”：账单上方“人数 Person(s): 2”，对应位置。
+
+“付款 CNY Payment”：看表格里的Payment列，总金额是380.00，还有每行的付款？不，总付款是380.00，对应Total那行的Payment列。
+
+“入住时间 Arrival Date”：入住时间是2020-10-28 23:31，看对应字段。
+
+“团队名称 Group Name”：测绘学会，对应字段。
+
+“地址”：图中上方有“ZHENZHOU”（郑州），可能地址是这个？但看是否有地址字段，账单里可能没有明确的地址，但“ZHENZHOU”是城市，可能作为地址？不过先检查是否有地址项，用户给的类别里有“地址”，但图中可能没有明确的地址，比如酒店地址？图中标题是数字100科技酒店，ZHENZHOU是郑州，可能地址是这个？但需要看是否有对应内容。不过先看其他字段。
+
+“姓名 Guest Name”：林萍，对应字段。
+
+“房号 Room No”：1221，对应字段。
+
+“收银号 Cashier”：吴春梅 9150，对应字段。
+
+“日期 Date”：看表格里的Date列，比如2020-10-28等，还有可能是指账单的日期？但表格里的Date是每笔消费的日期，比如2020-10-28、2020-10-29。需要确定哪个是“日期 Date”类别，可能是指账单中的日期列，或者入住日期？不过看用户给的类别是“日期 Date”，对应表格中的Date列的标题，或者具体日期？可能需要看每个条目的Date。
+
+“标题”：图中最上方的“数字100科技酒店”是标题，所以标题是这个。
+
+“消费 CNY Consumptions”：看Consumptions列，比如358.49、21.51等，总消费是380.00。
+
+“账单号 Receipt No.”：29777，对应字段。
+
+“账目说明 Description”：比如“*房费”、“*6%房费增值税*房费”、“支付宝”等，对应表格中的Description列。
+
+“退房时间 Departure Date”：2020-10-29，对应字段。
+
+“预订号 Reservation No.”：0012721048，对应字段。
+
+现在逐个处理每个类别，找到对应的bbox和label。
+
+首先列出所有需要的类别：
+
+1. Balance 余额
+2. 人数 Person(s)
+3. 付款 CNY Payment
+4. 入住时间 Arrival Date
+5. 团队名称 Group Name
+6. 地址
+7. 姓名 Guest Name
+8. 房号 Room No
+9. 收银号 Cashier
+10. 日期 Date
+11. 标题
+12. 消费 CNY Consumptions
+13. 账单号 Receipt No.
+14. 账目说明 Description
+15. 退房时间 Departure Date
+16. 预订号 Reservation No.
+
+现在逐个分析：
+
+1. Balance 余额：在账单下方，“Balance 余额: CNY 0.00”，对应的bbox需要看位置。图中Total下面一行是Balance，数值0.00。所以bbox是包含“Balance 余额: CNY 0.00”的区域。
+
+2. 人数 Person(s)：在上方“人数 Person(s): 2”，对应位置。
+
+3. 付款 CNY Payment：Total行的Payment列是380.00，所以对应“380.00”在Payment列的Total行。
+
+4. 入住时间 Arrival Date：“入住时间 Arrival Date: 2020-10-28 23:31”，对应位置。
+
+5. 团队名称 Group Name：“团队名称 Group Name: 测绘学会”，对应位置。
+
+6. 地址：图中上方有“ZHENZHOU”（郑州），可能作为地址，因为酒店在郑州，所以地址是ZHENZHOU？或者看是否有其他地址信息。图中标题是数字100科技酒店，ZHENZHOU是城市，所以地址可能是ZHENZHOU。
+
+7. 姓名 Guest Name：“姓名 Guest Name: 林萍”，对应位置。
+
+8. 房号 Room No：“房号 Room No: 1221”，对应位置。
+
+9. 收银号 Cashier：“收银号 Cashier: 吴春梅 9150”，对应位置。
+
+10. 日期 Date：表格中的Date列，比如第一行是2020-10-28，第二行2020-10-28，第三行2020-10-29。需要确定是哪个，可能是指账单中的日期范围，或者表格的Date列标题？但用户给的类别是“日期 Date”，可能对应表格中的Date列的标题，或者具体日期。看账单中的“日期 Date”是表格的列标题，所以bbox是“日期 Date”这个表头的位置。
+
+11. 标题：“数字100科技酒店”是标题，位于图的上方，所以bbox是这个文字的位置。
+
+12. 消费 CNY Consumptions：表格中的Consumptions列，比如358.49、21.51，总消费380.00。对应“Total 总计: CNY 380.00”中的Consumptions部分。
+
+13. 账单号 Receipt No.：“账单号 Receipt No.: 29777”，对应位置。
+
+14. 账目说明 Description：表格中的Description列，比如“*房费”、“*6%房费增值税*房费”、“支付宝”等，对应每个条目的Description。
+
+15. 退房时间 Departure Date：“退房时间 Departure Date: 2020-10-29”，对应位置。
+
+16. 预订号 Reservation No.：“预订号 Reservation No.: 0012721048”，对应位置。
+
+现在需要为每个类别找到对应的bbox。由于是图片中的位置，需要估计每个元素的位置。
+
+现在开始构建每个条目：
+
+1. Balance 余额：
+   - 文字是“Balance 余额: CNY 0.00”，在Total下面一行。看图片中的位置，Total行之后是Balance行，所以bbox大概在消费表格的下方，对应数值0.00。
+   - label: "Balance 余额"
+
+2. 人数 Person(s)：
+   - 文字“人数 Person(s): 2”，在上方信息区，房号右边？不，看原图：姓名、房号、入住时间等在左列，团队名称等在右列。人数在左列，对应“人数 Person(s): 2”。
+   - label: "人数 Person(s)"
+
+3. 付款 CNY Payment：
+   - Total行的Payment列是380.00，所以对应“380.00”在Payment列的Total行。
+   - label: "付款 CNY Payment"
+
+4. 入住时间 Arrival Date：
+   - “入住时间 Arrival Date: 2020-10-28 23:31”，左列。
+   - label: "入住时间 Arrival Date"
+
+5. 团队名称 Group Name：
+   - “团队名称 Group Name: 测绘学会”，右列。
+   - label: "团队名称 Group Name"
+
+6. 地址：
+   - 图中上方有“ZHENZHOU”（郑州），作为酒店所在城市，即地址。所以“ZHENZHOU”是地址。
+   - label: "地址"
+
+7. 姓名 Guest Name：
+   - “姓名 Guest Name: 林萍”，左列。
+   - label: "姓名 Guest Name"
+
+8. 房号 Room No：
+   - “房号 Room No: 1221”，左列。
+   - label: "房号 Room No"
+
+9. 收银号 Cashier：
+   - “收银号 Cashier: 吴春梅 9150”，右列，收银号位置。
+   - label: "收银号 Cashier"
+
+10. 日期 Date：
+    - 表格中的“日期 Date”是列标题，位于表格的左列表头。比如表格的第一列是日期，所以“日期 Date”是表头文字。
+    - label: "日期 Date"
+
+11. 标题：
+    - 图最上方的“数字100科技酒店”是标题。
+    - label: "标题"
+
+12. 消费 CNY Consumptions：
+    - 表格中的“消费 CNY Consumptions”是列标题，对应每笔消费的金额，比如358.49等，总消费是380.00。所以“Total 总计: CNY 380.00”中的Consumptions部分。
+    - label: "消费 CNY Consumptions"
+
+13. 账单号 Receipt No.：
+    - “账单号 Receipt No.: 29777”，右列。
+    - label: "账单号 Receipt No."
+
+14. 账目说明 Description：
+    - 表格中的“账目说明 Description”是列标题，对应每行的描述，比如“*房费”、“*6%房费增值税*房费”、“支付宝”。
+    - label: "账目说明 Description"
+
+15. 退房时间 Departure Date：
+    - “退房时间 Departure Date: 2020-10-29”，左列。
+    - label: "退房时间 Departure Date"
+
+16. 预订号 Reservation No.：
+    - “预订号 Reservation No.: 0012721048”，右列。
+    - label: "预订号 Reservation No."
+
+现在需要为每个类别确定bbox。由于是图片，需要大致估计每个元素的位置。例如：
+
+- 标题“数字100科技酒店”在图的上方中央，所以bbox是[490, 10, 625, 45]左右（假设图片坐标，原图中标题在上方）。
+- ZHENZHOU在标题下方，所以地址的bbox是[500, 30, 600, 50]左右。
+- 姓名Guest Name：左列，文字“姓名 Guest Name: 林萍”，bbox是[25, 140, 250, 165]。
+- 房号Room No：左列，“房号 Room No: 1221”，bbox是[25, 165, 250, 190]。
+- 入住时间Arrival Date：左列，“入住时间 Arrival Date: 2020-10-28 23:31”，bbox是[25, 190, 350, 215]。
+- 人数Person(s)：左列，“人数 Person(s): 2”，bbox是[25, 215, 250, 240]。
+- 团队名称Group Name：右列，“团队名称 Group Name: 测绘学会”，bbox是[500, 140, 800, 165]。
+- 账单号Receipt No.：右列，“账单号 Receipt No.: 29777”，bbox是[500, 165, 800, 190]。
+- 预订号Reservation No.：右列，“预订号 Reservation No.: 0012721048”，bbox是[500, 190, 800, 215]。
+- 收银号Cashier：右列，“收银号 Cashier: 吴春梅 9150”，bbox是[500, 215, 800, 240]。
+- 日期Date：表格的列标题，位于表格上方，第一列的表头，“日期 Date”，bbox是[100, 300, 200, 325]（假设表格起始位置）。
+- 账目说明Description：表格的列标题，第二列，“账目说明 Description”，bbox是[250, 300, 400, 325]。
+- 消费CNY Consumptions：表格的列标题，第三列，“消费 CNY Consumptions”，bbox是[450, 300, 600, 325]。
+- 付款CNY Payment：表格的列标题，第四列，“付款 CNY Payment”，bbox是[650, 300, 800, 325]。
+- 退房时间Departure Date：左列，“退房时间 Departure Date: 2020-10-29”，bbox是[25, 240, 350, 265]。
+- Balance 余额：在表格下方，“Balance 余额: CNY 0.00”，bbox是[450, 400, 800, 425]（Total行下面）。
+- 付款CNY Payment的Total值：在Total行的Payment列，“380.00”，bbox是[650, 350, 800, 375]（Total行的Payment列）。
+- 消费CNY Consumptions的Total值：“380.00”在Consumptions列的Total行，bbox是[450, 350, 600, 375]。
+
+现在需要将每个类别对应到这些bbox。注意有些类别可能对应多个元素，但用户需要每个类别对应一个检测值，所以每个类别选一个主要的元素。
+
+现在整理成JSON数组：
+
+[
+  {"bbox_2d": [500, 25, 600, 45], "label": "地址"},
+  {"bbox_2d": [490, 10, 625, 40], "label": "标题"},
+  {"bbox_2d": [25, 140, 250, 165], "label": "姓名 Guest Name"},
+  {"bbox_2d": [25, 165, 250, 190], "label": "房号 Room No"},
+  {"bbox_2d": [25, 190, 350, 215], "label": "入住时间 Arrival Date"},
+  {"bbox_2d": [25, 215, 250, 240], "label": "人数 Person(s)"},
+  {"bbox_2d": [500, 140, 800, 165], "label": "团队名称 Group Name"},
+  {"bbox_2d": [500, 165, 800, 190], "label": "账单号 Receipt No."},
+  {"bbox_2d": [500, 190, 800, 215], "label": "预订号 Reservation No."},
+  {"bbox_2d": [500, 215, 800, 240], "label": "收银号 Cashier"},
+  {"bbox_2d": [25, 240, 350, 265], "label": "退房时间 Departure Date"},
+  {"bbox_2d": [100, 300, 200, 325], "label": "日期 Date"},
+  {"bbox_2d": [250, 300, 400, 325], "label": "账目说明 Description"},
+  {"bbox_2d": [450, 300, 600, 325], "label": "消费 CNY Consumptions"},
+  {"bbox_2d": [650, 300, 800, 325], "label": "付款 CNY Payment"},
+  {"bbox_2d": [450, 400, 800, 425], "label": "Balance 余额"},
+  {"bbox_2d": [650, 350, 800, 375], "label": "付款 CNY Payment"} // 这里可能重复，因为付款CNY Payment在Total行的数值，而列标题也是付款CNY Payment。需要确定用户需要的是哪个。可能列标题是“付款 CNY Payment”作为类别，而Total行的数值是该类别的值。但用户要求是“detect the corresponding values to the following categories”，即每个类别对应一个值，所以可能列标题是类别，而数值是该类别的值。但可能更准确的是，每个类别对应其在账单中的具体值，比如“付款 CNY Payment”对应Total行的380.00，而“消费 CNY Consumptions”对应Total的380.00。同时“日期 Date”可能对应表格中的日期列，比如2020-10-28等，但可能需要选一个日期，比如入住日期或退房日期？但用户给的类别是“日期 Date”，可能是指账单中的日期范围，或者表格的日期列。这里可能需要调整。
+
+另外，可能有些类别在图中没有明确的“地址”，因为图中只有“ZHENZHOU”（郑州），所以地址是ZHENZHOU。而“标题”是“数字100科技酒店”。
+
+现在再检查每个类别是否都覆盖：
+
+- Balance 余额：有，0.00
+- 人数

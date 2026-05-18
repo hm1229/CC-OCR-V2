@@ -1,9 +1,32 @@
-[
-    {"bbox_2d": [290, 112, 505, 130], "label": "company"},
-    {"bbox_2d": [290, 134, 505, 152], "label": "address"},
-    {"bbox_2d": [290, 156, 505, 174], "label": "address"},
-    {"bbox_2d": [290, 178, 505, 196], "label": "address"},
-    {"bbox_2d": [290, 200, 505, 218], "label": "address"},
-    {"bbox_2d": [290, 220, 505, 238], "label": "date"},
-    {"bbox_2d": [290, 242, 505, 260], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is "De Jelita Stesen Minyak". Let's check the text.
+- Address: The address lines are "Jin Permas 9/5, Bdr Permas Jaya 81750, Johor Bahru".
+- Date: The date is "02/05/18".
+- Total: The total amount is "60.00" (under Total Cash section, Total is RM 60.00).
+
+Now, find the bounding boxes for each.
+
+First, company: The line "De Jelita Stesen Minyak" is the company name. Let's check the coordinates.
+
+Address: The address lines include "Jin Permas 9/5, Bdr Permas Jaya 81750, Johor Bahru". Let's confirm.
+
+Date: The date is in the section "Date 02/05/18".
+
+Total: The total is listed as "Total RM 60.00" and "Total Gross C RM 60.00". The main total is 60.00.
+
+Now, map each to their bounding boxes.
+
+Let's go step by step.
+
+1. Company: The text "De Jelita Stesen Minyak" is in the upper part. Let's find its bounding box.
+
+2. Address: The address lines are "Jin Permas 9/5, Bdr Permas Jaya 81750, Johor Bahru". Let's check the lines.
+
+3. Date: The date is "02/05/18" under the Date field.
+
+4. Total: The total amount is "60.00" in the Total row.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [292, 202, 438, 220], "label": "company"}, {"bbox_2d": [292, 222, 438, 240], "label": "address"}, {"bbox_2d": [292, 242, 438, 260], "label": "address"}, {"bbox_2d": [292, 262, 438, 280], "label": "address"}, {"bbox_2d": [292, 494, 347, 512], "label": "date"}, {"bbox_2d": [332, 312, 667, 329], "label": "total"}]

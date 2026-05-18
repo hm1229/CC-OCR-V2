@@ -1,8 +1,184 @@
+Got it, let's extract the information step by step.
+
+First, find the date. On the invoice, the order date is "11/03/2022 07:09 PM". So the date is that.
+
+Doc_no_receipt_no: The receipt number is "003-1220845" and order number is "1000249". Wait, the label is doc_no_receipt_no, which probably includes both? Let me check the fields. The receipt no. is "003-1220845" and order no. is "1000249". But maybe the doc_no is the receipt number. Let's check the text: "Receipt No.:003-1220845" and "Order No. 1000249". So doc_no_receipt_no would be the receipt number, but maybe the order number is part of it. Wait, the problem says "doc_no_receipt_no" — maybe the document number and receipt number. Let's check the text: "Order No. 1000249 11/03/2022 07:09 PM Receipt No.:003-1220845". So the receipt number is 003-1220845, order number is 1000249. But the label is doc_no_receipt_no, so perhaps the receipt number is the key. Let's note the receipt no. as part of that.
+
+Seller address: The address is "YHM Aeon Tebrau City S17, Second Floor, Aeon Tebrau City, 1, Jalan Desa Tebrau, Taman Desa Tebrau, 81100 Johor Bahru, Johor, 002105827328". Let's check the text: "YHM Aeon Tebrau City S17, Second Floor, Aeon Tebrau City, 1, Jalan Desa Tebrau, Taman Desa Tebrau, 81100 Johor Bahru, Johor, 002105827328".
+
+Seller name: "YHM Aeon Tebrau City" — that's the seller name.
+
+Total amount: The total is "TOTAL:MYR 49.70", so total_amount is 49.70 MYR.
+
+Total tax: Let's check the tax summary. The tax amount is 2.80 MYR (from Tax Summary: Tax(YR) is 2.80). Also, Total Excluded Tax is 46.90, and total is 49.70, so tax is 49.70 - 46.90 = 2.80. So total_tax is 2.80.
+
+Now, let's map each category with their bounding boxes.
+
+First, date: The date is in the order line: "11/03/2022 07:09 PM". Let's find the coordinates. The order No. line is "Order No. 1000249 11/03/2022 07:09 PM". So the date part is there.
+
+Doc_no_receipt_no: The receipt number is "003-1220845" (from "Receipt No.:003-1220845") and order number is "1000249". But maybe the doc_no is the receipt number. Let's check the text: "Receipt No.:003-1220845" — that's the receipt number. So the doc_no_receipt_no would include both, but maybe the problem expects the receipt number. Let's check the exact text.
+
+Seller address: The address block is from "YHM Aeon Tebrau City" down to the phone number.
+
+Seller name: "YHM Aeon Tebrau City" — that's the top part of the address.
+
+Total amount: "TOTAL:MYR 49.70" — that's the total line.
+
+Total tax: The tax amount is 2.80, which is in the Tax Summary: "Tax(YR) 2.80". Also, the total tax can be calculated as total - excluded tax: 49.70 - 46.90 = 2.80. So the total_tax is 2.80.
+
+Now, let's identify each element's bounding box.
+
+1. Date: The date is "11/03/2022 07:09 PM" in the order line. Let's find the coordinates. The order line is: "Order No. 1000249 11/03/2022 07:09 PM". So the date is part of that line.
+
+2. doc_no_receipt_no: The receipt number is "003-1220845" (from "Receipt No.:003-1220845") and order number is "1000249". But maybe the doc_no is the receipt number. Let's check the text: "Receipt No.:003-1220845" — that's the receipt number. So the doc_no_receipt_no is the receipt number.
+
+3. seller_address: The address is the block starting from "YHM Aeon Tebrau City S17, Second Floor, ..." down to the phone number "002105827328".
+
+4. seller_name: "YHM Aeon Tebrau City" — the first line of the address.
+
+5. total_amount: "TOTAL:MYR 49.70" — the line that says "TOTAL:MYR 49.70".
+
+6. total_tax: The tax amount is 2.80, which is in the Tax Summary section: "Tax(YR) 2.80". Let's check the Tax Summary line: "SR 6 46.90 2.80" — so the tax amount is 2.80.
+
+Now, let's define the bounding boxes for each.
+
+First, let's parse the image text:
+
+- The top part has the address:
+
+YHM Aeon Tebrau City
+S17, Second Floor,
+Aeon Tebrau City,
+1, Jalan Desa Tebrau,
+Taman Desa Tebrau,
+81100 Johor Bahru, Johor.
+002105827328
+
+Then the tax invoice header.
+
+Order No. 1000249 11/03/2022 07:09 PM
+Receipt No.:003-1220845
+Cashier :Cashier
+Eat In
+
+Then the items.
+
+SubTotal : 49.70
+Total : 49.70
+TOTAL:MYR 49.70
+Total Excluded Tax : 46.90
+: 2.80
+
+Payment Details
+Cash 50.00
+Cash Change 0.30
+
+Tax Summary
+Tax Code % Amount(YR) Tax(YR)
+SR 6 46.90 2.80
+
+Now, let's map each category:
+
+- date: "11/03/2022 07:09 PM" — located in the line with Order No. and time. The bounding box would be around that text.
+
+- doc_no_receipt_no: The receipt number is "003-1220845" (from "Receipt No.:003-1220845") and order number is "1000249". But the label is doc_no_receipt_no, so maybe both. But let's check the exact text. The receipt number is a key identifier. Let's take the receipt number.
+
+- seller_address: The address block from "YHM Aeon Tebrau City" to the phone number.
+
+- seller_name: "YHM Aeon Tebrau City" — the first line of the address.
+
+- total_amount: "TOTAL:MYR 49.70" — the line that says TOTAL:MYR 49.70.
+
+- total_tax: The tax amount is 2.80, which is in the Tax Summary's Tax(YR) column. Also, the difference between total and excluded tax is 49.70 - 46.90 = 2.80. So total_tax is 2.80.
+
+Now, let's create the JSON entries.
+
+For each:
+
+1. date: The text "11/03/2022 07:09 PM" is in the order line. Let's find its coordinates. The order line is "Order No. 1000249 11/03/2022 07:09 PM". So the bounding box for the date part.
+
+2. doc_no_receipt_no: The receipt number is "003-1220845" (from "Receipt No.:003-1220845"). Let's get that.
+
+3. seller_address: The address lines from "YHM Aeon Tebrau City" down to "002105827328".
+
+4. seller_name: "YHM Aeon Tebrau City" — the first line of the address.
+
+5. total_amount: "TOTAL:MYR 49.70" — the line with that text.
+
+6. total_tax: The tax amount 2.80, which is in the Tax Summary row.
+
+Now, let's define the bounding boxes. Since the image is a receipt, we can estimate the positions.
+
+But since we need to provide the bounding box as [x1, y1, x2, y2], let's check the original image's structure.
+
+The top part (seller info) is at the top. Let's assume the coordinates:
+
+- seller_name: The text "YHM Aeon Tebrau City" is in the upper part. Let's say the bounding box is from the top of the address block.
+
+- seller_address: The entire address block including the phone number.
+
+- date: The order date is in the line below the order number.
+
+- doc_no_receipt_no: The receipt number is next to the order number.
+
+- total_amount: The line "TOTAL:MYR 49.70" is in the middle-right.
+
+- total_tax: The tax amount in the Tax Summary.
+
+Now, let's write the JSON.
+
+First, identify each element:
+
+1. date: "11/03/2022 07:09 PM" — in the order line. Let's check the text: "Order No. 1000249 11/03/2022 07:09 PM". So the date is part of that.
+
+2. doc_no_receipt_no: "003-1220845" (Receipt No.) and "1000249" (Order No.). But maybe the receipt number is the main one. Let's take the receipt number.
+
+3. seller_address: The address from "YHM Aeon Tebrau City" to "002105827328".
+
+4. seller_name: "YHM Aeon Tebrau City" — the first line.
+
+5. total_amount: "TOTAL:MYR 49.70" — the line that says that.
+
+6. total_tax: "2.80" — from the Tax Summary.
+
+Now, let's create the entries.
+
+For example:
+
+- date: The text "11/03/2022 07:09 PM" is in the line. Let's find its bounding box. Let's assume the coordinates in the image. Since the image is a receipt, the order line is near the top of the invoice content.
+
+- doc_no_receipt_no: The receipt number is "003-1220845" — located in the line "Receipt No.:003-1220845".
+
+- seller_address: The block starting with "YHM Aeon Tebrau City" and ending with the phone number.
+
+- seller_name: The first line of the address, "YHM Aeon Tebrau City".
+
+- total_amount: The line "TOTAL:MYR 49.70" — which is a prominent line.
+
+- total_tax: The tax amount in the Tax Summary, which is 2.80.
+
+Now, let's structure the JSON.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's list them:
+
+1. date: label "date", bbox around "11/03/2022 07:09 PM"
+2. doc_no_receipt_no: label "doc_no_receipt_no", bbox around "003-1220845" (Receipt No.)
+3. seller_address: label "seller_address", bbox around the address block
+4. seller_name: label "seller_name", bbox around "YHM Aeon Tebrau City" (first line)
+5. total_amount: label "total_amount", bbox around "TOTAL:MYR 49.70"
+6. total_tax: label "total_tax", bbox around "2.80" in Tax Summary
+
+Now, let's check the exact text for total_tax. In the Tax Summary, the line is "SR 6 46.90 2.80", so the tax amount is 2.80. Also, the "Total Excluded Tax : 46.90" and total is 49.70, so 49.70 - 46.90 = 2.80. So total_tax is 2.80.
+
+Now, let's write the JSON array.
+</think>
 [
-    {"bbox_2d": [154, 304, 298, 323], "label": "date"},
-    {"bbox_2d": [104, 320, 240, 337], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [144, 237, 527, 300], "label": "seller_address"},
-    {"bbox_2d": [144, 217, 336, 236], "label": "seller_name"},
-    {"bbox_2d": [264, 500, 336, 520], "label": "total_amount"},
-    {"bbox_2d": [654, 600, 696, 619], "label": "total_tax"}
+    {"bbox_2d": [144, 300, 298, 318], "label": "date"},
+    {"bbox_2d": [100, 320, 244, 337], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [144, 210, 527, 284], "label": "seller_address"},
+    {"bbox_2d": [144, 210, 336, 227], "label": "seller_name"},
+    {"bbox_2d": [264, 525, 494, 543], "label": "total_amount"},
+    {"bbox_2d": [724, 625, 764, 642], "label": "total_tax"}
 ]

@@ -1,130 +1,223 @@
-用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个识别每个类别在图中的位置。
 
-首先看Company Name：图顶部是Tiankai Information Co., Ltd.，所以Company Name的bbox是包含这个标题的区域。然后Title是COMMERCIAL INVOICE，所以Title是那个大标题。
+首先看Company Name，是Tiankai Information Co., Ltd.，在顶部。Title是COMMERCIAL INVOICE，中间大标题。
 
-Customer是LONGI SOLAR TECHNOLOGY K.K.，对应Customer标签。Invoice No.是LS-JPLS-NOVIS-20211112-07，Date是2021-11-12，Address是两行地址：15605 Williams Stream South Derek, SD 58575和1584 Anne Ridges Danielssmuth, LA 05011。Delivery Terms是FOB，S.C No.是LGi-L-Ino-2111-0854-N012，Payment Terms是T/T 90 days after Receiving the Invoice。Name of Commodity & Specification是MONO SOLAR MOUDLE LR5-72HBD-540M。Unit1 Price是34.965（看表格里的Unit Price列？不对，看表格里的列：Unit Price（第一列？不看表格结构。表格里的列有Unit Price（可能是Unit1 Price？看表格中的“Unit Price”列，然后另一个Unit Price？不，看表格里的列：Average Watts是540，Unit Price（第一列？不，表格里的列是：Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price（另一个？不，看表格中的列标题：Unit Price（可能是单价，然后Total Pcs是数量，然后另一个Unit Price？不对，看表格里的内容：比如Total Pcs是620，Unit Price（第二个？不，看表格中的“Unit Price”列有两个？不，看表格里的列：在“Total Pcs”右边是“Unit Price”？不，原表格的列是：Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price（？不，看原表格的列标题：
+Customer是LONGI SOLAR TECHNOLOGY K.K.，在Customer:后面。
 
-看图片中的表格：
+Invoice No.是LS-JPLS-NOVIS-20211112-07，对应Invoice No.字段。
 
-列标题是：Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price（？不，原表格里的列应该是：
+Date是2021-11-12，在Date:后面。
 
-看图片中的表格部分：
+Delivery Terms是FOB，对应Delivery Terms:。
 
-表格的列标题行是：Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price（？不，看图片中的表格，实际列是：
+S.C No.是LGi-L-Ino-2111-0854-N012，S.C No.:后面。
 
-从图片中看，表格的列有：Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price（另一个？不，看数据行：比如第一行数据中，Unit Price是34.965，然后Total Pcs是620，然后另一个Unit Price是18881.1？不对，看表格中的列标题应该是：
+Payment Terms是T/T 90 days after Receiving the Invoice，Payment Terms:后面。
 
-看图片中的表格列标题：
+Address是15605 Williams Stream South Derek, SD 58575 1584 Anne Ridges Danielssmuth, LA 05011，Address:后面的内容。
 
-- Remark
-- Name of Commodity & Specification
-- Currency
-- Average Watts
-- Unit Price（第一个单价，比如34.965）
-- Total Pcs（数量620）
-- Unit Price（第二个？不，看Total Pcs右边是“Unit Price”？不，原表格中“Total Pcs”右边是“Unit Price”吗？不，看图片中的表格，列标题是：
+Bank Details下的Beneficial是Tiankai Information Co., Ltd.，Beneficial:后面。
 
-在图片中，表格的列标题行是：
+Bank Name是Tiankai Information Co., Ltd.，Bank Name:后面。
 
-Remark | Name of Commodity & Specification | Currency | Average Watts | Unit Price | Total Pcs | Unit Price | Total Watts | Total Amount
+Swift ID是CIBKCNBJ710，Swift ID:后面。
 
-不对，看图片中的表格，实际列是：
+Add是905 David Causeway Apt. 733 Davidview, ND 95932，Add:后面。
 
-看图片中的表格，列标题是：
+Account No.是8111727013200582012，Account No.:后面。
 
-Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price（？不，看数据行中的“Unit Price”列，比如第一行的Unit Price是34.965，然后Total Pcs是620，然后另一个列是Unit Price（18881.1？不，看Total Pcs右边的列是“Unit Price”吗？不，看图片中的表格，列标题是：
+Branch Number是302791025363，Branch Number:后面。
 
-从图片中可以看到，表格的列有：
+Name of Commodity & Specification是MONO SOLAR MOUDLE LR5-72HBD-540M，表格里的Name of Commodity & Specification列。
 
-- Remark
-- Name of Commodity & Specification
-- Currency
-- Average Watts
-- Unit Price（比如34.965）
-- Total Pcs（620）
-- Unit Price（另一个？不，看“Total Pcs”右边是“Unit Price”吗？不，看“Total Pcs”右边是“Unit Price”列的值是18881.1？然后Total Watts是334800，Total Amount是11,706,282。所以可能“Unit1 Price”是第一个Unit Price（34.965），“Unit2 Price”是另一个Unit Price（18881.1）？因为用户要求的类别有Unit1 Price和Unit2 Price，所以需要区分这两个。
+Currency是JPY，表格里的Currency列。
 
-然后Total Amount是11,706,282，Total Pcs是620，Total Watts是334800（在Total行是334800？看Total行的Total Watts是334800？原表格中Total行的Total Watts是334800？看图片中的Total行：Total行的Total Watts是334800？是的，Total行的Total Watts列是334800。Total Amount是11,706,282。
+Average Watts是540，表格里的Average Watts列。
 
-Bank Details部分：Beneficial是Tiankai Information Co., Ltd.，Bank Name是Tiankai Information Co., Ltd.，Swift ID是CIBKCNBJ710，Add是905 David Causeway Apt. 733 Davidview, ND 95932，Account No.是8111727013200582012，Branch Number是302791025363。
+Total Pcs是620，表格里的Total Pcs列。
 
-现在逐个处理每个类别：
+Total Watts是334800，表格里的Total Watts列（注意看Total Watts那栏，下面Total行是334800？看表格里Total Watts列，第一行是334800，然后Total行是334800？对，表格中Total Watts列的数值。
 
-1. Account No.：在Bank Details下的Account No.，值是8111727013200582012。需要找到对应的bbox。
-2. Add：Bank Details下的Add，值是905 David Causeway Apt. 733 Davidview, ND 95932。
-3. Address：Customer的Address，两行地址：15605 Williams Stream South Derek, SD 58575 和 1584 Anne Ridges Danielssmuth, LA 05011。
-4. Average Watts：表格中的Average Watts列，值是540。
-5. Bank Name：Bank Details下的Bank Name，值是Tiankai Information Co., Ltd.。
-6. Beneficial：Bank Details下的Beneficial，值是Tiankai Information Co., Ltd.。
-7. Branch Number：Bank Details下的Branch Number，值是302791025363。
-8. Company Name：顶部的Tiankai Information Co., Ltd.。
-9. Currency：表格中的Currency列，值是JPY。
-10. Customer：Customer字段，值是LONGI SOLAR TECHNOLOGY K.K.。
-11. Date：Date字段，值是2021-11-12。
-12. Delivery Terms：Delivery Terms字段，值是FOB。
-13. Invoice No.：Invoice No.字段，值是LS-JPLS-NOVIS-20211112-07。
-14. Name of Commodity & Specification：表格中的该列，值是MONO SOLAR MOUDLE LR5-72HBD-540M。
-15. Payment Terms：Payment Terms字段，值是T/T 90 days after Receiving the Invoice。
-16. S.C No.：S.C No.字段，值是LGi-L-Ino-2111-0854-N012。
-17. Swift ID：Bank Details下的Swift ID，值是CIBKCNBJ710。
-18. Title：COMMERCIAL INVOICE，大标题。
-19. Total Amount：表格中的Total Amount列，值是11,706,282（Total行的Total Amount）。
-20. Total Pcs：表格中的Total Pcs列，值是620（Total行的Total Pcs）。
-21. Total Watts：表格中的Total Watts列，值是334800（Total行的Total Watts）。
-22. Unit1 Price：表格中的第一个Unit Price列（比如34.965）。
-23. Unit2 Price：表格中的另一个Unit Price列（比如18881.1）。
+Total Amount是11,706,282，表格里的Total Amount列，Total行是11,706,282。
 
-现在需要确定每个元素的bbox。因为是图片，需要估计每个元素的位置。例如：
+Unit1 Price是34.965？看表格里的Unit Price列，第一行的Unit Price是34.965？看表格里的Unit Price列，第一行是34.965？看图片中的表格，Unit Price列第一行是34.965？不，看图片里的表格，Unit Price列第一行是34.965？看图片中的“Unit Price”列，第一行是34.965？然后另一个Unit Price是18881.1？哦，表格里的列是：Remark, Name of Commodity & Specification, Currency, Average Watts, Unit Price, Total Pcs, Unit Price, Total Watts, Total Amount。所以Unit1 Price是第一个Unit Price（Average Watts右边的Unit Price），即34.965；Unit2 Price是另一个Unit Price（Total Pcs右边的Unit Price），即18881.1。
 
-- Company Name：顶部的Tiankai Information Co., Ltd.，bbox大约是[225, 28, 775, 50]（因为标题在上方）。
-- Title：COMMERCIAL INVOICE，bbox是[445, 240, 554, 265]左右，因为是大写加粗。
-- Customer：在左侧，Customer: 后面的内容，bbox是[100, 130, 440, 148]。
-- Invoice No.：右侧Invoice No.: 后面的内容，bbox是[660, 130, 850, 152]。
-- Address：Customer下面的Address，两行，bbox是[100, 160, 520, 190]（两行地址）。
-- Date：右侧Date: 后面的内容，bbox是[660, 160, 780, 178]。
-- Delivery Terms：左侧Delivery Terms: 后面的FOB，bbox是[100, 220, 200, 238]。
-- Shipped From: 可能没有在要求中，但S.C No.是LGi-L-Ino-2111-0854-N012，bbox是[150, 240, 420, 258]。
-- Shipped To: 可能没有，Payment Terms是T/T 90 days...，bbox是[660, 240, 850, 260]。
-- Country of Origin: 可能没有，不重要。
-- Goods description...下的表格：Name of Commodity & Specification是MONO SOLAR...，bbox是[150, 310, 450, 350]（单元格内容）。
-- Average Watts：表格中的列，值540，bbox是[340, 310, 410, 330]（列标题和内容）。
-- Currency：表格中的Currency列，JPY，bbox是[460, 310, 500, 330]。
-- Unit1 Price：表格中的Unit Price列（第一个），值34.965，bbox是[490, 310, 540, 330]。
-- Total Pcs：表格中的Total Pcs列，620，bbox是[560, 310, 610, 330]。
-- Unit2 Price：表格中的另一个Unit Price列（比如18881.1），bbox是[640, 310, 700, 330]。
-- Total Watts：表格中的Total Watts列，334800（Total行），bbox是[750, 310, 820, 330]（Total行的Total Watts）。
-- Total Amount：表格中的Total Amount列，11,706,282，bbox是[850, 310, 950, 330]（Total行的Total Amount）。
-- VAT行：Total行的VAT是0%，Total行的Total是620，334800，0，11,706,282。
-- Bank Details部分：Beneficial是Tiankai Information Co., Ltd.，bbox是[100, 490, 440, 508]。
-- Bank Name：Tiankai Information Co., Ltd.，bbox是[100, 508, 440, 526]。
-- Swift ID：CIBKCNBJ710，bbox是[100, 530, 320, 548]。
-- Add：905 David Causeway Apt. 733 Davidview, ND 95932，bbox是[100, 548, 520, 566]。
-- Account No.：8111727013200582012，bbox是[100, 566, 440, 584]。
-- Branch Number：302791025363，bbox是[100, 584, 320, 602]。
+现在需要逐个对应每个标签，找到它们的bbox。
 
-现在需要将每个类别对应到这些元素，然后生成JSON数组。需要注意每个类别只出现一次，因为有些字段可能重复，但这里每个类别在要求中是唯一的，比如Unit1 Price和Unit2 Price是两个不同的列，所以都要包含。
+现在开始整理每个标签：
 
-现在开始列出每个类别：
+1. Account No.：对应Account No.:后面的数值，即8111727013200582012。看图片中Bank Details下的Account No.: 8111727013200582012。bbox需要定位这个文本的位置。
 
-1. Account No.：对应Bank Details下的Account No.，值是8111727013200582012。bbox需要看图片中的位置，假设在Add下面，Account No.的行。比如bbox是[105, 565, 435, 583]。
-2. Add：Bank Details下的Add，值是905 David Causeway Apt. 733 Davidview, ND 95932。bbox是[105, 547, 515, 565]。
-3. Address：Customer的Address，两行。bbox是[105, 162, 515, 190]（包含两行地址）。
-4. Average Watts：表格中的Average Watts列，值540。bbox是[342, 312, 408, 330]（列标题和内容）。
-5. Bank Name：Bank Details下的Bank Name，值是Tiankai Information Co., Ltd.。bbox是[105, 510, 435, 528]。
-6. Beneficial：Bank Details下的Beneficial，值是Tiankai Information Co., Ltd.。bbox是[105, 492, 435, 510]。
-7. Branch Number：Bank Details下的Branch Number，值是302791025363。bbox是[105, 600, 320, 618]。
-8. Company Name：顶部的Tiankai Information Co., Ltd.。bbox是[220, 25, 775, 45]。
-9. Currency：表格中的Currency列，值JPY。bbox是[462, 312, 500, 330]。
-10. Customer：Customer字段，值LONGI SOLAR TECHNOLOGY K.K.。bbox是[105, 132, 435, 150]。
-11. Date：Date字段，值2021-11-12。bbox是[665, 162, 775, 180]。
-12. Delivery Terms：Delivery Terms字段，值FOB。bbox是[105, 222, 200, 240]。
-13. Invoice No.：Invoice No.字段，值LS-JPLS-NOVIS-20211112-07。bbox是[665, 132, 845, 150]。
-14. Name of Commodity & Specification：表格中的该列，值MONO SOLAR MOUDLE LR5-72HBD-540M。bbox是[152, 312, 448, 350]。
-15. Payment Terms：Payment Terms字段，值T/T 90 days after Receiving the Invoice。bbox是[665, 242, 850, 260]。
-16. S.C No.：S.C No.字段，值LGi-L-Ino-2111-0854-N012。bbox是[152, 242, 420, 260]。
-17. Swift ID：Bank Details下的Swift ID，值CIBKCNBJ710。bbox是[105, 532, 320, 550]。
-18. Title：COMMERCIAL INVOICE。bbox是[440, 242, 558, 260]（大写，加粗）。
-19. Total Amount：表格中的Total Amount列，值11,706,282（Total行）。bbox是[852, 312, 950, 330]（Total行的Total Amount）。
-20. Total Pcs：表格中的Total Pcs列，值620（Total行）。bbox是[562, 312, 610, 330]（Total行的Total Pcs）。
-21. Total Watts：表格中的Total Watts列，值334800（Total行）。bbox是[752, 312, 820, 330]（Total行的Total Watts）。
-22. Unit1 Price：表格中的第一个Unit
+2. Add：Add:后面的地址，即905 David Causeway Apt. 733 Davidview, ND 95932。在Bank Details下的Add:。
+
+3. Address：Address:后面的内容，即15605 Williams Stream South Derek, SD 58575 1584 Anne Ridges Danielssmuth, LA 05011。注意原文中的“Danielssmuth”可能是“Danielssmuth”？看图片中的Address部分，是两行：15605 Williams Stream South Derek, SD 58575；1584 Anne Ridges Danielssmuth, LA 05011。
+
+4. Average Watts：表格中的Average Watts列，数值是540。对应表格里的单元格。
+
+5. Bank Name：Bank Name:后面的Tiankai Information Co., Ltd.。
+
+6. Beneficial：Beneficial:后面的Tiankai Information Co., Ltd.。
+
+7. Branch Number：Branch Number:后面的302791025363。
+
+8. Company Name：Tiankai Information Co., Ltd.，在顶部公司名称。
+
+9. Currency：表格中的Currency列，数值是JPY。
+
+10. Customer：Customer:后面的LONGI SOLAR TECHNOLOGY K.K.。
+
+11. Date：Date:后面的2021-11-12。
+
+12. Delivery Terms：Delivery Terms:后面的FOB。
+
+13. Invoice No.：Invoice No.:后面的LS-JPLS-NOVIS-20211112-07。
+
+14. Name of Commodity & Specification：表格中的Name of Commodity & Specification列，内容是MONO SOLAR MOUDLE LR5-72HBD-540M。
+
+15. Payment Terms：Payment Terms:后面的T/T 90 days after Receiving the Invoice。
+
+16. S.C No.：S.C No.:后面的LGi-L-Ino-2111-0854-N012。
+
+17. Swift ID：Swift ID:后面的CIBKCNBJ710。
+
+18. Title：COMMERCIAL INVOICE，中间的大标题。
+
+19. Total Amount：表格中的Total Amount列，Total行的数值是11,706,282。
+
+20. Total Pcs：表格中的Total Pcs列，数值是620（Total行）。
+
+21. Total Watts：表格中的Total Watts列，Total行的数值是334800。
+
+22. Unit1 Price：表格中第一个Unit Price列（Average Watts右边的Unit Price），数值是34.965（第一行）。
+
+23. Unit2 Price：表格中第二个Unit Price列（Total Pcs右边的Unit Price），数值是18881.1（第一行）。
+
+现在需要为每个标签确定bbox。因为是图片中的文本，需要估计每个文本的位置。例如：
+
+- Company Name：顶部的Tiankai Information Co., Ltd.，bbox大概是[225, 28, 775, 50]左右（因为公司名称在上方，地址下面，标题上面）。
+
+- Title：COMMERCIAL INVOICE，是大写，中间，所以bbox是[445, 120, 554, 145]左右（因为标题在公司名称下面，大写）。
+
+- Customer：在左侧，Customer: 后面的文本，bbox是[100, 220, 440, 240]左右。
+
+- Invoice No.：右侧，Invoice No.: 后面的文本，bbox是[660, 220, 850, 245]左右。
+
+- Address：左侧，Address: 后面的两行，bbox是[100, 250, 520, 290]左右（因为地址是两行，所以y范围大些）。
+
+- Date：右侧，Date: 后面的2021-11-12，bbox是[660, 250, 760, 270]左右。
+
+- Delivery Terms：左侧，Delivery Terms: 后面的FOB，bbox是[100, 300, 200, 320]左右。
+
+- Shipped From: 可能没有在要求里，但S.C No.是S.C No.: 后面的LGi-L-Ino-2111-0854-N012，bbox是[150, 320, 400, 340]左右。
+
+- Shipped To: 可能没有，Payment Terms: 后面的T/T 90 days after Receiving the Invoice，bbox是[660, 320, 850, 345]左右。
+
+- Country of Origin: 可能没有，然后是Goods description表格。
+
+表格中的列：
+
+- Remark：第一列，可能为空。
+
+- Name of Commodity & Specification：第二列，内容是MONO SOLAR MOUDLE LR5-72HBD-540M，bbox是[160, 370, 400, 420]左右（单元格内的文本）。
+
+- Currency：第三列，JPY，bbox是[420, 370, 460, 390]左右。
+
+- Average Watts：第四列，540，bbox是[460, 370, 520, 390]左右。
+
+- Unit Price（第一个）：第五列，34.965，bbox是[520, 370, 580, 390]左右。
+
+- Total Pcs：第六列，620，bbox是[580, 370, 640, 390]左右。
+
+- Unit Price（第二个）：第七列，18881.1，bbox是[640, 370, 700, 390]左右。
+
+- Total Watts：第八列，334800，bbox是[700, 370, 780, 390]左右。
+
+- Total Amount：第九列，11,706,282，bbox是[780, 370, 860, 390]左右。
+
+然后VAT行，Total行：
+
+- Total Pcs（Total行）：620，bbox是[580, 450, 640, 470]左右。
+
+- Total Watts（Total行）：334800，bbox是[700, 450, 780, 470]左右。
+
+- Total Amount（Total行）：11,706,282，bbox是[780, 450, 860, 470]左右。
+
+Bank Details部分：
+
+- Beneficial: Tiankai Information Co., Ltd.，bbox是[100, 520, 350, 540]左右。
+
+- Bank Name: Tiankai Information Co., Ltd.，bbox是[100, 540, 350, 560]左右。
+
+- Swift ID: CIBKCNBJ710，bbox是[150, 560, 320, 580]左右。
+
+- Add: 905 David Causeway Apt. 733 Davidview, ND 95932，bbox是[150, 580, 520, 600]左右。
+
+- Account No.: 8111727013200582012，bbox是[150, 600, 420, 620]左右。
+
+- Branch Number: 302791025363，bbox是[150, 620, 320, 640]左右。
+
+现在需要把每个标签对应到这些bbox。例如：
+
+- Account No.：对应Account No.: 后面的数值，bbox是[150, 600, 420, 620]（因为Account No.: 的标签在左边，数值在右边，所以数值的bbox是这个范围）。
+
+- Add：Add: 后面的地址，bbox是[150, 580, 520, 600]（Add: 的标签在左边，数值在右边，所以数值的bbox是这个）。
+
+- Address：Address: 后面的地址，bbox是[100, 250, 520, 290]（因为Address是两行，所以y从250到290，x从100开始）。
+
+- Average Watts：表格中Average Watts列的数值540，bbox是[460, 370, 520, 390]（该单元格内的文本）。
+
+- Bank Name：Bank Name: 后面的Tiankai Information Co., Ltd.，bbox是[100, 540, 350, 560]（数值部分）。
+
+- Beneficial：Beneficial: 后面的Tiankai Information Co., Ltd.，bbox是[100, 520, 350, 540]（数值部分）。
+
+- Branch Number：Branch Number: 后面的302791025363，bbox是[150, 620, 320, 640]（数值部分）。
+
+- Company Name：Tiankai Information Co., Ltd.（顶部公司名称），bbox是[225, 28, 775, 50]（公司名称在标题上方，地址下方）。
+
+- Currency：表格中Currency列的JPY，bbox是[420, 370, 460, 390]（数值部分）。
+
+- Customer：Customer: 后面的LONGI SOLAR TECHNOLOGY K.K.，bbox是[100, 220, 440, 240]（数值部分）。
+
+- Date：Date: 后面的2021-11-12，bbox是[660, 250, 760, 270]（数值部分）。
+
+- Delivery Terms：Delivery Terms: 后面的FOB，bbox是[150, 300, 200, 320]（数值部分）。
+
+- Invoice No.：Invoice No.: 后面的LS-JPLS-NOVIS-20211112-07，bbox是[660, 220, 850, 245]（数值部分）。
+
+- Name of Commodity & Specification：表格中该列的内容，bbox是[160, 370, 400, 420]（数值部分，即MONO SOLAR MOUDLE LR5-72HBD-540M）。
+
+- Payment Terms：Payment Terms: 后面的T/T 90 days after Receiving the Invoice，bbox是[660, 320, 850, 345]（数值部分）。
+
+- S.C No.：S.C No.: 后面的LGi-L-Ino-2111-0854-N012，bbox是[150, 320, 400, 340]（数值部分）。
+
+- Swift ID：Swift ID: 后面的CIBKCNBJ710，bbox是[150, 560, 320, 580]（数值部分）。
+
+- Title：COMMERCIAL INVOICE，bbox是[445, 120, 554, 145]（标题文本）。
+
+- Total Amount：表格中Total Amount列的Total行数值11,706,282，bbox是[780, 450, 860, 470]（数值部分）。
+
+- Total Pcs：表格中Total Pcs列的Total行数值620，bbox是[580, 450, 640, 470]（数值部分）。
+
+- Total Watts：表格中Total Watts列的Total行数值334800，bbox是[700, 450, 780, 470]（数值部分）。
+
+- Unit1 Price：表格中第一个Unit Price列（Average Watts右边）的数值34.965，bbox是[520, 370, 580, 390]（数值部分）。
+
+- Unit2 Price：表格中第二个Unit Price列（Total Pcs右边）的数值18881.1，bbox是[640, 370, 700, 390]（数值部分）。
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意的是，有些标签可能在图中没有明确的数值，比如Shipped From、Shipped To等，但用户要求的类别中没有这些，所以只处理要求的类别。
+
+现在逐一列出所有要求的类别（共23个？数一下用户给的类别列表：
+
+Account No., Add, Address, Average Watts, Bank Name, Beneficial, Branch Number, Company Name, Currency, Customer, Date, Delivery Terms, Invoice No., Name of Commodity & Specification, Payment Terms, S.C No., Swift ID, Title, Total Amount, Total Pcs, Total Watts, Unit1 Price, Unit2 Price。共23个类别。
+
+现在为每个类别生成对应的bbox和label。
+
+例如：
+
+1. Account No.：label是"Account No."，bbox是[150, 600, 420, 620]（假设数值的位置）。
+
+2. Add：label是"Add"，bbox是[150, 580, 520, 600]。
+
+3

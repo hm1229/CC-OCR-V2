@@ -1,6 +1,20 @@
-[
-    {"bbox_2d": [44, 87, 956, 115], "label": "company"},
-    {"bbox_2d": [44, 146, 956, 174], "label": "address"},
-    {"bbox_2d": [500, 230, 634, 252], "label": "date"},
-    {"bbox_2d": [500, 373, 636, 395], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is "HON HWA HARDWARE TRADING". Let's check the text.
+- Address: The address line is "NO 37, JALAN MANIS 7, TAMAN SEGAR, 56100 CHERAS, KUALA LUMPUR."
+- Date: The date on the invoice is "05/01/2017" (from the timestamp part).
+- Total: The total amount is "5.00" (under Total Inclusive GST and CASH, also in GST Summary).
+
+Now, find the bounding boxes for each.
+
+Company: The top part has "HON HWA HARDWARE TRADING" — that's the company name. Bounding box would cover that line.
+
+Address: The address lines are the next few lines: "NO 37, JALAN MANIS 7, TAMAN SEGAR, 56100 CHERAS, KUALA LUMPUR."
+
+Date: The date is in the line with CB# and M#, which is "05/01/2017 4:47:51 PM" — the date part is 05/01/2017.
+
+Total: The total amount is shown as 5.00 in multiple places, like "Total Inclusive GST: 5.00" and "CASH 5.00". Let's pick one, maybe the Total Inclusive GST line.
+
+Now, structure each entry with bbox and label.
+</think>
+[{"bbox_2d": [44, 109, 953, 137], "label": "company"}, {"bbox_2d": [44, 147, 953, 184], "label": "address"}, {"bbox_2d": [504, 302, 646, 324], "label": "date"}, {"bbox_2d": [44, 497, 953, 522], "label": "total"}]

@@ -1,6 +1,162 @@
+Got it, let's extract the required information from the invoice.
+
+First, company: The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's find its bounding box.
+
+Address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" and the tax ID line. Let's check the address part.
+
+Date: The date is "14 Jun 2018 18:27".
+
+Total: The net total is RM10.15, which is in the "Nett Total: RM10.15" section.
+
+Now, let's identify each element's bounding box.
+
+Company: The company name is in the upper part. Let's check the coordinates. The text "UNIHAKKA INTERNATIONAL SDN BHD" is centered.
+
+Address: The address is below the company name, including the lines with the address details.
+
+Date: The date is "14 Jun 2018 18:27" right below the company name.
+
+Total: The net total is RM10.15, which is in the payment section's net total.
+
+Let me verify each:
+
+- Company: "UNIHAKKA INTERNATIONAL SDN BHD" – the bounding box should cover that line.
+- Address: The lines starting from "12, Jalan Tampoi..." up to the tax ID maybe, but the main address is those lines.
+- Date: "14 Jun 2018 18:27"
+- Total: "Nett Total: RM10.15" – the total amount is RM10.15.
+
+Now, let's map each to their bounding boxes.
+
+First, company:
+
+The company name is in the middle top. Let's check the image. The text is:
+
+UNIHAKKA INTERNATIONAL SDN BHD
+
+14 Jun 2018 18:27
+
+(867388-U)
+
+So the company line is the first line after the top.
+
+Address: The next lines: 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor
+
+Invoice # is also there, but address is the physical address.
+
+Date: 14 Jun 2018 18:27
+
+Total: Nett Total: RM10.15
+
+Now, let's create the JSON entries.
+
+For company:
+
+bbox_2d: Let's see, the company name is centered. Let's estimate the coordinates. The image's company name is in the upper part. Let's check the vertical position.
+
+Alternatively, look at the text elements.
+
+Let me list each:
+
+1. Company: "UNIHAKKA INTERNATIONAL SDN BHD" – the bounding box is around that line.
+
+2. Address: The address lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" and maybe the tax ID line, but the main address is that line.
+
+3. Date: "14 Jun 2018 18:27"
+
+4. Total: "Nett Total: RM10.15" – the total amount is RM10.15.
+
+Now, let's check the positions.
+
+In the image, the date is right below the company name. The address is below the date.
+
+Let's define each:
+
+- Company: [214, 207, 785, 226] (approx, since the text is centered)
+- Address: [225, 247, 774, 266] (the line "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor")
+- Date: [325, 227, 441, 239] (the line "14 Jun 2018 18:27")
+- Total: [425, 317, 547, 332] (the "Nett Total: RM10.15" line, but the total amount is RM10.15. Alternatively, the total amount in the item section is RM10.17, but net total is RM10.15. The question says "total", which is likely the net total.)
+
+Wait, the problem says "total". Let's check the invoice's total. The "Total Amount: RM10.17" then GST, rounding, net total RM10.15. So the net total is the final amount to pay, so that's the total.
+
+So the total is RM10.15.
+
+Now, let's get the bounding boxes.
+
+Let me check the image again.
+
+The company name: UNIHAKKA INTERNATIONAL SDN BHD – this is a single line, so the bounding box is the area where this text is.
+
+Address: The address is multiple lines, but the main address line is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor"
+
+Date: 14 Jun 2018 18:27
+
+Total: Nett Total: RM10.15
+
+Now, let's create the JSON array.
+
+Each entry is an object with bbox_2d and label.
+
+Let's estimate the coordinates. Since the image is a standard invoice, the text is centered.
+
+For company:
+
+The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's assume the bounding box is from x1=200, y1=200, x2=800, y2=220 (approx).
+
+But maybe better to look at the exact text positions.
+
+Alternatively, in the image, the company name is the first line after the top (where A06073 is). Let's check the vertical positions.
+
+The invoice has:
+
+- Top right: A06073 (handwritten)
+- Then company name: UNIHAKKA INTERNATIONAL SDN BHD
+- Then date: 14 Jun 2018 18:27
+- Then (867388-U)
+- Then address: 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor
+- Then invoice number: Invoice # : OR18061402170457
+- Then items...
+
+So the company is the line "UNIHAKKA INTERNATIONAL SDN BHD".
+
+Address is the line "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor".
+
+Date is "14 Jun 2018 18:27".
+
+Total is "Nett Total: RM10.15".
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text is centered, so the bounding box would cover the width of the company name. Let's say the coordinates are [210, 205, 788, 225].
+
+For address:
+
+The address line is below the date and company. Let's check the line: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" – the bounding box is [222, 245, 776, 265].
+
+For date:
+
+"14 Jun 2018 18:27" – the line is below the company name. Bounding box [322, 227, 445, 240].
+
+For total:
+
+"Nett Total: RM10.15" – this line is in the payment section. Let's find where. The payment mode section has:
+
+Total Amount: RM10.17
+
+GST @0%: RM0.00
+
+Rounding: -RM0.02
+
+Nett Total: RM10.15
+
+So the "Nett Total: RM10.15" line. The bounding box for that line is around the text. Let's estimate [420, 320, 550, 335].
+
+Now, let's compile the JSON array.
+</think>
 [
-    {"bbox_2d": [279, 207, 505, 224], "label": "company"},
-    {"bbox_2d": [279, 247, 505, 264], "label": "address"},
-    {"bbox_2d": [325, 224, 437, 237], "label": "date"},
-    {"bbox_2d": [425, 377, 520, 392], "label": "total"}
+    {"bbox_2d": [212, 207, 786, 226], "label": "company"},
+    {"bbox_2d": [224, 247, 774, 266], "label": "address"},
+    {"bbox_2d": [325, 227, 441, 239], "label": "date"},
+    {"bbox_2d": [425, 320, 550, 335], "label": "total"}
 ]

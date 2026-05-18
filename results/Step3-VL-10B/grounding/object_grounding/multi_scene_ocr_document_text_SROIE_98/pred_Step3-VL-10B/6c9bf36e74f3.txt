@@ -1,8 +1,224 @@
+Got it, let's look at the receipt and identify each category.
+
+First, company: The top part says "99 SPEED MART S/B (519537-X)". That's the company name.
+
+Address: There are multiple address lines. Let's check the lines: "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY", "41150 KLANG, SELANGOR", "1317-TRILLIUM SG BESI". These are all part of the address.
+
+Date: The date on the receipt is "31-03-18" which is in the line with time and invoice number.
+
+Total: The total sales inclusive of GST is RM 3.99, but also there's rounding to 4.00. Wait, the "Total Sales (Inclusive GST) RM 3.99" is the total amount before rounding adjustment. But the cash given is 10, change 6. So the total amount paid is 4.00 (after rounding). Let me check the labels. The "Total Sales (Inclusive GST) RM 3.99" is the main total. Let's confirm.
+
+Now, let's map each:
+
+Company: "99 SPEED MART S/B (519537-X)" – the first line.
+
+Address: The lines from LOT P.T. ... to 1317-TRILLIUM SG BESI. Let's take the main address block.
+
+Date: "31-03-18" – the date field.
+
+Total: The total sales inclusive GST is 3.99, but the rounded total is 4.00. Let's check the receipt. The line "Total Sales (Inclusive GST) RM 3.99" is the total amount of sales. Then "Rounding Adjustment RM .01" and "Rounding RM 4.00" – so the total amount to be paid is 4.00. But the question says "total" – probably the total sales amount. Let's check the elements.
+
+Now, let's extract each:
+
+1. Company: The first line, "99 SPEED MART S/B (519537-X)". Bounding box would be the area containing that text.
+
+2. Address: The lines below the company, including LOT P.T., JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1317-TRILLIUM SG BESI. Let's group these as the address.
+
+3. Date: The date "31-03-18" is in the line with 04:06PM and 570842.
+
+4. Total: The "Total Sales (Inclusive GST) RM 3.99" is the total sales amount. Alternatively, the rounded total is 4.00. Let's check the receipt's total. The key is to find the total value. The line "Total Sales (Inclusive GST) RM 3.99" is the total of the items. Then there's rounding adjustment. But the question says "total" – likely the total amount charged, which after rounding is 4.00. Let's check the elements.
+
+Now, let's define the bounding boxes.
+
+First, company: The text "99 SPEED MART S/B (519537-X)" is at the top. Let's find its coordinates.
+
+Address: The block from "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY" down to "1317-TRILLIUM SG BESI".
+
+Date: The date "31-03-18" is in the line with time 04:06PM.
+
+Total: The "Total Sales (Inclusive GST) RM 3.99" is the total sales. Let's check the line.
+
+Now, let's structure the JSON.
+
+For company:
+bbox: The area covering "99 SPEED MART S/B (519537-X)" – let's estimate the coordinates. The text is centered, so the bounding box would be from the top part.
+
+Address: The lines below company, so the next few lines.
+
+Date: The date is on the right side of the line with 04:06PM, 570842, 31-03-18.
+
+Total: The line "Total Sales (Inclusive GST) RM 3.99" – the amount is 3.99.
+
+Let me check each element:
+
+- Company: "99 SPEED MART S/B (519537-X)" – label: company
+- Address: The address lines (LOT P.T. ... 1317-TRILLIUM SG BESI) – label: address
+- Date: "31-03-18" – label: date
+- Total: "3.99" (from Total Sales) – label: total
+
+Now, let's get the bounding boxes.
+
+Looking at the image:
+
+Company text is at the top, so the bounding box is [108, 107, 892, 132] (approx, since the text is centered).
+
+Address lines: from "LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY" (next line) down to "1317-TRILLIUM SG BESI". So the bounding box would cover those lines.
+
+Date: The date "31-03-18" is in the line with time 04:06PM, which is a line with three elements: time, invoice number, date. So the date is on the right, so the bounding box for date is around "31-03-18".
+
+Total: The line "Total Sales (Inclusive GST) RM 3.99" – the amount is 3.99, so the total value is 3.99.
+
+Now, let's write the JSON entries.
+
+First, company:
+
+{
+  "bbox_2d": [105, 106, 890, 131],
+  "label": "company"
+}
+
+Address: The address block includes multiple lines. Let's take the combined area.
+
+The address lines are:
+
+LOT P.T. 2811, JALAN ANGSA,
+TAMAN BERKELEY
+41150 KLANG, SELANGOR
+1317-TRILLIUM SG BESI
+
+So the bounding box would be from the line after company to the GST ID line? Wait, GST ID is separate. The address is up to 1317-TRILLIUM SG BESI. Let's check the text:
+
+"LOT P.T. 2811, JALAN ANGSA,
+TAMAN BERKELEY
+41150 KLANG, SELANGOR
+1317-TRILLIUM SG BESI"
+
+So the bounding box for address is the area containing these lines.
+
+Date: The date is "31-03-18" in the line with 04:06PM and 570842. So the bounding box for date is around that date.
+
+Total: The total sales amount is "3.99" in the line "Total Sales (Inclusive GST) RM 3.99".
+
+Now, let's code the JSON array.
+
+Each entry is a dictionary with bbox and label.
+
+Let's list them:
+
+1. Company: "99 SPEED MART S/B (519537-X)"
+2. Address: the address lines
+3. Date: "31-03-18"
+4. Total: "3.99" (from Total Sales)
+
+Now, check if there's another total, like the rounded amount. But the question says "total", which is likely the total sales amount. Let's confirm the receipt:
+
+"Total Sales (Inclusive GST) RM 3.99" – that's the total of the items. Then there's rounding adjustment, but the main total is 3.99.
+
+So the four categories:
+
+- company: the business name
+- address: the store's address
+- date: the transaction date
+- total: the total amount of sales
+
+Now, let's define the bounding boxes.
+
+For company: The first line, so the coordinates would be the top part. Let's assume the image's text positions.
+
+Alternatively, maybe the address includes the GST ID? No, GST ID is separate. The address is the physical location.
+
+Let me check the image again.
+
+The receipt has:
+
+99 SPEED MART S/B (519537-X)  --> company
+
+LOT P.T. 2811, JALAN ANGSA,  --> address line 1
+
+TAMAN BERKELEY  --> address line 2
+
+41150 KLANG, SELANGOR  --> address line 3
+
+1317-TRILLIUM SG BESI  --> address line 4
+
+GST ID. NO : 000181747712  --> GST ID, not address
+
+So the address is the four lines above GST ID.
+
+Date: 31-03-18 is in the line with 04:06PM and 570842.
+
+Total: The line "Total Sales (Inclusive GST) RM 3.99" – the amount is 3.99.
+
+Now, let's create the JSON entries.
+
+First entry: company
+
+{
+  "bbox_2d": [102, 104, 894, 130],
+  "label": "company"
+}
+
+Second entry: address
+
+The address spans from "LOT P.T. 2811, JALAN ANGSA," to "1317-TRILLIUM SG BESI". Let's find the bounding box. The y-coordinates for these lines are below the company line. Let's estimate:
+
+The lines are:
+
+- LOT P.T. 2811, JALAN ANGSA,
+- TAMAN BERKELEY
+- 41150 KLANG, SELANGOR
+- 1317-TRILLIUM SG BESI
+
+So the bounding box would cover these four lines. Let's say the top of the address is the line after company, and the bottom is the line before GST ID.
+
+So:
+
+{
+  "bbox_2d": [98, 140, 890, 200],
+  "label": "address"
+}
+
+Third entry: date
+
+The date is "31-03-18" in the line with time 04:06PM. Let's find that line. The line is:
+
+04:06PM  570842  31-03-18
+
+So the date is on the right. The bounding box for date is around "31-03-18".
+
+{
+  "bbox_2d": [310, 230, 385, 252],
+  "label": "date"
+}
+
+Fourth entry: total
+
+The total sales line is:
+
+Total Sales (Inclusive GST) RM 3.99
+
+So the amount is 3.99. The bounding box for the total value is around "3.99".
+
+{
+  "bbox_2d": [325, 300, 395, 322],
+  "label": "total"
+}
+
+Now, check if these are accurate. Let's verify each.
+
+Company: Correct, the first line is the company.
+
+Address: The lines from LOT P.T. to 1317-TRILLIUM are the address.
+
+Date: 31-03-18 is the date.
+
+Total: The total sales amount is 3.99, which is the total of the items.
+
+Yes, these should be the correct mappings.
+</think>
 [
-    {"bbox_2d": [99, 102, 901, 128], "label": "company"},
-    {"bbox_2d": [99, 142, 901, 168], "label": "address"},
-    {"bbox_2d": [99, 172, 901, 198], "label": "address"},
-    {"bbox_2d": [99, 198, 901, 224], "label": "address"},
-    {"bbox_2d": [752, 252, 890, 278], "label": "date"},
-    {"bbox_2d": [99, 322, 901, 348], "label": "total"}
+    {"bbox_2d": [102, 104, 894, 130], "label": "company"},
+    {"bbox_2d": [96, 142, 892, 202], "label": "address"},
+    {"bbox_2d": [312, 232, 384, 254], "label": "date"},
+    {"bbox_2d": [323, 302, 393, 324], "label": "total"}
 ]

@@ -1,1 +1,200 @@
-[{"bbox_2d": [100, 12, 899, 34], "label": "company"}, {"bbox_2d": [100, 36, 899, 62], "label": "address"}, {"bbox_2d": [100, 662, 899, 684], "label": "date"}, {"bbox_2d": [100, 452, 899, 474], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The top part has "AEON CO. (M) BHD (126926-H)". Let's check the bounding box for that line.
+- Address: The address lines are "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR". Need to capture that.
+- Date: The date is "09/07/2017" which is in the lower part of the receipt.
+- Total: The total amount, looking at "Total After Adj Incl GST" is 23.80, or check the "Total" under GST Summary which is 22.47 + 1.33 = 23.80. Let's confirm the total value.
+
+Now, find the bounding boxes for each.
+
+Company: The line "AEON CO. (M) BHD (126926-H)" is at the top. Bounding box would be the area around that text.
+
+Address: The lines from "3RD FLR..." to "55100 KUALA LUMPUR" and GST ID. Let's check the address section.
+
+Date: "09/07/2017 17:01" – the date part is 09/07/2017.
+
+Total: The total sales incl GST is 23.80, and the total after adjustment is also 23.80. Let's check the "Total" line in the GST summary: "Total 22.47 1.33" but the overall total is 23.80. Let's check the "Total After Adj Incl GST" which is 23.80.
+
+Now, let's map each:
+
+1. Company: "AEON CO. (M) BHD (126926-H)" – find its coordinates.
+2. Address: The address block includes the store location.
+3. Date: "09/07/2017"
+4. Total: The total amount paid or total sales. Let's check the "Total After Adj Incl GST" is 23.80, which is the total.
+
+Now, extract each with their bounding boxes.
+
+First, company: The text "AEON CO. (M) BHD (126926-H)" is in the top part. Let's check the coordinates.
+
+Looking at the image, the company line is the first line. So the bounding box for company is the area containing that line.
+
+Address: The lines below company: "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR" and GST ID. So the address includes those lines.
+
+Date: The line "09/07/2017 17:01" – the date is 09/07/2017.
+
+Total: Let's check the "Total After Adj Incl GST" which is 23.80. Also, the "Total" under GST Summary is 22.47 (amount) + 1.33 (tax) = 23.80. So the total value is 23.80.
+
+Now, let's define each entry.
+
+For company:
+- Text: "AEON CO. (M) BHD (126926-H)"
+- Bounding box: Let's estimate. The top part, so y1 is around 20, x1 from left, x2 to right.
+
+For address:
+- Text: "3RD FLR, AEON TAMAN MALURI SC JLN JEJAKA, TAMAN MALURI CHERAS, 55100 KUALA LUMPUR"
+- Bounding box: Below company, includes those lines.
+
+For date:
+- Text: "09/07/2017"
+- Bounding box: In the lower part, near the time.
+
+For total:
+- The total amount, which is "23.80" in "Total After Adj Incl GST" or "Total Sales Incl GST".
+
+Let's check the receipt:
+
+- "Total Sales Incl GST 23.80"
+- "Total After Adj Incl GST 23.80"
+- "Total 22.47 1.33" (under GST Summary, but that's the breakdown)
+
+The main total is 23.80.
+
+Now, let's create the JSON array.
+
+First, company:
+
+{"bbox_2d": [100, 10, 899, 30], "label": "company"} – approximate, since the first line is the company.
+
+Address:
+
+The address lines are from "3RD FLR..." to "GST ID...". Let's check the lines:
+
+"3RD FLR, AEON TAMAN MALURI SC" – line 3
+
+"JLN JEJAKA, TAMAN MALURI" – line 4
+
+"CHERAS, 55100 KUALA LUMPUR" – line 5
+
+"GST ID : 002017394688" – line 6
+
+So the address block includes these lines. Bounding box would cover these.
+
+Date: "09/07/2017 17:01" – the date part is 09/07/2017. Let's find that line: "09/07/2017 17:01" is present.
+
+Total: Let's take "Total After Adj Incl GST 23.80" – the value is 23.80.
+
+Now, let's check each element's position.
+
+Alternatively, maybe the total is the "Total" in the GST summary, but the overall total is 23.80.
+
+Let me check the receipt again:
+
+Sub-total: 23.80
+
+Total Sales Incl GST: 23.80
+
+Total After Adj Incl GST: 23.80
+
+So the total amount is 23.80.
+
+Now, let's define each entry.
+
+1. Company: "AEON CO. (M) BHD (126926-H)" – the first line.
+
+2. Address: The store address lines (3rd flr, jln jejaka, etc.)
+
+3. Date: "09/07/2017" (from the timestamp line)
+
+4. Total: "23.80" (from Total After Adj Incl GST or Total Sales)
+
+Now, let's get the bounding boxes.
+
+For company:
+
+The text is at the top. Let's assume the coordinates. The image's top part, so y1 is small, x from left to right.
+
+For address:
+
+The lines below company, so y is next.
+
+Date: The line with "09/07/2017 17:01" is in the middle-lower part.
+
+Total: The line "Total After Adj Incl GST 23.80" is above the cash section.
+
+Let's check the exact positions.
+
+Alternatively, maybe the total is the amount paid (CASH 50.80, change 27.00, so total paid is 50.80, but the total sales is 23.80. The question says "total" – probably the total sales amount, which is 23.80.
+
+Now, let's structure the JSON.
+
+Each entry is a dictionary with bbox_2d and label.
+
+Let's list them:
+
+- Company: line "AEON CO. (M) BHD (126926-H)" – bbox covers that line.
+
+- Address: the block of address lines (3rd flr, jln jejaka, etc.)
+
+- Date: "09/07/2017" from the timestamp.
+
+- Total: "23.80" from Total Sales Incl GST or Total After Adj.
+
+Now, let's check the coordinates.
+
+Assuming the image is the receipt, let's estimate the bounding boxes.
+
+For company:
+
+The first line, so top part. Let's say the bounding box is [92, 12, 897, 32] (approx).
+
+Address:
+
+Lines from "3RD FLR..." to "GST ID...". Let's check the lines:
+
+"3RD FLR, AEON TAMAN MALURI SC" – y around 40-50
+
+"JLN JEJAKA, TAMAN MALURI" – y 50-60
+
+"CHERAS, 55100 KUALA LUMPUR" – y 60-70
+
+"GST ID : 002017394688" – y 70-80
+
+So the address block's bbox is [92, 40, 897, 85] (approx).
+
+Date:
+
+The line "09/07/2017 17:01" is present. Let's find its position. It's below the GST summary and above the invoice number. Let's check:
+
+"09/07/2017 17:01" – y around 200-220.
+
+So bbox for date: [92, 205, 520, 225] (approx), label "date".
+
+Total:
+
+The "Total After Adj Incl GST 23.80" is in the section above cash. Let's check:
+
+"Total After Adj Incl GST 23.80" – y around 150-170.
+
+So bbox for total: [92, 160, 350, 180] (approx), label "total".
+
+Alternatively, the "Total Sales Incl GST 23.80" is also a total. Let's confirm which one is intended. The question says "total", which in receipts usually refers to the total amount of the transaction, which is the total sales including adjustments, so 23.80.
+
+Now, let's compile the JSON array.
+
+Each entry:
+
+1. Company: bbox around the company name line.
+2. Address: bbox around the address lines.
+3. Date: bbox around the date string.
+4. Total: bbox around the total amount.
+
+Let's write the JSON.
+</think>
+[
+    {"bbox_2d": [92, 12, 897, 32], "label": "company"},
+    {"bbox_2d": [92, 40, 897, 85], "label": "address"},
+    {"bbox_2d": [92, 205, 520, 225], "label": "date"},
+    {"bbox_2d": [92, 160, 350, 180], "label": "total"}
+]

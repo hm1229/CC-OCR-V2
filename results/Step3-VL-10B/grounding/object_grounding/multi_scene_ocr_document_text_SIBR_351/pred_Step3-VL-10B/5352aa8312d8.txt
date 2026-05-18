@@ -1,290 +1,188 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看INVOICE标题，然后看各个字段：
+首先看INVOICE的各个部分：
 
-1. ADDRESS：需要找地址信息。比如Sold to的地址，Ship to的地址，From的地址。比如Sold to的地址是“257 Ashley Ford Martinezburgh, ME 21956”等。还有Ship to的地址“9759 Smith Groves Michaelfurt, GA 51316”等。From的地址“36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156”。这些都属于ADDRESS。
+1. COMPANY NAME：Sold to和Ship to以及From的公司都是Express Media Co., Ltd.。需要确认哪个是对应的。比如Sold to的公司是Express Media Co., Ltd.，Ship to也是，From也是。所以COMPANY NAME可以取其中一个，比如Sold to的公司。
 
-2. AMOUNT(USD)：表格里的AMOUNT列，比如3301.90，还有TOTAL行的3301.90。所以这两个金额。
+2. ADDRESS：Sold to的地址是257 Ashley Ford Martinezburgh, ME 21956；Ship to的地址是9759 Smith Groves Michaelfurt, GA 51316；From的地址是36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156。需要看每个ADDRESS对应哪个。比如Sold to的ADDRESS是257 Ashley Ford Martinezburgh, ME 21956。
 
-3. COMPANY NAME：Sold to、Ship to、From的公司都是Express Media Co., Ltd.，所以公司名称是这个。
+3. AMOUNT(USD)：表格里的AMOUNT列，第一行是3301.90，TOTAL行也是3301.90。所以AMOUNT(USD)的值是3301.90，对应TOTAL行的AMOUNT。
 
-4. Contact Person：Ship to部分的Contact Person : T.Magesh，所以是T.Magesh。
+4. Contact Person：Ship to部分的Contact Person : T.Magesh，所以Contact Person是T.Magesh。
 
-5. DESCRIPTION(FUNAI)：表格里的DESCRIPTION列，比如BONNET。
+5. DESCRIPTION(FUNAI)：表格中第一行的DESCRIPTION是BONNET。
 
 6. Date：右上角Date:2022/05/12。
 
-7. EMR.：EMR.20220511-0090，这个是EMR.类别。
+7. EMR.：EMR.20220511-0090，在Ship to右边。
 
-8. GSTLN No：GSTIN No:33AAAC5198G1ZS，所以是这个编号。
+8. GSTLN No：GSTIN No:33AAAC5198G1ZS，在Sold to部分。
 
 9. Mobile：Ship to部分的Mobile:+597305950991。
 
-10. NO：可能是指PO编号？或者看NO列？比如PO-210322-020是P/O NO，另外可能还有其他NO？比如顶部的NO:LD20220512001sea？需要看。用户给的类别里有NO，所以要找NO。比如顶部的“NO:LD20220512001sea”中的NO对应的内容，或者表格中的NO？可能这里的NO是指PO编号？不，P/O NO是单独的类别。NO可能是指其他编号，比如顶部的NO:LD20220512001sea，所以这个NO是LD20220512001sea。
+10. NO：可能是指PO NO？不，NO可能是指其他编号？看左上角的NO:LD20220512001sea？或者看表格中的NO？可能用户这里的NO是指PO NO？不，P/O NO是PO-210322-020。另外左上角的NO:LD20220512001sea，可能对应NO类别。需要检查。
 
-11. P/O NO：表格中的P/O NO列，PO-210322-020。
+11. P/O NO：表格第一行的P/O NO是PO-210322-020。
 
-12. PARTS NO：表格中的PARTS NO列，139432-002。
+12. PARTS NO：139432-002。
 
-13. QTY(PCS)：表格中的QTY(PCS)列，530，还有TOTAL行的530。
+13. QTY(PCS)：530（TOTAL行的QTY是530，第一行也是530）。
 
-14. TITLE：可能没有明确的TITLE，或者看是否有标题？比如INVOICE是标题，但类别里有TITLE吗？用户给的类别里有TITLE，可能需要检查。或者可能没有，暂时看是否有。
+14. TITLE：可能没有明确的TITLE，或者看是否有其他标题？可能这里没有，或者可能用户中的TITLE是其他？或者可能不需要，但看问题中的类别有TITLE，需要检查。可能发票中没有明确的TITLE字段，或者可能我漏看了。或者可能TITLE是公司名称？不，COMPANY NAME已经单独了。可能TITLE不存在？但问题要求检测对应的值，所以如果有的话。或者可能这里的TITLE是描述？不，DESCRIPTION是BONNET。可能TITLE在发票中没有，暂时先看其他。
 
 15. Tel：Ship to部分的Tel:+147396326314。
 
-16. UNIT PRICE(USD)：表格中的UNIT PRICE列，6.23，还有TOTAL行的6.23？不，TOTAL行的UNIT PRICE是空？看表格里TOTAL行的UNIT PRICE列是空，因为TOTAL是数量总和，单价是每个的单价，所以TOTAL行的UNIT PRICE可能没有，而第一行的UNIT PRICE是6.23。
+16. UNIT PRICE(USD)：6.23（第一行的UNIT PRICE）。
 
-现在需要逐个列出每个对象的bbox和label。需要先确定每个元素的位置。
+现在逐个处理每个类别，找到对应的bbox和label。
 
-先处理各个部分：
+首先列出所有需要的类别：
 
-- INVOICE标题：可能不算在类别里，类别里没有TITLE？用户给的类别有TITLE，可能需要看。但先看其他。
+- ADDRESS：比如Sold to的地址，坐标看Sold to下面的地址。Sold to的地址是“257 Ashley Ford Martinezburgh, ME 21956”以及下面的USNS...。所以ADDRESS的bbox是Sold to的地址部分。
 
-首先，Sold to部分：
+- AMOUNT(USD)：TOTAL行的AMOUNT列，值是3301.90。对应的单元格是TOTAL行的AMOUNT(USD)列。
 
-Sold to: Express Media Co., Ltd. → COMPANY NAME
+- COMPANY NAME：Sold to的公司名称“Express Media Co., Ltd.”。
 
-地址：257 Ashley Ford Martinezburgh, ME 21956；USNS Mitchell11 FP0 AE 14655；GSTIN No:33AAAC5198G1ZS → 这些是ADDRESS（多个地址行）和GSTLN No。
+- Contact Person：Ship to部分的“Contact Person : T.Magesh”中的T.Magesh。
 
-Ship to部分：
+- DESCRIPTION(FUNAI)：表格中第一行的DESCRIPTION列，值是BONNET。
 
-Ship to: Express Media Co., Ltd. → COMPANY NAME
+- Date：右上角“Date:2022/05/12”。
 
-地址：9759 Smith Groves Michaelfurt, GA 51316；USS Fischer FP0 AE 57737 → ADDRESS
+- EMR.：“EMR.20220511-0090”在Ship to右边。
 
-Tel: +147396326314 → Tel
+- GSTLN No：“GSTIN No:33AAAC5198G1ZS”在Sold to部分。
 
-Mobile: +597305950991 → Mobile
+- Mobile：Ship to部分的“Mobile:+597305950991”。
 
-Contact Person: T.Magesh → Contact Person
+- NO：左上角“NO:LD20220512001sea”？看左上角的“NO:LD20220512001sea”，所以NO对应这个。
 
-EMR.: EMR.20220511-0090 → EMR.
+- P/O NO：表格第一行的P/O NO列，值是PO-210322-020。
 
-From部分：
+- PARTS NO：第一行的PARTS NO列，139432-002。
 
-From: Express Media Co., Ltd. → COMPANY NAME
+- QTY(PCS)：TOTAL行的QTY(PCS)列，530。
 
-地址：36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156 → ADDRESS
+- TITLE：可能没有，或者可能我漏了？再看发票，是否有TITLE？比如Invoice的标题是INVOICE，但可能不是。或者可能TITLE是其他？暂时可能没有，但问题中要求检测，所以如果存在的话。或者可能用户中的TITLE是公司名称？不，COMPANY NAME已经单独。可能这里没有TITLE，或者可能我搞错了。再检查问题中的类别：TITLE是其中一个，需要找。可能Ship to的公司名称？不，COMPANY NAME是Express Media Co., Ltd.。或者可能TITLE是“Express Media Co., Ltd.”？不，COMPANY NAME已经覆盖。可能TITLE不存在，或者可能在其他地方。暂时先处理有值的。
 
-Date: 2022/05/12 → Date
+- Tel：Ship to的Tel:+147396326314。
 
-表格部分：
+- UNIT PRICE(USD)：第一行的UNIT PRICE列，6.23。
 
-P/O NO: PO-210322-020 → P/O NO
+现在开始逐个构建每个条目：
 
-PARTS NO: 139432-002 → PARTS NO
+1. ADDRESS（Sold to的地址）：
+   - 文本：257 Ashley Ford Martinezburgh, ME 21956
+   - bbox：看Sold to下面的地址，Sold to的地址是“257 Ashley Ford Martinezburgh, ME 21956”以及USNS...。所以bbox范围是Sold to的地址部分，即“257 Ashley Ford Martinezburgh, ME 21956”这行。
+   - 坐标大概：Sold to的地址在“Sold to :”下面，所以bbox是[234, 102, 494, 122]左右？需要看图片中的位置。不过可能更准确的是看每个部分的位置。
 
-DESCRIPTION(FUNAI): BONNET → DESCRIPTION(FUNAI)
+不过可能更系统的是，先看每个字段在图中的位置：
 
-QTY(PCS): 530 → QTY(PCS)
+- Sold to:
+  - Company: Express Media Co., Ltd. → COMPANY NAME
+  - Address: 257 Ashley Ford Martinezburgh, ME 21956；USNS Mitchell11 FP0 AE 14655 → ADDRESS（可能包含两行地址，所以整个地址块是ADDRESS）
+  - GSTIN No: 33AAAC5198G1ZS → GSTLN No
 
-UNIT PRICE(USD): 6.23 → UNIT PRICE(USD)
+- Ship to:
+  - Company: Express Media Co., Ltd. → COMPANY NAME（但可能重复，不过问题中可能需要所有出现的？但通常一个发票一个公司，所以可能Ship to和Sold to是同一公司？看地址不同，所以是不同的地址，但公司名称相同。）
+  - Address: 9759 Smith Groves Michaelfurt, GA 51316；USS Fischer FP0 AE 57737 → 另一个ADDRESS
+  - Tel: +147396326314 → Tel
+  - Mobile: +597305950991 → Mobile
+  - Contact Person: T.Magesh → Contact Person
 
-AMOUNT(USD): 3301.90（第一行）和3301.90（TOTAL行）→ AMOUNT(USD)两个实例？
+- From:
+  - Company: Express Media Co., Ltd. → COMPANY NAME
+  - Address: 36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156 → 另一个ADDRESS
 
-TOTAL行的QTY(PCS)是530，AMOUNT是3301.90。
+- Date: 2022/05/12 → Date
 
-另外，顶部的NO:LD20220512001sea → NO（类别中的NO）
+- EMR.: EMR.20220511-0090 → EMR.
 
-现在需要为每个检测到的对象生成bbox。需要估计每个元素在图中的位置，因为是图片，需要看坐标。但因为是示意图，可能需要根据布局来。
+- P/O NO: PO-210322-020 → P/O NO
 
-比如，Date的位置在右上角，Date:2022/05/12，所以bbox大概是对应位置。
+- PARTS NO: 139432-002 → PARTS NO
 
-EMR.的位置在Ship to右边，EMR.20220511-0090。
+- DESCRIPTION(FUNAI): BONNET → DESCRIPTION(FUNAI)
 
-GSTIN No:33AAAC5198G1ZS在Sold to的GSTIN No行。
+- QTY(PCS): 530（第一行和TOTAL行）→ QTY(PCS)
 
-Contact Person在Ship to的Contact Person行。
+- UNIT PRICE(USD): 6.23 → UNIT PRICE(USD)
 
-Mobile在Ship to的Mobile行。
+- AMOUNT(USD): 3301.90（第一行和TOTAL行）→ AMOUNT(USD)
 
-Tel在Ship to的Tel行。
+- NO: 左上角的NO:LD20220512001sea → NO
 
-P/O NO在表格的第一列，PO-210322-020。
+现在需要为每个类别找到对应的bbox。由于是图片，需要估计每个文本的位置。
 
-PARTS NO在第二列，139432-002。
+例如：
 
-DESCRIPTION(FUNAI)在第三列，BONNET。
+- COMPANY NAME（Sold to的公司）：Sold to : 后面的Express Media Co., Ltd. → 文本是“Express Media Co., Ltd.”，bbox大概在[234, 92, 494, 112]
 
-QTY(PCS)在第四列，530。
+- ADDRESS（Sold to的地址）：257 Ashley Ford Martinezburgh, ME 21956 → bbox是[234, 114, 494, 134]；USNS Mitchell11 FP0 AE 14655 → [234, 136, 494, 156]。但可能整个Sold to的地址块作为ADDRESS，所以合并这两个行。
 
-UNIT PRICE(USD)在第五列，6.23。
+- GSTLN No：GSTIN No:33AAAC5198G1ZS → 文本是“33AAAC5198G1ZS”，在Sold to部分，bbox是[300, 158, 494, 178]
 
-AMOUNT(USD)在第六列，3301.90（第一行）和TOTAL行的3301.90。
+- Ship to的Company：Express Media Co., Ltd. → 同样COMPANY NAME，但可能重复，不过问题中可能需要所有出现的？但可能用户需要的是主要的，比如Ship to的公司也是同一个，所以可能只取一个？但问题中是“detect the corresponding values”，所以每个出现的都要？不过可能发票中Company Name是同一个，所以可以选其中一个。
 
-ADDRESS：Sold to的地址有三行，Ship to的地址有三行，From的地址一行。每个地址行都是ADDRESS。
+- Ship to的Address：9759 Smith Groves Michaelfurt, GA 51316 → bbox是[234, 200, 494, 220]；USS Fischer FP0 AE 57737 → [234, 222, 494, 242]
 
-COMPANY NAME：Sold to、Ship to、From的公司名称都是Express Media Co., Ltd.，所以三个实例？
+- Tel：+147396326314 → 在Ship to部分，Tel:后面，bbox是[300, 244, 494, 264]
 
-现在需要把所有类别对应的对象列出来，每个作为单独的JSON对象。
+- Mobile：+597305950991 → Mobile:后面，bbox是[300, 266, 494, 286]
 
-现在开始逐个处理：
+- Contact Person：T.Magesh → Contact Person:后面，bbox是[300, 288, 494, 308]
 
-1. NO: 顶部的“NO:LD20220512001sea”中的NO对应的内容，即LD20220512001sea。bbox是顶部左侧，NO:后面的内容。假设bbox是[38, 5, 244, 25]（因为图中顶部有“NO:LD20220512001sea”）。
+- From的Address：36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156 → bbox是[234, 320, 600, 340]
 
-label: NO
+- Date：2022/05/12 → 右上角，Date:后面，bbox是[694, 92, 824, 112]
 
-2. Date: 右上角“Date:2022/05/12”，bbox是[625, 5, 740, 25]（大概位置）。
+- EMR.：EMR.20220511-0090 → 在Ship to右边，bbox是[694, 200, 824, 220]
 
-label: Date
+- P/O NO：PO-210322-020 → 表格第一行P/O NO列，bbox是[100, 340, 220, 360]
 
-3. EMR.: “EMR.20220511-0090”在Ship to右边，bbox是[680, 250, 820, 265]（大概）。
+- PARTS NO：139432-002 → 表格第一行PARTS NO列，bbox是[230, 340, 350, 360]
 
-label: EMR.
+- DESCRIPTION(FUNAI)：BONNET → 表格第一行DESCRIPTION列，bbox是[360, 340, 520, 360]
 
-4. GSTIN No: “GSTIN No:33AAAC5198G1ZS”在Sold to部分，bbox是[250, 190, 430, 210]（大概）。
+- QTY(PCS)：530 → 表格第一行QTY(PCS)列，bbox是[540, 340, 620, 360]；TOTAL行的QTY(PCS)是530，bbox是[540, 460, 620, 480]
 
-label: GSTLN No
+- UNIT PRICE(USD)：6.23 → 表格第一行UNIT PRICE列，bbox是[630, 340, 720, 360]
 
-5. COMPANY NAME（Sold to）: “Express Media Co., Ltd.”在Sold to行，bbox是[250, 80, 490, 100]。
+- AMOUNT(USD)：3301.90 → 表格第一行AMOUNT列，bbox是[730, 340, 820, 360]；TOTAL行的AMOUNT是3301.90，bbox是[730, 460, 820, 480]
 
-label: COMPANY NAME
+- NO：左上角的NO:LD20220512001sea → 文本是“NO:LD20220512001sea”，bbox是[30, 12, 220, 32]
 
-6. COMPANY NAME（Ship to）: “Express Media Co., Ltd.”在Ship to行，bbox是[250, 220, 490, 240]。
+- TITLE：可能没有明确的TITLE，或者可能我漏了。再检查问题中的类别，TITLE是其中一个，可能在发票中没有，或者可能“INVOICE”是TITLE？但INVOICE是标题，可能对应TITLE。比如INVOICE的标题，bbox是[450, 20, 550, 40]（因为INVOICE在顶部中间）。所以TITLE是“INVOICE”，对应标签TITLE。
 
-label: COMPANY NAME
+现在整理所有类别：
 
-7. COMPANY NAME（From）: “Express Media Co., Ltd.”在From行，bbox是[250, 340, 490, 360]。
+1. ADDRESS（Sold to的地址）：包含两行，257 Ashley Ford Martinezburgh, ME 21956 和 USNS Mitchell11 FP0 AE 14655 → 合并为一个ADDRESS条目，bbox覆盖这两行。
+2. AMOUNT(USD)：3301.90（TOTAL行的AMOUNT）
+3. COMPANY NAME：Express Media Co., Ltd.（Sold to的公司）
+4. Contact Person：T.Magesh（Ship to的Contact Person）
+5. DESCRIPTION(FUNAI)：BONNET（表格第一行的DESCRIPTION）
+6. Date：2022/05/12（右上角）
+7. EMR.：EMR.20220511-0090（Ship to右侧）
+8. GSTLN No：33AAAC5198G1ZS（Sold to的GSTIN No）
+9. Mobile：+597305950991（Ship to的Mobile）
+10. NO：LD20220512001sea（左上角的NO）
+11. P/O NO：PO-210322-020（表格第一行P/O NO）
+12. PARTS NO：139432-002（表格第一行PARTS NO）
+13. QTY(PCS)：530（TOTAL行的QTY）
+14. TITLE：INVOICE（顶部的标题）
+15. Tel：+147396326314（Ship to的Tel）
+16. UNIT PRICE(USD)：6.23（表格第一行UNIT PRICE）
 
-label: COMPANY NAME
+现在需要为每个条目生成bbox和label。由于是图片，需要估计每个文本的位置，这里用相对坐标（假设图片宽度是W，高度是H，每个元素的位置用x1,y1,x2,y2表示，基于图片中的像素位置，但因为没有实际像素值，只能根据布局估计）。
 
-8. Address（Sold to第一行）: “257 Ashley Ford Martinezburgh, ME 21956”在Sold to地址第一行，bbox是[250, 105, 540, 125]。
+例如：
 
-label: ADDRESS
-
-9. Address（Sold to第二行）: “USNS Mitchell11 FP0 AE 14655”在Sold to地址第二行，bbox是[250, 130, 490, 150]。
-
-label: ADDRESS
-
-10. Address（Ship to第一行）: “9759 Smith Groves Michaelfurt, GA 51316”在Ship to地址第一行，bbox是[250, 245, 540, 265]。
-
-label: ADDRESS
-
-11. Address（Ship to第二行）: “USS Fischer FP0 AE 57737”在Ship to地址第二行，bbox是[250, 270, 490, 290]。
-
-label: ADDRESS
-
-12. Address（From）: “36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156”在From地址，bbox是[250, 365, 620, 385]。
-
-label: ADDRESS
-
-13. Contact Person: “T.Magesh”在Ship to的Contact Person行，bbox是[300, 300, 370, 320]（大概）。
-
-label: Contact Person
-
-14. Mobile: “+597305950991”在Ship to的Mobile行，bbox是[300, 325, 420, 345]。
-
-label: Mobile
-
-15. Tel: “+147396326314”在Ship to的Tel行，bbox是[300, 280, 420, 300]。
-
-label: Tel
-
-16. P/O NO: “PO-210322-020”在表格第一列，bbox是[100, 420, 220, 440]（表格的P/O NO列第一行）。
-
-label: P/O NO
-
-17. PARTS NO: “139432-002”在表格第二列，bbox是[250, 420, 350, 440]。
-
-label: PARTS NO
-
-18. DESCRIPTION(FUNAI): “BONNET”在表格第三列，bbox是[370, 420, 450, 440]。
-
-label: DESCRIPTION(FUNAI)
-
-19. QTY(PCS): “530”在表格第四列，bbox是[470, 420, 520, 440]。
-
-label: QTY(PCS)
-
-20. UNIT PRICE(USD): “6.23”在表格第五列，bbox是[590, 420, 640, 440]。
-
-label: UNIT PRICE(USD)
-
-21. AMOUNT(USD)（第一行）: “3301.90”在表格第六列，bbox是[670, 420, 750, 440]。
-
-label: AMOUNT(USD)
-
-22. TOTAL行的QTY(PCS): “530”在TOTAL行第四列，bbox是[470, 580, 520, 600]。
-
-label: QTY(PCS)（因为QTY(PCS)是类别，TOTAL行的QTY也是QTY(PCS)）
-
-23. TOTAL行的AMOUNT(USD): “3301.90”在TOTAL行第六列，bbox是[670, 580, 750, 600]。
-
-label: AMOUNT(USD)
-
-现在需要检查是否有重复或遗漏。比如TITLE类别，用户给的类别有TITLE，但图中是否有TITLE？INVOICE是标题，可能属于TITLE？但用户给的类别里有TITLE，所以需要看。INVOICE在顶部中间，是大标题，所以可以认为是TITLE。那需要添加：
-
-24. TITLE: “INVOICE”在顶部中间，bbox是[450, 20, 600, 50]（大概）。
-
-label: TITLE
-
-现在需要确认所有类别：
-
-用户提供的类别列表：ADDRESS, AMOUNT(USD), COMPANY NAME, Contact Person, DESCRIPTION(FUNAI), Date, EMR., GSTLN No, Mobile, NO, P/O NO, PARTS NO, QTY(PCS), TITLE, Tel, UNIT PRICE(USD)。共16个类别，现在需要确保每个类别都有对应的对象。
-
-现在检查每个类别是否都有：
-
-- ADDRESS：有多个，已处理。
-- AMOUNT(USD)：有，已处理。
-- COMPANY NAME：有，已处理。
-- Contact Person：有，已处理。
-- DESCRIPTION(FUNAI)：有，已处理。
-- Date：有，已处理。
-- EMR.：有，已处理。
-- GSTLN No：有，已处理。
-- Mobile：有，已处理。
-- NO：有，已处理。
-- P/O NO：有，已处理。
-- PARTS NO：有，已处理。
-- QTY(PCS)：有，已处理（包括TOTAL行）。
-- TITLE：有（INVOICE），已处理。
-- Tel：有，已处理。
-- UNIT PRICE(USD)：有，已处理。
-
-现在需要将这些对象整理成JSON数组，每个对象包含bbox_2d和label。注意bbox的坐标是相对的，因为是图片，需要估计每个元素的位置。由于实际图片的尺寸未知，这里用相对位置（比如x1, y1, x2, y2在0-1000范围内）。
-
-现在开始构建每个对象：
-
-1. NO: 顶部的NO:LD20220512001sea → 假设bbox是[38, 8, 242, 28]（因为图中顶部左侧有“NO:LD20220512001sea”）
-label: NO
-
-2. Date: Date:2022/05/12 → bbox是[622, 8, 742, 28]
-label: Date
-
-3. EMR.: EMR.20220511-0090 → bbox是[678, 248, 822, 268]
-label: EMR.
-
-4. GSTIN No: GSTIN No:33AAAC5198G1ZS → bbox是[252, 188, 428, 208]
-label: GSTLN No
-
-5. COMPANY NAME (Sold to): Express Media Co., Ltd. → bbox是[252, 78, 492, 98]
-label: COMPANY NAME
-
-6. COMPANY NAME (Ship to): Express Media Co., Ltd. → bbox是[252, 220, 492, 240]
-label: COMPANY NAME
-
-7. COMPANY NAME (From): Express Media Co., Ltd. → bbox是[252, 338, 492, 358]
-label: COMPANY NAME
-
-8. ADDRESS (Sold to line1): 257 Ashley Ford Martinezburgh, ME 21956 → bbox是[252, 106, 542, 126]
-label: ADDRESS
-
-9. ADDRESS (Sold to line2): USNS Mitchell11 FP0 AE 14655 → bbox是[252, 132, 492, 152]
-label: ADDRESS
-
-10. ADDRESS (Ship to line1): 9759 Smith Groves Michaelfurt, GA 51316 → bbox是[252, 246, 542, 266]
-label: ADDRESS
-
-11. ADDRESS (Ship to line2): USS Fischer FP0 AE 57737 → bbox是[252, 272, 492, 292]
-label: ADDRESS
-
-12. ADDRESS (From): 36516 Gutierrez Stravenue Suite 790 North Nicholas, NV 38156 → bbox是[252, 366, 622, 386]
-label: ADDRESS
-
-13. Contact Person: T.Magesh → bbox是[302, 302, 372, 322]
-label: Contact Person
-
-14. Mobile: +597305950991 → bbox是[302, 326, 422, 346]
-label: Mobile
-
-15. Tel: +147396326314 → bbox是[302, 282, 422, 302
+- TITLE（INVOICE）：位于发票顶部中间，文字是“INVOICE”，所以bbox是[440, 20, 560, 45]（因为INVOICE在顶部，居中）。
+- Date：右上角，Date:2022/05/12，bbox是[680, 90, 830, 110]。
+- NO：左上角，NO:LD20220512001sea，bbox是[20, 10, 220, 35]。
+- COMPANY NAME（Sold to）：Sold to : 后面的公司，bbox是[230, 90, 490, 110]。
+- ADDRESS（Sold to）：257 Ashley Ford Martinezburgh, ME 21956，bbox是[230, 110, 490, 130]；USNS Mitchell11 FP0 AE 14655，bbox是[230, 130, 490, 150]。可以合并为一个ADDRESS，包含这两行，所以bbox是[230, 110, 490, 155]。
+- GSTLN No：GSTIN No:33AAAC5198G1ZS，bbox是[300, 155, 490, 175]。
+- Ship to的Company：Express Media Co., Ltd.，bbox是[230, 190, 490, 210]（但和Sold to的公司相同，可能不需要重复，但问题中是detect all，所以可能需要。不过可能用户只需要一个，这里先处理主要的）。
+- Ship to的ADDRESS：9759 Smith Groves Michaelfurt, GA 51316，bbox是[230,

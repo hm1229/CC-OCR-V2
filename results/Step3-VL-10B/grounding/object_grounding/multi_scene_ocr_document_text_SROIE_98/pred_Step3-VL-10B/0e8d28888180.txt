@@ -1,10 +1,27 @@
-[
-    {"bbox_2d": [44, 46, 626, 67], "label": "company"},
-    {"bbox_2d": [27, 307, 527, 330], "label": "company"},
-    {"bbox_2d": [101, 68, 593, 87], "label": "address"},
-    {"bbox_2d": [101, 342, 593, 363], "label": "address"},
-    {"bbox_2d": [327, 232, 429, 251], "label": "date"},
-    {"bbox_2d": [275, 320, 590, 340], "label": "total"},
-    {"bbox_2d": [346, 541, 653, 560], "label": "total"},
-    {"bbox_2d": [275, 440, 590, 460], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+1. Company: The top part says "GARDENIA BAKERIES (KL) SDN BHD (139386 X)". Let's check the bounding box for that.
+2. Address: There are two addresses. The first is for Gardenia: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." The second is for Makassar Fresh Market: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR". But maybe the main company address is the first one. Let's check the problem. The question says "address" – probably the company's address.
+3. Date: The date on the invoice is "20/08/2017" (from Date: 20/08/2017 and DD: 20/08/2017).
+4. Total: The total payable is "55.14" (Total Payable: 55.14).
+
+Now, let's map each:
+
+- Company: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" – find its bounding box.
+- Address: The address of Gardenia: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Let's check the text.
+- Date: "20/08/2017" (the date field).
+- Total: "55.14" (Total Payable).
+
+Let's check the image text:
+
+Company line: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" – that's the company.
+
+Address for company: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." – that's the address.
+
+Date: "Date: 20/08/2017" – so the date is 20/08/2017.
+
+Total: "Total Payable: 55.14" – so total is 55.14.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [37, 49, 963, 100], "label": "company"}, {"bbox_2d": [37, 114, 963, 162], "label": "address"}, {"bbox_2d": [325, 232, 675, 252], "label": "date"}, {"bbox_2d": [425, 837, 574, 859], "label": "total"}]

@@ -1,8 +1,33 @@
-[
-    {"bbox_2d": [212, 226, 579, 245], "label": "company"},
-    {"bbox_2d": [154, 272, 578, 300], "label": "address"},
-    {"bbox_2d": [154, 244, 346, 259], "label": "date"},
-    {"bbox_2d": [424, 437, 546, 452], "label": "total"},
-    {"bbox_2d": [424, 454, 546, 469], "label": "total"},
-    {"bbox_2d": [424, 470, 546, 485], "label": "total"}
-]
+Got it, let's extract the required information from the invoice.
+
+First, company: The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's find its bounding box.
+
+Address: The address lines are "12, Jalan Tampoi 7/4,Kawasan Perindustrian Tampoi,81200 Johor Bahru,Johor". Need to check the coordinates.
+
+Date: The date is "19 Jun 2018 18:28".
+
+Total: The net total is RM8.45, which is labeled as "Nett Total: RM8.45". Let's confirm the total amount.
+
+Now, let's map each category.
+
+Company: The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's check the bounding box.
+
+Address: The address block includes the lines with the address.
+
+Date: The date line is "19 Jun 2018 18:28".
+
+Total: The net total is RM8.45, so the total value is that.
+
+Let's identify each element's bounding box.
+
+For company: The text is centered, so the bounding box would cover that line.
+
+Address: The address is below the company, so the lines from "12, Jalan Tampoi..." to "Johor".
+
+Date: The date is above the address, "19 Jun 2018 18:28".
+
+Total: The "Nett Total: RM8.45" is in the section after the item list.
+
+Now, let's structure the JSON array with each entry.
+</think>
+[{"bbox_2d": [220, 200, 779, 247], "label": "company"}, {"bbox_2d": [220, 247, 779, 270], "label": "address"}, {"bbox_2d": [220, 204, 347, 219], "label": "date"}, {"bbox_2d": [437, 302, 527, 317], "label": "total"}]

@@ -1,144 +1,206 @@
-用户现在需要检测图像中的各个指定对象，先逐个看。首先标题是“住店结账单 BILL OF HOUSING”，所以标题的bbox。然后客户名称GUEST NAME对应的是“聂强”那部分。房号ROOM NUMBER是*405。入住日期CHECK IN是2020-11-06 11:04。离店日期CHECK OUT是2020-11-06 11:04:00。协议单位AGENT是“支付宜”。账号ACCOUNT NUMBER是226825。日期DATE列是那些日期行，比如2020-11-02等。摘要DESCRIPTION是“房费”“405 0”这些。金额AMOUNT是每行的379.00等。合计金额AMOUNT是1,516.00。退补差额BALANCE COMPENSATION是1,516.00。第一联The first是底部的“第一联 财务(白)”。第二联The second是“第二联 宾客(黄)”。
+用户现在需要从住店结账单中提取各个字段的值和对应的标签。首先得逐个看每个类别，找到对应的位置。
 
-现在要逐个确定每个元素的bbox。先看标题：“住店结账单”在上方，所以标题的bbox大概是中间上方。然后客户名称：GUEST NAME对应的是“聂强”所在的区域。房号是*405。入住日期是右侧的2020-11-06 11:04。离店日期是2020-11-06 11:04:00。协议单位是“支付宜”在AGENT下面。账号是226825。日期列是表格里的DATE列，比如第一行日期是2020-11-02。摘要DESCRIPTION是表格里的“房费”等。金额AMOUNT是表格里的379.00等。合计金额是“合计金额：1,516.00”。退补差额是“退补差额：1,516.00”。第一联是底部的“第一联 财务(白) The first Finance”。第二联是“第二联 宾客(黄) The second Guest”。
+首先看标题，标题是“住店结账单 BILL OF HOUSING”，所以标题的bbox要覆盖这个部分。
 
-现在需要把每个类别对应到bbox。先列出来每个类别：
+然后客户名称GUEST NAME：对应“聂强”，看位置在客户名称那栏。
 
-1. 入住日期 CHECK IN：看位置是入住日期那栏，文字是2020-11-06 11:04，对应的区域。
-2. 协议单位 AGENT：文字是“支付宜”，在AGENT标签下面。
-3. 合计金额 AMOUNT：文字是“合计金额：1,516.00”。
-4. 客户名称 GUEST NAME：文字是“聂强”，在GUEST NAME下面。
-5. 帐号 ACCOUNT NUMBER：文字是226825，在ACCOUNT NUMBER下面。
-6. 房号 ROOM NUMBER：文字是*405，在ROOM NUMBER下面。
-7. 摘要DESCRIPTION：表格中的“摘要”列，比如“房费”“405 0”等，是列标题和内容。
-8. 日期DATE：表格中的“日期”列，比如2020-11-02等。
-9. 标题：住店结账单 BILL OF HOUSING，顶部的大标题。
-10. 离店日期 CHECK OUT：文字是2020-11-06 11:04:00，在CHECK OUT下面。
-11. 第一联 The first：底部的“第一联 财务(白) The first Finance”。
-12. 第二联 The second：底部的“第二联 宾客(黄) The second Guest”。
-13. 退补差额 BALANCE COMPENSATION：文字是“退补差额：1,516.00”。
-14. 金额 AMOUNT：表格中的“金额”列，比如379.00等，以及房费总计1516.00等。
+入住日期CHECK IN：是2020-11-06 11:04，看入住日期的区域。
 
-现在需要为每个类别找到对应的bbox。先处理标题：
+协议单位AGENT：是“支付宝”，看协议单位那栏。
 
-标题“住店结账单 BILL OF HOUSING”在图像上方，黄色区域的顶部，所以bbox大概是[325, 72, 675, 102]左右（因为文字是居中的大标题）。
+合计金额AMOUNT：是1,516.00，看合计金额那部分。
 
-客户名称GUEST NAME：对应“聂强”在左侧，GUEST NAME标签右边，所以bbox是[65, 132, 235, 152]左右（看图像中客户名称的位置，标签是“客户名称：”，然后是聂强，所以区域是包含“聂强”的部分）。
+帐号ACCOUNT NUMBER：是226825，看帐号那栏。
 
-房号ROOM NUMBER：“房号：”后面是*405，所以bbox是[65, 162, 235, 182]（标签和内容）。
+房号ROOM NUMBER：是*405，看房号那栏。
 
-入住日期CHECK IN：“入住日期：”后面是2020-11-06 11:04，所以bbox是[425, 132, 625, 152]（右侧的入住日期区域）。
+摘要DESCRIPTION：看表格里的摘要列，比如“房费”等，不过可能需要看每个日期对应的摘要，不过这里可能需要确认每个摘要的条目，不过先看标签是摘要DESCRIPTION，对应表格中的DESCRIPTION列。
 
-离店日期CHECK OUT：“离店日期：”后面是2020-11-06 11:04:00，所以bbox是[425, 182, 625, 202]。
+日期DATE：表格中的日期列，比如2020-11-02等，对应日期列。
 
-协议单位AGENT：“协议单位：”后面是“支付宜”，所以bbox是[65, 212, 235, 232]（标签和内容）。
+离店日期CHECK OUT：是2020-11-06 11:04:00，看离店日期那栏。
 
-账号ACCOUNT NUMBER：“帐号：”后面是226825，所以bbox是[65, 242, 235, 262]。
+第一联The first：底部第一联财务(白) The first Finance。
 
-日期DATE：表格中的“日期 DATE”列，是表头，所以bbox是[65, 302, 155, 322]（表头的日期列）。
+第二联The second：底部第二联宾客(黄) The second Guest。
 
-摘要DESCRIPTION：表格中的“摘要 DESCRIPTION”列，表头是“摘要”，所以bbox是[175, 302, 325, 322]（表头的摘要列）。
+退补差额BALANCE COMPENSATION：是1,516.00，看退补差额那栏。
 
-金额AMOUNT：表格中的“金额 AMOUNT”列，表头是“金额”，所以bbox是[375, 302, 525, 322]（表头的金额列）。
+金额AMOUNT：表格中的金额列，比如379.00等，还有房费总计1516.00等，需要看对应的金额列。
 
-合计金额AMOUNT：“合计金额：1,516.00”在表格下方，所以bbox是[65, 452, 235, 472]（标签和内容）。
+现在逐个处理：
 
-退补差额BALANCE COMPENSATION：“退补差额：1,516.00”在合计金额下面，所以bbox是[65, 492, 235, 512]（标签和内容）。
+1. 标题：住店结账单 BILL OF HOUSING，位置在上方中间，bbox大概是[325, 65, 675, 95]左右（看图片中的标题位置）。
 
-第一联The first：底部的“第一联 财务(白) The first Finance”，所以bbox是[65, 602, 325, 622]（第一联的标识）。
+2. 客户名称GUEST NAME：客户名称是“聂强”，对应位置在左上方，GUEST NAME下面，bbox是[65, 130, 235, 150]左右，内容是聂强。
 
-第二联The second：底部的“第二联 宾客(黄) The second Guest”，所以bbox是[375, 602, 625, 622]（第二联的标识）。
+3. 入住日期CHECK IN：入住日期是2020-11-06 11:04，对应CHECK IN右边，bbox是[540, 135, 725, 155]左右。
 
-现在需要检查每个类别是否都覆盖。另外，表格中的日期行（比如2020-11-02）属于日期DATE的内容，但类别是“日期DATE”作为表头，所以表头的日期列是“日期DATE”这个标签，所以要检测的是表头的“日期”列，即“日期 DATE”这个单元格。
+4. 协议单位AGENT：协议单位是“支付宝”，对应AGENT下面，bbox是[240, 200, 350, 220]左右。
 
-现在整理每个类别对应的bbox和label：
+5. 合计金额AMOUNT：合计金额是1,516.00，对应“合计金额：”下面，bbox是[65, 600, 935, 625]左右，内容是1,516.00。
 
-1. 标题：住店结账单 BILL OF HOUSING → bbox是标题区域，比如[295, 70, 705, 100]（因为文字是大的，居中）。
-2. 客户名称 GUEST NAME：对应“聂强”所在的区域，标签是“客户名称：”，内容是聂强，所以bbox是[60, 130, 240, 155]（包含标签和内容）。
-3. 房号 ROOM NUMBER：“房号：*405” → bbox [60, 160, 240, 185]。
-4. 入住日期 CHECK IN：“入住日期：2020-11-06 11:04” → bbox [420, 130, 620, 155]。
-5. 离店日期 CHECK OUT：“离店日期：2020-11-06 11:04:00” → bbox [420, 180, 620, 205]。
-6. 协议单位 AGENT：“协议单位：支付宜” → bbox [60, 210, 240, 235]。
-7. 帐号 ACCOUNT NUMBER：“帐号：226825” → bbox [60, 240, 240, 265]。
-8. 日期DATE：表格表头的“日期 DATE” → bbox [65, 300, 160, 325]（表头单元格）。
-9. 摘要DESCRIPTION：表格表头的“摘要 DESCRIPTION” → bbox [170, 300, 330, 325]（表头单元格）。
-10. 金额 AMOUNT：表格表头的“金额 AMOUNT” → bbox [370, 300, 530, 325]（表头单元格）。
-11. 合计金额 AMOUNT：“合计金额：1,516.00” → bbox [60, 450, 240, 475]。
-12. 退补差额 BALANCE COMPENSATION：“退补差额：1,516.00” → bbox [60, 490, 240, 515]。
-13. 第一联 The first：“第一联 财务(白) The first Finance” → bbox [60, 600, 320, 625]。
-14. 第二联 The second：“第二联 宾客(黄) The second Guest” → bbox [370, 600, 620, 625]。
+6. 帐号ACCOUNT NUMBER：帐号是226825，对应ACCOUNT NUMBER下面，bbox是[240, 190, 350, 210]左右。
 
-现在需要确认每个类别都存在，然后生成JSON数组。注意有些类别可能重复，比如“金额 AMOUNT”在表格中的列和总计，但类别是“金额 AMOUNT”作为表头，以及“合计金额 AMOUNT”是另一个类别。需要区分清楚。
+7. 房号ROOM NUMBER：房号是*405，对应ROOM NUMBER下面，bbox是[120, 155, 230, 175]左右。
 
-现在检查每个类别：
+8. 摘要DESCRIPTION：表格中的DESCRIPTION列，比如“房费”等，对应每个日期行的摘要，比如2020-11-02那行的摘要，bbox是[320, 440, 520, 465]左右（看表格的列标题）。
 
-- 入住日期 CHECK IN ✔️
-- 协议单位 AGENT ✔️
-- 合计金额 AMOUNT ✔️（“合计金额：1,516.00”）
-- 客户名称 GUEST NAME ✔️
-- 帐号 ACCOUNT NUMBER ✔️
-- 房号 ROOM NUMBER ✔️
-- 摘要DESCRIPTION ✔️（表头的摘要列）
-- 日期DATE ✔️（表头的日期列）
-- 标题 ✔️（住店结账单）
-- 离店日期 CHECK OUT ✔️
-- 第一联 The first ✔️
-- 第二联 The second ✔️
-- 退补差额 BALANCE COMPENSATION ✔️
-- 金额 AMOUNT ✔️（表头的金额列，比如379.00所在的列，以及房费总计1516.00？不，房费总计是“房费：1516.00”，但“金额 AMOUNT”类别应该是指表格中的金额列，即每行的金额，以及可能的总计？但根据问题中的类别，“金额 AMOUNT”是其中一个类别，需要看是否有对应的元素。比如表格中的“金额 AMOUNT”表头，以及可能的其他金额项。但问题中的类别是“金额 AMOUNT”作为单独的类别，所以需要找到对应的表头。
+9. 日期DATE：表格中的DATE列，列标题是日期，对应每个日期行的日期，比如2020-11-02，列标题的bbox是[100, 485, 160, 505]左右。
 
-现在把所有类别列出来，确保每个都处理：
+10. 离店日期CHECK OUT：离店日期是2020-11-06 11:04:00，对应CHECK OUT右边，bbox是[540, 160, 725, 180]左右。
 
-1. 入住日期 CHECK IN
-2. 协议单位 AGENT
-3. 合计金额 AMOUNT
-4. 客户名称 GUEST NAME
-5. 帐号 ACCOUNT NUMBER
-6. 房号 ROOM NUMBER
-7. 摘要DESCRIPTION
-8. 日期DATE
-9. 标题
-10. 离店日期 CHECK OUT
-11. 第一联 The first
-12. 第二联 The second
-13. 退补差额 BALANCE COMPENSATION
-14. 金额 AMOUNT
+11. 第一联The first：底部第一联财务(白) The first Finance，对应底部左侧，bbox是[50, 935, 325, 960]左右。
 
-现在为每个类别生成对应的bbox和label。需要注意图像中的元素位置，可能需要更精确的坐标，但因为是相对格式，大致范围即可。
+12. 第二联The second：底部第二联宾客(黄) The second Guest，对应底部右侧，bbox是[650, 935, 925, 960]左右。
 
-现在开始构建JSON数组：
+13. 退补差额BALANCE COMPENSATION：退补差额是1,516.00，对应“退补差额：”下面，bbox是[65, 650, 935, 670]左右。
 
-- 标题：住店结账单 BILL OF HOUSING → bbox [290, 72, 710, 102]（因为标题在黄色区域的顶部，居中）
-- 客户名称 GUEST NAME：对应“聂强”和GUEST NAME标签，bbox [65, 132, 235, 152]（标签和内容）
-- 房号 ROOM NUMBER：*405和ROOM NUMBER标签，bbox [65, 162, 235, 182]
-- 入住日期 CHECK IN：2020-11-06 11:04和CHECK IN标签，bbox [425, 132, 625, 152]
-- 离店日期 CHECK OUT：2020-11-06 11:04:00和CHECK OUT标签，bbox [425, 182, 625, 202]
-- 协议单位 AGENT：支付宜和AGENT标签，bbox [65, 212, 235, 232]
-- 帐号 ACCOUNT NUMBER：226825和ACCOUNT NUMBER标签，bbox [65, 242, 235, 262]
-- 日期DATE：表格中的“日期”表头，bbox [65, 302, 155, 322]（表头单元格）
-- 摘要DESCRIPTION：表格中的“摘要”表头，bbox [175, 302, 325, 322]（表头单元格）
-- 金额 AMOUNT：表格中的“金额”表头，bbox [375, 302, 525, 322]（表头单元格）
-- 合计金额 AMOUNT：1,516.00和“合计金额：”标签，bbox [65, 452, 235, 472]
-- 退补差额 BALANCE COMPENSATION：1,516.00和“退补差额：”标签，bbox [65, 492, 235, 512]
-- 第一联 The first：底部的“第一联 财务(白) The first Finance”，bbox [65, 602, 325, 622]
-- 第二联 The second：底部的“第二联 宾客(黄) The second Guest”，bbox [375, 602, 625, 622]
+14. 金额AMOUNT：表格中的金额列，比如每个房费的金额379.00，列标题是AMOUNT，对应表格最右侧列，列标题的bbox是[650, 485, 850, 505]左右，或者看每个行的金额值，比如379.00的单元格。
 
-现在检查是否有遗漏。比如“房费：1516.00”是否属于某个类别？但问题中的类别没有“房费”，所以不需要。另外，表格中的日期行（如2020-11-02）属于日期DATE的内容，但类别是“日期DATE”作为表头，所以表头已经覆盖。摘要列的内容（房费等）属于摘要DESCRIPTION的列，表头覆盖。金额列的内容（379.00等）属于金额AMOUNT的列，表头覆盖。
+现在需要把每个类别对应到具体的bbox和label。需要确保每个标签都覆盖到。
 
-现在将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+现在整理每个条目：
 
-注意坐标是相对的，图像中的黄色区域是主要部分，所以x和y的范围大致在0到1000之间（因为图像可能有边框，但主要看黄色区域内的位置）。
+- 标题：住店结账单 BILL OF HOUSING → label是标题，bbox是标题所在的区域，比如[320, 60, 680, 90]（因为图片中标题在上方中间，黄色单据的顶部）。
+
+- 客户名称GUEST NAME：内容是聂强，对应GUEST NAME标签，bbox是客户名称那一行，比如[60, 125, 240, 145]（GUEST NAME在左，聂强在右）。
+
+- 入住日期CHECK IN：内容是2020-11-06 11:04，对应CHECK IN标签，bbox是入住日期那一行，比如[535, 130, 720, 150]。
+
+- 协议单位AGENT：内容是支付宝，对应AGENT标签，bbox是协议单位那一行，比如[235, 200, 345, 220]。
+
+- 合计金额AMOUNT：内容是1,516.00，对应AMOUNT标签，bbox是“合计金额：”下面的数值，比如[65, 600, 930, 625]。
+
+- 帐号ACCOUNT NUMBER：内容是226825，对应ACCOUNT NUMBER标签，bbox是帐号那一行，比如[235, 185, 345, 205]。
+
+- 房号ROOM NUMBER：内容是*405，对应ROOM NUMBER标签，bbox是房号那一行，比如[115, 155, 225, 175]。
+
+- 摘要DESCRIPTION：表格中的DESCRIPTION列，比如“房费”是摘要内容，列标题是DESCRIPTION，bbox是表格的列标题，比如[315, 475, 525, 500]（列标题行的DESCRIPTION）。
+
+- 日期DATE：表格中的DATE列，列标题是DATE，bbox是列标题行的DATE，比如[100, 475, 165, 500]。
+
+- 离店日期CHECK OUT：内容是2020-11-06 11:04:00，对应CHECK OUT标签，bbox是离店日期那一行，比如[535, 155, 720, 175]。
+
+- 第一联The first：底部第一联的标识，比如“第一联 财务(白) The first Finance”，bbox是底部左侧，比如[55, 930, 320, 955]。
+
+- 第二联The second：底部第二联的标识，比如“第二联 宾客(黄) The second Guest”，bbox是底部右侧，比如[645, 930, 920, 955]。
+
+- 退补差额BALANCE COMPENSATION：内容是1,516.00，对应BALANCE COMPENSATION标签，bbox是“退补差额：”下面的数值，比如[65, 645, 930, 670]。
+
+- 金额AMOUNT：表格中的金额列，比如每个房费的金额379.00，列标题是AMOUNT，或者每个行的金额值。比如列标题的AMOUNT是[645, 475, 855, 500]（列标题行的AMOUNT）。
+
+现在需要确保每个标签都对应一个条目。现在检查所有要求的类别：
+
+要求的类别列表：
+
+入住日期 CHECK IN, 协议单位 AGENT, 合计金额 AMOUNT, 客户名称 GUEST NAME, 帐号 ACCOUNT NUMBER, 房号 ROOM NUMBER, 摘要DESCRIPTION, 日期DATE, 标题, 离店日期 CHECK OUT, 第一联 The first, 第二联 The second, 退补差额 BALANCE COMPENSATION, 金额 AMOUNT.
+
+共14个类别，现在逐个对应：
+
+1. 入住日期 CHECK IN → 对应
+2. 协议单位 AGENT → 对应
+3. 合计金额 AMOUNT → 对应
+4. 客户名称 GUEST NAME → 对应
+5. 帐号 ACCOUNT NUMBER → 对应
+6. 房号 ROOM NUMBER → 对应
+7. 摘要DESCRIPTION → 对应（表格中的DESCRIPTION列）
+8. 日期DATE → 对应（表格中的DATE列）
+9. 标题 → 对应（住店结账单）
+10. 离店日期 CHECK OUT → 对应
+11. 第一联 The first → 对应
+12. 第二联 The second → 对应
+13. 退补差额 BALANCE COMPENSATION → 对应
+14. 金额 AMOUNT → 对应（表格中的AMOUNT列，或者总金额？这里看要求是“金额 AMOUNT”，可能指表格中的金额列，或者合计金额？但合计金额已经单独列了，所以金额AMOUNT是表格中的每个金额项，比如379.00的列。）
+
+现在需要为每个类别生成一个JSON对象，包含bbox和label。
+
+现在开始构建每个条目的bbox（需要根据图片大致估计，因为图片是实际的单据，需要看位置）：
+
+1. 标题：住店结账单 BILL OF HOUSING → 位置在单据上方，居中。bbox大概[320, 65, 680, 95]（因为单据是黄色，标题在顶部中间）。
+
+2. 客户名称 GUEST NAME：客户名称是“聂强”，GUEST NAME在左，内容在右。bbox是[65, 130, 235, 150]（GUEST NAME的标签和内容区域）。
+
+3. 入住日期 CHECK IN：入住日期是2020-11-06 11:04，CHECK IN在左，内容在右。bbox是[540, 135, 725, 155]。
+
+4. 协议单位 AGENT：协议单位是“支付宝”，AGENT在左，内容在右。bbox是[240, 200, 350, 220]。
+
+5. 合计金额 AMOUNT：合计金额是1,516.00，对应“合计金额：”下面。bbox是[65, 600, 935, 625]。
+
+6. 帐号 ACCOUNT NUMBER：帐号是226825，ACCOUNT NUMBER在左，内容在右。bbox是[240, 190, 350, 210]。
+
+7. 房号 ROOM NUMBER：房号是*405，ROOM NUMBER在左，内容在右。bbox是[120, 155, 230, 175]。
+
+8. 摘要DESCRIPTION：表格中的DESCRIPTION列，列标题是“摘要DESCRIPTION”，对应每个日期行的摘要（如“房费”）。列标题的bbox是[320, 440, 520, 465]（表格的列标题行，DESCRIPTION列）。
+
+9. 日期DATE：表格中的DATE列，列标题是“日期DATE”，对应每个日期行的日期（如2020-11-02）。列标题的bbox是[100, 485, 160, 505]（列标题行，DATE列）。
+
+10. 离店日期 CHECK OUT：离店日期是2020-11-06 11:04:00，CHECK OUT在左，内容在右。bbox是[540, 160, 725, 180]。
+
+11. 第一联 The first：底部第一联，文字是“第一联 财务(白) The first Finance”。bbox是[50, 935, 325, 960]（底部左侧）。
+
+12. 第二联 The second：底部第二联，文字是“第二联 宾客(黄) The second Guest”。bbox是[650, 935, 925, 960]（底部右侧）。
+
+13. 退补差额 BALANCE COMPENSATION：退补差额是1,516.00，对应“退补差额：”下面。bbox是[65, 650, 935, 670]。
+
+14. 金额 AMOUNT：表格中的AMOUNT列，列标题是“金额AMOUNT”，对应每个房费的金额（如379.00）。列标题的bbox是[650, 485, 850, 505]（列标题行，AMOUNT列）。
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+注意：bbox的坐标是相对图片的，需要大致估计，因为图片中的单据位置。比如标题的bbox，假设图片中单据的顶部是标题，所以x1和x2是左右范围，y1是顶部，y2是标题的高度。
 
 现在编写每个条目：
 
-1. 标题：label是“标题”，bbox比如[295, 70, 705, 100]
-2. 客户名称 GUEST NAME：label是“客户名称 GUEST NAME”，bbox[60, 130, 240, 155]
-3. 房号 ROOM NUMBER：label是“房号 ROOM NUMBER”，bbox[60, 160, 240, 185]
-4. 入住日期 CHECK IN：label是“入住日期 CHECK IN”，bbox[420, 130, 620, 155]
-5. 离店日期 CHECK OUT：label是“离店日期 CHECK OUT”，bbox[420, 180, 620, 205]
-6. 协议单位 AGENT：label是“协议单位 AGENT”，bbox[60, 210, 240, 235]
-7. 帐号 ACCOUNT NUMBER：label是“帐号 ACCOUNT NUMBER”，bbox[60, 240, 240, 265]
-8. 日期DATE：label是“日期DATE”，bbox[65, 300, 160, 325]
-9. 摘要DESCRIPTION：label是“摘要DESCRIPTION”，bbox[170, 300, 330, 325]
-10. 金额 AMOUNT：label是“金额 AMOUNT”，bbox[370, 300, 530, 325]
-11. 合计金额 AMOUNT：label是“合计金额 AMOUNT”，bbox[60, 450, 2
+1. 标题：
+bbox_2d: [325, 60, 675, 90]（因为标题是“住店结账单 BILL OF HOUSING”，在单据上方居中，黄色单据的顶部）
+label: 标题
+
+2. 客户名称 GUEST NAME：
+bbox_2d: [60, 125, 240, 150]（GUEST NAME标签和内容“聂强”）
+label: 客户名称 GUEST NAME
+
+3. 入住日期 CHECK IN：
+bbox_2d: [535, 130, 720, 155]（入住日期的内容2020-11-06 11:04）
+label: 入住日期 CHECK IN
+
+4. 协议单位 AGENT：
+bbox_2d: [235, 195, 345, 220]（协议单位“支付宝”）
+label: 协议单位 AGENT
+
+5. 合计金额 AMOUNT：
+bbox_2d: [65, 595, 935, 625]（合计金额1,516.00）
+label: 合计金额 AMOUNT
+
+6. 帐号 ACCOUNT NUMBER：
+bbox_2d: [235, 185, 345, 210]（帐号226825）
+label: 帐号 ACCOUNT NUMBER
+
+7. 房号 ROOM NUMBER：
+bbox_2d: [115, 150, 230, 175]（房号*405）
+label: 房号 ROOM NUMBER
+
+8. 摘要DESCRIPTION：
+bbox_2d: [315, 435, 525, 465]（表格中DESCRIPTION列的列标题，对应摘要内容如“房费”）
+label: 摘要DESCRIPTION
+
+9. 日期DATE：
+bbox_2d: [95, 475, 165, 505]（表格中DATE列的列标题，对应日期如2020-11-02）
+label: 日期DATE
+
+10. 离店日期 CHECK OUT：
+bbox_2d: [535, 155, 720, 180]（离店日期11:04:00）
+label: 离店日期 CHECK OUT
+
+11. 第一联 The first：
+bbox_2d: [55, 930, 320, 955]（第一联 财务(白) The first Finance）
+label: 第一联 The first
+
+12. 第二联 The second：
+bbox_2d: [645, 930, 920, 955]（第二联 宾客(黄) The second Guest）
+label: 第二联 The second
+
+13. 退补差额 BALANCE COMPENSATION：
+bbox_2d: [65, 645, 935, 670]（退补差额1,516.00）
+label: 退补差额 BALANCE COMPENSATION
+
+14. 金额

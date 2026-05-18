@@ -1,9 +1,30 @@
-[
-    {"bbox_2d": [240, 77, 759, 95], "label": "company"},
-    {"bbox_2d": [240, 97, 759, 134], "label": "address"},
-    {"bbox_2d": [240, 136, 759, 154], "label": "address"},
-    {"bbox_2d": [240, 156, 759, 174], "label": "address"},
-    {"bbox_2d": [240, 176, 759, 194], "label": "address"},
-    {"bbox_2d": [325, 457, 445, 475], "label": "date"},
-    {"bbox_2d": [240, 575, 325, 593], "label": "total"}
-]
+Got it, let's extract the required information from the receipt.
+
+First, identify the company. The top part says "RESTAURANT TONY ROMA'S AEDON TEBRAU CITY..." so the company is TONY ROMA'S.
+
+Address: The address lines are "GRAND COMPNIONS SON BHD (285560-H) LOT G112, AEDON MALL TEBRAU CITY NO 1 JALAN DESA TEBRAU 81100 JOHOR BAHRU". Let's check the bounding box for that.
+
+Date: The date is "03 Mar 18 05:16:55 PM" which is the order date.
+
+Total: The total amount is "269.40" as shown in the Total line.
+
+Now, let's map each category:
+
+- company: The restaurant name is "TONY ROMA'S AEDON TEBRAU CITY" (from the top of the receipt).
+- address: The address block includes the location details.
+- date: The date and time of the order.
+- total: The total amount paid.
+
+Let's check each part's coordinates.
+
+For company: The header has "RESTAURANT TONY ROMA'S AEDON TEBRAU CITY" so the company name is there.
+
+Address: The lines starting from "GRAND COMPNIONS SON BHD..." down to "81100 JOHOR BAHRU".
+
+Date: "03 Mar 18 05:16:55 PM" is in the section with Chk 65991, Guest3.
+
+Total: The "Total" line shows 269.40.
+
+Now, create the JSON entries for each.
+</think>
+[{"bbox_2d": [292, 79, 707, 122], "label": "company"}, {"bbox_2d": [292, 97, 707, 147], "label": "address"}, {"bbox_2d": [325, 447, 441, 466], "label": "date"}, {"bbox_2d": [234, 592, 322, 617], "label": "total"}]

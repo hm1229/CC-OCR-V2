@@ -1,9 +1,37 @@
-[
-    {"bbox_2d": [309, 109, 690, 126], "label": "date"},
-    {"bbox_2d": [320, 137, 679, 152], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [334, 144, 665, 167], "label": "seller_address"},
-    {"bbox_2d": [375, 907, 557, 922], "label": "seller_gst_id"},
-    {"bbox_2d": [309, 97, 690, 114], "label": "seller_name"},
-    {"bbox_2d": [505, 332, 632, 347], "label": "total_amount"},
-    {"bbox_2d": [510, 347, 577, 360], "label": "total_tax"}
-]
+Got it, let's extract each required field from the invoice.
+
+First, date: The invoice has "05 May 2018 18:21" so that's the date.
+
+Doc_no_receipt_no: Invoice # is OR18050502160248.
+
+Seller_address: The address is "12, Jalan Tampol 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor (867388-U)".
+
+Seller_gst_id: Look for GST REG. It's #000656195584.
+
+Seller_name: UNIHAKKA INTERNATIONAL SDN BHD.
+
+Total_amount: Total Amount: $11.20.
+
+Total_tax: GST @6%: $0.63.
+
+Now, find each element's bounding box.
+
+Let's check each:
+
+Date: "05 May 2018 18:21" is in the header section.
+
+Doc_no_receipt_no: Invoice # : OR18050502160248.
+
+Seller_address: The address lines below the company name.
+
+Seller_gst_id: GST REG #000656195584.
+
+Seller_name: UNIHAKKA INTERNATIONAL SDN BHD.
+
+Total_amount: Total Amount: $11.20.
+
+Total_tax: GST @6%: $0.63.
+
+Now, map each to their bounding boxes.
+</think>
+[{"bbox_2d": [264, 134, 352, 147], "label": "date"}, {"bbox_2d": [320, 227, 447, 239], "label": "doc_no_receipt_no"}, {"bbox_2d": [302, 137, 697, 160], "label": "seller_address"}, {"bbox_2d": [437, 907, 556, 919], "label": "seller_gst_id"}, {"bbox_2d": [264, 112, 507, 125], "label": "seller_name"}, {"bbox_2d": [505, 332, 597, 344], "label": "total_amount"}, {"bbox_2d": [510, 345, 556, 356], "label": "total_tax"}]

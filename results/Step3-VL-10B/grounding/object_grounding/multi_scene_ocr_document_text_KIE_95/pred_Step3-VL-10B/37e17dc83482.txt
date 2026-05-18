@@ -1,1 +1,154 @@
-[{"bbox_2d": [162, 920, 837, 945], "label": "date"}, {"bbox_2d": [162, 125, 837, 150], "label": "seller_name"}, {"bbox_2d": [162, 155, 837, 225], "label": "seller_address"}, {"bbox_2d": [162, 825, 837, 850], "label": "total_amount"}]
+Got it, let's extract the required information from the receipt.
+
+First, find the date. Looking at the bottom part, there's "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER". The date is 18-11-18.
+
+Next, seller_name: The top part says "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)". So that's the seller name.
+
+Seller_address: The address lines are "LOT 1251A - & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (TESCO PUTRA NILAI)".
+
+Total_amount: The total rounded is RM 30.90, and there's a circled 30.90. Let's check the total section: "TOTAL ROUNDED RM 30.90". So that's the total amount.
+
+Now, map each to their bounding boxes.
+
+For date: The line with the timestamp is at the bottom, "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER". The date part is 18-11-18.
+
+Seller_name: The top part, "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)".
+
+Seller_address: The address block starting from "LOT 1251A - & 1851-B..." down to "(TESCO PUTRA NILAI)".
+
+Total_amount: The circled 30.90 or the "TOTAL ROUNDED RM 30.90" line. Let's check the total section: "TOTAL ROUNDED RM 30.90" is the line, and the circled amount is also 30.90. So the total amount is 30.90.
+
+Now, define the bounding boxes.
+
+Let's check each element:
+
+1. date: The line "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER" – the date is the first part. The coordinates for this line are in the lower part of the receipt.
+
+2. seller_name: The top part, "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)" – that's the header.
+
+3. seller_address: The address lines: "LOT 1251A - & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (TESCO PUTRA NILAI)".
+
+4. total_amount: The "TOTAL ROUNDED RM 30.90" line, or the circled 30.90. Let's take the circled one as it's highlighted, but the text also shows 30.90.
+
+Now, let's get the coordinates.
+
+Looking at the image:
+
+- seller_name: The text "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)" is in the upper part. Let's find its bounding box.
+
+- seller_address: The address block is below the seller name, from "LOT 1251A..." to "(TESCO PUTRA NILAI)".
+
+- date: The line "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER" is near the bottom.
+
+- total_amount: The circled "30.90" is in the middle-right of the total section. Also, the "TOTAL ROUNDED RM 30.90" is above that.
+
+Let's structure each entry.
+
+First, seller_name:
+
+The text is "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)". Let's check the coordinates. The top part of the receipt has this.
+
+Then seller_address: The address lines. Let's check the lines:
+
+"LOT 1251A - & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (TESCO PUTRA NILAI)"
+
+That's a block of text.
+
+Date: "18-11-18" is part of the timestamp line.
+
+Total_amount: The value is 30.90, which is in the "TOTAL ROUNDED" line and the circled amount.
+
+Now, let's define each bounding box.
+
+For seller_name:
+
+The text is in the upper section. Let's see the image: the first part after "tan woon yann" is the company info. So the bounding box for seller_name is the area containing "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)".
+
+For seller_address: The address lines below that, including the lot number, jalan, etc.
+
+For date: The line "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER" – the date is the first part, 18-11-18.
+
+For total_amount: The circled 30.90 is a clear indicator, so the bounding box around that circle, or the text "TOTAL ROUNDED RM 30.90".
+
+Let's check the positions.
+
+Now, let's create the JSON array.
+
+First, identify each element:
+
+1. date: The timestamp line's date part. Let's check the coordinates. The line is at the bottom, so the bounding box would be around "18-11-18".
+
+2. seller_address: The address block. Let's check the lines:
+
+"LOT 1251A - & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (TESCO PUTRA NILAI)"
+
+3. seller_name: "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)"
+
+4. total_amount: The value 30.90, which is in the total section. The circled amount is a good target.
+
+Now, let's assign bounding boxes.
+
+Assuming the image's coordinates (since it's a receipt, the layout is standard):
+
+- seller_name: The top part, above the invoice. Let's say the bounding box is from the top of the company name to the end of the CO reg line.
+
+- seller_address: The lines below seller_name, including the lot, jalan, etc.
+
+- date: The line at the bottom with the timestamp, the date is the first part.
+
+- total_amount: The circled 30.90 is in the middle right of the total section.
+
+Let's write the JSON entries.
+
+For example:
+
+- date: The line "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER" – the date is "18-11-18". So the bounding box for this line's date part.
+
+- seller_address: The address text block.
+
+- seller_name: The company name block.
+
+- total_amount: The circled 30.90.
+
+Now, let's check the exact positions.
+
+Looking at the image:
+
+The text "18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER" is at the bottom, so the date is part of that.
+
+The seller_name is "MR D.I.T.Y. (M) SDN BHD (CO.REG: 886Q71-D)" – that's the header.
+
+Seller_address is the block starting with "LOT 1251A - & 1851-B..." down to "(TESCO PUTRA NILAI)".
+
+Total_amount: The "TOTAL ROUNDED RM 30.90" and the circled 30.90. Let's take the circled one as it's emphasized.
+
+Now, let's define the bounding boxes.
+
+For the date, the line is:
+
+"18-11-18 13:58 SHO1 ZI53 T2 R000002902 OPERATOR TRAINEE CASHIER"
+
+So the date is the first 10 characters (18-11-18).
+
+For seller_name, the text is:
+
+"MR D.I.T.Y. (M) SDN BHD
+(CO.REG: 886Q71-D)"
+
+For seller_address, the text is:
+
+"LOT 1251A - & 1851-B, JALAN KPB 6,
+KAWASAN PERINDUSTRIAN BALAKONG,
+43300 SERI KEMBANGAN, SELANGOR
+(TESCO PUTRA NILAI)"
+
+For total_amount, the circled "30.90" is in the area where the total is shown.
+
+Now, let's create the JSON array with each entry.
+</think>
+[
+    {"bbox_2d": [16, 927, 82, 947], "label": "date"},
+    {"bbox_2d": [100, 117, 892, 167], "label": "seller_name"},
+    {"bbox_2d": [104, 172, 890, 247], "label": "seller_address"},
+    {"bbox_2d": [295, 737, 347, 767], "label": "total_amount"}
+]

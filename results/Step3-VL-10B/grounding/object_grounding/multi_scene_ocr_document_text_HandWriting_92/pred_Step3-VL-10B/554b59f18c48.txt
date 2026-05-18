@@ -1,1 +1,24 @@
-[{"bbox_2d": [312, 295, 427, 648], "label": "DATE"}, {"bbox_2d": [427, 295, 648, 648], "label": "CITY"}, {"bbox_2d": [650, 295, 695, 648], "label": "STATE"}, {"bbox_2d": [695, 295, 838, 648], "label": "ZIP"}]
+用户现在需要从表单中提取CITY、DATE、STATE、ZIP四个字段的值和对应的 bounding box。首先看每个字段的位置：
+
+DATE对应的框是09-21-89，看它的矩形区域。CITY是Richfield，STATE是MN，ZIP是55423。需要确定每个的坐标。
+
+先看DATE的框：在表单中DATE下面的输入框，内容是09-21-89。然后CITY是Richfield，STATE是MN，ZIP是55423。现在要确定每个的bbox。
+
+看图像中的布局：
+
+DATE的输入框是中间偏左的矩形，里面手写09-21-89。CITY的输入框是中间的，里面Richfield。STATE是MN，ZIP是55423。需要把每个的bbox找出来。
+
+现在逐个分析：
+
+1. DATE：对应的输入框，看坐标。表单中DATE标签下的框，内容是09-21-89。这个框的坐标应该是从DATE标签下方的矩形，所以bbox是[297, 300, 425, 650]左右？需要看图像中的位置。原图像中，DATE的框是中间的矩形，里面手写的日期。然后CITY的框是右边的，包含Richfield。STATE是MN，ZIP是55423，它们在CITY框的右边，STATE和ZIP是并排的。
+
+现在看每个字段的标注：
+
+- DATE：标签是DATE，对应的输入框里的内容是09-21-89。所以这个输入框的bbox是[299, 302, 423, 648]（大概范围）。
+- CITY：标签是CITY，对应的输入框里的内容是Richfield，bbox是[427, 300, 597, 652]。
+- STATE：标签是STATE，对应的内容是MN，位置在CITY框的右边，所以bbox是[599, 300, 632, 650]（因为STATE是单独的列，里面写的是MN）。
+- ZIP：标签是ZIP，对应的内容是55423，bbox是[634, 300, 837, 652]（因为ZIP的框包含55423）。
+
+现在需要确认每个的label和bbox。然后整理成JSON数组。
+</think>
+[{"bbox_2d": [297, 300, 425, 650], "label": "DATE"}, {"bbox_2d": [425, 300, 597, 652], "label": "CITY"}, {"bbox_2d": [630, 575, 667, 687], "label": "STATE"}, {"bbox_2d": [634, 575, 837, 687], "label": "ZIP"}]

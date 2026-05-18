@@ -1,8 +1,116 @@
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+1. Company: The top part says "FISH FARM THAI RESTAURANT" and "Veg Fish Farm Thai Restaurant S/B". Let's check the company name. The main company line is "Veg Fish Farm Thai Restaurant S/B".
+
+2. Address: The address lines are "KM 4, Jin Ampang, Hulu Langat, 68000 Amapng, Selangor." Let's find that.
+
+3. Date: The printed date is "01/05/2018" which appears in multiple places, like Printed and Cashier timestamps.
+
+4. Total: The grand total is 412.90, which is in the "GRAND TOTAL : 412.90" line.
+
+Now, map each to their bounding boxes.
+
+First, company: The company name is "Veg Fish Farm Thai Restaurant S/B" which is under the main title. Let's check the coordinates.
+
+Address: The address lines are "KM 4, Jin Ampang, Hulu Langat, 68000 Amapng, Selangor." Let's locate that.
+
+Date: The date "01/05/2018" is in the Printed field: "Printed: 01/05/2018 6:33:22" and Cashier also has the date. Let's pick one instance.
+
+Total: The grand total is clearly marked as 412.90.
+
+Now, let's define each entry.
+
+For company: The text "Veg Fish Farm Thai Restaurant S/B" is in the upper part. Let's check the bounding box.
+
+Looking at the image, the company line is:
+
+"Veg Fish Farm Thai Restaurant S/B"
+
+So the bounding box for company would be around that line.
+
+Address: The address is "KM 4, Jin Ampang, Hulu Langat, 68000 Amapng, Selangor." Let's find that.
+
+Date: The date is "01/05/2018" from the printed timestamp.
+
+Total: The grand total is "412.90" in the GRAND TOTAL line.
+
+Now, let's structure each as a JSON object.
+
+First, company:
+
+The company name is "Veg Fish Farm Thai Restaurant S/B". Let's check the coordinates. The main title is "FISH FARM THAI RESTAURANT" then the next line is the company. So the bounding box for company is the line containing "Veg Fish Farm Thai Restaurant S/B".
+
+Address: The address lines are "KM 4, Jin Ampang, Hulu Langat, 68000 Amapng, Selangor." Let's check the lines below the company.
+
+Date: The date in the printed field: "Printed: 01/05/2018 6:33:22" — the date part is 01/05/2018.
+
+Total: The grand total is "412.90" in the "GRAND TOTAL : 412.90" line.
+
+Now, let's assign each.
+
+Let's list each category:
+
+1. company: "Veg Fish Farm Thai Restaurant S/B" — find its bounding box.
+
+2. address: "KM 4, Jin Ampang, Hulu Langat, 68000 Amapng, Selangor." — bounding box.
+
+3. date: "01/05/2018" — from the printed timestamp.
+
+4. total: "412.90" — grand total.
+
+Now, check the image for exact positions.
+
+For company: The text is in the upper section. Let's see:
+
+The lines are:
+
+FISH FARM THAI RESTAURANT
+
+Veg Fish Farm Thai Restaurant S/B
+
+Comp. Reg. No. 928627-V
+
+So the company is the second line. Bounding box would cover that line.
+
+Address: The next lines after company:
+
+KM 4, Jin Ampang, Hulu Langat,
+
+68000 Amapng, Selangor.
+
+So those two lines are the address.
+
+Date: The printed date is in "Printed: 01/05/2018 6:33:22" — the date is 01/05/2018.
+
+Total: The GRAND TOTAL line has 412.90.
+
+Now, let's create the JSON entries.
+
+Each entry is a dictionary with bbox_2d and label.
+
+Let's estimate the coordinates. Since the image is a receipt, the text is vertical. Let's assume the coordinates are based on the image's layout.
+
+But since we need to provide the bounding box, let's think of the approximate positions.
+
+Alternatively, maybe the key is to identify the text and its location.
+
+But perhaps the answer expects the main instances.
+
+Let's proceed:
+
+- Company: "Veg Fish Farm Thai Restaurant S/B" — label: company. Bounding box: the area where this text is printed.
+
+- Address: The address lines: "KM 4, Jin Ampang, Hulu Langat, 68000 Amapng, Selangor." — label: address.
+
+- Date: "01/05/2018" (from Printed or Cashier date) — label: date.
+
+- Total: "412.90" (grand total) — label: total.
+
+Now, let's write the JSON array.
+</think>
 [
-    {"bbox_2d": [100, 45, 900, 65], "label": "company"},
-    {"bbox_2d": [100, 185, 900, 225], "label": "address"},
-    {"bbox_2d": [100, 255, 900, 275], "label": "date"},
-    {"bbox_2d": [100, 280, 900, 295], "label": "date"},
-    {"bbox_2d": [100, 305, 900, 325], "label": "date"},
-    {"bbox_2d": [100, 555, 900, 575], "label": "total"}
+    {"bbox_2d": [101, 104, 597, 124], "label": "company"},
+    {"bbox_2d": [101, 147, 597, 167], "label": "address"},
+    {"bbox_2d": [225, 232, 333, 249], "label": "date"},
+    {"bbox_2d": [325, 527, 429, 544], "label": "total"}
 ]

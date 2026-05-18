@@ -1,1 +1,169 @@
-[{"bbox_2d": [100, 52, 890, 98], "label": "company"}, {"bbox_2d": [100, 152, 890, 202], "label": "address"}, {"bbox_2d": [100, 252, 302, 272], "label": "date"}, {"bbox_2d": [320, 302, 422, 322], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The company name is "ALSERKAM ENTERPRISE" and the branch is "PETRON BKT LANJAN SB". Let's check the top part. The company line is "ALSERKAM ENTERPRISE" so that's the company.
+
+- Address: The address lines are "KM 458.4 BKT LANJAN UTARA, L/RAYA UTARA SELATAN,SG BULOH 47000 SUNGAI BUL". Let's find that block.
+
+- Date: The date is "01/02/2018" which is in the transaction details.
+
+- Total: The total amount including GST is "4.90" (Total RM inc.GST: 4.90). Also, the cash paid is 5.00, change 0.10, but the total amount for the purchase is 4.90.
+
+Now, let's map each to their bounding boxes.
+
+First, company: The company name is "ALSERKAM ENTERPRISE" which is in the top section. Let's check the text:
+
+"PETRON BKT LANJAN SB
+ALSERKAM ENTERPRISE"
+
+So the company label is "ALSERKAM ENTERPRISE".
+
+Address: The address lines are from "KM 458.4 BKT LANJAN UTARA, L/RAYA UTARA SELATAN,SG BULOH 47000 SUNGAI BUL".
+
+Date: "01/02/2018" is the date.
+
+Total: "Total RM inc.GST: 4.90" so the total value is 4.90.
+
+Now, find the bounding boxes for each.
+
+Let's check the coordinates.
+
+For company: The text "ALSERKAM ENTERPRISE" is in the upper part. Let's see the lines:
+
+Line 2: ALSERKAM ENTERPRISE → that's the company.
+
+Address: The lines starting from "KM 458.4 BKT LANJAN UTARA, L/RAYA UTARA SELATAN,SG BULOH 47000 SUNGAI BUL" → that's the address.
+
+Date: "01/02/2018 4:43:17 PM" → the date part is 01/02/2018.
+
+Total: "Total RM inc.GST: 4.90" → the total amount is 4.90.
+
+Now, create the JSON entries.
+
+Each entry has bbox_2d and label.
+
+Let's define the bounding boxes.
+
+First, company:
+
+The text "ALSERKAM ENTERPRISE" is in the second line of the top section. Let's check the coordinates. The image's text:
+
+Line 1: PETRON BKT LANJAN SB
+
+Line 2: ALSERKAM ENTERPRISE
+
+So the bounding box for company would be around that line.
+
+Address: The lines below the company, including the address details.
+
+Date: The line with "01/02/2018 4:43:17 PM" → the date is 01/02/2018.
+
+Total: The line "Total RM inc.GST: 4.90" → the total value is 4.90.
+
+Now, let's structure each.
+
+For company:
+
+bbox_2d: Let's see the text "ALSERKAM ENTERPRISE" is in the upper part. Let's estimate the coordinates. The image's top section:
+
+"PETRON BKT LANJAN SB" is top, then "ALSERKAM ENTERPRISE" is next. So the bounding box for company is the area containing that line.
+
+Similarly, address is the block of address lines.
+
+Date is the transaction date line.
+
+Total is the total amount line.
+
+Now, let's write the JSON.
+
+First, company:
+
+{
+  "bbox_2d": [108, 107, 892, 130],  // approximate, since the text is "ALSERKAM ENTERPRISE" which is line 2.
+  "label": "company"
+}
+
+Address:
+
+The address lines are:
+
+"Tel: 03-6156 8757 Co No: 001083069-M
+KM 458.4 BKT LANJAN UTARA,
+L/RAYA UTARA SELATAN,SG BULOH
+47000 SUNGAI BUL"
+
+So the address is the part from "KM 458.4..." to "47000 SUNGAI BUL". Let's take the bounding box for that block.
+
+{
+  "bbox_2d": [45, 150, 892, 200],  // approximate, covering the address lines.
+  "label": "address"
+}
+
+Date:
+
+The date is in the line "01/02/2018 4:43:17 PM". So the date part is "01/02/2018".
+
+{
+  "bbox_2d": [45, 230, 275, 252],  // the line with Store No. and date.
+  "label": "date"
+}
+
+Total:
+
+The total is "Total RM inc.GST: 4.90". Let's find that line.
+
+{
+  "bbox_2d": [45, 300, 475, 322],  // the line with Total RM inc.GST.
+  "label": "total"
+}
+
+Wait, need to check the exact text. Let's look at the receipt:
+
+After the items, there's:
+
+GST RM: 0.28
+
+Total RM inc.GST: 4.90
+
+So that line is "Total RM inc.GST: 4.90". So the total value is 4.90, and the label is total.
+
+Now, let's confirm each category.
+
+Yes, these four categories: address, company, date, total.
+
+Now, make sure the bounding boxes are accurate. Since the problem says to return the detected values with their bounding boxes, we need to identify the exact regions.
+
+Alternatively, maybe the company is "PETRON BKT LANJAN SB ALSERKAM ENTERPRISE" as the company name. Let's check the top:
+
+"PETRON BKT LANJAN SB
+ALSERKAM ENTERPRISE"
+
+So the company is ALSERKAM ENTERPRISE, with the branch PETRON BKT LANJAN SB. But the main company is ALSERKAM ENTERPRISE.
+
+Address is the location details: KM 458.4 BKT LANJAN UTARA, L/RAYA UTARA SELATAN, SG BULOH 47000 SUNGAI BUL.
+
+Date is 01/02/2018.
+
+Total is 4.90 (Total RM inc.GST).
+
+Now, let's define the bounding boxes more precisely.
+
+For company: The text "ALSERKAM ENTERPRISE" is on the second line. Let's check the coordinates in the image. The image's text:
+
+Line 1: PETRON BKT LANJAN SB (top)
+Line 2: ALSERKAM ENTERPRISE
+Line 3: Tel: 03-6156 8757 Co No: 001083069-M
+...
+
+So the company's bounding box is around line 2.
+
+Address: The lines from "KM 458.4 BKT LANJAN UTARA," down to "47000 SUNGAI BUL".
+
+Date: The line "01/02/2018 4:43:17 PM" which is under Store No.
+
+Total: The line "Total RM inc.GST: 4.90".
+
+Now, let's create the JSON array with these four entries.
+</think>
+[{"bbox_2d": [105, 108, 890, 131], "label": "company"}, {"bbox_2d": [42, 152, 892, 202], "label": "address"}, {"bbox_2d": [44, 232, 273, 254], "label": "date"}, {"bbox_2d": [44, 302, 473, 324], "label": "total"}]

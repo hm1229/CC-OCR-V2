@@ -1,217 +1,165 @@
-Got it, let's go through each category and find the corresponding elements in the receipt.
+Got it, let's go through each category and find the corresponding values on the receipt.
 
-First, seller_name: The top line says "LEONG HENG SHELL SERVICE STATION". Let's check the coordinates.
+First, date: Looking at the receipt, there's a line "Date Time Num POS CNo Shift" and below that "20/06/18 00:05 90554 01 4145 331". So the date is 20/06/18.
 
-seller_address: The address lines: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR". Need to capture that.
+doc_no_receipt_no: The invoice number is "01000339450" (from "Invoice number: 01000339450"). Also, the pre auth code is A01A1529424173, but maybe the receipt number is part of the Num field? Wait, the "Num" in the date line is 90554. Let me check. The problem says doc_no_receipt_no. Let's check the invoice number first. The invoice number is a document number. Let's confirm: "Invoice number: 01000339450" so that's the doc_no.
 
-seller_gst_id: "GST No : 001934041088" — that's the GST number.
+seller_address: The address lines: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR". Let's combine those.
 
-seller_phone: "Telephone : 03-90805318" — the phone number.
+seller_gst_id: "GST No : 001934041088" so that's the GST number.
 
-doc_no_receipt_no: The invoice number is "Invoice number: 01000339450". Also, there's a pre auth code, but the main doc number is the invoice number.
+seller_name: "LEONG HENG SHELL SERVICE STATION"
 
-date: The date is "20/06/18" in the cashier section.
+seller_phone: "Telephone : 03-90805318"
 
-total_amount: The "Total" is RM 50.00, and "Total Gross" is RM 22.73. Wait, need to check which is total amount. The Total (before tax) is 50.00, but the Total Gross is 22.73. Let's see the labels. The "Total" line is RM 50.00, which is the amount paid. But maybe total_amount is the total of the transaction. Let's check the receipt: Total is 50.00, Cash is 50.00. Then Relief GST is 0.00, Total Gross is 22.73. Wait, FuelSave 95 is 50.00 for 22.73 litres at 2.200 RM/litre. So 22.73 * 2.2 = 50.006, which rounds to 50.00. Then GST relief is given, so Total Gross is 22.73. But the question is about total_amount and total_tax. Let's check the categories.
+total_amount: The "Total" line shows RM 50.00. Also, "Total Gross" is RM 22.73. Wait, need to check which is total amount. The Total (before tax) is 50.00, and Total Gross is 22.73 (since relief GST is 0.00, so total gross is the amount after tax relief? Wait, the receipt has "Total" as 50.00, "Cash" 50.00, "Relief GST" 0.00, "Total Gross" 22.73. Wait, maybe the total amount paid is 50.00 (cash), and total tax (GST) is 0.00 (relief). Let's check the labels.
 
-total_tax: The Relief GST is 0.00, so maybe total_tax is the GST amount. But in the receipt, "Relief GST" is 0.00, so maybe total_tax is that. But let's check each category.
+total_amount: The total amount of the transaction. The "Total" line is RM 50.00, which is the amount before tax? But the fuel price is 2.200 RM/litre, 22.73 litre, so 22.73 * 2.200 = 50.006, which matches the Total of 50.00. Then GST relief is 0.00, so Total Gross is 22.73? Wait, maybe the Total Gross is the amount after tax, but in this case, relief GST is 0, so total gross is same as total? Maybe I need to check the definitions. The problem says total_amount and total_tax. Let's see:
 
-Let's list each:
+total_tax: The GST amount. The "Relief GST" is 0.00, so the tax (GST) that was relieved, so the actual tax paid is 0.00. So total_tax is 0.00.
 
-1. date: "20/06/18" — in the Date field.
+total_amount: The total amount paid, which is Cash 50.00, so total_amount is 50.00.
 
-2. doc_no_receipt_no: Invoice number is 01000339450. Also, the pre auth code is A01A1529424173, but the main receipt number is the invoice number. So doc_no is invoice number.
+Now let's map each:
 
-3. seller_address: The address block: LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR.
+date: "20/06/18" from the date line.
 
-4. seller_gst_id: GST No : 001934041088.
+doc_no_receipt_no: Let's check. The invoice number is 01000339450. Also, the receipt has a "Num" which is 90554. But the problem says doc_no_receipt_no. Maybe the invoice number is the document number. Let's take invoice number as doc_no.
 
-5. seller_name: LEONG HENG SHELL SERVICE STATION.
+seller_address: The address block: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR"
 
-6. seller_phone: Telephone : 03-90805318.
+seller_gst_id: "001934041088" from GST No.
 
-7. total_amount: The "Total" is RM 50.00 (the amount paid), or "Total Gross" is RM 22.73. Let's check the labels. The Total line is "Total RM 50.00", which is the total of the transaction before tax? Wait, no. The FuelSave 95 is 50.00, which is the amount for the fuel. Then Cash is 50.00, so that's the payment. The Total Gross is 22.73, which is the net amount after GST relief. But maybe total_amount is the total amount paid, which is 50.00. Let's check the receipt's "Total" line: "Total RM 50.00". So that's the total amount.
+seller_name: "LEONG HENG SHELL SERVICE STATION"
 
-8. total_tax: The GST related. The "Relief GST" is 0.00, and "Total Gross" is 22.73. But maybe total_tax is the GST amount. However, in the receipt, the GST is given relief, so the tax collected is 0.00. So total_tax would be the GST amount, which is 0.00. But let's check the labels.
+seller_phone: "03-90805318" from Telephone.
 
-Now, let's map each:
+total_amount: "50.00" from the Total line (RM 50.00).
 
-- date: [20/06/18] — the date field in the cashier section: "20/06/18 00:05 90554 01 4145 331" — the date is 20/06/18.
+total_tax: "0.00" from Relief GST (since that's the GST amount, and it's relieved, so tax paid is 0.00).
 
-- doc_no_receipt_no: Invoice number: 01000339450. Let's check the line "Invoice number: 01000339450".
+Now, let's find the bounding boxes for each.
 
-- seller_address: The address lines: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR".
+First, seller_name: The line "LEONG HENG SHELL SERVICE STATION" is at the top. Let's check the coordinates. The text is in the upper part.
 
-- seller_gst_id: "GST No : 001934041088".
+seller_address: The lines below company no: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR"
 
-- seller_name: "LEONG HENG SHELL SERVICE STATION".
+seller_gst_id: "GST No : 001934041088"
 
-- seller_phone: "Telephone : 03-90805318".
+seller_phone: "Telephone : 03-90805318"
 
-- total_amount: "Total RM 50.00" — the line "Total RM 50.00".
+doc_no_receipt_no: Invoice number: "01000339450"
 
-- total_tax: Let's check. The "Relief GST" is 0.00, which is the tax relief. But maybe total_tax is the GST amount before relief. However, the receipt shows "FuelSave 95" with price, and the GST is part of that. But in the receipt, the "Total Gross" is 22.73, which is the amount after relief. The tax (GST) would be the difference between the total and total gross? Wait, the total is 50.00, total gross is 22.73. But 50.00 - 22.73 = 27.27, which might be the GST amount. But the receipt says "Relief GST C RM 0.00". Hmm, maybe in Malaysia, FuelSave is a tax relief, so the GST is reduced. The note at the bottom says "Diesel & Petrol RON95 given relief under Section 56(3)(b) GST Act 2014". So the GST is relieved, meaning the tax collected is 0. So total_tax might be 0.00. But the "Total Gross" is 22.73, which is the net amount. Let's check the labels again. The problem says "total_tax" — maybe the tax amount charged. Since relief is given, the tax is 0. So the "Relief GST" line is 0.00, which could be the tax amount. Alternatively, maybe total_tax is the GST component. Let's check the receipt's lines:
+date: "20/06/18" from the date line.
 
-- FuelSave 95: RM 50.00 C
+total_amount: The "Total" line: "Total RM 50.00"
 
-- 2.200 RM / litre
-
-Then Total: RM 50.00
-
-Cash: RM 50.00
-
-Relief GST: C RM 0.00
-
-Total Gross: C RM 22.73
-
-So the Total (50.00) is the amount including GST, and Total Gross (22.73) is after relief. The Relief GST is the amount of GST relieved, which is 0.00? That doesn't make sense. Wait, maybe the "C" stands for something. Alternatively, maybe the total amount is the Total Gross (22.73) as the net amount, and the tax is the difference. But the problem's categories are total_amount and total_tax. Let's see the example: total_amount is likely the total payment, which is 50.00 (Cash). total_tax would be the GST amount. But in the receipt, the GST is relieved, so maybe total_tax is 0.00. Let's check the "Relief GST" line: it's labeled "Relief GST" with amount 0.00. So that's the tax relief, meaning the tax that was supposed to be collected is 0.00. So total_tax is 0.00.
-
-Now, let's identify each element's bounding box.
-
-First, seller_name: "LEONG HENG SHELL SERVICE STATION" — top line. Let's check the coordinates. The text is at the top, so the bounding box would cover that line.
-
-seller_address: The next lines: "Company No :256628-W", "LOT 26151 BANDAR SG LONG,", "11 1/4 MILES CHERAS,", "43000 KAJANG, SELANGOR". So the address is those lines.
-
-seller_gst_id: "GST No : 001934041088" — that line.
-
-seller_phone: "Telephone : 03-90805318" — that line.
-
-doc_no_receipt_no: "Invoice number: 01000339450" — that line.
-
-date: "20/06/18" in the Date field: "Date Time Num POS CNo Shift 20/06/18 00:05 90554 01 4145 331" — the date is 20/06/18.
-
-total_amount: "Total RM 50.00" — the line "Total RM 50.00".
-
-total_tax: "Relief GST C RM 0.00" — the line "Relief GST C RM 0.00".
+total_tax: "Relief GST C RM 0.00" so the amount is 0.00.
 
 Now, let's list each with their bounding boxes.
 
 Let's go step by step.
 
-1. seller_name: "LEONG HENG SHELL SERVICE STATION" — the first line. Let's check the coordinates. The text is from the top, so the bounding box is [x1, y1, x2, y2] covering that line.
+1. date: The date is in the line "20/06/18 00:05 90554 01 4145 331". The date part is "20/06/18". Let's find the bounding box for that text.
 
-2. seller_address: The lines from "LOT 26151 BANDAR SG LONG," down to "43000 KAJANG, SELANGOR". So multiple lines.
+2. doc_no_receipt_no: The invoice number is "01000339450" from "Invoice number: 01000339450". Let's check that line.
 
-3. seller_gst_id: "GST No : 001934041088" — the line after telephone.
+3. seller_address: The address lines: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR". These are multiple lines, so the bounding box should cover all those lines.
 
-4. seller_phone: "Telephone : 03-90805318" — the line before GST No.
+4. seller_gst_id: "GST No : 001934041088" – the line with GST No.
 
-5. doc_no_receipt_no: "Invoice number: 01000339450" — the line after GST No.
+5. seller_name: "LEONG HENG SHELL SERVICE STATION" – the first line.
 
-6. date: "20/06/18" — in the cashier section, the first part of the date-time line.
+6. seller_phone: "Telephone : 03-90805318" – the line with Telephone.
 
-7. total_amount: "Total RM 50.00" — the line labeled "Total".
+7. total_amount: The line "Total RM 50.00" – the Total section.
 
-8. total_tax: "Relief GST C RM 0.00" — the line labeled "Relief GST".
+8. total_tax: The line "Relief GST C RM 0.00" – the Relief GST amount.
 
-Now, let's check each in the image.
+Now, let's define each bounding box.
 
-Let's parse the image text:
+For seller_name: The text is at the top. Let's assume the coordinates. The image is a receipt, so the top part.
 
-- LEONG HENG SHELL SERVICE STATION (seller_name)
+Let's check the image content:
+
+- LEONG HENG SHELL SERVICE STATION (top line)
 - Company No :256628-W
-- LOT 26151 BANDAR SG LONG, (seller_address part)
-- 11 1/4 MILES CHERAS, (seller_address part)
-- 43000 KAJANG, SELANGOR (seller_address part)
+- LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR
 - Site : 2188
-- Telephone : 03-90805318 (seller_phone)
-- GST No : 001934041088 (seller_gst_id)
-- Invoice number: 01000339450 (doc_no_receipt_no)
-- Pre auth code A01A1529424173
-- 22.73 litre Pump # 06
-- FuelSave 95 RM 50.00 C
-- 2.200 RM / litre
-- Total RM 50.00 (total_amount)
-- Cash RM 50.00
-- Relief GST C RM 0.00 (total_tax)
-- Total Gross C RM 22.73
-- Cashier: KKHALEK
-- Date Time Num POS CNo Shift 20/06/18 00:05 90554 01 4145 331 (date is 20/06/18)
-- Diesel & Petrol RON95 given relief under Section 56(3)(b) GST Act 2014
-- Thank You and Please Come Again
+- Telephone : 03-90805318
+- GST No : 001934041088
+- Invoice number: 01000339450
 
-Now, assign each category:
+Then the pre auth code, etc.
 
-- date: "20/06/18" — from the Date line.
-- doc_no_receipt_no: "01000339450" — from Invoice number.
-- seller_address: The address lines (LOT..., 11 1/4..., 43000...).
-- seller_gst_id: "001934041088" — from GST No.
-- seller_name: "LEONG HENG SHELL SERVICE STATION".
-- seller_phone: "03-90805318" — from Telephone.
-- total_amount: "50.00" — from Total line.
-- total_tax: "0.00" — from Relief GST line.
+So for each label:
 
-Now, need to get the bounding boxes for each. Since the image is a receipt, each line's position can be approximated.
+- seller_name: "LEONG HENG SHELL SERVICE STATION" – bounding box covers that line.
+- seller_gst_id: "GST No : 001934041088" – the line with GST No.
+- seller_phone: "Telephone : 03-90805318" – the line with Telephone.
+- seller_address: The three lines: LOT..., 11 1/4..., 43000... – combine these.
+- doc_no_receipt_no: "Invoice number: 01000339450" – the invoice number.
+- date: "20/06/18" from the date line (20/06/18 00:05...).
+- total_amount: "Total RM 50.00" – the Total line.
+- total_tax: "Relief GST C RM 0.00" – the Relief GST line.
 
-Let's list each entry:
+Now, let's create the JSON array.
 
-1. date: The text "20/06/18" is in the line "Date Time Num POS CNo Shift 20/06/18 00:05 90554 01 4145 331". So the bounding box for the date part.
+Each entry is a dictionary with "bbox_2d" and "label".
 
-2. doc_no_receipt_no: The line "Invoice number: 01000339450" — the number is 01000339450.
-
-3. seller_address: The lines "LOT 26151 BANDAR SG LONG,", "11 1/4 MILES CHERAS,", "43000 KAJANG, SELANGOR".
-
-4. seller_gst_id: The line "GST No : 001934041088".
-
-5. seller_name: The line "LEONG HENG SHELL SERVICE STATION".
-
-6. seller_phone: The line "Telephone : 03-90805318".
-
-7. total_amount: The line "Total RM 50.00".
-
-8. total_tax: The line "Relief GST C RM 0.00".
-
-Now, create the JSON array with each entry's bbox and label.
-
-Assuming the coordinates are relative (since the image is a standard receipt, we can estimate the positions):
-
-- seller_name: topmost line, so [x1, y1, x2, y2] covers the first line. Let's say the bounding box is [60, 35, 970, 55] (approximate).
-
-- seller_address: next few lines. Let's take the lines from "LOT..." to "SELANGOR". Bounding box [60, 60, 970, 110] (covers multiple lines).
-
-- seller_gst_id: line "GST No : 001934041088" — [60, 140, 970, 160].
-
-- seller_phone: line "Telephone : 03-90805318" — [60, 115, 970, 135].
-
-- doc_no_receipt_no: line "Invoice number: 01000339450" — [60, 165, 970, 185].
-
-- date: line "20/06/18" in the cashier section. The date is part of "Date Time Num POS CNo Shift 20/06/18 00:05 90554 01 4145 331". Let's find that line: "Cashier: KKHALEK" then the next line is the date-time. So the date is at the start of that line. Bounding box [200, 850, 280, 875] (approximate, since the line is "20/06/18 00:05 90554 01 4145 331").
-
-- total_amount: line "Total RM 50.00" — [60, 420, 970, 440].
-
-- total_tax: line "Relief GST C RM 0.00" — [60, 450, 970, 470].
-
-Now, let's structure each entry.
+Let's estimate the bounding boxes. Since the image is a text receipt, each line's position can be approximated.
 
 For example:
 
-{
-  "bbox_2d": [60, 35, 970, 55],
-  "label": "seller_name"
-},
-{
-  "bbox_2d": [60, 60, 970, 110],
-  "label": "seller_address"
-},
-{
-  "bbox_2d": [60, 115, 970, 135],
-  "label": "seller_phone"
-},
-{
-  "bbox_2d": [60, 140, 970, 160],
-  "label": "seller_gst_id"
-},
-{
-  "bbox_2d": [60, 165, 970, 185],
-  "label": "doc_no_receipt_no"
-},
-{
-  "bbox_2d": [200, 850, 280, 875],
-  "label": "date"
-},
-{
-  "bbox_2d": [60, 420, 970, 440],
-  "label": "total_amount"
-},
-{
-  "bbox_
+- seller_name: [x1, y1, x2, y2] – the first line, so top part. Let's say the coordinates are from the top, the first line's bounding box.
+- date: the line with "20/06/18" is in the lower middle part, near the cashier section.
+
+But since we need to provide the bounding boxes, let's check the exact text positions.
+
+Alternatively, maybe the key is to identify the text and its location.
+
+Let's list each:
+
+1. date: "20/06/18" – found in the line "20/06/18 00:05 90554 01 4145 331". The bounding box for this date part.
+
+2. doc_no_receipt_no: The invoice number is "01000339450" – from "Invoice number: 01000339450". Let's take that line.
+
+3. seller_address: The address lines: "LOT 26151 BANDAR SG LONG, 11 1/4 MILES CHERAS, 43000 KAJANG, SELANGOR" – these are three lines, so the bounding box covers all three.
+
+4. seller_gst_id: "001934041088" from "GST No : 001934041088" – the line.
+
+5. seller_name: "LEONG HENG SHELL SERVICE STATION" – first line.
+
+6. seller_phone: "03-90805318" from "Telephone : 03-90805318" – the line.
+
+7. total_amount: "50.00" from "Total RM 50.00" – the Total line.
+
+8. total_tax: "0.00" from "Relief GST C RM 0.00" – the Relief GST line.
+
+Now, let's write the JSON entries.
+
+For each, the bbox_2d is the rectangle around the text.
+
+Let's assume the coordinates (since the image is provided, but in text form, we can describe the lines):
+
+- seller_name: The first line, so [x=left, y=top, x=right, y=bottom] covering "LEONG HENG SHELL SERVICE STATION".
+- seller_gst_id: The line "GST No : 001934041088" – the text for GST ID is the number part, but the label is seller_gst_id, so the entire line's bounding box.
+- seller_phone: The line "Telephone : 03-90805318" – bounding box around that line.
+- seller_address: The three address lines: "LOT 26151 BANDAR SG LONG,", "11 1/4 MILES CHERAS,", "43000 KAJANG, SELANGOR" – bounding box covering all three.
+- doc_no_receipt_no: The line "Invoice number: 01000339450" – bounding box around that line.
+- date: The date "20/06/18" in the line "20/06/18 00:05 90554 01 4145 331" – bounding box around the date part.
+- total_amount: The line "Total RM 50.00" – bounding box around that line.
+- total_tax: The line "Relief GST C RM 0.00" – bounding box around that line.
+
+Now, let's create the JSON array.
+</think>
+[
+    {"bbox_2d": [62, 87, 997, 112], "label": "date"},
+    {"bbox_2d": [62, 302, 997, 325], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [62, 142, 997, 192], "label": "seller_address"},
+    {"bbox_2d": [62, 232, 997, 254], "label": "seller_gst_id"},
+    {"bbox_2d": [62, 72, 997, 94], "label": "seller_name"},
+    {"bbox_2d": [62, 262, 997, 284], "label": "seller_phone"},
+    {"bbox_2d": [62, 372, 997, 394], "label": "total_amount"},
+    {"bbox_2d": [62, 402, 997, 424], "label": "total_tax"}
+]

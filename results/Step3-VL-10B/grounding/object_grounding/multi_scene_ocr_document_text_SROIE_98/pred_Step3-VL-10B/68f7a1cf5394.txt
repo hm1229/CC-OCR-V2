@@ -1,6 +1,33 @@
-[
-  {"bbox_2d": [295, 244, 704, 260], "label": "company"},
-  {"bbox_2d": [295, 272, 704, 300], "label": "address"},
-  {"bbox_2d": [393, 246, 527, 262], "label": "date"},
-  {"bbox_2d": [423, 320, 542, 336], "label": "total"}
-]
+Got it, let's extract the required information from the invoice.
+
+First, company: The company name is UNIHAKKA INTERNATIONAL SDN BHD. Let's find its location on the image. It's at the top part.
+
+Address: The address is 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor. Let's check the text.
+
+Date: The date is 14 Apr 2018 18:11.
+
+Total: The total amount is $8.90, which is the Net Total. Let's check the Total Amount line.
+
+Now, let's map each category with their bounding boxes.
+
+For company: The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's get the coordinates.
+
+Address: The address lines are below the company name.
+
+Date: The date is on the same line as the company, next to the company name.
+
+Total: The total amount is in the payment section, "Total Amount: $8.90" and "Nett Total: $8.90".
+
+Let me check each element.
+
+Company: "UNIHAKKA INTERNATIONAL SDN BHD" – the bounding box should cover that line.
+
+Address: The address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor" – that's the address.
+
+Date: "14 Apr 2018 18:11" – that's the date.
+
+Total: The total amount is $8.90, which is the Net Total. Let's confirm the line "Total Amount: $8.90" and "Nett Total: $8.90" – the total value is $8.90.
+
+Now, let's structure each entry.
+</think>
+[{"bbox_2d": [289, 104, 505, 120], "label": "company"}, {"bbox_2d": [134, 127, 505, 144], "label": "address"}, {"bbox_2d": [327, 107, 432, 119], "label": "date"}, {"bbox_2d": [424, 300, 502, 313], "label": "total"}]

@@ -1,7 +1,38 @@
-[
-    {"bbox_2d": [37, 24, 525, 44], "label": "company"},
-    {"bbox_2d": [37, 46, 525, 66], "label": "address"},
-    {"bbox_2d": [37, 68, 525, 88], "label": "address"},
-    {"bbox_2d": [92, 112, 525, 132], "label": "date"},
-    {"bbox_2d": [144, 312, 325, 332], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part says "GREEN LANE PHARMACY SDN BHD"
+- Address: The lines below the company name: "33 JLN BANGAU 1,KEPONG BARU, 52100 KEPONG, KL"
+- Date: "1/8/2018 9:42:41 AM"
+- Total: The total payment is 34.80, so look for the "TOTAL :" which is 34.80
+
+Now, find the bounding boxes for each.
+
+Company: The first line is the company name. Let's check the coordinates. The text "GREEN LANE PHARMACY SDN BHD" is at the top.
+
+Address: The next lines: "33 JLN BANGAU 1,KEPONG BARU, 52100 KEPONG, KL"
+
+Date: "DATE : 1/8/2018 9:42:41 AM"
+
+Total: "TOTAL : 34.80" (the main total, not the subtotals)
+
+Let's map each:
+
+1. Company: [44, 24, 540, 42] (approx, since the text is there)
+2. Address: [44, 44, 540, 62] (combining the address lines)
+3. Date: [104, 200, 324, 218] (the date line)
+4. Total: [224, 312, 324, 328] (the "TOTAL :" line shows 34.80)
+
+Wait, need to check the exact positions. Let's look at the image:
+
+- Company: "GREEN LANE PHARMACY SDN BHD" is the first line. Bounding box would cover that.
+- Address: The next three lines: "33 JLN BANGAU 1,KEPONG BARU, 52100 KEPONG, KL" — so that's the address.
+- Date: "DATE : 1/8/2018 9:42:41 AM" — the date field.
+- Total: The "TOTAL :" is 34.80, which is in the section after rounding.
+
+Let me check the text:
+
+In the invoice, after the items, there's "Rounding : -0.01", then "TOTAL : 34.80". So that's the total amount.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [44, 24, 540, 42], "label": "company"}, {"bbox_2d": [44, 44, 540, 62], "label": "address"}, {"bbox_2d": [114, 202, 324, 220], "label": "date"}, {"bbox_2d": [226, 314, 324, 332], "label": "total"}]

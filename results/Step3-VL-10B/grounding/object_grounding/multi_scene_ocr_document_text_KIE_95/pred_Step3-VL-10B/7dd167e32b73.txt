@@ -1,8 +1,80 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is at the bottom part, "15-07-18". Let's check the coordinates.
+
+Seller_address: The address is "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANG, SELANGOR (PUSAT PERNIAGAAN BUNGA RAYA, MANTIN)". Let's find that section.
+
+Seller_gst_id: The GST ID is "000306020352" from "(GST ID No :000306020352)".
+
+Seller_name: "MR. D.I.Y. (M) SDN BHD" is the seller name.
+
+Total_amount: The total rounded is RM 7.15, but wait, the total incl. GST is RM 7.16, then rounded adjustment. But the total amount paid is the cash? Wait, no. The total amount for the transaction is the total rounded, which is RM 7.15. Let me check the labels. The "TOTAL ROUNDED" is RM 7.15. That's the total amount of the purchase.
+
+Total_tax: The GST summary shows "GST SR@0% Tax(RM) 0.00", so total tax is 0.00.
+
+Now, let's map each:
+
+1. date: "15-07-18" is in the line "15-07-18 10:35 SHO1 ZI33 T2 R000010082". So the date part is 15-07-18.
+
+2. seller_address: The block starting with LOT 1851-A... up to MANTIN).
+
+3. seller_gst_id: The GST ID No:000306020352.
+
+4. seller_name: MR. D.I.Y. (M) SDN BHD.
+
+5. total_amount: TOTAL ROUNDED is RM 7.15.
+
+6. total_tax: GST Tax(RM) is 0.00.
+
+Now, find the bounding boxes for each.
+
+Let's check the image:
+
+- Seller name: "MR. D.I.Y. (M) SDN BHD" is at the top. Bounding box would be the line containing that.
+
+- Seller address: The lines below the name, including CO.REG, LOT, etc.
+
+- Seller GST ID: The line with (GST ID No :000306020352)
+
+- Date: The line with 15-07-18 10:35...
+
+- Total amount: The line "TOTAL ROUNDED RM 7.15"
+
+- Total tax: The GST Summary line, Tax(RM) 0.00.
+
+Let's define each:
+
+1. date: The text "15-07-18" is in the line "15-07-18 10:35 SHO1 ZI33 T2 R000010082". So the bounding box for that line's date part.
+
+2. seller_address: The block from "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANG, SELANGOR (PUSAT PERNIAGAAN BUNGA RAYA, MANTIN)".
+
+3. seller_gst_id: The line "(GST ID No :000306020352)".
+
+4. seller_name: "MR. D.I.Y. (M) SDN BHD".
+
+5. total_amount: "TOTAL ROUNDED RM 7.15".
+
+6. total_tax: In the GST Summary, "Tax(RM) 0.00".
+
+Now, let's check the coordinates. Since the image is a receipt, the text positions:
+
+- Seller name: top part, first line.
+
+- Seller address: next few lines.
+
+- GST ID: line after address.
+
+- Then the product details, then totals.
+
+- Date: near the bottom, above the operator info.
+
+Let's create the JSON entries.
+</think>
 [
-  {"bbox_2d": [94, 107, 890, 132], "label": "seller_name"},
-  {"bbox_2d": [94, 152, 890, 175], "label": "seller_gst_id"},
-  {"bbox_2d": [94, 177, 890, 232], "label": "seller_address"},
-  {"bbox_2d": [148, 922, 225, 945], "label": "date"},
-  {"bbox_2d": [94, 322, 890, 345], "label": "total_amount"},
-  {"bbox_2d": [148, 632, 225, 655], "label": "total_tax"}
+    {"bbox_2d": [144, 923, 220, 944], "label": "date"},
+    {"bbox_2d": [101, 200, 898, 292], "label": "seller_address"},
+    {"bbox_2d": [134, 244, 392, 263], "label": "seller_gst_id"},
+    {"bbox_2d": [92, 142, 527, 163], "label": "seller_name"},
+    {"bbox_2d": [24, 332, 979, 354], "label": "total_amount"},
+    {"bbox_2d": [144, 477, 327, 496], "label": "total_tax"}
 ]

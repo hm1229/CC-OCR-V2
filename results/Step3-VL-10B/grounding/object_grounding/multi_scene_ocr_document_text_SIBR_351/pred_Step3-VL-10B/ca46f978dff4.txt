@@ -1,1 +1,218 @@
-[{"bbox_2d": [242, 140, 756, 158], "label": "Add"}, {"bbox_2d": [100, 330, 900, 348], "label": "Add"}, {"bbox_2d": [102, 220, 224, 238], "label": "Date"}, {"bbox_2d": [150, 520, 442, 546], "label": "Description of Goods"}, {"bbox_2d": [420, 180, 580, 198], "label": "Fax"}, {"bbox_2d": [102, 200, 242, 218], "label": "Invoice No"}, {"bbox_2d": [50, 520, 102, 546], "label": "No."}, {"bbox_2d": [450, 520, 542, 546], "label": "Price"}, {"bbox_2d": [320, 520, 372, 546], "label": "Qty"}, {"bbox_2d": [102, 360, 224, 378], "label": "TEL"}, {"bbox_2d": [302, 180, 422, 198], "label": "Tel"}, {"bbox_2d": [440, 320, 558, 346], "label": "Title"}, {"bbox_2d": [600, 520, 702, 546], "label": "Total"}, {"bbox_2d": [720, 550, 882, 576], "label": "Total"}, {"bbox_2d": [600, 600, 702, 626], "label": "Total"}]
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个识别每个类别。
+
+首先看Add：发票上方的Add是“0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064”和下面的Unit 9346 Box 2446 DPO AP 94482？不对，看TO部分的Add是“99852 Miller Heights Suite 606 Port Patricia, LA 41162”。另外上方的Add是发件方的地址？看题目里的Add可能有两个？不，先看每个标签。
+
+先列出来需要的类别：Add, Date, Description of Goods, Fax, Invoice No, No., Price, Qty, TEL, Tel, Title, Total。
+
+现在逐个找：
+
+1. Add：看发件方的Add？还是TO的Add？看发票上方的Add:0870 Villanueva... 是发件方地址。另外TO部分的Add是收件方地址。需要看哪个Add。题目里的Add可能对应发件方的Add？看原文中的Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064，这个是发件方的Add。另外Unit 9346... 也是发件方的Add？可能需要看。不过先看每个元素。
+
+Title是“Commercial Invoice”，所以Title的bbox是标题部分。
+
+Invoice No:EC20210102，Date:Oct 8th, 2021。
+
+Description of Goods是表格里的第一行内容：CNC FIBER LASER CUTTING MACHINE MODEL FIBER PLUS 8025 1500W。
+
+Fax是58 3066-05177857（发件方的Fax）。
+
+No.是表格里的No列，第一行是1，还有Total行的No可能是空？看表格里的No列，第一行是1，下面Total行的No列可能没有数值，但Total是总金额。
+
+Price是US$520,000.00（对应第一行的Price）。
+
+Qty是1 Set（第一行的Qty）。
+
+TEL：发件方的Tel是55 8677-08567581？不，看From部分的Tel？或者看TO的TEL是30-24313532，而发件方的Tel是Tel:55 8677-08567581。另外还有Tel:30-24313532是TO的TEL，标签是Tel（收件方的电话）。
+
+现在整理每个标签：
+
+- Add：发件方的Add，即“Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064”和“Unit 9346 Box 2446 DPO AP 94482”？可能需要看哪个。或者看TO的Add是“Add:99852 Miller Heights Suite 606 Port Patricia, LA 41162”。需要确定每个Add对应的。题目中的Add可能有两个？但看问题中的类别是Add，可能需要看出现的Add。比如发件方的Add是上方的Add:...，而TO的Add是收件方的Add。需要看每个Add的标签。
+
+现在逐个处理：
+
+1. Add（发件方）：文本是“Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064”和“Unit 9346 Box 2446 DPO AP 94482”？不，看原文中的Add:0870... 是一行，然后下面一行是Unit 9346... 所以这两个都是发件方的地址，属于Add。但可能需要看哪个是主要的。或者可能题目中的Add指的是TO的Add？不，先看每个元素的位置。
+
+另外，Title是“Commercial Invoice”，所以Title的bbox是标题部分。
+
+现在开始列每个类别：
+
+- Title: "Commercial Invoice" → 找到标题的位置，bbox是中间的大标题。
+
+- Invoice No: "Invoice No:EC20210102" → 文本中的Invoice No部分。
+
+- Date: "Date:Oct 8th, 2021" → 对应的日期。
+
+- Add（发件方）: "Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064" 和 "Unit 9346 Box 2446 DPO AP 94482"？可能需要看，原文中Add:后面是第一行地址，然后下一行是Unit... 所以这两个都是发件方的Add。但可能需要合并？或者看问题中的Add可能指的是其中一个。或者可能用户需要的是所有Add的实例？但先看TO的Add是“Add:99852 Miller Heights Suite 606 Port Patricia, LA 41162”，这是收件方的Add，标签是Add吗？不，TO部分的Add是收件方的地址，标签可能是Add（收件方）。但问题中的类别是Add，可能需要区分发件方和收件方？但问题中的类别是Add，可能需要看所有Add的出现。
+
+另外，Fax是发件方的Fax:58 3066-05177857。
+
+Tel（发件方）: Tel:55 8677-08567581；Tel（收件方）: TEL:30-24313532（注意大小写，原文中TO部分是TEL:30-24313532，而发件方是Tel:55...）。
+
+No.是表格中的No列，第一行是1，对应No.的值是1。
+
+Description of Goods是表格中第一行的Description of Goods列内容：CNC FIBER LASER CUTTING MACHINE MODEL FIBER PLUS 8025 1500W。
+
+Price是表格中第一行的Price列：US$520,000.00。
+
+Qty是表格中第一行的Qty列：1 Set。
+
+Total是表格底部的Total Amount对应的520,000.00，以及Total列的US$520,000.00。
+
+现在需要为每个类别找到对应的bbox和label。
+
+现在开始逐个构建：
+
+1. Add（发件方地址第一行）：文本“Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064” → 找到这个文本的位置，bbox大概在上方，Add:后面的内容。
+
+2. Add（发件方地址第二行）：“Unit 9346 Box 2446 DPO AP 94482” → 这行在Add:下面。
+
+3. Add（收件方TO的Add）：“Add:99852 Miller Heights Suite 606 Port Patricia, LA 41162” → TO部分的Add:后面的内容。
+
+但问题中的类别是Add，可能需要看哪个是需要的。可能题目中的Add指的是发件方的Add？或者看问题中的例子，可能需要检查每个类别。
+
+另外，Tel（发件方）是“Tel:55 8677-08567581”，Tel（收件方）是“TEL:30-24313532”（注意大小写，原文中TO部分是TEL:，而发件方是Tel:）。
+
+现在，先处理每个类别：
+
+- Title: "Commercial Invoice" → 中间的大标题，bbox是包含这个文字的区域。
+
+- Invoice No: "Invoice No:EC20210102" → 左侧的Invoice No行。
+
+- Date: "Date:Oct 8th, 2021" → Invoice No下面的Date行。
+
+- Add（发件方）: 包含“Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064”和“Unit 9346 Box 2446 DPO AP 94482”的区域，可能合并为一个Add？或者分开？但看原文中Add:是单独一行，然后Unit...是下一行，所以这两个都是发件方的Add信息，可能属于同一个Add类别？或者可能题目中的Add指的是其中一个。需要看问题中的要求，可能每个Add实例都要列？但可能更可能的是，发件方的Add是上方的Add:...，而TO的Add是收件方的Add，所以需要区分。但问题中的类别是Add，可能需要看所有Add的出现。
+
+另外，Fax是“Fax:58 3066-05177857” → 发件方的Fax行。
+
+- No.: 表格中第一行的No列，值为1 → 对应表格的No列单元格。
+
+- Description of Goods: 表格中第一行的Description of Goods列，内容是CNC FIBER LASER CUTTING MACHINE MODEL FIBER PLUS 8025 1500W。
+
+- Price: 表格中第一行的Price列，值为US$520,000.00。
+
+- Qty: 表格中第一行的Qty列，值为1 Set。
+
+- TEL: 收件方的TEL，即“TEL:30-24313532” → TO部分的TEL行。
+
+- Tel: 发件方的Tel，即“Tel:55 8677-08567581” → 发件方的Tel行。
+
+- Total: 表格底部的Total Amount对应的520,000.00，以及Total列的US$520,000.00，还有Total行的Total Amount是520,000.00。
+
+现在需要确定每个元素的bbox。由于是图片中的文字，需要估计每个文字的位置。
+
+现在开始列出每个条目：
+
+1. Add（发件方第一行地址）：
+   - 文本：Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064
+   - bbox：大概在发票上方，Add:后面的内容，坐标需要估计。假设图片中的位置，Add:在上方偏左，所以bbox是[290, 100, 710, 120]左右？不，看原文中的Add:0870... 是第一行，然后Unit...是第二行。所以Add:0870... 的bbox是包含该行文字的区域。
+
+2. Add（发件方第二行地址）：
+   - 文本：Unit 9346 Box 2446 DPO AP 94482
+   - bbox：在Add:行的下面，所以是下一行。
+
+3. Add（收件方TO的Add）：
+   - 文本：Add:99852 Miller Heights Suite 606 Port Patricia, LA 41162
+   - bbox：在TO:下面的Add:行。
+
+4. Date:
+   - 文本：Date:Oct 8th, 2021
+   - bbox：Invoice No下面的Date行。
+
+5. Invoice No:
+   - 文本：Invoice No:EC20210102
+   - bbox：左侧的Invoice No行。
+
+6. Fax:
+   - 文本：Fax:58 3066-05177857
+   - bbox：发件方信息中的Fax行，和Tel同一行？看原文中Tel:55... Fax:58... 是同一行，所以Fax的bbox是包含Fax:58... 的区域。
+
+7. No.:
+   - 文本：1（表格中第一行No列）
+   - bbox：表格第一行No列的单元格。
+
+8. Description of Goods:
+   - 文本：CNC FIBER LASER CUTTING MACHINE MODEL FIBER PLUS 8025 1500W
+   - bbox：表格第一行Description of Goods列的单元格。
+
+9. Price:
+   - 文本：US$520,000.00（表格第一行Price列）
+   - bbox：表格第一行Price列的单元格。
+
+10. Qty:
+    - 文本：1 Set（表格第一行Qty列）
+    - bbox：表格第一行Qty列的单元格。
+
+11. TEL:
+    - 文本：30-24313532（TO部分的TEL:30-24313532）
+    - bbox：TO部分的TEL行。
+
+12. Tel:
+    - 文本：55 8677-08567581（发件方的Tel:55...）
+    - bbox：发件方信息中的Tel行。
+
+13. Title:
+    - 文本：Commercial Invoice
+    - bbox：中间的大标题，字体较大。
+
+14. Total:
+    - 文本：520,000.00（表格底部Total行的Total Amount和Total列）
+    - bbox：表格底部Total行的Total列和Total Amount列。
+
+现在需要将这些转化为JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+由于是图片，需要大致估计bbox。例如：
+
+- Title的bbox：假设在图片中间，文字“Commercial Invoice”是标题，所以bbox可能是[380, 250, 620, 280]左右（因为标题在发票中间，较大字体）。
+
+- Invoice No的bbox：在左侧，Invoice No:EC20210102，所以bbox是[100, 300, 300, 320]。
+
+- Date的bbox：在Invoice No下面，Date:Oct 8th, 2021，bbox是[100, 320, 300, 340]。
+
+- Add（发件方第一行）：Add:0870 Villanueva Rapid Suite 686 North Darrylfort, TX 12064，bbox是[250, 80, 750, 100]。
+
+- Add（发件方第二行）：Unit 9346 Box 2446 DPO AP 94482，bbox是[250, 105, 750, 125]。
+
+- Fax的bbox：Fax:58 3066-05177857，和Tel在同一行，所以bbox是[300, 140, 500, 160]（假设Tel:55...在左边，Fax在右边）。
+
+- Tel（发件方）的bbox：Tel:55 8677-08567581，bbox是[250, 140, 450, 160]。
+
+- TO的Add：Add:99852 Miller Heights Suite 606 Port Patricia, LA 41162，bbox是[100, 450, 900, 470]。
+
+- TEL（收件方）：TEL:30-24313532，bbox是[150, 480, 300, 495]。
+
+- 表格的No.列第一行：No.是1，bbox是[60, 550, 150, 600]（表格的No列，第一行）。
+
+- Description of Goods的bbox：表格中第一行Description列，内容是CNC...，bbox是[160, 550, 450, 600]。
+
+- Qty的bbox：表格中第一行Qty列，1 Set，bbox是[460, 550, 550, 600]。
+
+- Price的bbox：表格中第一行Price列，US$520,000.00，bbox是[560, 550, 750, 600]。
+
+- Total的bbox：表格底部Total行，Total Amount是520,000.00，Total列也是520,000.00，bbox是[60, 650, 150, 670]（No.列的Total行）和[760, 650, 850, 670]（Total列的Total行）。
+
+现在需要将这些整理成JSON数组。注意每个类别对应一个条目，可能有些类别在图片中只有一个实例。
+
+现在检查每个类别是否都覆盖：
+
+Add（发件方第一行）、Add（发件方第二行）、Add（收件方TO）、Date、Invoice No、Fax、No.、Description of Goods、Price、Qty、TEL（收件方）、Tel（发件方）、Title、Total。
+
+现在开始构建每个条目：
+
+1. Add（发件方第一行）：
+   - bbox: [250, 80, 750, 105]
+   - label: "Add"
+
+2. Add（发件方第二行）：
+   - bbox: [250, 105, 750, 125]
+   - label: "Add"
+
+3. Add（收件方TO）：
+   - bbox: [100, 450, 900, 475]
+   - label: "Add"
+
+4. Date:
+   - bbox: [100, 320, 300, 340]
+   - label: "Date"
+
+5. Invoice No:
+   - bbox: [100, 300,

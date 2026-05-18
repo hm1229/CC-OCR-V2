@@ -1,293 +1,152 @@
-Got it, let's go through each category and find the corresponding elements in the receipt.
+Got it, let's go through each category and find the corresponding values on the receipt.
 
-First, date: The date is on the receipt, "Date: 27/07/17". Let's find its position.
+First, date: The receipt has "Date: 27/07/17" so that's the date.
 
-doc_no_receipt_no: The slip number is "Slip: 0000000011000136498". That's the document number.
+doc_no_receipt_no: The slip number is "0000000011000136498" (under Slip:). Let me check the receipt. Yes, Slip: 0000000011000136498.
 
-seller_address: The address for IKEA Cheras, which is "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR". Let's check the lines.
+seller_address: The address for IKEA Cheras is "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR". Let's confirm the lines: "IKEA Cheras No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR".
 
-seller_gst_id: The GST No. is "GST No.: 000115154944".
+seller_gst_id: GST No.: 000115154944. That's the GST number.
 
-seller_name: The top part has "IKANO HANDEL SDN BHD (1074617K)" and then "IKEA Cheras". The main seller name here is IKEA Cheras, but the company is IKANO HANDEL. Wait, the problem says seller_name. Let's check. The receipt has "IKANO HANDEL SDN BHD" as the company, and "IKEA Cheras" as the store. Probably the seller_name is IKEA Cheras.
+seller_name: The top part has "IKANO HANDEL SDN BHD (1074617K)" and then "IKEA Cheras". Wait, the seller name here—probably the business name. The main seller is IKANO HANDEL SDN BHD, but the store is IKEA Cheras. Let me check. The receipt starts with IKANO HANDEL SDN BHD, then IKEA Cheras as the store. So seller_name could be IKANO HANDEL SDN BHD.
 
-total_amount: The total rounded is 538.00, which is the total amount including GST. Let's check "Total Rounded 538.00".
+total_amount: The total rounded is 538.00. Let's check "Total Rounded" which is 538.00.
 
-total_tax: The GST amount is 30.45, which is the tax. Let's check the GST SR section: "30.45" is the tax amount.
+total_tax: The GST amount is 30.45 (from "GST SR 6% 538.00 30.45"). So total_tax is 30.45.
 
 Now, let's map each:
 
-1. date: "27/07/17" – find the bounding box for that line.
-2. doc_no_receipt_no: Slip number "0000000011000136498"
-3. seller_address: The address lines: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR"
-4. seller_gst_id: "GST No.: 000115154944"
-5. seller_name: "IKEA Cheras" (since that's the store name, and the company is IKANO, but maybe the seller is IKEA Cheras)
-6. total_amount: "538.00" from "Total Rounded"
-7. total_tax: "30.45" from the GST amount.
+date: "27/07/17" — find the bounding box around that text.
 
-Now, let's check each element's position.
+doc_no_receipt_no: the slip number, which is "0000000011000136498" (Slip: ...)
 
-First, extract each:
+seller_address: the address lines for IKEA Cheras.
 
-- date: The line "Date: 27/07/17" – the text is in the section with Slip, Date, Time, Trans, Staff. So the date is part of that line.
+seller_gst_id: "000115154944" (GST No.: ...)
 
-- doc_no_receipt_no: The Slip number is "Slip: 0000000011000136498" – that's the document number.
+seller_name: "IKANO HANDEL SDN BHD" (the top line)
 
-- seller_address: The address block under IKEA Cheras: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR"
+total_amount: "538.00" (Total Rounded)
 
-- seller_gst_id: "GST No.: 000115154944" – directly below the address.
+total_tax: "30.45" (the GST amount)
 
-- seller_name: The top has "IKANO HANDEL SDN BHD (1074617K)" and then "IKEA Cheras". The main store name is IKEA Cheras, so that's the seller_name.
+Now, let's check each on the image.
 
-- total_amount: The line "Total Rounded 538.00" – that's the total amount after rounding.
+For date: The line is "Date: 27/07/17" — so the text is there.
 
-- total_tax: The GST amount is 30.45, which is in the GST SR section: "30.45" is the tax.
+doc_no_receipt_no: "Slip: 0000000011000136498" — that's the slip number.
 
-Now, let's define the bounding boxes. Since the image is a receipt, we need to estimate the coordinates.
+seller_address: The lines under IKEA Cheras: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR"
 
-Let's list each:
+seller_gst_id: "GST No.: 000115154944"
 
-1. date: The text "27/07/17" is in the line "Date: 27/07/17". Let's find the bounding box for that.
+seller_name: "IKANO HANDEL SDN BHD (1074617K)" — that's the seller name.
 
-Looking at the receipt structure:
+total_amount: "Total Rounded 538.00" — so the amount is 538.00.
 
-- The header has IKANO HANDEL, then IKEA Cheras address, then TAX INVOICE.
+total_tax: In the GST section, "30.45" is the tax amount (since 6% of 538 is ~32.28, wait no—wait the receipt says "GST SR 6% 538.00 30.45". Let me check: 538 * 6% = 32.28, but here it's 30.45. Wait, maybe the amount excl GST is 507.55, and 507.55 * 6% = 30.453, which rounds to 30.45. So the total tax is 30.45.
 
-- Then Slip: ... Date: 27/07/17 Time: 1:12
+Now, let's define the bounding boxes.
 
-So the date is in the line where Slip is, so the coordinates for that line's date.
+First, identify each element's position.
 
-2. doc_no_receipt_no: The Slip number is "0000000011000136498" – the text after "Slip: ".
+1. date: The line "Date: 27/07/17" — let's find the coordinates. The receipt has "Date: 27/07/17" in the section after Slip.
 
-3. seller_address: The address lines: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" – that's a block of text.
+2. doc_no_receipt_no: The Slip number is "0000000011000136498" — the text after "Slip:"
 
-4. seller_gst_id: "GST No.: 000115154944" – below the address.
+3. seller_address: The address block for IKEA Cheras: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" — multiple lines.
 
-5. seller_name: "IKEA Cheras" – the large text after the company name.
+4. seller_gst_id: "GST No.: 000115154944" — the line with GST No.
 
-6. total_amount: "538.00" in "Total Rounded" – the line "Total Rounded 538.00".
+5. seller_name: "IKANO HANDEL SDN BHD (1074617K)" — the topmost business name.
 
-7. total_tax: "30.45" in the GST SR section, which is the tax amount.
+6. total_amount: "Total Rounded 538.00" — the line "Total Rounded" with amount.
+
+7. total_tax: The GST amount, which is "30.45" in the GST SR line.
 
 Now, let's create the JSON entries.
 
-First, identify each element:
+For each label, find the corresponding bbox.
 
-- date: [the bounding box around "27/07/17"]
+Let's go step by step.
 
-- doc_no_receipt_no: [the slip number]
+- seller_name: The text "IKANO HANDEL SDN BHD (1074617K)" is at the top. Let's check the coordinates. The bounding box would cover that line.
 
-- seller_address: [the address block]
+- seller_gst_id: The line "GST No.: 000115154944" — so the text is there.
 
-- seller_gst_id: [the GST number]
+- seller_address: The lines "IKEA Cheras", "No 2A Jalan Cochranе", "Taman Maluri", "55100 KUALA LUMPUR" — combine these.
 
-- seller_name: [the IKEA Cheras text]
+- date: "Date: 27/07/17" — the date field.
 
-- total_amount: [the total rounded amount]
+- doc_no_receipt_no: "Slip: 0000000011000136498" — the slip number.
 
-- total_tax: [the GST amount 30.45]
+- total_amount: "Total Rounded 538.00" — the total rounded amount.
 
-Let's check each:
+- total_tax: The value 30.45 in the GST section.
 
-1. date: The line is "Date: 27/07/17". Let's assume the coordinates for that text. In the receipt, the Date is in the section below TAX INVOICE. Let's say the bounding box is around that line.
+Now, let's check the image again.
 
-2. doc_no_receipt_no: "Slip: 0000000011000136498" – the number part.
+Looking at the receipt:
 
-3. seller_address: The lines from "No 2A Jalan Cochranе" to "55100 KUALA LUMPUR".
+- Top: IKANO HANDEL SDN BHD (1074617K) — that's seller_name.
 
-4. seller_gst_id: "GST No.: 000115154944" – the line after the address.
+- Then IKEA Cheras, address lines: No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR — seller_address.
 
-5. seller_name: "IKEA Cheras" – the prominent text.
+- GST No.: 000115154944 — seller_gst_id.
 
-6. total_amount: "Total Rounded 538.00" – the line showing the total after rounding.
+- Slip: 0000000011000136498 — doc_no_receipt_no.
 
-7. total_tax: The line "30.45" under GST SR, which is the tax amount.
+- Date: 27/07/17 — date.
 
-Now, let's write the JSON array.
+- Total RM Including GST 6% 538.00 — but Total Rounded is 538.00 — total_amount.
 
-Each entry is a dictionary with "bbox_2d" and "label".
+- GST SR 6% 538.00 30.45 — so total_tax is 30.45.
 
-Let's define the bounding boxes approximately (since we can't measure exact pixels, but based on the layout):
+Now, let's map each:
 
-- seller_name: "IKEA Cheras" is in the middle top, so the bounding box would cover that text.
+1. date: [the text "27/07/17" in the Date field]
+   Bounding box: Let's see, the line is "Date: 27/07/17" — the coordinates for that line.
 
-- seller_address: The address lines below IKEA Cheras.
+2. doc_no_receipt_no: The slip number "0000000011000136498" — from "Slip: 0000000011000136498"
 
-- seller_gst_id: Below the address, the GST No. line.
+3. seller_address: The address lines for IKEA Cheras: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR"
 
-- date: In the section with Slip, Date, Time.
+4. seller_gst_id: "000115154944" from "GST No.: 000115154944"
 
-- doc_no_receipt_no: The Slip number.
+5. seller_name: "IKANO HANDEL SDN BHD (1074617K)"
 
-- total_amount: The "Total Rounded" line.
+6. total_amount: "538.00" from "Total Rounded 538.00"
 
-- total_tax: The GST amount (30.45) in the GST breakdown.
+7. total_tax: "30.45" from the GST line.
 
-Now, let's list each:
+Now, let's create the JSON array with each entry.
 
-1. date: The text "27/07/17" is part of the line "Date: 27/07/17". Let's take the bounding box for that line's date.
+For each, the bbox is the region containing the value.
 
-2. doc_no_receipt_no: The slip number "0000000011000136498" – the value after "Slip: ".
+Let's define the bounding boxes approximately (since we can't measure exact pixels, but based on the text positions).
 
-3. seller_address: The address block: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR".
+- seller_name: The top line, "IKANO HANDEL SDN BHD (1074617K)" — let's say the bounding box is around that line.
 
-4. seller_gst_id: "GST No.: 000115154944".
+- seller_gst_id: The line "GST No.: 000115154944" — the text after GST No.:
 
-5. seller_name: "IKEA Cheras".
+- seller_address: The block starting from "IKEA Cheras" down to the address.
 
-6. total_amount: "538.00" from "Total Rounded".
+- date: The line "Date: 27/07/17"
 
-7. total_tax: "30.45" from the GST section.
+- doc_no_receipt_no: The line "Slip: 0000000011000136498"
 
-Now, let's create the entries.
+- total_amount: The line "Total Rounded 538.00"
 
-For example:
+- total_tax: The number "30.45" in the GST SR section.
 
-- For seller_name: The text "IKEA Cheras" is in the image. Let's check the coordinates. The text is centered, so the bounding box would be around that line.
-
-- For seller_address: The lines below IKEA Cheras: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" – that's a multi-line address.
-
-- For seller_gst_id: The line "GST No.: 000115154944" – directly below the address.
-
-- For date: The line "Date: 27/07/17" is in the section with Slip, so the date is there.
-
-- For doc_no_receipt_no: The slip number is "0000000011000136498" – the text after "Slip: ".
-
-- For total_amount: The line "Total Rounded 538.00" – the amount after rounding.
-
-- For total_tax: The line showing the GST amount, which is 30.45. In the receipt, under GST SR, there's "30.45" which is the tax.
-
-Now, let's structure the JSON.
-
-Each entry:
-
+Now, let's write the JSON.
+</think>
 [
-  {"bbox_2d": [x1, y1, x2, y2], "label": "date"},
-  {"bbox_2d": [x1, y1, x2, y2], "label": "doc_no_receipt_no"},
-  ... etc.
+    {"bbox_2d": [190, 30, 809, 52], "label": "date"},
+    {"bbox_2d": [104, 322, 340, 342], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [275, 202, 725, 257], "label": "seller_address"},
+    {"bbox_2d": [275, 257, 725, 275], "label": "seller_gst_id"},
+    {"bbox_2d": [144, 10, 855, 32], "label": "seller_name"},
+    {"bbox_2d": [275, 484, 725, 502], "label": "total_amount"},
+    {"bbox_2d": [634, 612, 675, 630], "label": "total_tax"}
 ]
-
-Now, let's assign approximate bounding boxes. Since the image is a standard receipt, let's estimate:
-
-- seller_name: "IKEA Cheras" – the text is in the upper middle. Let's say the bounding box is from x=220 to x=770, y=180 to y=210 (approx).
-
-- seller_address: The address lines are below that. Let's say y=215 to y=260.
-
-- seller_gst_id: Below the address, y=265 to y=285.
-
-- date: In the section below TAX INVOICE, the line with Date, Time, etc. Let's say y=300 to y=320.
-
-- doc_no_receipt_no: The Slip number is on the same line as Date, so the slip number is part of that line. The text "0000000011000136498" is after "Slip: ".
-
-- total_amount: The line "Total Rounded 538.00" is below the item details. Let's say y=450 to y=470.
-
-- total_tax: The GST amount 30.45 is in the GST breakdown section, which is below the payment method. Let's say y=520 to y=540.
-
-But since we need to be precise, maybe look at the exact text positions.
-
-Alternatively, since the problem is to detect the objects, we can identify the text and their labels.
-
-Let's list each:
-
-1. date: "27/07/17" – label: date
-2. doc_no_receipt_no: "0000000011000136498" – label: doc_no_receipt_no
-3. seller_address: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" – label: seller_address
-4. seller_gst_id: "000115154944" (or the full line "GST No.: 000115154944") – label: seller_gst_id
-5. seller_name: "IKEA Cheras" – label: seller_name
-6. total_amount: "538.00" (from "Total Rounded") – label: total_amount
-7. total_tax: "30.45" – label: total_tax
-
-Now, for each, the bounding box is the area containing that text.
-
-Let's check the receipt image:
-
-- The seller_name is "IKEA Cheras" which is a large bold text. The bounding box would cover that line.
-
-- The seller_address is the three lines: "No 2A Jalan Cochranе", "Taman Maluri", "55100 KUALA LUMPUR".
-
-- The seller_gst_id is the line "GST No.: 000115154944".
-
-- The date is in the line "Date: 27/07/17".
-
-- The doc_no_receipt_no is the slip number: "0000000011000136498" (from "Slip: ...").
-
-- The total_amount is "538.00" in "Total Rounded".
-
-- The total_tax is "30.45" in the GST section (the line with "30.45" under GST SR).
-
-Now, let's create the JSON entries.
-
-For example:
-
-- date: The text "27/07/17" is in the line where Date is specified. Let's take the bounding box around that text.
-
-- doc_no_receipt_no: The slip number is the value after "Slip: ".
-
-- seller_address: The address block.
-
-- seller_gst_id: The GST number line.
-
-- seller_name: "IKEA Cheras".
-
-- total_amount: The total rounded amount.
-
-- total_tax: The GST amount.
-
-Now, writing the JSON:
-
-[
-  {"bbox_2d": [245, 315, 337, 335], "label": "date"},
-  {"bbox_2d": [110, 320, 495, 335], "label": "doc_no_receipt_no"},
-  {"bbox_2d": [225, 225, 770, 265], "label": "seller_address"},
-  {"bbox_2d": [275, 285, 445, 305], "label": "seller_gst_id"},
-  {"bbox_2d": [275, 190, 720, 215], "label": "seller_name"},
-  {"bbox_2d": [275, 465, 335, 485], "label": "total_amount"},
-  {"bbox_2d": [535, 535, 575, 555], "label": "total_tax"}
-]
-
-Wait, need to check the exact positions. Let's look at the receipt:
-
-- "IKEA Cheras" is in the middle top, so the bounding box for seller_name is around that text.
-
-- The address lines: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" – these are three lines, so the bounding box covers those.
-
-- GST No. line: "GST No.: 000115154944" – below the address.
-
-- Date: "Date: 27/07/17" – in the section below TAX INVOICE, next to Slip.
-
-- Slip number: "0000000011000136498" – the slip value.
-
-- Total Rounded: "538.00" – in the line "Total Rounded 538.00".
-
-- GST amount: "30.45" – in the line under GST SR, which is the tax amount.
-
-Let me check the receipt's text:
-
-Looking at the image:
-
-- The line "Total RM Including GST 6% 538.00" – then "Rounding Adj. 0.00", "Total Rounded 538.00". So total_amount is 538.00.
-
-- The GST breakdown: "GST SR 6% 538.00 30.45" – so the tax is 30.45.
-
-Now, let's adjust the bounding boxes.
-
-For seller_name: The text "IKEA Cheras" is prominent. Let's find its coordinates. In the image, it's centered, so the bounding box would be from x=200 to x=780, y=170 to y=200.
-
-For seller_address: The lines below IKEA Cheras: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" – y=205 to y=255.
-
-For seller_gst_id: "GST No.: 000115154944" – y=255 to y=275.
-
-For date: The line "Date: 27/07/17" is in the section with Slip, which is below TAX INVOICE. Let's see: "Slip: 0000000011000136498 Date: 27/07/17 Time: 1:12" – so the date is part of that line. The bounding box for date is around "27/07/17".
-
-For doc_no_receipt_no: The slip number is "0000000011000136498" – the text after "Slip: ".
-
-For total_amount: The line "Total Rounded 538.00" – the amount is 538.00.
-
-For total_tax: The line "30.45" in the GST section.
-
-Now, let's write the JSON with these.
-
-Another approach: list each element with their text and label.
-
-1. date: "27/07/17" → label date
-2. doc_no_receipt_no: "0000000011000136498" → label doc_no_receipt_no
-3. seller_address: "No 2A Jalan Cochranе Taman Maluri 55100 KUALA LUMPUR" → label seller_address

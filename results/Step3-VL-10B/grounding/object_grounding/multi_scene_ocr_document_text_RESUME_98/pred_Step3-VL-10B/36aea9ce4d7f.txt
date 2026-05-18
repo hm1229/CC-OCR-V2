@@ -1,1 +1,27 @@
-[{"bbox_2d": [102, 110, 250, 138], "label": "name"}, {"bbox_2d": [600, 110, 756, 136], "label": "phone"}, {"bbox_2d": [724, 112, 924, 136], "label": "email"}]
+用户现在需要提取简历中的email、name、phone。首先看name是周若岚，对应顶部的大标题。phone是+86 136 5555 6666，email是xrui lan.z@linggan - app.me（注意看原文中的邮箱）。然后确定每个的bbox。
+
+首先看name：周若岚在简历顶部的蓝色框里，文字是“周若岚”，所以bbox是包含这个文字的区域。然后phone是电话图标旁边的号码，email是邮箱图标旁边的地址。
+
+现在逐个分析：
+
+1. name：周若岚，位置在简历上方的蓝色信息框内，文字“周若岚”。
+2. phone：+86 136 5555 6666，对应电话图标旁边的数字。
+3. email：xrui lan.z@linggan - app.me（原文是xrui lan.z@linggan - app.me？看原文中的邮箱是xrui lan.z@linggan - app.me？看图片中的邮箱是xrui lan.z@linggan - app.me？看图片里的邮箱是“xrui lan.z@linggan - app.me”？不，原文是“xrui lan.z@linggan - app.me”？看图片中的邮箱部分：“xrui lan.z@linggan - app.me”？看图片里的邮箱是“xrui lan.z@linggan - app.me”？看图片中的文字是“xrui lan.z@linggan - app.me”？对，图片里的邮箱是“xrui lan.z@linggan - app.me”（注意可能原文中的拼写，看图片中的邮箱是“xrui lan.z@linggan - app.me”？不，看图片中的邮箱是“xrui lan.z@linggan - app.me”？看图片里的邮箱部分：“xrui lan.z@linggan - app.me”？是的，图片中的邮箱是“xrui lan.z@linggan - app.me”（可能中间是z，所以是xrui lan.z@linggan - app.me）。
+
+现在确定每个元素的bbox：
+
+- name：周若岚，位于简历上方的蓝色矩形框内，文字“周若岚”的位置。看图片中的结构，蓝色框内的标题是“周若岚”，所以bbox是[109, 107, 333, 138]左右？需要看坐标。不过可能更准确的是看整个蓝色框内的name部分。或者看图片中的“周若岚”是大标题，所以bbox是[107, 105, 335, 137]。
+
+- phone：电话图标旁边的号码，即“+86 136 5555 6666”，位于蓝色框的右侧，电话图标（黑色电话形状）旁边。所以bbox是[452, 110, 667, 132]左右。
+
+- email：邮箱图标（黑色信封）旁边的地址，即“xrui lan.z@linggan - app.me”，位于电话号码的右侧。所以bbox是[675, 112, 922, 134]左右。
+
+现在需要确认每个的label：
+
+- name对应“周若岚”
+- phone对应“+86 136 5555 6666”
+- email对应“xrui lan.z@linggan - app.me”
+
+现在整理成JSON数组。
+</think>
+[{"bbox_2d": [107, 105, 335, 137], "label": "name"}, {"bbox_2d": [452, 110, 667, 132], "label": "phone"}, {"bbox_2d": [675, 112, 922, 134], "label": "email"}]

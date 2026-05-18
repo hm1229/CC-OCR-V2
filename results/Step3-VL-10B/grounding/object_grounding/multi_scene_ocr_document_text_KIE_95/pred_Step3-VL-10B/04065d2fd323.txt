@@ -1,3 +1,284 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date is on the receipt as "19-04-2018". Let's check where that is. The line says "Date : 19-04-2018 13:43:54". So the date part is 19-04-2018.
+
+doc_no_receipt_no: There's "Order #:139358" and "INV No.: 539319". Wait, the question says doc_no_receipt_no. Maybe Order # is the receipt number? Let's check. The Order # is 139358, and INV No. is 539319. But the label is doc_no_receipt_no. Let's see the problem statement. The user probably refers to the invoice number or order number. Let's check the fields. The Order # is a key identifier. Let's confirm: "Order # :139358" so that's the order number, which is part of the document number.
+
+seller_address: The address is "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." Let's check the top part: "R&C VENTURE SDN BHD (1191015-W) LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." So the address is that line.
+
+seller_gst_id: The GST NO is given as "(GST NO: 001557721088)". So that's the GST ID.
+
+seller_name: The company name is "CITY MILK" and "R&C VENTURE SDN BHD". The top says "CITY MILK" then the company name. So seller_name is "CITY MILK" or the full company name. Let's check the top: "CITY MILK R&C VENTURE SDN BHD (1191015-W) ...". So the seller name is "CITY MILK" (since it's the business name).
+
+total_amount: The total is shown as "TOTAL: 9.50". So that's the total amount.
+
+total_tax: The GST payable is 0.54, and in the GST Summary, Tax(RM) is 0.54. So total_tax is 0.54.
+
+Now, let's map each:
+
+1. date: The date line is "Date : 19-04-2018 13:43:54". The date part is 19-04-2018. Bounding box around that text.
+
+2. doc_no_receipt_no: Let's check which is the document number. The Order # is 139358, which is a document identifier. Alternatively, INV No. is 539319. But the problem says "doc_no_receipt_no". Let's check the receipt: "Order # :139358" is the order number, which is part of the receipt. Let's take Order # as the receipt number.
+
+3. seller_address: The address lines: "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR."
+
+4. seller_gst_id: "(GST NO: 001557721088)" so the number is 001557721088.
+
+5. seller_name: "CITY MILK" (the topmost name).
+
+6. total_amount: "TOTAL: 9.50" so the value is 9.50.
+
+7. total_tax: The GST payable is 0.54, so that's the total tax.
+
+Now, let's find the bounding boxes for each.
+
+First, date: The line is "Date : 19-04-2018 13:43:54". Let's find the coordinates. The text "19-04-2018" is part of that line.
+
+doc_no_receipt_no: "Order # :139358" — the order number is 139358.
+
+seller_address: The address lines: "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." Let's check the lines above.
+
+seller_gst_id: The line with "(GST NO: 001557721088)".
+
+seller_name: "CITY MILK" is the first line.
+
+total_amount: The line "TOTAL: 9.50".
+
+total_tax: The GST payable line "GST payable (6%): 0.54" or the GST Summary's Tax(RM) 0.54.
+
+Now, let's list each with their bounding boxes.
+
+Let's go step by step.
+
+1. date: The text "19-04-2018" is in the line "Date : 19-04-2018 13:43:54". Let's find the bounding box for that date part.
+
+Looking at the receipt, the date is on the left side, so the coordinates would be around where that text is.
+
+2. doc_no_receipt_no: The Order # is "139358" in "Order # :139358". So the number is 139358.
+
+3. seller_address: The address is "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." Let's check the lines: "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." is part of the company info.
+
+4. seller_gst_id: The GST number is "001557721088" from "(GST NO: 001557721088)".
+
+5. seller_name: "CITY MILK" is the topmost name.
+
+6. total_amount: "9.50" from "TOTAL: 9.50".
+
+7. total_tax: "0.54" from "GST payable (6%): 0.54" or the GST Summary.
+
+Now, let's create the JSON array.
+
+First, identify each element's bounding box.
+
+Let's check the image:
+
+- CITY MILK is at the top, so seller_name: [CITY MILK] — the text "CITY MILK" is centered at the top.
+
+- R&C VENTURE SDN BHD (1191015-W) is below that.
+
+- Then the address: LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR.
+
+- GST NO: 001557721088.
+
+- Tax Invoice, then Order #:139358.
+
+- INV No.:539319.
+
+- Date: 19-04-2018 13:43:54.
+
+- Cashier: City Milk Cashier.
+
+- Then the item: Banana Milkshake(R) 1 x 9.50 9.50 SR.
+
+- Total QTY:1.
+
+- Total (Excluding GST):8.96.
+
+- GST payable (6%):0.54.
+
+- Total (Inclusive of GST):9.50.
+
+- TOTAL:9.50.
+
+- CASH:10.50, CHANGE:1.00.
+
+- GST Summary: SR (@6%) Amount(RM)8.96, Tax(RM)0.54.
+
+Now, let's map each category:
+
+- date: The date is "19-04-2018" (from the Date line). Bounding box around that text.
+
+- doc_no_receipt_no: Let's check if it's Order # or INV No. The problem says "doc_no_receipt_no". In receipts, the invoice number (INV No.) is often the document number. Let's check: "INV No.: 539319". So maybe that's the document number. Let's confirm. The Order # is the order number, INV No. is the invoice number. The question says "doc_no_receipt_no" — likely the invoice number. Let's check the receipt: "INV No.: 539319". So doc_no_receipt_no is 539319.
+
+Wait, the user's instruction says "doc_no_receipt_no". Let's check the receipt for document number. The receipt has "Tax Invoice" and "Order #". The invoice number is INV No.:539319. So that's the document number for the tax invoice. So doc_no_receipt_no is 539319.
+
+Earlier I thought Order #, but maybe INV No. is the document number. Let's check the problem statement again. The user says "doc_no_receipt_no" — document number of the receipt. The receipt's invoice number is INV No. So that's the key.
+
+So let's correct:
+
+doc_no_receipt_no: "INV No.: 539319" → the number is 539319.
+
+Then Order # is 139358, which is the order number, not the document number. So doc_no_receipt_no is INV No.
+
+Now, let's re-express:
+
+1. date: "19-04-2018" (from Date line)
+2. doc_no_receipt_no: "539319" (from INV No.)
+3. seller_address: "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR."
+4. seller_gst_id: "001557721088" (from GST NO line)
+5. seller_name: "CITY MILK" (top name)
+6. total_amount: "9.50" (from TOTAL line)
+7. total_tax: "0.54" (from GST payable or GST Summary)
+
+Now, find bounding boxes for each.
+
+Let's check each element's position:
+
+- seller_name: "CITY MILK" is the first line, so the text is centered. Bounding box: top part.
+
+- seller_address: The lines after the company name: "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." — that's the address.
+
+- seller_gst_id: The line with "(GST NO: 001557721088)" — the number is 001557721088.
+
+- date: The line "Date : 19-04-2018 13:43:54" — the date part is 19-04-2018.
+
+- doc_no_receipt_no: "INV No.: 539319" — the number is 539319.
+
+- total_amount: "TOTAL: 9.50" — the 9.50 is the total.
+
+- total_tax: "GST payable (6%): 0.54" — the 0.54 is the tax.
+
+Now, let's define the bounding boxes. Since the image is a receipt, each line is a row. Let's estimate the coordinates.
+
+For example:
+
+- seller_name: "CITY MILK" is at the top, so the bounding box would cover that text.
+
+- seller_address: The address lines are below the company name.
+
+- seller_gst_id: The GST line is below the address.
+
+- date: Below the Cashier line.
+
+- doc_no_receipt_no: Below the date line (INV No.)
+
+- total_amount: The TOTAL line is prominent.
+
+- total_tax: The GST payable line or the GST Summary.
+
+Let's create the JSON entries.
+
+First, list each:
+
+1. date: The text "19-04-2018" in the Date line. Let's find the bounding box. The line is "Date : 19-04-2018 13:43:54". So the date part is from the start of the date to the end of the year.
+
+2. doc_no_receipt_no: "539319" in "INV No.: 539319".
+
+3. seller_address: The address text "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR."
+
+4. seller_gst_id: "001557721088" in "(GST NO: 001557721088)".
+
+5. seller_name: "CITY MILK".
+
+6. total_amount: "9.50" in "TOTAL: 9.50".
+
+7. total_tax: "0.54" in "GST payable (6%): 0.54" or in the GST Summary's Tax(RM) 0.54.
+
+Now, let's write the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's assume the coordinates are relative to the image (since we can't measure exact pixels, but in the context of the problem, we need to identify the correct text regions).
+
+For example:
+
+- seller_name: The text "CITY MILK" is at the top center. So bbox_2d could be [229, 102, 770, 128] (approximate, since the image is a receipt, the top lines are centered).
+
+- seller_address: The address lines are below, so [229, 140, 770, 166] (the line "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR.").
+
+- seller_gst_id: The GST line is below the address: [229, 168, 770, 184] (the line "(GST NO: 001557721088)").
+
+- date: The date line is below Cashier: "Date : 19-04-2018 13:43:54" — so the date part is within that line. Let's take the entire date line's text for the date value, but the label is date, so the bounding box around "19-04-2018".
+
+- doc_no_receipt_no: "INV No.: 539319" — the line is below date, so bbox around "539319".
+
+- total_amount: The line "TOTAL: 9.50" — bbox around "9.50".
+
+- total_tax: The line "GST payable (6%): 0.54" — bbox around "0.54".
+
+Now, let's construct the JSON.
+
+Note: The exact bounding box coordinates are not precise without image dimensions, but in the context of the problem, we need to identify the correct text segments.
+
+Let's proceed:
+
 [
-  {"bbox_2d": [146, 232, 853, 252], "label": "date"},
-  {"bbox_2d": [146
+  {
+    "bbox_2d": [160, 238, 250, 260],
+    "label": "date"
+  },
+  {
+    "bbox_2d": [540, 250, 595, 268],
+    "label": "doc_no_receipt_no"
+  },
+  {
+    "bbox_2d": [229, 142, 770, 164],
+    "label": "seller_address"
+  },
+  {
+    "bbox_2d": [325, 170, 435, 188],
+    "label": "seller_gst_id"
+  },
+  {
+    "bbox_2d": [429, 104, 570, 124],
+    "label": "seller_name"
+  },
+  {
+    "bbox_2d": [850, 300, 925, 322],
+    "label": "total_amount"
+  },
+  {
+    "bbox_2d": [845, 280, 875, 298],
+    "label": "total_tax"
+  }
+]
+
+Wait, let's check each:
+
+- seller_name: "CITY MILK" is the top line. The text is centered, so the bounding box should cover "CITY MILK". Let's check the original receipt: "CITY MILK" is the first line, so the coordinates for that text.
+
+- date: The line "Date : 19-04-2018 13:43:54" — the date part is "19-04-2018". Let's find where that is. The date is in the middle of the receipt, below Cashier.
+
+- doc_no_receipt_no: "INV No.: 539319" — the number is 539319. So the text "539319" is the document number.
+
+- seller_address: The address lines: "LOT--18A-2, BERJAYA TIMES SQUARE, KUALA LUMPUR." — that's the address.
+
+- seller_gst_id: The GST number is "001557721088" from "(GST NO: 001557721088)".
+
+- total_amount: The total is "9.50" in the "TOTAL: 9.50" line.
+
+- total_tax: The GST amount is "0.54" from "GST payable (6%): 0.54" or the GST Summary.
+
+Let me verify the total_tax. The receipt shows "GST payable (6%): 0.54" and in the GST Summary, "Tax(RM) 0.54". So either is correct. Let's take the GST payable line.
+
+Now, adjust the bounding boxes to match the text.
+
+For example, the total_amount is in the line "TOTAL: 9.50", so the value is 9.50. The bounding box should enclose that number.
+
+The total_tax is the 0.54 in "GST payable (6%): 0.54".
+
+Let's check the positions:
+
+- Order #:139358 is above INV No.
+
+- INV No.:539319 is next.
+
+- Date line is next.
+
+- Cashier line.
+
+- Then the item description.
+
+- Then Total QTY, Total (Excluding GST), GST payable, Total (Inclusive of GST), TOTAL.
+
+- Then

@@ -1,6 +1,22 @@
-[
-    {"bbox_2d": [212, 24, 787, 46], "label": "company"},
-    {"bbox_2d": [210, 48, 788, 82], "label": "address"},
-    {"bbox_2d": [325, 300, 425, 322], "label": "date"},
-    {"bbox_2d": [21, 600, 978, 632], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part says "EVERGREEN LIGHT SDN BHD"
+- Address: The address lines are "NO.7-1, JALAN PUTERI 7/11, BANDAR PUTERI, 47100 PUCHONG, BELANGOR"
+- Date: The date on the invoice is "10/07/2017"
+- Total: The total amount is "56.00" (Total Incl GST)
+
+Now, find the bounding boxes for each.
+
+Check the image:
+
+Company: "EVERGREEN LIGHT SDN BHD" is at the top. Bounding box would cover that line.
+
+Address: The address lines are below the company name. Let's check the text: "NO.7-1, JALAN PUTERI 7/11, BANDAR PUTERI, 47100 PUCHONG, BELANGOR"
+
+Date: "10/07/2017" is in the line with Eddie and the invoice number.
+
+Total: "Total Incl GST" has RM 56.00, so the total value is 56.00.
+
+Now, map each to their labels.
+</think>
+[{"bbox_2d": [244, 44, 755, 62], "label": "company"}, {"bbox_2d": [264, 64, 735, 102], "label": "address"}, {"bbox_2d": [325, 302, 420, 322], "label": "date"}, {"bbox_2d": [24, 687, 979, 712], "label": "total"}]

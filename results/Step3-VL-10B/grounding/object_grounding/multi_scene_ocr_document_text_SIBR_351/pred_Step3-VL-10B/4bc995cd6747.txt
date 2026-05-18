@@ -1,185 +1,285 @@
-用户现在需要从销售确认单中提取指定的各个对象，每个对象要对应bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从销售确认单中提取各个类别的值，然后对应到指定的标签。首先得逐个分析每个需要的类别，找到它们在图中的位置。
 
 首先看Add（地址）：图中公司地址是Add:963 Davidson Shore Wilsonmouth, AK 88629，所以Add的bbox要找这个位置。
 
-Company Name：公司名称是“泰麒麟科技有限公司 Tai Qilin Technology Co., Ltd.”，所以Company Name的bbox是公司名称的区域。
+Company Name是泰麒麟科技有限公司和英文Tai Qilin Technology Co., Ltd.，所以Company Name的bbox是公司名称部分。
 
-Contract No.：合同号在右侧，有三个编号，所以Contract No.的区域是包含这些编号的框。
+Contract No.在右侧的Contract No.下面有三个编号，需要确认。图中Contract No.对应的单元格是HT220301081/等，所以Contract No.的bbox是那个区域。
 
-Date：日期是18-Jun-22，在Contract No.下方的Date栏。
+Date是18-Jun-22，对应Date字段。
 
-Name of Commodity and specifications：表格中的“Name of Commodity and specifications”列，对应HSS TWIST DRILLS等。
+Name of Commodity and specifications是HSS TWIST DRILLS那一行，看表格里的Name of Commodity列。
 
-Quantity PCS：表格中的Quantity列，单位是PCS，数量是7080。
+Quantity PCS是7080，对应Quantity列的值。
 
-REMARKS：备注部分，下面的1-6条内容。
+REMARKS是下面的备注部分，从REMARKS:开始到下面的条款。
 
-Title：标题是“SALES CONFIRMATION”。
+Title是SALES CONFIRMATION，大标题。
 
-To Messrs：开头的“To Messrs:”后面是客户信息。
+To Messrs是To Messrs:下面的Bosch Power Tools等。
 
-Total Amount CNY：表格中的Total Amount列，总金额是¥176,012.27等。
+Total Amount CNY是表格里的Total Amount列，比如HSS TWIST DRILLS的Total是¥176,012.27，还有TOTAL行的总金额。
 
-Unit Price CNY：表格中的Unit Price列，单位是CNY，价格是¥24.86。
+Unit Price CNY是HSS TWIST DRILLS的Unit Price是¥24.86。
 
-然后是其他类别：1. Packing，看Packing: IN PALLETS；2. Shipping Marks: N/M；4. Port of loading: SHANGHAI；5. Port of destination: WORMS,GERMANY；6. Terms of payment: T/T；7. Insurance: ALL RISKS。
+然后是1. Packing：对应Packing: IN PALLETS，所以Packing的值是IN PALLETS，bbox是Packing那一行。
 
-现在需要逐个确定每个元素的bbox。先看整体结构：
+2. Shipping Marks: N/M，对应Shipping Marks的值。
 
-首先，Add：在公司名称下方，Add:963 Davidson Shore Wilsonmouth, AK 88629。所以bbox是包含这个地址的区域，大概在公司名称下面，地址行。
+4. Port of loading: SHANGHAI，Port of loading的值。
 
-Company Name：公司名称是“泰麒麟科技有限公司 Tai Qilin Technology Co., Ltd.”，所以bbox是顶部的公司名称区域，包括中英文。
+5. Port of destination: WORMS,GERMANY，Port of destination的值。
 
-Contract No.：右侧的Contract No.栏，包含三个编号，所以bbox是Contract No.标签和下面的编号区域。
+6. Terms of payment: T/T，Terms of payment的值。
 
-Date：Date: 18-Jun-22，对应右侧Date栏。
+7. Insurance: ALL RISKS，Insurance的值。
 
-Name of Commodity and specifications：表格的第一列，表头是Name of Commodity and specifications，下面有HSS TWIST DRILLS等。
+现在需要逐个确定每个类别的bbox和label。需要仔细看图片中的每个部分。
 
-Quantity PCS：表格的Quantity列，表头是Quantity，单位是PCS，下面数量是7080。
+首先，先列出来所有需要的类别，然后找每个的对应位置：
 
-REMARKS：下面的REMARKS: 1. ... 6. ... 的内容区域。
+1. Packing：在“1. Packing:”后面是IN PALLETS，所以bbox是包含“1. Packing: IN PALLETS”的区域。
 
-Title：大标题“SALES CONFIRMATION”。
+2. Shipping Marks：对应“2. Shipping Marks: N/M”，bbox是该行。
 
-To Messrs：开头的“To Messrs:”后面是客户信息，Bosch Power Tools等。
+4. Port of loading：对应“4. Port of loading: SHANGHAI”，bbox是该行。
 
-Total Amount CNY：表格的Total Amount列，总金额是¥176,012.27等，还有TOTAL行的总金额。
+5. Port of destination：对应“5. Port of destination: WORMS,GERMANY”，bbox是该行。
 
-Unit Price CNY：表格的Unit Price列，单位是CNY，价格是¥24.86。
+6. Terms of payment：对应“6. Terms of payment: T/T”，bbox是该行。
 
-然后是其他类别：
+7. Insurance：对应“7. Insurance: ALL RISKS”，bbox是该行。
 
-1. Packing：在TOTAL下面的1. Packing: IN PALLETS，所以对应这个条目。
+Add：公司地址Add:963 Davidson Shore Wilsonmouth, AK 88629，bbox是公司名称下面的Add行。
 
-2. Shipping Marks：2. Shipping Marks: N/M。
+Company Name：泰麒麟科技有限公司和Tai Qilin Technology Co., Ltd.，bbox是顶部的公司名称区域。
 
-4. Port of loading：4. Port of loading: SHANGHAI。
+Contract No.：右侧Contract No.下面的三个编号，bbox是Contract No.对应的单元格。
 
-5. Port of destination：5. Port of destination: WORMS,GERMANY。
+Date：Date: 18-Jun-22，bbox是Date行。
 
-6. Terms of payment：6. Terms of payment: T/T。
+Name of Commodity and specifications：表格中Name of Commodity列，比如HSS TWIST DRILLS那一行，以及上面的“and specifications”行？看表格第一行是Name of Commodity | Quantity | Unit Price | Total Amount，然后下面一行是and specifications | PCS | CNY | CNY，然后是HSS TWIST DRILLS的行。所以Name of Commodity and specifications对应的是表格中Name of Commodity列的标题行，以及可能的合并？看原文中“Name of Commodity and specifications”是表格的第一行（可能是表头？不，看原文表格：
 
-7. Insurance：7. Insurance: ALL RISKS。
+表格的表头是Name of Commodity | Quantity | Unit Price | Total Amount，然后下面一行是“and specifications” | PCS | CNY | CNY，然后是HSS TWIST DRILLS的行。所以“Name of Commodity and specifications”是表格中第一行（表头下的内容？不，看原文：
 
-现在需要把每个类别对应到图中的位置，确定每个的bbox。因为是图像中的元素，需要看每个部分的位置。
+表格部分：
+
+| Name of Commodity | Quantity | Unit Price | Total Amount |
+|---------------------|----------|------------|--------------|
+| and specifications  | PCS      | CNY        | CNY          |
+| HSS TWIST DRILLS    | 7080     | ¥24.86     | ¥176,012.27  |
+| TOTAL:              | 7080     |            | ¥176,012.27  |
+
+所以“Name of Commodity and specifications”对应的是第二行（and specifications那一行）的Name of Commodity列的内容，即“and specifications”属于Name of Commodity的说明？或者可能“Name of Commodity and specifications”是表头的合并？可能用户需要的是该类别对应的内容，即Name of Commodity列的标题，或者该行的内容。不过根据问题中的“Name of Commodity and specifications”是作为一个类别，所以对应表格中Name of Commodity列的标签，即该列的标题行？或者看问题中的描述，用户需要的是每个类别的值，所以需要找到对应的元素。
+
+然后Quantity PCS：对应Quantity列的值，比如HSS TWIST DRILLS的Quantity是7080，TOTAL的Quantity也是7080，所以Quantity PCS的值是7080（在HSS TWIST DRILLS行）。
+
+REMARKS：是下面从REMARKS:开始的条款，所以bbox是REMARKS:到下面的条款部分。
+
+Title：SALES CONFIRMATION，大标题，bbox是SALES CONFIRMATION的区域。
+
+To Messrs：To Messrs:下面的Bosch Power Tools和ROBERT BOSCH GESELLSCHAFT MIT，所以To Messrs的bbox是该部分。
+
+Total Amount CNY：表格中Total Amount列的值，比如HSS TWIST DRILLS的Total是¥176,012.27，TOTAL行的Total也是¥176,012.27，所以Total Amount CNY对应这些值。
+
+Unit Price CNY：HSS TWIST DRILLS的Unit Price是¥24.86，所以Unit Price CNY对应这个值。
+
+现在需要为每个类别生成对应的bbox和label。需要先确定每个元素在图中的位置，用坐标的话，因为是图片，需要估计bbox的范围。但可能更简单的是根据文本内容定位。
+
+现在开始逐个处理：
+
+1. Packing：文本是“1. Packing: IN PALLETS”，在表格下面的条款部分，第1点。所以bbox是包含该行的区域。
+
+2. Shipping Marks：文本是“2. Shipping Marks: N/M”，第2点。
+
+4. Port of loading：文本是“4. Port of loading: SHANGHAI”，第4点。
+
+5. Port of destination：文本是“5. Port of destination: WORMS,GERMANY”，第5点。
+
+6. Terms of payment：文本是“6. Terms of payment: T/T”，第6点。
+
+7. Insurance：文本是“7. Insurance: ALL RISKS”，第7点。
+
+Add：文本是“Add:963 Davidson Shore Wilsonmouth, AK 88629”，在公司名称下面。
+
+Company Name：文本是“泰麒麟科技有限公司”和“Tai Qilin Technology Co., Ltd.”，在顶部。
+
+Contract No.：文本是“Contract No.:”下面的三个编号，即HT220301081/等，位于右侧表格。
+
+Date：文本是“Date: 18-Jun-22”，在Contract No.下面。
+
+Name of Commodity and specifications：表格中“and specifications”所在的行，即Name of Commodity列下的“and specifications”单元格。
+
+Quantity PCS：表格中HSS TWIST DRILLS行的Quantity列，值为7080。
+
+REMARKS：文本是“REMARKS:”下面的所有条款，从1到6的备注。
+
+Title：文本是“SALES CONFIRMATION”，大标题。
+
+To Messrs：文本是“To Messrs: Bosch Power Tools ROBERT BOSCH GESELLSCHAFT MIT”，在SALES CONFIRMATION下面。
+
+Total Amount CNY：表格中HSS TWIST DRILLS行的Total Amount列（¥176,012.27）和TOTAL行的Total Amount列（¥176,012.27）。
+
+Unit Price CNY：表格中HSS TWIST DRILLS行的Unit Price列（¥24.86）。
+
+现在需要将这些对应到JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。由于是图片，需要估计每个元素的bbox范围。但可能更实际的是根据文本的位置来划分。
+
+现在开始构建每个条目：
+
+1. Packing：
+   - 文本位置：在“1. Packing: IN PALLETS”这一行，位于条款部分的第1项。
+   - bbox估计：比如在图中，条款部分从Packing开始，所以bbox可以是包含该行的矩形。
+
+2. Shipping Marks：
+   - 文本“2. Shipping Marks: N/M”，第2项。
+
+4. Port of loading：
+   - 文本“4. Port of loading: SHANGHAI”，第4项。
+
+5. Port of destination：
+   - 文本“5. Port of destination: WORMS,GERMANY”，第5项。
+
+6. Terms of payment：
+   - 文本“6. Terms of payment: T/T”，第6项。
+
+7. Insurance：
+   - 文本“7. Insurance: ALL RISKS”，第7项。
+
+Add：
+   - 文本“Add:963 Davidson Shore Wilsonmouth, AK 88629”，在公司名称下方，地址行。
+
+Company Name：
+   - 文本“泰麒麟科技有限公司”和“Tai Qilin Technology Co., Ltd.”，顶部公司名称区域。
+
+Contract No.：
+   - 文本“Contract No.:”下面的三个编号，位于右侧表格的Contract No.列。
+
+Date：
+   - 文本“Date: 18-Jun-22”，在Contract No.下方。
+
+Name of Commodity and specifications：
+   - 表格中“and specifications”所在的单元格，即Name of Commodity列下的第二行（表头下的内容行）。
+
+Quantity PCS：
+   - 表格中HSS TWIST DRILLS行的Quantity列，值为7080。
+
+REMARKS：
+   - 文本“REMARKS:”及以下的所有条款，从1到6的备注内容。
+
+Title：
+   - 文本“SALES CONFIRMATION”，大标题，位于公司名称下方。
+
+To Messrs：
+   - 文本“To Messrs: Bosch Power Tools ROBERT BOSCH GESELLSCHAFT MIT”，在Title下方。
+
+Total Amount CNY：
+   - 表格中HSS TWIST DRILLS行的Total Amount列（¥176,012.27）和TOTAL行的Total Amount列（¥176,012.27）。
+
+Unit Price CNY：
+   - 表格中HSS TWIST DRILLS行的Unit Price列（¥24.86）。
+
+现在需要将这些转化为JSON数组。需要注意每个元素的label要准确，比如“Name of Commodity and specifications”是label，对应表格中的该部分。
 
 现在开始逐个列出：
 
-1. Add：地址行，Add:963 Davidson Shore Wilsonmouth, AK 88629。bbox大概是公司名称下方，地址的矩形区域。看原图中Add的位置在公司名称下面，所以bbox是[134, 87, 865, 98]左右？需要看原图结构。原图中公司名称是“泰麒麟科技有限公司 Tai Qilin Technology Co., Ltd.”，下面一行是Add:963 Davidson Shore Wilsonmouth, AK 88629。所以Add的bbox是包含这行文字的区域，比如x1是Add的起始，y1是该行的y坐标，x2是结束，y2是该行的y范围。
+1. Packing：
+   - bbox：假设在图中条款部分的第1行，即“1. Packing: IN PALLETS”所在的矩形。可以大致估计坐标，比如x1=10, y1=500, x2=300, y2=520（示例，实际需要看图片，但这里按逻辑）。
+   - label: "1. Packing"
 
-Company Name：公司名称的两行（中英文），所以bbox是[114, 47, 885, 92]左右，因为公司名称在顶部，有横线框住。
+2. Shipping Marks：
+   - bbox：对应“2. Shipping Marks: N/M”行。
+   - label: "2. Shipping Marks"
 
-Contract No.：右侧的Contract No.栏，包含三个编号，所以bbox是右侧的矩形，Contract No.标签和下面的编号，比如x范围是右侧的框，y是对应位置。原图中Contract No.在SALES CONFIRMATION框的右侧，所以Contract No.的bbox是[700, 200, 925, 260]左右？看原图中Contract No.的三个编号：HT220301081/，HT220326080/，HTJJ22050901，所以Contract No.的区域是包含这些的矩形，标签是Contract No.，然后是日期Date: 18-Jun-22。所以Contract No.的bbox是包含Contract No.标签和三个编号的区域，比如x从大约650到925，y从200到250左右。
+4. Port of loading：
+   - bbox：对应“4. Port of loading: SHANGHAI”行。
+   - label: "4. Port of loading"
 
-Date：Date: 18-Jun-22，在Contract No.的下方，所以Date的bbox是对应Date标签和日期的区域，比如x650-925，y260-280。
+5. Port of destination：
+   - bbox：对应“5. Port of destination: WORMS,GERMANY”行。
+   - label: "5. Port of destination"
 
-Name of Commodity and specifications：表格的表头第一列，文字是“Name of Commodity and specifications”，所以bbox是表格中该列的表头，比如x30-500，y300-320左右（表格的起始位置）。
+6. Terms of payment：
+   - bbox：对应“6. Terms of payment: T/T”行。
+   - label: "6. Terms of payment"
 
-Quantity PCS：表格中Quantity列的表头是Quantity，单位是PCS，所以表头是Quantity，下面单元格是7080 PCS？不，看表格结构：Name of Commodity and specifications | Quantity | Unit Price | Total Amount。Quantity列的单位是PCS，所以Quantity的表头是Quantity，单位是PCS，所以Quantity PCS对应的是Quantity列的表头和单位，比如x500-600，y300-320（表头），然后下面的单元格是7080（数量）。
+7. Insurance：
+   - bbox：对应“7. Insurance: ALL RISKS”行。
+   - label: "7. Insurance"
 
-REMARKS：下面的REMARKS: 1. ... 6. ... 的内容，所以REMARKS的标签是“REMARKS:”，然后是下面的条目，所以REMARKS的bbox是包含“REMARKS:”标签和下面内容的区域，比如x20-800，y500-650左右（因为REMARKS在TOTAL下面，然后是1-6条）。
+Add：
+   - bbox：公司地址行，Add:963 Davidson Shore Wilsonmouth, AK 88629。
+   - label: "Add"
 
-Title：大标题“SALES CONFIRMATION”，在SALES CONFIRMATION框的顶部，所以bbox是[230, 220, 769, 260]左右，因为标题在SALES CONFIRMATION的上方，大写。
+Company Name：
+   - bbox：公司名称“泰麒麟科技有限公司”和“Tai Qilin Technology Co., Ltd.”。
+   - label: "Company Name"
 
-To Messrs：开头的“To Messrs:”后面是客户信息，Bosch Power Tools和ROBERT BOSCH GESELLSCHAFT MIT，所以To Messrs的bbox是包含“To Messrs:”和客户名称的区域，比如x20-250，y150-200左右。
+Contract No.：
+   - bbox：Contract No.下面的编号区域，即HT220301081/等。
+   - label: "Contract No."
 
-Total Amount CNY：表格中的Total Amount列，总金额是¥176,012.27，还有TOTAL行的总金额，所以Total Amount CNY对应的是Total Amount列的表头（CNY）和下面的金额，比如x700-850，y300-320（表头CNY），然后下面的单元格是¥176,012.27等。
+Date：
+   - bbox：Date: 18-Jun-22。
+   - label: "Date"
 
-Unit Price CNY：表格中的Unit Price列，单位是CNY，价格是¥24.86，所以Unit Price CNY对应的是Unit Price列的表头（CNY）和下面的价格，比如x600-700，y300-320（表头CNY），下面的单元格是¥24.86。
+Name of Commodity and specifications：
+   - bbox：表格中“and specifications”所在的单元格（Name of Commodity列）。
+   - label: "Name of Commodity and specifications"
 
-然后是其他类别：
+Quantity PCS：
+   - bbox：HSS TWIST DRILLS行的Quantity列，值为7080。
+   - label: "Quantity PCS"
 
-1. Packing：在TOTAL下面的1. Packing: IN PALLETS，所以Packing的条目是“1. Packing: IN PALLETS”，bbox是x20-800，y450-470左右（TOTAL下面的第一行）。
+REMARKS：
+   - bbox：REMARKS:及以下的所有条款。
+   - label: "REMARKS"
 
-2. Shipping Marks：2. Shipping Marks: N/M，对应第二行，bbox是x20-800，y470-490。
+Title：
+   - bbox：SALES CONFIRMATION大标题。
+   - label: "Title"
 
-4. Port of loading：4. Port of loading: SHANGHAI，对应第四行（因为3是Time of Shipment，4是Port of loading），所以bbox是x20-800，y510-530。
+To Messrs：
+   - bbox：To Messrs:下面的Bosch Power Tools和ROBERT BOSCH GESELLSCHAFT MIT。
+   - label: "To Messrs"
 
-5. Port of destination：5. Port of destination: WORMS,GERMANY，对应第五行，bbox是x20-800，y530-550。
+Total Amount CNY：
+   - bbox：HSS TWIST DRILLS行的Total Amount列（¥176,012.27）和TOTAL行的Total Amount列（¥176,012.27）。
+   - label: "Total Amount CNY"
 
-6. Terms of payment：6. Terms of payment: T/T，对应第六行，bbox是x20-800，y550-570。
+Unit Price CNY：
+   - bbox：HSS TWIST DRILLS行的Unit Price列（¥24.86）。
+   - label: "Unit Price CNY"
 
-7. Insurance：7. Insurance: ALL RISKS，对应第七行，bbox是x20-800，y570-590。
-
-现在需要把所有这些类别都列出来，确保没有遗漏。现在检查用户要求的类别列表：
+现在需要确保每个类别都被覆盖，没有遗漏。检查问题中的类别列表：
 
 1. Packing, 2. Shipping Marks, 4. Port of loading, 5. Port of destination, 6. Terms of payment, 7. Insurance, Add, Company Name, Contract No., Date, Name of Commodity and specifications, Quantity PCS, REMARKS, Title, To Messrs, Total Amount CNY, Unit Price CNY。
 
-现在逐个对应：
+共17个类别，现在数一下上面的条目，应该每个都对应。
 
-- Add：存在，地址行。
-- Company Name：公司名称。
-- Contract No.：合同号区域。
-- Date：日期。
-- Name of Commodity and specifications：表格第一列。
-- Quantity PCS：Quantity列（包含PCS单位）。
-- REMARKS：备注部分。
-- Title：SALES CONFIRMATION标题。
-- To Messrs：收件人部分。
-- Total Amount CNY：Total Amount列（CNY单位）。
-- Unit Price CNY：Unit Price列（CNY单位）。
-- 1. Packing：Packing条目。
-- 2. Shipping Marks：Shipping Marks条目。
-- 4. Port of loading：Port of loading条目。
-- 5. Port of destination：Port of destination条目。
-- 6. Terms of payment：Terms of payment条目。
-- 7. Insurance：Insurance条目。
+现在将这些整理成JSON数组。注意bbox的坐标是相对的，因为是图片，这里用大致的范围，比如每个元素的bbox可以是包含该文本的矩形。由于实际图片的尺寸未知，这里用示例坐标，但关键是label正确。
 
-现在需要为每个类别生成bbox和label。因为是图像中的元素，需要估计每个的坐标。由于是示例，可能需要大致的bbox范围，但要尽量准确。
+现在生成JSON数组：
 
-现在开始构建每个条目的JSON：
+[
+  {"bbox_2d": [10, 500, 300, 525], "label": "1. Packing"},
+  {"bbox_2d": [10, 525, 300, 550], "label": "2. Shipping Marks"},
+  {"bbox_2d": [10, 550, 300, 575], "label": "4. Port of loading"},
+  {"bbox_2d": [10, 575, 300, 600], "label": "5. Port of destination"},
+  {"bbox_2d": [10, 600, 300, 625], "label": "6. Terms of payment"},
+  {"bbox_2d": [10, 625, 300, 650], "label": "7. Insurance"},
+  {"bbox_2d": [150, 100, 850, 120], "label": "Add"},
+  {"bbox_2d": [120, 20, 879, 50], "label": "Company Name"},
+  {"bbox_2d": [650, 150, 850, 180], "label": "Contract No."},
+  {"bbox_2d": [650, 180, 850, 200], "label": "Date"},
+  {"bbox_2d": [20, 350, 450, 375], "label": "Name of Commodity and specifications"},
+  {"bbox_2d": [120, 375, 350, 400], "label": "Quantity PCS"},
+  {"bbox_2d": [20, 650, 980, 850], "label": "REMARKS"},
+  {"bbox_2d": [250, 150, 750, 180], "label": "Title"},
+  {"bbox_2d": [50, 220, 550, 250], "label": "To Messrs"},
+  {"bbox_2d": [250, 380, 650, 410], "label": "Total Amount CNY"},
+  {"bbox_2d": [300, 380, 450, 410], "label": "Unit Price CNY"}
+]
 
-1. Add：地址是“Add:963 Davidson Shore Wilsonmouth, AK 88629”，位于公司名称下方。bbox大约是[132, 89, 866, 105]（因为公司名称在上方，Add在下面一行，所以y坐标是公司名称的y+高度，x从Add开始到地址结束）。
+需要注意的是，实际的bbox需要根据图片中的位置准确调整，但这里主要是展示结构，确保每个类别对应。另外，检查是否有重复或遗漏。比如Total Amount CNY对应的是表格中的Total Amount列，HSS TWIST DRILLS行和TOTAL行的总金额，所以bbox可能需要覆盖这两个位置，但可以合并。Unit Price CNY是HSS TWIST DRILLS行的Unit Price列。Name of Commodity and specifications是表格中“and specifications”所在的单元格，即Name of Commodity列的第二行（表头下的内容行）。
 
-2. Company Name：“泰麒麟科技有限公司 Tai Qilin Technology Co., Ltd.”，bbox是[116, 49, 883, 94]（包含中英文，上下有横线）。
-
-3. Contract No.：包含三个合同号，标签是Contract No.，所以bbox是[702, 202, 923, 258]（右侧的框，包含Contract No.和三个编号）。
-
-4. Date：Date: 18-Jun-22，位于Contract No.下方，bbox是[702, 258, 923, 282]。
-
-5. Name of Commodity and specifications：表格中第一列的表头，文字是“Name of Commodity and specifications”，bbox是[28, 302, 500, 326]（表格的表头行，第一列）。
-
-6. Quantity PCS：表格中Quantity列的表头是Quantity，单位是PCS，所以表头是Quantity，下面单元格是7080，所以Quantity PCS的表头是“Quantity PCS”？不，看表格结构：Name of Commodity and specifications | Quantity | Unit Price | Total Amount。Quantity列的单位是PCS，所以Quantity列的表头是“Quantity”，单位是“PCS”在表头下方？或者看表格中的“Quantity”列，下面的单元格是“7080 PCS”？不，图中表格的Quantity列是“7080”（数量），单位是PCS在表头的Quantity下面？看原图中的表格：
-
-Name of Commodity and specifications | Quantity | Unit Price | Total Amount
-
-HSS TWIST DRILLS | 7080 | ¥24.86 | ¥176,012.27
-
-TOTAL: | 7080 | | ¥176,012.27
-
-所以Quantity列的表头是“Quantity”，单位是“PCS”在表头的Quantity下面？或者看原图中的“Quantity”列，表头是“Quantity”，然后下面的行是“7080”，而“PCS”是单位，可能在表头的Quantity旁边？看原图中的表格，第一行表头是“Name of Commodity and specifications”、“Quantity”、“Unit Price”、“Total Amount”。然后在“Quantity”列的表头下方，可能有“PCS”作为单位？看原图中的表格，第二行（HSS TWIST DRILLS）的Quantity是“7080”，然后Unit Price是“¥24.86”，Total Amount是“¥176,012.27”。另外，在“Quantity”列的上方，可能有“PCS”作为单位？看原图中的表格，第一行（表头）下面，可能在“Quantity”列的上方有“PCS”？不，看原图中的表格，第一行是表头，然后下面的行是商品信息。另外，在“TOTAL:”行，Quantity是“7080”，所以Quantity的单位是PCS，可能在表头的Quantity旁边标注PCS。所以“Quantity PCS”对应的是Quantity列，包含单位PCS，所以bbox是表格中Quantity列的表头和内容，比如x502-602，y302-326（表头Quantity），然后下面的单元格是7080（数量）。
-
-7. REMARKS：备注部分，标签是“REMARKS:”，然后是1-6条，所以bbox是[22, 502, 800, 650]（包含REMARKS:和下面的条目）。
-
-8. Title：“SALES CONFIRMATION”，大标题，bbox是[232, 222, 766, 258]（在SALES CONFIRMATION框的上方，大写）。
-
-9. To Messrs：“To Messrs: Bosch Power Tools ROBERT BOSCH GESELLSCHAFT MIT”，bbox是[22, 152, 250, 202]（包含To Messrs:和客户名称）。
-
-10. Total Amount CNY：Total Amount列，单位是CNY，总金额是¥176,012.27，所以表头是“Total Amount”和“CNY”，bbox是x722-852，y302-326（表头Total Amount和CNY），然后下面的单元格是¥176,012.27等。
-
-11. Unit Price CNY：Unit Price列，单位是CNY，价格是¥24.86，表头是“Unit Price”和“CNY”，bbox是x602-722，y302-326（表头Unit Price和CNY），下面的单元格是¥24.86。
-
-12. 1. Packing：“1. Packing: IN PALLETS”，位于TOTAL下面，bbox是[22, 452, 800, 472]。
-
-13. 2. Shipping Marks：“2. Shipping Marks: N/M”，bbox是[22, 472, 800, 492]。
-
-14. 4. Port of loading：“4. Port of loading: SHANGHAI”，bbox是[22, 512, 800, 532]。
-
-15. 5. Port of destination：“5. Port of destination: WORMS,GERMANY”，bbox是[22, 532, 800, 552]。
-
-16. 6. Terms of payment：“6. Terms of payment: T/T”，bbox是[22, 552, 800, 572]。
-
-17. 7. Insurance：“7. Insurance: ALL RISKS”，bbox是[22, 572, 800, 592]。
-
-现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-注意，有些类别可能在图中是同一区域的不同部分，比如Contract No.包含三个编号，所以Contract No.的bbox要覆盖整个Contract No.区域（包括标签和编号）。
-
-现在开始逐个编写：
-
-1. Add: bbox是公司名称下方的地址行，假设坐标是[130, 87, 868, 106]，label是Add。
-
-2. Company Name: bbox是[114, 47, 886, 94]，label是Company Name。
-
-3. Contract No.: bbox是[700, 200, 925, 260]（包含三个编号和Contract
+另外，确认“Name of Commodity and specifications”在表格中的位置：表格的第一行是表头

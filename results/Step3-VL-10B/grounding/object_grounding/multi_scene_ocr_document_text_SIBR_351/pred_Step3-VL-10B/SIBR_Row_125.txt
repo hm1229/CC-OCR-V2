@@ -1,0 +1,163 @@
+用户现在需要检测图像中的各个指定对象，先逐个看。首先看Arrive 入住日期，对应的是Arrive 27/10/20，位置在左侧。然后Balance 余额是Balance CNY0.00。CHARGES 借方是项目里的借方列，比如500.00。CREDITS 贷方是贷方列。Clerk 收银员是John Cox。Confirmation No 确认号是94120772。DATE 日期是27/10/20和28/10/20。DESCRIPTION 项目是Accommodation services和Post Post Pay。Depart 离店日期是28/10/20。Fax 传真在右上角是86.781.8905.0107。INVOICE # 账单号是8691688。Marriott Bonvoy 万豪旅享家是XXXXX7671。No.of Guest 住店人数是1。Page #是1。Room 房号是0756。TIME 离店时间是09:47。Tel 电话是86.775.191.8877。Time printed是28-OCT-20。Time 入住时间是09:40。公司名是Business Soft Guanlian Information Hotel和商软冠联信息酒店。地址是442 Thomas Branch Suite 396 Fordstad, MD 52721和天津市建城清城黄路Q座573794。标题是INFORMATION INVOICE。邮政编码是310006。邮箱是https://www.harvey.com/。
+
+现在要逐个定位每个元素的bbox。先看公司名：Business Soft Guanlian Information Hotel和商软冠联信息酒店，对应右上角的英文和中文。地址是两行，英文地址和中文地址。标题是INFORMATION INVOICE。邮政编码是310006。邮箱是网址。
+
+然后Arrive 入住日期：Arrive 27/10/20，对应位置在入住日期那栏，文字是Arrive 27/10/20，下面有入住日期的中文。所以bbox要包含这个区域。
+
+现在开始逐个处理：
+
+1. Arrive 入住日期：看图像中“Arrive 27/10/20”和“入住日期”对应的位置。在左侧，Arrive下面的日期。bbox大概是[58, 310, 225, 347]左右？需要看图像中的位置。原图像中Arrive 27/10/20，Time 09:40，Depart 28/10/20，TIME 09:47。所以Arrive 入住日期的区域是Arrive 27/10/20和入住日期的中文，对应位置。
+
+2. Balance 余额：在Total下面，Balance CNY0.00，所以bbox是[437, 647, 529, 665]左右。
+
+3. CHARGES 借方：列标题是CHARGES 借方，下面有500.00等，列的位置在中间偏右，借方列。比如27/10/20的Accommodation services对应的借方是500.00，所以CHARGES 借方的列标题位置。
+
+4. CREDITS 贷方：列标题是CREDITS 贷方，对应右边的列，比如500.00在贷方列。
+
+5. Clerk 收银员：John Cox，对应Clerk 收银员: John Cox，位置在右侧上方。
+
+6. Confirmation No 确认号：94120772，对应Confirmation No 确认号: 94120772。
+
+7. DATE 日期：列标题是DATE 日期，下面有27/10/20和28/10/20。
+
+8. DESCRIPTION 项目：列标题是DESCRIPTION 项目，下面有Accommodation services和Post Post Pay。
+
+9. Depart 离店日期：28/10/20，对应Depart 28/10/20和离店日期的中文。
+
+10. Fax 传真：86.781.8905.0107，对应Fax 传真: 86.781.8905.0107。
+
+11. INVOICE # 账单号：8691688，对应INVOICE # 8691688。
+
+12. Marriott Bonvoy 万豪旅享家：XXXXX7671，对应Marriott Bonvoy万豪旅享家: XXXXX7671。
+
+13. No.of Guest 住店人数：1，对应No.of Guest 住店人数: 1。
+
+14. Page #：1，对应Page # : 1。
+
+15. Room 房号：0756，对应Room 房号 : 0756。
+
+16. TIME 离店时间：09:47，对应TIME 离店时间 09:47。
+
+17. Tel 电话：86.775.191.8877，对应Tel 电话: 86.775.191.8877。
+
+18. Time printed：28-OCT-20，对应Time printed : 28-OCT-20。
+
+19. Time 入住时间：09:40，对应Time 入住时间 09:40。
+
+20. 公司名：Business Soft Guanlian Information Hotel（英文）和商软冠联信息酒店（中文），对应右上角的两行。
+
+21. 地址：442 Thomas Branch Suite 396 Fordstad, MD 52721（英文地址）和天津市建城清城黄路Q座573794（中文地址）。
+
+22. 标题：INFORMATION INVOICE，对应上方的标题。
+
+23. 邮政编码：310006，对应邮政编码: 310006。
+
+24. 邮箱：https://www.harvey.com/，对应网址。
+
+现在需要为每个类别找到对应的bbox。需要仔细看图像中的位置。
+
+先处理公司名：Business Soft Guanlian Information Hotel在右上角，英文，所以bbox是[593, 28, 832, 38]左右。商软冠联信息酒店是中文，在英文下面，所以另一个bbox是[593, 38, 832, 48]。
+
+地址：英文地址是442 Thomas Branch Suite 396 Fordstad, MD 52721，对应右上角的地址行，bbox是[593, 50, 887, 62]。中文地址是天津市建城清城黄路Q座573794，对应下面一行，bbox是[593, 62, 887, 74]。
+
+标题：INFORMATION INVOICE，在左侧上方，大写，所以bbox是[125, 140, 382, 160]左右（因为图中有“INFORMATION INVOICE”）。
+
+邮政编码：310006，在中文地址下面，Fax上面，所以bbox是[795, 74, 887, 86]。
+
+邮箱：https://www.harvey.com/，在公司名下面，所以bbox是[593, 86, 832, 98]。
+
+Arrive 入住日期：Arrive 27/10/20，对应左侧的Arrive部分，文字是Arrive 27/10/20，下面有“入住日期”中文，所以bbox是[58, 312, 225, 334]（Arrive和日期）以及“入住日期”的中文，可能合并。看图像中“Arrive 27/10/20”和“入住日期”是同一行，所以bbox是[58, 310, 225, 347]（包含Arrive和入住日期）。
+
+Depart 离店日期：Depart 28/10/20和“离店日期”中文，对应位置在Arrive右边，所以bbox是[325, 310, 442, 334]（Depart和日期）以及“离店日期”中文，合并为[325, 310, 492, 347]。
+
+Time 入住时间：Time 09:40，对应Arrive下面的Time，所以bbox是[235, 310, 317, 334]（Time和09:40）以及“入住时间”中文，合并为[235, 310, 342, 347]。
+
+TIME 离店时间：TIME 09:47，对应Depart下面的TIME，所以bbox是[455, 310, 537, 334]（TIME和09:47）以及“离店时间”中文，合并为[455, 310, 592, 347]。
+
+Clerk 收银员：John Cox，对应Clerk 收银员: John Cox，位置在右侧，Room房号下面，所以bbox是[675, 230, 832, 248]（Clerk 收银员: John Cox）。
+
+Confirmation No 确认号：94120772，对应Confirmation No 确认号: 94120772，位置在Clerk上面，所以bbox是[675, 248, 832, 266]（确认号）。
+
+Page #：1，对应Page # : 1，位置在Clerk下面，所以bbox是[675, 266, 717, 284]（Page # : 1）。
+
+Time printed：28-OCT-20，对应Time printed : 28-OCT-20，位置在Page #下面，所以bbox是[675, 284, 832, 302]（Time printed : 28-OCT-20）。
+
+Room 房号：0756，对应Room 房号 : 0756，位置在右侧上方，Marriott下面，所以bbox是[675, 200, 832, 218]（Room 房号 : 0756）。
+
+Marriott Bonvoy 万豪旅享家：XXXXX7671，对应Marriott Bonvoy万豪旅享家: XXXXX7671，位置在Room房号下面，所以bbox是[675, 218, 832, 236]（万豪旅享家: XXXXX7671）。
+
+No.of Guest 住店人数：1，对应No.of Guest 住店人数: 1，位置在Marriott下面，所以bbox是[675, 236, 727, 254]（住店人数: 1）。
+
+INVOICE # 账单号：8691688，对应INVOICE # 8691688，位置在Time printed右边，所以bbox是[795, 334, 887, 352]（账单号）。
+
+Fax 传真：86.781.8905.0107，对应Fax 传真: 86.781.8905.0107，位置在地址下面，Tel上面，所以bbox是[795, 86, 887, 104]（Fax 传真: ...）。
+
+Tel 电话：86.775.191.8877，对应Tel 电话: 86.775.191.8877，位置在Fax下面，所以bbox是[795, 104, 887, 122]（Tel 电话: ...）。
+
+DATE 日期：列标题是DATE 日期，在项目表的上方，所以bbox是[108, 470, 175, 490]（DATE 日期）。
+
+DESCRIPTION 项目：列标题是DESCRIPTION 项目，在DATE右边，所以bbox是[200, 470, 325, 490]（项目）。
+
+CHARGES 借方：列标题是CHARGES 借方，在DESCRIPTION右边，所以bbox是[437, 470, 529, 490]（借方）。
+
+CREDITS 贷方：列标题是CREDITS 贷方，在CHARGES右边，所以bbox是[600, 470, 692, 490]（贷方）。
+
+Balance 余额：在Total下面，Balance CNY0.00，所以bbox是[437, 645, 529, 665]（余额）。
+
+Post Post Pay是DESCRIPTION项目中的第二项，对应28/10/20的项目，所以DESCRIPTION项目包含这个内容，已经包含在列标题里了？不，项目是每个条目的描述，所以28/10/20的Post Post Pay属于DESCRIPTION项目下的内容，所以不需要单独列，因为类别是DESCRIPTION 项目，列标题即可。
+
+现在需要确保每个类别都被检测到。现在整理所有类别：
+
+- Arrive 入住日期
+- Balance 余额
+- CHARGES 借方
+- CREDITS 贷方
+- Clerk 收银员
+- Confirmation No 确认号
+- DATE 日期
+- DESCRIPTION 项目
+- Depart 离店日期
+- Fax 传真
+- INVOICE # 账单号
+- Marriott Bonvoy 万豪旅享家
+- No.of Guest 住店人数
+- Page #
+- Room 房号
+- TIME 离店时间
+- Tel 电话
+- Time printed
+- Time 入住时间
+- 公司名
+- 地址
+- 标题
+- 邮政编码
+- 邮箱
+
+现在逐个对应：
+
+1. Arrive 入住日期：存在，bbox是包含Arrive 27/10/20和“入住日期”文字的区域。
+2. Balance 余额：存在，Balance CNY0.00。
+3. CHARGES 借方：列标题和对应数值。
+4. CREDITS 贷方：列标题和对应数值。
+5. Clerk 收银员：John Cox。
+6. Confirmation No 确认号：94120772。
+7. DATE 日期：列标题。
+8. DESCRIPTION 项目：列标题和项目内容（Accommodation services, Post Post Pay）。
+9. Depart 离店日期：28/10/20和“离店日期”。
+10. Fax 传真：86.781.8905.0107。
+11. INVOICE # 账单号：8691688。
+12. Marriott Bonvoy 万豪旅享家：XXXXX7671。
+13. No.of Guest 住店人数：1。
+14. Page #：1。
+15. Room 房号：0756。
+16. TIME 离店时间：09:47。
+17. Tel 电话：86.775.191.8877。
+18. Time printed：28-OCT-20。
+19. Time 入住时间：09:40。
+20. 公司名：Business Soft Guanlian Information Hotel 和 商软冠联信息酒店（两个部分？但类别是“公司名”，可能合并或选主要的，这里看图像中公司名是Business Soft Guanlian Information Hotel，中文是商软冠联信息酒店，所以两个都是公司名？但可能视为一个实体，取英文或中文。这里按图像中的显示，公司名是Business Soft Guanlian Information Hotel（英文）和商软冠联信息酒店（中文），所以两个bbox？但类别是“公司名”，可能需要选其中一个，或者都算。但根据问题中的“公司名”是一个类别，可能指主要的公司名称，即Business Soft Guanlian Information Hotel。
+21. 地址：英文地址和中文地址，两个部分，但类别是“地址”，所以包含两个地址的bbox。
+22. 标题：INFORMATION INVOICE。
+23. 邮政编码：310006。
+24. 邮箱：https://www.harvey.com/。
+
+现在需要为每个类别生成一个条目，即使有些类别在图像中有多个实例（如公司名有两个，地址有两个），但按问题中的类别，每个类别对应一个检测，可能需要选主要的或都包含？但问题要求“detect all objects matching these categories”，所以每个类别出现的所有实例都要检测？比如公司名有两个（英文和中文），所以两个公司名的实例？但可能“公司名”指的是酒店的名称，即Business Soft Guanlian Information Hotel（商软冠联信息酒店是中文翻译），所以视为一个公司名，两个表述。但可能在图像中，公司名是Business Soft Guanlian Information Hotel，下面的中文是商软冠联信息酒店，所以公司名的bbox是英文那行，中文是辅助。所以公司名的bbox是Business Soft Guanlian Information Hotel的区域

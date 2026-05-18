@@ -1,1 +1,27 @@
-[{"bbox_2d": [342, 77, 657, 97], "label": "company"}, {"bbox_2d": [340, 100, 659, 162], "label": "address"}, {"bbox_2d": [340, 222, 659, 242], "label": "date"}, {"bbox_2d": [340, 332, 659, 352], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The restaurant name is "RESTORAN WAN SHENG". Let's check the text.
+- Address: The address lines are "No.2, Jalan Temenggung 19/9, Seksyen 9, Bandar Mahkota Cheras, 43200 Cheras, Selangor".
+- Date: The date is "21-03-2018 11:42:20".
+- Total: The total amount is "4.80" (from the TOTAL: line).
+
+Now, find the bounding boxes for each.
+
+First, company: The line "RESTORAN WAN SHENG" is the company name. Let's check the coordinates.
+
+Address: The address spans multiple lines. Let's capture the block.
+
+Date: The line starting with "Date :" is the date.
+
+Total: The line "TOTAL: 4.80" is the total.
+
+Let's map each:
+
+1. Company: "RESTORAN WAN SHENG" – the text is in the top part.
+2. Address: The lines from "No.2, Jalan Temenggung..." to "43200 Cheras, Selangor".
+3. Date: "Date : 21-03-2018 11:42:20"
+4. Total: "TOTAL: 4.80"
+
+Now, create the JSON array with each entry's bbox and label.
+</think>
+[{"bbox_2d": [21, 209, 979, 237], "label": "company"}, {"bbox_2d": [21, 247, 979, 300], "label": "address"}, {"bbox_2d": [21, 307, 979, 328], "label": "date"}, {"bbox_2d": [21, 494, 979, 517], "label": "total"}]

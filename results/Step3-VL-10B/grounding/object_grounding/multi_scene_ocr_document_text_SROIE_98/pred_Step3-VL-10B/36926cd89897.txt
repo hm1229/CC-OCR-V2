@@ -1,1 +1,27 @@
-[{"bbox_2d": [442, 210, 592, 230], "label": "company"}, {"bbox_2d": [440, 232, 595, 262], "label": "address"}, {"bbox_2d": [440, 315, 556, 335], "label": "date"}, {"bbox_2d": [440, 675, 556, 695], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The company name is BHPetrol Permas Jaya 2. Let's check the text. The top part has "BHPetrol Permas Jaya 2" which is the company.
+
+- Address: The address lines are LOT PTD 101051, Jalan Permas 10/10, 81750 Masai, Johor. So that's the address.
+
+- Date: The date is 03-04-2018, which is in the transaction details.
+
+- Total: The total amount is RM 50.00, found under TOTAL AMOUNT and CASH.
+
+Now, find the bounding boxes for each.
+
+Let's check each element:
+
+Company: "BHPetrol Permas Jaya 2" is in the upper part. Let's get its coordinates.
+
+Address: The lines below the company: LOT PTD 101051, Jalan Permas 10/10, 81750 Masai, Johor.
+
+Date: "03-04-2018 08:15:14" is the date-time.
+
+Total: "RM 50.00" is the total amount.
+
+Now, map each to the labels.
+</think>
+[{"bbox_2d": [444, 110, 553, 132], "label": "company"}, {"bbox_2d": [444, 132, 553, 154], "label": "address"}, {"bbox_2d": [444, 154, 553, 176], "label": "address"}, {"bbox_2d": [444, 176, 553, 198], "label": "address"}, {"bbox_2d": [444, 317, 553, 339], "label": "date"}, {"bbox_2d": [444, 339, 553, 361], "label": "date"}, {"bbox_2d": [444, 447, 553, 469], "label": "total"}]

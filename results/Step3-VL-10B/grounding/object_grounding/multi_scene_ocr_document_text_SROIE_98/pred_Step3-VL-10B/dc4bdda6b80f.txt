@@ -1,6 +1,42 @@
-[
-    {"bbox_2d": [292, 217, 707, 234], "label": "company"},
-    {"bbox_2d": [292, 243, 707, 292], "label": "address"},
-    {"bbox_2d": [375, 227, 500, 242], "label": "date"},
-    {"bbox_2d": [458, 300, 575, 314], "label": "total"}
-]
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's find its bounding box.
+- Address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor" and the phone number part. Let's check the address section.
+- Date: The date is "12 May 2018 19:14".
+- Total: The total amount is "$6.60" (Total Amount: $6.60) and also the Nett Total is $6.60. Let's confirm the total value.
+
+Now, let's map each:
+
+1. Company: "UNIHAKKA INTERNATIONAL SDN BHD" – look at the text.
+2. Address: The address block includes the lines starting from "12, Jalan Tampoi...".
+3. Date: "12 May 2018 19:14" – that's the date line.
+4. Total: The total amount is $6.60, which is in the Total Amount section.
+
+Now, find the bounding boxes for each.
+
+Check the image:
+
+- Company: The line "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part.
+- Address: The lines below the company: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor" and the phone number "(867388-U)".
+- Date: "12 May 2018 19:14" is right below the company name.
+- Total: The "Total Amount: $6.60" is in the item section summary.
+
+Let's define each bounding box.
+
+For company:
+The text is "UNIHAKKA INTERNATIONAL SDN BHD". Let's get its coordinates. In the image, that's a centered line.
+
+For address:
+The address spans multiple lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor" and the phone number line. So the address block includes those.
+
+For date:
+"12 May 2018 19:14" – that's the date.
+
+For total:
+The total amount is $6.60, which is in the "Total Amount: $6.60" line.
+
+Now, let's structure the JSON array.
+</think>
+[{"bbox_2d": [279, 237, 490, 254], "label": "company"}, {"bbox_2d": [279, 260, 490, 293], "label": "address"}, {"bbox_2d": [300, 240, 425, 253], "label": "date"}, {"bbox_2d": [447, 300, 540, 313], "label": "total"}]

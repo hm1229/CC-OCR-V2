@@ -1,6 +1,126 @@
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's find its bounding box.
+- Address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor" and the (867388-U) part. Let's check the address section.
+- Date: The date is "06 May 2018 18:23".
+- Total: The total amount is "$7.30" (Nett Total: $7.30).
+
+Now, let's map each to their bounding boxes.
+
+For company: The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's get its coordinates.
+
+Address: The address lines below the company name. Let's check the lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru,Johor" and the (867388-U) is part of the address maybe.
+
+Date: "06 May 2018 18:23" is right below the company name.
+
+Total: Look for "Total Amount: $7.30" or "Nett Total: $7.30". The Nett Total is $7.30.
+
+Now, let's define each entry.
+
+1. Company: "UNIHAKKA INTERNATIONAL SDN BHD" – find its bounding box.
+2. Address: The address block, which includes the lines with the location.
+3. Date: The date string.
+4. Total: The total amount value.
+
+Let's check the image:
+
+- Company: The text is centered, so the bounding box would be around that line.
+- Address: The lines below the company, including the (867388-U) and the address details.
+- Date: The line with "06 May 2018 18:23".
+- Total: The "Nett Total: $7.30" or "Total Amount: $7.30".
+
+Now, let's extract each.
+
+First, company:
+
+The company name is in the middle top. Let's check the coordinates. The text is "UNIHAKKA INTERNATIONAL SDN BHD". Let's get the bounding box.
+
+Address: The address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru,Johor" and the (867388-U) is above that. So the address includes those lines.
+
+Date: "06 May 2018 18:23" is directly below the company name.
+
+Total: The total amount is shown as "Total Amount: $7.30" and "Nett Total: $7.30". Let's take the Nett Total.
+
+Now, let's structure the JSON.
+
+For each category:
+
+- address: the address lines.
+- company: the company name.
+- date: the date string.
+- total: the total amount.
+
+Let's find the exact bounding boxes.
+
+Looking at the image:
+
+Company: "UNIHAKKA INTERNATIONAL SDN BHD" – the text is in the upper part, centered. Let's assume the coordinates. Let's check the vertical position.
+
+Date: "06 May 2018 18:23" – right below the company.
+
+Address: The lines below the date: "(867388-U)" and then the address lines.
+
+Total: In the section where "Total Amount: $7.30" and "Nett Total: $7.30" are present.
+
+Now, let's define each entry.
+
+1. Company: bbox around "UNIHAKKA INTERNATIONAL SDN BHD"
+2. Address: bbox around the address lines (including the (867388-U) and the address)
+3. Date: bbox around "06 May 2018 18:23"
+4. Total: bbox around "Nett Total: $7.30" or the total amount value.
+
+Let's check the image content:
+
+- Company: "UNIHAKKA INTERNATIONAL SDN BHD" – yes.
+- Address: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru,Johor" and the (867388-U) is part of the address info.
+- Date: "06 May 2018 18:23"
+- Total: The total amount is $7.30, which is in "Total Amount: $7.30" and "Nett Total: $7.30". Let's take the Nett Total line.
+
+Now, let's write the JSON entries.
+
+First, company:
+
+{"bbox_2d": [295, 107, 704, 126], "label": "company"} – approximate, since the text is centered.
+
+Address: The address lines are below the date. Let's check:
+
+The lines are:
+
+(867388-U)
+
+12, Jalan Tampoi 7/4, Kawasan Perindustrian
+
+Tampoi,81200 Johor Bahru,Johor
+
+So the address block includes these. Let's take the bounding box for the address.
+
+Date: "06 May 2018 18:23" – the line below the company.
+
+Total: "Nett Total: $7.30" – in the section after the items.
+
+Let's verify each:
+
+- Company: Correct.
+- Address: Correct.
+- Date: Correct.
+- Total: Correct.
+
+Now, let's make sure the bounding boxes are accurate. Since the image is a bit low-res, but we can estimate.
+
+Alternatively, check the key elements:
+
+- Company: UNIHAKKA INTERNATIONAL SDN BHD
+- Address: 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru,Johor (and the (867388-U) is part of the address)
+- Date: 06 May 2018 18:23
+- Total: $7.30 (Nett Total)
+
+Now, construct the JSON array.
+</think>
 [
-    {"bbox_2d": [214, 202, 785, 222], "label": "company"},
-    {"bbox_2d": [295, 232, 704, 252], "label": "address"},
-    {"bbox_2d": [302, 212, 437, 225], "label": "date"},
-    {"bbox_2d": [437, 320, 546, 335], "label": "total"}
+    {"bbox_2d": [295, 107, 704, 126], "label": "company"},
+    {"bbox_2d": [300, 137, 700, 172], "label": "address"},
+    {"bbox_2d": [300, 114, 437, 129], "label": "date"},
+    {"bbox_2d": [437, 320, 527, 335], "label": "total"}
 ]

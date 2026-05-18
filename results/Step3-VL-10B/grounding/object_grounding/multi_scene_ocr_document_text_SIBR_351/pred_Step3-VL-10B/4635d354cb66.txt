@@ -1,155 +1,195 @@
-用户现在需要从商业发票中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name，顶部的Aidoxin Network Co., Ltd. 是公司名，还有Sold to里的公司？不，Bill to也是公司名，Sold to是客户。先列出来每个类别：
+首先看Company Name，发票顶部是Aidoxin Network Co., Ltd.，所以Company Name的bbox是顶部公司信息。
 
-先处理每个类别：
+然后Group NO：图中右上角Group NO : BVPK22050236，所以对应位置。
 
-1. @Price：看表格里的@Price列，比如第一行的61.911012，对应列的标题是@Price，所以要找@Price的标签位置？不，是检测对象，即表格中的@Price列的数值？不，题目是“detect all objects matching these categories”，即每个类别对应的内容，比如@Price是列标题还是数值？看例子中的类别，比如@Price是列，里面的数值是该列的内容。但需要看每个类别在图中的位置。
+Invoice Date：Invoice Date: 05/13/2022 13:39:25，找到这个位置。
 
-先逐个类别分析：
+Invoice No：Invoice No: VFX22050227，对应。
 
-- @Price：在表格的表头，列标题是@Price，对应位置。看表格部分，表头有@Price列，所以要找这个列的区域。比如表格的表头行，@Price是其中一个列标题。
-- A/C Name：在Remit Payment to部分，A/C Name: Aidoxin Network Co., Ltd. 所以这个是A/C Name的内容。
-- A/C No.：A/C No.: 10532514040003375，对应位置。
-- Address：多个地址，比如Bill to的地址，Ship to的地址，Sold to的地址，Remit Payment的Bank Add等。需要看每个Address实例？但可能每个地址都是Address类别。比如Bill to的Address是5037 Grant Creek South Matthew, WA 73794；Ship to的Address是925 Anthony Viaduct Brownview, NJ 76729 Unit 1224 Box 9219 DPO AE 94727；Sold to的Address是PSC 3572, Box 7231 APO AE 43845 304 Elizabeth Road Aaronfurt, NY 37369 0693 Kelly Views Sydneyhaven, VT 44387；Bank Add是Unit 9957 Box 7722 DPO AE 15401等。这些都属于Address类别。
-- Amount：表格中的Amount列，比如237,614.46，还有Subtotal Amt.等。
-- Bank Add：Remit Payment中的Bank Add: Unit 9957 Box 7722 DPO AE 15401。
-- Bank Name：AGRICULTURAL BANK OF CHINA SUZHOU BRANCH。
-- Bill Attn：Bill Attn: Erin Sims。
-- Brand：在Line#部分，Brand: EE。
-- Comments：Comments: BT deferment account (number 8393487) BT VAT number GB 245 7193 48 BT EORI number GB245719348000。
-- Company Name：顶部的Aidoxin Network Co., Ltd.，还有Sold to可能不是，Bill to是Aidoxin Network Co., Ltd.，所以Company Name是这个。
-- Country of Origin：Country of Origin: Chi（第一行的）。
-- Creater：Creater: 张秀梅。
-- Customer No：Customer No: TWN0007。
-- Customer PO No：Customer PO No: JUTFF22050039。
-- Disc. Amt：Disc. Amt.: 0.00。
-- Duly Type：Duly Type: Foreign。
-- Fax：多个Fax，比如Bill to的Fax:（空？看Bill to部分，Fax: 后面没有内容？Ship to的Fax:？Forwarder的Fax:？还有顶部的Fax:61-565-71852881。需要看每个Fax的位置。
-- Forwarder：Forwarder: Scan Global Logistics Ltd。
-- Group NO：Group NO: BVPK22050236。
-- Invoice Date：Invoice Date: 05/13/2022 13:39:25。
-- Invoice No：Invoice No: VFX22050227，还有Packing No: VPK22050236，Remark里的Invoice No也是VFX22050227。
-- Model No.：Model No.列，比如第一行的BEE Smart Router对应？不，Model No.是列标题，下面的内容比如GRV9517UWAC34-A-OT, 1 O等。
-- N/C Amt.：N/C Amt.: 0.00。
-- NO.：表格的NO.列，比如JTFPF22050039等。
-- Packing Comments：Packing Comments: We hereby certify that shipment does not contain solid wood packing materails.
-- Packing No：Packing No: VPK22050236。
-- Part No.：Part No.列，比如FRAOT9517009J等。
-- Payment Term：Payment Term: D/A 120 days after acceptance。
-- Phone：多个Phone，比如顶部的Phone:50-685-27888281，Ship Via的Tel: Mobile 07775 7504，Bill to的Tel:30-7500072等。
-- Product Name：Product Name对应的是Model No.下面的内容？比如BEE Smart Router，多功能路由器等。
-- Representative：Representative: 52-828-82802132-68857。
-- Ship Atn：Ship Atn: Lisa Baker。
-- Ship Qty：Ship Qty列，比如3,838.00 PCS。
-- Ship to：Ship to的地址部分。
-- Shipping Term：Shipping Term: FOB Shanghai。
-- Swift No：Swift No.: ABOCCNB BJ103（看A/C Name下面的Swift No.）。
-- Tax Amt：Tax Amt.: 0.00。
-- Tel：多个Tel，比如顶部的Phone是电话，Bill to的Tel:30-7500072，Ship Via的Tel: Mobile 07775 7504等。
-- Title：可能没有明确的Title？或者看Sold to的Attn: T-Mobile？可能Title不是主要的，或者可能没有。需要再检查。
-- Total Charge Amount：Total Charge Amount: USD 237,614.46。
-- Type：Line#部分的Type: 8517623600。
+Customer No：Customer No: TWN0007。
 
-现在需要逐个确定每个类别的bbox。因为是图像中的位置，需要看每个元素的位置。比如：
+Customer PO No：Customer PO No: JUTFF22050039。
 
-先处理Company Name：顶部的Aidoxin Network Co., Ltd.，其bbox是[29, 6, 629, 32]左右？看图片顶部，公司名是Aidoxin Network Co., Ltd.，地址是7903 Lloyd Port Apt. 998 Summersmouth, TX 46106，电话等。所以Company Name的bbox是包含公司名的区域，比如[29, 6, 629, 28]（因为公司名在最上方）。
+Payment Term：Payment Term: D/A 120 days after acceptance。
 
-然后A/C Name：在Remit Payment to部分，A/C Name: Aidoxin Network Co., Ltd.，其位置在右侧的Remit Payment to框内，A/C Name: 后面的内容。bbox大概是在Remit Payment to的A/C Name行，比如[598, 338, 757, 353]（需要看图像中的位置，可能更准确的是看该文本的位置）。
+Phone：顶部Phone:50-685-27888281。
 
-A/C No.：A/C No.: 10532514040003375，在Remit Payment to的A/C No.行，bbox是对应位置。
+Fax：顶部Fax:61-565-71852881。
 
-Address：多个地址，比如Bill to的Address是5037 Grant Creek South Matthew, WA 73794，在Bill to框内，地址行。Ship to的Address是925 Anthony Viaduct Brownview, NJ 76729 Unit 1224 Box 9219 DPO AE 94727，在Ship to框内。Sold to的Address是PSC 3572, Box 7231 APO AE 43845 304 Elizabeth Road Aaronfurt, NY 37369 0693 Kelly Views Sydneyhaven, VT 44387，在Sold to框内。Bank Add是Unit 9957 Box 7722 DPO AE 15401，在Remit Payment的Bank Add行。这些都属于Address类别，每个地址是一个Address对象。
+Bill Attn：Bill Attn: Erin Sims，在Bill to部分。
 
-Amount：表格中的Amount列，每个行的Amount值，比如237,614.46，还有Subtotal Amt.等。比如第一行的Amount是237,614.46，对应表格的Amount列。
+Ship Atn：Ship Attn: Lisa Baker，在Ship to部分。
 
-Bank Add：Remit Payment中的Bank Add: Unit 9957 Box 7722 DPO AE 15401，其位置在Remit Payment的Bank Add行。
+Ship to：Ship to的地址是925 Anthony Viaduct Brownview, NJ 76729 Unit 1224 Box 9219 DPO AE 94727。
 
-Bank Name：AGRICULTURAL BANK OF CHINA SUZHOU BRANCH，在Remit Payment的Bank Name行。
+Shipping Term：Shipping Term: FOB Shanghai。
 
-Bill Attn：Bill Attn: Erin Sims，在Bill to框内的Bill Attn行。
+Forwarder：Forwarder: Scan Global Logistics Ltd。
 
-Brand：在Line#部分，Brand: EE，对应Line#行的Brand信息。
+Import Name：Import Name: （这里可能没有值？看表格上方Import Name: 后面是空？不，看表格上方Import Name: 后面可能没有，不过看用户给的类别里有Import Name？不，用户给的类别里没有Import Name，看用户需要的类别列表。用户需要的类别里有Forwarder，所以Forwarder是Scan Global Logistics Ltd。
 
-Comments：Comments: BT deferment account (number 8393487) BT VAT number GB 245 7193 48 BT EORI number GB245719348000，在Remarks部分的Comments行。
+A/C Name：A/C Name: Aidoxin Network Co., Ltd. 在Remit Payment to部分。
 
-Company Name：除了顶部的，还有Sold to的公司？不，Sold to是PSC...，所以主要Company Name是顶部的Aidoxin Network Co., Ltd.，以及Bill to的Aidoxin Network Co., Ltd.，所以这两个都是Company Name？但可能视为同一个公司，所以顶部的Company Name是主要的。
+A/C No.：A/C No.: 10532514040003375。
 
-Country of Origin：Country of Origin: Chi，在Line#部分的第一行，对应Country of Origin行。
+Bank Name：Bank Name: AGRICULTURAL BANK OF CHINA SUZHOU BRANCH。
 
-Creater：Creater: 张秀梅，在底部的Creater行。
+Bank Add：Bank Add: Unit 9957 Box 7722 DPO AE 15401。
 
-Customer No：Customer No: TWN0007，在右上角的Customer No行。
+Address：Sold to的地址是PSC 3572, Box 7231 APO AE 43845 304 Elizabeth Road Aaronfurt, NY 37369 0693 Kelly Views Sydneyhaven, VT 44387 GB245719348 EORI# GB2457193480000，还有Ship to的地址，Bill to的地址。需要看哪个Address？可能Sold to的Address是主要的，或者看用户需要的Address类别。另外Bill to的Address是5037 Grant Creek South Matthew, WA 73794。需要确定每个Address对应哪个。可能用户需要的是Sold to的Address，或者Ship to的Address。需要看每个字段。
 
-Customer PO No：Customer PO No: JUTFF22050039，在右上角的Customer PO No行。
+Amount：表格中的Amount列，比如第一行是237,614.46，还有Subtotal Amt.也是这个数，Total Charge Amount也是。
 
-Disc. Amt：Disc. Amt.: 0.00，在Subtotal下面的Discount行。
+@Price：表格中的@Price列，比如61.911012。
 
-Duly Type：Duly Type: Foreign，在底部的Duly Type行。
+NO.：表格中的NO.列，比如JTFPF22050039，SFX2202032等。
 
-Fax：多个Fax，比如顶部的Fax:61-565-71852881，在顶部的Fax行；Bill to的Fax:（可能没有内容，但行存在）；Ship to的Fax:（可能没有）；Forwarder的Fax:（可能没有）；Ship Via的Fax:（可能没有）。所以顶部的Fax是存在的，bbox是顶部的Fax:61-565-71852881。
+Part No.：表格中的Part No.列，比如FRAOT9517009J (B)，然后另一个是E232521A0002等。
 
-Forwarder：Forwarder: Scan Global Logistics Ltd，在Ship to框内的Forwarder行。
+Model No.：表格中的Model No.列，比如BEE Smart Router (B) VDSL CPE GATEWAY GRV9517UWAC34-A-OT, 1 O；另一个是8517623600 多功能路由器。
 
-Group NO：Group NO: BVPK22050236，在右上角的Group NO行。
+Product Name：对应Model No.的内容，比如BEE Smart Router (B) VDSL CPE GATEWAY...，多功能路由器。
 
-Invoice Date：Invoice Date: 05/13/2022 13:39:25，在右上角的Invoice Date行。
+Brand：Brand: EE，在表格中的Type部分？看表格里有Brand: EE。
 
-Invoice No：Invoice No: VFX22050227，在右上角的Invoice No行；Packing No: VPK22050236，在Remark里的Packing No行；还有表格中的NO.列的JTFPF22050039等，但Invoice No是主要的发票编号，所以右上角的Invoice No是主要的。
+Country of Origin：Country of Origin: Chi（中国）。
 
-Model No.：Model No.列的标题，以及下面的内容，比如GRV9517UWAC34-A-OT, 1 O等。
+Comments：Comments: BT deferment account (number 8393487) BT VAT number GB 245 7193 48 BT EORI number GB2457193480000。
 
-N/C Amt.：N/C Amt.: 0.00，在Subtotal下面的N/C Amt.行。
+Creater：Creater: 张秀梅，在底部。
 
-NO.：表格的NO.列，比如JTFPF22050039，SFX2202032等。
+Packing No：Packing No: VPK22050236。
 
-Packing Comments：Packing Comments: We hereby certify that shipment does not contain solid wood packing materails.，在Packing Comments行。
+Packing Comments：Packing Comments: We hereby certify that shipment does not contain solid wood packing materails.
 
-Packing No：Packing No: VPK22050236，在Remark里的Packing No行。
+Duly Type：Duly Type: Foreign，在底部。
 
-Part No.：Part No.列，比如FRAOT9517009J，E232521A0002等。
+Representative：Representative: 52-828-82802132-68857，在底部。
 
-Payment Term：Payment Term: D/A 120 days after acceptance，在右上角的Payment Term行。
+Title：可能没有？看用户给的类别里有Title，但图中可能没有，或者看是否有。可能没有，暂时忽略？
 
-Phone：多个Phone，比如顶部的Phone:50-685-27888281，在顶部的Phone行；Bill to的Tel:30-7500072（Tel也算Phone？可能Tel和Phone是不同的，但题目中的Phone是类别，所以顶部的Phone是Phone，Ship Via的Tel是Mobile 07775 7504，可能属于Tel类别？需要区分Phone和Tel。题目中的类别有Phone和Tel，所以Phone是比如顶部的Phone:50-685-27888281，而Tel是比如Bill to的Tel:30-7500072，Ship Via的Tel: Mobile 07775 7504等。
+现在需要逐个处理每个类别，找到对应的bbox。
 
-Product Name：Product Name对应的是Model No.下面的描述，比如BEE Smart Router，多功能路由器等。
+先列所有需要的类别，然后找每个的bbox：
 
-Representative：Representative: 52-828-82802132-68857，在底部的Representative行。
+1. @Price：表格中@Price列，比如第一行的61.911012，对应单元格。看表格里的@Price列，每个行的@Price值。比如第一行@Price是61.911012，第二行可能没有？看表格结构，NO.列有两个条目？看表格里的行：
 
-Ship Atn：Ship Atn: Lisa Baker，在Ship to框内的Ship Atn行。
+第一行NO.是JTFPF22050039，Part No.是FRAOT9517009J (B)，Model No.是BEE Smart Router (B) VDSL CPE GATEWAY GRV9517UWAC34-A-OT, 1 O，Ship Qty是3,838.00 PCS，@Price是61.911012，Amount是237,614.46。
 
-Ship Qty：Ship Qty列，比如3,838.00 PCS，对应表格的Ship Qty列。
+第二行NO.是SFX2202032，Part No.是（空？不，看表格中SFX2202032对应的Part No.？可能表格中SFX2202032是另一个行？然后Line#是2，Type: 8517623600，Brand: EE，Country of Origin: Chi，然后Part No.是E232521A0002，Model No.是8517623600 多功能路由器，Ship Qty是2？不，看Subtotal Order Qty是3,838，所以可能第一行是主要的，第二行是另一个？可能表格中的行是合并的？看表格的结构，可能第一行是JTFPF22050039，然后下面的Line#是2，对应另一个产品。所以@Price在第一行是61.911012，第二行可能没有@Price？或者看表格中的@Price列，每个产品行的@Price。比如第一行有@Price，第二行可能没有，因为Subtotal是总和。所以@Price的bbox是对应第一行的@Price单元格，即表格中@Price列的单元格，比如坐标范围。
 
-Ship to：Ship to的地址部分，即925 Anthony Viaduct Brownview, NJ 76729 Unit 1224 Box 9219 DPO AE 94727，在Ship to框内。
+2. A/C Name：在Remit Payment to部分，A/C Name: Aidoxin Network Co., Ltd.，对应位置。
 
-Shipping Term：Shipping Term: FOB Shanghai，在Ship to框内的Shipping Term行。
+3. A/C No.：A/C No.: 10532514040003375，在Remit Payment to部分。
 
-Swift No：Swift No.: ABOCCNB BJ103（看A/C Name下面的Swift No.行，在Remit Payment的A/C Name下方）。
+4. Address：Sold to的地址，即PSC 3572, Box 7231 APO AE 43845 304 Elizabeth Road Aaronfurt, NY 37369 0693 Kelly Views Sydneyhaven, VT 44387 GB245719348 EORI# GB2457193480000，这个是Sold to的地址，属于Address类别。
 
-Tax Amt：Tax Amt.: 0.00，在Subtotal下面的Tax Amt.行。
+5. Amount：表格中的Amount列，比如第一行的237,614.46，以及Subtotal Amt.和Total Charge Amount也是这个值。需要看哪个Amount，可能Total Charge Amount是总金额，所以Amount可以是Total Charge Amount的值，或者表格中的Amount列。比如表格中每个行的Amount，以及Subtotal的Amount。
 
-Tel：比如Bill to的Tel:30-7500072，在Bill to框内的Tel行；Ship Via的Tel: Mobile 07775 7504，在Ship Via行；还有其他Tel。
+6. Bank Add：Bank Add: Unit 9957 Box 7722 DPO AE 15401，在Remit Payment to部分。
 
-Title：可能没有明确的Title，或者Sold to的Attn: T-Mobile是Attn，不是Title。可能Title不存在，或者需要再检查。题目中的Title是类别，可能图中没有，或者可能我漏了。比如Sold to的Attn是T-Mobile，可能不是Title。暂时认为Title可能没有，或者可能其他地方。但先继续。
+7. Bank Name：Bank Name: AGRICULTURAL BANK OF CHINA SUZHOU BRANCH，在Remit Payment to部分。
 
-Total Charge Amount：Total Charge Amount: USD 237,614.46，在底部的Total Charge Amount行。
+8. Bill Attn：Bill Attn: Erin Sims，在Bill to部分，Bill Attn: Erin Sims。
 
-Type：Line#部分的Type: 8517623600，在Line#行的Type信息。
+9. Brand：Brand: EE，在表格中的Line#部分，Brand: EE。
 
-现在需要将这些类别逐一对应到bbox。由于是图像，需要估计每个元素的位置。例如：
+10. Comments：Comments: BT deferment account (number 8393487) BT VAT number GB 245 7193 48 BT EORI number GB2457193480000，在底部Comments部分。
 
-1. Company Name: 顶部的Aidoxin Network Co., Ltd.，bbox [29, 6, 629, 32]
-2. @Price: 表格中的@Price列标题，比如在表格表头，列的位置，bbox [625, 437, 698, 456]（假设表格的@Price列）
-3. A/C Name: Remit Payment中的A/C Name: Aidoxin Network Co., Ltd.，bbox [598, 342, 757, 357]
-4. A/C No.: Remit Payment中的A/C No.: 1053251404000335，bbox [598, 332, 757, 345]
-5. Address: Bill to的地址，5037 Grant Creek South Matthew, WA 73794，bbox [107, 192, 475, 210]
-6. Amount: 表格中的Amount列，比如第一行的237,614.46，bbox [750, 456, 842, 475]
-7. Bank Add: Remit Payment中的Bank Add: Unit 9957 Box 7722 DPO AE 15401，bbox [598, 372, 757, 387]
-8. Bank Name: Remit Payment中的Bank Name: AGRICULTURAL BANK OF CHINA SUZHOU BRANCH，bbox [598, 357, 757, 372]
-9. Bill Attn: Bill to的Bill Attn: Erin Sims，bbox [332, 197, 425, 212]
-10. Brand: Line#部分的Brand: EE，bbox [250, 537, 285, 552]
-11. Comments: Comments: BT deferment account...，bbox [29, 792, 585, 837]
-12. Country of Origin: Line#部分的Country of Origin: Chi，bbox [250, 557, 325, 572]
-13. Creater: Creater: 张秀梅，bbox [29, 922, 585, 937]
-14. Customer No: Customer No: TWN0007，bbox [605, 147, 70
+11. Company Name：Aidoxin Network Co., Ltd.，顶部公司名称。
+
+12. Country of Origin：Country of Origin: Chi，在表格中的对应行，Country of Origin: Chi。
+
+13. Creater：Creater: 张秀梅，在底部，Creater: 张秀梅。
+
+14. Customer No：Customer No: TWN0007，在右上角部分。
+
+15. Customer PO No：Customer PO No: JUTFF22050039，在右上角部分。
+
+16. Disc. Amt：Disc. Amt.: 0.00，在Subtotal下面的Discount部分。
+
+17. Duly Type：Duly Type: Foreign，在底部，Duly Type: Foreign。
+
+18. Fax：顶部Fax:61-565-71852881，以及Ship Via部分的Fax:（可能没有，看Ship to部分的Fax: 后面是空？但顶部的Fax是公司的Fax，所以Fax是顶部的Fax:61-565-71852881。
+
+19. Forwarder：Forwarder: Scan Global Logistics Ltd，在Ship to部分，Forwarder: Scan Global Logistics Ltd。
+
+20. Group NO：Group NO : BVPK22050236，在右上角。
+
+21. Invoice Date：Invoice Date: 05/13/2022 13:39:25，在右上角。
+
+22. Invoice No：Invoice No: VFX22050227，在右上角。
+
+23. Model No.：表格中的Model No.列，比如BEE Smart Router (B) VDSL CPE GATEWAY GRV9517UWAC34-A-OT, 1 O；另一个是8517623600 多功能路由器。
+
+24. N/C Amt.：N/C Amt.: 0.00，在Subtotal下面的N/C部分。
+
+25. NO.：表格中的NO.列，比如JTFPF22050039，SFX2202032等。
+
+26. Packing Comments：Packing Comments: We hereby certify that shipment does not contain solid wood packing materails.，在Packing Comments部分。
+
+27. Packing No：Packing No: VPK22050236，在底部，Packing No: VPK22050236。
+
+28. Part No.：表格中的Part No.列，比如FRAOT9517009J (B)，E232521A0002等。
+
+29. Payment Term：Payment Term: D/A 120 days after acceptance，在右上角。
+
+30. Phone：Phone:50-685-27888281，顶部。
+
+31. Product Name：对应Model No.的内容，比如BEE Smart Router (B) VDSL CPE GATEWAY...，多功能路由器。
+
+32. Representative：Representative: 52-828-82802132-68857，在底部，Representative: 52-828-82802132-68857。
+
+33. Ship Atn：Ship Attn: Lisa Baker，在Ship to部分。
+
+34. Ship Qty：表格中的Ship Qty列，比如3,838.00 PCS，2（可能？看Subtotal Order Qty是3,838，所以第一行Ship Qty是3,838.00 PCS，第二行可能没有，或者Line#是2对应另一个数量？看表格中Line#是2，然后Ship Qty可能对应另一个产品，比如E232521A0002的Ship Qty是2？因为Subtotal是3,838，所以3,838 + 2？不对，可能表格中的Ship Qty是3,838.00 PCS（第一行），然后Line#是2对应的是另一个产品，其Ship Qty是2？因为Part No. E232521A0002的Ship Qty可能在下面，看表格结构，可能表格是合并单元格，所以Ship Qty的总和是3,838，所以第一行的Ship Qty是3,838.00 PCS，第二行可能没有单独的Ship Qty，或者Line#是2是另一个行的标识。需要看表格中的Ship Qty列，第一行是3,838.00 PCS，第二行可能没有数值，因为Subtotal是总和。所以Ship Qty的bbox是第一行的Ship Qty单元格。
+
+35. Ship to：Ship to的地址是925 Anthony Viaduct Brownview, NJ 76729 Unit 1224 Box 9219 DPO AE 94727。
+
+36. Shipping Term：Shipping Term: FOB Shanghai，在Ship to部分。
+
+37. Swift No：Swift No.: ABOCCNB BJ103（看A/C Name下面的Swift No.: ABOCCNB BJ103？图中A/C Name: Aidoxin Network Co., Ltd. 下面Swift No.: ABOCCNB BJ103？看图片中的Remit Payment to部分，Swift No.: ABOCCNB BJ103？图中是Swift No.: ABOCCNB BJ103？看图片中的内容：“Swift No.: ABOCCNB BJ103”？图中写的是“Swift No.: ABOCCNB BJ103”吗？看图片中的Remit Payment to部分：
+
+A/C No.: 10532514040003375
+
+A/C Name: Aidoxin Network Co., Ltd.
+
+Swift No.: ABOCCNB BJ103？图中是“Swift No.: ABOCCNB BJ103”？看图片中的文字：“Swift No.: ABOCCNB BJ103”？是的，图中有“Swift No.: ABOCCNB BJ103”。
+
+38. Tax Amt：Tax Amt.: 0.00，在Subtotal下面的Tax部分。
+
+39. Tel：Tel: Mobile 07775 7504，在Ship Via部分，Tel: Mobile 07775 7504；另外Bill to的Tel: 30-7500072。
+
+40. Title：可能没有，图中没有Title字段，所以可能不包含。
+
+41. Total Charge Amount：Total Charge Amount: USD 237,614.46，在底部。
+
+42. Type：Type: 8517623600（在表格中的Type: 8517623600）。
+
+现在需要为每个类别找到对应的bbox。由于是OCR任务，需要确定每个元素的位置。以下是一些关键元素的bbox（假设图片的坐标是基于整个发票的布局，需要大致估计）：
+
+例如，Company Name是顶部的Aidoxin Network Co., Ltd.，其bbox是[29, 10, 529, 32]（假设）。
+
+Group NO是右上角的Group NO : BVPK22050236，bbox是[675, 54, 925, 70]。
+
+Invoice Date是Invoice Date: 05/13/2022 13:39:25，bbox是[675, 62, 925, 78]。
+
+Invoice No是Invoice No: VFX22050227，bbox是[675, 70, 925, 86]。
+
+Customer No是Customer No: TWN0007，bbox是[675, 86, 925, 102]。
+
+Customer PO No是Customer PO No: JUTFF22050039，bbox是[675, 102, 925, 118]。
+
+Payment Term是Payment Term: D/A 120 days after acceptance，bbox是[675, 118, 925, 134]。
+
+Phone是Phone:50-685-27888281，bbox是[29, 34, 244, 50]。
+
+Fax是Fax:61-565-71852881，bbox是[244, 34, 394, 50]。
+
+Bill Attn是Bill Attn: Erin Sims，bbox是[145, 200, 325, 216]（在Bill to部分）。
+
+Ship Attn是Ship Attn: Lisa Baker，bbox是[505, 320, 625, 336]（在Ship to部分）。
+
+Ship to是925 Anthony Viaduct Brownview, NJ 76729 Unit 1224 Box 9219 DPO AE 94727，bbox

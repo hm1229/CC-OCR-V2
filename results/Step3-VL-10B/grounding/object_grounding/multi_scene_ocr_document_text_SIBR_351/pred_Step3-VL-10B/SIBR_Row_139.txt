@@ -1,0 +1,127 @@
+用户现在需要检测图像中的各个指定对象，首先得逐个分析每个类别在图中的位置。首先看标题是“INFORMATION INVOICE”，公司名是“Huayuan Software Technology Hotel”和对应的中文“华远软件科技酒店”。然后人名是“Mr Amy Young”。接下来各个字段：
+
+Arrive 入住日期：看Arrive 11-10-20，对应入住日期。
+Balance 余额：图中有“Balance 余额”和CNY1,499.97。
+CHARGES 消费：列标题是CHARGES 消费，下面有数值。
+CREDITS 付款：列标题是CREDITS 付款，数值是0.00。
+Cashier 收银员：值是John Welch。
+Confirmation No. 确认号：值是89194630。
+DATE 日期：列标题DATE 日期，下面有11-10-20和12-10-20。
+DESCRIPTION 项目：列标题DESCRIPTION 项目，内容是Accommodation等。
+Depart 离店日期：Depart 14-10-20。
+Loyalty No.会员号码：XXXXX8055。
+No. of Guest 住店人数：1。
+Page # 页数：1。
+Room No. 房号：0903。
+Time printed 打印时间：14-OCT-20。
+Time 入住时间：23:50。
+Time 离店时间：00:00。
+lnvoice # 账单号：13113916。
+
+现在需要为每个类别找到对应的bbox。先处理标题“INFORMATION INVOICE”是标题。公司名是“Huayuan Software Technology Hotel”和中文。人名是“Mr Amy Young”。
+
+现在逐个列出来：
+
+1. 标题：INFORMATION INVOICE，位置在上方，对应bbox。
+2. 公司名：Huayuan Software Technology Hotel（英文）和华远软件科技酒店（中文）。
+3. 人名：Mr Amy Young。
+4. Arrive 入住日期：Arrive 11-10-20，对应入住日期的标签和日期。
+5. Balance 余额：Balance 余额和CNY1,499.97。
+6. CHARGES 消费：列标题和下面的数值。
+7. CREDITS 付款：列标题和数值。
+8. Cashier 收银员：John Welch。
+9. Confirmation No. 确认号：89194630。
+10. DATE 日期：列标题和下面的日期。
+11. DESCRIPTION 项目：列标题和项目内容。
+12. Depart 离店日期：Depart 14-10-20。
+13. Loyalty No.会员号码：XXXXX8055。
+14. No. of Guest 住店人数：1。
+15. Page # 页数：1。
+16. Room No. 房号：0903。
+17. Time printed 打印时间：14-OCT-20。
+18. Time 入住时间：23:50。
+19. Time 离店时间：00:00。
+20. lnvoice # 账单号：13113916。
+
+现在需要确定每个的bbox。比如标题“INFORMATION INVOICE”的位置，看图像中该文字的位置。公司名是顶部的Huayuan...和华远...。人名是Mr Amy Young。
+
+现在开始构建每个的条目：
+
+- 标题：INFORMATION INVOICE，bbox大概在上方，比如x1=100, y1=150, x2=300, y2=170左右（需要看图像，但根据布局，标题是大写，所以确定）。
+- 公司名：Huayuan Software Technology Hotel，英文部分，bbox是x1=450, y1=50, x2=850, y2=70；中文是“华远软件科技酒店”在英文下面，x1=450, y1=70, x2=600, y2=90。
+- 人名：Mr Amy Young，位置在左侧，x1=100, y1=200, x2=250, y2=220。
+- Arrive 入住日期：Arrive 11-10-20，对应标签和日期，x1=50, y1=350, x2=150, y2=370（Arrive）和x1=150, y1=350, x2=230, y2=370（11-10-20）。
+- Balance 余额：Balance 余额在下方，x1=200, y1=650, x2=300, y2=670；CNY1,499.97是金额，x1=600, y1=650, x2=850, y2=670。
+- CHARGES 消费：列标题CHARGES 消费，x1=350, y1=480, x2=450, y2=500；下面的数值比如999.98在对应行。
+- CREDITS 付款：列标题CREDITS 付款，x1=550, y1=480, x2=650, y2=500；数值0.00在Total行。
+- Cashier 收银员：John Welch，x1=600, y1=300, x2=750, y2=320。
+- Confirmation No. 确认号：89194630，x1=600, y1=250, x2=750, y2=270。
+- DATE 日期：列标题DATE 日期，x1=100, y1=480, x2=200, y2=500；下面的日期11-10-20和12-10-20。
+- DESCRIPTION 项目：列标题DESCRIPTION 项目，x1=250, y1=480, x2=400, y2=500；项目内容Accommodation等。
+- Depart 离店日期：Depart 14-10-20，x1=350, y1=350, x2=450, y2=370（Depart）和x1=450, y1=350, x2=530, y2=370（14-10-20）。
+- Loyalty No.会员号码：XXXXX8055，x1=650, y1=200, x2=750, y2=220。
+- No. of Guest 住店人数：1，x1=650, y1=220, x2=750, y2=240。
+- Page # 页数：1，x1=650, y1=320, x2=750, y2=340。
+- Room No. 房号：0903，x1=650, y1=190, x2=750, y2=210。
+- Time printed 打印时间：14-OCT-20，x1=650, y1=380, x2=750, y2=400。
+- Time 入住时间：23:50，x1=350, y1=350, x2=450, y2=370（Time）和x1=450, y1=350, x2=530, y2=370（23:50）。
+- Time 离店时间：00:00，x1=550, y1=350, x2=650, y2=370（Time）和x1=650, y1=350, x2=730, y2=370（00:00）。
+- lnvoice # 账单号：13113916，x1=750, y1=330, x2=850, y2=350。
+
+现在需要将这些整理成JSON数组，每个元素包含bbox和label。需要注意每个类别只出现一次，比如标题是“INFORMATION INVOICE”，公司名是两个（英文和中文？但可能公司名作为一个类别，因为是公司名称。人名是Mr Amy Young。然后其他字段。
+
+现在开始列出所有需要的类别，确保没有遗漏：
+
+类别列表：
+
+Arrive 入住日期, Balance 余额, CHARGES 消费, CREDITS 付款, Cashier 收银员, Confirmation No. 确认号, DATE 日期, DESCRIPTION 项目, Depart 离店日期, Loyalty No.会员号码, No. of Guest 住店人数, Page # 页数, Room No. 房号, Time printed 打印时间, Time 入住时间, Time 离店时间, lnvoice # 账单号, 人名, 公司名, 标题.
+
+现在逐个处理：
+
+1. 标题：INFORMATION INVOICE → label: 标题，bbox需要确定。看图像中“INFORMATION INVOICE”在上方，所以bbox大概[105, 145, 325, 165]（假设）。
+2. 公司名：Huayuan Software Technology Hotel（英文）和华远软件科技酒店（中文）→ 可以合并为公司名，因为是同一公司的中英文。所以公司名的bbox是英文部分和中文部分，比如英文是[455, 55, 845, 75]，中文是[455, 75, 605, 95]。但可能作为一个公司名条目，或者两个？但题目中公司名是一个类别，所以可能取英文的bbox，因为中文是翻译。或者都算？但可能公司名是“Huayuan Software Technology Hotel”作为公司名，中文是辅助。所以公司名的bbox是[455, 55, 845, 75]。
+3. 人名：Mr Amy Young → bbox[105, 210, 255, 230]。
+4. Arrive 入住日期：Arrive 11-10-20 → label是Arrive 入住日期，bbox包含Arrive和日期，比如[50, 355, 235, 375]（Arrive 11-10-20）。
+5. Balance 余额：Balance 余额和CNY1,499.97 → label是Balance 余额，bbox比如[200, 655, 300, 675]（Balance 余额）和[600, 655, 850, 675]（CNY1,499.97），但可能取“Balance 余额”文字的bbox，比如[200, 655, 300, 675]。
+6. CHARGES 消费：列标题CHARGES 消费，bbox[350, 485, 450, 505]。
+7. CREDITS 付款：列标题CREDITS 付款，bbox[550, 485, 650, 505]。
+8. Cashier 收银员：John Welch → bbox[600, 305, 750, 325]。
+9. Confirmation No. 确认号：89194630 → bbox[600, 255, 750, 275]。
+10. DATE 日期：列标题DATE 日期，bbox[100, 485, 200, 505]。
+11. DESCRIPTION 项目：列标题DESCRIPTION 项目，bbox[250, 485, 400, 505]。
+12. Depart 离店日期：Depart 14-10-20 → bbox[350, 355, 530, 375]（Depart 14-10-20）。
+13. Loyalty No.会员号码：XXXXX8055 → bbox[650, 205, 750, 225]。
+14. No. of Guest 住店人数：1 → bbox[650, 225, 750, 245]。
+15. Page # 页数：1 → bbox[650, 325, 750, 345]。
+16. Room No. 房号：0903 → bbox[650, 195, 750, 215]。
+17. Time printed 打印时间：14-OCT-20 → bbox[650, 385, 750, 405]。
+18. Time 入住时间：23:50 → bbox[450, 355, 530, 375]（Time 23:50）。
+19. Time 离店时间：00:00 → bbox[650, 355, 730, 375]（Time 00:00）。
+20. lnvoice # 账单号：13113916 → bbox[750, 335, 850, 355]。
+21. 人名：已经处理过Mr Amy Young，所以人名的label是人名，对应上面的条目。
+22. 公司名：已经处理过Huayuan Software Technology Hotel。
+23. 标题：已经处理过INFORMATION INVOICE。
+
+现在需要确保每个类别都覆盖，然后生成JSON数组。注意有些类别可能在图像中是多个部分，但每个类别只列一次。比如“Balance 余额”是类别，对应其文字部分；“CHARGES 消费”是列标题；“CREDITS 付款”是列标题；“Arrive 入住日期”是Arrive和日期的组合；“Depart 离店日期”是Depart和日期的组合；“Time 入住时间”是Time和时间的组合；“Time 离店时间”是Time和时间的组合；“lnvoice # 账单号”是账单号；“公司名”是酒店名称；“人名”是客人姓名；“标题”是INFORMATION INVOICE。
+
+现在开始编写每个条目的JSON：
+
+[
+  {"bbox_2d": [105, 145, 325, 165], "label": "标题"},
+  {"bbox_2d": [455, 55, 845, 75], "label": "公司名"},
+  {"bbox_2d": [105, 210, 255, 230], "label": "人名"},
+  {"bbox_2d": [50, 355, 235, 375], "label": "Arrive 入住日期"},
+  {"bbox_2d": [200, 655, 300, 675], "label": "Balance 余额"},
+  {"bbox_2d": [350, 485, 450, 505], "label": "CHARGES 消费"},
+  {"bbox_2d": [550, 485, 650, 505], "label": "CREDITS 付款"},
+  {"bbox_2d": [600, 305, 750, 325], "label": "Cashier 收银员"},
+  {"bbox_2d": [600, 255, 750, 275], "label": "Confirmation No. 确认号"},
+  {"bbox_2d": [100, 485, 200, 505], "label": "DATE 日期"},
+  {"bbox_2d": [250, 485, 400, 505], "label": "DESCRIPTION 项目"},
+  {"bbox_2d": [350, 355, 530, 375], "label": "Depart 离店日期"},
+  {"bbox_2d": [650, 205, 750, 225], "label": "Loyalty No.会员号码"},
+  {"bbox_2d": [650, 225, 750, 245], "label": "No. of Guest 住店人数"},
+  {"bbox_2d": [650, 325, 750, 345], "label": "Page # 页数"},
+  {"bbox_2d": [650, 195, 750, 215], "label": "Room No. 房号"},
+  {"bbox_2d": [650, 385, 750, 405], "label": "Time printed 打印时间"},
+ 

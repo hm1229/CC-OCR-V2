@@ -1,182 +1,211 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段对应的信息，每个字段要找到对应的bbox和label。首先得逐个分析每个类别在图中的位置。
 
-首先看各个类别：
+首先看1. Packing：在发票下方的第1点，内容是关于包装的描述。找到对应的文本区域。
 
-1. Packing：看第1点的内容，是包装信息。对应文本“1. Packing: ethyl maltol-A1000kg 0.5kg*50/ fibre drum,Lot No:2021-10-232 ethyl maltol-B 700kg 0.5kg*50/ fibre drum,Lot No:2021-10-212 100kg methyl cyclopentenolone 1kg*25/fibre drum,Lot No:2021-10-21” 这部分是Packing。
+2. Port of Shipment：第2点，上海，中国。
 
-2. Port of Shipment：第2点，“Port of Shipment: Shanghai,China.” 对应。
+3. Port of Destination：第3点，Keelung（基隆）。
 
-3. Port of Destination：第3点，“Port of Destination: Keelung” 对应。
+4. Time of Shipment：第4点，PROMPT（即刻装运）。
 
-4. Time of Shipment：第4点，“Time of Shipment: PROMPT” 对应。
+5. Country of Origin：第5点，Hanzhong(610069),China。
 
-5. Country of Origin：第5点，“Country of Origin: Hanzhong(610069),China.” 对应。
+6. Terms of Payment：第6点，100% T/T in advance。
 
-6. Terms of Payment：第6点，“Terms of Payment: 100% T/T in advance” 对应。
+然后是ACCOUNT：看底部的账户号码，2606 0536 1920 0141 328。
 
-然后是其他类别：
+ACCOUNT NAME：Helian Electronic Technology Co., Ltd.
 
-ACCOUNT：看底部的ACCOUNT：“ACCOUNT : 2606 0536 1920 0141 328” 对应。
+Add：买方的地址是361 Baldwin Light Haysland, SC 87689；卖方的地址是82970 Pamela Court Suite 845 Charlesland, NY 91341。需要看对应哪个Add？题目里的Add可能指买方或卖方？看问题中的Add，可能需要看上下文。不过先看各个字段。
 
-ACCOUNT NAME：“ACCOUNT NAME : Helian Electronic Technology Co., Ltd.” 对应。
+Amount：总金额是SAY USD FORTY-EIGHT THOUSAND ONE HUNDRED AND SEVENTY ONLY，或者看表格里的总和？表格里的总和是26500+18550+3120=48170？不过文本里写的是FORTY-EIGHT THOUSAND ONE HUNDRED AND SEVENTY，可能对应。
 
-Add：买方的Add是“The buyer: 合联电子科技有限公司 Add:361 Baldwin Light Haysland, SC 87689”；卖方的Add是“The seller: Helian Electronic Technology Co., Ltd. Add:82970 Pamela Court Suite 845 Charlesland, NY 91341” 这里需要看是否有Add类别，可能有两个Add，但需要确认。不过先看每个Add的位置。
+BANK ADDRESS：中间银行的地址是942 Tracy Haven Apt. 442 Hooperchester, FL 89364。
 
-Amount：表格中的Amount列，以及Total amount: SAY USD... 对应。
+BANK NAME：INDUSTRIAL AND COMMERCIAL BANK OF CHINA HANZHONG SUB-BRANCH。
 
-BANK ADDRESS：“BANK ADDRESS 942 Tracy Haven Apt. 442 Hooperchester, FL 89364” 对应。
+Company Name：合联电子科技有限公司（Helian Electronic Technology Co., Ltd.）。
 
-BANK NAME：“BANK NAME : INDUSTRIAL AND COMMERCIAL BANK OF CHINA HANZHONG SUB-BRANCH” 对应。
+DATE：2021/10/18。
 
-Company Name：顶部的“合联电子科技有限公司 Helian Electronic Technology Co., Ltd.” 以及卖方的Company Name是Helian Electronic Technology Co., Ltd.，买方也是合联电子科技有限公司，所以Company Name有两个？但需要看标注。
+Fax：买方的Fax是+628-8-80896923；卖方的Fax是+90-8882-1283669。需要看对应哪个Fax？题目中的Fax F可能指买方或卖方？看顶部的传真F是(28)9616-0828938（卖方的传真？因为顶部是公司的信息，合联电子科技有限公司的地址是4486 Kevin Mountains...，传真F是(28)9616-0828938。另外买方的Fax是+628-8-80896923，卖方的Fax是+90-8882-1283669。需要看问题中的“传真 F”对应哪个。可能顶部的传真F是公司的（卖方？不，顶部是合联电子科技有限公司的信息吗？看顶部：合联电子科技有限公司，电话T是(68)8106-8980932，邮箱E是rthompson@holt.biz，地址A是4486 Kevin Mountains Suite 866 Scottside, MT 60290。然后传真F是(28)9616-0828938，网址W是http://reed.com/。这部分是卖方的信息吗？因为下面The seller是Helian Electronic Technology Co., Ltd.，而The buyer是合联电子科技有限公司。所以顶部的合联电子科技有限公司是买方？不，The buyer是合联电子科技有限公司，所以顶部的合联电子科技有限公司是买方的信息？看The buyer的Add是361...，而顶部的地址是4486...，可能顶部是卖方的信息？因为The seller是Helian Electronic Technology Co., Ltd.，其地址是82970...，而顶部的地址是4486 Kevin Mountains...，可能顶部是另一个公司的信息？可能我搞反了。不过先处理每个字段。
 
-DATE：“DATE : 2021/10/18” 对应。
+INTERMEDIARY BANK SWIFT：CHASUS33。
 
-Fax：买方的Fax是“Fax:+628-8-80896923”；卖方的Fax是“Fax:+90-8882-1283669”；顶部的传真F是“传真 F : (28)9616-0828938” 这里需要看哪些是Fax类别。用户给的类别中有“Fax”，所以需要找所有Fax。
+NO.：TH2021101801。
 
-INTERMEDIARY BANK SWIFT：“INTERMEDIARY BANK SWIFT : CHASUS33” 对应。
+Name of Product：表格中的三个产品：Ethyl maltol-Afood grade，Ethyl maltol-B food grade，Methyl cyclopenolenolone-food grade。
 
-NO.：“NO. : TH2021101801” 对应。
+Quantity：1000kg，700kg，100kg。
 
-Name of Product：表格中的Name of Product列，如“Ethyl maltol-Afood grade”等。
+SWIFT CODE：ICBKCNBJJSAS。
 
-Quantity：表格中的Quantity列，如1000kg等。
+Tel：买方的Tel是+938-8-29098266；卖方的Tel是+09-8920-016861；顶部的电话T是(68)8106-8980932（可能是卖方的？因为The seller的Tel是+09-8920-016861，而顶部的电话T是(68)8106-8980932，可能顶部是卖方的另一个信息？或者可能顶部是公司的通用信息。需要看每个Tel对应。
 
-SWIFT CODE：“SWIFT CODE : ICBKCNBJJSAS” 对应。
+Title：可能是指发票的标题COMMERICAL INVOICE？或者可能没有明确的Title，但看问题中的Title可能是指公司名称？不，Title可能是指“COMMERICAL INVOICE”这个标题。不过看问题中的Title类别，可能需要找。
 
-Tel：买方的Tel是“Tel:+938-8-29098266”；卖方的Tel是“Tel:+09-8920-016861”；顶部的电话T是“电话 T : (68)8106-8980932” 这里Tel类别需要找。
+UnitPrice CIF Keelung BY Sea：表格中的Unit Price列，CIF Keelung BY Sea，对应$26.5/kg，$26.5/kg，$31.2/kg。
 
-Title：可能是指“COMMERICAL INVOICE”是标题？或者看是否有Title类别，用户给的类别中有Title，可能是指发票标题“COMMERICAL INVOICE”？
+邮编 E：可能是指邮箱E，即rthompson@holt.biz（顶部的邮箱）。
 
-UnitPrice CIF Keelung BY Sea：表格中的“Unit Price CIF Keelung BY Sea”列，如$26.5/kg等。
+现在需要逐个列出每个类别，找到对应的bbox。
 
-传真 F：顶部的“传真 F : (28)9616-0828938” 对应。
+首先，先整理每个类别：
 
-地址 A：顶部的“地址 A : 4486 Kevin Mountains Suite 866 Scottside, MT 60290” 对应。
+1. Packing：对应第1点的文本，内容是“1. Packing: ethyl maltol-A1000kg 0.5kg*50/ fibre drum, Lot No:2021-10-232 ethyl maltol-B 700kg 0.5kg*50/ fibre drum, Lot No:2021-10-212 100kg methyl cyclopenolenolone 1kg*25/fibre drum, Lot No:2021-10-21” 所以bbox是包含这段文字的区域。
 
-电话 T：顶部的“电话 T : (68)8106-8980932” 对应。
+2. Port of Shipment：第2点，“2. Port of Shipment: Shanghai,China.” 找到这段的bbox。
 
-网址 W：顶部的“网址 W : http://reed.com/” 对应。
+3. Port of Destination：第3点，“3. Port of Destination: Keelung” 找到。
 
-邮编 E：这里可能用户写错了？“邮编 E”？看邮箱是“邮箱 E : rthompson@holt.biz” 所以E是邮箱，可能用户把邮箱标为邮编E？需要看。用户给的类别是“邮编 E”，可能是指邮箱（E是Email的缩写？因为顶部有“邮箱 E : ...”）。
+4. Time of Shipment：第4点，“4. Time of Shipment: PROMPT” 找到。
 
-现在需要逐个定位每个元素的bbox。因为是图片，需要估计每个部分的位置。但可能更高效的是按类别列出所有出现的位置。
+5. Country of Origin：第5点，“5. Country of Origin: Hanzhong(610069),China.” 找到。
 
-现在开始整理：
+6. Terms of Payment：第6点，“6. Terms of Payment: 100% T/T in advance” 找到。
 
-1. Packing：对应第1点的文本，bbox大概是[10, 698, 989, 730]（因为第1点是Packing的描述）
+ACCOUNT：底部的“ACCOUNT : 2606 0536 1920 0141 328” 找到。
 
-2. Port of Shipment：第2点，“2. Port of Shipment: Shanghai,China.” bbox是[10, 732, 989, 748]
+ACCOUNT NAME：“ACCOUNT NAME : Helian Electronic Technology Co., Ltd.” 找到。
 
-3. Port of Destination：第3点，“3. Port of Destination: Keelung” bbox是[10, 749, 989, 765]
+Add：需要看是买方还是卖方的Add。问题中的Add可能指买方的Add（The buyer: 合联电子科技有限公司的Add: 361 Baldwin Light Haysland, SC 87689）或者卖方的Add（The seller: Helian Electronic Technology Co., Ltd.的Add: 82970 Pamela Court Suite 845 Charlesland, NY 91341）。需要看问题中的Add对应哪个。可能题目中的Add是买方的Add，因为The buyer部分有Add。所以买方的Add是“361 Baldwin Light Haysland, SC 87689” 对应的bbox。
 
-4. Time of Shipment：第4点，“4. Time of Shipment: PROMPT” bbox是[10, 766, 989, 782]
+Amount：总金额的文本“Total amount: SAY USD FORTY-EIGHT THOUSAND ONE HUNDRED AND SEVENTY ONLY” 找到，或者表格中的Amount列的总和？但文本里写的是这个，所以用这个。
 
-5. Country of Origin：第5点，“5. Country of Origin: Hanzhong(610069),China.” bbox是[10, 783, 989, 799]
+BANK ADDRESS：“BANK ADDRESS 942 Tracy Haven Apt. 442 Hooperchester, FL 89364” 找到。
 
-6. Terms of Payment：第6点，“6. Terms of Payment: 100% T/T in advance” bbox是[10, 799, 989, 815]
+BANK NAME：“BANK NAME : INDUSTRIAL AND COMMERCIAL BANK OF CHINA HANZHONG SUB-BRANCH” 找到。
 
-ACCOUNT：底部的“ACCOUNT : 2606 0536 1920 0141 328” bbox是[10, 870, 989, 886]
+Company Name：“合联电子科技有限公司”（The buyer的公司名称）或者“The seller: Helian Electronic Technology Co., Ltd.”。看问题中的Company Name，可能指卖方的公司名称，因为The seller是Helian Electronic Technology Co., Ltd.，而The buyer是合联电子科技有限公司。需要看哪个。可能Company Name是合联电子科技有限公司（因为顶部有这个公司名称）。顶部的“合联电子科技有限公司”是公司名称，所以bbox是顶部的公司名称区域。
 
-ACCOUNT NAME：“ACCOUNT NAME : Helian Electronic Technology Co., Ltd.” bbox是[10, 887, 989, 903]
+DATE：“DATE : 2021/10/18” 找到。
 
-Add（买方）：“Add:361 Baldwin Light Haysland, SC 87689” 在The buyer部分，bbox是[38, 225, 961, 241]
+Fax：需要看是哪个Fax。问题中的“传真 F”可能指顶部的传真F：(28)9616-0828938（因为顶部有“传真 F : (28)9616-0828938”）。另外买方的Fax是+628-8-80896923，卖方的Fax是+90-8882-1283669。但问题中的“传真 F”可能对应顶部的传真，即(28)9616-0828938。
 
-Add（卖方）：“Add:82970 Pamela Court Suite 845 Charlesland, NY 91341” 在The seller部分，bbox是[38, 312, 961, 328]
+地址 A：顶部的“地址 A : 4486 Kevin Mountains Suite 866 Scottside, MT 60290” 找到。
 
-Amount（表格中的Amount列）：表格里的Amount列，比如$26500.00等，bbox是表格的Amount列区域，大概[520, 430, 800, 520]（因为表格是Name of Product, Quantity, Unit Price..., Amount四列，Amount列在最右）
+电话 T：顶部的“电话 T : (68)8106-8980932” 找到。
 
-Total amount的Amount：“Total amount: SAY USD...” bbox是[10, 530, 989, 546]
+网址 W：顶部的“网址 W : http://reed.com/” 找到。
 
-BANK ADDRESS：“BANK ADDRESS 942 Tracy Haven Apt. 442 Hooperchester, FL 89364” bbox是[10, 830, 989, 846]
+邮编 E：顶部的“邮箱 E : rthompson@holt.biz” 找到（因为邮编E可能是指邮箱，E是Email的缩写）。
 
-BANK NAME：“BANK NAME : INDUSTRIAL AND COMMERCIAL BANK OF CHINA HANZHONG SUB-BRANCH” bbox是[10, 847, 989, 863]
+现在需要为每个类别确定bbox。由于是图片中的文本，需要估计每个文本块的位置。
 
-Company Name（买方）：“The buyer: 合联电子科技有限公司” 对应的Company Name，bbox是[38, 205, 961, 221]
+现在开始逐个处理：
 
-Company Name（卖方）：“The seller: Helian Electronic Technology Co., Ltd.” bbox是[38, 302, 961, 318]
+1. Packing：
+文本是“1. Packing: ethyl maltol-A1000kg 0.5kg*50/ fibre drum, Lot No:2021-10-232 ethyl maltol-B 700kg 0.5kg*50/ fibre drum, Lot No:2021-10-212 100kg methyl cyclopenolenolone 1kg*25/fibre drum, Lot No:2021-10-21”
+bbox大概在表格下方，第1点的位置，所以坐标需要看图片中的位置。假设图片中这部分的y范围是从表格下方开始，大约在Total amount下面。
 
-DATE：“DATE : 2021/10/18” 在发票上方，bbox是[450, 200, 989, 216]
+2. Port of Shipment：
+“2. Port of Shipment: Shanghai,China.” 找到对应的行。
 
-Fax（买方）：“Fax:+628-8-80896923” 在The buyer部分，bbox是[38, 242, 961, 258]
+3. Port of Destination：
+“3. Port of Destination: Keelung” 对应的行。
 
-Fax（卖方）：“Fax:+90-8882-1283669” 在The seller部分，bbox是[38, 330, 961, 346]
+4. Time of Shipment：
+“4. Time of Shipment: PROMPT” 对应的行。
 
-Fax（顶部）：“传真 F : (28)9616-0828938” 在顶部右侧，bbox是[670, 10, 989, 26]
+5. Country of Origin：
+“5. Country of Origin: Hanzhong(610069),China.” 对应的行。
 
-INTERMEDIARY BANK SWIFT：“INTERMEDIARY BANK SWIFT : CHASUS33” bbox是[10, 950, 989, 966]
+6. Terms of Payment：
+“6. Terms of Payment: 100% T/T in advance” 对应的行。
 
-NO.：“NO. : TH2021101801” 在COMMERICAL INVOICE下方，bbox是[380, 205, 989, 221]
+ACCOUNT：
+“ACCOUNT : 2606 0536 1920 0141 328” 在底部，银行信息下方。
 
-Name of Product（表格第一行）：“Ethyl maltol-Afood grade” bbox是[100, 450, 520, 470]
+ACCOUNT NAME：
+“ACCOUNT NAME : Helian Electronic Technology Co., Ltd.” 在ACCOUNT上面。
 
-Name of Product（第二行）：“Ethyl maltol-B food grade” bbox是[100, 475, 520, 495]
+Add（买方的Add）：
+“The buyer: 合联电子科技有限公司 Add:361 Baldwin Light Haysland, SC 87689” 找到这部分的Add。
 
-Name of Product（第三行）：“Methyl cyclopentenolone-food grade” bbox是[100, 500, 520, 520]
+Amount：
+“Total amount: SAY USD FORTY-EIGHT THOUSAND ONE HUNDRED AND SEVENTY ONLY” 在表格下方，Packing上面。
 
-Quantity（第一行）：“1000kg” bbox是[520, 450, 680, 470]
+BANK ADDRESS：
+“BANK ADDRESS 942 Tracy Haven Apt. 442 Hooperchester, FL 89364” 在银行信息部分。
 
-Quantity（第二行）：“700kg” bbox是[520, 475, 680, 495]
+BANK NAME：
+“BANK NAME : INDUSTRIAL AND COMMERCIAL BANK OF CHINA HANZHONG SUB-BRANCH” 在BANK ADDRESS上面。
 
-Quantity（第三行）：“100kg” bbox是[520, 500, 680, 520]
+Company Name：
+顶部的“合联电子科技有限公司” 及其英文，所以bbox是顶部的公司名称区域。
 
-SWIFT CODE：“SWIFT CODE : ICBKCNBJJSAS” bbox是[10, 910, 989, 926]
+DATE：
+“DATE : 2021/10/18” 在NO.和DATE的位置，发票上方。
 
-Tel（买方）：“Tel:+938-8-29098266” 在The buyer部分，bbox是[38, 250, 961, 266]
+Fax（顶部的传真F）：
+“传真 F : (28)9616-0828938” 在顶部联系信息部分。
 
-Tel（卖方）：“Tel:+09-8920-016861” 在The seller部分，bbox是[38, 340, 961, 356]
+地址 A（顶部的地址A）：
+“地址 A : 4486 Kevin Mountains Suite 866 Scottside, MT 60290” 在顶部联系信息部分。
 
-Tel（顶部）：“电话 T : (68)8106-8980932” 在顶部，bbox是[540, 10, 989, 26]
+电话 T（顶部的电话T）：
+“电话 T : (68)8106-8980932” 在顶部联系信息部分。
 
-Title：“COMMERICAL INVOICE” 是标题，bbox是[250, 300, 750, 320]（因为COMMERICAL INVOICE在中间上方）
+网址 W（顶部的网址W）：
+“网址 W : http://reed.com/” 在顶部联系信息部分。
 
-UnitPrice CIF Keelung BY Sea（表格列标题）：“Unit Price CIF Keelung BY Sea” bbox是[520, 420, 800, 440]
+邮编 E（顶部的邮箱E）：
+“邮箱 E : rthompson@holt.biz” 在顶部联系信息部分。
 
-传真 F（顶部）已经算过，是“传真 F : (28)9616-0828938”
+另外，还有卖方的Add、Tel、Fax等，但问题中的类别可能主要指顶部的公司（合联电子科技有限公司）的联系信息，以及买方、卖方的交易信息。
 
-地址 A（顶部）：“地址 A : 4486 Kevin Mountains Suite 866 Scottside, MT 60290” bbox是[670, 15, 989, 31]
+现在需要将每个类别对应到正确的bbox。由于是文本提取，每个条目的bbox需要覆盖对应的文本。
 
-电话 T（顶部）：“电话 T : (68)8106-8980932” 已经算过
+现在开始构建JSON数组：
 
-网址 W（顶部）：“网址 W : http://reed.com/” bbox是[730, 15, 989, 31]
+首先，列出所有类别：
 
-邮编 E（邮箱）：“邮箱 E : rthompson@holt.biz” 在顶部，bbox是[600, 10, 730, 26]
+1. Packing
+2. Port of Shipment
+3. Port of Destination
+4. Time of Shipment
+5. Country of Origin
+6. Terms of Payment
+7. ACCOUNT
+8. ACCOUNT NAME
+9. Add（买方的Add）
+10. Amount
+11. BANK ADDRESS
+12. BANK NAME
+13. Company Name（合联电子科技有限公司，顶部）
+14. DATE
+15. Fax（顶部的传真F）
+16. 地址 A（顶部的地址A）
+17. 电话 T（顶部的电话T）
+18. 网址 W（顶部的网址W）
+19. 邮编 E（顶部的邮箱E）
+20. Name of Product（三个产品，可能需要分别？但问题中是“Name of Product”作为类别，可能指表格中的产品名称列，所以每个产品名称？但问题中是“Name of Product”作为一个类别，可能需要看是否是列标题。表格的列标题是“Name of Product”，所以列标题的bbox。
+21. Quantity（列标题的Quantity）
+22. UnitPrice CIF Keelung BY Sea（列标题的Unit Price CIF Keelung BY Sea）
+23. INTERMEDIARY BANK SWIFT（CHASUS33）
+24. NO.（TH2021101801）
+25. SWIFT CODE（ICBKCNBJJSAS）
+26. Tel（顶部的电话T，即(68)8106-8980932；或者买方的Tel+938-8-29098266；卖方的Tel+09-8920-016861。需要看问题中的“Tel”对应哪个。问题中的“电话 T”是顶部的，而“Tel”可能是指买方或卖方的Tel。但问题中的类别有“电话 T”和“Tel”，可能“电话 T”是顶部的，“Tel”是其他？不，问题中的类别是“电话 T”和“Tel”？看问题中的类别列表：“电话 T, 网址 W, 邮编 E” 是单独的，而“Tel”是另一个类别？不，看问题中的类别列表：
 
-现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意有些类别可能重复，比如Add有两个（买方和卖方），Fax有三个（买方、卖方、顶部），Tel有三个（买方、卖方、顶部）等。需要确保每个出现的都列出来。
+问题中的类别列表：
 
-现在开始逐个列出：
+1. Packing, 2. Port of Shipment, 3. Port of Destination, 4. Time of Shipment, 5. Country of Origin, 6. Terms of Payment, ACCOUNT, ACCOUNT NAME, Add, Amount, BANK ADDRESS, BANK NAME, Company Name, DATE, Fax, INTERMEDIARY BANK SWIFT, NO., Name of Product, Quantity, SWIFT CODE, Tel, Title, UnitPrice CIF Keelung BY Sea, 传真 F, 地址 A, 电话 T, 网址 W, 邮编 E.
 
-1. Packing: [10, 698, 989, 730], label "Packing"
-2. Port of Shipment: [10, 732, 989, 748], label "Port of Shipment"
-3. Port of Destination: [10, 749, 989, 765], label "Port of Destination"
-4. Time of Shipment: [10, 766, 989, 782], label "Time of Shipment"
-5. Country of Origin: [10, 783, 989, 799], label "Country of Origin"
-6. Terms of Payment: [10, 799, 989, 815], label "Terms of Payment"
-7. ACCOUNT: [10, 870, 989, 886], label "ACCOUNT"
-8. ACCOUNT NAME: [10, 887, 989, 903], label "ACCOUNT NAME"
-9. Add（买方）: [38, 225, 961, 241], label "Add"
-10. Add（卖方）: [38, 312, 961, 328], label "Add"
-11. Amount（表格Amount列）: [520, 430, 800, 520]（可能更准确的是每个Amount单元格，但总金额的Amount是[10, 530, 989, 546]，label "Amount"
-12. Total amount的Amount: [10, 530, 989, 546], label "Amount"
-13. BANK ADDRESS: [10, 830, 989, 846], label "BANK ADDRESS"
-14. BANK NAME: [10, 847, 989, 863], label "BANK NAME"
-15. Company Name（买方）: [38, 205, 961, 221], label "Company Name"
-16. Company Name（卖方）: [38, 302, 961, 318], label "Company Name"
-17. DATE: [450, 200, 989, 216], label "DATE"
-18. Fax（买方）: [38, 242, 961, 258], label "Fax"
-19. Fax（卖方）: [38, 330, 961, 346], label "Fax"
-20. Fax（顶部）: [670, 10, 989, 26], label "Fax"
-21. INTERMEDIARY BANK SWIFT: [10, 950, 989, 966], label "INTERMEDIARY BANK SWIFT"
-22. NO.: [380, 205, 989, 221], label "NO."
-23. Name of Product（第一行）: [100, 450, 520, 470], label "Name of Product"
-24. Name of Product（第二行）: [100, 475, 520, 495], label "Name of Product"
-25. Name of Product（第三行）: [100, 500, 520, 520], label "Name of Product"
-26. Quantity（第一行）: [520, 450, 680, 470], label "Quantity"
-27. Quantity（第二行）: [520, 475, 680, 495], label "Quantity"
-28. Quantity（第三行）: [520, 500, 680, 520], label "Quantity"
-29. SWIFT CODE: [10, 910, 989, 926], label "SWIFT CODE"
-30. Tel（买方）: [38, 250, 961, 266], label "Tel"
-31. Tel（卖方）: [38, 340, 961, 356], label "Tel"
-32. Tel（顶部）: [540, 10, 989, 26], label "Tel"
-33. Title: [250, 300, 750, 320], label "Title"
-34. UnitPrice CIF
+注意“Tel”和“电话 T”是两个不同的类别？看问题中的列表，有“Tel”和“电话 T”。可能“Tel”是指买方或卖方的Tel，而“电话 T”是顶部的公司（合联电子科技有限公司）的电话。例如：
+
+- 电话 T：顶部的“电话 T : (68)8106-8980932”
+- Tel：买方的Tel“+938-8-29098266” 或者卖方的Tel“+09-8920-016861”
+
+需要区分。另外“Title”可能是指“COMMERICAL INVOICE”这个标题，即发票的标题。
+
+现在处理“Title”：COMMERICAL INVOICE 是标题，所以bbox是标题的位置。
+
+现在需要确保每个类别都被覆盖。
+
+现在开始逐个处理：
+
+1. Packing：
+文本：“1. Packing: ethyl maltol-A1000kg 0.5kg*50/ fibre drum, Lot No:2021-10-232 ethyl maltol-B 700kg 0.5kg*50/ fibre drum, Lot No:2021-10-212 100kg methyl cyclopenolenolone 1kg*25/fibre drum, Lot No:2021-10-21”
+bbox：大约在Total amount下方，y坐标范围较大，假设是[100, 600, 900, 650]（需要根据实际图片，但这里只能估计）
+
+2. Port of Sh

@@ -1,138 +1,205 @@
-用户现在需要检测指定类别的对象，先逐个看每个类别在文档中的位置。首先看标题TITLE是STRUMBA MEDIA LLC DBA MIRACLE NOODLE，然后订单号PURCHASE ORDER NO.是MN-07162021。然后SELLER是卖方，COMPANY NAME是Mengxin Media Co., Ltd.（出现两次，卖方和买方）。ADDRESS是卖方地址和买方地址。然后2.BAG MARKING对应的内容是No shown batch number on the bag, just show on the carton. 3.UNIT PRICE 单价是USD0.48/USD0.5 per Bag... 5.TOTAL AMOUNT 总金额是USD26127.36。6.TIME OF SHIPPMENT是ETD before 10th, Sep, 2021。7.PORT OF LOADING是USNS Meza PRO AA 96141。8.PAYMENT是50% TT advance...。Konjac pasta including是konjac flat angel hair,konjac flat fettuccine,konjac flat rice。PRODUCT NAME是KONJAC PASTA。VARIETY 品类是表格里的三个品类。Total Bags总袋数是表格里的数值。Total Cartons 总箱数是表格里的数值。Total Pallets总托盘数是表格里的数值。TRANSACTION METHOD可能对应支付方式？不过看用户给的类别里有TRANSACTION METHOD，可能需要检查。现在逐个处理：
+用户现在需要从采购订单中提取各个类别对应的内容，先逐个看每个类别。首先看订单号PURCHASE ORDER NO.，在顶部是MN-07162021。然后TITLE是公司名称STRUMBA MEDIA LLC DBA MIRACLE NOODLE。PRODUCT NAME是MIRACLE NOODLE？不，看标题是STRUMBA MEDIA LLC DBA MIRACLE NOODLE，所以TITLE是这个。然后COMPANY NAME，卖方是Mengxin Media Co., Ltd.，买方也是这个公司？不，卖方和买方都是Mengxin Media？看SELLER和BUYER都是Mengxin Media Co., Ltd.，所以COMPANY NAME可能有两个？不过先看每个类别。
 
-首先TITLE：STRUMBA MEDIA LLC DBA MIRACLE NOODLE，对应bbox是顶部的大标题。
+现在逐个处理：
 
-订单号PURCHASE ORDER NO.：MN-07162021，对应第一行下面的订单号。
+2.BAG MARKING：内容是No shown batch number on the bag, just show on the carton. 找到对应部分。
 
-COMPANY NAME：卖方的Mengxin Media Co., Ltd.，买方的Mengxin Media Co., Ltd.，所以两个公司名？但看文档中SELLER和BUYER的公司名都是Mengxin Media Co., Ltd.，所以需要标记。
+3.UNIT PRICE 单价：USD0.48/USD0.5 per Bag From Shanghai,China To Los Angeles,USA
 
-ADDRESS：卖方地址是18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800；买方地址是925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867。
+5.TOTAL AMOUNT 总金额：USD26127.36
 
-2.BAG MARKING：对应“2.BAG MARKING: No shown batch number on the bag, just show on the carton .”
+6.TIME OF SHIPPMENT：ETD before 10th ,Sep, 2021
 
-3.UNIT PRICE 单价：“3.UNIT PRICE: 单价 USD0.48/USD0.5 per Bag From Shanghai,China To Los Angeles,USA”
+7.PORT OF LOADING：USNS Meza EPO AA 96141
 
-5.TOTAL AMOUNT 总金额：“5.TOTAL AMOUNT:总金额 USD26127.36”
+8.PAYMENT：50% TT advance before deliver the goods,50% TT after receiving the goods 30days
 
-6.TIME OF SHIPPMENT：“6.TIME OF SHIPPMENT: ETD before 10th ,Sep, 2021”
+ADDRESS：卖方地址是18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800；买方地址是925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867。需要看是否要提取，用户要求的ADDRESS类别，可能两个地址？但看问题中的ADDRESS是类别，所以需要看哪个部分。比如卖方的ADDRESS是SELLER下面的地址，买方是BUYER下面的地址。但可能需要分别？不过先看每个类别。
 
-7.PORT OF LOADING：“7.PORT OF LOADING: USNS Meza PRO AA 96141”
+COMPANY NAME：SELLER是Mengxin Media Co., Ltd.，BUYER也是Mengxin Media Co., Ltd.，所以COMPANY NAME是这个公司名。
 
-8.PAYMENT：“8.PAYMENT: 50% TT advance before deliver the goods,50% TT after receiving the goods 30days”
+Konjac pasta including：konjac flat angel hair,konjac flat fettuccine,konjac flat rice
 
-Konjac pasta including：“The seller have sold and the buyer have bought terms of FOB Shanghai 53760 BAGS KONJAC PASTA Konjac pasta including : konjac flat angel hair,konjac flat fettuccine,konjac flat rice”
+PRODUCT NAME：看订单中的产品是KONJAC PASTA，所以PRODUCT NAME是KONJAC PASTA？
 
-PRODUCT NAME：“KONJAC PASTA”（在Konjac pasta including里也有，另外表格里的VARIETY也是KONJAC PASTA (FLAT ANGEL HAIR)等，所以PRODUCT NAME是KONJAC PASTA）
+TITLE：STRUMBA MEDIA LLC DBA MIRACLE NOODLE
 
-VARIETY 品类：表格的表头“VARIETY 品类”以及下面的三行内容（KONJAC PASTA (FLAT ANGEL HAIR)等）
+TRANSACTION METHOD：FOB Shanghai（在1.OBJECT OF CONTRACT里）
 
-Total Bags总袋数：表格中的“Total Bags总袋数”列，以及对应数值（18816, 18816, 16128）
+Total Bags总袋数：表格中的Total Bags列，比如第一行是18816，第二行18816，第三行16128。但需要看每个VARIETY对应的Total Bags，不过类别是Total Bags总袋数，可能指总和？不过表格里的Total Bags是各品类的袋数，所以每个VARIETY对应自己的Total Bags。但类别是Total Bags总袋数，可能需要看整体？不过先看每个类别对应的位置。
 
-Total Cartons 总箱数：“Total Cartons总箱数”列，数值784,784,672
+VARIETY 品类：表格中的VARIETY列，比如KONJAC PASTA (FLAT ANGEL HAIR)等。
 
-Total Pallets总托盘数：“Total Pallets总托盘数”列，数值7,7,6
+订单号 PURCHASE ORDER NO.：MN-07162021
 
-现在需要把每个类别对应的位置找出来，生成bbox。注意每个元素的坐标需要看文档中的位置，比如：
+现在需要把每个类别对应到其在文档中的位置，用bbox。需要先分析每个部分的坐标。
 
-TITLE的bbox是顶部，从STRUMBA MEDIA LLC到MIRACLE NOODLE，所以x1大概在100左右，y1是顶部，y2是标题行的底部。
+首先看标题TITLE：STRUMBA MEDIA LLC DBA MIRACLE NOODLE，位于最上方，所以bbox是[109, 17, 889, 40]左右（看原文的排版，第一行是STRUMBA MEDIA LLC DBA MIRACLE NOODLE，所以x1,y1,x2,y2需要估计，因为是图片中的位置，假设图片的坐标系统，每个元素的位置。
 
-订单号PURCHASE ORDER NO.是“PURCHASE ORDER NO.:订单号 MN-07162021”，所以bbox是包含这行的区域。
+然后订单号PURCHASE ORDER NO.：在TITLE下面，是PURCHASE ORDER NO.:订单号 MN-07162021，所以bbox是[109, 43, 889, 65]左右。
 
-COMPANY NAME：SELLER:卖方下面的Mengxin Media Co., Ltd.，以及BUYER:买方下面的Mengxin Media Co., Ltd.，所以两个公司名，但可能合并？不过看文档中是两个不同的公司名条目，所以需要分别标记？或者看是否是同一个公司名，但作为两个位置。
+COMPANY NAME：SELLER的公司名是Mengxin Media Co., Ltd.，位于SELLER:卖方下面，所以SELLER的公司名是Mengxin Media Co., Ltd.，bbox是[109, 102, 490, 125]。BUYER的公司名也是Mengxin Media Co., Ltd.，位于BUYER:买方下面，bbox是[109, 202, 575, 225]。但可能COMPANY NAME指的是卖方或买方？不过可能需要看是否有多个，但用户要求的是每个类别对应一个，可能需要看主要的，比如卖方的公司名。
 
-ADDRESS：卖方地址是SELLER下面的地址行，买方地址是BUYER下面的地址行。
+ADDRESS：SELLER的地址是18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800，位于SELLER下面，bbox是[109, 127, 889, 150]。BUYER的地址是925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867，位于BUYER下面，bbox是[109, 227, 889, 250]。所以ADDRESS可能有两个，但需要看用户需求，可能需要都提取？不过先看每个类别。
 
-现在开始逐个列出：
+现在逐个处理每个需要的类别：
 
-1. TITLE: "STRUMBA MEDIA LLC DBA MIRACLE NOODLE" → bbox是顶部的大标题，坐标大概[100, 15, 890, 50]左右（根据文档布局，标题在最上方，居中）。
+1. 2.BAG MARKING：内容是“2.BAG MARKING: No shown batch number on the bag, just show on the carton.” 所以bbox是对应这部分的区域，比如从“2.BAG MARKING:”到下面的说明。看原文中“2.BAG MARKING: No shown batch number on the bag, just show on the carton.” 所以bbox是[109, 260, 889, 283]左右（需要看行号，原文中2.BAG MARKING在1.OBJECT之后，所以位置是第2点，对应内容的区域）。
 
-2. 订单号 PURCHASE ORDER NO.: "PURCHASE ORDER NO.:订单号 MN-07162021" → bbox是标题下面的一行，y坐标在标题下方，比如[100, 55, 890, 80]。
+2. 3.UNIT PRICE 单价：“3.UNIT PRICE: 单价 USD0.48/USD0.5 per Bag From Shanghai,China To Los Angeles,USA” 所以bbox是包含这部分的区域，比如“3.UNIT PRICE: 单价”到后面的说明。
 
-3. COMPANY NAME（卖方）: "Mengxin Media Co., Ltd."（SELLER下面的公司名）→ bbox是SELLER:卖方下面的公司名行，比如[100, 120, 500, 145]。
+3. 5.TOTAL AMOUNT 总金额：“5.TOTAL AMOUNT:总金额 USD26127.36” 所以对应区域。
 
-4. COMPANY NAME（买方）: "Mengxin Media Co., Ltd."（BUYER:买方下面的公司名）→ bbox是BUYER:买方下面的公司名行，比如[100, 200, 500, 225]。
+4. 6.TIME OF SHIPPMENT：“6.TIME OF SHIPPMENT: ETD before 10th ,Sep, 2021” 对应区域。
 
-5. ADDRESS（卖方）: "18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800" → SELLER地址行，bbox是公司名下面的地址行，比如[100, 145, 890, 170]。
+5. 7.PORT OF LOADING：“7.PORT OF LOADING: USNS Meza EPO AA 96141” 对应区域。
 
-6. ADDRESS（买方）: "925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867" → BUYER地址行，公司名下面的地址行，比如[100, 225, 890, 250]。
+6. 8.PAYMENT：“8.PAYMENT: 50% TT advance before deliver the goods,50% TT after receiving the goods 30days” 对应区域。
 
-7. 2.BAG MARKING: "2.BAG MARKING: No shown batch number on the bag, just show on the carton ." → 对应“2.BAG MARKING:”下面的内容，bbox是该部分的区域，比如[100, 270, 600, 295]。
+7. ADDRESS：比如SELLER的地址是“18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800”，BUYER的地址是“925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867”。需要确定哪个是ADDRESS类别，可能两个地址都属于ADDRESS，但需要看用户需求。比如SELLER的地址是ADDRESS（卖方地址），BUYER的是买方地址。但可能需要提取其中一个？或者都提取？不过先看每个类别。
 
-8. 3.UNIT PRICE 单价: "3.UNIT PRICE: 单价 USD0.48/USD0.5 per Bag From Shanghai,China To Los Angeles,USA" → 对应“3.UNIT PRICE:”下面的内容，bbox是该部分，比如[100, 310, 800, 335]。
+8. COMPANY NAME：SELLER的公司名是“Mengxin Media Co., Ltd.”，BUYER的也是。所以COMPANY NAME是这个公司名，对应SELLER或BUYER的公司名部分。
 
-9. Konjac pasta including: "konjac flat angel hair,konjac flat fettuccine,konjac flat rice" → 在“1.OBJECT OF CONTRACT:”下面的“Konjac pasta including : ...”部分，bbox是包含这部分的区域，比如[100, 350, 600, 375]。
+9. Konjac pasta including：“KONJAC pasta including : konjac flat angel hair,konjac flat fettuccine,konjac flat rice” 所以对应1.OBJECT OF CONTRACT中的这部分。
 
-10. PRODUCT NAME: "KONJAC PASTA" → 在“1.OBJECT OF CONTRACT:”中的“53760 BAGS KONJAC PASTA”以及“Konjac pasta including”中的KONJAC PASTA，所以可以取其中一个，比如“53760 BAGS KONJAC PASTA”中的KONJAC PASTA，bbox是该行的一部分，比如[100, 325, 500, 345]。
+10. PRODUCT NAME：在标题中是MIRACLE NOODLE？或者产品是KONJAC PASTA。看1.OBJECT OF CONTRACT中是“53760 BAGS KONJAC PASTA”，所以PRODUCT NAME是KONJAC PASTA。
 
-11. 5.TOTAL AMOUNT 总金额: "5.TOTAL AMOUNT:总金额 USD26127.36" → 对应“5.TOTAL AMOUNT:”下面的内容，bbox是该部分，比如[100, 400, 500, 425]。
+11. TITLE：STRUMBA MEDIA LLC DBA MIRACLE NOODLE，即最顶部的标题。
 
-12. 6.TIME OF SHIPPMENT: "6.TIME OF SHIPPMENT: ETD before 10th ,Sep, 2021" → 对应“6.TIME OF SHIPPMENT:”下面的内容，bbox是该部分，比如[100, 440, 500, 465]。
+12. TRANSACTION METHOD：FOB Shanghai（在1.OBJECT OF CONTRACT中“The seller have sold and the buyer have bought terms of FOB Shanghai”）。
 
-13. 7.PORT OF LOADING: "7.PORT OF LOADING: USNS Meza PRO AA 96141" → 对应“7.PORT OF LOADING:”下面的内容，bbox是该部分，比如[100, 480, 500, 505]。
+13. Total Bags总袋数：表格中的Total Bags列，比如第一行KONJAC PASTA (FLAT ANGEL HAIR)的Total Bags是18816，第二行也是18816，第三行是16128。但类别是Total Bags总袋数，可能指每个VARIETY的Total Bags，所以需要看表格中的Total Bags列的每个值。但类别是Total Bags总袋数，可能需要提取表格的表头“Total Bags总袋数”以及对应的数据？不过用户要求的是“Total Bags总袋数”作为类别，对应其在文档中的位置，即表格的表头“Total Bags总袋数”。
 
-14. 8.PAYMENT: "8.PAYMENT: 50% TT advance before deliver the goods,50% TT after receiving the goods 30days" → 对应“8.PAYMENT:”下面的内容，bbox是该部分，比如[100, 520, 800, 545]。
+14. Total Cartons 总箱数：表格中的Total Cartons总箱数列，表头是“Total Cartons总箱数”。
 
-15. VARIETY 品类: "VARIETY 品类"（表格的表头）→ 表格的第一行表头，bbox是表格的表头行，比如[100, 460, 800, 485]。
+15. Total Pallets总托盘数：表格中的Total Pallets总托盘数列，表头是“Total Pallets总托盘数”。
 
-16. Total Bags总袋数: "Total Bags总袋数"（表格的列标题）→ 表格的列标题之一，bbox是表格中该列的表头，比如[200, 460, 350, 485]。
+16. VARIETY 品类：表格中的VARIETY 品类列，表头是“VARIETY 品类”，以及下面的三个品类：KONJAC PASTA (FLAT ANGEL HAIR)等。
 
-17. Total Cartons 总箱数: "Total Cartons 总箱数"（表格的列标题）→ 表格的列标题之一，bbox是表格中该列的表头，比如[400, 460, 550, 485]。
+17. 订单号 PURCHASE ORDER NO.：“PURCHASE ORDER NO.:订单号 MN-07162021” 对应的区域。
 
-18. Total Pallets总托盘数: "Total Pallets总托盘数"（表格的列标题）→ 表格的列标题之一，bbox是表格中该列的表头，比如[600, 460, 750, 485]。
+现在需要为每个类别生成对应的bbox和label。由于是图片，需要估计每个部分的坐标。假设图片的宽度是整个页面，每个部分的y坐标大致如下（从上到下）：
 
-现在需要确认每个类别的存在，然后生成对应的JSON数组。需要注意有些类别可能重复，比如COMPANY NAME出现两次（卖方和买方），但都是同一个公司名，所以需要分别标记吗？看用户给的类别是“COMPANY NAME”，所以每个出现的公司名都算一个实例。另外，TRANSACTION METHOD可能对应支付方式，即8.PAYMENT中的内容，所以TRANSACTION METHOD可以对应8.PAYMENT吗？用户给的类别有TRANSACTION METHOD，需要检查。看用户提供的类别列表：TRANSACTION METHOD，可能是指支付方式，所以8.PAYMENT属于TRANSACTION METHOD？但用户要求的是“对于每个检测到的对象，提供label为指定的类别”，所以需要看每个类别是否在文档中存在。比如TRANSACTION METHOD在文档中是否有？支付方式是50% TT advance...，所以TRANSACTION METHOD可以对应这个内容。但用户给的类别中包含TRANSACTION METHOD，所以需要检查是否在文档中有这个类别。看用户提供的类别列表：2.BAG MARKING, 3.UNIT PRICE 单价, 5.TOTAL AMOUNT 总金额, 6.TIME OF SHIPPMENT, 7.PORT OF LOADING, 8.PAYMENT, ADDRESS, COMPANY NAME, Konjac pasta including, PRODUCT NAME, TITLE, TRANSACTION METHOD, Total Bags总袋数, Total Cartons 总箱数, Total Pallets总托盘数, VARIETY 品类, 订单号 PURCHASE ORDER NO.
+- TITLE: 最上方，y1≈15, y2≈35
+- 订单号: y1≈45, y2≈65
+- SELLER: y1≈95, y2≈115
+- SELLER地址: y1≈125, y2≈145
+- BUYER: y1≈205, y2≈225
+- BUYER地址: y1≈235, y2≈255
+- 1.OBJECT OF CONTRACT: y1≈275, y2≈335
+- 2.BAG MARKING: y1≈345, y2≈365
+- 3.UNIT PRICE: y1≈375, y2≈395
+- 4.QUANTITY: y1≈405, y2≈425（表格标题）
+- 表格内容: y1≈435, y2≈525（表格行）
+- 5.TOTAL AMOUNT: y1≈545, y2≈565
+- 6.TIME OF SHIPPMENT: y1≈575, y2≈595
+- 7.PORT OF LOADING: y1≈605, y2≈625
+- 8.PAYMENT: y1≈635, y2≈655
 
-现在看TRANSACTION METHOD，文档中的支付方式是8.PAYMENT，所以TRANSACTION METHOD可能和8.PAYMENT是同一个？或者TRANSACTION METHOD是其他？比如FOB是交易条款，属于交易方式？但用户给的类别中没有FOB，所以可能TRANSACTION METHOD对应的是支付方式，即8.PAYMENT。但用户要求的是检测指定类别，所以如果TRANSACTION METHOD在文档中没有明确的“TRANSACTION METHOD”标题，而是支付方式属于8.PAYMENT，所以可能TRANSACTION METHOD是另一个类别？或者可能用户把8.PAYMENT作为TRANSACTION METHOD？需要再看。可能用户提供的类别中，TRANSACTION METHOD是存在的，比如在文档中是否有“TRANSACTION METHOD”这个标题？看文档中的内容，没有“TRANSACTION METHOD”这个标题，只有8.PAYMENT是支付方式，所以可能TRANSACTION METHOD对应的是8.PAYMENT的内容。但需要确认每个类别是否在文档中存在。现在先处理所有明确的类别：
+现在逐个处理每个需要的类别：
 
-现在列出所有需要检测的类别，然后在文档中找到对应的内容：
+1. 订单号 PURCHASE ORDER NO.:
+   - 文本是“PURCHASE ORDER NO.:订单号 MN-07162021”
+   - bbox: [109, 43, 889, 65]
+   - label: "订单号 PURCHASE ORDER NO."
 
-- TITLE: 存在，是文档最上方的标题。
-- 订单号 PURCHASE ORDER NO.: 存在，是“PURCHASE ORDER NO.:订单号 MN-07162021”。
-- COMPANY NAME: 存在，卖方和买方的公司名。
-- ADDRESS: 存在，卖方和买方的地址。
-- 2.BAG MARKING: 存在，对应“2.BAG MARKING: ...”。
-- 3.UNIT PRICE 单价: 存在，对应“3.UNIT PRICE: 单价 ...”。
-- Konjac pasta including: 存在，对应“Konjac pasta including : ...”。
-- PRODUCT NAME: 存在，比如“KONJAC PASTA”。
-- 5.TOTAL AMOUNT 总金额: 存在，对应“5.TOTAL AMOUNT:总金额 ...”。
-- 6.TIME OF SHIPPMENT: 存在，对应“6.TIME OF SHIPPMENT: ...”。
-- 7.PORT OF LOADING: 存在，对应“7.PORT OF LOADING: ...”。
-- 8.PAYMENT: 存在，对应“8.PAYMENT: ...”。
-- VARIETY 品类: 存在，表格的“VARIETY 品类”列。
-- Total Bags总袋数: 存在，表格的“Total Bags总袋数”列。
-- Total Cartons 总箱数: 存在，表格的“Total Cartons 总箱数”列。
-- Total Pallets总托盘数: 存在，表格的“Total Pallets总托盘数”列。
-- TRANSACTION METHOD: 需要检查，文档中是否有交易方式，比如FOB Shanghai是交易条款（贸易术语），属于交易方式，所以“1.OBJECT OF CONTRACT: ... FOB Shanghai ...”中的FOB是交易方式，所以TRANSACTION METHOD对应这个内容。比如“terms of FOB Shanghai”是交易方式（国际贸易术语）。所以TRANSACTION METHOD可以对应“FOB Shanghai”这部分。
+2. TITLE:
+   - 文本是“STRUMBA MEDIA LLC DBA MIRACLE NOODLE”
+   - bbox: [109, 17, 889, 40]
+   - label: "TITLE"
 
-现在需要把TRANSACTION METHOD也加入，找到对应的位置：“1.OBJECT OF CONTRACT: The seller have sold and the buyer have bought terms of FOB Shanghai ...”中的“terms of FOB Shanghai”是交易方式，所以TRANSACTION METHOD的bbox是包含“terms of FOB Shanghai”的区域。
+3. COMPANY NAME（SELLER的公司名）:
+   - 文本是“Mengxin Media Co., Ltd.”
+   - bbox: [109, 102, 490, 125]
+   - label: "COMPANY NAME"
 
-现在整理所有类别：
+4. ADDRESS（SELLER的地址）:
+   - 文本是“18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800”
+   - bbox: [109, 127, 889, 150]
+   - label: "ADDRESS"
 
-1. TITLE
-2. 订单号 PURCHASE ORDER NO.
-3. COMPANY NAME（卖方）
-4. COMPANY NAME（买方）
-5. ADDRESS（卖方）
-6. ADDRESS（买方）
-7. 2.BAG MARKING
-8. 3.UNIT PRICE 单价
-9. Konjac pasta including
-10. PRODUCT NAME
-11. 5.TOTAL AMOUNT 总金额
-12. 6.TIME OF SHIPPMENT
-13. 7.PORT OF LOADING
-14. 8.PAYMENT
-15. VARIETY 品类
-16. Total Bags总袋数
-17. Total Cartons 总箱数
-18. Total Pallets总托盘数
-19. TRANSACTION METHOD
+5. ADDRESS（BUYER的地址）:
+   - 文本是“925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867”
+   - bbox: [109, 227, 889, 250]
+   - label: "ADDRESS" （可能需要两个，但用户可能需要都包含）
 
-现在需要为每个类别生成bbox。由于是文本识别，需要估计每个部分的坐标。假设文档的布局是垂直排列，每个部分之间的间距大致相同。现在开始逐个确定：
+6. Konjac pasta including:
+   - 文本是“KONJAC pasta including : konjac flat angel hair,konjac flat fettuccine,konjac flat rice”
+   - 在1.OBJECT OF CONTRACT中，所以bbox: [109, 305, 889, 328]
+   - label: "Konjac pasta including"
 
-- TITLE: "STRUMBA MEDIA LLC DBA MIRACLE NOODLE" → 位于文档最上方，居中。bbox大概[100, 10, 900, 40]
-- 订单号 PURCHASE ORDER NO.: "PURCHASE ORDER NO.:订单号 MN-07162021" → 在TITLE下方，bbox[100, 45, 900, 70]
-- COMPANY NAME（卖方）: "Mengxin Media Co., Ltd." → 在SELLER:卖方下方，SELLER:卖方的标题是“SELLER:卖方”，然后是公司名。所以“SELLER:卖方”是标题，下面一行是公司名。bbox[100, 120, 500, 145]
-- COMPANY NAME（买方）: "Mengxin Media Co., Ltd." → 在BUYER:买方下方，BUYER:买方是标题，下面一行是公司名。bbox[100, 200, 500, 225]
-- ADDRESS（卖方）: "18286 Karen Orchard Apt. 338 Richardsonshire, MA 16800" → 在卖方公司名下方，bbox[100, 145, 800, 170]
-- ADDRESS（买方）: "925 Williams Mission Apt. 635 Lake Shelbyland, FL 57867" → 在买方公司名下方，bbox[100, 
+7. PRODUCT NAME:
+   - 文本是“KONJAC PASTA”（在1.OBJECT OF CONTRACT中的“53760 BAGS KONJAC PASTA”）
+   - bbox: [109, 315, 889, 338]
+   - label: "PRODUCT NAME"
+
+8. TRANSACTION METHOD:
+   - 文本是“FOB Shanghai”（在1.OBJECT OF CONTRACT中的“terms of FOB Shanghai”）
+   - bbox: [109, 328, 889, 351]
+   - label: "TRANSACTION METHOD"
+
+9. 2.BAG MARKING:
+   - 文本是“2.BAG MARKING: No shown batch number on the bag, just show on the carton.”
+   - bbox: [109, 345, 889, 368]
+   - label: "2.BAG MARKING"
+
+10. 3.UNIT PRICE 单价:
+    - 文本是“3.UNIT PRICE: 单价 USD0.48/USD0.5 per Bag From Shanghai,China To Los Angeles,USA”
+    - bbox: [109, 375, 889, 398]
+    - label: "3.UNIT PRICE 单价"
+
+11. 5.TOTAL AMOUNT 总金额:
+    - 文本是“5.TOTAL AMOUNT:总金额 USD26127.36”
+    - bbox: [109, 545, 889, 568]
+    - label: "5.TOTAL AMOUNT 总金额"
+
+12. 6.TIME OF SHIPPMENT:
+    - 文本是“6.TIME OF SHIPPMENT: ETD before 10th ,Sep, 2021”
+    - bbox: [109, 575, 889, 598]
+    - label: "6.TIME OF SHIPPMENT"
+
+13. 7.PORT OF LOADING:
+    - 文本是“7.PORT OF LOADING: USNS Meza EPO AA 96141”
+    - bbox: [109, 605, 889, 628]
+    - label: "7.PORT OF LOADING"
+
+14. 8.PAYMENT:
+    - 文本是“8.PAYMENT: 50% TT advance before deliver the goods,50% TT after receiving the goods 30days”
+    - bbox: [109, 635, 889, 658]
+    - label: "8.PAYMENT"
+
+15. VARIETY 品类:
+    - 表格的VARIETY列，表头是“VARIETY 品类”，以及下面的三个品类行。表头的bbox: [109, 435, 889, 458]
+    - label: "VARIETY 品类"
+
+16. Total Bags总袋数:
+    - 表格的Total Bags列，表头是“Total Bags总袋数”，bbox: [325, 435, 445, 458]
+    - label: "Total Bags总袋数"
+
+17. Total Cartons 总箱数:
+    - 表格的Total Cartons列，表头是“Total Cartons总箱数”，bbox: [475, 435, 625, 458]
+    - label: "Total Cartons 总箱数"
+
+18. Total Pallets总托盘数:
+    - 表格的Total Pallets列，表头是“Total Pallets总托盘数”，bbox: [655, 435, 775, 458]
+    - label: "Total Pallets总托盘数"
+
+现在需要检查是否所有类别都覆盖了。用户要求的类别列表是：
+
+2.BAG MARKING, 3.UNIT PRICE 单价, 5.TOTAL AMOUNT 总金额, 6.TIME OF SHIPPMENT, 7.PORT OF LOADING, 8.PAYMENT, ADDRESS, COMPANY NAME, Konjac pasta including, PRODUCT NAME, TITLE, TRANSACTION METHOD, Total Bags总袋数, Total Cartons 总箱数, Total Pallets总托盘数, VARIETY 品类, 订单号 PURCHASE ORDER NO.
+
+共17个类别，现在逐一对应：
+
+- 订单号 PURCHASE ORDER NO. ✔️
+- TITLE ✔️
+- COMPANY NAME ✔️
+- ADDRESS（两个，但至少一个）✔️
+- Konjac pasta including ✔️
+- PRODUCT NAME ✔️
+- TRANSACTION METHOD ✔️
+- 2.BAG MARKING ✔️
+- 3.UNIT PRICE 单价 ✔️
+- 5.TOTAL AMOUNT 总金额 ✔️
+- 6.TIME OF SHIPPMENT ✔️
+- 7.PORT OF LOADING ✔️
+- 8

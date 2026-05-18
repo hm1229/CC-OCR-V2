@@ -1,233 +1,251 @@
-Got it, let's go through the document and identify each category. First, let's list all the required categories and find their instances.
+Got it, let's go through each category and find the corresponding values in the image. First, I need to identify each field.
 
-1. Address: Look for vendor address, ship to, bill to, goods supplier addresses. Let's check each.
-   - Vendor Address: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816"
-   - Ship To address: "Hutai Media Co., Ltd. PSC 4424, Box 8114 APO AP 14111 Unit 9564 Box 7977 DPO AA 42587"
-   - Bill To address: "Hutai Media Co., Ltd. Unit 9608 Box 8132 DPO AA 73386 907 Michael Hills Halefort, CT 41681"
-   - Goods Supplier: "USNS Young FPO AE 42348 USNS Zamora FPO AP 55451" – these are addresses too.
+Starting with Address: Let's check Ship To and Bill To addresses. But maybe the main vendor address? Wait, the problem says "Address" — maybe the Ship To address? Let's check the Ship To section. Ship To has Hutai Media Co., Ltd. with address PSC 4424, Box 8114 APO AP 14111, Unit 9564 Box 7977 DPO AA 42587. But maybe the Vendor Address is also an address. Let's check the labels.
 
-2. Cancel L/T: Found in the section, value is 999.
+Wait, the task is to detect each category's value. Let's list all categories:
 
-3. Company Name: Vendor Name, Ship To, Bill To, Goods Supplier are company names. For example, "Hutai Media Co., Ltd." appears multiple times.
+1. Address: Let's see, maybe the Ship To address. Let's check the Ship To section. The Ship To address is "Hutai Media Co., Ltd. PSC 4424, Box 8114 APO AP 14111 Unit 9564 Box 7977 DPO AA 42587". But maybe the Vendor Address is also an address. Let's check the Vendor Address field: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816". Let's confirm which is the target. The category is "Address" — maybe the Ship To address. Let's check the labels in the image.
 
-4. Date: PO number/date is 11/19/2021, Due Date is 02/01/2022, also the top right has 11/19/2021 05:23:17.
+2. Cancel L/T: In the image, there's a line "Cancel L/T : 999". So that's the value.
 
-5. Due Date: The due date for the item is 02/01/2022.
+3. Company Name: The Vendor Name is Hutai Media Co., Ltd. Also, Ship To and Bill To are also Hutai Media Co., Ltd. So Company Name could be the Vendor Name.
 
-6. E-Mail: Vendor E-Mail is monica85@roberts.com, Buyer E-Mail is allisonharper@martin.org.
+4. Date: The PO number/date is 3013309726 / 11/19/2021. Also, the top right has 11/19/2021 05:23:17. Let's check which Date is needed. The category is "Date" — maybe the PO date, which is 11/19/2021.
 
-7. For each delivery, we expect: "DRY PACK =LVL 3 & L.F Required"
+5. Due Date: In the item section, Due Date is 02/01/2022.
 
-8. Id: Maybe the PO number? Or item ID. The item has ASMEM-00270, which is an ID.
+6. E-Mail: There are two E-Mails: Vendor E-Mail is monica85@roberts.com, Buyer E-Mail is allisonharper@martin.org. Let's check which one. The category is E-Mail — maybe the Buyer's E-Mail? Or Vendor's. Let's check the labels.
 
-9. Item: The item number 1, material/desc.
+7. Id: The Vendor has a number 10053097, which is the Vendor ID. Also, PO number is 3013309726. Let's check the "Id" category. Maybe the Vendor ID is 10053097.
 
-10. Item Value: 296,400.00
+8. Item: The item number is 1, and the item code is ASMEM-00270. The label "Item" in the table is the first column, which is 1.
 
-11. L/T: 217
+9. Item Value: For item 1, Item Value is 296,400.00.
 
-12. MOQ: 760
+10. L/T: The L/T is 217 (from "L/T : 217").
 
-13. Material Group: ARISTA
+11. MOQ: MOQ is 760.
 
-14. Name: Buyer name is Andrew Romero.
+12. Material Group: Material Group is ARISTA.
 
-15. Order Inc: 760
+13. Name: The Buyer's name is Andrew Romero. Also, Vendor Name is Hutai Media Co., Ltd. Let's check the "Name" category. Maybe the Buyer's Name.
 
-16. PO number/date (MM/DD/YYYY): 3013309726 / 11/19/2021
+14. Order Inc: Order Inc is 760 (same as MOQ here? Let's check: "Order Inc : 760").
 
-17. Page Number: Page 1 of 5
+15. PO number/date (MM/DD/YYYY): The PO number/date is 3013309726 / 11/19/2021.
 
-18. Payment Terms: STD 90 Days NET
+16. Page Number: Top right says "Page 1 of 5", so Page Number is 1.
 
-19. Product Name: The material/desc line, like "MEM, EMMC, 16G MLC USED AS 8G PSLC, 153 Manufacturer KIOXACORP THGBMJG7C1LBAIL TRAY"
+17. Payment Terms: STD 90 Days NET.
 
-20. Qty Recd: 0
+18. Product Name: The material/desc is "ASMEM-00270 MEM, EMMC, 16G MLC USED AS 8G PSLC, 153 Manufacturer KIOXACORP THGBMJG7C1LBAIL TRAY".
 
-21. Qty Retd.: 0
+19. Qty Recd: For item 1, Qty Recd is 0.
 
-22. Specification: Maybe the material group or other specs, but check. The "Special Instructions" box is empty, but maybe the product name includes specs.
+20. Qty Retd.: Qty Retd. is 0.
 
-23. Telephone: 4161206792
+21. Specification: Maybe the Special Instructions? But Special Instructions is empty. Or the product specs. Let's check if there's a "Specification" field. The image has "Special Instructions" which is a box, but maybe the product's specification is in Material/Desc.
 
-24. Terms of delivery: FCA HONG KONG
+22. Telephone: Buyer's Telephone is 4161206792.
 
-25. Title: Purchase order
+23. Terms of delivery: FCA HONG KONG.
 
-26. Total Qty: 39,520
+24. Title: The title of the document is "Purchase order".
 
-27. U/M: EA
+25. Total Qty: Total Qty for item 1 is 39,520.
 
-28. Unit Price: 7.5
+26. U/M: U/M is EA (for item 1).
 
-29. VAT Reg. No.: 000147849216
+27. Unit Price: Unit Price is 7.5.
 
-30. Vendor: 10053097 (the vendor code) and Vendor Name is Hutai Media Co., Ltd.
+28. VAT Reg. No.: 000147849216.
 
-31. Vendor Address: as above
+29. Vendor: Vendor number is 10053097, Vendor Name is Hutai Media Co., Ltd.
 
-32. Vendor E-Mail: monica85@roberts.com
+30. Vendor Address: As above, "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816".
 
-33. Vendor Name: Hutai Media Co., Ltd.
+31. Vendor E-Mail: monica85@roberts.com.
 
-Now, let's map each category to their bounding boxes. Let's go step by step.
+32. Vendor Name: Hutai Media Co., Ltd.
 
-First, identify each element's location.
+Now, let's map each category to the correct bounding box.
+
+Let's start with each:
+
+- Address: Let's take Ship To address. The Ship To section is on the right. The address lines: "Hutai Media Co., Ltd. PSC 4424, Box 8114 APO AP 14111 Unit 9564 Box 7977 DPO AA 42587". Let's check the coordinates.
+
+- Cancel L/T: The line "Cancel L/T : 999" — find that in the image. Below L/T: 217, then Cancel L/T: 999.
+
+- Company Name: Vendor Name is "Hutai Media Co., Ltd." — the Vendor Name field.
+
+- Date: PO number/date is 11/19/2021 (from PO number/date (MM/DD/YYYY)).
+
+- Due Date: From the item row, Due Date column: 02/01/2022.
+
+- E-Mail: Let's check Buyer E-Mail: "allisonharper@martin.org" — under Buyer section.
+
+- Id: Vendor ID is 10053097 (under Vendor: 10053097).
+
+- Item: The item number in the table is 1 (first column of the item table).
+
+- Item Value: 296,400.00 (from Item Value column of item 1).
+
+- L/T: 217 (from "L/T : 217").
+
+- MOQ: 760 (from "MOQ : 760").
+
+- Material Group: ARISTA (from "Material Group : ARISTA").
+
+- Name: Buyer's name is Andrew Romero (under Buyer: Andrew Romero).
+
+- Order Inc: 760 (from "Order Inc : 760").
+
+- PO number/date (MM/DD/YYYY): 3013309726 / 11/19/2021 (the line with PO number/date).
 
 - Page Number: "Page 1 of 5" at top right.
-- Title: "Purchase order" at top center.
-- PO number/date (MM/DD/YYYY): "3013309726 / 11/19/2021" below title.
-- Vendor: "10053097" (left side, Vendor: line)
-- Vendor Name: "Hutai Media Co., Ltd." under Vendor:
-- Vendor Address: the address under Vendor Name.
-- Vendor E-Mail: "monica85@roberts.com" under Vendor E-Mail:
-- Ship To: "01RI" and the address below.
-- Bill To: the address under Bill To:
-- Goods Supplier: the address under Goods Supplier:
-- Buyer: "Andrew Romero"
-- Telephone: "4161206792"
-- E-Mail: "allisonharper@martin.org"
-- Special Instructions: the box (empty)
-- Payment Terms: "STD 90 Days NET"
-- Terms of delivery: "FCA HONG KONG"
-- VAT Reg. No.: "000147849216"
-- Item: the row with item 1, material/desc.
-- Material/Desc.: the description for item 1.
-- U/M: "EA"
-- Total Qty: "39,520"
-- Qty Recd: "0"
-- Qty Retd.: "0"
-- Unit Price: "7.5"
-- Item Value: "296,400.00"
-- Due Date: "02/01/2022"
-- L/T: "217"
-- Cancel L/T: "999"
-- MOQ: "760"
-- Order Inc: "760"
-- Material Group: "ARISTA"
-- Name: "Andrew Romero" (Buyer name)
-- For each delivery, we expect: "DRY PACK =LVL 3 & L.F Required"
-- Id: The item ID "ASMEM-00270" (maybe under Item)
-- Product Name: The detailed description like "MEM, EMMC, 16G MLC USED AS 8G PSLC, 153..."
-- Total net value excl. tax: "296,400.00" (at bottom)
 
-Now, let's list each category with their bounding box.
+- Payment Terms: "STD 90 Days NET" (under Payment Terms).
 
-Let's start with Page Number: top right, "Page 1 of 5". Bounding box: [750, 8, 822, 24] (approx, since the image's top right has that text).
+- Product Name: The material/desc for item 1: "ASMEM-00270 MEM, EMMC, 16G MLC USED AS 8G PSLC, 153 Manufacturer KIOXACORP THGBMJG7C1LBAIL TRAY".
 
-Title: "Purchase order" – center top. Bounding box: [422, 52, 577, 84].
+- Qty Recd: 0 (from Qty Recd column of item 1).
 
-PO number/date: "3013309726 / 11/19/2021" – below title. Bounding box: [337, 197, 662, 217].
+- Qty Retd.: 0 (from Qty Retd. column of item 1).
 
-Vendor: "10053097" – left side, Vendor: line. Bounding box: [102, 142, 172, 160].
+- Specification: Maybe the Special Instructions box, but it's empty. Alternatively, the product's specification is part of Material/Desc. Let's check if there's a "Specification" label. The image has "Special Instructions" which is a section, but maybe the product's specification is the Material/Desc. Let's assume the Material/Desc is the product name, and maybe "Specification" is not directly labeled, but perhaps the Special Instructions is empty. Alternatively, maybe the "Specification" is the L/T or other, but let's check the categories given. The user listed "Specification" as a category, so maybe the Special Instructions area, but it's empty. Alternatively, maybe the product's description includes specification.
 
-Vendor Name: "Hutai Media Co., Ltd." – under Vendor. Bounding box: [102, 162, 347, 180].
+- Telephone: 4161206792 (under Buyer: Telephone).
 
-Vendor Address: the address lines. Let's check: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816". Bounding box: [102, 182, 347, 210] (since it's multiple lines, but the main block).
+- Terms of delivery: FCA HONG KONG (under Terms of delivery).
 
-Vendor E-Mail: "monica85@roberts.com" – under Vendor E-Mail:. Bounding box: [102, 292, 347, 310].
+- Title: "Purchase order" (the main title).
 
-Ship To: "01RI" – right side, Ship To:. Bounding box: [452, 142, 482, 160].
+- Total Qty: 39,520 (from Total Qty column of item 1).
 
-Ship To address: the address under Ship To:. Bounding box: [452, 162, 697, 210].
+- U/M: EA (from U/M column of item 1).
 
-Bill To: the company name under Bill To:. "Hutai Media Co., Ltd." – Bounding box: [452, 242, 697, 260].
+- Unit Price: 7.5 (from Unit Price column of item 1).
 
-Bill To address: the address under Bill To:. Bounding box: [452, 262, 737, 290].
+- VAT Reg. No.: 000147849216 (under VAT Reg. No.).
 
-Goods Supplier: "Hutai Media Co., Ltd." and the addresses. Bounding box: [102, 302, 347, 320] (Goods Supplier: line) and the addresses below: [102, 322, 347, 340].
+- Vendor: 10053097 (the Vendor number).
 
-Buyer: "Andrew Romero" – left side, Buyer:. Bounding box: [102, 362, 347, 380].
+- Vendor Address: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816" (under Vendor Address).
 
-Telephone: "4161206792" – under Telephone:. Bounding box: [102, 382, 347, 398].
+- Vendor E-Mail: monica85@roberts.com (under Vendor E-Mail).
 
-E-Mail: "allisonharper@martin.org" – under E-Mail:. Bounding box: [102, 402, 347, 418].
+- Vendor Name: Hutai Media Co., Ltd. (under Vendor Name).
 
-Special Instructions: the box. Bounding box: [34, 472, 456, 540] (the rectangular box).
+Now, let's create the JSON array for each. Let's go step by step.
 
-Payment Terms: "STD 90 Days NET" – right side, Payment Terms:. Bounding box: [452, 392, 697, 410].
+1. Address: Let's take Ship To address. The Ship To section is on the right. The text is "Hutai Media Co., Ltd. 01RI Hutai Media Co., Ltd. PSC 4424, Box 8114 APO AP 14111 Unit 9564 Box 7977 DPO AA 42587". Let's check the bounding box. The Ship To label is on the right side. The address lines are under Ship To.
 
-Terms of delivery: "FCA HONG KONG" – right side, Terms of delivery:. Bounding box: [452, 422, 697, 440].
+But maybe the Vendor Address is also an address. Let's check the Vendor Address field: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816". Let's confirm which is the target. The category is "Address" — perhaps the Ship To address. Let's check the image's Ship To section:
 
-VAT Reg. No.: "000147849216" – right side, VAT Reg. No:. Bounding box: [452, 442, 697, 460].
+Ship To:
+01RI
+Hutai Media Co., Ltd.
+PSC 4424, Box 8114 APO AP 14111
+Unit 9564 Box 7977 DPO AA 42587
 
-Item: the item number 1. Bounding box: [34, 542, 76, 560] (the "1" in the Item column).
+So the address for Ship To is those lines. Let's get the bounding box for that.
 
-Material/Desc.: the description for item 1. Bounding box: [78, 542, 342, 620] (the cell for Material/Desc.).
+2. Cancel L/T: The line "Cancel L/T : 999" — in the lower part of the form, below L/T: 217.
 
-U/M: "EA" – under U/M column. Bounding box: [342, 542, 372, 560].
+3. Company Name: Vendor Name is "Hutai Media Co., Ltd." — the Vendor Name field.
 
-Total Qty: "39,520" – under Total Qty column. Bounding box: [372, 542, 442, 560].
+4. Date: The PO number/date is "11/19/2021" from the PO number/date line.
 
-Qty Recd: "0" – under Qty Recd column. Bounding box: [442, 542, 472, 560].
+5. Due Date: "02/01/2022" from the item row's Due Date column.
 
-Qty Retd.: "0" – under Qty Retd. column. Bounding box: [472, 542, 502, 560].
+6. E-Mail: Buyer's E-Mail is "allisonharper@martin.org" — under Buyer: E-Mail.
 
-Unit Price: "7.5" – under Unit Price column. Bounding box: [502, 542, 562, 560].
+7. Id: Vendor ID is "10053097" — under Vendor: 10053097.
 
-Item Value: "296,400.00" – under Item Value column. Bounding box: [562, 542, 682, 560].
+8. Item: The item number in the table is "1" (first column of the item table).
 
-Due Date: "02/01/2022" – under Due Date column. Bounding box: [682, 542, 762, 560].
+9. Item Value: "296,400.00" from the Item Value column of item 1.
 
-L/T: "217" – below the item table, L/T:. Bounding box: [102, 632, 132, 648].
+10. L/T: "217" from "L/T : 217".
 
-Cancel L/T: "999" – below L/T:. Bounding box: [102, 642, 132, 658].
+11. MOQ: "760" from "MOQ : 760".
 
-MOQ: "760" – below Cancel L/T:. Bounding box: [102, 652, 132, 668].
+12. Material Group: "ARISTA" from "Material Group : ARISTA".
 
-Order Inc: "760" – below MOQ:. Bounding box: [102, 662, 132, 678].
+13. Name: "Andrew Romero" from Buyer: Andrew Romero.
 
-Material Group: "ARISTA" – below Order Inc:. Bounding box: [102, 672, 142, 688].
+14. Order Inc: "760" from "Order Inc : 760".
 
-Name: "Andrew Romero" – same as Buyer, but maybe the label. Wait, the "Name" category might refer to the buyer's name, which is already covered. But let's check if there's another name. Maybe the vendor name is also a Company Name.
+15. PO number/date (MM/DD/YYYY): "3013309726 / 11/19/2021" from the PO number/date line.
 
-Company Name: "Hutai Media Co., Ltd." appears in Vendor Name, Ship To, Bill To, Goods Supplier. Let's take one instance, e.g., Vendor Name: [102, 162, 347, 180] as Company Name.
+16. Page Number: "1" from "Page 1 of 5" at top right.
 
-Date: The PO number/date has a date 11/19/2021, and the top right has 11/19/2021 05:23:17. Let's take the PO date: [337, 197, 662, 217] includes the date.
+17. Payment Terms: "STD 90 Days NET" from Payment Terms section.
 
-Due Date: [682, 542, 762, 560] as above.
+18. Product Name: "ASMEM-00270 MEM, EMMC, 16G MLC USED AS 8G PSLC, 153 Manufacturer KIOXACORP THGBMJG7C1LBAIL TRAY" from Material/Desc of item 1.
 
-E-Mail: Two E-Mails: Vendor E-Mail and Buyer E-Mail. Let's take Vendor E-Mail: [102, 292, 347, 310] and Buyer E-Mail: [102, 402, 347, 418].
+19. Qty Recd: "0" from Qty Recd column of item 1.
 
-For each delivery, we expect: "DRY PACK =LVL 3 & L.F Required" – below the item table. Bounding box: [34, 680, 526, 698].
+20. Qty Retd.: "0" from Qty Retd. column of item 1.
 
-Id: The item ID "ASMEM-00270" – in the Material/Desc. cell, first line. Bounding box: [78, 552, 342, 568] (the first line of the description).
+21. Specification: Let's check if there's a "Specification" field. The image has "Special Instructions" which is a box, but it's empty. Alternatively, maybe the product's specification is part of the Material/Desc, but the category is "Specification". Let's check the labels. The user included "Specification" in the categories, so maybe the Special Instructions area, but it's empty. Alternatively, maybe the L/T is a specification, but L/T is Line Type. Let's see, maybe the "Specification" is not present, but the problem says to detect corresponding values. If there's no explicit "Specification" field, maybe it's the Special Instructions, which is empty. But let's check the image: the Special Instructions box is empty, so maybe the value is empty. But let's check the categories again. The user listed "Specification" as a category, so perhaps the product's description includes specification, but maybe the answer expects the Special Instructions. Let's note that the Special Instructions box is present but empty, so the value is empty. But maybe I missed a field. Let's check the image again.
 
-Product Name: The detailed description, e.g., "MEM, EMMC, 16G MLC USED AS 8G PSLC, 153 Manufacturer KIOXACORP THGBMJG7C1LBAIL TRAY". Bounding box: [78, 568, 342, 620].
+22. Telephone: "4161206792" from Buyer: Telephone.
 
-Specification: Maybe the "Special Instructions" box, but it's empty. Alternatively, the material group or other specs. But maybe the "Specification" is not clearly marked, but let's check if any section is labeled Specification. The document has "Special Instructions" which is a box, but maybe that's the only one. Alternatively, the product name includes specs.
+23. Terms of delivery: "FCA HONG KONG" from Terms of delivery section.
 
-Telephone: [102, 382, 347, 398] as above.
+24. Title: "Purchase order" from the main title.
 
-Terms of delivery: [452, 422, 697, 440] as above.
+25. Total Qty: "39,520" from Total Qty column of item 1.
 
-Title: [422, 52, 577, 84] as above.
+26. U/M: "EA" from U/M column of item 1.
 
-Total Qty: [372, 542, 442, 560] as above.
+27. Unit Price: "7.5" from Unit Price column of item 1.
 
-U/M: [342, 542, 372, 560] as above.
+28. VAT Reg. No.: "000147849216" from VAT Reg. No. section.
 
-Unit Price: [502, 542, 562, 560] as above.
+29. Vendor: "10053097" from Vendor: 10053097.
 
-VAT Reg. No.: [452, 442, 697, 460] as above.
+30. Vendor Address: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816" from Vendor Address field.
 
-Vendor: [102, 142, 172, 160] (the code) and Vendor Name is the company.
+31. Vendor E-Mail: "monica85@roberts.com" from Vendor E-Mail field.
 
-Vendor Address: [102, 182, 347, 210] as above.
+32. Vendor Name: "Hutai Media Co., Ltd." from Vendor Name field.
 
-Vendor E-Mail: [102, 292, 347, 310] as above.
+Now, let's create the JSON entries. Each entry has bbox_2d and label.
 
-Vendor Name: [102, 162, 347, 180] as above.
+Let's start with Page Number:
 
-Now, let's compile all these into the JSON array. We need to make sure each entry has a bbox and label.
+- Page Number: The text "Page 1 of 5" is at the top right. Bounding box: top right corner, text "Page 1 of 5".
 
-Let's list some key ones:
+Next, Title: "Purchase order" is the main title, centered.
 
-- Page Number: "Page 1 of 5" → bbox [750, 8, 822, 24], label "Page Number"
-- Title: "Purchase order" → bbox [422, 52, 577, 84], label "Title"
-- PO number/date: "3013309726 / 11/19/2021" → bbox [337, 197, 662, 217], label "PO number/date (MM/DD/YYYY)"
-- Vendor: "10053097" → bbox [102, 142, 172, 160], label "Vendor"
-- Vendor Name: "Hutai Media Co., Ltd." → bbox [102, 162, 347, 180], label "Vendor Name"
-- Vendor Address: "PSC 6731, Box 1234 APO AA 28628 Unit 6238 Box 2922 DPO AP 87816" → bbox [102, 182, 347, 210], label "Vendor Address"
-- Vendor E-Mail: "monica85@roberts.com" → bbox [102, 292, 347, 310], label "Vendor E-Mail"
-- Ship To: "01RI" →
+PO number/date (MM/DD/YYYY): The line "PO number/date (MM/DD/YYYY) : 3013309726 / 11/19/2021" — the text after the colon.
+
+Date: The date part of PO number/date is 11/19/2021.
+
+Id: Vendor ID is "10053097" under Vendor:.
+
+Vendor: The Vendor number is 10053097, so label "Vendor" corresponds to that.
+
+Vendor Name: "Hutai Media Co., Ltd." under Vendor Name:.
+
+Vendor Address: The address under Vendor Address:.
+
+Vendor E-Mail: "monica85@roberts.com" under Vendor E-Mail:.
+
+Buyer: "Andrew Romero" under Buyer:.
+
+Telephone: "4161206792" under Telephone:.
+
+E-Mail (Buyer): "allisonharper@martin.org" under E-Mail:.
+
+Payment Terms: "STD 90 Days NET" under Payment Terms:.
+
+Terms of delivery: "FCA HONG KONG" under Terms of delivery:.
+
+VAT Reg. No.: "000147849216" under VAT Reg. No:.
+
+Special Instructions: The box is empty, so maybe no value, but the category is "Special Instructions" but the user's category list has "Special Instructions" as part of the detection? Wait, the user's categories include "Special Instructions" as a label? Let me check the user's list:
+
+The user's categories to detect: Address, Cancel L/T, Company Name, Date, Due Date, E-Mail, Id, Item, Item Value, L/T, MOQ, Material Group, Name, Order Inc, PO number/date (MM/DD/YYYY), Page Number, Payment Terms, Product Name, Qty Recd, Qty Ret

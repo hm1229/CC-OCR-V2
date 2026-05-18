@@ -1,220 +1,262 @@
-用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+Got it, let's go through each category and find the corresponding values in the image.
 
-首先看C/I No：图中左上角C/I No对应TAI20210706632，所以找到这个位置的bbox。
+First, let's list all the categories:
 
-然后Date：2021-07-16，对应Date字段。
+- Address: Need to check where address is. The Delivery Address is given, but maybe also the seller's address? Wait, the problem says "Address" as a category. Let's check the fields. The Delivery Address is "Unit 1833 Box 9772 DPO AA 91750". Also, the Seller's address is "1333 Brent Streets New Larry, HI 25769". But the category is "Address"—maybe the Delivery Address is the main one here. Let's check the labels.
 
-Sold to：Haichuang Information Co., Ltd.，看Sold to部分。
+- C/I No: The Commercial Invoice No is TAI20210706632. That's in the top left.
 
-Delivery Address：Unit 1833 Box 9772 DPO AA 91750，这个是Delivery Address的内容。
+- Company Name: There are multiple companies. The Seller is Haichuang Information Co., Ltd. The Manufacturer is also Haichuang Information Co., Ltd. The Sold to is also Haichuang Information Co., Ltd. But the category is "Company Name"—maybe the Seller's company name? Let's check.
 
-Destination：Perris, CA，对应Destination字段。
+- Currency: USD, as per the image.
 
-ETD：2021-12-07，ETD字段。
+- Cust NO.: 71500, from the Cust NO. field.
 
-FAX：有两个FAX，卖家的FAX是92-82-66969191，制造商的FAX是69-61-29681929。需要分别找吗？看题目中的FAX类别，可能两个都要？不过先看每个出现的FAX。
+- Date: 2021-07-16, the Date field.
 
-PO NO.：PO-0002731781，PO NO.字段。
+- Delivery Address: Unit 1833 Box 9772 DPO AA 91750.
 
-Terms of Delivery：FOB Shanghai，对应Terms of Delivery。
+- Destination: Perris, CA.
 
-Terms of Payment：TT30SHIP，对应Terms of Payment。
+- ETD: 2021-12-07.
 
-Type of Container：1*40HC，对应Type of Container。
+- FAX: There are two FAXes: Seller's FAX is 92-82-66969191, Manufacturer's FAX is 69-61-29681929. Need to check which one. The problem says "FAX"—maybe the Seller's or Manufacturer's? Let's check the labels.
 
-Your Cont.：tf5597，对应Your Cont.。
+- PO NO.: PO-0002731781.
 
-Cust NO.：71500，Cust NO.字段。
+- Sold to: Haichuang Information Co., Ltd.
 
-Currency：USD，Currency字段。
+- TEL: There are two TELs: Seller's TEL is 69-19-29166829, Manufacturer's TEL is 66-29-18969192. Which one? The Sold to is the same as Seller, so maybe the Seller's TEL.
 
-Company Name：卖家是Haichuang Information Co., Ltd.（SOLD TO也是这个？不，SOLD TO是买方，Seller是卖方，Manufacturer是制造商。Company Name应该包括Seller、Sold to、Manufacturer的公司名？比如Seller的Company Name是Haichuang Information Co., Ltd.，Sold to也是这个，Manufacturer也是Haichuang Information Co., Ltd.。所以需要看每个Company Name的出现。
+- Terms of Delivery: FOB Shanghai.
 
-Title是Commercial Invoice，标题。
+- Terms of Payment: TT30SHIP.
 
-现在逐个处理：
+- Title: The title is "Commercial Invoice".
 
-1. C/I No：TAI20210706632，位置在左上角，C/I No标签下的内容。bbox大概是[39, 73, 152, 88]左右？看原图结构，C/I No行是“C/I No TAI20210706632”，所以bbox是包含这个文本的区域。
+- Type of Container: 1*40HC.
 
-2. Date：2021-07-16，Date行，对应bbox。
+- Your Cont.: tf5597.
 
-3. Sold to：Haichuang Information Co., Ltd.，Sold to: 后面的内容，bbox是Sold to部分的文本。
+Now, let's map each category to the correct field with bounding box.
 
-4. Delivery Address：Unit 1833 Box 9772 DPO AA 91750，Delivery Address: 后面的内容。
+Let's start with each:
 
-5. Destination：Perris, CA，Destination字段对应的内容。
+1. Address: Let's check the Delivery Address. The Delivery Address is "Unit 1833 Box 9772 DPO AA 91750". Let's find its bounding box.
 
-6. ETD：2021-12-07，ETD字段。
+2. C/I No: The C/I No is TAI20210706632. The label is "C/I No" with that value.
 
-7. FAX：卖家的FAX是92-82-66969191（在Seller部分），制造商的FAX是69-61-29681929（在Manufacturer部分）。所以两个FAX都要吗？题目中的FAX类别，所以每个FAX实例都要检测。
+3. Company Name: The Seller's company name is "Haichuang Information Co., Ltd." (under SELLER). Let's confirm.
 
-8. PO NO.：PO-0002731781，PO NO.字段。
+4. Currency: USD, under Currency: USD.
 
-9. Terms of Delivery：FOB Shanghai，对应Terms of Delivery。
+5. Cust NO.: 71500, from Cust NO. field.
 
-10. Terms of Payment：TT30SHIP，对应Terms of Payment。
+6. Date: 2021-07-16, under Date.
 
-11. Type of Container：1*40HC，对应Type of Container。
+7. Delivery Address: Unit 1833 Box 9772 DPO AA 91750.
 
-12. Your Cont.：tf5597，对应Your Cont.。
+8. Destination: Perris, CA.
 
-13. Cust NO.：71500，Cust NO.字段。
+9. ETD: 2021-12-07.
 
-14. Currency：USD，Currency字段。
+10. FAX: Let's check the Manufacturer's FAX: 69-61-29681929 (since the Manufacturer section has FAX: 69-61-29681929). Or Seller's FAX: 92-82-66969191. The problem says "FAX"—maybe need to check which one is relevant. Let's check the image: under SELLER, FAX is 92-82-66969191; under MANUFACTURER, FAX is 69-61-29681929. The category is just "FAX", so perhaps both? But the problem says "detect the corresponding values", so maybe each FAX is a separate entry? Wait, the problem lists "FAX" as a category, so maybe there's one FAX. Let's check the context. The Sold to is the same as Seller, so maybe the Seller's FAX. Let's check the image: SELLER section has TEL and FAX. Let's take the Seller's FAX: 92-82-66969191.
 
-15. Company Name：Seller的Company Name是Haichuang Information Co., Ltd.（Seller部分），Sold to的Company Name也是Haichuang Information Co., Ltd.，Manufacturer的Company Name是Haichuang Information Co., Ltd.。所以这三个都是Company Name吗？需要看每个Company Name的出现。比如Seller的Company Name是“Haichuang Information Co., Ltd.”，Sold to的Company Name也是这个，Manufacturer的也是。所以三个Company Name实例？
+11. PO NO.: PO-0002731781.
 
-16. Title：Commercial Invoice，标题部分。
+12. Sold to: Haichuang Information Co., Ltd.
 
-现在需要确定每个元素的bbox。因为是图片，需要估计每个文本的位置。
+13. TEL: Seller's TEL is 69-19-29166829 (under SELLER: TEL:69-19-29166829).
 
-现在开始列每个类别：
+14. Terms of Delivery: FOB Shanghai.
 
-- C/I No: 文本是TAI20210706632，对应位置在左上方，C/I No标签右侧。bbox大概[101, 75, 234, 92]（假设坐标是基于图片的，需要看原图布局。原图中C/I No行是“C/I No TAI20210706632”，所以x范围是C/I No的列，y是对应行。
+15. Terms of Payment: TT30SHIP.
 
-- Date: 2021-07-16，Date行，对应bbox[45, 112, 146, 130]左右。
+16. Title: Commercial Invoice (the title of the document).
 
-- Sold to: Haichuang Information Co., Ltd.，Sold to: 后面的内容，bbox是Sold to: 行的文本，比如x从Sold to: 开始，y是对应行。
+17. Type of Container: 1*40HC.
 
-- Delivery Address: Unit 1833 Box 9772 DPO AA 91750，Delivery Address: 后面的内容，bbox是该行的文本。
+18. Your Cont.: tf5597.
 
-- Destination: Perris, CA，Destination字段对应的内容，看右侧Destination列下的Perris, CA。
+Now, let's find the bounding boxes for each.
 
-- ETD: 2021-12-07，ETD字段对应的内容，在右侧ETD行。
+Let's go step by step.
 
-- FAX（Seller）: 92-82-66969191，在Seller部分的FAX: 后面的内容。
+First, Title: "Commercial Invoice" is at the top. The bounding box would be around that text.
 
-- FAX（Manufacturer）: 69-61-29681929，在Manufacturer部分的FAX: 后面的内容。
+C/I No: The line "C/I No TAI20210706632" — so the value is TAI20210706632.
 
-- PO NO.: PO-0002731781，PO NO.字段对应的内容。
+Date: "Date 2021-07-16" — value is 2021-07-16.
 
-- Terms of Delivery: FOB Shanghai，在Terms of Delivery行。
+Sold to: "Sold to: Haichuang Information Co., Ltd." — the company name here.
 
-- Terms of Payment: TT30SHIP，在Terms of Payment行。
+Delivery Address: "Delivery Address: Unit 1833 Box 9772 DPO AA 91750" — the address text.
 
-- Type of Container: 1*40HC，在Type of Container列下的内容。
+Destination: "Destination Perris, CA" — the value.
 
-- Your Cont.: tf5597，在Your Cont.列下的内容。
+ETD: "ETD 2021-12-07" — value.
 
-- Cust NO.: 71500，在Cust NO.列下的内容。
+Cust NO.: "Cust NO. 71500" — value.
 
-- Currency: USD，在Currency字段下的内容。
+Type of Container: "Type of Container 1*40HC" — value.
 
-- Company Name（Seller）: Haichuang Information Co., Ltd.（Seller部分的公司名）。
+Your Cont.: "Your Cont. tf5597" — value.
 
-- Company Name（Sold to）: Haichuang Information Co., Ltd.（Sold to部分的公司名）。
+Terms of Delivery: "Terms of Delivery FOB Shanghai" — value.
 
-- Company Name（Manufacturer）: Haichuang Information Co., Ltd.（Manufacturer部分的公司名）。
+Terms of Payment: "Terms of Payment TT30SHIP" — value.
 
-- Title: Commercial Invoice，标题在最上方。
+Currency: "Currency: USD" — value.
 
-现在需要将这些都列出来，每个作为一个对象。注意有些可能重复，比如Company Name出现三次，FAX出现两次等。
+Company Name: Let's check the SELLER's company name: "Haichuang Information Co., Ltd." (under SELLER). Also, the Manufacturer's company name is the same, but the Sold to is also the same. The category is "Company Name" — maybe the main company, which is the Seller. So the SELLER's company name.
 
-现在开始构建JSON数组：
+FAX: Let's check the SELLER's FAX: "FAX: 92-82-66969191" — value.
 
-1. C/I No: bbox对应C/I No的值，label是C/I No。
-2. Date: 对应Date的值，label Date。
-3. Sold to: 对应Sold to的公司名，label Sold to。
-4. Delivery Address: 对应Delivery Address的地址，label Delivery Address。
-5. Destination: 对应Destination的Perris, CA，label Destination。
-6. ETD: 对应ETD的2021-12-07，label ETD。
-7. FAX（Seller）: 92-82-66969191，label FAX。
-8. FAX（Manufacturer）: 69-61-29681929，label FAX。
-9. PO NO.: PO-0002731781，label PO NO.。
-10. Terms of Delivery: FOB Shanghai，label Terms of Delivery。
-11. Terms of Payment: TT30SHIP，label Terms of Payment。
-12. Type of Container: 1*40HC，label Type of Container。
-13. Your Cont.: tf5597，label Your Cont.。
-14. Cust NO.: 71500，label Cust NO.。
-15. Currency: USD，label Currency。
-16. Company Name（Seller）: Haichuang Information Co., Ltd.（Seller部分），label Company Name。
-17. Company Name（Sold to）: Haichuang Information Co., Ltd.（Sold to部分），label Company Name。
-18. Company Name（Manufacturer）: Haichuang Information Co., Ltd.（Manufacturer部分），label Company Name。
-19. Title: Commercial Invoice，label Title。
+PO NO.: "PO NO. PO-0002731781" — value.
 
-现在需要确定每个的bbox。因为是图片，需要大致估计。例如：
+Address: Wait, the problem has "Address" as a category. Let's check if there's an address field. The Delivery Address is an address, but maybe the Seller's address is also an address. Let's check the image: SELLER's address is "1333 Brent Streets New Larry, HI 25769". So that's an address. But the category is "Address" — maybe the Delivery Address is the one labeled as Delivery Address, but the category is just "Address". Let's check the problem statement: the categories include "Address". Let's see which address is intended. The Delivery Address is clearly labeled, so that's the Address.
 
-- Title: "Commercial Invoice" 在最上方，所以bbox是[39, 33, 834, 60]左右（假设页面布局）。
+Now, let's list all entries with their bounding boxes.
 
-- C/I No: "C/I No TAI20210706632"，bbox是[39, 75, 234, 95]。
+Let's start with each:
 
-- Date: "Date 2021-07-16"，bbox是[39, 112, 152, 132]。
+1. Title: "Commercial Invoice" — the top title. Bounding box: around the text.
 
-- SELLER部分的Company Name: "Haichuang Information Co., Ltd."，在Seller标题下的公司名，bbox是[334, 135, 600, 155]（大概）。
+2. C/I No: The text "TAI20210706632" next to "C/I No".
 
-- MANUFACTURER部分的Company Name: "Haichuang Information Co., Ltd."，在Manufacturer标题下的公司名，bbox是[634, 135, 826, 155]。
+3. Company Name: The SELLER's company name: "Haichuang Information Co., Ltd." (under SELLER).
 
-- Sold to: "Sold to: Haichuang Information Co., Ltd."，bbox是[39, 155, 326, 175]。
+4. Currency: "USD" under Currency:.
 
-- Delivery Address: "Delivery Address: Unit 1833 Box 9772 DPO AA 91750"，bbox是[39, 200, 234, 220]（地址部分）。
+5. Cust NO.: "71500" under Cust NO.
 
-- Terms of Delivery: "FOB Shanghai"，在Terms of Delivery行，bbox是[334, 200, 456, 220]。
+6. Date: "2021-07-16" under Date.
 
-- Port of Loading: 这里可能没有内容，但Terms of Delivery是FOB Shanghai，所以对应位置。
+7. Delivery Address: "Unit 1833 Box 9772 DPO AA 91750" under Delivery Address:.
 
-- Terms of Payment: "TT30SHIP"，在Terms of Payment行，bbox是[334, 225, 456, 245]。
+8. Destination: "Perris, CA" under Destination.
 
-- Port of Discharge: 可能没有内容，但ETD是2021-12-07，在ETD行，bbox是[634, 225, 756, 245]。
+9. ETD: "2021-12-07" under ETD.
 
-- Type of Container: "1*40HC"，在Type of Container列，bbox是[634, 200, 756, 220]。
+10. FAX: Let's take the SELLER's FAX: "92-82-66969191" under SELLER's FAX.
 
-- Cust NO.: "71500"，在Cust NO.列，bbox是[756, 200, 878, 220]。
+11. PO NO.: "PO-0002731781" under PO NO.
 
-- Our Cont.: 可能没有内容，Your Cont.: "tf5597"，在Your Cont.列，bbox是[756, 225, 878, 245]。
+12. Sold to: "Haichuang Information Co., Ltd." under Sold to:.
 
-- Destination: "Perris, CA"，在Destination列，bbox是[634, 250, 756, 270]。
+13. TEL: SELLER's TEL: "69-19-29166829" under SELLER's TEL.
 
-- Currency: "USD"，在Currency列，bbox是[334, 250, 456, 270]。
+14. Terms of Delivery: "FOB Shanghai" under Terms of Delivery.
 
-- PO NO.: "PO-0002731781"，在PO NO.列，bbox是[756, 225, 878, 245]？不，PO NO.是PO-0002731781，在PO NO.行，对应右侧PO NO.列，所以bbox是[756, 245, 878, 265]。
+15. Terms of Payment: "TT30SHIP" under Terms of Payment.
 
-- FAX（Seller）: "FAX: 92-82-66969191"，在Seller部分的FAX行，bbox是[334, 155, 600, 175]。
+16. Type of Container: "1*40HC" under Type of Container.
 
-- FAX（Manufacturer）: "FAX: 69-61-29681929"，在Manufacturer部分的FAX行，bbox是[634, 155, 826, 175]。
+17. Your Cont.: "tf5597" under Your Cont.
 
-现在需要将这些都整理成JSON数组，每个元素包含bbox和label。注意有些可能在图中没有显示完整，但根据提供的图片内容，尽量提取。
+18. Address: Let's check if there's another address. The Manufacturer's address is "3060 Cox Inlet New Johnfort, WA 40495". But the problem's categories include "Address" — maybe the Delivery Address is the main one, but let's check the problem's list. The categories given are: Address, C/I No, Company Name, Currency, Cust NO., Date, Delivery Address, Destination, ETD, FAX, PO NO., Sold to, TEL, Terms of Delivery, Terms of Payment, Title, Type of Container, Your Cont.. So "Address" is a separate category from "Delivery Address". So maybe the Seller's address or Manufacturer's address. Let's check the image: SELLER's address is "1333 Brent Streets New Larry, HI 25769". Let's take that as the Address.
 
-现在开始编写每个条目：
+Now, let's verify each category:
 
-1. {"bbox_2d": [39, 33, 834, 60], "label": "Title"}
-2. {"bbox_2d": [39, 75, 234, 95], "label": "C/I No"}
-3. {"bbox_2d": [39, 112, 152, 132], "label": "Date"}
-4. {"bbox_2d": [334, 135, 600, 155], "label": "Company Name"}
-5. {"bbox_2d": [634, 135, 826, 155], "label": "Company Name"}
-6. {"bbox_2d": [39, 155, 326, 175], "label": "Sold to"}
-7. {"bbox_2d": [39, 200, 234, 220], "label": "Delivery Address"}
-8. {"bbox_2d": [334, 200, 456, 220], "label": "Terms of Delivery"}
-9. {"bbox_2d": [334, 225, 456, 245], "label": "Terms of Payment"}
-10. {"bbox_2d": [634, 225, 756, 245], "label": "ETD"}
-11. {"bbox_2d": [634, 200, 756, 220], "label": "Type of Container"}
-12. {"bbox_2d": [756, 200, 878, 220], "label": "Cust NO."}
-13. {"bbox_2d": [756, 225, 878, 245], "label": "Your Cont."}
-14. {"bbox_2d": [634, 250, 756, 270], "label": "Destination"}
-15. {"bbox_2d": [334, 250, 456, 270], "label": "Currency"}
-16. {"bbox_2d": [756, 245, 878, 265], "label": "PO NO."}
-17. {"bbox_2d": [334, 155, 600, 175], "label": "FAX"}
-18. {"bbox_2d": [634, 155, 826, 175], "label": "FAX"}
+- Address: SELLER's address: "1333 Brent Streets New Larry, HI 25769"
 
-现在检查是否有遗漏的类别：Address（Delivery Address属于Address？不，Delivery Address是单独的类别，Address可能指其他地址？但题目中的Address类别，可能Delivery Address是Address的一种？不，题目中的类别有Address，所以需要看是否有其他Address。比如Seller的地址是1333 Brent Streets New Larry, HI 25769，Manufacturer的地址是3060 Cox Inlet New Johnfort, WA 40495。这些是否属于Address类别？
+- C/I No: TAI20210706632
 
-哦，用户要求的类别中有Address，所以需要检查是否有Address类别。之前的分析可能漏了。题目中的类别列表：Address, C/I No, Company Name, Currency, Cust NO., Date, Delivery Address, Destination, ETD, FAX, PO NO., Sold to, TEL, Terms of Delivery, Terms of Payment, Title, Type of Container, Your Cont..
+- Company Name: SELLER's company name: Haichuang Information Co., Ltd.
 
-所以Address是单独的类别，而Delivery Address是另一个类别。所以Seller的地址（1333 Brent Streets New Larry, HI 25769）属于Address类别，Manufacturer的地址（3060 Cox Inlet New Johnfort, WA 40495）也属于Address类别。Sold to的地址？不，Sold to是公司名，其地址可能没有在图中显示？看Sold to部分，Sold to: Haichuang Information Co., Ltd.，没有地址，而Delivery Address是另一个地址。所以Address类别应该包括Seller和Manufacturer的地址。
+- Currency: USD
 
-现在补充：
+- Cust NO.: 71500
 
-- Seller的Address: 1333 Brent Streets New Larry, HI 25769，在Seller部分的地址，label Address。
-- Manufacturer的Address: 3060 Cox Inlet New Johnfort, WA 40495，在Manufacturer部分的地址，label Address。
+- Date: 2021-07-16
 
-另外，TEL也有两个：Seller的TEL: 69-19-29166829，Manufacturer的TEL: 66-29-18969192，这些属于TEL类别，需要添加。
+- Delivery Address: Unit 1833 Box 9772 DPO AA 91750
 
-现在重新检查类别列表中的TEL，需要包含这两个TEL。
+- Destination: Perris, CA
 
-所以现在需要添加：
+- ETD: 2021-12-07
 
-- TEL（Seller）: 69-19-29166829，label TEL。
-- TEL（Manufacturer）: 66-29-18969192，label TEL。
+- FAX: SELLER's FAX: 92-82-66969191
 
-现在修正之前的遗漏：
+- PO NO.: PO-0002731781
 
-之前的步骤中，FAX有两个，TEL也有两个，Address有两个（Seller和Manufacturer的地址），Company Name有三个（Seller、Sold to、
+- Sold to: Haichuang Information Co., Ltd.
+
+- TEL: SELLER's TEL: 69-19-29166829
+
+- Terms of Delivery: FOB Shanghai
+
+- Terms of Payment: TT30SHIP
+
+- Title: Commercial Invoice
+
+- Type of Container: 1*40HC
+
+- Your Cont.: tf5597
+
+Now, let's find the bounding boxes for each.
+
+For example, the Title "Commercial Invoice" is at the top, so the bounding box would be around that text.
+
+C/I No: The line "C/I No TAI20210706632" — the value is the text after C/I No.
+
+Let's check the image coordinates. Since it's a text-based analysis, we can approximate the bounding boxes based on the layout.
+
+Let's list each entry with their bounding box and label:
+
+1. Title: "Commercial Invoice" — the main title. Bounding box: [29, 53, 970, 82] (approx, since it's the top title).
+
+2. C/I No: The text "TAI20210706632" — located below the title, left side. Bounding box: [100, 62, 244, 77] (since C/I No is on the left, value is next to it).
+
+3. Company Name: SELLER's company name: "Haichuang Information Co., Ltd." — under SELLER section. Bounding box: [350, 137, 600, 155] (approx).
+
+4. Currency: "USD" — under Currency: line. Bounding box: [450, 235, 480, 252].
+
+5. Cust NO.: "71500" — under Cust NO. field. Bounding box: [700, 195, 750, 212].
+
+6. Date: "2021-07-16" — under Date field. Bounding box: [100, 137, 200, 154].
+
+7. Delivery Address: "Unit 1833 Box 9772 DPO AA 91750" — under Delivery Address: line. Bounding box: [70, 245, 470, 262].
+
+8. Destination: "Perris, CA" — under Destination field. Bounding box: [500, 235, 570, 252].
+
+9. ETD: "2021-12-07" — under ETD field. Bounding box: [450, 252, 540, 269].
+
+10. FAX: SELLER's FAX: "92-82-66969191" — under SELLER's FAX. Bounding box: [350, 155, 490, 172].
+
+11. PO NO.: "PO-0002731781" — under PO NO. field. Bounding box: [600, 269, 780, 286].
+
+12. Sold to: "Haichuang Information Co., Ltd." — under Sold to: line. Bounding box: [70, 157, 320, 174].
+
+13. TEL: SELLER's TEL: "69-19-29166829" — under SELLER's TEL. Bounding box: [350, 172, 490, 189].
+
+14. Terms of Delivery: "FOB Shanghai" — under Terms of Delivery. Bounding box: [200, 200, 300, 217].
+
+15. Terms of Payment: "TT30SHIP" — under Terms of Payment. Bounding box: [200, 220, 290, 237].
+
+16. Type of Container: "1*40HC" — under Type of Container. Bounding box: [500, 195, 570, 212].
+
+17. Your Cont.: "tf5597" — under Your Cont. field. Bounding box: [550, 212, 600, 229].
+
+18. Address: SELLER's address: "1333 Brent Streets New Larry, HI 25769" — under SELLER's address. Bounding box: [350, 155, 600, 172] (wait, no, the SELLER's address is above the TEL. Let's check: SELLER section has address: "1333 Brent Streets New Larry, HI 25769" — that's the address line. So bounding box for Address (SELLER's address) is [350, 137, 600, 154].
+
+Now, let's compile all these into the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's list them:
+
+1. Title: label "Title", bbox around "Commercial Invoice"
+2. C/I No: label "C/I No", value TAI20210706632
+3. Company Name: label "Company Name", value Haichuang Information Co., Ltd. (SELLER)
+4. Currency: label "Currency", value USD
+5. Cust NO.: label "Cust NO.", value 71500
+6. Date: label "Date", value 2021-07-16
+7. Delivery Address: label "Delivery Address", value Unit 1833 Box 9772 DPO AA 91750
+8. Destination: label "Destination", value Perris, CA
+9. ETD: label "ETD", value 2021-12-07
+10. FAX: label "FAX", value 92-82-66969191 (SELLER's FAX)
+11. PO NO.: label "PO NO.", value PO-0002731781
+12. Sold to: label "Sold to", value Haichuang Information Co., Ltd.
+13. TEL: label "TEL", value 69-19-29166829 (SELLER's TEL)
+14. Terms of Delivery: label "Terms of Delivery", value FOB Shanghai

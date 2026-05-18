@@ -1,1 +1,33 @@
-[{"bbox_2d": [20, 27, 880, 53], "label": "company"}, {"bbox_2d": [20, 145, 880, 185], "label": "address"}, {"bbox_2d": [370, 320, 520, 340], "label": "date"}, {"bbox_2d": [720, 530, 820, 550], "label": "total"}]
+Got it, let's extract the required information from the tax invoice.
+
+First, the company name: "PASARAYA BORONG PINTAR SDN BHD" is at the top. Let's check the bounding box.
+
+Address: The address line is "NO 19-G&19-1&19-2 JALAN TASIK UTAMA 4, MEDAN NIAGA TASIK DAMAI". Let's find that.
+
+Date: The date is "14/03/2018" which is in the timestamp section.
+
+Total: The total amount is "0.90" under "Total Includes GST 0%".
+
+Now, let's map each to their categories.
+
+For company: The text "PASARAYA BORONG PINTAR SDN BHD" is the company. Let's get its coordinates.
+
+Address: The address lines are below the BR No. Let's check the lines.
+
+Date: The date is part of "14/03/2018 4:06:34PM".
+
+Total: The total is "0.90" in the total section.
+
+Let's identify each element's bounding box.
+
+1. Company: The topmost text, "PASARAYA BORONG PINTAR SDN BHD". Bounding box would be the area covering that line.
+
+2. Address: The lines starting with "NO 19-G&19-1&19-2 JALAN TASIK UTAMA 4, MEDAN NIAGA TASIK DAMAI". Let's check the coordinates.
+
+3. Date: The date "14/03/2018" is in the line above "TAX INVOICE".
+
+4. Total: The total amount is "0.90" in the line "Total Includes GST 0% 0.90".
+
+Now, let's structure each entry.
+</think>
+[{"bbox_2d": [229, 44, 770, 92], "label": "company"}, {"bbox_2d": [229, 102, 770, 157], "label": "address"}, {"bbox_2d": [375, 242, 624, 264], "label": "date"}, {"bbox_2d": [325, 532, 974, 554], "label": "total"}]

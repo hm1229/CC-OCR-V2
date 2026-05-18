@@ -1,1 +1,33 @@
-[{"bbox_2d": [107, 72, 335, 88], "label": "email"}, {"bbox_2d": [352, 72, 462, 88], "label": "phone"}, {"bbox_2d": [50, 50, 152, 82], "label": "name"}]
+用户现在需要提取email、name、phone三个信息。首先看name是沈阔，对应最上面的大字体。email是example@outlook.com，带信封图标。phone是+86 139-0000-2468，带电话图标。然后确定每个的bbox。
+
+先看name：沈阔在左上角，大字体。bbox大概是[50, 53, 152, 80]左右？看原文布局，沈阔是第一行大标题。然后email是example@outlook.com，前面有信封图标，位置在沈阔下面一行。phone是+86 139-0000-2468，带电话图标，在email右边。
+
+现在逐个分析：
+
+name：沈阔，对应文本“沈阔”，位置在页面上方，大字号。看坐标的话，原文中“沈阔”是第一行，所以bbox是[50, 53, 152, 80]（假设页面的坐标，根据排版）。
+
+email：example@outlook.com，前面有信封图标，所以文本是example@outlook.com，bbox是[108, 60, 334, 78]左右，因为原文中是“example@outlook.com”在信封图标右边。
+
+phone：+86 139-0000-2468，带电话图标，所以文本是+86 139-0000-2468，bbox是[334, 60, 464, 78]左右，因为中间是竖线分隔，所以电话部分在email右边，电话图标后是号码。
+
+现在需要准确提取每个元素的bbox。看原文的排版：
+
+第一行是“沈阔”（name），然后下面一行是“example@outlook.com | +86 139-0000-2468 | 北京 | ...” 所以：
+
+name的bbox：[50, 53, 152, 80]（因为“沈阔”是单独一行，大字体）。
+
+email的bbox：[108, 62, 334, 79]（包含信封图标和邮箱地址）。
+
+phone的bbox：[336, 62, 464, 79]（包含电话图标和号码）。
+
+现在确认每个标签：
+
+name对应“沈阔”，label是name；
+
+email对应example@outlook.com，label是email；
+
+phone对应+86 139-0000-2468，label是phone。
+
+现在整理成JSON数组。
+</think>
+[{"bbox_2d": [108, 62, 334, 79], "label": "email"}, {"bbox_2d": [336, 62, 464, 79], "label": "phone"}, {"bbox_2d": [50, 53, 152, 80], "label": "name"}]

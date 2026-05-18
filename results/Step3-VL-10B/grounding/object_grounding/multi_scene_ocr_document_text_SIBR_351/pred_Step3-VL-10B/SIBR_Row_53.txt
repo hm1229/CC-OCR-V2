@@ -1,0 +1,157 @@
+用户现在需要检测图像中的各个指定对象，然后给出每个的bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name：图顶部是Jufeng Company Information Co., Ltd.，所以这个是Company Name。
+
+Date：Invoice No旁边的Date是2021/8/23，所以Date的位置。
+
+From：From后面是Jufeng Company Information Co., Ltd.，所以From的标签。
+
+Address：右边Address对应的是Putuo District，所以Address。
+
+Project No：Project No是400575976，找到这个位置。
+
+Client order No：OC 147269，对应Client order No。
+
+CURRENCY：CURRENCY: USD，这个是CURRENCY。
+
+Description：表格里的Description列，比如SLEW BEARING 920026505是Description的内容，所以Description的标签对应表格的列标题或者内容？看表格的Description列，所以Description是列标题，里面的内容是SLEW BEARING...。
+
+Qty：表格里的Qty列，数值是24等。
+
+Unit：表格里的Unit列，比如PCE。
+
+Unit Price：表格里的Unit Price列，比如800.00。
+
+Amount：表格里的Amount列，比如19200.00，还有总金额EXW BY: 19,200.00也是Amount相关？
+
+Attn：Attn后面是Mark Rodriguez，所以Attn。
+
+Tel No.：Tel No.是+055-221-5770。
+
+Fax No.：不过用户没要求Fax No.，所以不管。
+
+Invoice Address：Invoice Address是Unit 1681 Box 0568 DPO AP 61707。
+
+The estimated shipping date：图中的The estimate shipping date: 2021/8/23。
+
+Payment Terms：30Days After goods and invoice received。
+
+Delivery Terms：EX-WORKS。
+
+SLEW BEARING：表格中的描述是SLEW BEARING 920026505，所以SLEW BEARING是这个产品名称。
+
+Title：可能图中的标题是Jufeng Company Information Co., Ltd.作为Title？不过用户给的类别里有Title，需要看。图顶部的大标题是公司名称，可能Title就是公司名称？或者看是否有其他Title。不过可能Title对应的是文档的标题，即Jufeng Company Information Co., Ltd.，所以Title的bbox是顶部的公司名称。
+
+现在逐个整理：
+
+1. Company Name：Jufeng Company Information Co., Ltd.，位置在顶部，bbox大概覆盖顶部文字。
+看图像中“Jufeng Company Information Co., Ltd.”是标题，所以Company Name的bbox是[444, 29, 555, 52]左右？需要看图像的布局。原图像中顶部居中是Jufeng Company Information Co., Ltd.，所以bbox是[440, 27, 560, 50]。
+
+2. Date：Invoice No旁边的Date: 2021/8/23，所以Date的label对应这个值，bbox是Date: 后面的内容，即Date的标签和值的位置。看图像中Date: 2021/8/23，所以Date的bbox是包含Date: 和日期的区域，比如[405, 142, 527, 160]左右？
+
+3. From：From: Jufeng Company Information Co., Ltd.，所以From的label是From，对应内容，bbox是From: 后面的公司名称，即[425, 152, 555, 168]。
+
+4. Address：Address: Putuo District，所以Address的label是Address，对应内容，bbox是Address: 后面的Putuo District，即[435, 172, 555, 188]。
+
+5. Project No：Project No: 400575976，所以Project No的label是Project No，对应数值，bbox是Project No: 后面的数字，即[420, 202, 555, 218]。
+
+6. Client order No：Client order No: OC 147269，所以Client order No的label是Client order No，对应数值，bbox是Client order No: 后面的内容，即[420, 220, 555, 236]。
+
+7. CURRENCY：CURRENCY: USD，所以CURRENCY的label是CURRENCY，对应内容，bbox是CURRENCY: 后面的USD，即[335, 312, 455, 328]。
+
+8. Description：表格中的Description列，列标题是Description，所以Description的label是Description，对应列标题的位置，即表格第一列的表头，bbox是[28, 302, 152, 320]（表格的Description列标题）。
+
+9. Qty：表格中的Qty列，列标题是Qty，对应数值24等，所以Qty的label是Qty，列标题的bbox是[152, 302, 192, 320]。
+
+10. Unit：表格中的Unit列，列标题是Unit，对应PCE等，所以Unit的label是Unit，列标题的bbox是[200, 302, 232, 320]。
+
+11. Unit Price：表格中的Unit Price列，列标题是Unit Price，对应800.00等，所以Unit Price的label是Unit Price，列标题的bbox是[252, 302, 332, 320]。
+
+12. Amount：表格中的Amount列，列标题是Amount，对应19200.00等，还有总金额EXW BY: 19,200.00也是Amount。首先表格的Amount列标题的bbox是[362, 302, 452, 320]。另外总金额EXW BY: 19,200.00也是Amount，所以需要看。用户要求的是Amount，所以可能包括列和总金额。但先看表格中的Amount列，以及总金额。
+
+13. Attn：Attn: Mark Rodriguez，所以Attn的label是Attn，对应内容，bbox是Attn: 后面的名字，即[105, 192, 155, 208]（Attn:）和后面的Mark Rodriguez，所以Attn的bbox是包含Attn: 和名字的区域，比如[105, 190, 325, 210]。
+
+14. Tel No.：Tel No.: +055-221-5770，所以Tel No.的label是Tel No.，对应内容，bbox是Tel No.: 后面的电话，即[105, 200, 215, 216]（Tel No.:）和电话号码，所以Tel No.的bbox是[105, 198, 325, 218]。
+
+15. Invoice Address：Invoice Address: Unit 1681 Box 0568 DPO AP 61707，所以Invoice Address的label是Invoice Address，对应内容，bbox是Invoice Address: 后面的地址，即[105, 220, 325, 236]（Invoice Address:）和地址内容，所以Invoice Address的bbox是[105, 218, 325, 238]。
+
+16. The estimated shipping date：The estimate shipping date: 2021/8/23，所以The estimated shipping date的label是The estimated shipping date，对应内容，bbox是这句话的位置，即[105, 340, 325, 356]。
+
+17. Payment Terms：Payment Terms: 30Days After goods and invoice received，所以Payment Terms的label是Payment Terms，对应内容，bbox是这句话的位置，即[105, 356, 325, 372]。
+
+18. Delivery Terms：Delivery Terms: EX-WORKS，所以Delivery Terms的label是Delivery Terms，对应内容，bbox是这句话的位置，即[105, 372, 325, 388]。
+
+19. SLEW BEARING：表格中的Description内容是SLEW BEARING 920026505，所以SLEW BEARING是这个产品名称，属于Description中的内容，所以SLEW BEARING的label是SLEW BEARING，对应单元格内容，bbox是表格中第一行Description列的内容，即[28, 322, 152, 340]（SLEW BEARING 920026505）。
+
+20. Title：可能图中的标题是Jufeng Company Information Co., Ltd.，作为Title，所以Title的label是Title，对应顶部的公司名称，bbox和Company Name可能重复？但用户要求Title，所以需要确认。图中最上方的标题是Jufeng Company Information Co., Ltd.，所以Title的bbox是[440, 27, 560, 50]，和Company Name可能相同？但用户列中的Title是单独的类别，所以需要包含。
+
+现在需要检查每个类别是否都覆盖：
+
+用户要求的类别列表：
+
+Address, Amount, Attn, CURRENCY, Client order No, Company Name, Date, Delivery Terms, Description, From, Invoice Address, Payment Terms, Project No, Qty, SLEW BEARING, Tel No., The estimated shipping date, Title, Unit, Unit Price.
+
+现在逐个确认：
+
+- Address：存在，对应Address: Putuo District。
+- Amount：存在，表格中的Amount列和总金额。
+- Attn：存在，Attn: Mark Rodriguez。
+- CURRENCY：存在，CURRENCY: USD。
+- Client order No：存在，Client order No: OC 147269。
+- Company Name：存在，Jufeng Company Information Co., Ltd.。
+- Date：存在，Date: 2021/8/23。
+- Delivery Terms：存在，Delivery Terms: EX-WORKS。
+- Description：存在，表格的Description列及内容。
+- From：存在，From: Jufeng Company Information Co., Ltd.。
+- Invoice Address：存在，Invoice Address: Unit 1681 Box 0568 DPO AP 61707。
+- Payment Terms：存在，Payment Terms: 30Days After goods and invoice received。
+- Project No：存在，Project No: 400575976。
+- Qty：存在，表格的Qty列。
+- SLEW BEARING：存在，SLEW BEARING 920026505。
+- Tel No.：存在，Tel No.: +055-221-5770。
+- The estimated shipping date：存在，The estimate shipping date: 2021/8/23。
+- Title：存在，Jufeng Company Information Co., Ltd.（作为标题）。
+- Unit：存在，表格的Unit列。
+- Unit Price：存在，表格的Unit Price列。
+
+现在需要为每个类别找到对应的bbox。需要注意图像中的坐标是相对的，因为是图片，所以需要估计每个元素的位置。
+
+现在开始逐个构建JSON：
+
+1. Company Name：顶部的公司名称，bbox大约是[442, 29, 556, 52]，label: Company Name
+2. Title：可能和Company Name是同一个？但用户要求Title，可能图中的标题就是公司名称，所以Title的bbox也是这个，或者可能Title是文档的标题，即Jufeng Company Information Co., Ltd.，所以Title的label是Title，bbox同上。
+3. Date：Date: 2021/8/23，位置在Invoice No下方，Date标签和值，bbox大约是[406, 144, 526, 160]，label: Date
+4. From：From: Jufeng Company Information Co., Ltd.，bbox大约是[426, 154, 554, 168]，label: From
+5. Address：Address: Putuo District，bbox大约是[436, 174, 554, 188]，label: Address
+6. Project No：Project No: 400575976，bbox大约是[420, 204, 554, 218]，label: Project No
+7. Client order No：Client order No: OC 147269，bbox大约是[420, 222, 554, 236]，label: Client order No
+8. CURRENCY：CURRENCY: USD，bbox大约是[336, 314, 454, 328]，label: CURRENCY
+9. Description：表格的Description列标题，bbox大约是[28, 304, 150, 320]，label: Description；另外SLEW BEARING是Description列的内容，所以SLEW BEARING的bbox是[28, 324, 150, 340]，label: SLEW BEARING
+10. Qty：表格的Qty列标题，bbox大约是[152, 304, 190, 320]，label: Qty；Qty的数值是24，在第一行，bbox大约是[152, 324, 190, 340]，但用户要求的是Qty作为类别，所以列标题即可。
+11. Unit：表格的Unit列标题，bbox大约是[200, 304, 230, 320]，label: Unit；Unit的数值是PCE，在第一行，bbox大约是[200, 324, 230, 340]，但类别是Unit，所以列标题。
+12. Unit Price：表格的Unit Price列标题，bbox大约是[252, 304, 330, 320]，label: Unit Price；Unit Price的数值是800.00，在第一行，bbox大约是[252, 324, 330, 340]，类别是Unit Price，列标题。
+13. Amount：表格的Amount列标题，bbox大约是[362, 304, 450, 320]，label: Amount；总金额EXW BY: 19,200.00，bbox大约是[500, 430, 620, 450]，label: Amount（因为是总金额，属于Amount）
+14. Attn：Attn: Mark Rodriguez，bbox大约是[106, 192, 324, 208]，label: Attn
+15. Tel No.：Tel No.: +055-221-5770，bbox大约是[106, 202, 324, 218]，label: Tel No.
+16. Invoice Address：Invoice Address: Unit 1681 Box 0568 DPO AP 61707，bbox大约是[106, 222, 324, 238]，label: Invoice Address
+17. The estimated shipping date：The estimate shipping date: 2021/8/23，bbox大约是[106, 342, 324, 358]，label: The estimated shipping date
+18. Payment Terms：Payment Terms: 30Days After goods and invoice received，bbox大约是[106, 356, 324, 372]，label: Payment Terms
+19. Delivery Terms：Delivery Terms: EX-WORKS，bbox大约是[106, 372, 324, 388]，label: Delivery Terms
+20. Title：Jufeng Company Information Co., Ltd.作为标题，bbox同Company Name，即[442, 29, 556, 52]，label: Title
+
+现在需要检查是否有重复或遗漏。比如SLEW BEARING是Description中的内容，所以需要单独列出SLEW BEARING的bbox，即表格中第一行Description列的单元格内容，包含SLEW BEARING 920026505，所以其bbox是[28, 322, 152, 342]左右。
+
+另外，Amount的总金额EXW BY: 19,200.00也是一个Amount，所以需要包含。
+
+现在整理所有条目：
+
+- Company Name: [442, 29, 556, 52]
+- Title: [442, 29, 556, 52] （可能和Company Name重复，但用户要求Title，所以保留）
+- Date: [406, 144, 526, 160]
+- From: [426, 154, 554, 168]
+- Address: [436, 174, 554, 188]
+- Project No: [420, 204, 554, 218]
+- Client order No: [420, 222, 554, 236]
+- CURRENCY: [336, 314, 454, 328]
+- Description: [28, 304, 150, 320] （列标题）
+- SLEW BEARING: [28, 324, 

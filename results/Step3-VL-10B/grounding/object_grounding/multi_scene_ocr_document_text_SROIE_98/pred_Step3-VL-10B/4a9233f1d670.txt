@@ -1,6 +1,338 @@
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The company name is "MR. D.I.Y. (M) SDN BHD" along with its registration details. Let's check the text.
+- Address: The address lines are "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR"
+- Date: The date on the invoice is "21-03-18" (from the bottom part: 21-03-18 12:27 ...)
+- Total: The total amount is "RM 21.50" (Total Incl. GST@6%)
+
+Now, find the bounding boxes for each.
+
+Let's check each part:
+
+Company: The company name is in the upper part. The text is "MR. D.I.Y. (M) SDN BHD (CO.REG :860671-D)". So the bounding box for company would be that line.
+
+Address: The address spans multiple lines: LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR. Also includes GST ID and IOI, but the main address is those lines.
+
+Date: The date is "21-03-18" in the footer.
+
+Total: The line "Total Incl. GST@6% RM 21.50"
+
+Now, let's map each.
+
+First, company:
+
+Looking at the text, the company is:
+
+"MR. D.I.Y. (M) SDN BHD
+(CO.REG :860671-D)"
+
+So the bounding box for company is the area containing that.
+
+Address:
+
+"LOT 1851-A & 1851-B, JALAN KPB 6,
+KAWASAN PERINDUSTRIAN BALAKONG,
+43300 SERI KEMBANGAN, SELANGOR
+(GST ID No :000306020352)
+(IOI PUCHONG)"
+
+But the main address is the first three lines. Let's take the lines from LOT to SELANGOR.
+
+Date: The date is in the line "21-03-18 12:27 SH01 ZJ86", so the date part is "21-03-18".
+
+Total: The line "Total Incl. GST@6% RM 21.50"
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text starts at the top after the number 31803045. Let's check the coordinates. The company name is in the upper section.
+
+Address: The address lines are below the company.
+
+Date: The date is in the lower part, near the operator info.
+
+Total: The total is above the cash and change.
+
+Let's list each:
+
+1. Company: "MR. D.I.Y. (M) SDN BHD (CO.REG :860671-D)" – the bounding box would cover that block.
+
+2. Address: The address lines: LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR. Let's check the text.
+
+3. Date: "21-03-18" from the line "21-03-18 12:27 SH01 ZJ86"
+
+4. Total: "RM 21.50" from "Total Incl. GST@6% RM 21.50"
+
+Now, let's create the JSON entries.
+
+First, company:
+
+The company text is:
+
+"MR. D.I.Y. (M) SDN BHD
+(CO.REG :860671-D)"
+
+So the bounding box is the area containing these lines.
+
+Address:
+
+The address is:
+
+"LOT 1851-A & 1851-B, JALAN KPB 6,
+KAWASAN PERINDUSTRIAN BALAKONG,
+43300 SERI KEMBANGAN, SELANGOR"
+
+Plus the GST ID and IOI, but the main address is those lines.
+
+Date:
+
+"21-03-18" is part of "21-03-18 12:27 SH01 ZJ86 T2 R000110882 OPERATOR TRAINEE CASHIER"
+
+Total:
+
+"Total Incl. GST@6% RM 21.50" – the total amount is RM 21.50.
+
+Now, let's check the exact positions.
+
+Looking at the image:
+
+- Company: The lines are:
+
+MR. D.I.Y. (M) SDN BHD
+
+(CO.REG :860671-D)
+
+LOT 1851-A & 1851-B, JALAN KPB 6,
+
+KAWASAN PERINDUSTRIAN BALAKONG,
+
+43300 SERI KEMBANGAN, SELANGOR
+
+(GST ID No :000306020352)
+
+(IOI PUCHONG)
+
+So the company is the first two lines.
+
+Address is the next four lines (LOT to SELANGOR, and the GST and IOI are part of the address details, but maybe the address is the physical location, which is the LOT, JALAN, etc.)
+
+Date is at the bottom: 21-03-18 12:27 ...
+
+Total is above that: Total Incl. GST@6% RM 21.50
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text "MR. D.I.Y. (M) SDN BHD" and "(CO.REG :860671-D)" – let's find their coordinates.
+
+In the image, the top part after the number 31803045 is the company info.
+
+Address: The lines starting with LOT 1851-A... up to SELANGOR.
+
+Date: The line starting with 21-03-18.
+
+Total: The line "Total Incl. GST@6% RM 21.50"
+
+Now, let's create the JSON array.
+
+Each entry has bbox_2d and label.
+
+Let's estimate the coordinates. Since it's a text-based image, we can describe the regions.
+
+Alternatively, look for the key elements.
+
+Company: The company name is clearly labeled, so the bounding box is around "MR. D.I.Y. (M) SDN BHD (CO.REG :860671-D)".
+
+Address: The address block includes the lot number, street, industrial area, postal code, and state.
+
+Date: The date is "21-03-18" in the footer.
+
+Total: The total amount is RM 21.50.
+
+Now, let's write the JSON.
+
+First, company:
+
+{
+  "bbox_2d": [108, 137, 892, 172],
+  "label": "company"
+}
+
+Wait, need to check the actual text positions. Let's parse the image text.
+
+The image has:
+
+31803045 (top left)
+
+Then:
+
+MR. D.I.Y. (M) SDN BHD
+
+(CO.REG :860671-D)
+
+LOT 1851-A & 1851-B, JALAN KPB 6,
+
+KAWASAN PERINDUSTRIAN BALAKONG,
+
+43300 SERI KEMBANGAN, SELANGOR
+
+(GST ID No :000306020352)
+
+(IOI PUCHONG)
+
+-TAX INVOICE-
+
+Then the items.
+
+Then:
+
+Item(s) : 6
+
+Qty(s) : 6
+
+Total Incl. GST@6% RM 21.50
+
+CASH RM 50.00
+
+CHANGE RM 28.50
+
+Then:
+
+GST @6% included in total RM 1.22
+
+21-03-18 12:27 SH01 ZJ86 T2 R000110882 OPERATOR TRAINEE CASHIER
+
+EXCHANGE... etc.
+
+So:
+
+Company: The lines from "MR. D.I.Y. (M) SDN BHD" to "(CO.REG :860671-D)".
+
+Address: The lines from "LOT 1851-A & 1851-B, JALAN KPB 6," to "(IOI PUCHONG)".
+
+Date: "21-03-18" in the line "21-03-18 12:27 SH01 ZJ86..."
+
+Total: "Total Incl. GST@6% RM 21.50"
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text is in the upper part, so the bounding box would be the area containing those two lines.
+
+For address:
+
+The lines from LOT to IOI PUCHONG.
+
+For date:
+
+The date part is the first part of the line "21-03-18 12:27 SH01 ZJ86..."
+
+For total:
+
+The line "Total Incl. GST@6% RM 21.50"
+
+Now, let's create the entries.
+
+1. Company: The block with MR. D.I.Y. (M) SDN BHD and CO.REG.
+
+2. Address: The block with LOT, JALAN, KAWASAN, 43300, and GST/IOI.
+
+3. Date: The date "21-03-18" in the footer.
+
+4. Total: The total amount line.
+
+Now, let's check the exact text for each.
+
+Company label: The company name is clearly identified.
+
+Address: The physical address details.
+
+Date: The transaction date.
+
+Total: The total amount including GST.
+
+Now, let's write the JSON.
+
+First, company:
+
+{
+  "bbox_2d": [113, 140, 887, 170],
+  "label": "company"
+}
+
+Address:
+
+The address spans multiple lines. Let's take the main address lines:
+
+LOT 1851-A & 1851-B, JALAN KPB 6,
+KAWASAN PERINDUSTRIAN BALAKONG,
+43300 SERI KEMBANGAN, SELANGOR
+
+And the GST and IOI are part of the address registration, so include them.
+
+So the bounding box for address would be from the LOT line to the IOI line.
+
+{
+  "bbox_2d": [110, 175, 890, 240],
+  "label": "address"
+}
+
+Date:
+
+The date is in the line "21-03-18 12:27 SH01 ZJ86 T2 R000110882 OPERATOR TRAINEE CASHIER"
+
+So the date part is "21-03-18", which is at the start of that line.
+
+{
+  "bbox_2d": [21, 920, 100, 940],  // approximate, but the line is there
+  "label": "date"
+}
+
+Wait, the line is "21-03-18 12:27 SH01 ZJ86 T2 R000110882 OPERATOR TRAINEE CASHIER" – so the date is the first 10 characters.
+
+Total:
+
+The line "Total Incl. GST@6% RM 21.50" – the total amount is RM 21.50.
+
+{
+  "bbox_2d": [100, 730, 890, 750],
+  "label": "total"
+}
+
+Now, let's verify each.
+
+Company: Correct, the company name is there.
+
+Address: The address details are correct.
+
+Date: The date is 21-03-18, which is the transaction date.
+
+Total: The total amount is RM 21.50.
+
+Now, let's make sure the bounding boxes are accurate. Since the image is a receipt, the text is aligned, so the coordinates can be estimated.
+
+Alternatively, check the exact positions.
+
+Another way: look for the key phrases.
+
+- Company: "MR. D.I.Y. (M) SDN BHD" – this is the company.
+
+- Address: The lines starting with "LOT 1851-A..." which is the address.
+
+- Date: "21-03-18" is the date.
+
+- Total: "Total Incl. GST@6% RM 21.50" – the total.
+
+Now, let's create the JSON array with these four entries.
+</think>
 [
-    {"bbox_2d": [101, 103, 898, 157], "label": "company"},
-    {"bbox_2d": [101, 160, 898, 247], "label": "address"},
-    {"bbox_2d": [21, 920, 979, 943], "label": "date"},
-    {"bbox_2d": [101, 727, 979, 748], "label": "total"}
+    {"bbox_2d": [114, 138, 886, 171], "label": "company"},
+    {"bbox_2d": [110, 176, 890, 242], "label": "address"},
+    {"bbox_2d": [22, 921, 102, 942], "label": "date"},
+    {"bbox_2d": [102, 731, 888, 752], "label": "total"}
 ]

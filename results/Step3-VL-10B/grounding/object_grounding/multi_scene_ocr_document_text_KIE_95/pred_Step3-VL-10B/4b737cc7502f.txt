@@ -1,9 +1,109 @@
+Got it, let's extract each required field from the invoice.
+
+First, date: The invoice has "10 May 2018 18:19". So that's the date.
+
+Doc_no_receipt_no: The invoice number is "OR1805102160303". Let me check the label: "Invoice # : OR1805102160303".
+
+Seller_address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" and the (867388-U) maybe part of it, but the main address is those lines.
+
+Seller_gst_id: Wait, looking at the invoice, there's a GST REG #000656195584 at the bottom. But the seller's GST ID—wait, the top has (867388-U) which might be the seller's GST? Or the GST REG is for the bar. Let me check. The seller is UNIHAKKA INTERNATIONAL SDN BHD. The GST REG # is under BAR WANG RICE, which is the business name. Wait, the seller's GST ID—maybe the (867388-U) next to the address is the seller's GST. Let me check the invoice structure. The top part: "UNIHAKKA INTERNATIONAL SDN BHD 10 May 2018 18:19 (867388-U) 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor". So (867388-U) is likely the seller's GST identification number.
+
+Seller_name: "UNIHAKKA INTERNATIONAL SDN BHD".
+
+Total_amount: The "Total Amount: $12.20" is there.
+
+Total_tax: The "GST @6%: $0.69" is the tax amount.
+
+Now, let's map each:
+
+date: "10 May 2018 18:19" → find the bounding box for that text.
+
+doc_no_receipt_no: Invoice # is OR1805102160303.
+
+seller_address: The address lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" (including the (867388-U) maybe part of the address line? Let's check the original text: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" is the address, and (867388-U) is above that, maybe a reference. But the address is the line with the location.
+
+seller_gst_id: (867388-U) is the GST ID for the seller UNIHAKKA.
+
+seller_name: UNIHAKKA INTERNATIONAL SDN BHD.
+
+total_amount: Total Amount: $12.20
+
+total_tax: GST @6%: $0.69
+
+Now, let's find the bounding boxes for each.
+
+First, date: The line "10 May 2018 18:19" is in the header. Let's check coordinates.
+
+Looking at the image, the text "10 May 2018 18:19" is below the company name.
+
+doc_no_receipt_no: "Invoice # : OR1805102160303" — the number is OR1805102160303.
+
+seller_address: The address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" — that's the address block.
+
+seller_gst_id: The (867388-U) is next to the address line, above the address. Let's check: " (867388-U) " is on the same line as the company name's address part.
+
+seller_name: "UNIHAKKA INTERNATIONAL SDN BHD" — the company name.
+
+total_amount: The line "Total Amount: $12.20" — that's the total amount.
+
+total_tax: "GST @6%: $0.69" — that's the tax amount.
+
+Now, let's list each with their bounding boxes.
+
+Let's go step by step.
+
+1. date: The text "10 May 2018 18:19" — find its position. In the image, it's centered below the company name. Bounding box would cover that line.
+
+2. doc_no_receipt_no: The invoice number is "OR1805102160303" — part of "Invoice # : OR1805102160303".
+
+3. seller_address: The address lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" — that's the address.
+
+4. seller_gst_id: The (867388-U) — which is in the line above the address: " (867388-U) ".
+
+5. seller_name: "UNIHAKKA INTERNATIONAL SDN BHD" — the company name.
+
+6. total_amount: "Total Amount: $12.20" — the total amount line.
+
+7. total_tax: "GST @6%: $0.69" — the GST tax line.
+
+Now, let's check each in the image.
+
+For seller_gst_id: The text (867388-U) is present. Let's confirm: in the image, after the company name, it's "10 May 2018 18:19 (867388-U) 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor". So (867388-U) is the GST ID.
+
+Now, let's create the JSON entries.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's define the bounding boxes approximately (since we need to estimate based on the image layout).
+
+- seller_name: "UNIHAKKA INTERNATIONAL SDN BHD" — top part, so bbox is around the company name line.
+- date: "10 May 2018 18:19" — below company name.
+- seller_gst_id: "(867388-U)" — same line as date, after the date.
+- seller_address: the address lines below the GST ID.
+- doc_no_receipt_no: "OR1805102160303" — below the address, in the "Invoice #" line.
+- total_amount: "Total Amount: $12.20" — in the middle of the item list, after the items.
+- total_tax: "GST @6%: $0.69" — below total amount, before net total.
+
+Now, let's write each:
+
+1. date: label "date", bbox for "10 May 2018 18:19"
+2. doc_no_receipt_no: label "doc_no_receipt_no", bbox for "OR1805102160303"
+3. seller_address: label "seller_address", bbox for the address text
+4. seller_gst_id: label "seller_gst_id", bbox for "(867388-U)"
+5. seller_name: label "seller_name", bbox for "UNIHAKKA INTERNATIONAL SDN BHD"
+6. total_amount: label "total_amount", bbox for "Total Amount: $12.20"
+7. total_tax: label "total_tax", bbox for "GST @6%: $0.69"
+
+Now, let's check if all are present.
+
+Yes, all categories are covered.
+</think>
 [
-    {"bbox_2d": [322, 252, 677, 270], "label": "seller_name"},
-    {"bbox_2d": [425, 262, 574, 278], "label": "date"},
-    {"bbox_2d": [522, 278, 620, 294], "label": "seller_gst_id"},
-    {"bbox_2d": [382, 296, 617, 322], "label": "seller_address"},
-    {"bbox_2d": [252, 330, 648, 346], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [502, 452, 650, 466], "label": "total_amount"},
-    {"bbox_2d": [502, 466, 620, 480], "label": "total_tax"}
+    {"bbox_2d": [254, 137, 346, 152], "label": "date"},
+    {"bbox_2d": [209, 334, 346, 349], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [279, 154, 547, 192], "label": "seller_address"},
+    {"bbox_2d": [293, 144, 346, 159], "label": "seller_gst_id"},
+    {"bbox_2d": [254, 117, 546, 132], "label": "seller_name"},
+    {"bbox_2d": [447, 444, 552, 459], "label": "total_amount"},
+    {"bbox_2d": [457, 460, 547, 474], "label": "total_tax"}
 ]

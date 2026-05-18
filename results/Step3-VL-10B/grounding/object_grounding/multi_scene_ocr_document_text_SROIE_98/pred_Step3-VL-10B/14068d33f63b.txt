@@ -1,1 +1,33 @@
-[{"bbox_2d": [89, 7, 910, 32], "label": "company"}, {"bbox_2d": [89, 37, 910, 102], "label": "address"}, {"bbox_2d": [190, 947, 809, 968], "label": "date"}, {"bbox_2d": [225, 547, 325, 567], "label": "total"}]
+Got it, let's extract the required information from the invoice.
+
+First, the company name: "BOON SENG PAPER SDN BHD (1248717-W)". Let's find its bounding box.
+
+Then the address: "12, JALAN BUNGA TANJUNG, 2/16 SEKSYEN 2, 40000 SHAH ALAM, SELANGOR". That's the address section.
+
+Date: The timestamp at the bottom is "19/03/2018 1:01:43 PM". So the date part is 19/03/2018.
+
+Total amount: The "Total Amt Payable" is 31.80 RM. Let's check where that is.
+
+Now, let's map each category.
+
+Company: The top line with the company name.
+
+Address: The lines below the company name.
+
+Date: The date in the timestamp.
+
+Total: The total amount payable, which is 31.80.
+
+Let's check each element's position.
+
+For company: The text "BOON SENG PAPER SDN BHD (1248717-W)" is at the top. Bounding box would cover that line.
+
+Address: The next lines: "12, JALAN BUNGA TANJUNG, 2/16 SEKSYEN 2, 40000 SHAH ALAM, SELANGOR".
+
+Date: The line "19/03/2018 1:01:43 PM" — the date part is 19/03/2018.
+
+Total: The "Total Amt Payable : 31.80" — so the total amount is 31.80.
+
+Now, let's structure the JSON array with each entry.
+</think>
+[{"bbox_2d": [82, 112, 918, 192], "label": "company"}, {"bbox_2d": [82, 132, 918, 200], "label": "address"}, {"bbox_2d": [192, 946, 337, 966], "label": "date"}, {"bbox_2d": [22, 532, 977, 557], "label": "total"}]

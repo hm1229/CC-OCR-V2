@@ -1,6 +1,139 @@
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's find its location on the invoice. It's near the top.
+- Address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor" and the reference "(867388-U)" maybe part of address? Wait, the main address is the lines after the date.
+- Date: The date is "05 Apr 2018 18:25".
+- Total: The total amount is "Total Amount: $6.90" and "Nett Total: $6.90". Let's check which total to pick. The problem says "total", so probably the net total or total amount. Let's see the values.
+
+Now, let's map each:
+
+Company: "UNIHAKKA INTERNATIONAL SDN BHD" – find its bounding box.
+
+Address: The address block is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" and maybe the (867388-U) is part of the address? Let's check the text.
+
+Date: "05 Apr 2018 18:25" – that's the date.
+
+Total: The total amount is $6.90, which is in "Total Amount: $6.90" and "Nett Total: $6.90". Let's take the total amount.
+
+Now, let's check the coordinates.
+
+First, company: The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's find the bounding box.
+
+Looking at the image, the company name is centered. Let's estimate the coordinates.
+
+Address: The lines below the date: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" and the (867388-U) is above that? Wait, the invoice has:
+
+05 Apr 2018 18:25
+
+(867388-U)
+
+12, Jalan Tampoi 7/4, Kawasan Perindustrian
+
+Tampoi,81200 Johor Bahru, Johor
+
+So the address includes those lines.
+
+Date: "05 Apr 2018 18:25" – that's the date.
+
+Total: Let's check where the total is. In the item list, after the items, it says "Total Amount: $6.90" and "GST @6%: $0.39" and "Nett Total: $6.90". So the total amount is $6.90.
+
+Now, let's create the JSON entries.
+
+For company: bbox around "UNIHAKKA INTERNATIONAL SDN BHD"
+
+For address: bbox around the address lines.
+
+For date: bbox around "05 Apr 2018 18:25"
+
+For total: bbox around "Total Amount: $6.90" or "Nett Total: $6.90". Let's check which one is more appropriate. The problem says "total", so likely the net total, which is $6.90.
+
+Let's check each element's position.
+
+First, company:
+
+The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the middle top. Let's get the coordinates. Let's assume the image's text positions.
+
+Alternatively, look at the structure:
+
+- The top has "UNIHAKKA INTERNATIONAL SDN BHD" – that's the company.
+
+- Below that is the date: "05 Apr 2018 18:25"
+
+- Then the address: the lines starting with "12, Jalan Tampoi..."
+
+- Then the invoice number.
+
+Then the items, then total amount.
+
+So let's define each:
+
+1. Company: "UNIHAKKA INTERNATIONAL SDN BHD" – label: company
+
+2. Address: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" – label: address
+
+3. Date: "05 Apr 2018 18:25" – label: date
+
+4. Total: "Total Amount: $6.90" (or Nett Total: $6.90) – label: total
+
+Now, let's find the bounding boxes.
+
+For company: The text is in the upper part, centered. Let's check the coordinates. Let's see the image's text:
+
+"UNIHAKKA INTERNATIONAL SDN BHD" – the bounding box would cover that line.
+
+For address: The lines are:
+
+"12, Jalan Tampoi 7/4, Kawasan Perindustrian"
+
+"Tampoi,81200 Johor Bahru, Johor"
+
+So combined, that's the address.
+
+Date: "05 Apr 2018 18:25" – that's a single line.
+
+Total: Let's check where "Total Amount: $6.90" is. It's in the right part of the item list section.
+
+Now, let's write the JSON.
+
+Each entry is a dictionary with bbox and label.
+
+Let's estimate the coordinates. Since the image is a bit large, but in the problem, we need to provide the bounding box as [x1, y1, x2, y2]. Let's check the positions.
+
+Alternatively, maybe the exact coordinates can be inferred from the text placement.
+
+But perhaps in the context of the problem, the key is to identify the correct text for each category.
+
+Let me list each:
+
+- Company: "UNIHAKKA INTERNATIONAL SDN BHD" → label: company
+
+- Address: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" → label: address
+
+- Date: "05 Apr 2018 18:25" → label: date
+
+- Total: "$6.90" (from Total Amount or Nett Total) → label: total
+
+Now, let's check the total amount. The invoice shows "Total Amount: $6.90" and "Nett Total: $6.90". Either can be the total. Let's pick "Total Amount: $6.90" as the total.
+
+Now, let's create the entries.
+
+For each, the bbox:
+
+Company: The text is in the upper part. Let's say the coordinates are from the top section. Let's check the image: the company name is above the date. So the bounding box for company is around that line.
+
+Address: Below the date and the reference (867388-U), the address lines.
+
+Date: The line with 05 Apr 2018 18:25.
+
+Total: The line with "Total Amount: $6.90".
+
+Now, let's write the JSON array.
+</think>
 [
-    {"bbox_2d": [295, 204, 704, 222], "label": "company"},
-    {"bbox_2d": [295, 232, 704, 260], "label": "address"},
-    {"bbox_2d": [395, 208, 527, 224], "label": "date"},
-    {"bbox_2d": [454, 392, 558, 408], "label": "total"}
+    {"bbox_2d": [234, 202, 765, 220], "label": "company"},
+    {"bbox_2d": [234, 232, 765, 267], "label": "address"},
+    {"bbox_2d": [309, 205, 433, 221], "label": "date"},
+    {"bbox_2d": [520, 392, 637, 408], "label": "total"}
 ]

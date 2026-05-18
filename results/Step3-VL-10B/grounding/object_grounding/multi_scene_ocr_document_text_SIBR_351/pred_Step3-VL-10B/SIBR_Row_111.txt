@@ -1,0 +1,231 @@
+用户现在需要从发票中提取指定的各个对象，每个对象要找到对应的bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看ADD：图中上方有ADD: 9137 Burton Dale... 所以ADD的位置是那个地址行。然后ADDRESS可能和ADD类似？不过看题目里的类别，ADD是单独的，ADDRESS可能也是？不过先看每个类别。
+
+先列出来所有要检测的类别：ADD, ADDRESS, Amount (USD), COMPANY NAME, Date, Description of Goods, FAX, FOB价, H/S-CODE, Marks, No., P/O No., Quantity (KGS), TEL, TITLE, TO, Terms of Payment, Unit Price (USD/KG), 保险费, 净佣金, 海运费, 船期, 贸易性质, 陆运费。
+
+现在逐个找：
+
+1. ADD：图中上方“ADD: 9137 Burton Dale Suite 928 Wangborough, WV 26481” 这个区域。bbox需要确定。看坐标，大概在顶部偏右，公司信息里的ADD。
+
+2. ADDRESS：可能和ADD重复？或者看是否有单独的ADDRESS。不过图中公司名称是“襄樊地球村传媒有限公司”，然后ADD是地址。可能ADDRESS就是ADD对应的内容？或者可能题目中的ADDRESS是另一个？不过先看其他。
+
+3. Amount (USD)：在货物行的Amount列，比如US$52,148.35，还有TOTAL里的US$52,148.35。需要找到所有Amount (USD)的实例。比如货物行的Amount是US$52,148.35，TOTAL里的也是。
+
+4. COMPANY NAME：图中左上角“襄樊地球村传媒有限公司”是公司名称，还有To的公司是Xiangfan Earth Village Media Co., Ltd.，但题目中的COMPANY NAME应该是指开票公司，即左上角的“襄樊地球村传媒有限公司”。
+
+5. Date：发票中的Date: 2022/3/8。
+
+6. Description of Goods：表格中的“Description of Goods”列，内容是E-GLASS SMC ROVING 4800TEX ER14-4800-442 (4*4)。
+
+7. FAX：图中上方的FAX: +8856018135878。
+
+8. FOB价：在下方的“FOB价: $ 50370.15”。
+
+9. H/S-CODE：图中的“H/S CODE: 7019.12.0090”。
+
+10. Marks：表格中的“Marks”列，内容是N/M。
+
+11. No.：发票中的No.: JSKR22 171。
+
+12. P/O No.：下方的“P/O No.: 196/ER14-4800-442/02/2022”。
+
+13. Quantity (KGS)：表格中的“Quantity (KGS)”列，数值是39004。
+
+14. TEL：图中的TEL: +3418365718867。
+
+15. TITLE：图中的大标题“INVOICE”。
+
+16. TO：运输详情中的“TO USS Bishop FPO AA 30187”，以及To: Xiangfan Earth Village Media Co., Ltd. 这里的TO应该是指运输的TO，看Transport Details里的TO部分。
+
+17. Terms of Payment：Terms of Payment: T/T 45 DAYS FROM B/I DATE。
+
+18. Unit Price (USD/KG)：表格中的“Unit Price (USD/KG)”列，数值是US$1.337。
+
+19. 保险费：图中的“保险费: $ 18.20”。
+
+20. 净佣金：图中的“净佣金: $”（可能后面没有数值？看图片中的“净佣金: $”）。
+
+21. 海运费：图中的“海运费: $ 1760.00”。
+
+22. 船期：图中的“船期: 3月13日”。
+
+23. 贸易性质：图中的“贸易性质: 一般贸易”。
+
+24. 陆运费：图中的“陆运费: ¥ 12088.00”。
+
+现在需要为每个类别找到对应的bbox。需要仔细看每个元素的位置。
+
+现在开始逐个处理：
+
+1. ADD：对应图中“ADD: 9137 Burton Dale Suite 928 Wangborough, WV 26481” 这行。bbox大概在顶部，公司信息区域。坐标范围：ADD的文本位置，x从ADD开始，y在顶部。看原图，ADD在公司名称右边，所以bbox是[214, 87, 462, 105]左右？需要更准确。原图中公司名称是“襄樊地球村传媒有限公司”，然后右边是ADD: ... 所以ADD的bbox是[213, 86, 463, 106]（假设）。
+
+2. ADDRESS：可能和ADD是同一内容？或者可能题目中的ADDRESS是另一个地址？比如To的地址？但To的地址是“2386 Peter Lights Rowefurt, RI 71745 USNS Barnes FPO AE 45886”，但题目中的类别有ADDRESS，可能需要看是否有单独的ADDRESS标签。不过可能图中没有单独的ADDRESS，或者可能ADD就是ADDRESS？不过先按题目要求，可能ADDRESS是另一个，但图中可能没有，或者可能我漏了。或者可能题目中的ADDRESS是公司地址，即ADD对应的就是ADDRESS？可能需要再检查。不过先继续其他。
+
+3. Amount (USD)：有两个地方，货物行的Amount是US$52,148.35，TOTAL里的也是。所以需要找到这两个。比如货物行的Amount列的单元格，bbox是[500, 690, 625, 712]左右？看表格中的Amount列，对应数值是US$52,148.35。TOTAL行的Amount也是US$52,148.35。所以这两个都是Amount (USD)。
+
+4. COMPANY NAME：左上角的“襄樊地球村传媒有限公司”，bbox是[25, 28, 167, 48]。
+
+5. Date：Date: 2022/3/8，bbox是[395, 238, 447, 256]。
+
+6. Description of Goods：表格中的描述列，内容是“E-GLASS SMC ROVING 4800TEX ER14-4800-442 (4*4)”，bbox是[132, 695, 447, 725]（看表格的Description of Goods列）。
+
+7. FAX：FAX: +8856018135878，bbox是[407, 100, 542, 118]。
+
+8. FOB价：FOB价: $ 50370.15，bbox是[500, 825, 625, 843]。
+
+9. H/S-CODE：H/S CODE: 7019.12.0090，bbox是[100, 950, 237, 968]。
+
+10. Marks：Marks列，内容是N/M，bbox是[50, 625, 112, 645]（表格的Marks列）。
+
+11. No.：No.: JSKR22 171，bbox是[400, 240, 475, 258]。
+
+12. P/O No.：P/O No.: 196/ER14-4800-442/02/2022，bbox是[100, 835, 325, 853]。
+
+13. Quantity (KGS)：Quantity (KGS)列的数值39004，bbox是[300, 690, 375, 712]（表格中Quantity列）。
+
+14. TEL：TEL: +3418365718867，bbox是[345, 102, 475, 120]。
+
+15. TITLE：INVOICE，大标题，bbox是[375, 140, 625, 170]（因为图中INVOICE是大写，居中）。
+
+16. TO：运输详情中的TO USS Bishop FPO AA 30187，bbox是[375, 300, 625, 318]（看Transport Details里的TO部分）。
+
+17. Terms of Payment：Terms of Payment: T/T 45 DAYS FROM B/I DATE，bbox是[400, 260, 595, 278]。
+
+18. Unit Price (USD/KG)：Unit Price (USD/KG)列的数值US$1.337，bbox是[450, 690, 535, 712]。
+
+19. 保险费：保险费: $ 18.20，bbox是[500, 975, 625, 993]。
+
+20. 净佣金：净佣金: $，bbox是[500, 955, 625, 973]（看图片中的“净佣金: $”）。
+
+21. 海运费：海运费: $ 1760.00，bbox是[500, 935, 625, 953]。
+
+22. 船期：船期: 3月13日，bbox是[500, 915, 625, 933]。
+
+23. 贸易性质：贸易性质: 一般贸易，bbox是[500, 905, 625, 923]。
+
+24. 陆运费：陆运费: ¥ 12088.00，bbox是[500, 895, 625, 913]。
+
+现在需要确认每个类别的存在和对应的bbox。可能有些类别在图中没有，比如ADDRESS，可能图中没有单独的ADDRESS，或者可能ADD就是ADDRESS？需要再检查题目中的类别，用户要求检测所有匹配的类别，所以如果某个类别不存在，可能不包含。但根据图中的内容，现在列出所有存在的：
+
+现在整理每个类别：
+
+- ADD：存在，对应公司地址行。
+- ADDRESS：可能图中没有单独的ADDRESS，或者可能To的地址是ADDRESS？但题目中的类别有ADDRESS，可能需要看。To的地址是“2386 Peter Lights Rowefurt, RI 71745 USNS Barnes FPO AE 45886”，这可以视为ADDRESS（收件人地址）。所以ADDRESS的bbox是To部分的地址。
+- Amount (USD)：存在，两个位置（货物行和TOTAL）。
+- COMPANY NAME：存在，开票公司名称。
+- Date：存在。
+- Description of Goods：存在。
+- FAX：存在。
+- FOB价：存在。
+- H/S-CODE：存在。
+- Marks：存在。
+- No.：存在。
+- P/O No.：存在。
+- Quantity (KGS)：存在。
+- TEL：存在。
+- TITLE：存在（INVOICE）。
+- TO：存在（运输的TO）。
+- Terms of Payment：存在。
+- Unit Price (USD/KG)：存在。
+- 保险费：存在。
+- 净佣金：存在（虽然数值可能为空，但标签存在）。
+- 海运费：存在。
+- 船期：存在。
+- 贸易性质：存在。
+- 陆运费：存在。
+
+现在需要为每个类别生成对应的bbox和label。需要注意，有些类别可能有多个实例，比如Amount (USD)有两个，需要都列出吗？题目要求“Detect all objects matching these categories”，所以每个实例都要检测。但可能图中Amount (USD)有两个，所以需要两个条目。但先看每个类别在图中的出现次数。
+
+现在开始逐个处理：
+
+1. ADD：
+   - bbox：[212, 85, 463, 106]（ADD: 9137 Burton Dale Suite 928 Wangborough, WV 26481）
+   - label: ADD
+
+2. ADDRESS：这里可能指To的地址，即“2386 Peter Lights Rowefurt, RI 71745 USNS Barnes FPO AE 45886”是收件人地址，属于ADDRESS。
+   - bbox：[132, 200, 450, 240]（To: Xiangfan Earth Village Media Co., Ltd. 下面的地址）
+   - label: ADDRESS
+
+3. Amount (USD)：
+   - 第一个：货物行的Amount，数值US$52,148.35，bbox：[502, 692, 622, 710]
+   - 第二个：TOTAL行的Amount，数值US$52,148.35，bbox：[502, 740, 622, 758]
+   - 所以两个Amount (USD)实例。
+
+4. COMPANY NAME：
+   - 开票公司：襄樊地球村传媒有限公司，bbox：[26, 28, 166, 48]
+   - label: COMPANY NAME
+
+5. Date：
+   - Date: 2022/3/8，bbox：[394, 236, 448, 254]
+   - label: Date
+
+6. Description of Goods：
+   - 内容：E-GLASS SMC ROVING 4800TEX ER14-4800-442 (4*4)，bbox：[134, 692, 446, 710]
+   - label: Description of Goods
+
+7. FAX：
+   - FAX: +8856018135878，bbox：[406, 100, 541, 118]
+   - label: FAX
+
+8. FOB价：
+   - FOB价: $ 50370.15，bbox：[500, 823, 624, 841]
+   - label: FOB价
+
+9. H/S-CODE：
+   - H/S CODE: 7019.12.0090，bbox：[102, 950, 236, 968]
+   - label: H/S-CODE
+
+10. Marks：
+    - Marks列的N/M，bbox：[52, 624, 112, 642]
+    - label: Marks
+
+11. No.：
+    - No.: JSKR22 171，bbox：[400, 238, 474, 256]
+    - label: No.
+
+12. P/O No.：
+    - P/O No.: 196/ER14-4800-442/02/2022，bbox：[102, 834, 324, 852]
+    - label: P/O No.
+
+13. Quantity (KGS)：
+    - 数值39004，bbox：[302, 690, 374, 708]
+    - label: Quantity (KGS)
+
+14. TEL：
+    - TEL: +3418365718867，bbox：[344, 101, 474, 119]
+    - label: TEL
+
+15. TITLE：
+    - INVOICE，bbox：[374, 142, 626, 168]
+    - label: TITLE
+
+16. TO：
+    - 运输的TO：USS Bishop FPO AA 30187，bbox：[374, 300, 626, 318]
+    - label: TO
+
+17. Terms of Payment：
+    - Terms of Payment: T/T 45 DAYS FROM B/I DATE，bbox：[400, 258, 594, 276]
+    - label: Terms of Payment
+
+18. Unit Price (USD/KG)：
+    - 数值US$1.337，bbox：[452, 690, 534, 708]
+    - label: Unit Price (USD/KG)
+
+19. 保险费：
+    - 保险费: $ 18.20，bbox：[500, 974, 624, 992]
+    - label: 保险费
+
+20. 净佣金：
+    - 净佣金: $，bbox：[500, 954, 624, 972]
+    - label: 净佣金
+
+21. 海运费：
+    - 海运费: $ 1760.00，bbox：[500, 934, 624, 952]
+    - label: 海运费
+
+22. 船期：
+    - 船期: 3月13日，bbox：[500, 914, 624, 932]
+    - label: 船期
+
+23

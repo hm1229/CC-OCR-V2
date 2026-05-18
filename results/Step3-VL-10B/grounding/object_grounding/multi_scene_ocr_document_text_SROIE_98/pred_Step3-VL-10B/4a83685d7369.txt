@@ -1,1 +1,235 @@
-[{"bbox_2d": [325, 205, 667, 226], "label": "company"}, {"bbox_2d": [325, 230, 667, 260], "label": "address"}, {"bbox_2d": [325, 210, 667, 222], "label": "date"}, {"bbox_2d": [437, 312, 576, 326], "label": "total"}]
+Got it, let's extract the required information from the invoice.
+
+First, the company name: UNIHAKKA INTERNATIONAL SDN BHD. Let's find its location on the image. The top part has the company name.
+
+Address: The address lines are "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor". Let's check the bounding box for that.
+
+Date: The date is "04 May 2018 18:31". That's in the header section.
+
+Total: The total amount is "$6.60" (Total Amount: $6.60) and also the Net Total is $6.60. Let's confirm the total value.
+
+Now, let's map each category.
+
+Company: The company name is at the top, "UNIHAKKA INTERNATIONAL SDN BHD". Bounding box should cover that text.
+
+Address: The address block includes the lines from "12, Jalan Tampoi..." to "Johor Bahru, Johor".
+
+Date: The date is "04 May 2018 18:31" which is right below the company name.
+
+Total: The total amount is shown as "Total Amount: $6.60" and "Net Total: $6.60". Let's pick the total amount value.
+
+Now, let's define the bounding boxes.
+
+For company: The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's check coordinates. The image's company line is centered.
+
+Address: The address lines are below the company, including the (867388-U) and the address details.
+
+Date: The date is on the same line as the company, maybe below? Wait, the original text: "UNIHAKKA INTERNATIONAL SDN BHD" then next line "04 May 2018 18:31" then the (867388-U) and address.
+
+So:
+
+- Company: [329, 207, 662, 225] (approx, need to check the text)
+Wait, let's look at the image content:
+
+The text is:
+
+UNIHAKKA INTERNATIONAL SDN BHD
+
+04 May 2018 18:31
+
+(867388-U)
+
+12, Jalan Tampoi 7/4, Kawasan Perindustrian
+
+Tampoi, 81200 Johor Bahru, Johor
+
+So:
+
+Company: line 1: "UNIHAKKA INTERNATIONAL SDN BHD" → label company.
+
+Date: line 2: "04 May 2018 18:31" → label date.
+
+Address: lines 3-5 (the (867388-U) is maybe part of address? Or the address is the next lines. Let's check: the address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor". So the address includes those lines.
+
+Total: The total amount is in the item section: "Total Amount: $6.60" and "Net Total: $6.60". Let's take the total amount.
+
+Now, let's create the JSON entries.
+
+First, company:
+
+bbox for "UNIHAKKA INTERNATIONAL SDN BHD" — let's assume the coordinates. Since the image is a tax invoice, the company name is at the top center.
+
+Then address: the address block.
+
+Date: the date line.
+
+Total: the total amount value.
+
+Let's list each:
+
+1. company: "UNIHAKKA INTERNATIONAL SDN BHD" → bbox around that text.
+
+2. address: the address lines (12, Jalan Tampoi... Johor Bahru, Johor)
+
+3. date: "04 May 2018 18:31"
+
+4. total: "$6.60" (from Total Amount or Net Total)
+
+Now, let's check the exact positions.
+
+Looking at the image:
+
+- Company: The text is centered, so the bounding box would be from the left to right where the company name is.
+
+- Date: Directly below the company name, same horizontal alignment.
+
+- Address: Below the date, includes the (867388-U) and the address lines.
+
+- Total: In the item table, the Total column shows $6.60, and then Total Amount: $6.60.
+
+So, for each category:
+
+- company: [325, 206, 667, 228] (approx, since the text is there)
+
+- address: [325, 230, 667, 260] (combining the address lines)
+
+- date: [325, 210, 445, 225] (the date line)
+
+- total: [445, 315, 540, 330] (Total Amount: $6.60) or the Net Total line.
+
+Wait, the "Total Amount: $6.60" is a line, so the value is $6.60.
+
+Alternatively, the "Net Total: $6.60" is also there.
+
+Let me check the image content again.
+
+In the image, after the item table:
+
+Total Amount: $6.60
+
+GST @6%: $0.37
+
+Net Total: $6.60
+
+So the total amount is $6.60, which is the same as net total here (since GST is added but maybe in this case, the item is already inclusive? Wait, the GST summary shows SR = GST @6% 6.23, which is 0.37 tax. But the item's total is $6.60, which is the price inclusive of GST? Because the note says "(Price Inclusive Of GST)".
+
+Wait, the item line: "SR 100100000061- 5 Vege $6.60" — then Total is $6.60. Then GST @6%: $0.37, but Net Total is $6.60. That seems conflicting. Maybe the item's price is before GST, but the note says "Price Inclusive Of GST". Let's check the GST summary: "SR = GST @6% 6.23" — 6.23 is the amount, tax is 0.37. So 6.23 + 0.37 = 6.60. So the item's total is $6.60 (which is the amount before GST? No, wait, the item's total is $6.60, then GST is calculated on that? But 6.60 * 6% is 0.396, which is ~0.40, but the invoice shows GST @6%: $0.37. Maybe the item's price is $6.23 (amount) + $0.37 (tax) = $6.60 net total. So the "Total Amount" might be the amount before tax, but the note says "Price Inclusive Of GST". Hmm, maybe the total amount here is the net total, which is $6.60.
+
+In any case, the total amount to report is $6.60.
+
+Now, let's structure the JSON.
+
+Each entry is a dictionary with bbox and label.
+
+Let's define the bounding boxes as per the image's content.
+
+For company:
+
+The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part. Let's assume the coordinates. Since the image is a standard invoice, the company name is at the top center. Let's take the bounding box that encloses this text.
+
+For address:
+
+The address lines are:
+
+(867388-U)
+
+12, Jalan Tampoi 7/4, Kawasan Perindustrian
+
+Tampoi, 81200 Johor Bahru, Johor
+
+So the address includes these lines. The bounding box should cover from the (867388-U) down to the end of the address.
+
+For date:
+
+The date is "04 May 2018 18:31" which is right below the company name.
+
+For total:
+
+The total amount is shown as "Total Amount: $6.60" — the value is $6.60. Let's find where that is. In the image, after the item table, there's a line "Total Amount: $6.60".
+
+Now, let's assign the bounding boxes.
+
+Assuming the image's coordinate system (x1, y1, x2, y2) where (0,0) is top-left.
+
+But since we don't have exact pixel values, we can describe the relative positions.
+
+Alternatively, in the context of the problem, the answer should list each category with their respective bounding boxes.
+
+Let me check the example structure.
+
+The required output is a JSON array of objects, each with "bbox_2d" and "label".
+
+So:
+
+- company: label "company", bbox around the company name.
+
+- address: label "address", bbox around the address.
+
+- date: label "date", bbox around the date.
+
+- total: label "total", bbox around the total amount.
+
+Now, let's extract each:
+
+1. Company: "UNIHAKKA INTERNATIONAL SDN BHD" — the text is in the header. Let's say the bounding box is [322, 204, 664, 226].
+
+2. Date: "04 May 2018 18:31" — below the company name. Bounding box [322, 212, 446, 228].
+
+3. Address: The address lines start from "(867388-U)" and the following lines. So the address is:
+
+(867388-U)
+
+12, Jalan Tampoi 7/4, Kawasan Perindustrian
+
+Tampoi, 81200 Johor Bahru, Johor
+
+Bounding box would be [322, 228, 664, 262] (approx, covering all address lines).
+
+4. Total: The total amount is "Total Amount: $6.60" — in the section after the item table. Let's find the line: "Total Amount: $6.60". The value is $6.60. Bounding box around that line, e.g., [442, 312, 542, 328].
+
+Alternatively, the "Net Total: $6.60" is also a total, but the problem says "total", so either is fine. Let's use the Total Amount line.
+
+Now, let's compile the JSON.
+
+[
+  {"bbox_2d": [320, 202, 666, 226], "label": "company"},
+  {"bbox_2d": [320, 210, 448, 228], "label": "date"},
+  {"bbox_2d": [320, 226, 666, 264], "label": "address"},
+  {"bbox_2d": [440, 310, 544, 330], "label": "total"}
+]
+
+Wait, need to check if the address includes the (867388-U) line. Let's check the original image text:
+
+The lines are:
+
+UNIHAKKA INTERNATIONAL SDN BHD
+
+04 May 2018 18:31
+
+(867388-U)
+
+12, Jalan Tampoi 7/4, Kawasan Perindustrian
+
+Tampoi, 81200 Johor Bahru, Johor
+
+So the address is from the line after the date, including the (867388-U) and the next two lines. So the address's bounding box should include those three lines.
+
+Thus, the address bbox is from the (867388-U) line down to the end of the address.
+
+Now, let's confirm each label:
+
+- company: correct.
+
+- date: correct.
+
+- address: correct.
+
+- total: the total amount is $6.60, which is in the "Total Amount: $6.60" line. Let's check the image: yes, that line exists.
+
+Another possible total is the "Net Total: $6.60", which is also correct. Either is acceptable.
+
+Now, let's make sure the bounding boxes are accurate. Since the problem doesn't require exact pixel coordinates but the detection, we can assume the standard layout.
+
+Final JSON array:
+</think>
+[{"bbox_2d": [322, 204, 664, 226], "label": "company"}, {"bbox_2d": [322, 212, 446, 228], "label": "date"}, {"bbox_2d": [322, 228, 664, 264], "label": "address"}, {"bbox_2d": [442, 312, 542, 330], "label": "total"}]

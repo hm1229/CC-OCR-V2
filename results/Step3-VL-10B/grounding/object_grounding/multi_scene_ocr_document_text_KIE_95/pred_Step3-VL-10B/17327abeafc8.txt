@@ -1,10 +1,168 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The receipt has "20/Jan/2017" which is the date. Let's check where that is. The line with "20/Jan/2017 08:06:50" is the date and time. So the date part is 20/Jan/2017.
+
+doc_no_receipt_no: The receipt number is "702747070814" (the line starts with "C# : 702747070814").
+
+seller_address: The address lines are "No.49, Jalan Oinar G U31G, Subang Perdana, 40150 Shah Alam, Selangor D.E." Let's check the text.
+
+seller_gst_id: "GST Reg : 001734164480" so that's the GST registration number.
+
+seller_name: "BEMED (SP) SDN. BHD." at the top.
+
+seller_phone: "03-7845 8155" (the phone number line).
+
+total_amount: The total inclusive GST is 203.00, which is marked in the circle. Also, the MASTER payment is 203.00, so total_amount is 203.00.
+
+total_tax: In the GST Summary, the Tax (MYR) is 11.40. Let's check that section. The GST Summary has "Tax (MYR)" as 11.40.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The text "20/Jan/2017" is in the line "C# : 702747070814 20/Jan/2017 08:06:50". So the date part is there.
+
+2. doc_no_receipt_no: The receipt number is "702747070814" which is next to "C# : ".
+
+3. seller_address: The address lines are from "No.49, Jalan Oinar G U31G, Subang Perdana, 40150 Shah Alam, Selangor D.E." Let's check the lines.
+
+4. seller_gst_id: "GST Reg : 001734164480"
+
+5. seller_name: "BEMED (SP) SDN. BHD." at the top.
+
+6. seller_phone: "03-7845 8155"
+
+7. total_amount: The total inclusive GST is 203.00, which is in the circled area.
+
+8. total_tax: The tax amount in GST Summary is 11.40.
+
+Now, let's find the bounding boxes for each.
+
+Let's list each element:
+
+- seller_name: The top line "BEMED (SP) SDN. BHD." — the bounding box would be around that text.
+
+- seller_address: The lines below the name: "No.49, Jalan Oinar G U31G, Subang Perdana, 40150 Shah Alam, Selangor D.E." — multiple lines, but the main address.
+
+- seller_gst_id: "GST Reg : 001734164480" — that line.
+
+- seller_phone: "03-7845 8155" — the phone number line.
+
+- doc_no_receipt_no: "C# : 702747070814" — the receipt number.
+
+- date: "20/Jan/2017" — part of the timestamp.
+
+- total_amount: "203.00" in the "Total Inclusive GST" section, circled.
+
+- total_tax: "11.40" in the GST Summary under Tax (MYR).
+
+Now, let's check each on the image.
+
+For example, the date is in the line: "C# : 702747070814 20/Jan/2017 08:06:50" — so the date is "20/Jan/2017".
+
+doc_no_receipt_no is "702747070814".
+
+seller_address: The address is split into multiple lines. Let's take the main address block:
+
+"No.49, Jalan Oinar G U31G,
+Subang Perdana,
+40150 Shah Alam, Selangor D.E."
+
+seller_gst_id: "GST Reg : 001734164480"
+
+seller_name: "BEMED (SP) SDN. BHD."
+
+seller_phone: "03-7845 8155"
+
+total_amount: The total is "203.00" (the circled one, or the MASTER line which is also 203.00).
+
+total_tax: In GST Summary, the Tax column has 11.40.
+
+Now, let's create the JSON entries.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's define each:
+
+1. date: The text "20/Jan/2017" is in the line with the receipt number. Let's find the coordinates. The line is "C# : 702747070814 20/Jan/2017 08:06:50". So the date part is there. Bounding box would cover that date.
+
+2. doc_no_receipt_no: The receipt number is "702747070814" — the part after "C# : ".
+
+3. seller_address: The address lines. Let's check the lines:
+
+- No.49, Jalan Oinar G U31G,
+
+- Subang Perdana,
+
+- 40150 Shah Alam, Selangor D.E.
+
+These are the address lines.
+
+4. seller_gst_id: "GST Reg : 001734164480" — that line.
+
+5. seller_name: "BEMED (SP) SDN. BHD." — top line.
+
+6. seller_phone: "03-7845 8155" — the phone line.
+
+7. total_amount: The total inclusive GST is 203.00, which is in the circled box. The text "203.00" there.
+
+8. total_tax: The tax amount in GST Summary is 11.40. Let's check the GST Summary section:
+
+"GST Summary:
+Amount (MYR) Tax (MYR)
+SR. 191.51 11.40"
+
+So the tax is 11.40.
+
+Now, let's assign bounding boxes. Since the image is a receipt, we need to estimate the coordinates. But since we can't measure exact pixels, we'll describe the regions.
+
+Alternatively, maybe the key is to identify the text and its location.
+
+Let's list each:
+
+- seller_name: [140, 137, 859, 160] (approx, the top line)
+
+- seller_address: The lines below seller_name: "No.49, Jalan Oinar G U31G, Subang Perdana, 40150 Shah Alam, Selangor D.E." — so the bounding box covers those lines.
+
+- seller_gst_id: The line "GST Reg : 001734164480" — below the address.
+
+- seller_phone: "03-7845 8155" — below GST Reg.
+
+- doc_no_receipt_no: "C# : 702747070814" — in the cash receipt section.
+
+- date: "20/Jan/2017" — next to doc_no_receipt_no.
+
+- total_amount: The circled "203.00" in "Total Inclusive GST".
+
+- total_tax: "11.40" in GST Summary.
+
+Now, let's structure the JSON.
+
+Each entry:
+
+1. date: label "date", bbox around "20/Jan/2017"
+
+2. doc_no_receipt_no: label "doc_no_receipt_no", bbox around "702747070814"
+
+3. seller_address: label "seller_address", bbox around the address lines
+
+4. seller_gst_id: label "seller_gst_id", bbox around "GST Reg : 001734164480"
+
+5. seller_name: label "seller_name", bbox around "BEMED (SP) SDN. BHD."
+
+6. seller_phone: label "seller_phone", bbox around "03-7845 8155"
+
+7. total_amount: label "total_amount", bbox around "203.00" (the total inclusive GST)
+
+8. total_tax: label "total_tax", bbox around "11.40" in GST Summary
+
+Now, let's write the JSON array.
+</think>
 [
-    {"bbox_2d": [202, 275, 367, 295], "label": "date"},
-    {"bbox_2d": [702, 275, 814, 295], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [225, 140, 800, 190], "label": "seller_address"},
-    {"bbox_2d": [325, 300, 605, 318], "label": "seller_gst_id"},
-    {"bbox_2d": [225, 110, 800, 130], "label": "seller_name"},
-    {"bbox_2d": [325, 310, 425, 328], "label": "seller_phone"},
-    {"bbox_2d": [525, 370, 625, 390], "label": "total_amount"},
-    {"bbox_2d": [635, 430, 685, 448], "label": "total_tax"}
+    {"bbox_2d": [202, 302, 367, 325], "label": "date"},
+    {"bbox_2d": [702, 302, 814, 325], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [144, 147, 855, 200], "label": "seller_address"},
+    {"bbox_2d": [325, 337, 640, 359], "label": "seller_gst_id"},
+    {"bbox_2d": [264, 127, 835, 150], "label": "seller_name"},
+    {"bbox_2d": [325, 362, 425, 384], "label": "seller_phone"},
+    {"bbox_2d": [234, 595, 325, 617], "label": "total_amount"},
+    {"bbox_2d": [545, 945, 605, 967], "label": "total_tax"}
 ]

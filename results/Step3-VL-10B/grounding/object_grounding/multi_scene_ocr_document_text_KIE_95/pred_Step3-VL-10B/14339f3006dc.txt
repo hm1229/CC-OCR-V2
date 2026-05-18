@@ -1,10 +1,67 @@
+Got it, let's go through each category and find the corresponding values in the image.
+
+First, date: The receipt has "DATE: 31/03/2017" under the receipt section. So that's the date.
+
+doc_no_receipt_no: The receipt number is "CS0016842D" from "RECEIPT #: CS0016842D".
+
+seller_address: The address lines are "69 JALAN NOVA US/ N, SEKSYEN US SUBANG BE". Let's check the top part: "69 JALAN NOVA US/ N, SEKSYEN US SUBANG BE".
+
+seller_gst_id: There's "GST/TAX NO: 000988800896" and also "GST NO: 000988800896" at the bottom. So that's the GST ID.
+
+seller_name: The top line is "LIVE9 PHARMACY SDN BHD".
+
+seller_phone: The phone number is "TEL: 03-77347762".
+
+total_amount: Let's check the total. The "TOTAL" under the sub-total section is 12.15? Wait, no. Wait, the cash is 50.15, change is 38.00. But the total amount paid is cash, but the total of the items is sub-total 12.19, then after GST and rounding, total is 12.15. Wait, the "TOTAL" line shows 12.15. Let me check. The sub-total (GST) is 12.19, then disc 0.00, GST 0.69, so sub-total + GST is 12.19 + 0.69 = 12.88? Wait no, the sub-total (GST) is 12.19, which includes GST? Wait, the GST summary shows the tax amount is 0.69. Let's check the total amount. The "TOTAL" in the transaction is 12.15. Let me check the receipt: the line "TOTAL" has 12.15. So that's the total amount of the sale.
+
+total_tax: The GST total is 0.69, as shown in "TAX TOTAL: 0.69" and in the GST summary, the tax amount for SR is 0.69.
+
+Now, let's map each:
+
+1. date: "31/03/2017" – find the bounding box around that text.
+2. doc_no_receipt_no: "CS0016842D" – from RECEIPT #.
+3. seller_address: The address line, which is "69 JALAN NOVA US/ N, SEKSYEN US SUBANG BE" – check the top part.
+4. seller_gst_id: "000988800896" – from GST/TAX NO or GST NO.
+5. seller_name: "LIVE9 PHARMACY SDN BHD" – top line.
+6. seller_phone: "03-77347762" – from TEL:.
+7. total_amount: "12.15" – from the TOTAL line in the transaction.
+8. total_tax: "0.69" – from TAX TOTAL: 0.69.
+
+Now, need to find the bounding boxes for each.
+
+Let's check each element:
+
+- seller_name: The first line is "LIVE9 PHARMACY SDN BHD" – coordinates. Let's assume the top part.
+- seller_gst_id: The line "GST/TAX NO: 000988800896" – that's the GST ID.
+- seller_address: The line "69 JALAN NOVA US/ N, SEKSYEN US SUBANG BE" – that's the address.
+- seller_phone: "TEL: 03-77347762" – phone number.
+- date: "31/03/2017" in the receipt section.
+- doc_no_receipt_no: "CS0016842D" in RECEIPT #.
+- total_amount: The "TOTAL" line which is 12.15.
+- total_tax: "0.69" in TAX TOTAL.
+
+Now, let's list each with their bounding boxes.
+
+First, extract each:
+
+1. date: The text "31/03/2017" is in the line "RECEIPT #: CS0016842D DATE: 31/03/2017". So the date part is there.
+2. doc_no_receipt_no: "CS0016842D" is the receipt number.
+3. seller_address: The address is "69 JALAN NOVA US/ N, SEKSYEN US SUBANG BE" – from the line after GST/TAX NO.
+4. seller_gst_id: "000988800896" – from GST/TAX NO: 000988800896 (top) and also at the bottom GST NO: same.
+5. seller_name: "LIVE9 PHARMACY SDN BHD" – top line.
+6. seller_phone: "03-77347762" – from TEL: 03-77347762.
+7. total_amount: The "TOTAL" in the transaction section is 12.15. Let's check the line: "TOTAL 12.15".
+8. total_tax: "0.69" – from "TAX TOTAL: 0.69" and GST summary.
+
+Now, create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [310, 277, 425, 297], "label": "date"},
-    {"bbox_2d": [225, 290, 335, 308], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [69, 225, 905, 245], "label": "seller_address"},
-    {"bbox_2d": [150, 245, 305, 263], "label": "seller_gst_id"},
-    {"bbox_2d": [100, 10, 500, 30], "label": "seller_name"},
-    {"bbox_2d": [150, 265, 305, 283], "label": "seller_phone"},
-    {"bbox_2d": [450, 530, 525, 548], "label": "total_amount"},
-    {"bbox_2d": [730, 610, 775, 628], "label": "total_tax"}
+    {"bbox_2d": [310, 310, 437, 328], "label": "date"},
+    {"bbox_2d": [225, 310, 332, 328], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [69, 232, 925, 250], "label": "seller_address"},
+    {"bbox_2d": [150, 252, 325, 270], "label": "seller_gst_id"},
+    {"bbox_2d": [45, 112, 305, 130], "label": "seller_name"},
+    {"bbox_2d": [105, 272, 285, 290], "label": "seller_phone"},
+    {"bbox_2d": [455, 430, 525, 448], "label": "total_amount"},
+    {"bbox_2d": [755, 535, 805, 553], "label": "total_tax"}
 ]

@@ -1,0 +1,209 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看TITLE，就是INVOICE那个大标题，对应图中的“INVOICE”部分。然后COMPANY NAME是顶部的鑫博腾飞网络有限公司，中英文。ADDRESS的话，TO部分的地址，还有顶部的公司地址？需要看每个类别。
+
+先列出来每个类别：
+
+1. ADDRESS：TO部分的地址，0366 Priscilla Views...和4270 Daniel Loop...；另外顶部的公司地址9182 Johnson Ports Apt...也是ADDRESS？可能需要看。但先看TO的地址是收货方地址，属于ADDRESS。另外顶部的公司地址也是ADDRESS？需要确认。不过先处理每个类别。
+
+2. AMOUNT：图中USD 8,900.00，对应AMOUNT。
+
+3. Account Number：Beneficiary Bank下面的Account Number: 2111112011463000011235。
+
+4. Beneficiary：Beneficiary: Xinbotengfei Network Co., Ltd.
+
+5. Beneficiary Bank：BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH
+
+6. COMPANY NAME：顶部的鑫博腾飞网络有限公司，Xinbotengfei Network Co., Ltd.
+
+7. CONTRACT NO.：INVOICE NO.旁边的M01ACI2021I079S2，因为CONTRACT NO.和INVOICE NO.相同。
+
+8. COUNTRY OF ORIGIN：COUNTRY OF ORIGIN:CHINA
+
+9. Email：顶部的Email:deannastevens@fry.com
+
+10. FAX：顶部的FAX:704-56222243
+
+11. GROSS WEIGHT：GROSS WEIGHT: @ 28 / 1120 KGS
+
+12. INVOICE DATE：Nov.22.2021
+
+13. INVOICE NO.：M01ACI2021I079S2
+
+14. NET WEIGHT：NET WEIGHT: @ 25 / 1000 KGS
+
+15. PRODUCT NAME：L-ISOLEUCINE 40DRUMS WITH 2 PALLETS
+
+16. Post Code：顶部的Post Code:110014，还有TO部分的NC 21755和TX 50426也是Post Code？需要看。顶部的Post Code是110014，属于Post Code。
+
+17. QUANTITY：QUANTITY: @ 1000 KGS（这里的数量是1000 KGS？或者看QUANTITY OF PACKING是40 DRUMS，QUANTITY可能是指总数量？图中QUANTITY: @ 1000 KGS，所以QUANTITY是1000 KGS对应的数量？
+
+18. QUANTITY OF PACKING：40 DRUMS
+
+19. SHIPPING MARKS：N/M
+
+20. Swift Code：COMM C N S H S Y G（图中Swift Code: COMM C N S H S Y G？看原文是COMM C N S H S Y G？图中是COMM C N S H S Y G？原文是Swift Code: COMM C N S H S Y G？看图片中的Swift Code: COMM C N S H S Y G？不，图中是“Swift Code: COMM C N S H S Y G”？看图片里的内容：“Swift Code: COMM C N S H S Y G”？不，原图中是“Swift Code: COMM C N S H S Y G”？看用户提供的图中，Beneficiary Bank部分的Swift Code是COMM C N S H S Y G？看原文：“Swift Code: COMM C N S H S Y G”？不，图中是“Swift Code: COMM C N S H S Y G”？可能我看错了，原图中是“COMM C N S H S Y G”？不，看用户提供的图中的内容：
+
+在Beneficiary Bank部分：
+
+Beneficiary Bank: BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH
+
+Swift Code: COMM C N S H S Y G？不，原图中是“COMM C N S H S Y G”？不，看用户提供的图中的文字是“Swift Code: COMM C N S H S Y G”？不，看用户给的图里的内容：
+
+“Swift Code: COMM C N S H S Y G”？不，原图中是“COMM C N S H S Y G”？可能实际是“COMM C N S H S Y G”？不管，按图中的内容提取。
+
+21. TEL：顶部的TEL:498-23027550
+
+22. TERMS OF PAYMENT：T/T in Advance
+
+23. TITLE：INVOICE（大标题）
+
+24. UNIT PRICE：AT USD 8.9/KG FOB SHANGHAI, CHINA
+
+现在需要逐个确定每个类别的bbox。需要看每个元素在图中的位置。
+
+首先处理TITLE：图中“INVOICE”是大标题，位于中间偏上，所以bbox是包含“INVOICE”的区域。
+
+COMPANY NAME：顶部的“鑫博腾飞网络有限公司”和“Xinbotengfei Network Co., Ltd.”，所以bbox是顶部的公司名称部分。
+
+ADDRESS：TO部分的地址，即“0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426”，还有顶部的公司地址“9182 Johnson Ports Apt. 311 Mclaughlinmouth, VA 40561”也是ADDRESS？可能需要看，但用户要求的是检测所有匹配的，所以两个地址？但先看TO的地址是收货方地址，属于ADDRESS。另外顶部的公司地址也是ADDRESS吗？可能需要都算。但先看问题中的类别是ADDRESS，所以需要找到所有地址。
+
+现在开始逐个列：
+
+1. TITLE: "INVOICE" → 找到图中的大标题，bbox大概在中间，比如x范围是320到680左右，y在发票标题位置。
+
+2. COMPANY NAME: 顶部的“鑫博腾飞网络有限公司”和英文，bbox是顶部的公司名称，包括中英文。
+
+3. CONTRACT NO.: 右侧的“M01ACI2021I079S2”（INVOICE NO.和CONTRACT NO.相同）。
+
+4. INVOICE NO.: 同上，M01ACI2021I079S2。
+
+5. INVOICE DATE: "Nov.22.2021"。
+
+6. COUNTRY OF ORIGIN: "CHINA"。
+
+7. PRODUCT NAME: "L-ISOLEUCINE 40DRUMS WITH 2 PALLETS"。
+
+8. QUANTITY: "1000 KGS"（在QUANTITY: @ 1000 KGS）。
+
+9. QUANTITY OF PACKING: "40 DRUMS"。
+
+10. NET WEIGHT: "25 / 1000 KGS"。
+
+11. GROSS WEIGHT: "28 / 1120 KGS"。
+
+12. UNIT PRICE: "AT USD 8.9/KG FOB SHANGHAI, CHINA"。
+
+13. AMOUNT: "8,900.00"（USD 8,900.00）。
+
+14. TERMS OF PAYMENT: "T/T in Advance"。
+
+15. TEL: "498-23027550"（顶部的TEL）。
+
+16. FAX: "704-56222243"（顶部的FAX）。
+
+17. Email: "deannastevens@fry.com"（顶部的Email）。
+
+18. Post Code: 顶部的"110014"（Post Code:110014），还有TO部分的"21755"（NC 21755）和"50426"（TX 50426）也是Post Code？需要看。Post Code类别，所以这三个？但可能主要看顶部的Post Code:110014，因为其他是州的邮编？不过按图中的Post Code标注，顶部有“Post Code 110014”，所以这个是Post Code。
+
+19. Beneficiary: "Xinbotengfei Network Co., Ltd."（Beneficiary: 后面的内容）。
+
+20. Beneficiary Bank: "BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH"。
+
+21. Swift Code: "COMM C N S H S Y G"（图中的Swift Code: COMM C N S H S Y G？看用户提供的图中是“COMM C N S H S Y G”？原图中是“COMM C N S H S Y G”？不，看用户给的图中的内容：“Swift Code: COMM C N S H S Y G”？不，用户提供的图中Beneficiary Bank部分的Swift Code是“COMM C N S H S Y G”？看原文中的Swift Code: COMM C N S H S Y G？可能实际是“COMM C N S H S Y G”？不管，按图中的内容。
+
+22. Account Number: "2111112011463000011235"（Account Number: 后面的数字）。
+
+23. SHIPPING MARKS: "N/M"。
+
+24. ADDRESS：TO部分的地址，即“0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426”；另外顶部的公司地址“9182 Johnson Ports Apt. 311 Mclaughlinmouth, VA 40561”也是ADDRESS。需要确认是否都算。比如，顶部的地址是公司地址，属于ADDRESS；TO的地址是收货地址，也属于ADDRESS。所以两个ADDRESS？
+
+现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个元素的位置。例如：
+
+- COMPANY NAME：顶部的公司名称，包括中英文，bbox是[125, 38, 875, 100]左右（因为顶部的公司名称在上方，包含中英文和地址行）。
+
+- TITLE：INVOICE，位于中间，大字体，bbox是[320, 200, 680, 250]左右。
+
+- INVOICE NO.：右侧的M01ACI2021I079S2，bbox是[600, 330, 900, 350]。
+
+- INVOICE DATE：Nov.22.2021，bbox是[600, 355, 900, 375]。
+
+- CONTRACT NO.：同INVOICE NO.，因为图中CONTRACT NO.也是M01ACI2021I079S2，所以bbox同上。
+
+- COUNTRY OF ORIGIN：CHINA，在产品描述下方，bbox是[20, 440, 350, 460]。
+
+- PRODUCT NAME：L-ISOLEUCINE...，在QUANTITY & DESCRIPTION列，bbox是[20, 465, 350, 490]。
+
+- QUANTITY：1000 KGS，在COUNTRY OF ORIGIN下面，@ 1000 KGS，bbox是[20, 475, 350, 495]。
+
+- QUANTITY OF PACKING：40 DRUMS，在QUANTITY下面，bbox是[20, 495, 350, 510]。
+
+- NET WEIGHT：25 / 1000 KGS，在QUANTITY OF PACKING下面，bbox是[20, 515, 350, 530]。
+
+- GROSS WEIGHT：28 / 1120 KGS，在NET WEIGHT下面，bbox是[20, 535, 350, 550]。
+
+- UNIT PRICE：AT USD 8.9/KG...，在GROSS WEIGHT下面，bbox是[20, 560, 550, 580]。
+
+- AMOUNT：8,900.00，在UNIT PRICE右边的USD列，bbox是[570, 565, 800, 590]。
+
+- TERMS OF PAYMENT：T/T in Advance，在UNIT PRICE下面，bbox是[20, 600, 550, 620]。
+
+- TEL：498-23027550，顶部的TEL，bbox是[520, 70, 650, 85]（因为顶部有TEL:498-23027550）。
+
+- FAX：704-56222243，顶部的FAX，bbox是[600, 70, 720, 85]。
+
+- Email：deannastevens@fry.com，顶部的Email，bbox是[720, 70, 880, 85]。
+
+- Post Code：110014，顶部的Post Code:110014，bbox是[420, 70, 500, 85]。
+
+- Beneficiary：Xinbotengfei Network Co., Ltd.，在支付信息中的Beneficiary: 后面，bbox是[150, 650, 550, 670]。
+
+- Beneficiary Bank：BANK OF COMMUNICATIONS...，在Beneficiary下面，bbox是[150, 675, 550, 695]。
+
+- Swift Code：COMM C N S H S Y G，Beneficiary Bank下面，bbox是[150, 695, 550, 710]。
+
+- Account Number：2111112011463000011235，Beneficiary Bank下面，bbox是[150, 710, 550, 725]。
+
+- SHIPPING MARKS：N/M，在SHIPPING MARKS列，bbox是[20, 730, 350, 750]。
+
+- ADDRESS（TO部分）：0366 Priscilla Views...，在TO: 后面，bbox是[100, 335, 550, 360]（因为TO: 后面是地址，两行）。
+
+- ADDRESS（顶部公司地址）：9182 Johnson Ports Apt...，在最顶部，bbox是[100, 90, 520, 105]。
+
+现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意有些类别可能重复，比如INVOICE NO.和CONTRACT NO.是同一个值，所以两个条目？因为类别是CONTRACT NO.和INVOICE NO.，所以都要列。
+
+现在开始构建每个条目：
+
+1. COMPANY NAME: 顶部的公司名称，包含中英文。bbox是[125, 38, 875, 100]（假设）。
+
+2. TITLE: INVOICE，bbox是[320, 200, 680, 250]。
+
+3. INVOICE NO.: M01ACI2021I079S2，bbox是[605, 332, 900, 352]。
+
+4. CONTRACT NO.: M01ACI2021I079S2，bbox同上（因为图中CONTRACT NO.也是这个值）。
+
+5. INVOICE DATE: Nov.22.2021，bbox是[605, 355, 900, 375]。
+
+6. COUNTRY OF ORIGIN: CHINA，bbox是[20, 442, 350, 462]。
+
+7. PRODUCT NAME: L-ISOLEUCINE 40DRUMS WITH 2 PALLETS，bbox是[20, 467, 350, 487]。
+
+8. QUANTITY: 1000 KGS（@ 1000 KGS），bbox是[20, 477, 350, 497]。
+
+9. QUANTITY OF PACKING: 40 DRUMS，bbox是[20, 497, 350, 517]。
+
+10. NET WEIGHT: 25 / 1000 KGS，bbox是[20, 517, 350, 537]。
+
+11. GROSS WEIGHT: 28 / 1120 KGS，bbox是[20, 537, 350, 557]。
+
+12. UNIT PRICE: AT USD 8.9/KG FOB SHANGHAI, CHINA，bbox是[20, 562, 550, 582]。
+
+13. AMOUNT: 8,900.00，bbox是[572, 567, 800, 587]。
+
+14. TERMS OF PAYMENT: T/T in Advance，bbox是[20, 602, 550, 622]。
+
+15. TEL: 498-23027550，bbox是[522, 72, 652, 92]（顶部的TEL）。
+
+16. FAX: 704-56222243，bbox是[602, 72, 722, 92]。
+
+17.

@@ -1,6 +1,143 @@
-[
-    {"bbox_2d": [38, 12, 520, 34], "label": "company"},
-    {"bbox_2d": [38, 74, 520, 122], "label": "address"},
-    {"bbox_2d": [28, 222, 152, 242], "label": "date"},
-    {"bbox_2d": [122, 322, 302, 342], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+Company: The top part says "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)". So that's the company.
+
+Address: The address lines are "PASARAYA BORONG SUPER SEVEN NO. 1 Jalan Euro 1 Off Jalan Batu Tiga Sungai Buloh Seksyen U3 Shah Alam,40150". Let's check the bounding box for that.
+
+Date: The invoice date is "21-03-2018".
+
+Total: The net total is RM18.30, which is labeled as "Net Total". Let's check where that is.
+
+Now, let's map each to their bounding boxes.
+
+First, company: The company name is at the top. Let's find the coordinates.
+
+Looking at the image, the company line is "SUPER SEVEN CASH & CARRY SDN 'BHD" and the next line is the GST ID part. So the company's text is in the upper section.
+
+Address: The address details are from "PASARAYA BORONG SUPER SEVEN" down to the fax number.
+
+Date: The date is "21-03-2018" which is under the operator section.
+
+Total: The net total is "RM18.30" under "Net Total".
+
+Now, let's define each entry.
+
+For company: The text "SUPER SEVEN CASH & CARRY SDN 'BHD" is the company. Let's check the bounding box.
+
+The address includes the lines: "PASARAYA BORONG SUPER SEVEN", "NO. 1 Jalan Euro 1", "Off Jalan Batu Tiga", "Sungai Buloh Seksyen U3 Shah Alam,40150".
+
+Date is "21-03-2018".
+
+Total is the net total, which is "RM18.30".
+
+Now, let's create the JSON array.
+
+First, company: The bounding box for the company name. Let's see the top part:
+
+" SUPER SEVEN CASH & CARRY SDN 'BHD
+(590150-A)
+PASARAYA BORONG SUPER SEVEN"
+
+So the company is the first line. Let's get the coordinates.
+
+Address: The address lines are from "PASARAYA BORONG SUPER SEVEN" down to the fax. Let's check the text.
+
+Date: The date is "21-03-2018" which is in the section with time.
+
+Total: The net total is "RM18.30" which is under "Net Total".
+
+Now, let's structure each entry.
+
+1. Company: The company name is "SUPER SEVEN CASH & CARRY SDN 'BHD". Let's find its bounding box.
+
+Looking at the image, the first line is "SUPER SEVEN CASH & CARRY SDN 'BHD" with coordinates. Let's assume the bounding box covers that line.
+
+2. Address: The address is the block of text starting from "PASARAYA BORONG SUPER SEVEN" to the fax number.
+
+3. Date: The date is "21-03-2018".
+
+4. Total: The net total is "RM18.30".
+
+Now, let's check each:
+
+- Company: [34, 10, 527, 32] (approx, since the text is at the top)
+- Address: [34, 34, 527, 160] (the address lines)
+- Date: [34, 202, 210, 222] (the date line "21-03-2018")
+- Total: [202, 320, 327, 338] (the net total line "Net Total RM18.30")
+
+Wait, need to check the exact positions.
+
+Let me parse the image content:
+
+The text for company:
+
+" SUPER SEVEN CASH & CARRY SDN 'BHD
+(590150-A)
+PASARAYA BORONG SUPER SEVEN"
+
+So the company is the first line. Let's take the bounding box for that line.
+
+Address:
+
+"NO. 1 Jalan Euro 1
+Off Jalan Batu Tiga
+Sungai Buloh Seksyen U3 Shah Alam,40150
+http://www.super7.com.my
+TEL : 03-78590861
+FAX : 03-78590864"
+
+So the address includes these lines.
+
+Date: "21-03-2018" is in the line "21-03-2018 11:25:07 AM (RM)"
+
+Total: "Net Total RM18.30" is in the section after "Rounding Adjustment".
+
+Now, let's define each entry with their bounding boxes.
+
+For the company, the main company name is "SUPER SEVEN CASH & CARRY SDN 'BHD", so the bounding box would be around that line.
+
+Address: The address block is from "PASARAYA BORONG SUPER SEVEN" down to the fax.
+
+Date: The date is "21-03-2018".
+
+Total: The net total is "RM18.30".
+
+Now, let's create the JSON array entries.
+
+First, company:
+
+{
+  "bbox_2d": [34, 12, 525, 34],
+  "label": "company"
+}
+
+Address:
+
+{
+  "bbox_2d": [34, 36, 525, 158],
+  "label": "address"
+}
+
+Date:
+
+{
+  "bbox_2d": [34, 204, 212, 224],
+  "label": "date"
+}
+
+Total:
+
+{
+  "bbox_2d": [204, 322, 327, 338],
+  "label": "total"
+}
+
+Wait, let's check the total. The "Net Total" line is "Net Total RM18.30". So the total value is RM18.30. Let's confirm the location.
+
+In the image, after "Rounding Adjustment RM0.01", then "Net Total RM18.30". So the net total is that line.
+
+Yes, so the total's bounding box is around "Net Total RM18.30".
+
+Now, let's make sure all categories are covered.
+</think>
+[{"bbox_2d": [34, 12, 525, 34], "label": "company"}, {"bbox_2d": [34, 36, 525, 158], "label": "address"}, {"bbox_2d": [34, 204, 212, 224], "label": "date"}, {"bbox_2d": [204, 322, 327, 338], "label": "total"}]

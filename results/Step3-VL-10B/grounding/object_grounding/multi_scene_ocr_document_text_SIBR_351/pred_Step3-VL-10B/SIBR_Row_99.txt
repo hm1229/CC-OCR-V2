@@ -1,0 +1,245 @@
+用户现在需要识别发票中的各个元素，按照要求分类。首先看每个类别对应的位置。
+
+首先公司名称：恒聪百汇科技有限公司和英文Hengcong Baihui Technology Co., Ltd.，所以COMPANY NAME的bbox是顶部的公司名区域。
+
+ADDRESS是03205 Larsen Motorway Apt. 542 Shirleyhaven, SD 76933，这部分是地址。
+
+FAX是68-843-51126682，看FAX后面的号码。
+
+TEL是58-836-66121805，TEL后面的号码。
+
+INV.DATE是2021-8-24，对应INV.DATE的值。
+
+INV.NO是BEU32-21117+BEU32-21134+BEU32-，看INV.NO那里的内容。
+
+S/C NO是BEU32-21134+BEU32-21137+BEU03-2101+BEU47-2101+BEU48-，对应S/C NO的值。
+
+TITLE是“发票”和INVOICE，所以TITLE是发票和INVOICE部分。
+
+Marks&Nos.是表格里的N/M列，对应Marks&Nos.的表头。
+
+Item no.&Description是FORKLIFT TRUCKS所在的列，表头是Item no.&Description。
+
+Quantity (PKGS)是数量列，比如4，表头是Quantity (PKGS)。
+
+Unit Price (EURO)是单价列，比如8326.73，表头是Unit Price (EURO)。
+
+Amount (EURO)是金额列，比如33,306.90，表头是Amount (EURO)。
+
+现在逐个找每个元素的bbox：
+
+1. COMPANY NAME：顶部的“恒聪百汇科技有限公司”和英文，所以bbox是[10, 1, 989, 42]左右，看图片里的公司名位置。
+
+2. ADDRESS：03205 Larsen Motorway Apt. 542 Shirleyhaven, SD 76933，对应地址行，bbox是[29, 37, 637, 55]。
+
+3. TEL：TEL:58-836-66121805，所以TEL的标签和号码，bbox是[132, 57, 387, 72]。
+
+4. FAX：FAX:68-843-51126682，bbox是[392, 57, 637, 72]。
+
+5. TITLE：发票和INVOICE，看“发票”和“INVOICE”部分，bbox是[337, 137, 387, 159]（发票）和[462, 159, 537, 177]（INVOICE）。
+
+6. INV.DATE：2021-8-24，对应INV.DATE: 后面的日期，bbox是[17, 162, 257, 178]。
+
+7. INV.NO：BEU32-21117+BEU32-21134+BEU32-，对应INV.NO: 后面的内容，bbox是[102, 167, 327, 185]。
+
+8. S/C NO：BEU32-21134+BEU32-21137+BEU03-2101+BEU47-2101+BEU48-，对应S/C NO: 后面的内容，bbox是[692, 142, 902, 159]。
+
+9. Marks&Nos.：表格的表头“Marks&Nos.”，bbox是[17, 312, 257, 342]（因为表格的表头行，Marks&Nos.是第一列的表头）。
+
+10. Item no.&Description：表格的表头“Item no.&Description”，bbox是[267, 312, 537, 342]。
+
+11. Quantity (PKGS)：表格的表头“Quantity (PKGS)”，bbox是[547, 312, 692, 342]。
+
+12. Unit Price (EURO)：表格的表头“Unit Price (EURO)”，bbox是[697, 312, 847, 342]。
+
+13. Amount (EURO)：表格的表头“Amount (EURO)”，bbox是[857, 312, 992, 342]。
+
+然后还有Amount (EURO)的数值，比如33,306.90，但题目要求是检测对象，可能表头和数值？不过看问题描述是“Detect all objects matching these categories”，类别中的Amount (EURO)应该是指该列，所以表头是Amount (EURO)。另外数值部分可能也属于，但先看表头。
+
+现在整理每个类别：
+
+- COMPANY NAME：公司名称的文本，包括中英文，bbox是[10, 1, 989, 42]（因为公司名在最上方，两行）。
+
+- ADDRESS：地址行，03205...，bbox是[29, 37, 637, 55]。
+
+- FAX：FAX后面的号码，bbox是[392, 57, 637, 72]（FAX:68-843-51126682）。
+
+- TEL：TEL后面的号码，bbox是[132, 57, 387, 72]（TEL:58-836-66121805）。
+
+- TITLE：发票和INVOICE，看“发票”是中文标题，“INVOICE”是英文标题，所以bbox是[337, 137, 387, 159]（发票）和[462, 159, 537, 177]（INVOICE）。
+
+- INV.DATE：2021-8-24，bbox是[17, 162, 257, 178]（INV.DATE: 2021-8-24）。
+
+- INV.NO：BEU32-21117+BEU32-21134+BEU32-，bbox是[102, 167, 327, 185]（INV.NO: BEU32-21117+BEU32-21134+BEU32-）。
+
+- S/C NO：BEU32-21134+BEU32-21137+BEU03-2101+BEU47-2101+BEU48-，bbox是[692, 142, 902, 159]（S/C NO: BEU32-21134+BEU32-21137+BEU03-2101+BEU47-2101+BEU48-）。
+
+- Marks&Nos.：表格中“Marks&Nos.”表头，bbox是[17, 312, 257, 342]（因为表格的表头行，第一列是Marks&Nos.）。
+
+- Item no.&Description：表格中“Item no.&Description”表头，bbox是[267, 312, 537, 342]。
+
+- Quantity (PKGS)：表格中“Quantity (PKGS)”表头，bbox是[547, 312, 692, 342]。
+
+- Unit Price (EURO)：表格中“Unit Price (EURO)”表头，bbox是[697, 312, 847, 342]。
+
+- Amount (EURO)：表格中“Amount (EURO)”表头，bbox是[857, 312, 992, 342]。
+
+另外，还有S/C NO的标签，P.O.E.、P.O.D.这些可能不算，因为类别里没有。现在检查每个类别是否都覆盖：
+
+类别列表：ADDRESS, Amount (EURO), COMPANY NAME, FAX, INV.DATE, INV.NO, Item no.&Description, Marks&Nos., Quantity (PKGS), S/C NO, TEL, TITLE, Unit Price (EURO)。共13个类别，现在每个都要对应。
+
+现在逐个确认：
+
+1. ADDRESS：存在，已找到。
+
+2. Amount (EURO)：表头是Amount (EURO)，所以bbox是表格表头的该列，即[857, 312, 992, 342]。
+
+3. COMPANY NAME：存在，顶部的公司名。
+
+4. FAX：存在，FAX:后面的号码。
+
+5. INV.DATE：存在，INV.DATE:后面的日期。
+
+6. INV.NO：存在，INV.NO:后面的内容。
+
+7. Item no.&Description：存在，表格的该列表头。
+
+8. Marks&Nos.：存在，表格的该列表头（N/M对应的是Marks&Nos.的内容，表头是Marks&Nos.）。
+
+9. Quantity (PKGS)：存在，表格的该列表头。
+
+10. S/C NO：存在，S/C NO:后面的内容。
+
+11. TEL：存在，TEL:后面的号码。
+
+12. TITLE：存在，“发票”和“INVOICE”是标题。
+
+13. Unit Price (EURO)：存在，表格的该列表头。
+
+现在需要把每个的bbox和label对应起来。注意有些是表头，有些是内容，但题目要求是检测对象，可能表头是主要的标识。
+
+现在开始构建JSON数组：
+
+- COMPANY NAME：公司名称的文本，包括中英文，bbox是[10, 1, 989, 42]（因为公司名在最上方，两行文字）。
+
+- ADDRESS：地址行，03205 Larsen Motorway Apt. 542 Shirleyhaven, SD 76933，bbox是[29, 37, 637, 55]。
+
+- TEL：TEL:58-836-66121805，bbox是[132, 57, 387, 72]。
+
+- FAX：FAX:68-843-51126682，bbox是[392, 57, 637, 72]。
+
+- TITLE：发票（中文）和INVOICE（英文），所以“发票”的bbox是[337, 137, 387, 159]，“INVOICE”的bbox是[462, 159, 537, 177]。但可能合并？或者看“发票”是主要标题，所以取“发票”的bbox。
+
+- INV.DATE：2021-8-24，bbox是[17, 162, 257, 178]（INV.DATE: 2021-8-24）。
+
+- INV.NO：BEU32-21117+BEU32-21134+BEU32-，bbox是[102, 167, 327, 185]（INV.NO: BEU32-21117+BEU32-21134+BEU32-）。
+
+- S/C NO：BEU32-21134+BEU32-21137+BEU03-2101+BEU47-2101+BEU48-，bbox是[692, 142, 902, 159]（S/C NO: BEU32-21134+BEU32-21137+BEU03-2101+BEU47-2101+BEU48-）。
+
+- Marks&Nos.：表格表头“Marks&Nos.”，bbox是[17, 312, 257, 342]（因为表格的表头行，第一列是Marks&Nos.，对应N/M是内容）。
+
+- Item no.&Description：表格表头“Item no.&Description”，bbox是[267, 312, 537, 342]（对应FORKLIFT TRUCKS是内容）。
+
+- Quantity (PKGS)：表格表头“Quantity (PKGS)”，bbox是[547, 312, 692, 342]（对应数量4是内容）。
+
+- Unit Price (EURO)：表格表头“Unit Price (EURO)”，bbox是[697, 312, 847, 342]（对应单价8326.73是内容）。
+
+- Amount (EURO)：表格表头“Amount (EURO)”，bbox是[857, 312, 992, 342]（对应金额33,306.90是内容）。
+
+现在需要确保每个类别都出现一次。现在检查类别列表中的每个：
+
+ADDRESS：是
+
+Amount (EURO)：是（表头）
+
+COMPANY NAME：是
+
+FAX：是
+
+INV.DATE：是
+
+INV.NO：是
+
+Item no.&Description：是
+
+Marks&Nos.：是
+
+Quantity (PKGS)：是
+
+S/C NO：是
+
+TEL：是
+
+TITLE：是（“发票”）
+
+Unit Price (EURO)：是
+
+现在把每个的bbox和label列出来：
+
+1. {"bbox_2d": [10, 1, 989, 42], "label": "COMPANY NAME"}
+
+2. {"bbox_2d": [29, 37, 637, 55], "label": "ADDRESS"}
+
+3. {"bbox_2d": [132, 57, 387, 72], "label": "TEL"}
+
+4. {"bbox_2d": [392, 57, 637, 72], "label": "FAX"}
+
+5. {"bbox_2d": [337, 137, 387, 159], "label": "TITLE"} （“发票”）
+
+6. {"bbox_2d": [462, 159, 537, 177], "label": "TITLE"} （“INVOICE”）？但可能“INVOICE”也是TITLE，不过可能合并？或者看题目中的TITLE是否包含这两个。但可能“发票”是主要的中文标题，所以选一个。或者看“INVOICE”是英文标题，所以两个都是TITLE？但类别中TITLE是一个类别，可能需要看哪个更准确。或者可能“发票”和“INVOICE”共同构成TITLE，所以可以选其中一个，比如“发票”的bbox。
+
+7. {"bbox_2d": [17, 162, 257, 178], "label": "INV.DATE"}
+
+8. {"bbox_2d": [102, 167, 327, 185], "label": "INV.NO"}
+
+9. {"bbox_2d": [692, 142, 902, 159], "label": "S/C NO"}
+
+10. {"bbox_2d": [17, 312, 257, 342], "label": "Marks&Nos."}
+
+11. {"bbox_2d": [267, 312, 537, 342], "label": "Item no.&Description"}
+
+12. {"bbox_2d": [547, 312, 692, 342], "label": "Quantity (PKGS)"}
+
+13. {"bbox_2d": [697, 312, 847, 342], "label": "Unit Price (EURO)"}
+
+14. {"bbox_2d": [857, 312, 992, 342], "label": "Amount (EURO)"}
+
+现在数一下，共14个？不，类别是13个，可能哪里重复了。哦，类别列表是：
+
+ADDRESS, Amount (EURO), COMPANY NAME, FAX, INV.DATE, INV.NO, Item no.&Description, Marks&Nos., Quantity (PKGS), S/C NO, TEL, TITLE, Unit Price (EURO) → 13个类别。现在检查：
+
+- ADDRESS：1
+
+- Amount (EURO)：1
+
+- COMPANY NAME：1
+
+- FAX：1
+
+- INV.DATE：1
+
+- INV.NO：1
+
+- Item no.&Description：1
+
+- Marks&Nos.：1
+
+- Quantity (PKGS)：1
+
+- S/C NO：1
+
+- TEL：1
+
+- TITLE：1（可能“发票”和“INVOICE”算一个TITLE，所以选其中一个，比如“发票”）
+
+- Unit Price (EURO)：1
+
+现在重新整理，确保每个类别一个条目：
+
+1. COMPANY NAME：[10,1,989,42]
+
+2. ADDRESS：[29,37,637,55]
+
+3. TEL：[132,57,387,72]
+
+4. FAX：[392,57,6

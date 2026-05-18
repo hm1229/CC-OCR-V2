@@ -1,7 +1,59 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date on the receipt is 20-11-17. Let's check where that is. In the invoice section, there's a line with 03:29PM, 562936, and 20-11-17. So the date is 20-11-17.
+
+doc_no_receipt_no: The invoice number is 10222/102/T0341. Let's find that. It's labeled "INVOICE NO : 10222/102/T0341".
+
+seller_address: The address lines are LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1413-SETIA ALAM 2. Let's check the top part of the receipt.
+
+seller_gst_id: GST ID. NO : 000181747712. That's the GST ID.
+
+seller_name: 99 SPEED MART S/8 (519537-X). That's the store name at the top.
+
+total_amount: The total sales (inclusive GST) is RM 169.78. Let's check the "Total Sales (Inclusive GST) RM 169.78" line.
+
+total_tax: In the GST Summary, the Tax(RM) is 9.61. Let's check the GST Summary section: Tax(RM) 9.61.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is "20-11-17" which is in the line with 03:29PM and 562936. Let's find the coordinates. The text "20-11-17" is on the right side of that line.
+
+2. doc_no_receipt_no: "10222/102/T0341" is the invoice number.
+
+3. seller_address: The address block includes multiple lines: LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1413-SETIA ALAM 2.
+
+4. seller_gst_id: "000181747712" is the GST ID.
+
+5. seller_name: "99 SPEED MART S/8 (519537-X)" is the top line.
+
+6. total_amount: "169.78" from "Total Sales (Inclusive GST) RM 169.78".
+
+7. total_tax: "9.61" from the GST Summary's Tax(RM) column.
+
+Now, let's define each bounding box.
+
+For seller_name: The text is at the top, "99 SPEED MART S/8 (519537-X)". Let's check the coordinates. The top part of the receipt.
+
+seller_address: The lines below the seller_name: LOT P.T. 2811, JALAN ANGSA, TAMAN BERKELEY, 41150 KLANG, SELANGOR, 1413-SETIA ALAM 2.
+
+seller_gst_id: The line "GST ID. NO : 000181747712".
+
+doc_no_receipt_no: "INVOICE NO : 10222/102/T0341".
+
+date: "20-11-17" in the timestamp line.
+
+total_amount: "169.78" in the Total Sales line.
+
+total_tax: "9.61" in the GST Summary.
+
+Let's create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [95, 55, 628, 80], "label": "seller_name"},
-    {"bbox_2d": [95, 85, 628, 132], "label": "seller_address"},
-    {"bbox_2d": [95, 135, 628, 158], "label": "seller_gst_id"},
-    {"bbox_2d": [95, 160, 628, 182], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [520, 192, 628, 214], "label": "date"},
-    {"bbox_2d": [95, 300, 628, 322
+    {"bbox_2d": [234, 332, 332, 354], "label": "date"},
+    {"bbox_2d": [196, 297, 346, 319], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [92, 107, 502, 200], "label": "seller_address"},
+    {"bbox_2d": [154, 237, 332, 257], "label": "seller_gst_id"},
+    {"bbox_2d": [92, 7, 532, 27], "label": "seller_name"},
+    {"bbox_2d": [292, 487, 402, 507], "label": "total_amount"},
+    {"bbox_2d": [877, 637, 927, 657], "label": "total_tax"}
+]

@@ -1,8 +1,54 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is at the bottom part, "24-11-17". Let's check the coordinates. The line with the date is "24-11-17 13:11 SH01 ZT09...". So the date is 24-11-17.
+
+Seller_address: The address is "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR". Let's find that section.
+
+Seller_gst_id: The GST ID is "001092886528" as per "(GST ID No :001092886528)".
+
+Seller_name: The company name is "MR. D.I.Y. SDN BHD (CO.REG :704427-T)".
+
+Total_amount: The total incl GST is RM 3.90. Look at "Total Incl. GST@6% RM 3.90".
+
+Total_tax: The GST tax amount is 0.22 RM, from the GST Summary section where Tax(RM) is 0.22.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is in the line "24-11-17 13:11 SH01 ZT09 T2 R000011248". So the date part is "24-11-17". Let's check the coordinates of that line.
+
+2. seller_address: The address lines are from "LOT 1851-A & 1851-B, JALAN KPB 6," down to "SELANGOR". Let's capture that block.
+
+3. seller_gst_id: The line with GST ID is "(GST ID No :001092886528)".
+
+4. seller_name: The top part "MR. D.I.Y. SDN BHD (CO.REG :704427-T)".
+
+5. total_amount: The line "Total Incl. GST@6% RM 3.90".
+
+6. total_tax: The GST tax amount is 0.22, which is in the GST Summary section under Tax(RM) column.
+
+Now, let's define each bounding box.
+
+For seller_name: The text is "MR. D.I.Y. SDN BHD (CO.REG :704427-T )". Let's find the coordinates. The top part of the invoice.
+
+seller_address: The address lines: "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR".
+
+seller_gst_id: "(GST ID No :001092886528)".
+
+date: "24-11-17" in the timestamp line.
+
+total_amount: "Total Incl. GST@6% RM 3.90".
+
+total_tax: The tax amount is 0.22, which is in the GST Summary row for GST S@6% under Tax(RM).
+
+Let's check each element's position.
+
+Now, construct the JSON array.
+</think>
 [
-    {"bbox_2d": [242, 922, 312, 942], "label": "date"},
-    {"bbox_2d": [202, 162, 798, 182], "label": "seller_name"},
-    {"bbox_2d": [204, 192, 796, 262], "label": "seller_address"},
-    {"bbox_2d": [224, 274, 776, 294], "label": "seller_gst_id"},
-    {"bbox_2d": [204, 342, 796, 362], "label": "total_amount"},
-    {"bbox_2d": [702, 442, 756, 462], "label": "total_tax"}
+    {"bbox_2d": [240, 927, 297, 947], "label": "date"},
+    {"bbox_2d": [101, 200, 898, 272], "label": "seller_address"},
+    {"bbox_2d": [140, 282, 609, 302], "label": "seller_gst_id"},
+    {"bbox_2d": [101, 177, 898, 200], "label": "seller_name"},
+    {"bbox_2d": [101, 547, 898, 567], "label": "total_amount"},
+    {"bbox_2d": [754, 477, 825, 497], "label": "total_tax"}
 ]

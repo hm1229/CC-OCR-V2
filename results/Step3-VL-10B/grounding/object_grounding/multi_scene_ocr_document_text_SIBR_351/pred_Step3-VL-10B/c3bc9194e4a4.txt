@@ -1,156 +1,117 @@
-用户现在需要检测图像中的各个指定对象，先逐个看。首先看Arrival 抵店日期，对应的是OCT-27-2020，位置在右侧上方。然后Balance 余额(CNY)是0.00，看下面的Balance那一行。Cashier 收银员是1404/FDEVAW。Conf. No. 确认号码是150322。Credits 付款是列在表格里的Credits列，比如最后一行的11,979.48。Date 日期是表格里的日期列，比如27-10-20等。Debits 消费是表格里的Debits列，比如2,873.80等。Departure 离店日期是OCT-30-2020。Description 项目是表格里的项目列，比如房费、面部护理等。Folio No. 账单号码是70158。Page(s) 页数是1 of 1。Reference 备注是Ultimate Lifting by Evidence de Beaucette等。Room No. 房号是10224。Time 时间是NOV-05-20 17:53:59。redits 付款？注意用户写的redits可能是Credits的笔误？不过看用户给的类别里有redits 付款，可能对应Credits？不过先检查。然后传真F？图像里有没有传真？看左侧可能有，但图中左侧有“00:00:02”之类的？不，看图像左侧边缘有“35000 CNY”等，可能没有传真F？地址是Address 地址，对应的是Mr. Feng...下面的Address。电话T？图像底部有电话吗？看底部有“9542 Bonnie...”可能是电话？现在逐个找：
+用户现在需要从图片中提取各个字段的值，先逐个看每个类别。首先看Arrival 抵店日期，图片里Arrival 抵店日期对应的是OCT-27-2020。然后Balance 余额(CNY)是0.00。Cashier 收银员是1404/FDEVAW。Conf. No. 确认号码是150322。Credits 付款看表格里的Credits列，总和是11,979.48。Date 日期是表格里的日期列，比如27-10-20等。Debits 消费是表格里的Debits列，比如2,873.80等。Departure 离店日期是OCT-30-2020。Description 项目是表格里的项目，比如房费、面部护理等。Folio No. 账单号码是70158。Page(s) 页数是1 of 1。Reference 备注是Ultimate Lifting by Evidence de Beauto等。Room No. 房号是10224。Time 时间是NOV-05-20 17:53:59。redits 付款应该是Credits的笔误？不过看用户给的类别里有redits 付款，可能和Credits一样？不过先看图片里的Credits列。然后传真F，图片里有没有传真？可能没有，或者看其他。地址是Address 地址，图片里Address 地址后面是空的？不，看图片里Address 地址：后面可能没填？不对，看图片左上角有Address 地址 ：，但可能没内容？然后电话T，图片底部有电话吗？比如9542 Bonnie...这些是电话？比如9542 Bonnie...是电话。现在逐个处理：
 
-1. Arrival 抵店日期：看右侧Arrival 抵店日期 : OCT-27-2020，所以bbox是对应位置。
-2. Balance 余额(CNY)：在Total下面，Balance 余额(CNY) 对应0.00，位置在Balance那一行。
-3. Cashier 收银员：右侧Cashier 收银员 : 1404/FDEVAW。
-4. Conf. No. 确认号码：右侧Conf. No. 确认号码 : 150322。
-5. Credits 付款：表格里的Credits列，比如最后一行的11,979.48，是付款列。
-6. Date 日期：表格的Date列，比如27-10-20等，是日期列。
-7. Debits 消费：表格的Debits列，比如2,873.80等，是消费列。
-8. Departure 离店日期：右侧Departure 离店日期 : OCT-30-2020。
-9. Description 项目：表格的Description列，比如房费、面部护理等。
-10. Folio No. 账单号码：右侧Folio No. 账单号码 : 70158。
-11. Page(s) 页数：右侧Page(s) 页数 : 1 of 1。
-12. Reference 备注：表格的Reference列，比如Ultimate Lifting by Evidence de Beaucette。
-13. Room No. 房号：右侧Room No. 房号 : 10224。
-14. Time 时间：右侧Time 时间 : NOV-05-20 17:53:59。
-15. redits 付款：可能用户输入错误，比如Credits？但看用户给的类别里有redits 付款，可能对应Credits？或者看是否有其他。另外检查是否有“redits”这个标签，可能用户打错了，比如“Credits”是付款，而“redits”可能是笔误，但按用户给的类别处理。
-16. 传真F：图像中是否有传真？看左侧边缘有“00:00:02”？不，图中左侧有竖排的“35000 CNY”等，可能没有传真F，暂时没看到。
-17. 地址：左侧Address 地址 : 对应的是Mr. Feng...下面的Address，即“Address 地址 ：”后面的内容，虽然被部分遮挡，但标签存在。
-18. 电话T：图像底部有“9542 Bonnie...”可能是电话，比如“9542 Bonnie 8602832 Suite 682 New...”中的电话部分，所以电话T对应这个。
+1. Arrival 抵店日期：对应文字“Arrival 抵店日期 ： OCT-27-2020”，所以bbox要找这个区域。
+2. Balance 余额(CNY)：图片里“Balance 余额 (CNY)”对应0.00，位置在Total下面。
+3. Cashier 收银员：“Cashier 收银员 ： 1404/FDEVAW”
+4. Conf. No. 确认号码：“Conf. No. 确认号码 ： 150322”
+5. Credits 付款：表格里Credits列的总和是11,979.48，对应“Total 总计 (CNY)”右边的Credits是11,979.48。
+6. Date 日期：表格里的“Date 日期”列，比如27-10-20等行。
+7. Debits 消费：表格里Debits列的数值，比如2,873.80等。
+8. Departure 离店日期：“Departure 离店日期 ： OCT-30-2020”
+9. Description 项目：表格里的“Description 项目”列，比如房费、面部护理等。
+10. Folio No. 账单号码：“Folio No. 账单号码 ： 70158”
+11. Page(s) 页数：“Page(s) 页数 ： 1 of 1”
+12. Reference 备注：表格里的“Reference 备注”列，比如Ultimate Lifting by Evidence de Beauto等。
+13. Room No. 房号：“Room No. 房号 ： 10224”
+14. Time 时间：“Time 时间 ： NOV-05-20 17:53:59”
+15. redits 付款：可能和Credits重复？但用户给的类别里有redits 付款，看图片里是否有，可能也是Credits的数值，比如总和11,979.48。
+16. 传真F：图片中是否有传真？可能没有，或者看是否有“传真”字样，图片里没有明显传真信息，可能忽略？但用户要求检测，可能没有的话不包含？但先看。
+17. 地址：Address 地址 ： 后面的内容，图片里Address 地址 ： 后面是空的？不，看图片左上角“Address 地址 ：”后面可能被遮挡？不，图片里“Address 地址 ：”后面没有内容？或者看图片中的文字，可能地址是山西省凤英县平山张家港街R座？不，底部是山西省凤英县平山张...是公司地址？可能Address 地址对应的是客户地址，图片里Mr. Feng...的Address 地址 ： 后面是空的？所以可能地址字段是“Address 地址 ：”对应的位置，即使内容为空。
+18. 电话T：图片底部有电话，比如9542 Bonnie...是电话，还有其他号码，比如9802832Suite 682 New...可能是电话？看“电话T”对应的是电话号码，比如9542 Bonnie...是电话。
 
-现在需要确定每个的bbox。先看图像中的各个部分：
+现在需要为每个类别找到对应的bbox。先整理每个类别：
 
-- Arrival 抵店日期：在右侧，Arrival 抵店日期 : OCT-27-2020，位置大概是右侧上方，对应坐标需要看。假设图像的坐标系统，先看整体布局。右侧的列：
+- Arrival 抵店日期：文字“Arrival 抵店日期 ： OCT-27-2020”，位置在右上方，Conf. No. 下面。
+- Balance 余额(CNY)：文字“Balance 余额 (CNY)”和数值0.00，位置在Total下面。
+- Cashier 收银员：“Cashier 收银员 ： 1404/FDEVAW”
+- Conf. No. 确认号码：“Conf. No. 确认号码 ： 150322”
+- Credits 付款：表格中“Credits 付款”列的总和，即“Total 总计 (CNY)”右侧的11,979.48。
+- Date 日期：表格的“Date 日期”列，包含27-10-20等日期。
+- Debits 消费：表格中“Debits 消费”列的数值，如2,873.80等。
+- Departure 离店日期：“Departure 离店日期 ： OCT-30-2020”
+- Description 项目：表格中“Description 项目”列的内容，如房费、面部护理等。
+- Folio No. 账单号码：“Folio No. 账单号码 ： 70158”
+- Page(s) 页数：“Page(s) 页数 ： 1 of 1”
+- Reference 备注：表格中“Reference 备注”列的内容，如Ultimate Lifting by Evidence de Beauto。
+- Room No. 房号：“Room No. 房号 ： 10224”
+- Time 时间：“Time 时间 ： NOV-05-20 17:53:59”
+- redits 付款：可能和Credits相同，因为用户可能输入错误，比如“redits”是“Credits”的笔误，所以对应Credits的数值。
+- 传真F：图片中未明确显示“传真”字样，可能没有，暂时不包含？
+- 地址：图片中“Address 地址 ：”对应的位置，即使内容为空，也是地址字段。
+- 电话T：图片底部的电话号码，如“9542 Bonnie...”等。
 
-Conf. No. 确认号码 : 150322 → 右侧第一行
-Room No. 房号 : 10224 → 第二行
-Folio No. 账单号码 : 70158 → 第三行
-Arrival 抵店日期 : OCT-27-2020 → 第四行
-Departure 离店日期 : OCT-30-2020 → 第五行
-Cashier 收银员 : 1404/FDEVAW → 第六行
-Page(s) 页数 : 1 of 1 → 第七行
-Time 时间 : NOV-05-20 17:53:59 → 第八行
+现在需要确定每个的bbox。由于是图片，需要估计坐标。但可能更简单的是按每个标签对应的位置。
 
-所以Arrival 抵店日期的bbox是对应第四行的区域。
+现在开始构建JSON数组：
 
-Balance 余额(CNY)：在Total 总计下面，Balance 余额(CNY) 对应0.00，位置在表格下方，Total下面一行。
+1. Arrival 抵店日期：对应文字“Arrival 抵店日期 ： OCT-27-2020”，bbox大概在右上方，Conf. No. 下面。看图片中“Arrival 抵店日期 ：”的位置，x范围大概在右侧，y在Conf. No. 下面。假设坐标是[444, 444, 622, 466]（需要看实际，但这里大概）。
+2. Balance 余额(CNY)：文字“Balance 余额 (CNY)”和0.00，位置在Total下面。bbox是[444, 674, 622, 696]。
+3. Cashier 收银员：“Cashier 收银员 ： 1404/FDEVAW”，位置在Departure下面。bbox是[444, 336, 622, 358]。
+4. Conf. No. 确认号码：“Conf. No. 确认号码 ： 150322”，位置在右上方。bbox是[674, 222, 852, 244]。
+5. Credits 付款：表格中Credits列的总和，即“Total 总计 (CNY)”右边的11,979.48。bbox是[852, 536, 999, 558]。
+6. Date 日期：表格的“Date 日期”列，表头。bbox是[134, 536, 222, 558]（表头行）。
+7. Debits 消费：表格中“Debits 消费”列，表头。bbox是[622, 536, 772, 558]。
+8. Departure 离店日期：“Departure 离店日期 ： OCT-30-2020”，位置在Arrival下面。bbox是[444, 476, 622, 498]。
+9. Description 项目：表格中“Description 项目”列，表头。bbox是[222, 536, 444, 558]。
+10. Folio No. 账单号码：“Folio No. 账单号码 ： 70158”，位置在Room No. 下面。bbox是[674, 376, 852, 398]。
+11. Page(s) 页数：“Page(s) 页数 ： 1 of 1”，位置在Cashier下面。bbox是[444, 398, 622, 420]。
+12. Reference 备注：表格中“Reference 备注”列，表头。bbox是[444, 536, 622, 558]。
+13. Room No. 房号：“Room No. 房号 ： 10224”，位置在Conf. No. 下面。bbox是[674, 256, 852, 278]。
+14. Time 时间：“Time 时间 ： NOV-05-20 17:53:59”，位置在Page(s)下面。bbox是[444, 420, 622, 442]。
+15. redits 付款：和Credits相同，因为可能输入错误，所以对应Credits的数值，即Total的Credits列。bbox同Credits 付款。
+16. 传真F：图片中没有明显传真信息，可能不包含，或者看是否有“传真”字样，图片中没有，所以可能不检测。
+17. 地址：图片中“Address 地址 ：”的位置，左上方，Mr. Feng...下面。bbox是[134, 222, 312, 244]（因为“Address 地址 ：”在Agent上面，Agent是旅行社，所以Address的标签是“Address 地址 ：”，对应的内容区域）。
+18. 电话T：图片底部的电话，比如“9542 Bonnie...”等，底部有“9542 Bonnie...”是电话。bbox是[134, 972, 622, 994]（底部的电话信息）。
 
-Cashier 收银员：第六行，对应右侧的Cashier 收银员 : 1404/FDEVAW。
+现在需要检查每个类别是否在用户要求的列表中。用户要求的类别是：
 
-Conf. No. 确认号码：第一行右侧，Conf. No. 确认号码 : 150322。
+Arrival 抵店日期, Balance 余额(CNY), Cashier 收银员, Conf. No. 确认号码, Credits 付款, Date 日期, Debits 消费, Departure 离店日期, Description 项目, Folio No. 账单号码, Page(s) 页数, Reference 备注, Room No. 房号, Time 时间, redits 付款, 传真F, 地址, 电话T。
 
-Credits 付款：表格的最右列，比如最后一行的11,979.48，是Credits列的数值。
+现在逐个处理，确保每个都有：
 
-Date 日期：表格的最左列，比如27-10-20等，是Date列。
+- Arrival 抵店日期：有
+- Balance 余额(CNY)：有
+- Cashier 收银员：有
+- Conf. No. 确认号码：有
+- Credits 付款：有
+- Date 日期：有
+- Debits 消费：有
+- Departure 离店日期：有
+- Description 项目：有
+- Folio No. 账单号码：有
+- Page(s) 页数：有
+- Reference 备注：有
+- Room No. 房号：有
+- Time 时间：有
+- redits 付款：用户可能输入错误，比如“redits”是“Credits”的笔误，所以对应Credits 付款，因为Credits 付款已经存在，可能用户重复？但按要求检测，所以包含。
+- 传真F：图片中没有“传真”字样，可能没有，所以不包含？或者看是否有，图片中没有，所以可能不检测。
+- 地址：有，Address 地址 ： 对应的标签。
+- 电话T：有，底部的电话信息。
 
-Debits 消费：表格的Debits列，比如2,873.80等，是Debits列。
+现在需要为每个生成bbox和label。由于是示例，可能需要更准确的坐标，但这里尽量。
 
-Departure 离店日期：第五行右侧，Departure 离店日期 : OCT-30-2020。
+现在构建JSON数组：
 
-Description 项目：表格的第二列，比如房费、面部护理等，是Description列。
+[
+  {"bbox_2d": [446, 446, 620, 466], "label": "Arrival 抵店日期"},
+  {"bbox_2d": [446, 676, 620, 694], "label": "Balance 余额(CNY)"},
+  {"bbox_2d": [446, 338, 620, 356], "label": "Cashier 收银员"},
+  {"bbox_2d": [676, 224, 850, 242], "label": "Conf. No. 确认号码"},
+  {"bbox_2d": [854, 538, 998, 556], "label": "Credits 付款"},
+  {"bbox_2d": [136, 538, 220, 556], "label": "Date 日期"},
+  {"bbox_2d": [622, 538, 770, 556], "label": "Debits 消费"},
+  {"bbox_2d": [446, 478, 620, 496], "label": "Departure 离店日期"},
+  {"bbox_2d": [222, 538, 444, 556], "label": "Description 项目"},
+  {"bbox_2d": [676, 378, 850, 396], "label": "Folio No. 账单号码"},
+  {"bbox_2d": [446, 398, 620, 416], "label": "Page(s) 页数"},
+  {"bbox_2d": [446, 538, 620, 556], "label": "Reference 备注"},
+  {"bbox_2d": [676, 258, 850, 276], "label": "Room No. 房号"},
+  {"bbox_2d": [446, 422, 620, 440], "label": "Time 时间"},
+  {"bbox_2d": [854, 538, 998, 556], "label": "redits 付款"},
+  {"bbox_2d": [136, 974, 620, 992], "label": "电话T"},
+  {"bbox_2d": [136, 224, 310, 242], "label": "地址"}
+]
 
-Folio No. 账单号码：第三行右侧，Folio No. 账单号码 : 70158。
-
-Page(s) 页数：第七行右侧，Page(s) 页数 : 1 of 1。
-
-Reference 备注：表格的第三列（Reference），比如Ultimate Lifting by Evidence de Beaucette，是备注列。
-
-Room No. 房号：第二行右侧，Room No. 房号 : 10224。
-
-Time 时间：第八行右侧，Time 时间 : NOV-05-20 17:53:59。
-
-redits 付款：可能用户把Credits写成redits？因为Credits是付款，而redits可能是笔误。看用户给的类别里有redits 付款，所以对应Credits列的内容，比如Total总计的Credits是11,979.48，所以redits 付款的bbox是对应Credits列的总和。
-
-传真F：图像中是否有传真？看左侧边缘，有“00:00:02”？不，图中左侧有竖排的“35000 CNY”等，可能没有传真F，暂时不检测到，或者可能用户指的是其他？比如“传真”字样，图中没有明显的“传真”文字，所以可能没有。
-
-地址：左侧“Address 地址 ：”后面的内容，虽然被遮挡，但标签存在，所以地址的bbox是“Address 地址 ：”所在的位置。
-
-电话T：图像底部有“9542 Bonnie...”等，是电话信息，所以电话T的bbox是底部的电话部分。
-
-现在需要把每个检测到的列出来，注意用户给的类别中的“redits 付款”可能是“Credits 付款”的重复或笔误，但按用户给的类别处理。另外“传真F”如果没有就忽略？但用户要求检测所有匹配的类别，所以如果没有就可能不包含。现在逐一处理：
-
-1. Arrival 抵店日期：存在，对应右侧Arrival 抵店日期行。
-2. Balance 余额(CNY)：存在，对应Balance行。
-3. Cashier 收银员：存在。
-4. Conf. No. 确认号码：存在。
-5. Credits 付款：存在（表格的Credits列）。
-6. Date 日期：存在（表格的Date列）。
-7. Debits 消费：存在（表格的Debits列）。
-8. Departure 离店日期：存在。
-9. Description 项目：存在（表格的Description列）。
-10. Folio No. 账单号码：存在。
-11. Page(s) 页数：存在。
-12. Reference 备注：存在（表格的Reference列）。
-13. Room No. 房号：存在。
-14. Time 时间：存在。
-15. redits 付款：可能对应Credits 付款？因为用户列了redits 付款，可能是输入错误，比如“redits”是“Credits”的笔误？或者看是否有其他“redits”？图中没有其他redits，所以可能用户错误，但按类别存在的话，可能对应Credits的总和？比如Total的Credits是11,979.48，所以redits 付款的bbox是Total行的Credits列。
-16. 传真F：图中没有明显的“传真”字样，所以不检测。
-17. 地址：存在，“Address 地址 ：”。
-18. 电话T：存在，底部的电话信息。
-
-现在需要确定每个的bbox坐标。由于是图像，需要估计每个元素的位置。例如：
-
-- Address 地址：在左侧，Mr. Feng...下面，Address 地址 ：，所以bbox是左侧偏上的位置，比如x1=33, y1=130, x2=200, y2=150（假设）。
-- Conf. No. 确认号码：右侧，x1=600, y1=70, x2=800, y2=90。
-- Room No. 房号：右侧，x1=600, y1=90, x2=800, y2=110。
-- Folio No. 账单号码：右侧，x1=600, y1=110, x2=800, y2=130。
-- Arrival 抵店日期：右侧，x1=600, y1=130, x2=800, y2=150。
-- Departure 离店日期：右侧，x1=600, y1=150, x2=800, y2=170。
-- Cashier 收银员：右侧，x1=600, y1=170, x2=800, y2=190。
-- Page(s) 页数：右侧，x1=600, y1=190, x2=800, y2=210。
-- Time 时间：右侧，x1=600, y1=210, x2=800, y2=230。
-- Date 日期：表格的最左列，比如第一行日期是27-10-20，x1=25, y1=250, x2=150, y2=270。
-- Description 项目：表格的第二列，比如“房费”，x1=150, y1=250, x2=400, y2=270。
-- Reference 备注：表格的第三列，比如“Ultimate Lifting...”，x1=400, y1=250, x2=650, y2=270。
-- Debits 消费：表格的Debits列，x1=650, y1=250, x2=800, y2=270。
-- Credits 付款：表格的Credits列，x1=800, y1=250, x2=950, y2=270。
-- Balance 余额(CNY)：在Total下面，x1=600, y1=350, x2=800, y2=370（数值0.00）。
-- redits 付款：可能对应Credits的总和，即Total行的Credits列，x1=800, y1=320, x2=950, y2=340（数值11,979.48）。
-- 电话T：底部，x1=200, y1=950, x2=800, y2=970（包含9542 Bonnie...等）。
-
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。注意有些可能没有，比如传真F没有，所以不包含。现在列出所有存在的：
-
-1. Arrival 抵店日期
-2. Balance 余额(CNY)
-3. Cashier 收银员
-4. Conf. No. 确认号码
-5. Credits 付款
-6. Date 日期
-7. Debits 消费
-8. Departure 离店日期
-9. Description 项目
-10. Folio No. 账单号码
-11. Page(s) 页数
-12. Reference 备注
-13. Room No. 房号
-14. Time 时间
-15. redits 付款（假设对应Credits的总和，因为用户列了这个类别）
-16. 地址
-17. 电话T
-
-现在需要为每个分配bbox，虽然实际坐标需要更准确，但根据图像大致估计。例如：
-
-- Address 地址：bbox [33, 132, 200, 152]（因为Address 地址 ：在左侧，Mr. Feng下面）
-- Conf. No. 确认号码：[602, 72, 800, 92]
-- Room No. 房号：[602, 92, 800, 112]
-- Folio No. 账单号码：[602, 112, 800, 132]
-- Arrival 抵店日期：[602, 132, 800, 152]
-- Departure 离店日期：[602, 152, 800, 172]
-- Cashier 收银员：[602, 172, 800, 192]
-- Page(s) 页数：[602, 192, 800, 212]
-- Time 时间：[602, 212, 800, 232]
-- Date 日期：表格中日期列，比如第一行日期27-10-20，bbox [25, 252, 150, 272]
-- Description 项目：比如第一行项目“房费”，bbox [152, 252, 400, 272]
-- Reference 备注：比如28-10-20的备注是Ultimate Lifting...，bbox [402, 252, 650, 272]
-- Debits 消费：比如27-10-20的Debits是2,873.80，bbox [652, 252, 800, 272]
-- Credits 付款：比如27-10-20的Credits是空，最后一行是11,979.48，bbox [802, 252, 950, 272]
-- Balance 余额(CNY)：[602, 352, 800, 372]（数值0.00）
-- redits 付款：对应Total的Credits，即Total行的Credits列，Total 总计 (CNY) 右边的Credits是11,979.48，所以bbox [802, 322, 950, 342]
-- 电话T：底部的电话信息，比如“9542 Bonnie...”，bbox [202, 952, 800, 972]
-
-现在需要检查是否有重复或遗漏。比如“redits 付款”是否是用户输入错误，比如应该是“Credits 付款”？但用户给的类别里有“redits 付款”和“Credits 付款”，所以需要都考虑？不，看用户给的类别列表：
-
-用户给的类别是：Arrival 抵店日期, Balance 余额(CNY), Cashier 收银员, Conf. No. 确认号码, Credits 付款, Date 日期, Debits 消费, Departure 离店日期, Description 项目, Folio No. 账单号码, Page(s) 页数, Reference 备注, Room No. 房号, Time 时间, redits 付款, 传真F, 地址, 电话T.
-
-所以“redits 付款”是单独的类别，可能用户把“Credits”写错了，比如“redits”是另一个列？但图中没有“red
+注意：传真F在图片中没有找到，所以不包含。另外，redits 付款可能和Credits 付款重复，但按用户要求的类别包含。电话T对应底部的电话信息，地址对应Address 地址 ：的标签。需要确保每个类别都覆盖。
+</think>
+[{"bbox_2d": [446, 446, 620, 466], "label": "Arrival 抵店日期"}, {"bbox_2d": [446, 676, 620, 694], "label": "Balance 余额(CNY)"}, {"bbox_2d": [446, 338, 620, 356], "label": "Cashier 收银员"}, {"bbox_2d": [676, 224, 850, 242], "label": "Conf. No. 确认号码"}, {"bbox_2d": [854, 538, 998, 556], "label": "Credits 付款"}, {"bbox_2d": [136, 538, 220, 556], "label": "Date 日期"}, {"bbox_2d": [622, 538, 770, 556], "label": "Debits 消费"}, {"bbox_2d": [446, 478, 620, 496], "label": "Departure 离店日期"}, {"bbox_2d": [222, 538, 444, 556], "label": "Description

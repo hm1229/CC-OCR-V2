@@ -1,8 +1,32 @@
-[
-    {"bbox_2d": [101, 100, 898, 125], "label": "company"},
-    {"bbox_2d": [101, 140, 898, 190], "label": "address"},
-    {"bbox_2d": [101, 230, 898, 252], "label": "date"},
-    {"bbox_2d": [101, 255, 898, 275], "label": "date"},
-    {"bbox_2d": [101, 920, 898, 942], "label": "date"},
-    {"bbox_2d": [101, 670, 898, 692], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part says "LIGHTROOM GALLERY SDN BHD" along with address details. So the company name is that.
+- Address: The address lines are "No: 28, JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA"
+- Date: There's "Bill Date: 20/11/2017" and "Closed Bill: 20/11/2017 04:01:23 PM". Let's pick the bill date.
+- Total: The total amount is "RM 278.80" under "TOT :".
+
+Now, find the bounding boxes for each.
+
+First, company: The header has the company name. Let's check the text. The company is "LIGHTROOM GALLERY SDN BHD" which is in the top section.
+
+Address: The address lines are from "No: 28..." down to "MALAYSIA".
+
+Date: The bill date is "20/11/2017" in the "Bill Date" field.
+
+Total: The total is "RM 278.80" in the "TOT :" line.
+
+Now, map each to their bounding boxes.
+
+Let's check the image:
+
+Company: The text "LIGHTROOM GALLERY SDN BHD" is at the top. Let's get its coordinates.
+
+Address: The address block includes lines like "No: 28, JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA". So that's the address.
+
+Date: "Bill Date : 20/11/2017" — that's the date.
+
+Total: "TOT : RM 278.80" — that's the total.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [101, 70, 898, 147], "label": "company"}, {"bbox_2d": [101, 73, 898, 150], "label": "address"}, {"bbox_2d": [114, 307, 302, 323], "label": "date"}, {"bbox_2d": [325, 537, 425, 553], "label": "total"}]

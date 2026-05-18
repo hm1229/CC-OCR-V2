@@ -1,10 +1,222 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is on the invoice under "Date : 28/07/17 9:48:42 AM". So the date value is 28/07/17.
+
+Doc_no_receipt_no: That's the Bill No, which is POS/39336.
+
+Seller_address: The address lines are 69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR. Let's check the text.
+
+Seller_gst_id: The GST ID No is 000784498688.
+
+Seller_name: SKL DAMANSARA ENTERPRISE.
+
+Seller_phone: The Tel/Fax is 03-7727 5196.
+
+Total_amount: The Net Amt is 28.80.
+
+Total_tax: The GST (6%) is 1.63.
+
+Now, let's map each to their bounding boxes.
+
+First, seller_name: The top part has "SKL DAMANSARA ENTERPRISE" — that's the seller name. Bounding box around that text.
+
+Seller_gst_id: The line (GST ID No : 000784498688) — so the GST ID is 000784498688.
+
+Seller_address: The address lines: 69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR.
+
+Seller_phone: Tel/Fax 03-7727 5196.
+
+Doc_no_receipt_no: Bill No : POS/39336.
+
+Date: Date : 28/07/17 9:48:42 AM — the date part is 28/07/17.
+
+Total_amount: Net Amt : 28.80.
+
+Total_tax: GST (6%) : 1.63.
+
+Now, let's check each element's position.
+
+Let's list each category with their bounding box.
+
+1. date: The text "Date : 28/07/17 9:48:42 AM" — the date is 28/07/17. The bounding box for the date line.
+
+2. doc_no_receipt_no: "Bill No : POS/39336" — the receipt number.
+
+3. seller_address: The address block: "69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR."
+
+4. seller_gst_id: "(GST ID No : 000784498688)" — the GST ID.
+
+5. seller_name: "SKL DAMANSARA ENTERPRISE" — the top company name.
+
+6. seller_phone: "Tel/Fax 03-7727 5196" — the phone number.
+
+7. total_amount: "Net Amt : 28.80" — the net amount.
+
+8. total_tax: "GST (6%) : 1.63" — the tax amount.
+
+Now, let's define the bounding boxes. Since the image is a receipt, each line is a separate entry.
+
+Let's go step by step.
+
+- seller_name: The first line after the top number. The text "SKL DAMANSARA ENTERPRISE" is centered. Let's find its coordinates. The bounding box would be around that text.
+
+- seller_gst_id: The line below the name: "(GST ID No : 000784498688)". So the GST ID is in that line.
+
+- seller_address: The next lines: "69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR." — multiple lines, so the bounding box covers all those address lines.
+
+- seller_phone: The line "Tel/Fax 03-7727 5196" — below the address.
+
+- doc_no_receipt_no: "Bill No : POS/39336" — under the phone line.
+
+- date: "Date : 28/07/17 9:48:42 AM" — next line.
+
+- Then the item list, then Gross Amt, GST, Net Amt.
+
+- total_amount: "Net Amt : 28.80" — that's the net amount.
+
+- total_tax: "GST (6%) : 1.63" — the tax amount.
+
+Now, let's structure each as a JSON object.
+
+Let's check each:
+
+1. date: The text "Date : 28/07/17 9:48:42 AM" — the date part is 28/07/17. The bounding box for this line.
+
+2. doc_no_receipt_no: "Bill No : POS/39336" — the receipt number.
+
+3. seller_address: The address lines (from 69G... to SELANGOR.)
+
+4. seller_gst_id: The GST ID line: (GST ID No : 000784498688)
+
+5. seller_name: "SKL DAMANSARA ENTERPRISE"
+
+6. seller_phone: "Tel/Fax 03-7727 5196"
+
+7. total_amount: "Net Amt : 28.80"
+
+8. total_tax: "GST (6%) : 1.63"
+
+Now, let's assign bounding boxes. Since the image is a standard receipt, each line is a separate entry. Let's estimate the coordinates.
+
+For example, the seller_name is at the top, so the bounding box is from the top part.
+
+Let's list each:
+
+- seller_name: [x1, y1, x2, y2] — the text "SKL DAMANSARA ENTERPRISE" is in the upper part. Let's say the coordinates cover that line.
+
+- seller_gst_id: The line below seller_name: "(GST ID No : 000784498688)" — so the bounding box for that line.
+
+- seller_address: The next lines: "69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR." — multiple lines, so the bounding box spans those.
+
+- seller_phone: The line after address: "Tel/Fax 03-7727 5196"
+
+- doc_no_receipt_no: "Bill No : POS/39336" — below phone.
+
+- date: "Date : 28/07/17 9:48:42 AM" — below doc_no.
+
+- total_amount: "Net Amt : 28.80" — in the middle section, after items.
+
+- total_tax: "GST (6%) : 1.63" — above net amount.
+
+Now, let's create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's define each:
+
+1. date: The line with "Date : 28/07/17 9:48:42 AM". Let's take the bounding box for that line.
+
+2. doc_no_receipt_no: "Bill No : POS/39336"
+
+3. seller_address: The address block (multiple lines)
+
+4. seller_gst_id: "(GST ID No : 000784498688)"
+
+5. seller_name: "SKL DAMANSARA ENTERPRISE"
+
+6. seller_phone: "Tel/Fax 03-7727 5196"
+
+7. total_amount: "Net Amt : 28.80"
+
+8. total_tax: "GST (6%) : 1.63"
+
+Now, let's check the image again.
+
+The seller_name is "SKL DAMANSARA ENTERPRISE" — that's the first big text.
+
+seller_gst_id: The line (GST ID No : 000784498688) — correct.
+
+seller_address: 69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR. — yes.
+
+seller_phone: Tel/Fax 03-7727 5196 — correct.
+
+doc_no_receipt_no: Bill No : POS/39336 — correct.
+
+date: Date : 28/07/17 9:48:42 AM — correct.
+
+total_amount: Net Amt : 28.80 — correct.
+
+total_tax: GST (6%) : 1.63 — correct.
+
+Now, let's assign bounding boxes. Since the image is a bit low-res, but we can approximate.
+
+For example, the seller_name is at the top, so the bounding box is from the top part. Let's assume the coordinates:
+
+- seller_name: [100, 100, 900, 130] (approx, covering the text)
+
+- seller_gst_id: [100, 140, 900, 160]
+
+- seller_address: [100, 170, 900, 230] (since address has multiple lines)
+
+- seller_phone: [100, 240, 900, 260]
+
+- doc_no_receipt_no: [100, 280, 900, 300]
+
+- date: [100, 310, 900, 330]
+
+- total_amount: [400, 450, 800, 470] (Net Amt line)
+
+- total_tax: [400, 470, 800, 490] (GST line)
+
+But maybe more precise. Let's check the actual text positions.
+
+Alternatively, since the problem says "detect the corresponding values", the key is to map each category to the correct text on the invoice, and the bounding box should enclose that text.
+
+Let's list each with their exact text and bounding box.
+
+1. date: The text "28/07/17" is part of the Date line. The line is "Date : 28/07/17 9:48:42 AM". So the bounding box for this line.
+
+2. doc_no_receipt_no: "POS/39336" from "Bill No : POS/39336".
+
+3. seller_address: The address lines: "69G, JALAN SS21/60, DAMANSA RA UTAMA, 47400 PETALING JAYA, SELANGOR."
+
+4. seller_gst_id: "000784498688" from "(GST ID No : 000784498688)".
+
+5. seller_name: "SKL DAMANSARA ENTERPRISE".
+
+6. seller_phone: "03-7727 5196" from "Tel/Fax 03-7727 5196".
+
+7. total_amount: "28.80" from "Net Amt : 28.80".
+
+8. total_tax: "1.63" from "GST (6%) : 1.63".
+
+Now, let's create the JSON array with each entry.
+
+For example:
+
+- For seller_name: the text is "SKL DAMANSARA ENTERPRISE". Let's find its bounding box. In the image, this is the topmost text, so the coordinates would be the area where that text is printed.
+
+Similarly for others.
+
+Now, let's write the JSON.
+</think>
 [
-    {"bbox_2d": [105, 140, 895, 164], "label": "seller_name"},
-    {"bbox_2d": [144, 334, 242, 354], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [105, 346, 376, 366], "label": "date"},
-    {"bbox_2d": [144, 184, 895, 240], "label": "seller_address"},
-    {"bbox_2d": [144, 196, 895, 216], "label": "seller_gst_id"},
-    {"bbox_2d": [295, 256, 600, 274], "label": "seller_phone"},
-    {"bbox_2d": [450, 444, 540, 464], "label": "total_amount"},
-    {"bbox_2d": [520, 444, 610, 464], "label": "total_tax"}
+    {"bbox_2d": [100, 310, 900, 335], "label": "date"},
+    {"bbox_2d": [100, 285, 900, 305], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [100, 175, 900, 235], "label": "seller_address"},
+    {"bbox_2d": [100, 145, 900, 165], "label": "seller_gst_id"},
+    {"bbox_2d": [100, 95, 900, 120], "label": "seller_name"},
+    {"bbox_2d": [100, 245, 900, 265], "label": "seller_phone"},
+    {"bbox_2d": [400, 475, 800, 495], "label": "total_amount"},
+    {"bbox_2d": [400, 445, 800, 465], "label": "total_tax"}
 ]

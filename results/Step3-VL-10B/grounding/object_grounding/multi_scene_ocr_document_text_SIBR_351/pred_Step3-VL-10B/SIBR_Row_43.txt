@@ -1,0 +1,220 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Address：图中有Sold To的地址和Ship To的地址。比如Sold To的地址是“Founder Technology Media Co., Ltd. USNV Delgado FPO AP 39498 Unit 2864 Box 8316 DPO AE 70054”，Ship To的地址是“PT. INDAH KIAT PULP AND PAPER TBK., GEDUNG SINAR MAS LAND PLAZA MENARA 2 LT.9, JL.MH.THAMRIN NO.51, GONDANGDIA, MENTENG KOTA ADM. JAKARTA PUSAT DKI JAKARTA 10350 NPWP: 01.000.566.8-092.000”。需要确定哪些是Address。另外右上角还有公司地址“664 Landry Summit Apt. 966 New David, GA 35692 0173 Smith Fort Richardson, ND 99656”也是Address。所以要找出所有Address相关的。
+
+Company Name：Sold To的公司是“Founder Technology Media Co., Ltd.”，Ship To的公司是“PT. INDAH KIAT PULP AND PAPER TBK.”，右上角的公司可能是“Khan”？因为网址是https://khan.com/，所以右上角的可能是公司地址，但Company Name可能主要是Sold To和Ship To的公司。比如Sold To的Company Name是“Founder Technology Media Co., Ltd.”，Ship To的Company Name是“PT. INDAH KIAT PULP AND PAPER TBK.”。
+
+Date：Invoice中的Date是“2022-02-07”。
+
+Delivery Terms：图中“Delivery Terms: CIF JAKARTA”。
+
+Delivery instructions：图中“Delivery instructions: By Sea.”。
+
+FOB：图中“FOB: 18151.10”。
+
+FREIGHT：图中“FREIGHT: 5.73”。
+
+Fabric No.：图中“Fabric No.119505997,11950600,11970653”。
+
+Fax：右上角的Fax是“+32655001832268”。
+
+INSURANCE：图中“INSURANCE: 8.79”。
+
+ITEM：表格中的ITEM列，比如1、2、3对应的行，ITEM列是“1”、“2”、“3”。
+
+Invoice Number：图中“Invoice Number: 653795+659272”。
+
+NPWP：Ship To地址中的“NPWP: 01.000.566.8-092.000”。
+
+Qty：表格中的Qty列，比如“1ROLL”等。
+
+Telephone：右上角的Telephone是“+23056806513820”。
+
+Title：Invoice的标题是“INVOICE”，所以Title是“INVOICE”这个标题。
+
+Total：图中“Total: USD 18,165.62”。
+
+UNIT PRICE：表格中的UNIT PRICE列，比如7,787.47等。
+
+VF Item No./Description：表格中的VF Item No./Description列，都是“PRESS FELT”。
+
+Website：右上角的网址“https://khan.com/”。
+
+现在需要逐个定位每个元素的bbox。需要看图片中的位置，比如右上角的联系信息：
+
+右上角的地址、电话、传真、网址：
+
+“664 Landry Summit Apt. 966 New David, GA 35692” —— Address
+
+“0173 Smith Fort Richardson, ND 99656” —— Address
+
+“Telephone: +23056806513820” —— Telephone
+
+“Fax: +32655001832268” —— Fax
+
+“https://khan.com/” —— Website
+
+然后Sold To部分：
+
+“Sold To: Founder Technology Media Co., Ltd. USNV Delgado FPO AP 39498 Unit 2864 Box 8316 DPO AE 70054” —— Company Name（Founder...）和Address（USNV...）
+
+Ship To部分：
+
+“Ship To: PT. INDAH KIAT PULP AND PAPER TBK., ... NPWP: 01.000.566.8-092.000” —— Company Name（PT. INDAH...）和Address（后面的地址）和NPWP（NPWP: ...）
+
+Invoice标题“INVOICE”是Title。
+
+Invoice Number: 653795+659272 —— Invoice Number
+
+Date: 2022-02-07 —— Date
+
+表格部分：
+
+ITEM列的表头和内容，比如ITEM的列是“ITEM”，对应行的ITEM是1、2、3 —— ITEM
+
+VF Item No./Description列是“VF Item No./Description”，内容是PRESS FELT —— VF Item No./Description
+
+Qty列是“Qty”，内容是1ROLL等 —— Qty
+
+UNIT PRICE列是“UNIT PRICE”，内容是7,787.47等 —— UNIT PRICE
+
+AMOUNT(USD)列是“AMOUNT (USD)”，内容是7,787.47等 —— AMOUNT(USD)
+
+FOB: 18151.10 —— FOB
+
+FREIGHT: 5.73 —— FREIGHT
+
+INSURANCE: 8.79 —— INSURANCE
+
+Total: USD 18,165.62 —— Total
+
+Fabric No.是“Fabric No.119505997,11950600,11970653” —— Fabric No.
+
+Delivery Terms: CIF JAKARTA —— Delivery Terms
+
+Delivery instructions: By Sea. —— Delivery instructions
+
+现在需要为每个类别找到对应的bbox。因为是图片，需要估计每个元素的位置。比如：
+
+1. Address（右上角第一个地址）：664 Landry Summit Apt. 966 New David, GA 35692 —— 位置在右上角，坐标大概x1=664, y1=...（需要看图片布局，假设右上角的文本块）
+
+不过可能更简单的是按图中的元素逐一对应。
+
+现在开始列出每个类别：
+
+- Address：多个，比如Sold To的地址，Ship To的地址，右上角的两个地址。需要确定每个Address的bbox。例如：
+
+  - 右上角第一个地址：“664 Landry Summit Apt. 966 New David, GA 35692” —— bbox大概在右上角，x范围是664到...，y是顶部。
+
+  - 右上角第二个地址：“0173 Smith Fort Richardson, ND 99656” —— 下一行。
+
+  - Sold To的地址：“USNV Delgado FPO AP 39498 Unit 2864 Box 8316 DPO AE 70054” —— 在Sold To下方。
+
+  - Ship To的地址：“PT. INDAH KIAT PULP AND PAPER TBK., ... PUSAT DKI JAKARTA 10350” —— 在Ship To下方。
+
+- Company Name：Sold To的公司“Founder Technology Media Co., Ltd.”，Ship To的公司“PT. INDAH KIAT PULP AND PAPER TBK.”。
+
+- Date：“2022-02-07” —— 在Invoice Number和Date那里。
+
+- Delivery Terms：“CIF JAKARTA” —— 左下角。
+
+- Delivery instructions：“By Sea.” —— 左下角，Delivery Terms下面。
+
+- FOB：“FOB: 18151.10” —— 在表格下方，总金额上面。
+
+- FREIGHT：“FREIGHT: 5.73” —— FOB下面。
+
+- Fabric No.：“Fabric No.119505997,11950600,11970653” —— 左下角，Delivery Terms上面。
+
+- Fax：“+32655001832268” —— 右上角，Telephone下面。
+
+- INSURANCE：“INSURANCE: 8.79” —— FREIGHT下面。
+
+- ITEM：表格中的ITEM列，表头是“ITEM”，内容是1、2、3 —— 表格的第一列。
+
+- Invoice Number：“653795+659272” —— Invoice Number: 后面的内容。
+
+- NPWP：“01.000.566.8-092.000” —— Ship To地址中的NPWP: 后面的内容。
+
+- Qty：表格中的Qty列，内容是1ROLL等 —— 第三列。
+
+- Telephone：“+23056806513820” —— 右上角，Telephone: 后面的内容。
+
+- Title：“INVOICE” —— 页面中间的大标题。
+
+- Total：“18,165.62” —— Total: USD 后面的金额。
+
+- UNIT PRICE：表格中的UNIT PRICE列，内容是7,787.47等 —— 第四列。
+
+- VF Item No./Description：表格中的VF Item No./Description列，内容是PRESS FELT —— 第二列。
+
+- Website：“https://khan.com/” —— 右上角，Fax下面。
+
+现在需要将每个类别对应一个或多个bbox。但可能有些类别在图中只有一个实例，比如Title是“INVOICE”，Invoice Number是唯一的，Date是唯一的，Total是唯一的等。
+
+现在开始构建JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意的是，由于是图片，坐标是相对的（0-1000），需要估计每个元素的位置。例如：
+
+- Title（INVOICE）：在页面中间偏上，所以bbox大概x1=440, y1=250, x2=560, y2=270（假设）。
+
+- Invoice Number：在Invoice标题右边，Invoice Number: 653795+659272，所以bbox是x1=690, y1=290, x2=920, y2=305。
+
+- Date：在Invoice Number下面，Date: 2022-02-07，bbox x1=700, y1=305, x2=850, y2=320。
+
+- Sold To: ...：在页面左侧，Sold To: 后面的公司和地址，bbox x1=100, y1=350, x2=400, y2=400。
+
+- Ship To: ...：在页面右侧，Ship To: 后面的地址，bbox x1=600, y1=350, x2=900, y2=450。
+
+- 表格部分：ITEM列的表头是“ITEM”，从左到右的列，所以ITEM的表头bbox是x1=100, y1=500, x2=150, y2=520；内容行的ITEM是1、2、3，比如第一行ITEM是“1”，bbox x1=100, y1=525, x2=120, y2=545。
+
+- VF Item No./Description：表头是“VF Item No./Description”，bbox x1=200, y1=500, x2=500, y2=520；内容是“PRESS FELT”等，比如第一行内容是“PRESS FELT”，bbox x1=200, y1=525, x2=450, y2=545。
+
+- Qty：表头“Qty”bbox x1=300, y1=500, x2=350, y2=520；内容“1ROLL”等，bbox x1=300, y1=525, x2=380, y2=545。
+
+- UNIT PRICE：表头“UNIT PRICE”bbox x1=450, y1=500, x2=600, y2=520；内容“7,787.47”等，bbox x1=450, y1=525, x2=600, y2=545。
+
+- AMOUNT (USD)：表头“AMOUNT (USD)”bbox x1=650, y1=500, x2=850, y2=520；内容“7,787.47”等，bbox x1=650, y1=525, x2=850, y2=545。
+
+- FOB：在表格下方，FOB: 18151.10，bbox x1=600, y1=600, x2=750, y2=620。
+
+- FREIGHT: 5.73，bbox x1=600, y1=620, x2=680, y2=640。
+
+- INSURANCE: 8.79，bbox x1=600, y1=640, x2=700, y2=660。
+
+- Total: USD 18,165.62，bbox x1=600, y1=660, x2=850, y2=680。
+
+- Fabric No.：左下角，Fabric No.119505997,11950600,11970653，bbox x1=100, y1=750, x2=400, y2=770。
+
+- Delivery Terms: CIF JAKARTA，bbox x1=100, y1=770, x2=300, y2=785。
+
+- Delivery instructions: By Sea.，bbox x1=100, y1=785, x2=250, y2=800。
+
+- Company Name（Sold To）：Founder Technology Media Co., Ltd.，bbox x1=100, y1=350, x2=400, y2=365。
+
+- Company Name（Ship To）：PT. INDAH KIAT PULP AND PAPER TBK.，bbox x1=600, y1=350, x2=900, y2=365。
+
+- Address（Sold To）：USNV Delgado FPO AP 39498 Unit 2864 Box 8316 DPO AE 70054，bbox x1=100, y1=365, x2=400, y2=380。
+
+- Address（Ship To）：PT. INDAH KIAT...PUSAT DKI JAKARTA 10350，bbox x1=600, y1=380, x2=900, y2=450。
+
+- Address（右上角第一个）：664 Landry Summit Apt. 966 New David, GA 35692，bbox x1=660, y1=10, x2=920, y2=25。
+
+- Address（右上角第二个）：0173 Smith Fort Richardson, ND 99656，bbox x1=660, y1=25, x2=920, y2=40。
+
+- Telephone（右上角）：+23056806513820，bbox x1=660, y1=40, x2=920, y2=55。
+
+- Fax（右上角）：+32655001832268，bbox x1=660, y1=55, x2=920, y2=70。
+
+- Website（右上角）：https://khan.com/，bbox x1=660, y1=70, x2=920, y2=85。
+
+- NPWP（Ship To）：01.000.566.8-092.000，bbox x1=600, y1=450, x2=900, y2=465。
+
+现在需要将这些整理成JSON数组，每个元素对应一个类别。注意有些类别可能有多个实例，比如Address有多个，但需要每个Address都列出来吗？题目要求“Detect all objects matching these categories”，所以每个出现的实例都要检测。但可能有些类别在图中只有一个实例，比如Title、Invoice Number、Date、Total等。
+
+现在开始逐个列出：
+
+1. Title: INVOICE → bbox是标题的位置，比如x1=440, y1=230, x2=560, y2=250（假设）
+2. Invoice Number: 653795+659272 → x1=690, y1=290, x2=920, y2=305
+3. Date: 2022-02-07 → x1=700, y1=305, x2=850, y2=320
+4. Sold To Company Name: Founder Technology Media Co., Ltd. → x1=100, y1

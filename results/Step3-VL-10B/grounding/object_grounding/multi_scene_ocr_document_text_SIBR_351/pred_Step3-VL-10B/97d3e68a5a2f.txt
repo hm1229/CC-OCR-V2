@@ -1,208 +1,223 @@
-用户现在需要检测图像中的各个指定类别对象。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name：右上角“新宇龙信息信息有限公司”是公司名，还有地址里的“陕西省柳市牧野李X座 952636”？不，Company Name是新宇龙信息信息有限公司，对应右上角。
+首先看Company Name：右上角“新宇龙信息信息有限公司”，对应bbox是右上角的公司名称区域。
 
-Address：有三个Address，分别是Vendor Information里的Address，Ship To的Address，Bill To的Address。需要分别找。
+Address：有三个地址，分别是Vendor Information的Address，Ship To的Address，Bill To的Address。需要分别找。比如Vendor Information的Address是“6682 Brooks Pines Joyceberg, MA 48243”，对应左边的Address字段。
 
-Approve Date：在Vender Acknowledgement部分，有“Approve Date:2021-02-08”，所以这个是Approve Date。
+Approve Date：在Vender Acknowledgement部分，有“Approve Date:2021-02-08”，所以这个是日期。
 
-Attn：三个部分的Attn，Vendor的Attn是Drew Roy，Ship To的Attn是Theresa Fitzpatrick，Bill To的Attn是Adam Hayes。每个Attn字段。
+Attn：三个部分的Attn，比如Vendor Information的Attn是Drew Roy，Ship To的Attn是Theresa Fitzpatrick，Bill To的Attn是Adam Hayes。需要看对应的Attn字段。
 
-Delivery/Freight Terms：在中间的Ship Via和Delivery/Freight Terms那里，值是FOB，所以这个字段。
+Delivery/Freight Terms：在中间的Ship Via和Delivery/Freight Terms那里，值是FOB。
 
-Description：表格里的Description列，比如IC, Semtech...这些内容。
+Description：表格中的Description列，比如“IC, Semtech, GN2108S, bare Die,4x25G Driver”等。
 
-NO.：表格里的NO.列，比如10、20。
+NO.：表格中的NO.列，比如10、20。
 
 PO NO.：右上角“PO NO.:5309088400”。
 
-Part No.：表格里的Part No.列，比如140-0848、140-0849。
+Part No.：表格中的Part No.列，比如140-0848、140-0849。
 
-Payment Terms：Net 70 days。
+Payment Terms：Net 70 days，在Payment Terms字段。
 
-Pr #：表格里的Pr #列，可能有编号，比如0003368？看表格里的Pr #列，右边的列。
+Pr #：表格中的Pr #列，可能对应右边的列，比如有003368等。
 
-Qty：表格里的Qty列，比如150.012,000。
+Qty：表格中的Qty列，比如150.012,000。
 
-Rev.：表格里的Rev.列，比如1A。
+Rev.：表格中的Rev.列，比如1A。
 
-Tax：表格里的Tax列？或者看Total Price (TAX incl.)旁边的Tax？不，Tax Rate是0%，Tax是0.00？看Total Amount (Exclude Tax)和Total Amount (Include Tax)里的Tax部分。另外Tax Rate是0%。
-
-Tel/Fax：三个部分的Tel/Fax，Vendor的Tel/Fax是98159866155，Ship To的是(861)58622968//92696869，Bill To的是(616)82629588//96698629。注意有两个Tel/Fax类别？不，用户给的类别里有Tel/Fax和另一个Tel/Fax？看用户给的类别列表里是“Tel/Fax, Tel/Fax]”可能是重复？不，看用户提供的类别列表：[Additional Notes, Address, Approve Date, Attn, Company Name, Delivery/Freight Terms, Description, NO., PO NO., Part No., Payment Terms, Pr #, Qty, Rev., Tax, Tax Rate, Tel/Fax, Tel/Fax], Total Amount (Exclude Tax), Total Amount(Include Tax), Total Price (TAX incl.), UM, Unit Net Price, Unit Price (TAX incl.), Vender Acknowledgement, Vendor NO., 日期, 邮编]。这里可能有个笔误，Tel/Fax出现两次？但实际图中有三个Tel/Fax字段（Vendor、Ship To、Bill To的Tel/Fax），所以每个Tel/Fax对应。
-
-Total Amount (Exclude Tax)：图中的“Total Amount (Exclude Tax : USD 600048.00”
-
-Total Amount(Include Tax)：图中的“Total Amount (Include Tax) : USD 600048.00”
-
-Total Price (TAX incl.)：表格里的Total Price (TAX incl.)列，比如300.024,00等。
-
-UM：表格里的UM列，比如PC。
-
-Unit Net Price：表格里的Unit Net Price列，比如2.00/1
-
-Unit Price (TAX incl.)：表格里的Unit Price (TAX incl.)列，比如2.0000
-
-Vender Acknowledgement：底部的“Vender Acknowledgement: Please acknowledge order and advise delivery via fax within 3 working days (if there is no reply, we will consi valid )”
-
-Vendor NO.：200146
-
-日期：PO NO.下面的“日期:2021-02-02”
-
-邮编：右上角“邮编:215126”
-
-现在需要逐个定位这些元素的bbox。
-
-先处理Company Name：右上角“新宇龙信息信息有限公司”，坐标大概是右上角，看图像右上角的文字。图中右上角有“新宇龙信息信息有限公司”和地址，邮编。所以Company Name的bbox是包含“新宇龙信息信息有限公司”的区域。
-
-Address：三个Address，分别是：
-
-1. Vendor Information的Address：6682 Brooks Pines Joyceberg, MA 48243 → 对应左上方的Address字段。
-
-2. Ship To的Address：37445 Tucker Crest Smithview, TX 61202 → 中间的Address。
-
-3. Bill To的Address：74906 Davis Loaf Port Andrew, MD 72885 → 右边的Address。
-
-Approve Date：在Vender Acknowledgement部分，有“Approve Date:2021-02-08”，所以这个是Approve Date的bbox。
-
-Attn：三个Attn，分别是：
-
-- Vendor的Attn：Drew Roy → 左上方Attn字段。
-
-- Ship To的Attn：Theresa Fitzpatrick → 中间Attn字段。
-
-- Bill To的Attn：Adam Hayes → 右边Attn字段。
-
-Delivery/Freight Terms：在Ship Via和Delivery/Freight Terms的单元格，值是FOB，所以这个字段的bbox是对应的位置。
-
-Description：表格中的Description列，比如第一行的“IC, Semtech, GN2108S, bare Die, 4x25G Driver”等，所以Description列的表头和内容区域。
-
-NO.：表格中的NO.列，比如10、20，表头是NO.，对应列。
-
-PO NO.：右上角“PO NO.:5309088400” → 找这个文字的位置。
-
-Part No.：表格中的Part No.列，比如140-0848等，表头是Part No.。
-
-Payment Terms：Net 70 days → 对应Payment Terms的单元格。
-
-Pr #：表格中的Pr #列，比如右边的列，可能有编号，比如0003368（在灰色块旁边）。
-
-Qty：表格中的Qty列，比如150.012,000，表头是Qty。
-
-Rev.：表格中的Rev.列，比如1A，表头是Rev.。
-
-Tax：可能是指Total Amount中的Tax部分？或者看Total Price (TAX incl.)中的Tax？或者Tax Rate是0%，Tax是0.00。另外Total Amount (Exclude Tax)和Total Amount (Include Tax)中的Tax。比如Total Amount (Exclude Tax) : USD 600048.00，Tax : USD 0.00，Total Amount (Include Tax) : USD 600048.00。所以Tax的字段是“Tax : USD 0.00”？
+Tax：表格中的Tax列，比如0（Total Price (TAX incl.)对应的Tax？或者看Tax Rate？可能需要看Tax Rate是0%，Tax是0.00 USD？看Total Amount (Exclude Tax)是600048.00，Tax是0.00 USD，Total Amount (Include Tax)是600048.00。所以Tax是0.00 USD。
 
 Tax Rate：表格中的Tax Rate列，比如0%。
 
-Tel/Fax：三个Tel/Fax，分别是：
+Tel/Fax：三个部分的Tel/Fax，比如Vendor Information的Tel/Fax是98159866155，Ship To的是(861)58622968//92696869，Bill To的是(616)82629588//96698629。
 
-- Vendor的Tel/Fax：98159866155 → 左上方Tel/Fax字段。
+Total Amount (Exclude Tax)：600048.00 USD。
 
-- Ship To的Tel/Fax：(861)58622968//92696869 → 中间Tel/Fax字段。
+Total Amount(Include Tax)：600048.00 USD。
 
-- Bill To的Tel/Fax：(616)82629588//96698629 → 右边Tel/Fax字段。
+Total Price (TAX incl.)：比如第一行是300.024,00，两行的话是300.024*2？看表格中Total Price (TAX incl.)列，第一行是300.024,00，第二行也是300.024,00，总和是600048.00？
 
-Total Amount (Exclude Tax)：图中的“Total Amount (Exclude Tax : USD 600048.00” → 找这个文字。
+UM：表格中的UM列，比如PC。
 
-Total Amount(Include Tax)：图中的“Total Amount (Include Tax) : USD 600048.00” → 找这个文字。
+Unit Net Price：表格中的Unit Net Price列，比如2.00/1。
 
-Total Price (TAX incl.)：表格中的Total Price (TAX incl.)列，比如300.024,00等，表头是Total Price (TAX incl.)。
+Unit Price (TAX incl.)：表格中的Unit Price (TAX incl.)列，比如2.0000。
 
-UM：表格中的UM列，比如PC，表头是UM。
+Vender Acknowledgement：下面的说明“Vender Acknowledgement: Please acknowledge order and advise delivery via fax within 3 working days (if there is no reply, we will consi valid )”。
 
-Unit Net Price：表格中的Unit Net Price列，比如2.00/1，表头是Unit Net Price。
+Vendor NO.：200146，在Vendor Information下面的Vendor NO.。
 
-Unit Price (TAX incl.)：表格中的Unit Price (TAX incl.)列，比如2.0000，表头是Unit Price (TAX incl.)。
+日期：2021-02-02，在PO NO.下面的日期。
 
-Vender Acknowledgement：底部的“Vender Acknowledgement: Please acknowledge order and advise delivery via fax within 3 working days (if there is no reply, we will consi valid )” → 找这个文字区域。
+邮编：215126，在右上角公司信息下面的邮编。
 
-Vendor NO.：200146 → 左上方Vendor NO.的单元格。
+现在需要逐个确定每个类别的bbox。需要注意图中的各个区域。
 
-日期：PO NO.下面的“日期:2021-02-02” → 找这个文字。
+先整理每个类别：
 
-邮编：右上角“邮编:215126” → 找这个文字。
+1. Additional Notes：在Additional Notes部分，包含三条说明。bbox是Additional Notes标题下的内容区域。
 
-现在需要为每个类别生成对应的bbox。由于是图像，需要估计每个元素的位置。以下是一些关键元素的bbox（假设图像的坐标系统，左上角为(0,0)，右下角为(1000,1000)左右，根据图像比例）。
+2. Address：有三个Address，分别在Vendor Information、Ship To、Bill To的Address字段。比如Vendor Information的Address是“6682 Brooks Pines Joyceberg, MA 48243”，对应左边的Address框。
 
-例如：
+3. Approve Date：在Vender Acknowledgement表格的最右边，Approve Date:2021-02-08。
 
-Company Name：右上角，文字“新宇龙信息信息有限公司”，bbox大概[920, 10, 999, 30]（假设）。
+4. Attn：三个Attn，比如Vendor Information的Attn是Drew Roy，对应Attn:字段。
 
-Address（Vendor）：左上方Address字段，内容是6682 Brooks...，bbox大概[25, 200, 220, 220]（看图像中的位置）。
+5. Company Name：右上角“新宇龙信息信息有限公司”，地址是陕西省柳市牧野李街X座 952636，邮编215126。所以Company Name是“新宇龙信息信息有限公司”。
 
-Address（Ship To）：中间Address，37445 Tucker...，bbox大概[400, 200, 620, 220]。
+6. Delivery/Freight Terms：在Ship Via和Delivery/Freight Terms的单元格，值是FOB。
 
-Address（Bill To）：右边Address，74906 Davis...，bbox大概[700, 200, 900, 220]。
+7. Description：表格中的Description列，比如“IC, Semtech, GN2108S, bare Die,4x25G Driver”等。
 
-Approve Date：在Vender Acknowledgement部分，右边的Approve Date:2021-02-08，bbox大概[850, 950, 950, 970]。
+8. NO.：表格中的NO.列，比如10、20。
 
-Attn（Vendor）：左上方Attn: Drew Roy，bbox大概[25, 240, 220, 260]。
+9. PO NO.：右上角“PO NO.:5309088400”。
 
-Attn（Ship To）：中间Attn: Theresa Fitzpatrick，bbox大概[400, 240, 620, 260]。
+10. Part No.：表格中的Part No.列，比如140-0848、140-0849。
 
-Attn（Bill To）：右边Attn: Adam Hayes，bbox大概[700, 240, 900, 260]。
+11. Payment Terms：Net 70 days，在Payment Terms字段。
 
-Delivery/Freight Terms：中间的Delivery/Freight Terms: FOB，bbox大概[400, 300, 620, 320]。
+12. Pr #：表格中的Pr #列，比如有003368（在Bill To部分的Pr #？看右边的列，Pr #列可能对应右边的编号，比如003368）。
 
-Description：表格中的Description列，表头是Description，内容是各产品描述，bbox大概[150, 450, 400, 470]（表头）和对应行的内容。
+13. Qty：表格中的Qty列，比如150.012,000。
 
-NO.：表格中的NO.列，表头NO.，内容10、20，bbox大概[50, 450, 80, 470]（表头）。
+14. Rev.：表格中的Rev.列，比如1A。
 
-PO NO.：右上角PO NO.:5309088400，bbox大概[650, 60, 750, 80]。
+15. Tax：Total Amount (Exclude Tax)下面的Tax : USD 0.00，所以Tax是0.00 USD。
 
-Part No.：表格中的Part No.列，表头Part No.，内容140-0848等，bbox大概[100, 450, 170, 470]（表头）。
+16. Tax Rate：表格中的Tax Rate列，比如0%。
 
-Payment Terms：Net 70 days，对应单元格，bbox大概[650, 320, 850, 340]。
+17. Tel/Fax：三个Tel/Fax，比如Vendor Information的Tel/Fax是98159866155，对应Tel/Fax:字段。
 
-Pr #：表格中的Pr #列，表头Pr #，内容比如0003368，bbox大概[800, 450, 900, 470]（表头）。
+18. Total Amount (Exclude Tax)：600048.00 USD，在Total Amount (Exclude Tax)字段。
 
-Qty：表格中的Qty列，表头Qty，内容150.012,000，bbox大概[250, 450, 300, 470]（表头）。
+19. Total Amount(Include Tax)：600048.00 USD，在Total Amount (Include Tax)字段。
 
-Rev.：表格中的Rev.列，表头Rev.，内容1A，bbox大概[170, 450, 200, 470]（表头）。
+20. Total Price (TAX incl.)：表格中的Total Price (TAX incl.)列，比如300.024,00（每行）。
 
-Tax：Total Amount中的Tax : USD 0.00，bbox大概[600, 650, 700, 670]。
+21. UM：表格中的UM列，比如PC。
 
-Tax Rate：表格中的Tax Rate列，表头Tax Rate，内容0%，bbox大概[550, 450, 600, 470]（表头）。
+22. Unit Net Price：表格中的Unit Net Price列，比如2.00/1。
 
-Tel/Fax（Vendor）：左上方Tel/Fax: 98159866155，bbox大概[25, 260, 220, 280]。
+23. Unit Price (TAX incl.)：表格中的Unit Price (TAX incl.)列，比如2.0000。
 
-Tel/Fax（Ship To）：中间Tel/Fax: (861)58622968//92696869，bbox大概[400, 260, 620, 280]。
+24. Vender Acknowledgement：下面的说明文字“Vender Acknowledgement: Please acknowledge order and advise delivery via fax within 3 working days (if there is no reply, we will consi valid )”。
 
-Tel/Fax（Bill To）：右边Tel/Fax: (616)82629588//96698629，bbox大概[700, 260, 900, 280]。
+25. Vendor NO.：200146，在Vendor Information下方的Vendor NO.单元格。
 
-Total Amount (Exclude Tax)：图中的“Total Amount (Exclude Tax : USD 600048.00”，bbox大概[600, 620, 800, 640]。
+26. 日期：2021-02-02，在PO NO.下方的日期字段。
 
-Total Amount(Include Tax)：图中的“Total Amount (Include Tax) : USD 600048.00”，bbox大概[600, 640, 800, 660]。
+27. 邮编：215126，在公司信息下方的邮编字段。
 
-Total Price (TAX incl.)：表格中的Total Price (TAX incl.)列，表头Total Price (TAX incl.)，内容300.024,00等，bbox大概[650, 450, 750, 470]（表头）。
+现在需要为每个类别找到对应的bbox。由于图中的元素位置，需要大致确定每个区域的坐标。例如：
 
-UM：表格中的UM列，表头UM，内容PC，bbox大概[300, 450, 320, 470]（表头）。
+- Company Name：右上角，文字“新宇龙信息信息有限公司”，bbox大概是[920, 10, 996, 28]（假设图的右上角）。
 
-Unit Net Price：表格中的Unit Net Price列，表头Unit Net Price，内容2.00/1，bbox大概[350, 450, 420, 470]（表头）。
+- 邮编：在Company Name下面，“邮编：215126”，bbox是[920, 30, 956, 48]。
 
-Unit Price (TAX incl.)：表格中的Unit Price (TAX incl.)列，表头Unit Price (TAX incl.)，内容2.0000，bbox大概[450, 450, 520, 470]（表头）。
+- 日期：PO NO.下面的“日期：2021-02-02”，bbox是[896, 60, 936, 78]。
 
-Vender Acknowledgement：底部的“Vender Acknowledgement: Please acknowledge order and advise delivery via fax within 3 working days (if there is no reply, we will consi valid )”，bbox大概[50, 900, 950, 950]。
+- PO NO.：“PO NO.:5309088400”，bbox是[896, 80, 996, 98]。
 
-Vendor NO.：200146，对应单元格，bbox大概[25, 320, 150, 340]。
+- Vendor Information的Address：“Address: 6682 Brooks Pines Joyceberg, MA 48243”，bbox是[34, 190, 234, 210]（左边第一个框的Address行）。
 
-日期：日期:2021-02-02，对应单元格，bbox大概[650, 80, 750, 100]。
+- Ship To的Address：“Address: 37445 Tucker Crest Smithview, TX 61202”，bbox是[400, 190, 620, 210]（中间框的Address行）。
 
-邮编：邮编:215126，右上角，bbox大概[650, 30, 700, 50]。
+- Bill To的Address：“Address: 74906 Davis Loaf Port Andrew, MD 72885”，bbox是[680, 190, 900, 210]（右边框的Address行）。
 
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。注意有些类别可能有多个实例，比如Address有三个，Attn有三个，Tel/Fax有三个等，需要分别列出。
+- Attn：Vendor Information的Attn是“Drew Roy”，在Attn:行，bbox是[34, 220, 234, 238]。
 
-现在开始逐个列出：
+- Ship To的Attn是“Theresa Fitzpatrick”，bbox是[400, 220, 620, 238]。
 
-1. Company Name：新宇龙信息信息有限公司 → bbox大概[925, 12, 995, 32]（假设图像右上角）
-2. Address（Vendor）：6682 Brooks Pines Joyceberg, MA 48243 → bbox[25, 202, 220, 222]
-3. Address（Ship To）：37445 Tucker Crest Smithview, TX 61202 → bbox[402, 202, 620, 222]
-4. Address（Bill To）：74906 Davis Loaf Port Andrew, MD 72885 → bbox[702, 202, 900, 222]
-5. Approve Date：2021-02-08 → bbox[852, 952, 948, 972]
-6. Attn（Vendor）：Drew Roy → bbox[25, 242, 220, 262]
-7. Attn（Ship To）：Theresa Fitzpatrick → bbox[402, 242, 620, 262]
-8. Attn（Bill To）：Adam Hayes → bbox[702, 242, 900, 262]
-9. Delivery/Freight Terms：FOB → bbox[402, 322, 620, 342]
-10. Description：表头和内容，比如第一行描述 → bbox[152, 452, 400, 472]（表头）和行内容，但可能取表头
-11. NO.：表头NO. → bbox[52, 452, 82, 472]
-12. PO NO.：5309088
+- Bill To的Attn是“Adam Hayes”，bbox是[680, 220, 900, 238]。
+
+- Tel/Fax：Vendor Information的Tel/Fax是“98159866155”，在Tel/Fax:行，bbox是[34, 240, 234, 258]。
+
+- Ship To的Tel/Fax是“(861)58622968//92696869”，bbox是[400, 240, 620, 258]。
+
+- Bill To的Tel/Fax是“(616)82629588//96698629”，bbox是[680, 240, 900, 258]。
+
+- Vendor NO.：“200146”在Vendor Information下方的Vendor NO.单元格，bbox是[26, 300, 126, 320]。
+
+- Reference to Quotation：可能没有值，但这里不涉及。
+
+- Ship Via：FOB，在Ship Via单元格，bbox是[380, 300, 450, 320]。
+
+- Delivery/Freight Terms：FOB，和Ship Via一起？或者看Delivery/Freight Terms的单元格，值是FOB，bbox是[470, 300, 590, 320]。
+
+- Payment Terms：“Net 70 days”在Payment Terms单元格，bbox是[620, 300, 750, 320]。
+
+- Additional Notes：标题“Additional Notes:”下面的内容，bbox是[26, 690, 974, 740]（包含三条说明）。
+
+- Vender Acknowledgement：“Vender Acknowledgement: Please acknowledge order and advise delivery via fax within 3 working days (if there is no reply, we will consi valid )”，bbox是[26, 750, 974, 780]。
+
+- Approve Date：“Approve Date:2021-02-08”在Vender Acknowledgement表格的最右边，bbox是[850, 820, 950, 840]（表格的Approve Date列）。
+
+- NO.：表格中的NO.列，比如第一行是10，第二行是20，bbox是[50, 450, 80, 470]（列标题）。
+
+- Part No.：列标题“Part No.”，bbox是[80, 450, 140, 470]。
+
+- Rev.：列标题“Rev.”，bbox是[140, 450, 170, 470]。
+
+- Description：列标题“Description”，bbox是[170, 450, 400, 470]。
+
+- Qty：列标题“Qty”，bbox是[400, 450, 430, 470]。
+
+- UM：列标题“UM”，bbox是[430, 450, 450, 470]。
+
+- Unit Net Price：列标题“Unit Net Price”，bbox是[450, 450, 530, 470]。
+
+- Unit Price (TAX incl.)：列标题“Unit Price (TAX incl.)”，bbox是[530, 450, 630, 470]。
+
+- Tax Rate：列标题“Tax Rate”，bbox是[630, 450, 680, 470]。
+
+- Total Price (TAX incl.)：列标题“Total Price (TAX incl.)”，bbox是[680, 450, 790, 470]。
+
+- Tax：列标题“Tax”，bbox是[790, 450, 820, 470]。
+
+- Pr #：列标题“Pr #”，bbox是[820, 450, 860, 470]。
+
+- Total Amount (Exclude Tax)：在表格下方，“Total Amount (Exclude Tax) : USD 600048.00”，bbox是[700, 530, 974, 550]。
+
+- Total Amount(Include Tax)：在Total Amount (Exclude Tax)下面，“Total Amount (Include Tax) : USD 600048.00”，bbox是[700, 550, 974, 570]。
+
+- Tax：在Total Amount (Exclude Tax)中的Tax : USD 0.00，bbox是[700, 520, 750, 540]（可能需要看具体位置）。
+
+- Unit Net Price的值：比如第一行是2.00/1，对应单元格内容，bbox是[530, 480, 590, 500]（第一行的Unit Net Price）。
+
+- Unit Price (TAX incl.)的值：第一行是2.0000，bbox是[630, 480, 680, 500]。
+
+- Total Price (TAX incl.)的值：第一行是300.024,00，bbox是[680, 480, 790, 500]。
+
+- Qty的值：第一行是150.012,000，bbox是[400, 480, 460, 500]。
+
+- Part No.的值：第一行是140-0848，bbox是[80, 480, 140, 500]。
+
+- Description的值：第一行是“IC, Semtech, GN2108S, bare Die,4x25G Driver”，bbox是[170, 480, 400, 500]。
+
+- Rev.的值：第一行是1A，bbox是[140, 480, 160, 500]。
+
+- NO.的值：第一行是10，bbox是[50, 480, 60, 500]。
+
+- Pr #的值：第一行是003368（在右边的Pr #列，可能对应第二行？或者看右边的红色圈部分，Pr #列的值），比如第一行Pr #是003368？看右边的列，Pr #列在最右边，可能第一行的Pr #是003368，第二行也是。bbox是[820, 480, 860, 500]（第一行的Pr #值）。
+
+现在需要将所有类别对应起来，确保每个类别都有一个bbox。由于图中有些字段可能重复（比如三个Address），但用户要求是“detect the corresponding values”，可能每个类别对应一个实例，或者所有实例？但根据问题描述，是“the corresponding values to the following categories”，每个category对应一个值，所以需要找到每个category在图中的位置。
+
+现在开始构建JSON数组：
+
+1. Additional Notes：包含三条说明，bbox是Additional Notes标题下的区域，比如[26, 690, 974, 740]（因为Additional Notes:下面的内容）。
+
+2. Address（Vendor Information的Address）：[34, 192, 232, 210]（Address: 6682 Brooks...）。
+
+3. Approve Date：[852, 822, 948, 840]（Approve Date:2021-02-08）。
+
+4. Attn（Vendor Information的Attn）：[34, 222, 126, 238]（Attn: Drew Roy）。
+
+5. Company Name：[922, 10, 996, 28]（新宇龙信息信息有限公司）。
+
+6. Delivery/Freight Terms：[472, 302, 588, 320]（FOB）。
+
+7. Description（第一行的Description）：[172, 482, 400, 500]（IC, Semtech...Driver）。
+
+8. NO.

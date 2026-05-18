@@ -1,10 +1,289 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is on the invoice under "Date : 21/07/2017 12:07". So the bounding box for that line.
+
+doc_no_receipt_no: Invoice No. is CSA34539. So that's the document number.
+
+seller_address: The address is NO.9, JALAN MANIS 3, TAMAN SEGAR, CHERAS, 56100 KUALA LUMPUR.
+
+seller_gst_id: GST Reg No. is 001506648064.
+
+seller_name: K STATIONERY & OFFICE SUPPLIES.
+
+seller_phone: TEL: 03-91321611.
+
+total_amount: Let's check. The Total Incl. of GST is 148.00, or Payment is 148.00. So total_amount is 148.00.
+
+total_tax: In GST Summary, Tax (RM) is 8.38.
+
+Now, need to map each to their bounding boxes.
+
+Let's list each:
+
+1. date: The line with "Date : 21/07/2017 12:07". Let's find the coordinates. The date is in the middle section.
+
+2. doc_no_receipt_no: Invoice No. : CSA34539. So that line.
+
+3. seller_address: The address lines: NO.9, JALAN MANIS 3, TAMAN SEGAR; CHERAS, 56100 KUALA LUMPUR.
+
+4. seller_gst_id: GST Reg No. : 001506648064.
+
+5. seller_name: K STATIONERY & OFFICE SUPPLIES (the top line).
+
+6. seller_phone: TEL: 03-91321611 | FAX: ... so the phone is 03-91321611.
+
+7. total_amount: Let's check the Total Incl. of GST is 148.00, or Payment is 148.00. The total amount paid is 148.00.
+
+8. total_tax: The GST tax is 8.38 (from GST Summary, Tax (RM) column).
+
+Now, need to define the bounding boxes for each. Let's look at the image.
+
+First, seller_name: The top line "K STATIONERY & OFFICE SUPPLIES" is the seller name. Bounding box would be the area covering that text.
+
+seller_address: The next lines: NO.9, JALAN MANIS 3, TAMAN SEGAR; CHERAS, 56100 KUALA LUMPUR.
+
+seller_phone: TEL: 03-91321611 | FAX: 03-91321664. So the phone is the TEL part.
+
+doc_no_receipt_no: Invoice No.: CSA34539.
+
+date: Date : 21/07/2017 12:07.
+
+total_amount: Let's check the "Total Incl. of GST" is 148.00, which is the total amount including tax. Alternatively, Payment is 148.00. So either of these, but the total amount should be the total paid, which is 148.00.
+
+total_tax: The GST tax is 8.38, as per GST Summary.
+
+Now, let's structure each entry.
+
+For each label, find the corresponding bbox.
+
+Let's go step by step.
+
+1. date: The line "Date : 21/07/2017 12:07". Let's check the coordinates. In the image, the date is below Invoice No. So the bounding box for that line.
+
+2. doc_no_receipt_no: "Invoice No.: CSA34539" — the text for the invoice number.
+
+3. seller_address: The address block: "NO.9, JALAN MANIS 3, TAMAN SEGAR\nCHERAS, 56100 KUALA LUMPUR."
+
+4. seller_gst_id: "GST Reg No. :001506648064"
+
+5. seller_name: "K STATIONERY & OFFICE SUPPLIES"
+
+6. seller_phone: "TEL:03-91321611"
+
+7. total_amount: Let's check the "Total Incl. of GST" which is 148.00. The line "Total Incl. of GST 148.00"
+
+8. total_tax: The GST Summary line "Tax (RM) 8.38" — the tax amount.
+
+Now, need to define the bounding boxes. Since the image is a receipt, each line is a separate entry.
+
+Let's list each with their labels and bboxes.
+
+First, seller_name: The topmost text. The bounding box would be the area where "K STATIONERY & OFFICE SUPPLIES" is printed. Let's assume the coordinates.
+
+But since we need to provide the bounding box in [x1, y1, x2, y2] relative to the image.
+
+Alternatively, maybe the exact positions can be approximated.
+
+But perhaps the key is to identify each element.
+
+Let me list all:
+
+- seller_name: "K STATIONERY & OFFICE SUPPLIES" — the first line of text.
+
+- seller_address: The next two lines: "NO.9, JALAN MANIS 3, TAMAN SEGAR" and "CHERAS, 56100 KUALA LUMPUR."
+
+- seller_phone: "TEL:03-91321611 | FAX:03-91321664" — the phone number is the TEL part.
+
+- doc_no_receipt_no: "Invoice No.: CSA34539"
+
+- date: "Date : 21/07/2017 12:07"
+
+- total_amount: Let's check the "Payment : 148.00" or "Total Incl. of GST 148.00". The total amount is the total paid, which is 148.00. Let's take the "Total Incl. of GST" line.
+
+- total_tax: The GST Summary shows "Tax (RM) 8.38" — that's the total tax.
+
+- seller_gst_id: "GST Reg No. :001506648064"
+
+Now, let's map each to their labels.
+
+Now, create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's define each:
+
+1. seller_name: The text "K STATIONERY & OFFICE SUPPLIES" is at the top. Let's say the bounding box covers that line. For example, x1=200, y1=100, x2=800, y2=120 (approximate, but in the image, it's the first line).
+
+But maybe better to check the exact positions.
+
+Alternatively, since the problem is to detect the values, the key is to associate each category with the correct text.
+
+Let's proceed.
+
+For each category:
+
+- date: The value is "21/07/2017 12:07". The line is "Date : 21/07/2017 12:07". So the bbox is around that line.
+
+- doc_no_receipt_no: "CSA34539" (from Invoice No.)
+
+- seller_address: "NO.9, JALAN MANIS 3, TAMAN SEGAR\nCHERAS, 56100 KUALA LUMPUR"
+
+- seller_gst_id: "001506648064" (from GST Reg No.)
+
+- seller_name: "K STATIONERY & OFFICE SUPPLIES"
+
+- seller_phone: "03-91321611" (from TEL)
+
+- total_amount: "148.00" (from Total Incl. of GST or Payment)
+
+- total_tax: "8.38" (from GST Summary Tax (RM))
+
+Now, the bounding boxes need to be the area where each of these values is located.
+
+Let's check the image:
+
+- seller_name: top line, so [150, 70, 850, 95] (approx)
+
+- seller_address: next two lines, [150, 95, 850, 125] and [150, 125, 850, 145] — but combined as a block.
+
+- seller_phone: line with TEL and FAX, [150, 145, 850, 165]
+
+- doc_no_receipt_no: Invoice No. line, [100, 200, 800, 220]
+
+- date: Date line, [100, 220, 800, 240]
+
+- total_amount: Let's check the "Total Incl. of GST" line: [100, 350, 800, 370] (value 148.00)
+
+- total_tax: GST Summary line, "Tax (RM) 8.38" — [100, 450, 800, 470]
+
+- seller_gst_id: GST Reg No. line, [100, 180, 800, 200]
+
+These are approximate, but the key is to map each label to the correct region.
+
+Now, construct the JSON array.
+
+Each entry:
+
+1. {"bbox_2d": [x1, y1, x2, y2], "label": "date"} — for the date line.
+
+2. {"bbox_2d": [x1, y1, x2, y2], "label": "doc_no_receipt_no"} — invoice number.
+
+3. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_address"} — address lines.
+
+4. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_gst_id"} — GST Reg No.
+
+5. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_name"} — company name.
+
+6. {"bbox_2d": [x1, y1, x2, y2], "label": "seller_phone"} — TEL number.
+
+7. {"bbox_2d": [x1, y1, x2, y2], "label": "total_amount"} — total including GST.
+
+8. {"bbox_2d": [x1, y1, x2, y2], "label": "total_tax"} — GST tax amount.
+
+Now, let's assign the bounding boxes more precisely based on the image.
+
+Looking at the image:
+
+- seller_name: "K STATIONERY & OFFICE SUPPLIES" — the first line. Let's say the coordinates are from top, so y1 is around 60, y2 around 85. x1 and x2 cover the width.
+
+- seller_address: The next two lines: "NO.9, JALAN MANIS 3, TAMAN SEGAR" and "CHERAS, 56100 KUALA LUMPUR." So y1 around 85, y2 around 110.
+
+- seller_phone: "TEL:03-91321611 | FAX:03-91321664" — y1 around 110, y2 around 135.
+
+- Email line: "Email: kstationery@gmail.com" — y1 around 135, y2 around 155.
+
+- Company Reg No.: "Company Reg No. :001260452-W" — y1 around 155, y2 around 175.
+
+- GST Reg No.: "GST Reg No. :001506648064" — y1 around 175, y2 around 195.
+
+- TAX INVOICE: "TAX INVOICE" — y1 around 195, y2 around 215.
+
+- Invoice No.: "Invoice No.: CSA34539" — y1 around 215, y2 around 235.
+
+- Date: "Date : 21/07/2017 12:07" — y1 around 235, y2 around 255.
+
+- Cashier #: "Cashier # : 1" — y1 around 255, y2 around 275.
+
+Then the item section: "NAME CARD" — y1 around 275, y2 around 295.
+
+Then the item line: "1 x 148.00 148.00 SR" — y1 around 295, y2 around 315.
+
+Subtotal: "Subtotal : 148.00" — y1 around 315, y2 around 335.
+
+Total Excl. of GST: "Total Excl. of GST 139.62" — y1 around 335, y2 around 355.
+
+Total Incl. of GST: "Total Incl. of GST 148.00" — y1 around 355, y2 around 375.
+
+Payment: "Payment : 148.00" — y1 around 375, y2 around 395.
+
+Change Due: "Change Due : 0.00" — y1 around 395, y2 around 415.
+
+Total Item(s): "Total Item(s) : 1" — y1 around 415, y2 around 435.
+
+GST Summary: "GST Summary Amount(RM) Tax(RM)" — y1 around 435, y2 around 455.
+
+Then the GST line: "SR @ 6% 139.62 8.38" — y1 around 455, y2 around 475.
+
+Then the thank you messages.
+
+Now, mapping each category:
+
+- date: The line "Date : 21/07/2017 12:07" — y range ~235-255.
+
+- doc_no_receipt_no: "Invoice No.: CSA34539" — y range ~215-235.
+
+- seller_address: The address lines (NO.9... and CHERAS...) — y range ~85-110.
+
+- seller_gst_id: "GST Reg No. :001506648064" — y range ~175-195.
+
+- seller_name: "K STATIONERY & OFFICE SUPPLIES" — y range ~60-85.
+
+- seller_phone: "TEL:03-91321611 | FAX:03-91321664" — y range ~110-135.
+
+- total_amount: "Total Incl. of GST 148.00" — y range ~355-375.
+
+- total_tax: The GST tax amount is 8.38, which is in the line "SR @ 6% 139.62 8.38" — the Tax (RM) column, so y range ~455-475.
+
+Now, let's define the bounding boxes with approximate coordinates. Since the image is a standard receipt, the x range is from left to right, covering the text.
+
+For each entry:
+
+1. date: bbox_2d: [100, 235, 800, 255], label: "date"
+
+2. doc_no_receipt_no: bbox_2d: [100, 215, 800, 235], label: "doc_no_receipt_no"
+
+3. seller_address: bbox_2d: [100, 85, 800, 110], label: "seller_address" (combining both address lines, but maybe two lines. Alternatively, the two lines together.)
+
+4. seller_gst_id: bbox_2d: [100, 175, 800, 195], label: "seller_gst_id"
+
+5. seller_name: bbox_2d: [100, 60, 800, 85], label: "seller_name"
+
+6. seller_phone: bbox_2d: [100, 110, 800, 135], label: "seller_phone"
+
+7. total_amount: bbox_2d: [100, 355, 800, 375], label: "total_amount"
+
+8. total_tax: bbox_2d: [100, 455, 800, 475], label: "total_tax"
+
+Now, check if these make sense.
+
+- total_amount: The Total Incl. of GST is 148.00, which is the total amount paid including tax. That's correct.
+
+- total_tax: The GST tax is 8.38, which is the amount added for tax. Correct.
+
+- seller_gst_id: GST Reg No. is 001506648064. Correct.
+
+- seller_phone: TEL is 03-91321611. Correct.
+
+- date: 21/07/2017 12:07. Correct.
+
+- doc_no_receipt_no: Invoice No. CSA34539. Correct.
+
+- seller_address: The address lines. Correct.
+
+- seller_name: The company name. Correct.
+
+Now, compile the JSON array.
+</think>
 [
-    {"bbox_2d": [100, 62, 897, 87], "label": "seller_name"},
-    {"bbox_2d": [109, 90, 891, 137], "label": "seller_address"},
-    {"bbox_2d": [145, 147, 854, 170], "label": "seller_phone"},
-    {"bbox_2d": [234, 305, 347, 325], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [142, 325, 347, 343], "label": "date"},
-    {"bbox_2d": [234, 355, 647, 373], "label": "seller_gst_id"},
-    {"bbox_2d": [325, 445, 429, 463], "label": "total_amount"},
-    {"bbox_2d": [647, 463, 702, 481], "label": "total_tax"}
-]
+    {"bbox_2d": [100, 235, 800, 255], "label": "date"},
+    {"bbox_2d

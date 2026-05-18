@@ -1,0 +1,254 @@
+用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看标题部分，“精芯信息有限公司”是公司名，英文Jingxin Information Co., Ltd.也是公司名。然后看ADD：图中ADD:49599 James Greens Apt. 569 Barrettborough, MS 26924，所以ADD是这个地址。ADDRESS可能和ADD类似？不过看用户给的类别里有ADDRESS，可能需要检查。然后看各个字段：
+
+先列所有需要的类别：ACCOUNT, ADD, ADDRESS, Amount, Bank Address, COMPANY NAME, Contract No, Date, EMAIL, FAX, Invoice No, Marks & Numbers, Mode of transport, Payment, Quantity & Descriptions, SWIFT CODE, TEL, TEL/FAX, TITLE, Time of shipment, Unit Price, WEBSITE。
+
+现在逐个找：
+
+1. ACCOUNT：在“Please pay to”部分，ACCOUNT:3901300039814912583，所以这个是ACCOUNT。
+2. ADD：图中公司信息里的ADD:49599 James Greens Apt. 569 Barrettborough, MS 26924，所以ADD的bbox是公司信息里的ADD行。
+3. ADDRESS：可能看TO部分的地址？TO的地址是957 Peterson Summit East Josephville, MS 22452 97762 Vicki Rapid North Rebecca, SD 41267，这部分是收货地址，属于ADDRESS？
+4. Amount：表格里的Amount列，比如USD15,828.38等，还有TOTAL的USD17,200.38。
+5. Bank Address：在Please pay to里的Bank Address:04307 Lauren Landing Suite 749 New Cherylfort, CO 64715。
+6. COMPANY NAME：公司名称，比如Jingxin Information Co., Ltd.（出现两次，标题和Please pay to里的COMPANY）。
+7. Contract No：Invoice No旁边的Contract No:RM22009J。
+8. Date：Date:2022/3/8。
+9. EMAIL：图中公司信息里的john50@kelly.info，还有wsmith@wood.com？看公司信息里的john50@kelly.info info，所以EMAIL是john50@kelly.info。
+10. FAX：公司信息里的TEL/FAX:78-319-04683656，还有TO部分的FAX:+2299528896。
+11. Invoice No：Invoice No:RM22009。
+12. Marks & Numbers：表格里的Marks & Numbers列，比如RHTM。
+13. Mode of transport：BY SEA。
+14. Payment：T/T。
+15. Quantity & Descriptions：表格里的Quantity & Descriptions列，比如BEARING等。
+16. SWIFT CODE：有两个，一个是ICBKCNBJNBO（Bank的SWIFT），另一个是BOFAUS3N（Intermediary的SWIFT）。
+17. TEL：公司信息里的TEL:49599...？不，公司信息里的TEL/FAX是78-319-04683656，TO部分的TEL:+9596942288。
+18. TEL/FAX：公司信息里的TEL/FAX:78-319-04683656，TO部分的FAX:+2299528896（但TEL/FAX是公司自己的，TO的FAX是单独的？看类别是TEL/FAX，所以公司信息里的TEL/FAX是。
+19. TITLE：标题是COMMERCIAL INVOICE，所以TITLE是这个。
+20. Time of shipment：MAR OF 2022。
+21. Unit Price：表格里的Unit Price列，比如@USD0.1516/PC等。
+22. WEBSITE：公司信息里的http://pena.org/。
+
+现在需要为每个类别找到对应的bbox。需要仔细看每个元素的位置。
+
+现在开始逐个处理：
+
+- ACCOUNT：在“Please pay to”下的ACCOUNT:3901300039814912583。bbox范围是该行的文本区域。
+- ADD：公司信息中的ADD:49599 James Greens Apt. 569 Barrettborough, MS 26924。位置在公司名称下方。
+- ADDRESS：TO部分的地址，即957 Peterson Summit East Josephville, MS 22452 97762 Vicki Rapid North Rebecca, SD 41267。这部分是收货地址，属于ADDRESS。
+- Amount：表格中的Amount列，包括每个商品的金额和总计。比如第一行的USD15,828.38，第二行的USD1,372.00，总计的USD17,200.38。需要看是否是所有Amount的实例，但可能每个Amount单元格都是，不过可能需要选主要的，比如总计的Amount。
+- Bank Address：Please pay to下的Bank Address:04307 Lauren Landing Suite 749 New Cherylfort, CO 64715。
+- COMPANY NAME：公司名称，比如标题中的“精芯信息有限公司”和“Jingxin Information Co., Ltd.”，以及Please pay to中的“COMPANY: Jingxin Information Co., Ltd.”。这里可能有两个COMPANY NAME，但需要看是否都算。不过类别是COMPANY NAME，所以需要标注。
+- Contract No：Invoice No旁边的Contract No:RM22009J。
+- Date：Date:2022/3/8。
+- EMAIL：公司信息中的john50@kelly.info（因为有john50@kelly.info info，所以邮箱是john50@kelly.info）。
+- FAX：公司信息中的TEL/FAX:78-319-04683656（这是公司的FAX），另外TO部分的FAX:+2299528896也是FAX，但类别是FAX，可能需要看哪个。不过用户给的类别是FAX，所以可能两个？但需要看图中的FAX出现的地方。公司信息里有TEL/FAX，TO里有FAX。但可能FAX类别对应的是公司的FAX，即TEL/FAX中的FAX部分？或者TO的FAX。需要看。
+- Invoice No：Invoice No:RM22009。
+- Marks & Numbers：表格中的Marks & Numbers列，比如RHTM。
+- Mode of transport：BY SEA。
+- Payment：T/T。
+- Quantity & Descriptions：表格中的Quantity & Descriptions列，比如BEARING 104,380PCS等。
+- SWIFT CODE：有两个，Bank的SWIFT CODE:ICBKCNBJNBO，Intermediary的SWIFT CODE:BOFAUS3N。
+- TEL：公司信息中的TEL？不，公司信息中是TEL/FAX，TO中的TEL:+9596942288。所以TEL是TO部分的TEL。
+- TEL/FAX：公司信息中的TEL/FAX:78-319-04683656。
+- TITLE：COMMERCIAL INVOICE。
+- Time of shipment：MAR OF 2022。
+- Unit Price：表格中的Unit Price列，比如@USD0.1516/PC等。
+- WEBSITE：公司信息中的http://pena.org/。
+
+现在需要为每个类别确定一个或多个实例，然后给出bbox。注意有些类别可能有多个实例，比如SWIFT CODE有两个，COMPANY NAME有两个（标题和支付部分）。
+
+现在开始构建每个条目：
+
+1. ACCOUNT: 
+   - 文本：ACCOUNT:3901300039814912583
+   - bbox：在Please pay to部分，ACCOUNT行的位置。看图片中该部分的坐标，大概在下方支付信息里的ACCOUNT行。
+   - 标签：ACCOUNT
+
+2. ADD: 
+   - 文本：ADD:49599 James Greens Apt. 569 Barrettborough, MS 26924
+   - 位置：公司信息（Jingxin Information Co., Ltd.）下方的ADD行。
+   - 标签：ADD
+
+3. ADDRESS: 
+   - 文本：957 Peterson Summit East Josephville, MS 22452 97762 Vicki Rapid North Rebecca, SD 41267
+   - 位置：TO:下面的地址部分。
+   - 标签：ADDRESS
+
+4. Amount: 
+   - 比如总计的Amount: USD17,200.38
+   - 位置：表格最后一行TOTAL的Amount列。
+   - 标签：Amount
+
+5. Bank Address: 
+   - 文本：Bank Address:04307 Lauren Landing Suite 749 New Cherylfort, CO 64715
+   - 位置：Please pay to下的Bank Address行。
+   - 标签：Bank Address
+
+6. COMPANY NAME: 
+   - 第一个：精芯信息有限公司（标题）
+   - 第二个：Jingxin Information Co., Ltd.（标题英文）
+   - 第三个：Please pay to下的COMPANY: Jingxin Information Co., Ltd.
+   - 这里可能需要选主要的，比如标题的公司名和支付部分的公司名。但类别是COMPANY NAME，所以可以选其中一个或多个。比如标题的“精芯信息有限公司”和“Jingxin Information Co., Ltd.”，以及支付部分的“Jingxin Information Co., Ltd.”。但可能需要看是否都算。不过先处理标题的公司名。
+   - 比如标题的“精芯信息有限公司”：bbox是顶部的大标题。
+   - 另一个COMPANY NAME是Please pay to中的“Jingxin Information Co., Ltd.”（COMPANY: ...）
+
+7. Contract No: 
+   - 文本：Contract No:RM22009J
+   - 位置：Invoice No旁边的Contract No行。
+   - 标签：Contract No
+
+8. Date: 
+   - 文本：Date:2022/3/8
+   - 位置：COMMERCIAL INVOICE右侧的Date行。
+   - 标签：Date
+
+9. EMAIL: 
+   - 文本：john50@kelly.info（公司信息中的john50@kelly.info info，所以邮箱是john50@kelly.info）
+   - 位置：公司信息中的john50@kelly.info
+   - 标签：EMAIL
+
+10. FAX: 
+    - 公司信息中的TEL/FAX:78-319-04683656（这里的FAX部分）
+    - TO部分的FAX:+2299528896
+    - 可能选公司信息中的FAX，即TEL/FAX里的FAX。
+    - 标签：FAX
+
+11. Invoice No: 
+    - 文本：Invoice No:RM22009
+    - 位置：Invoice No行。
+    - 标签：Invoice No
+
+12. Marks & Numbers: 
+    - 文本：RHTM（表格中的Marks & Numbers列）
+    - 位置：表格第一列的RHTM
+    - 标签：Marks & Numbers
+
+13. Mode of transport: 
+    - 文本：BY SEA
+    - 位置：Mode of transport: BY SEA
+    - 标签：Mode of transport
+
+14. Payment: 
+    - 文本：T/T
+    - 位置：Payment: T/T
+    - 标签：Payment
+
+15. Quantity & Descriptions: 
+    - 文本：BEARING 104,380PCS；BEARING 1,000PCS
+    - 位置：表格中的Quantity & Descriptions列
+    - 标签：Quantity & Descriptions
+
+16. SWIFT CODE: 
+    - 第一个：ICBKCNBJNBO（Bank的SWIFT CODE）
+    - 第二个：BOFAUS3N（Intermediary的SWIFT CODE）
+    - 标签：SWIFT CODE（两个实例）
+
+17. TEL: 
+    - 文本：+9596942288（TO部分的TEL:）
+    - 位置：TO:下面的TEL行
+    - 标签：TEL
+
+18. TEL/FAX: 
+    - 文本：78-319-04683656（公司信息中的TEL/FAX:）
+    - 位置：公司信息中的TEL/FAX行
+    - 标签：TEL/FAX
+
+19. TITLE: 
+    - 文本：COMMERCIAL INVOICE
+    - 位置：大标题COMMERCIAL INVOICE
+    - 标签：TITLE
+
+20. Time of shipment: 
+    - 文本：MAR OF 2022
+    - 位置：Time of shipment: MAR OF 2022
+    - 标签：Time of shipment
+
+21. Unit Price: 
+    - 文本：@USD0.1516/PC；@USD1.3720/PC
+    - 位置：表格中的Unit Price列
+    - 标签：Unit Price
+
+22. WEBSITE: 
+    - 文本：http://pena.org/
+    - 位置：公司信息中的http://pena.org/
+    - 标签：WEBSITE
+
+现在需要将这些转换为JSON数组，每个元素是bbox和label。需要注意bbox的坐标是基于图像的，需要估计每个元素的位置。由于是示意图，可能需要大致确定。
+
+例如，标题“精芯信息有限公司”的bbox大概是[250, 10, 750, 50]（假设图像的坐标，实际需要看图像的布局，但这里只能大致估计）。
+
+现在开始逐个列出：
+
+1. ACCOUNT: 
+   - bbox：在Please pay to部分，ACCOUNT行，大概在图像下半部分，坐标比如[150, 620, 350, 640]（假设）
+   - label: ACCOUNT
+
+2. ADD: 
+   - bbox：公司信息中的ADD行，位于公司名称下方，比如[250, 150, 650, 170]
+   - label: ADD
+
+3. ADDRESS: 
+   - bbox：TO部分的地址，比如[100, 200, 450, 240]
+   - label: ADDRESS
+
+4. Amount: 
+   - 总计的Amount，比如[650, 450, 850, 470]（TOTAL行的Amount列）
+   - label: Amount
+
+5. Bank Address: 
+   - bbox：Please pay to下的Bank Address行，比如[150, 580, 500, 600]
+   - label: Bank Address
+
+6. COMPANY NAME: 
+   - 标题的“精芯信息有限公司”：bbox [300, 10, 700, 40]
+   - label: COMPANY NAME
+   - 另一个COMPANY NAME是Please pay to中的“Jingxin Information Co., Ltd.”（COMPANY: ...）：bbox [150, 610, 400, 630]
+   - label: COMPANY NAME
+
+7. Contract No: 
+   - bbox：Contract No:RM22009J，比如[450, 250, 550, 270]
+   - label: Contract No
+
+8. Date: 
+   - bbox：Date:2022/3/8，比如[500, 230, 600, 250]
+   - label: Date
+
+9. EMAIL: 
+   - bbox：john50@kelly.info，比如[350, 180, 450, 200]
+   - label: EMAIL
+
+10. FAX: 
+    - 公司信息中的FAX（TEL/FAX里的FAX部分）：比如[300, 190, 400, 210]
+    - label: FAX
+    - TO部分的FAX：+2299528896，比如[300, 240, 450, 260]
+    - label: FAX（可能需要选一个，比如公司信息中的FAX）
+
+11. Invoice No: 
+    - bbox：Invoice No:RM22009，比如[450, 240, 550, 260]
+    - label: Invoice No
+
+12. Marks & Numbers: 
+    - bbox：RHTM，比如[100, 350, 150, 370]
+    - label: Marks & Numbers
+
+13. Mode of transport: 
+    - bbox：BY SEA，比如[150, 310, 250, 330]
+    - label: Mode of transport
+
+14. Payment: 
+    - bbox：T/T，比如[150, 340, 200, 360]
+    - label: Payment
+
+15. Quantity & Descriptions: 
+    - bbox：BEARING 104,380PCS等，比如[200, 350, 500, 430]
+    - label: Quantity & Descriptions
+
+16. SWIFT CODE: 
+    - 第一个：ICBKCNBJNBO，比如[200, 650, 350, 670]
+    - label: SWIFT CODE
+    - 第二个：BOFAUS3N，比如[200, 680, 350, 700]
+    - label: SWIFT CODE
+
+17. TEL: 
+    - bbox：+9596942288，比如[200, 260,

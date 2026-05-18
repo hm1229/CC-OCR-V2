@@ -1,5 +1,165 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is on the invoice, "Date: 03/08/2017". Let's check where that is. The line with "Date: 03/08/2017" is under Cash Inv No.
+
+doc_no_receipt_no: The Cash Inv No. is 7803F712. So that's the document number.
+
+seller_address: The seller is MAKASSAR FRESH MARKET SDN BHD, and their address is GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, SELANGOR. Let's confirm the address lines.
+
+seller_gst_id: Wait, the top part has GARDENIA BAKERIES (KL) SDN BHD's GST ID: 000381399040. But the seller here is MAKASSAR... Wait, no, the invoice is from GARDENIA BAKERIES, and the seller on the invoice is MAKASSAR? Wait, no, the invoice is a tax invoice from GARDENIA BAKERIES, and the recipient is MAKASSAR FRESH MARKET SDN BHD. Wait, the labels: the seller_name would be GARDENIA BAKERIES (KL) SDN BHD. Let me check the top.
+
+Wait, the invoice header: GARDENIA BAKERIES (KL) SDN BHD (139386 X) is the company issuing the invoice. Then the recipient is MAKASSAR FRESH MARKET SDN BHD. So the seller (issuer) is GARDENIA BAKERIES. So seller_name is GARDENIA BAKERIES (KL) SDN BHD.
+
+seller_gst_id: The GST ID for GARDENIA is 000381399040, as per the top line: GST ID: 000381399040.
+
+seller_phone: The phone number for GARDENIA is Tel: 03-55423228.
+
+total_amount: The total payable is -51.88, but the total amount paid is 50.09? Wait, the Total Payable is -51.88, and there's a handwritten 50.09. But the total amount for the transaction—probably the total after tax. Let's check the totals. The Total 6% supplies (Inc. GST) is 32.05, and the 0% supplies is 19.83. But the Total Payable is -51.88, which might be the amount due. Wait, the question is total_amount. Let's see the final amount. The Total Payable is marked as -51.88, and the handwritten is 50.09. But maybe the total_amount is the total of all supplies. Alternatively, the total amount paid is 50.09 (handwritten). Let's check the labels.
+
+total_tax: The GST is 1.81, which is the tax amount.
+
+Now let's map each:
+
+date: "03/08/2017" — find the bounding box for that text.
+
+doc_no_receipt_no: Cash Inv No. is 7803F712. The line is "Cash Inv No.: 7803F712".
+
+seller_address: The address of the issuer (GARDENIA) is Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor. Let's check the top part: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+
+Wait, the problem says "seller_address"—the seller is the one issuing the invoice, which is GARDENIA BAKERIES. So their address is the top address.
+
+seller_gst_id: GST ID: 000381399040 — that's the issuer's GST.
+
+seller_name: GARDENIA BAKERIES (KL) SDN BHD (139386 X) — the company name at the top.
+
+seller_phone: Tel: 03-55423228 — the phone number of the issuer.
+
+total_amount: Let's check the total payable. The Total Payable is -51.88, and the handwritten amount is 50.09. But maybe the total amount of supplies (including tax) is 32.05 (Total 6% supplies Inc. GST) plus 19.83 (0% supplies) = 51.88. That matches the Total Payable's absolute value. So total_amount is 51.88.
+
+total_tax: The GST is 1.81, which is the tax amount.
+
+Now let's find each element's bounding box.
+
+First, date: The line "Date: 03/08/2017" — let's locate it. In the invoice, after Cash Inv No., there's "Date: 03/08/2017". So the text "03/08/2017" is the date.
+
+doc_no_receipt_no: "Cash Inv No.: 7803F712" — the number is 7803F712.
+
+seller_address: The issuer's address: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Let's check the top part: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor."
+
+seller_gst_id: "GST ID: 000381399040" — the number is 000381399040.
+
+seller_name: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — the company name at the top.
+
+seller_phone: "Tel: 03-55423228" — the phone number.
+
+total_amount: The total payable is 51.88 (since Total Payable is -51.88, the amount due is 51.88, and the handwritten 50.09 might be a payment, but the total amount of the invoice is 51.88). Alternatively, the total of all supplies: 19.83 (0% supplies) + 32.05 (6% supplies Inc. GST) = 51.88. So total_amount is 51.88.
+
+total_tax: "GST: 1.81" — the tax amount.
+
+Now, let's check each label and find their bounding boxes.
+
+Let's list each:
+
+1. date: "03/08/2017" — in the line "Date: 03/08/2017". Let's find the coordinates. The text is part of the header section.
+
+2. doc_no_receipt_no: "7803F712" — from "Cash Inv No.: 7803F712".
+
+3. seller_address: The address of GARDENIA: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." — this is in the top part, below the company name.
+
+4. seller_gst_id: "000381399040" — from "GST ID: 000381399040".
+
+5. seller_name: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — the company name at the top.
+
+6. seller_phone: "03-55423228" — from "Tel: 03-55423228".
+
+7. total_amount: "51.88" — from "Total Payable: -51.88" (the absolute value, or the sum of supplies).
+
+8. total_tax: "1.81" — from "GST: 1.81".
+
+Now, let's map each with their bounding boxes.
+
+First, seller_name: The top line is "GARDENIA BAKERIES (KL) SDN BHD (139386 X)". Let's check the coordinates. The text is at the top, so the bounding box would cover that line.
+
+seller_address: The next line is "Lot 3, Jalan Pelabur 23/1," then "40300 Shah Alam, Selangor." So those lines.
+
+seller_gst_id: The line "GST ID: 000381399040" — the number is the GST ID.
+
+seller_phone: "Tel: 03-55423228" — the phone number.
+
+date: "Date: 03/08/2017" — the date field.
+
+doc_no_receipt_no: "Cash Inv No.: 7803F712" — the invoice number.
+
+total_amount: Let's check the "Total Payable: -51.88" — the amount is 51.88.
+
+total_tax: "GST: 1.81" — the tax amount.
+
+Now, let's create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's go step by step.
+
+1. date: The text "03/08/2017" is in the line "Date: 03/08/2017". Let's find the bounding box. Looking at the image, the date is in the upper part, right after Cash Inv No. So the coordinates for that text.
+
+2. doc_no_receipt_no: The Cash Inv No. is 7803F712. The line is "Cash Inv No.: 7803F712". The number is the value.
+
+3. seller_address: The address of the seller (GARDENIA) is "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Let's check the lines: "Lot 3, Jalan Pelabur 23/1," and "40300 Shah Alam, Selangor." So combine those.
+
+4. seller_gst_id: "000381399040" from "GST ID: 000381399040".
+
+5. seller_name: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)".
+
+6. seller_phone: "03-55423228" from "Tel: 03-55423228".
+
+7. total_amount: The total payable is 51.88 (from "Total Payable: -51.88").
+
+8. total_tax: "1.81" from "GST: 1.81".
+
+Now, let's assign bounding boxes. Since this is a text-based analysis, we need to estimate the coordinates.
+
+For example:
+
+- seller_name: The topmost text, "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" — the bounding box would be from the top of the invoice, covering that line.
+
+- seller_address: The next two lines: "Lot 3, Jalan Pelabur 23/1," and "40300 Shah Alam, Selangor." So the bounding box includes those lines.
+
+- seller_gst_id: The line "GST ID: 000381399040" — the number is the value.
+
+- seller_phone: "Tel: 03-55423228" — the phone number.
+
+- date: "Date: 03/08/2017" — the date.
+
+- doc_no_receipt_no: "Cash Inv No.: 7803F712" — the invoice number.
+
+- total_amount: The line "Total Payable: -51.88" — the amount is 51.88.
+
+- total_tax: The line "GST: 1.81" — the tax amount.
+
+Now, let's write each entry.
+
+Note: The exact bounding box coordinates are approximate, but in the context of the problem, we need to identify the correct text regions.
+
+Let's list each:
+
+1. date: label "date", bbox around "03/08/2017"
+2. doc_no_receipt_no: label "doc_no_receipt_no", bbox around "7803F712"
+3. seller_address: label "seller_address", bbox around the address lines of GARDENIA
+4. seller_gst_id: label "seller_gst_id", bbox around "000381399040"
+5. seller_name: label "seller_name", bbox around "GARDENIA BAKERIES (KL) SDN BHD (139386 X)"
+6. seller_phone: label "seller_phone", bbox around "03-55423228"
+7. total_amount: label "total_amount", bbox around "51.88" (from Total Payable)
+8. total_tax: label "total_tax", bbox around "1.81" (from GST line)
+
+Now, construct the JSON array.
+</think>
 [
-    {"bbox_2d": [92, 52, 892, 72], "label": "seller_name"},
-    {"bbox_2d": [92, 74, 892, 94], "label": "seller_address"},
-    {"bbox_2d": [92, 96, 892, 116], "label": "seller_gst_id"},
-    {"bbox_2d": [92, 118, 352, 138], "label": "seller_phone"},
+    {"bbox_2d": [229, 247, 332, 266], "label": "date"},
+    {"bbox_2d": [729, 227, 832, 246], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [101, 277, 492, 322], "label": "seller_address"},
+    {"bbox_2d": [264, 302, 425, 321], "label": "seller_gst_id"},
+    {"bbox_2d": [69, 12, 439, 32], "label": "seller_name"},
+    {"bbox_2d": [154, 30, 285, 49], "label": "seller_phone"},
+    {"bbox_2d": [495, 525, 576, 544], "label": "total_amount"},
+    {"bbox_2d": [534, 477, 567, 496], "label": "total_tax"}
+]

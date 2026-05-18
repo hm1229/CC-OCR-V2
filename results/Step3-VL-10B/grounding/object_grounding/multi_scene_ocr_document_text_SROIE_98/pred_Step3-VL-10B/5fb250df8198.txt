@@ -1,6 +1,184 @@
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The company name is "PREMIO STATIONERY SDN BHD" along with the Co. No. and other details. Let's check the text.
+- Address: The address line is "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor."
+- Date: The date on the invoice is "20/03/2018 3:20:16 PM"
+- Total: The total sales inclusive of GST is 13.40, but wait, the "Total" in the description section is 13.40. Let me check the invoice. The "Total Sales Inclusive GST @6.00%:" is 13.40. Also, the GST summary shows amount 12.64, but the total amount paid is cash received 20.00, change 6.60. But the total for the purchase is 13.40. Let's confirm.
+
+Now, let's find each element's bounding box.
+
+Company: The company name is in the upper part. The text "PREMIO STATIONERY SDN BHD" is the company. Let's check the coordinates.
+
+Address: The address lines are "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor."
+
+Date: The date field is "20/03/2018 3:20:16 PM"
+
+Total: The total amount for the items is 13.40 (from the "Total:" line in the description table).
+
+Now, let's map each to their bounding boxes.
+
+First, company: The company name is in the header. Let's look at the text:
+
+"PREMIO STATIONERY SDN BHD" is the company. The bounding box would cover that line.
+
+Address: The address is below the company, including GST Reg No and the address lines.
+
+Date: The date is under "Date : 20/03/2018 3:20:16 PM"
+
+Total: The "Total : 13.40" in the description table.
+
+Let's check each part.
+
+For company:
+The text "PREMIO STATIONERY SDN BHD" is present. Let's find its coordinates. The company name is in the upper section, so the bounding box is around that line.
+
+For address:
+The address is "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." Let's check the lines: "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." is the address.
+
+For date:
+The date line is "Date : 20/03/2018 3:20:16 PM"
+
+For total:
+The total amount of the sale (before considering cash) is 13.40, which is the "Total : 13.40" in the description table.
+
+Now, let's create the JSON entries.
+
+First, company:
+bbox for "PREMIO STATIONERY SDN BHD" – let's check the image. The company name is in the header, below the crown logo. The text is "PREMIO STATIONERY SDN BHD" with Co. No. and GST Reg No. So the main company name is that line.
+
+Address: The address lines are "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." which is part of the company details.
+
+Date: The date field.
+
+Total: The total amount of the items, which is 13.40.
+
+Now, let's define each:
+
+1. Company: The text "PREMIO STATIONERY SDN BHD" – the bounding box would be the area containing that text. Let's check the coordinates. In the image, the company name is in the upper part, so the box is around that line.
+
+2. Address: The address is "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." – the lines below the company name.
+
+3. Date: The line with "Date : 20/03/2018 3:20:16 PM"
+
+4. Total: The line "Total : 13.40" in the description table.
+
+Now, let's check the exact positions.
+
+Looking at the image:
+
+- Company: The text "PREMIO STATIONERY SDN BHD" is centered. Let's take the bounding box for that line.
+
+- Address: The address is "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." which is below the GST Reg No.
+
+- Date: The date is under "TAX INVOICE" section, "Date : 20/03/2018 3:20:16 PM"
+
+- Total: In the description table, after the item, "Total : 13.40"
+
+Now, let's write the JSON.
+
+Each entry is an object with bbox and label.
+
+For company:
+The company name is "PREMIO STATIONERY SDN BHD". Let's find its bounding box. The text is in the upper part, so the coordinates would be from the top part.
+
+For address:
+The address lines: "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." – the bounding box covers that line.
+
+For date:
+The date line: "Date : 20/03/2018 3:20:16 PM" – bounding box around that.
+
+For total:
+The total line: "Total : 13.40" – in the description table.
+
+Now, let's check the image's text positions.
+
+Let me parse the image content:
+
+- The company name is "PREMIO STATIONERY SDN BHD" with Co. No. and GST Reg No. So the company's main name is that line.
+
+- Address: "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor."
+
+- Date: "20/03/2018 3:20:16 PM"
+
+- Total: The total amount of the sale is 13.40 (from the "Total : 13.40" in the description section).
+
+Now, let's create the entries.
+
+First, company:
+
+{"bbox_2d": [101, 200, 898, 222], "label": "company"} – approximate, since the text is centered.
+
+Address:
+
+{"bbox_2d": [145, 244, 898, 264], "label": "address"} – the address line.
+
+Date:
+
+{"bbox_2d": [145, 274, 898, 292], "label": "date"} – the date line.
+
+Total:
+
+{"bbox_2d": [445, 334, 547, 352], "label": "total"} – the "Total : 13.40" line.
+
+Wait, let's check the exact text in the image.
+
+Looking at the image:
+
+Under "TAX INVOICE", the lines are:
+
+Invoice No : SS3-154439
+
+Date : 20/03/2018 3:20:16 PM
+
+Cashier : IVY
+
+Then the description table:
+
+Description | Qty | Price | Amount
+
+1 SR ENERGIZER BATTERY AA 4'S | 1 | 13.40 | 13.40
+
+Total : 13.40
+
+Discount: 0.00
+
+Total Sales Inclusive GST @6.00%: 13.40
+
+Cash Received : 20.00
+
+Change : 6.60
+
+So the "Total" here is the line "Total : 13.40" in the description table.
+
+So the total amount for the purchase is 13.40.
+
+Now, let's confirm each category:
+
+- company: PREMIO STATIONERY SDN BHD (the company name)
+
+- address: No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor.
+
+- date: 20/03/2018 3:20:16 PM
+
+- total: 13.40 (the total of the items)
+
+Now, let's get the bounding boxes.
+
+For company: The text "PREMIO STATIONERY SDN BHD" is in the header. Let's check the coordinates. The image has the company name below the crown logo. The bounding box would be the area containing that text.
+
+For address: The address is "No 57, Jalan SS 3/29, 47300 Petaling Jaya, Selangor." which is below the GST Reg No.
+
+For date: The date line is "Date : 20/03/2018 3:20:16 PM"
+
+For total: The line "Total : 13.40" in the description table.
+
+Now, let's write the JSON array.
+</think>
 [
-    {"bbox_2d": [109, 156, 592, 175], "label": "company"},
-    {"bbox_2d": [142, 226, 590, 262], "label": "address"},
-    {"bbox_2d": [132, 300, 527, 320], "label": "date"},
-    {"bbox_2d": [322, 445, 427, 465], "label": "total"}
+    {"bbox_2d": [100, 202, 898, 224], "label": "company"},
+    {"bbox_2d": [144, 246, 898, 266], "label": "address"},
+    {"bbox_2d": [144, 276, 898, 294], "label": "date"},
+    {"bbox_2d": [443, 336, 550, 354], "label": "total"}
 ]

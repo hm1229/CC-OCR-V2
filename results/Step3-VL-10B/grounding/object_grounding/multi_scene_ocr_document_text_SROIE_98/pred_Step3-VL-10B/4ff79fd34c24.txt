@@ -1,12 +1,134 @@
+Got it, let's tackle this problem step by step. First, I need to identify each category: address, company, date, total. Let's look at the image.
+
+First, the company. The top part says "GARDENIA BAKERIES (KL) SDN BHD (139386 X)". That's the company name.
+
+Next, address. There are two addresses maybe? Let's check. The first address is for the company: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Then the other address is for MAKASSAR FRESH MARKET SDN BHD: "GROUND FLOOR, NO. 4 & 6, JALAN SS 15/4B, 47500 SUBANG JAYA, 'SELANGOR'". But maybe the main company address is the first one. Let's confirm.
+
+Date: The date on the invoice is "18/08/2017" (from Cash Inv No. date) and also "DD:18/08/2017" in the transaction details. So the date is 18/08/2017.
+
+Total: Looking at the totals, there's "Total Payable: -6.42". Also, other totals like Total 6% supplies (Inc. GST): 9.92, Total 0% supplies: -16.34. But the main total payable is -6.42. Let's check which one is the total. The problem says "total" category, so probably the Total Payable.
+
+Now, let's map each:
+
+Company: The header "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" – that's the company.
+
+Address: The company's address is "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." Let's check the bounding box for that.
+
+Date: The date is "18/08/2017" (from the Cash Inv No. line: Date: 18/08/2017).
+
+Total: The Total Payable is -6.42. Let's find where that is.
+
+Let me check each element's position.
+
+First, company: The top part, "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" – that's the company label.
+
+Address for the company: The lines below the company name: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." So that's the address.
+
+Date: The line "Date: 18/08/2017" under Cash Inv No.
+
+Total: The line "Total Payable: -6.42" at the bottom of the amounts section.
+
+Now, let's define the bounding boxes.
+
+For company: The text "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" is in the top part. Let's get its coordinates.
+
+Address (company's address): The lines "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." – that's the address.
+
+Date: The "Date: 18/08/2017" line.
+
+Total: The "Total Payable: -6.42" line.
+
+Let me check the image again.
+
+Looking at the image:
+
+- Company: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" – top section.
+
+- Address (company): "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." – below the company name.
+
+- Date: "Date: 18/08/2017" – next to Cash Inv No.
+
+- Total: "Total Payable: -6.42" – in the lower part of the invoice, after the supply totals.
+
+Now, let's structure each entry.
+
+First, company:
+
+bbox for company text: Let's see the top line. The company name is in the header. The coordinates would be from the top part.
+
+Then address: the company's address is the lines below the company name.
+
+Date: the line with "Date: 18/08/2017".
+
+Total: the line "Total Payable: -6.42".
+
+Let me check if there are other addresses. The other address is for MAKASSAR FRESH MARKET SDN BHD, but the problem says "address" – maybe the main company's address. Let's confirm the problem's categories: address, company, date, total. So company is GARDENIA BAKERIES, address is their address, date is the invoice date, total is the total payable.
+
+Now, let's write the JSON entries.
+
+1. Company: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" – label: company.
+
+2. Address: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." – label: address.
+
+3. Date: "18/08/2017" – label: date.
+
+4. Total: "-6.42" (from Total Payable) – label: total.
+
+Now, need to find the bounding boxes for each.
+
+Let's check the image's text positions.
+
+For company:
+
+The text is at the top: "GARDENIA BAKERIES (KL) SDN BHD (139386 X)". Let's assume the bounding box covers that line.
+
+For address (company's address):
+
+The lines are "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." – that's the address.
+
+Date: The line "Date: 18/08/2017" is under "Cash Inv No.: 7818F712".
+
+Total Payable: The line "Total Payable: -6.42" is below the other totals.
+
+Now, let's define the coordinates. Since the image is a receipt, the coordinates can be approximated.
+
+Alternatively, maybe the address for MAKASSAR is also an address, but the problem says "address" – probably the company's address. Let's check the problem statement: "Detect the corresponding values to the following categories: address, company, date, total." So each category once.
+
+Let me check each element:
+
+- Company: GARDENIA BAKERIES (KL) SDN BHD (139386 X) – correct.
+
+- Address: The address of the company (GARDENIA) is Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor.
+
+- Date: 18/08/2017 (from the date field on the invoice).
+
+- Total: The total payable is -6.42.
+
+Now, let's create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+For company:
+
+The text "GARDENIA BAKERIES (KL) SDN BHD (139386 X)" is in the top part. Let's get its bounding box. Let's assume the coordinates are from the top left to top right of that line.
+
+For address:
+
+The address lines: "Lot 3, Jalan Pelabur 23/1, 40300 Shah Alam, Selangor." – the bounding box covers these lines.
+
+For date:
+
+The line "Date: 18/08/2017" – bounding box around that.
+
+For total:
+
+The line "Total Payable: -6.42" – bounding box around that.
+
+Now, let's write the JSON.
+</think>
 [
-    {"bbox_2d": [69, 56, 927, 78], "label": "company"},
-    {"bbox_2d": [100, 80, 520, 107], "label": "address"},
-    {"bbox_2d": [45, 227, 942, 292], "label": "address"},
-    {"bbox_2d": [145, 237, 298, 257], "label": "date"},
-    {"bbox_2d": [325, 457, 432, 477], "label": "date"},
-    {"bbox_2d": [40, 337, 325, 357], "label": "total"},
-    {"bbox_2d": [105, 375, 325, 395], "label": "total"},
-    {"bbox_2d": [105, 417, 325, 437], "label": "total"},
-    {"bbox_2d": [105, 459, 325, 479], "label": "total"},
-    {"bbox_2d": [105, 517, 325, 537], "label": "total"}
+    {"bbox_2d": [92, 52, 925, 77], "label": "company"},
+    {"bbox_2d": [92, 79, 925, 104], "label": "address"},
+    {"bbox_2d": [425, 220, 547, 242], "label": "date"},
+    {"bbox_2d": [92, 840, 925, 864], "label": "total"}
 ]

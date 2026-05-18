@@ -1,1 +1,39 @@
-[{"bbox_2d": [290, 52, 710, 77], "label": "company"}, {"bbox_2d": [108, 92, 892, 162], "label": "address"}, {"bbox_2d": [108, 232, 328, 254], "label": "date"}, {"bbox_2d": [472, 602, 767, 632], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The top part says "Yam Fresh" which is the company name.
+- Address: The address lines are "No.145G, Jalan Rimbunan Raya 1, Laman Rimbunan Kepong, 52100 Kuala Lumpur".
+- Date: The date on the invoice is "2016-07-31".
+- Total: The grand total is RM7.95.
+
+Now, find the bounding boxes for each.
+
+Company: The text "Yam Fresh" is at the top. Let's check the coordinates. The company name is in the header.
+
+Address: The address block includes the lines from "No.145G..." to "52100 Kuala Lumpur".
+
+Date: The date is "Date: 2016-07-31 13:49:10" so the date part is 2016-07-31.
+
+Total: The grand total is "Grand Total RM7.95".
+
+Let's map each:
+
+1. Company: "Yam Fresh" – bbox around that text.
+2. Address: The address lines.
+3. Date: The date string.
+4. Total: The grand total amount.
+
+Now, check the positions.
+
+For company: The text "Yam Fresh" is centered at the top. Let's get the bounding box.
+
+Address: The lines below the company name: "No.145G, Jalan Rimbunan Raya 1, Laman Rimbunan Kepong, 52100 Kuala Lumpur".
+
+Date: The line starting with "Date: 2016-07-31 13:49:10".
+
+Total: The line "Grand Total RM7.95".
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [295, 37, 704, 174], "label": "company"}, {"bbox_2d": [101, 44, 898, 170], "label": "address"}, {"bbox_2d": [89, 232, 327, 254], "label": "date"}, {"bbox_2d": [459, 597, 767, 630], "label": "total"}]

@@ -1,115 +1,169 @@
-用户现在需要识别发票中的各个指定类别。首先得逐个看每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个标签在图中的位置。
 
-首先看COMPANY NAME：图上方“浙大万朋科技有限公司”是公司名，对应ADD是地址“84707 Williams Ports Apt. 854 East Melissaberg, FL 47027”。然后INVOICE是TITLE。To部分的地址是ADDRESS。No.是编号WSHA21 090-W16。Date是2021/12/7。Description of Goods是“E GLASS WET CHOPPED STRANDS”等。FROM是运输的FROM部分“USNV Pham FPO AP 81530”。TO是“USS Novak FPO AA 02216”。TRANSPORT METHOD是“BY SEA”。Terms of Payment是“T/T 60 DAYS AFTER B/L DATE”。Unit Price (USD/KG)是“US$0.900”。Quantity (KGS)是54000。Marks是“V/M”和“ECS16-12-548”。attn是“Julie Diaz”。TL是电话“+79-3-231-2228”。II/S CODE是底部“7019.11.0090”。SUPERLITE是“PRODUCT CODE 60001672”。然后右边表格里的物料名称、高托数、低托数、币种、销售单价、客户订单号、已发货过账数这些。
+首先看COMPANY NAME：发票顶部是“浙大万朋科技有限公司”，所以这个是公司名。然后ADD是地址，即“84707 Williams Ports Apt. 854 East Melissaberg, FL 47027”。ADDRESS可能和ADD类似？不过看题目里的类别，ADD和ADDRESS可能需要区分？不过先看每个标签。
 
-现在逐个提取：
+然后No.是编号，WSHA21 090-W16。Date是2021/12/7。Description of Goods是“E GLASS WET CHOPPED STRANDS”和“ECS16-12-548”。FROM是运输的FROM部分：USNV Pham FPO AP 81530。TO是USS Novak FPO AA 02216。TRANSPORT METHOD是BY SEA。Terms of Payment是T/T 60 DAYS AFTER B/L DATE。Unit Price (USD/KG)是US$0.900。Quantity (KGS)是54000。Marks是V/M。attn是Julie Diaz。TL是电话+79-3-231-2228。II/S CODE是7019.11.0090。高托数看右边表格里的高托数列，比如ECS16-12-548的高托数是20。低托数是0。客户订单号是WSHA21090-W16。已发货过账数是18,000.000等。币种是USD。物料名称是ECS16-12-548。销售单价是0.900000000。AMOUNT (USD)是US$48,600.00。SUPERLITE是PRODUCT CODE 60001672。TITLE是INVOICE。然后右边表格里的各个列对应。
 
-1. ADD：地址“84707 Williams Ports Apt. 854 East Melissaberg, FL 47027” → 对应位置。
-2. ADDRESS：To部分的地址“85611 Tina Mission South Thomasview, AK 32179 USS Gibson FPO AP 47637”。
-3. AMOUNT (USD)：有两个地方，一个是表格里的US$48,600.00，另一个是TOTAL的US$48,600.00。
-4. COMPANY NAME：“浙大万朋科技有限公司”。
-5. Date：“2021/12/7”。
-6. Description of Goods：“E GLASS WET CHOPPED STRANDS”和“ECS16-12-548”。
-7. FROM：“USNV Pham FPO AP 81530”。
-8. II/S CODE：“7019.11.0090”。
-9. Marks：“V/M”和“ECS16-12-548”（第一行的Marks列）。
-10. No.：“WSHA21 090-W16”。
-11. Quantity (KGS)：“54000”。
-12. SUPERLITE：“PRODUCT CODE 60001672”。
-13. TITLE：“INVOICE”。
-14. TL：“+79-3-231-2228”。
-15. TO：“USS Novak FPO AA 02216”。
-16. TRANSPORT METHOD：“BY SEA”。
-17. Terms of Payment：“T/T 60 DAYS AFTER B/L DATE”。
-18. Unit Price (USD/KG)：“US$0.900”。
-19. attn：“Julie Diaz”。
-20. 低托数：右边表格里的“0”（每个物料行的低托数列）。
-21. 客户订单号：右边表格里的“WSHA21090-W16”。
-22. 已发货过账数：右边表格里的“18,000.000”等，以及最后一行的“54,000.000”。
-23. 币种：右边表格里的“USD”。
-24. 物料名称：右边表格里的“ECS16-12-548”。
-25. 销售单价：右边表格里的“0.900000000”。
-26. 高托数：右边表格里的“20”。
+现在需要逐个匹配每个标签，找到对应的bbox。
 
-现在需要把每个类别对应到图中的位置，用bbox。需要看每个元素的位置。
+先列所有标签：
 
-先处理左边发票部分：
+ADD: 发票顶部的地址，即“ADD: 84707 Williams Ports Apt. 854 East Melissaberg, FL 47027” → 找这个文本的bbox。
 
-- COMPANY NAME：[171, 8, 362, 28]（“浙大万朋科技有限公司”）
-- ADD：[171, 28, 540, 42]（地址行）
-- TITLE：[377, 180, 622, 220]（INVOICE）
-- To的ADDRESS：[100, 230, 377, 270]（85611...）
-- attn：[100, 275, 150, 295]（Julie Diaz）
-- TL：[155, 275, 235, 295]（+79-3-231-2228）
-- No.：[500, 235, 575, 250]（WSHA21 090-W16）
-- Date：[500, 255, 575, 270]（2021/12/7）
-- Terms of Payment：[500, 275, 690, 290]（T/T 60 DAYS AFTER B/L DATE）
-- Transport Details的FROM：[250, 320, 425, 340]（USNV Pham FPO AP 81530）
-- Transport Details的TO：[500, 320, 675, 340]（USS Novak FPO AA 02216）
-- TRANSPORT METHOD：[650, 320, 705, 340]（BY SEA）
-- Marks：[50, 470, 150, 495]（V/M）；还有ECS16-12-548在Marks列下面？看表格第一行Marks是V/M，第二行是ECS16-12-548？
-- Description of Goods：[150, 475, 425, 495]（E GLASS WET CHOPPED STRANDS）；下面还有ECS16-12-548？
-- Quantity (KGS)：[320, 470, 425, 495]（54000）
-- Unit Price (USD/KG)：[430, 470, 540, 495]（US$0.900）
-- Amount (USD)：[550, 470, 640, 495]（US$48,600.00）
-- TOTAL的Quantity：[320, 600, 425, 620]（54000）；TOTAL的Amount：[550, 600, 640, 620]（US$48,600.00）
-- SUPERLITE：[100, 660, 250, 680]（PRODUCT CODE 60001672）
-- II/S CODE：[100, 950, 225, 970]（7019.11.0090）
+ADDRESS: 可能和ADD重复？或者看To部分的地址？To的地址是“85611 Tina Mission South Thomasview, AK 32179 USS Gibson FPO AP 47637” → 这是收货地址，可能ADDRESS是这个。
 
-然后右边表格部分（右侧小表格）：
+COMPANY NAME: “浙大万朋科技有限公司” → 顶部的公司名。
 
-- 物料名称：每个行的“ECS16-12-548” → 对应列标题“物料名称”
-- 高托数：列标题“高托数”，每个行的值20
-- 低托数：列标题“低托数”，每个行的值0
-- 币种：列标题“币种”，值USD
-- 销售单价：列标题“销售单价”，值0.900000000
-- 客户订单号：列标题“客户订单号”，值WSHA21090-W16等
-- 已发货过账数：列标题“Σ已发货过账数”，值18,000.000等，最后一行是54,000.000
+No.: “No.: WSHA21 090-W16” → 编号。
 
-现在需要把每个类别对应到具体的bbox。比如右边表格的列标题和内容：
+Date: “Date: 2021/12/7” → 日期。
 
-- 物料名称：在右边表格的列，比如第一行的“ECS16-12-548”所在的单元格，列标题是“物料名称”
-- 高托数：列标题“高托数”，对应每个行的20
-- 低托数：列标题“低托数”，对应每个行的0
-- 币种：列标题“币种”，对应USD
-- 销售单价：列标题“销售单价”，对应0.900000000
-- 客户订单号：列标题“客户订单号”，对应WSHA21090-W16等
-- 已发货过账数：列标题“Σ已发货过账数”，对应18,000.000等，最后一行的54,000.000
+Description of Goods: 表格中的“Description of Goods”列，内容是“E GLASS WET CHOPPED STRANDS”和“ECS16-12-548”。
 
-现在需要为每个类别生成对应的bbox。注意有些类别可能有多个实例，比如AMOUNT (USD)有两个地方（表格中的Amount和TOTAL的Amount），但需要都检测到吗？用户要求“detect all objects matching these categories”，所以每个出现的都要列吗？不过可能每个类别只要存在就列，或者看是否有多个。但先处理主要的。
+FROM: “Transport Details: FROM USNV Pham FPO AP 81530” → FROM部分。
 
-现在开始整理每个类别：
+TO: “TO USS Novak FPO AA 02216” → TO部分。
 
-1. ADD：[173, 30, 540, 48]（地址行“ADD: 84707...”）
-2. ADDRESS：[102, 232, 376, 272]（To的地址）
-3. AMOUNT (USD)：有两个，一个是表格中的Amount列的US$48,600.00，对应bbox [552, 472, 638, 492]；另一个是TOTAL的Amount [552, 602, 638, 622]
-4. COMPANY NAME：[175, 8, 360, 26]（“浙大万朋科技有限公司”）
-5. Date：[502, 256, 573, 274]（2021/12/7）
-6. Description of Goods：[152, 474, 423, 494]（E GLASS WET CHOPPED STRANDS）；还有ECS16-12-548在Description of Goods？看表格中第二行Description of Goods是ECS16-12-548？不，看表格结构：Marks列是V/M和ECS16-12-548？不，原表格中第一行Marks是V/M，Description of Goods是E GLASS WET CHOPPED STRANDS，第二行Marks是空？不，看原图中的表格：
+TRANSPORT METHOD: “BY SEA” → 运输方式。
 
-原表格的行：
+Terms of Payment: “Terms of Payment: T/T 60 DAYS AFTER B/L DATE” → 支付条款。
 
-第一行（Marks列）：V/M；Description of Goods：E GLASS WET CHOPPED STRANDS；Quantity：54000；Unit Price：US$0.900；Amount：US$48,600.00；然后下面一行是ECS16-12-548，可能是在Description of Goods的下一行？或者ECS16-12-548是Marks列的第二行？看原图中的表格，Marks列第一行是V/M，第二行是ECS16-12-548？然后Description of Goods可能没有第二行？不，原图中表格的Description of Goods列第一行是E GLASS WET CHOPPED STRANDS，第二行可能没有？或者ECS16-12-548是另一个条目？可能ECS16-12-548是物料编号，属于Description of Goods的一部分？可能需要看清楚。原图中表格里的内容：
+Unit Price (USD/KG): 表格中的“Unit Price (USD/KG)”列，值是US$0.900。
 
-Marks | Description of Goods | Quantity (KGS) | Unit Price (USD/KG) | Amount (USD)
---- | --- | --- | --- | ---
-V/M | E GLASS WET CHOPPED STRANDS | 54000 | US$0.900 | US$48,600.00
- | ECS16-12-548 |  |  | 
+Quantity (KGS): 表格中的“Quantity (KGS)”列，值是54000。
 
-可能第二行是另一个条目？但Quantity是54000，所以可能ECS16-12-548是Description of Goods的补充？或者ECS16-12-548是Marks列的第二行？不管怎样，Description of Goods的类别需要包含E GLASS WET CHOPPED STRANDS和ECS16-12-548吗？可能ECS16-12-548是物料名称，属于右边表格的物料名称，而左边表格的Description of Goods是E GLASS WET CHOPPED STRANDS。所以左边的Description of Goods是E GLASS WET CHOPPED STRANDS，对应bbox [150, 470, 425, 495]。
+Marks: 表格中的“Marks”列，值是V/M。
 
-7. FROM：[252, 322, 423, 342]（USNV Pham FPO AP 81530）
-8. II/S CODE：[102, 952, 223, 970]（7019.11.0090）
-9. Marks：[52, 472, 148, 492]（V/M）；还有ECS16-12-548在Marks列的第二行？看原图中Marks列第二行是ECS16-12-548吗？原图中表格里第二行的Marks列是空？不，原图中“ECS16-12-548”在Description of Goods列的下方？可能ECS16-12-548是另一个条目的Marks？或者看原图中的文字：“ECS16-12-548”在Marks列的下面？可能原图中表格的Marks列第一行是V/M，第二行是ECS16-12-548，所以Marks有两个实例：V/M和ECS16-12-548。所以Marks的bbox有两个：[52, 472, 148, 492]（V/M）和[150, 500, 250, 520]（ECS16-12-548）？
-10. No.：[504, 236, 572, 254]（WSHA21 090-W16）
-11. Quantity (KGS)：[322, 472, 422, 492]（54000）；TOTAL的Quantity是[322, 602, 422, 622]（54000）
-12. SUPERLITE：[104, 662, 248, 680]（PRODUCT CODE 60001672）
-13. TITLE：[379, 182, 620, 218]（INVOICE）
-14. TL：[157, 276, 233, 294]（+79-3-231-2228）
-15. TO：[504, 322, 673, 342]（USS Novak FPO AA 02216）
-16. TRANSPORT METHOD：[654, 322, 703, 342]（BY SEA）
-17. Terms of Payment：[504, 276, 688, 294]（T/T 60 DAYS AFTER B/L DATE）
-18. Unit Price (USD/KG)：[432, 472, 538, 492]（US$0.900）；TOTAL没有Unit Price，因为是总计
-19. attn：[104, 276, 152, 294]（Julie Diaz）
-20. 低托数：右边表格中的“低托数”列，每个行的值是0，比如第一行低托数是0，对应bbox在右边表格的低托数列，比如第一行的低托数单元格是[420, 700, 460, 720]（假设右边表格的位置，需要看右边表格的结构。右边表格的列标题是“物料名称”、“高托数”、“低托数”、“币种”、“销售单价”、“客户订单号”、“Σ已发货过账数”。每个列对应的内容。比如低托数列的标题是“低托数”，对应每个行的0，所以低托数的类别包括列标题和内容？但用户要求的是“低托数”作为类别，所以需要检测到低托数的列标题和内容？或者只要存在该类别。右边表格中“低托数”是列标题，所以有一个实例（列标题）和三个内容（每个行的低托数0）。但可能只需要列标题？或者看用户给的类别是“低托数”，所以需要检测到该列的存在。
-21. 客户订单号：右边表格中的“客户订单号”
+attn: “attn: Julie Diaz” → 注意事项联系人。
+
+TL: “TL:+79-3-231-2228” → 电话。
+
+II/S CODE: 底部的“II/S CODE: 7019.11.0090” → 代码。
+
+低托数: 右边表格中的“低托数”列，值是0（对应ECS16-12-548的行）。
+
+客户订单号: 右边表格中的“客户订单号”列，值是WSHA21090-W16。
+
+已发货过账数: 右边表格中的“Σ已发货过账数”列，值是18,000.000等。
+
+币种: 右边表格中的“币种”列，值是USD。
+
+物料名称: 右边表格中的“物料名称”列，值是ECS16-12-548。
+
+销售单价: 右边表格中的“销售单价”列，值是0.900000000。
+
+AMOUNT (USD): 总金额US$48,600.00，以及表格中的Amount列US$48,600.00。
+
+SUPERLITE: “SUPERLITE : PRODUCT CODE 60001672” → 超级轻质产品代码。
+
+TITLE: “INVOICE” → 标题。
+
+现在需要为每个标签找到对应的bbox。需要看图片中的位置，比如：
+
+COMPANY NAME: 顶部“浙大万朋科技有限公司” → bbox大概在上方，文字位置。
+
+ADD: “ADD: 84707 Williams Ports Apt. 854 East Melissaberg, FL 47027” → 在公司名下方。
+
+ADDRESS: To的地址，即“85611 Tina Mission South Thomasview, AK 32179 USS Gibson FPO AP 47637” → To部分的地址。
+
+No.: 右侧No.字段，WSHA21 090-W16。
+
+Date: Date: 2021/12/7。
+
+Description of Goods: 表格中Description of Goods列的内容，比如“E GLASS WET CHOPPED STRANDS”和“ECS16-12-548”所在的单元格。
+
+FROM: Transport Details中的FROM部分，USNV Pham FPO AP 81530。
+
+TO: Transport Details中的TO部分，USS Novak FPO AA 02216。
+
+TRANSPORT METHOD: BY SEA。
+
+Terms of Payment: T/T 60 DAYS AFTER B/L DATE。
+
+Unit Price (USD/KG): 表格中Unit Price列的值US$0.900。
+
+Quantity (KGS): 表格中Quantity列的值54000。
+
+Marks: 表格中Marks列的V/M。
+
+attn: attn: Julie Diaz。
+
+TL: TL:+79-3-231-2228。
+
+II/S CODE: 底部II/S CODE: 7019.11.0090。
+
+低托数: 右边表格中低托数列的0（比如第一行低托数是0）。
+
+客户订单号: 右边表格中客户订单号列的WSHA21090-W16。
+
+已发货过账数: 右边表格中Σ已发货过账数列的18,000.000等。
+
+币种: 右边表格中币种列的USD。
+
+物料名称: 右边表格中物料名称列的ECS16-12-548。
+
+销售单价: 右边表格中销售单价列的0.900000000。
+
+AMOUNT (USD): 总金额US$48,600.00（TOTAL行的Amount）以及表格中的Amount列US$48,600.00。
+
+SUPERLITE: SUPERLITE : PRODUCT CODE 60001672。
+
+TITLE: INVOICE（大标题）。
+
+现在需要将每个标签对应到具体的bbox。因为是图片，需要估计每个元素的位置。例如：
+
+- COMPANY NAME: [182, 8, 399, 30] （假设顶部公司名的位置）
+- ADD: [110, 30, 432, 48] （ADD: 后面的地址）
+- ADDRESS: [100, 120, 437, 140] （To的地址部分）
+- No.: [400, 140, 525, 158] （No.: WSHA21 090-W16）
+- Date: [400, 158, 467, 176] （Date: 2021/12/7）
+- Description of Goods: [140, 280, 350, 300] （E GLASS...）和[140, 300, 220, 318]（ECS16-12-548）
+- FROM: [250, 220, 425, 238] （FROM USNV...）
+- TO: [475, 220, 630, 238] （TO USS...）
+- TRANSPORT METHOD: [590, 220, 645, 238] （BY SEA）
+- Terms of Payment: [400, 176, 590, 194] （T/T 60...）
+- Unit Price (USD/KG): [360, 320, 450, 340] （US$0.900）
+- Quantity (KGS): [290, 320, 350, 340] （54000）
+- Marks: [110, 320, 150, 340] （V/M）
+- attn: [100, 140, 160, 158] （attn: Julie Diaz）
+- TL: [165, 140, 235, 158] （TL:+79-3-231-2228）
+- II/S CODE: [100, 950, 230, 968] （II/S CODE: 7019.11.0090）
+- 低托数: 右边表格中低托数列，比如第一行低托数是0，对应bbox在右边表格的低托数列，比如[520, 700, 550, 720]（假设）
+- 客户订单号: 右边表格中客户订单号列，比如WSHA21090-W16，对应bbox[650, 700, 750, 720]
+- 已发货过账数: 右边表格中Σ已发货过账数列，比如18,000.000，对应bbox[800, 700, 900, 720]
+- 币种: 右边表格中币种列，USD，对应bbox[580, 700, 620, 720]
+- 物料名称: 右边表格中物料名称列，ECS16-12-548，对应bbox[490, 700, 570, 720]
+- 销售单价: 右边表格中销售单价列，0.900000000，对应bbox[600, 700, 700, 720]
+- AMOUNT (USD): 总金额TOTAL行的US$48,600.00，对应bbox[300, 450, 420, 470]；表格中的Amount列US$48,600.00对应bbox[480, 320, 550, 340]
+- SUPERLITE: [100, 970, 230, 988] （SUPERLITE : PRODUCT CODE 60001672）
+- TITLE: [280, 180, 350, 200] （INVOICE大标题）
+
+现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意右边的表格中的多个行，比如低托数、客户订单号等在右边表格中，每个标签对应一个位置。例如，右边表格中的“物料名称”列有三行都是ECS16-12-548，所以物料名称的bbox可以取其中一个单元格，比如第一行的物料名称。
+
+另外，AMOUNT (USD)有两个地方：总金额和表格中的Amount，所以可能需要确认。题目中的AMOUNT (USD)应该是指总金额，即TOTAL行的US$48,600.00。
+
+现在开始逐个构建：
+
+1. COMPANY NAME: bbox是公司名的位置，文字“浙大万朋科技有限公司”，在发票顶部。假设坐标是[185, 10, 395, 32]。
+2. ADD: “ADD: 84707 Williams Ports Apt. 854 East Melissaberg, FL 47027”，在公司名下方，bbox[112, 34, 430, 52]。
+3. ADDRESS: To的地址，“85611 Tina Mission South Thomasview, AK 32179 USS Gibson FPO AP 47637”，bbox[100, 122, 435, 142]。
+4. No.: “No.: WSHA21 090-W16”，bbox[402, 144, 522, 162]。
+5. Date: “Date: 2021/12/7”，bbox[402, 162, 466, 180]。
+6. Description of Goods: 第一个商品描述“E GLASS WET CHOPPED STRANDS”，bbox[142, 322, 348, 340]；第二个“ECS16-12-548”在Marks下面，bbox[142, 340, 222, 358]。但可能取主要的描述，比如第一行的描述。
+7. FROM: “USNV Pham FPO AP 81530”，在Transport Details的FROM部分，bbox[252, 222, 423, 240]。
+8. TO: “USS Novak FPO AA 02216”，bbox[476, 222, 628, 240]。
+9. TRANSPORT METHOD: “BY SEA”，bbox[592, 222, 644, 240]。
+10. Terms of Payment: “T/T 60 DAYS AFTER B/L DATE”，bbox[402, 180, 590, 198]。
+11. Unit Price (USD/KG): “US$0.900”，bbox[362, 342, 448, 360]。
+12. Quantity (KGS): “54000”，bbox[292, 342, 348, 360]。
+13. Marks: “V/M”，bbox[112, 342, 150, 360]。
+14. attn: “Julie Diaz”，在attn: 后面，bbox[102, 144, 162, 162]。
+15. TL: “+79-3-231-2228”，bbox[167, 144, 235, 162]。
+16. II/S CODE: “7019.11.0090”，在底部，bbox[102, 952, 230, 970]。
+17. 低托数: 右边表格中低托数列，比如第一行低托数是0，bbox[522, 702, 550, 720]（假设右边表格的位置，需要看图片右边的表格，其中低托数列对应数值0）。
+18. 客户订单号: 右边表格中客户订单号列，比如WSHA21090-W16，bbox[652, 702, 750, 720]。
+19. 已发货过账数: 右边表格中Σ已发货过账数列，比如18,000.000，bbox[802, 702, 900, 720]。
+20. 币种: 右边表格中币种列，USD，bbox[582, 702, 620, 720]。
+21. 物料名称: 右边表格中物料名称列，ECS16-12-548，bbox[492, 702, 570, 720]。
+22. 销售单价: 右边表格中销售单价列，0.900000000，bbox[602, 702, 700, 720]。
+23. AMOUNT (USD): 总金额TOTAL行的US$48,600.00，bbox[302, 452, 420, 470]；或者表格中的Amount列US$48,600.00，bbox[482, 342, 550, 

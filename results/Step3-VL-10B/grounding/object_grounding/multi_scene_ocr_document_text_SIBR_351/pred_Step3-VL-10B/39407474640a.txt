@@ -1,129 +1,141 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看ADD：图中顶部“ADD: 9520 Michael Green Aquilarburgh, AL 67890”，所以ADD的bbox是对应区域。
+首先看Company Name：发票顶部是“维旺明网络有限公司”，对应中文，英文是Wewangming Network Co., Ltd.？不，看抬头，左上角是“维旺明网络有限公司”，所以Company Name是这个。然后ADD是地址，ADD: 9520 Michael Green Aquilarburgh, AL 67890。FAX是+8871168053588。TEL是+3168018158872。Date是19/Nov/21。No.是JSJJP21244？不，No.是JSJPP21244？看发票里No.: JSJPP21244。P/O No.是JP21244。Terms of Payment是T/T 60 DAYS AFTER B/L DATE。Title是INVOICE。To是Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666。Transportation Method是BY SEA。Unit Price (JPY/KG)是JPY 134.10。Quantity (KGS)有两个条目，8640和11520，总和是20160。Amount (JPY)是每个条目的金额和总金额JPY 2,703,456.00。Marks是N/M和ER13-3460-180-2END等。II/S-CODE是0和70191200.9。FROM是USS Parks FPO AA 72128。Product Name是E GLASS SPRAY UP ROVING等。Model是ER13-3460-180-2END。Address是To里的地址，即48666 Nunez Ford Gordontown, WV 11666。现在需要逐个对应。
 
-Address：可能和ADD是同一个？不过看题目里的Address，可能公司地址？不过图中公司是维旺明网络有限公司，地址是ADD那行？或者To的地址？不过先看每个类别。
+现在开始列每个标签：
 
-先列所有类别：ADD, Address, Amount (JPY), Company Name, Date, FAX, FROM, II/S-CODE, Marks, Model, No., P/O No., Product Name, Quantity (KGS), TEL, Terms of Payment, Title, To, Transportation Method, Unit Price (JPY/KG)。
+1. ADD：对应地址“9520 Michael Green Aquilarburgh, AL 67890”，在发票顶部右侧，ADD: 后面的内容。
+2. Address：To部分的地址，即“48666 Nunez Ford Gordontown, WV 11666”。
+3. Amount (JPY)：总金额是JPY 2,703,456.00，还有每个条目的金额，但可能总金额是关键。看TOTAL行的Amount是JPY 2,703,456.00。
+4. Company Name：左上角“维旺明网络有限公司”。
+5. Date：19/Nov/21，在Date: 后面。
+6. FAX：+8871168053588，在FAX: 后面。
+7. FROM：运输详情里的FROM部分，USS Parks FPO AA 72128。
+8. II/S-CODE：底部的II/S CODE: 0 和 70191200.9。
+9. Marks：表格里的Marks列，第一个是N/M，然后是ER13-3460-180-2END等。
+10. Model：ER13-3460-180-2END，是产品型号。
+11. No.：发票编号JSJPP21244（看No.: JSJPP21244）。
+12. P/O No.：JP21244，在P/O No.: 后面。
+13. Product Name：E GLASS SPRAY UP ROVING。
+14. Quantity (KGS)：8640和11520，总和20160（TOTAL行的20160）。
+15. TEL：+3168018158872，在TEL: 后面。
+16. Terms of Payment：T/T 60 DAYS AFTER B/L DATE。
+17. Title：INVOICE，大标题。
+18. To：Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666。
+19. Transportation Method：BY SEA，在运输详情的BY SEA。
+20. Unit Price (JPY/KG)：JPY 134.10，表格里的Unit Price列。
 
-现在逐个找：
+现在需要为每个标签找到对应的bbox。需要看每个元素在图中的位置。
 
-1. ADD：图中顶部“ADD: 9520 Michael Green Aquilarburgh, AL 67890”，所以bbox是包含ADD和地址的部分。看坐标，大概在顶部偏右，ADD的标签和内容。所以bbox范围是ADD: 后面的内容，位置在公司名称右边。公司名称是“维旺明网络有限公司”，右边是ADD: ... 所以ADD的bbox是[392, 23, 637, 38]左右？需要看图像中的位置。原图中公司名称在左上方，ADD在公司名称右边，所以ADD的区域是“ADD: 9520 Michael Green Aquilarburgh, AL 67890”，所以bbox的x1大概是390，y1是25，x2是635，y2是35左右。
+先处理Company Name：左上角“维旺明网络有限公司”，坐标大概是左上角，x1=29, y1=18, x2=152, y2=32左右（假设图的坐标，需要看实际位置。但因为是示意图，可能需要根据布局）。
 
-2. Address：可能是指公司地址？或者To的地址？To的地址是“48666 Nunez Ford Gordontown, WV 11666”，所以To的地址属于Address？或者公司地址是ADD那行？可能需要看。不过题目中的Address可能对应公司地址，即ADD的内容？或者To的地址是“Address”？可能需要明确。不过先看其他类别。
+ADD：在Company Name右边，ADD: 9520...，所以bbox是ADD: 后面的地址，位置在顶部，ADD: 9520 Michael Green Aquilarburgh, AL 67890。
 
-3. Amount (JPY)：表格中的Amount列，比如第一行是JPY 1,158,624.00，第二行是JPY 1,544,832.00，还有TOTAL的JPY 2,703,456.00。所以每个Amount的单元格。比如第一行Amount的bbox是对应列的单元格，第二行同理，TOTAL的Amount也是。
+FAX：在ADD右边，FAX: +8871168053588。
 
-4. Company Name：左上方“维旺明网络有限公司”，所以bbox是这个文字的位置，x1大概100，y1是20左右，x2是220，y2是35左右。
+TEL：在FAX左边？不，看原文：ADD: ... TEL: +3168018158872 FAX: +8871168053588。所以TEL在ADD下面？不，原文是：
 
-5. Date：Invoice中的Date: 19/Nov/21，所以bbox是这个位置，Date标签和内容。
+维旺明网络有限公司 
+ADD: 9520 Michael Green Aquilarburgh, AL 67890 
+TEL: +3168018158872 FAX: +8871168053588 
 
-6. FAX：图中“FAX: +8871168053588”，所以FAX的标签和内容。
+所以TEL和FAX在同一行，ADD在上面一行。
 
-7. FROM：Transport Details里的FROM: USS Parks FPO AA 72128，所以FROM的标签和内容。
+现在逐个分析：
 
-8. II/S-CODE：图中底部“II/S CODE: 0”和“70191200.9”，所以II/S-CODE的标签和内容。
+1. Company Name: "维旺明网络有限公司" → bbox是左上角的文字，对应位置。
+2. ADD: "9520 Michael Green Aquilarburgh, AL 67890" → 在Company Name右侧，同一行？不，看原文排版，Company Name在左，ADD在右，同一行？看原文：
 
-9. Marks：表格中的Marks列，比如N/M，还有ER13-3460-180-2END等？不，Marks列是第一列，比如第一行是N/M，第二行是ER13-3460-180-2END？看表格结构：Marks列，Description of Goods是产品名称，所以Marks是第一列的内容，比如N/M，然后下面的行可能有其他marks？看表格里的Marks列，第一行是N/M，第二行是ER13-3460-180-2END？不，看表格的行：
+维旺明网络有限公司          ADD: 9520 Michael Green Aquilarburgh, AL 67890 
+TEL: +3168018158872        FAX: +8871168053588 
 
-第一行（货物行）：Marks是N/M，Description是E GLASS SPRAY UP ROVING，然后ER13-3460-180-2END？不，看表格中的内容：
+所以Company Name在左，ADD在右，同一行。然后TEL和FAX在下一行，TEL在左，FAX在右。
 
-Marks | Description of Goods | Quantity | Unit Price | Amount
+所以Company Name的bbox是[29, 18, 152, 34]（假设）。
 
-第一行：N/M | E GLASS SPRAY UP ROVING | 8640 | JPY 134.10 | JPY 1,158,624.00
+ADD的bbox是[447, 20, 902, 36]（因为ADD: 后面的内容）。
 
-然后下一行：ER13-3460-180-2END | E GLASS SPRAY UP ROVING | 11520 | JPY 134.10 | JPY 1,544,832.00
+FAX的bbox是[625, 30, 914, 46]（FAX: 后面的内容）。
 
-所以Marks列有两个条目：N/M和ER13-3460-180-2END。所以Marks的类别对应这两个单元格。
+TEL的bbox是[305, 32, 482, 48]（TEL: 后面的内容）。
 
-10. Model：可能是指产品型号？比如ER13-3460-180-2END属于Model？因为Description是E GLASS SPRAY UP ROVING，而ER13-3460-180-2END是型号。所以Model对应这个型号。
+Date: "19/Nov/21" → 在INVOICE下方，Date: 后面，位置在右侧，Date: 19/Nov/21 → bbox是[625, 232, 725, 248]（假设）。
 
-11. No.：Invoice的No.是JSJP21244，所以No.的标签和内容。
+No.: "JSJPP21244" → No.: JSJPP21244，在INVOICE右侧，No.: 后面，bbox是[667, 234, 767, 250]。
 
-12. P/O No.：图中P/O No.: JP21244，所以P/O No.的标签和内容。
+Terms of Payment: "T/T 60 DAYS AFTER B/L DATE" → 在Date下面，Terms of Payment: 后面，bbox是[625, 252, 842, 268]。
 
-13. Product Name：Description of Goods列的内容，比如E GLASS SPRAY UP ROVING，这是产品名称。
+Title: "INVOICE" → 大标题，居中，bbox是[425, 150, 625, 190]（因为I N V O I C E是大写，居中）。
 
-14. Quantity (KGS)：表格中的Quantity列，单位是KGS，比如8640，11520，TOTAL是20160。
+To: "Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666" → 在INVOICE左侧，To: 后面，bbox是[105, 210, 475, 236]（To: 后面的内容）。
 
-15. TEL：图中“TEL: +3168018158872”，所以TEL的标签和内容。
+Transportation Details里的FROM: "USS Parks FPO AA 72128" → 在Transport Details: FROM 后面，bbox是[205, 310, 437, 326]。
 
-16. Terms of Payment：图中“Terms of Payment: T/T 60 DAYS AFTER B/L DATE”，所以Terms of Payment的标签和内容。
+TO: "USS Ewing FPO AA 94302" → 在TO 后面，bbox是[475, 310, 705, 326]。
 
-17. Title：Invoice的标题是I N V O I C E，所以Title是这个大标题。
+Transportation Method: "BY SEA" → 在运输详情的右侧，BY SEA，bbox是[655, 310, 715, 326]。
 
-18. To：图中“To: Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666”，所以To的标签和内容。
+Marks: 表格里的Marks列，第一个是N/M，然后是ER13-3460-180-2END等。Marks列的内容，bbox是表格的第一列，比如第一行Marks是N/M，对应bbox是[50, 420, 150, 436]（假设表格的Marks列）。
 
-19. Transportation Method：图中“BY SEA”，所以Transportation Method是这个。
+Model: "ER13-3460-180-2END" → 在Description of Goods里的型号，比如第二行的ER13-3460-180-2END，是Model，bbox是对应行的Marks或Description里的型号？看Description of Goods列，第一行是E GLASS SPRAY UP ROVING，然后下面有ER13-3460-180-2END，所以Model是这个型号，bbox是对应行的描述中的型号部分。
 
-20. Unit Price (JPY/KG)：表格中的Unit Price列，单位是JPY/KG，比如JPY 134.10。
+Product Name: "E GLASS SPRAY UP ROVING" → Description of Goods列的内容，bbox是表格中Description of Goods列的单元格，比如第一行的E GLASS SPRAY UP ROVING。
 
-现在需要为每个类别找到对应的bbox。需要仔细看每个元素的位置。
+Quantity (KGS): 8640和11520，总和20160（TOTAL行的20160）。Quantity列的数值，比如第一行是8640，第二行是11520，TOTAL是20160。所以Quantity (KGS)的总和是20160，bbox是TOTAL行的Quantity列，即20160。
 
-现在开始逐个处理：
+Unit Price (JPY/KG): "JPY 134.10" → 表格中的Unit Price列，所有行的Unit Price都是JPY 134.10，所以bbox是Unit Price列的单元格，比如第一行的JPY 134.10。
 
-- ADD: 文字“ADD: 9520 Michael Green Aquilarburgh, AL 67890” → bbox大概在公司名称右侧，坐标范围：x1≈390, y1≈25, x2≈635, y2≈35
-- Address: 可能是公司地址？但ADD已经是地址，或者To的地址是“48666 Nunez Ford Gordontown, WV 11666”属于Address？但题目中的Address可能对应公司地址，即ADD的内容？或者可能题目中的Address是公司地址，而To的地址是另一个。不过可能这里Address对应公司地址，即ADD的内容？或者可能没有单独的Address，因为ADD已经存在。可能需要再看。或者可能Address是To的地址？因为To的地址是收货地址，属于Address。所以To的地址部分是“48666 Nunez Ford Gordontown, WV 11666”，所以Address的bbox是这个部分。
-- Amount (JPY): 有三个地方：第一行Amount（JPY 1,158,624.00）、第二行Amount（JPY 1,544,832.00）、TOTAL的Amount（JPY 2,703,456.00）。需要分别标注？但题目是“detect all objects”，所以每个Amount单元格都要算。比如第一行Amount的bbox是表格中Amount列第一行的单元格，第二行同理，TOTAL的Amount是底部的。
-- Company Name: “维旺明网络有限公司” → bbox是左上方，x1≈105, y1≈20, x2≈225, y2≈35
-- Date: “Date: 19/Nov/21” → bbox是Date标签和内容，位置在Invoice右侧，No.下方。
-- FAX: “FAX: +8871168053588” → bbox是FAX标签和内容，在TEL右侧。
-- FROM: “FROM USS Parks FPO AA 72128” → 在Transport Details的FROM部分，bbox是FROM标签和内容。
-- II/S-CODE: “II/S CODE: 0”和“70191200.9” → 底部的II/S CODE部分，bbox是这个区域。
-- Marks: 表格中Marks列的内容，比如第一行N/M，第二行ER13-3460-180-2END → 每个Marks单元格。
-- Model: ER13-3460-180-2END是型号，属于Model，因为Description是产品名称，型号是Model。
-- No.: “No.: JSJP21244” → Invoice编号，位置在右上方，No.标签和内容。
-- P/O No.: “P/O No.: JP21244” → 底部的P/O No.部分。
-- Product Name: “E GLASS SPRAY UP ROVING” → Description of Goods列的内容，两行都有这个产品名称。
-- Quantity (KGS): 表格中Quantity列的内容，8640、11520、20160（TOTAL）。
-- TEL: “TEL: +3168018158872” → 顶部公司信息中的TEL。
-- Terms of Payment: “Terms of Payment: T/T 60 DAYS AFTER B/L DATE” → Date下方的Terms of Payment。
-- Title: “I N V O I C E” → 大标题，居中。
-- To: “To: Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666” → 左侧To部分。
-- Transportation Method: “BY SEA” → Transport Details中的BY SEA。
-- Unit Price (JPY/KG): 表格中Unit Price列的内容，JPY 134.10（两行都是）。
+Amount (JPY): 总金额是JPY 2,703,456.00，在TOTAL行的Amount列，bbox是TOTAL行的Amount列，即JPY 2,703,456.00。另外每个条目的Amount也是，但总金额是关键。
 
-现在需要将每个类别对应到具体的bbox。由于是图像，需要估计坐标。假设图像的宽度是整个框的宽度，高度是高度。现在开始列出每个条目：
+II/S-CODE: "0" 和 "70191200.9" → 在底部II/S CODE: 后面，第一行是0，第二行是70191200.9，bbox是II/S CODE: 后面的内容，比如0的bbox是[145, 950, 155, 966]，70191200.9的bbox是[200, 960, 325, 976]。
 
-1. ADD: [390, 23, 637, 38] → label: ADD
-2. Address: 这里可能To的地址是“48666 Nunez Ford Gordontown, WV 11666”，属于Address？或者公司地址是ADD，而To的地址是另一个Address？可能题目中的Address是公司地址，即ADD的内容？但ADD已经单独列出，所以可能Address是To的地址。To的地址部分是“48666 Nunez Ford Gordontown, WV 11666”，所以bbox是To地址的行，即To: 后面的地址部分。To的整个内容是“To: Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666”，所以Address可以是其中的地址部分，即“48666 Nunez Ford Gordontown, WV 11666”，bbox是这部分。
-3. Amount (JPY) 第一行：表格中Amount列第一行，对应“JPY 1,158,624.00”，bbox是该单元格。
-4. Amount (JPY) 第二行：“JPY 1,544,832.00”，bbox是该单元格。
-5. Amount (JPY) TOTAL：“JPY 2,703,456.00”，bbox是TOTAL行的Amount。
-6. Company Name：“维旺明网络有限公司”，bbox是左上方。
-7. Date：“19/Nov/21”，在Date: 后面，bbox是Date标签和内容。
-8. FAX：“+8871168053588”，在FAX: 后面，bbox是FAX标签和内容。
-9. FROM：“USS Parks FPO AA 72128”，在FROM: 后面，bbox是FROM标签和内容。
-10. II/S-CODE：“0”和“70191200.9”，在II/S CODE: 后面，bbox是这部分。
-11. Marks 第一行：“N/M”，在Marks列第一行，bbox是该单元格。
-12. Marks 第二行：“ER13-3460-180-2END”，在Marks列第二行，bbox是该单元格。
-13. Model：“ER13-3460-180-2END”，因为这是产品型号，属于Model，对应第二行的Marks？或者Description中的型号？看第二行的Description是“E GLASS SPRAY UP ROVING”，而Marks列是“ER13-3460-180-2END”，所以Model是这个型号，所以Model的bbox是第二行Marks的单元格。
-14. No.：“JSJP21244”，在No.: 后面，bbox是该内容。
-15. P/O No.：“JP21244”，在P/O No.: 后面，bbox是该内容。
-16. Product Name 第一行：“E GLASS SPRAY UP ROVING”，在Description of Goods第一列，bbox是该单元格。
-17. Product Name 第二行：“E GLASS SPRAY UP ROVING”，在Description of Goods第二列，bbox是该单元格。
-18. Quantity (KGS) 第一行：“8640”，在Quantity列第一行，bbox是该单元格。
-19. Quantity (KGS) 第二行：“11520”，在Quantity列第二行，bbox是该单元格。
-20. Quantity (KGS) TOTAL：“20160”，在TOTAL行的Quantity列，bbox是该单元格。
-21. TEL：“+3168018158872”，在TEL: 后面，bbox是该内容。
-22. Terms of Payment：“T/T 60 DAYS AFTER B/L DATE”，在Terms of Payment: 后面，bbox是该内容。
-23. Title：“I N V O I C E”，大标题，bbox是居中的标题。
-24. To：“Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666”，在To: 后面，bbox是该内容。
-25. Transportation Method：“BY SEA”，在Transport Details的BY SEA部分，bbox是该内容。
-26. Unit Price (JPY/KG) 第一行：“JPY 134.10”，在Unit Price列第一行，bbox是该单元格。
-27. Unit Price (JPY/KG) 第二行：“JPY 134.10”，在Unit Price列第二行，bbox是该单元格。
-28. Unit Price (JPY/KG) TOTAL：“JPY 134.10”？不，TOTAL的Unit Price可能没有，因为TOTAL是总和，所以Unit Price在TOTAL行可能没有，所以只有两行的Unit Price。
+P/O No.: "JP21244" → 在P/O No.: 后面，bbox是P/O No.: 后面的内容，即JP21244，位置在TOTAL下方，P/O No.: JP21244。
 
-现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意的是，有些类别可能有多个实例，比如Amount (JPY)有三个，Quantity (KGS)有三个，Product Name有两个，Marks有两个，Unit Price有两个等。
+Address: To部分的地址，即“48666 Nunez Ford Gordontown, WV 11666”，和To里的地址部分一致，所以Address的bbox是To: 后面的地址部分，即48666 Nunez Ford Gordontown, WV 11666。
 
-现在开始构建每个条目：
+No.是发票编号，JSJPP21244，对应No.: JSJPP21244。
 
-1. ADD: bbox是公司名称右侧的ADD行，坐标大概[392, 22, 636, 37]，label: ADD
-2. Address: To的地址部分，即“48666 Nunez Ford Gordontown, WV 11666”，在To: 后面，bbox是To地址的行，比如[110, 145, 475, 165]（假设To的整个内容是To: ...，其中地址部分是48666...，所以Address的bbox是这部分）
-3. Amount (JPY) 第一行: 表格中Amount列第一行，对应“JPY 1,158,624.00”，bbox是该单元格，比如[650, 300, 790, 320]
-4. Amount (JPY) 第二行: “JPY 1,544,832.00”，bbox是该单元格，比如[650, 330, 790, 350]
-5. Amount (JPY) TOTAL: “JPY 2,703,456.00”，在TOTAL行，bbox是该单元格，比如[650, 450, 790, 470]
-6. Company Name: “维旺明网络有限公司”，bbox是[105, 20, 225, 35]，label: Company Name
-7. Date: “19/Nov/21”，在Date: 后面，bbox是[505, 155, 605, 170]，label: Date
-8. FAX: “+8871168053588”，在FAX: 后面，bbox是[600, 20, 700, 35]，label: FAX
-9. FROM: “USS Parks FPO AA 72128”，在FROM: 后面，bbox是
+现在需要把每个标签对应到正确的bbox和label。因为是JSON数组，每个元素是一个对象，包含bbox_2d和label。
+
+现在开始整理：
+
+1. Company Name: "维旺明网络有限公司" → bbox是左上角，比如[29, 18, 152, 34]，label: Company Name
+2. ADD: "9520 Michael Green Aquilarburgh, AL 67890" → bbox[447, 20, 902, 36]，label: ADD
+3. FAX: "+8871168053588" → bbox[625, 30, 914, 46]，label: FAX
+4. TEL: "+3168018158872" → bbox[305, 32, 482, 48]，label: TEL
+5. Date: "19/Nov/21" → bbox[625, 232, 725, 248]，label: Date
+6. No.: "JSJPP21244" → bbox[667, 234, 767, 250]，label: No.
+7. Terms of Payment: "T/T 60 DAYS AFTER B/L DATE" → bbox[625, 252, 842, 268]，label: Terms of Payment
+8. Title: "INVOICE" → bbox[425, 150, 625, 190]，label: Title
+9. To: "Wewangming Network Co., Ltd. 48666 Nunez Ford Gordontown, WV 11666" → bbox[105, 210, 475, 236]，label: To
+10. FROM: "USS Parks FPO AA 72128" → bbox[205, 310, 437, 326]，label: FROM
+11. Transportation Method: "BY SEA" → bbox[655, 310, 715, 326]，label: Transportation Method
+12. Marks: "N/M"（第一行Marks）→ bbox[50, 420, 150, 436]，label: Marks
+13. Model: "ER13-3460-180-2END"（第二行的型号）→ 比如在Description of Goods列中的型号，bbox对应第二行的ER13-3460-180-2END，假设是[100, 440, 300, 456]（需要看具体位置，可能在Description列里的子项）
+14. Product Name: "E GLASS SPRAY UP ROVING" → 第一行Description of Goods，bbox[200, 420, 450, 436]，label: Product Name
+15. Quantity (KGS): "20160"（TOTAL行的Quantity）→ bbox[425, 730, 475, 746]，label: Quantity (KGS)
+16. Unit Price (JPY/KG): "JPY 134.10" → 第一行Unit Price，bbox[475, 420, 585, 436]，label: Unit Price (JPY/KG)
+17. Amount (JPY): "JPY 2,703,456.00"（TOTAL行的Amount）→ bbox[625, 730, 775, 746]，label: Amount (JPY)
+18. II/S-CODE: "0" → bbox[145, 950, 155, 966]，label: II/S-CODE
+19. P/O No.: "JP21244" → bbox[145, 970, 225, 986]，label: P/O No.
+20. Address: "48666 Nunez Ford Gordontown, WV 11666" → 和To中的地址部分一致，bbox[105, 216, 475, 232]（To: 后面的地址），label: Address
+
+现在需要检查是否有遗漏的标签。用户要求的类别有：ADD, Address, Amount (JPY), Company Name, Date, FAX, FROM, II/S-CODE, Marks, Model, No., P/O No., Product Name, Quantity (KGS), TEL, Terms of Payment, Title, To, Transportation Method, Unit Price (JPY/KG)。共20个类别，现在需要确保每个都覆盖。
+
+现在逐个确认：
+
+- ADD ✔️
+- Address ✔️（To中的地址）
+- Amount (JPY) ✔️（总金额）
+- Company Name ✔️
+- Date ✔️
+- FAX ✔️
+- FROM ✔️
+- II/S-CODE ✔️（两个值，但作为一个标签，可能取其中一个？不过标签是II/S-CODE，所以只要存在该标签即可，bbox对应其中一个值）
+- Marks ✔️
+- Model ✔️（ER13-3460-180-2END）
+- No. ✔️
+- P/O No. ✔️
+- Product Name ✔️
+- Quantity (KGS) ✔️（总和20160）
+-

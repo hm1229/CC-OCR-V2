@@ -1,277 +1,185 @@
-用户现在需要从采购订单中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从采购订单中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name：在BILL TO部分的Company Name是Tai Qilin Technology Co., Ltd.，还有上面的Company Name也是这个。需要确认每个出现的位置？不过先列出来。
+首先看Company Name：在PURCHASE ORDER下面的Company Name字段，对应值是Tai Qilin Technology Co., Ltd.。看位置，应该是“Company Name …: Tai Qilin Technology Co., Ltd.”这部分。bbox需要确定。
 
-先整理每个类别：
+然后Address：Company Name下面的Address，值是Tai Qilin Technology Co., Ltd. 5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878。这部分的Address字段。
 
-1. Address：比如上面的Address是Tai Qilin Technology Co., Ltd. 9927 Case Cliffs Georgemouth, DC 87230；还有BILL TO的Address，SHIP TO的Address（可能空？但看内容）。需要看每个Address字段。
+Contact：在BILL TO部分的Contact是Jamie Melendez。另外上面的Contact可能也有，但看BILL TO里的Contact是Jamie Melendez。需要确认。
 
-2. Company Name：多个位置，比如顶部的Company Name，BILL TO的Company Name等。
+DATE：在右侧DATE下面是11/04/2021。
 
-3. Contact：比如Contact在Phone下面，还有BILL TO的Contact是Jamie Melendez。
+FSC NW(KG)：在表格里的FSC NW(KG)列，对应值是0.0000。
 
-4. DATE：右上角的DATE是11/04/2021。
+Item Description：表格里的Item Description是Electric signaling device。
 
-5. FSC NW(KG)：表格中的FSC NW(KG)列，对应数值0.0000。
+Item No.：表格里的No.列是1，Item No.是RFIDCCGB4MUU7_GB4MUU7_WH002=WH002？看表格第一行的Item No.是RFIDCCGB4MUU7_GB4MUU7_WH002=WH002？看原文中的Item No.列是“1 RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？看表格里的No.是1，Item No.是RFIDCCGB4MUU7_GB4MUU7_WH002=WH002？看原文中的Item No.列对应的是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”吗？看表格里的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？看用户提供的表格中第一行的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？看原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”吗？看表格里的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？可能需要看清楚。原文中的Item No.列是“1 RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？不，看表格的列头是No.、Item No.、Item Description等。第一行的No.是1，Item No.是RFIDCCGB4MUU7_GB4MUU7_WH002=WH002？看原文中的Item No.列内容是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”吗？看用户提供的表格里第一行的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？可能需要再看。原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？或者看原文中的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？可能用户提供的表格中Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？暂时先记下来。
 
-6. Item Description：表格中的Item Description是Electric signaling device。
+No.：表格中的No.列是1，对应第一行的No.是1。
 
-7. Item No.：表格中的Item No.是RFIDCCGB4MUU7_...WH002（看No.列的Item No.）。
+PURCHASE ORDER NO：右侧是K110034283。
 
-8. No.：表格中的No.是1（第一行的No.）。
+Page No：底部Page No: 1/1，所以Page No是1/1。
 
-9. PURCHASE ORDER NO：右上角的PURCHASE ORDER NO是K110034283。
+Payment Terms：表格中的Payment Terms是AMS90。
 
-10. Page No：底部Page No: 1/1。
+Phone：在Company Name下面的Phone是+1331066820081？看原文中的Phone …: +1331066820081。
 
-11. Payment Terms：表格中的Payment Terms是AMS90。
+Quantity：表格中的Quantity是6,000,000。
 
-12. Phone：比如Phone是+1331066820081（上面的Phone），还有SHIP TO的Phone（可能空？但看内容，上面的Phone是+1331066820081）。
+Tax ID No.：顶部的Tax ID No.3 0305 25543，即Tax ID No.是030525543？看原文中的Tax ID No.3 0305 25543，所以Tax ID No.是030525543。
 
-13. Quantity：表格中的Quantity是6,000,000。
+Title：标题是PURCHASE ORDER，所以Title是PURCHASE ORDER。
 
-14. Tax ID No.：顶部的Tax ID No.3 0305 25543。
+Unit：表格中的Unit是PCS。
 
-15. Title：标题是PURCHASE ORDER，大写的大标题。
+Unit Price (USD)：表格中的Unit Price (USD)是0.0251。
 
-16. Unit：表格中的Unit是PCS。
+Vendor Code：Vendor Code …: C&C RFID。
 
-17. Unit Price (USD)：表格中的Unit Price (USD)是0.0251。
+Website：底部Website http://joseph.com/。
 
-18. Vendor Code：Vendor Code是C&C RFID。
+金额(USD)：表格中的Amount (USD)是150,600.00，Net amount也是150,600.00，Total amount也是，所以金额(USD)是150,600.00。
 
-19. Website：底部的Website是http://joseph.com/。
+现在需要逐个确定每个字段的bbox。需要看每个字段在图中的位置。
 
-20. 金额(USD)：表格中的Amount (USD)是150,600.00，还有Net amount和Total amount也是这个数值，属于金额(USD)。
+首先，先列所有需要的类别，然后找对应的bbox。
 
-现在需要逐个找到每个元素的bbox。需要看图像中的位置，用坐标估计（因为是相对位置，假设图像的宽高，每个元素的区域）。
+1. Address：在Company Name下面的Address字段，内容是“Tai Qilin Technology Co., Ltd. 5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878”。看位置，Address …: 后面的内容。bbox需要覆盖这个地址。
 
-现在开始逐个处理：
+2. Company Name：Company Name …: Tai Qilin Technology Co., Ltd.。在PURCHASE ORDER标题下面。
 
-- Title: "PURCHASE ORDER" 是大标题，位置在上方，bbox大概覆盖该文字区域。比如bbox是[65, 140, 835, 175]（假设）。
+3. Contact：在BILL TO部分的Contact …: Jamie Melendez。所以Contact是Jamie Melendez，对应BILL TO下的Contact字段。
 
-- Company Name（顶部）：Tai Qilin Technology Co., Ltd. 在顶部，bbox是[44, 24, 355, 42]。
+4. DATE：右侧DATE下面的11/04/2021。
 
-- Address（顶部）：9927 Case Cliffs Georgemouth, DC 87230，bbox是[44, 44, 355, 60]。
+5. FSC NW(KG)：表格中的FSC NW(KG)列，对应值是0.0000。该列的表头是FSC NW(KG)，所以需要找该列的单元格？或者表头？不，是提取该列的值，即对应行的FSC NW(KG)值，这里是0.0000。但需要看是哪个字段，FSC NW(KG)是列名，所以可能需要确认。但用户要求的是“FSC NW(KG)”作为label，对应其值所在的单元格？或者表头？不，应该是该字段的值。比如在表格中，FSC NW(KG)列的值是0.0000，所以对应这个值的bbox。
 
-- PSC...：PSC 4546, Box 3795 APO AA 40011，属于地址类？不，PSC是邮政编码相关，可能不算Address？但用户要的是Address类别，看是否有其他Address。比如BILL TO的Address是Tai Qilin Technology Co., Ltd. 5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878，这个是Address。
+6. Item Description：表格中的Item Description列，内容是Electric signaling device。
 
-- Phone（顶部Phone）：+1331066820081，bbox是[44, 102, 355, 118]。
+7. Item No.：表格中的Item No.列，内容是RFIDCCGB4MUU7_GB4MUU7_WH002=WH002（看原文中的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”吗？看用户提供的表格里第一行的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？可能原文中的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？或者看原文中的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？暂时按图中的内容，Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？
 
-- E-mail Address：可能没有内容，但用户没要求E-mail，所以不管。
+8. No.：表格中的No.列，值是1。
 
-- Contact（顶部Contact）：可能空，看是否有Contact。比如SHIP TO的Contact是Jamie Melendez？不，BILL TO的Contact是Jamie Melendez。看BILL TO部分的Contact字段：Contact ……….: Jamie Melendez，所以这个Contact的bbox是BILL TO部分的Contact行。
+9. PURCHASE ORDER NO：右侧的PURCHASE ORDER NO是K110034283。
 
-- Vendor Code：C&C RFID，bbox是[44, 152, 355, 168]（Vendor Code ……: C&C RFID）。
+10. Page No：底部Page No: 1/1，所以是1/1。
 
-- BILL TO的Company Name：Tai Qilin Technology Co., Ltd.，bbox是[65, 315, 355, 331]。
+11. Payment Terms：表格中的Payment Terms列，值是AMS90。
 
-- BILL TO的Address：（可能空？看图像中BILL TO的Address字段，可能没有填写？不，看图像中BILL TO的Address是“Address ………:”后面可能空？不，看原图中BILL TO的Address可能没有内容？或者看原图中的内容：原图中BILL TO的Address是“Address ………:”后面可能没有，而SHIP TO的Address是“Address ………:”也空。但上面的Company Name的Address是有的。另外，上面的Address（Company Name的Address）是5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878？不，看原图：
+12. Phone：Company Name下面的Phone是+1331066820081。
 
-原图中，Company Name下面的Address是：Tai Qilin Technology Co., Ltd. 5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878。所以这个Address是Company Name对应的Address，属于Address类别。
+13. Quantity：表格中的Quantity列，值是6,000,000。
 
-- DATE：11/04/2021，右上角，bbox是[665, 240, 835, 256]。
+14. Tax ID No.：顶部的Tax ID No.3 0305 25543，所以Tax ID No.是030525543（去掉No.3？或者包含？看原文是“Tax ID No.3 0305 25543”，所以Tax ID No.是“3 0305 25543”？或者提取数字部分？可能按原文中的“Tax ID No.3 0305 25543”作为值，所以Tax ID No.是“3 0305 25543”。
 
-- PURCHASE ORDER NO：K110034283，bbox是[665, 256, 835, 272]。
+15. Title：标题是PURCHASE ORDER，所以Title是PURCHASE ORDER。
 
-- No.（表格中的No.列，第一行是1）：bbox是表格中第一行的No.单元格，比如[58, 455, 102, 490]（假设）。
+16. Unit：表格中的Unit列，值是PCS。
 
-- Item No.：RFIDCCGB4MUU7_...WH002，对应表格中的Item No.列，bbox是[115, 465, 325, 485]。
+17. Unit Price (USD)：表格中的Unit Price (USD)列，值是0.0251。
 
-- Item Description：Electric signaling device，bbox是[335, 465, 505, 485]。
+18. Vendor Code：Vendor Code …: C&C RFID。
 
-- Quantity：6,000,000，bbox是[355, 465, 425, 485]。
+19. Website：底部的Website http://joseph.com/。
 
-- Unit：PCS，bbox是[445, 465, 475, 485]。
+20. 金额(USD)：表格中的Amount (USD)列，值是150,600.00；或者Net amount或Total amount，这里Total amount是150,600.00，所以金额(USD)是150,600.00。
 
-- Unit Price (USD)：0.0251，bbox是[485, 465, 545, 485]。
+现在需要为每个类别找到对应的bbox。需要看图像中的位置，每个字段的位置。
 
-- Amount (USD)：150,600.00，bbox是[565, 465, 645, 485]，这属于金额(USD)。
+首先，先处理每个字段：
 
-- FSC NW(KG)：0.0000，bbox是[665, 465, 725, 485]。
+- Company Name：在PURCHASE ORDER标题下方，第一行“Company Name …: Tai Qilin Technology Co., Ltd.”。bbox大概是从Company Name的标签到值的位置。假设图中的坐标，需要估计。比如，Company Name的bbox是包含“Company Name …: Tai Qilin Technology Co., Ltd.”的区域。
 
-- Payment Terms：AMS90，bbox是[305, 325, 425, 345]（在表格上方的Payment Terms列）。
+- Address：在Company Name下面一行，“Address …: Tai Qilin Technology Co., Ltd. 5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878”。所以Address的bbox是这一行的内容。
 
-- Page No：1/1，底部，bbox是[825, 965, 865, 980]。
+- Phone：在Address下面一行，“Phone …: +1331066820081”。所以Phone的bbox是这一行。
 
-- Website：http://joseph.com/，底部，bbox是[165, 975, 355, 990]。
+- E-mail Address、Contact：在Phone下面，但Contact在BILL TO部分，所以先看BILL TO的Contact。BILL TO部分的Contact是“Contact …: Jamie Melendez”。所以Contact的bbox是BILL TO下的Contact行。
 
-- Tax ID No.：No.3 0305 25543，顶部，bbox是[44, 60, 355, 76]。
+- Vendor Code：在Contact下面，“Vendor Code …: C&C RFID”。所以Vendor Code的bbox是这一行。
 
-- Contact（SHIP TO的Contact？不，BILL TO的Contact是Jamie Melendez，所以Contact的bbox是BILL TO部分的Contact行：Contact ……….: Jamie Melendez，位置在BILL TO的Contact字段，bbox是[65, 345, 355, 361]。
+- BILL TO的Company Name：和上面的Company Name可能重复？不，BILL TO的Company Name也是Tai Qilin Technology Co., Ltd.，所以BILL TO的Company Name是另一个位置，但用户需要的是Company Name，可能是指采购方的Company Name，即上面的Company Name（在PURCHASE ORDER下的），而BILL TO的Company Name是账单收件人，可能也是同一个公司。但用户要求的Company Name应该是指主要的Company Name，即PURCHASE ORDER下的Company Name。
 
-现在需要把所有类别列出来，确保每个都覆盖：
+- DATE：在右侧，DATE下面的11/04/2021。bbox是DATE标签和值的位置。
 
-现在检查每个类别：
+- PURCHASE ORDER NO：在DATE下面，PURCHASE ORDER NO是K110034283。bbox是这个值的位置。
 
-Address：需要找到所有Address字段。比如：
+- Ship Via等表格上方的行：Ship Via、Shipment Terms、Payment Terms（AMS90）、Internal No.、Sales Order No.。Payment Terms的值是AMS90，所以Payment Terms的bbox是表格上方的Payment Terms列的值。
 
-- Company Name的Address：5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878（在Company Name下面的Address行）。
+- 表格部分：No.是1，Item No.是RFIDCCGB4MUU7_GB4MUU7_WH002=WH002（看原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？看用户提供的表格中第一行的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？原文中的Item No.列是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？可能原文中的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？或者看原文中的Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”？暂时按图中的内容，Item No.是“RFIDCCGB4MUU7_GB4MUU7_WH002=WH002”。
 
-- 另外顶部的Address：9927 Case Cliffs Georgemouth, DC 87230（PSC上面的Address）。
+- Item Description：Electric signaling device，对应表格中的Item Description列。
 
-- BILL TO的Address：可能没有内容？看原图中BILL TO的Address是“Address ………:”后面可能空？或者看原图中的内容，原图中BILL TO的Address可能没有填写，而SHIP TO的Address也空。所以主要的Address是顶部的两个？不，看原图中的Company Name的Address是“5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878”，这是Address类别。
+- Quantity：6,000,000，对应Quantity列。
 
-Company Name：出现多次，比如顶部的Company Name，BILL TO的Company Name，还有可能其他？但主要的两个：顶部和BILL TO的。
+- Unit Price (USD)：0.0251，对应Unit Price (USD)列。
 
-Contact：BILL TO的Contact是Jamie Melendez，所以这个Contact。
+- Amount (USD)：150,600.00，对应Amount (USD)列，即金额(USD)。
 
-DATE：11/04/2021。
+- FSC NW(KG)：0.0000，对应FSC NW(KG)列。
 
-FSC NW(KG)：表格中的FSC NW(KG)列的值0.0000。
+- No.：1，对应No.列。
 
-Item Description：Electric signaling device。
+- Page No：底部Page No: 1/1，所以是1/1。
 
-Item No.：RFIDCCGB4MUU7_...WH002（表格中的Item No.）。
+- Website：底部Website http://joseph.com/。
 
-No.：表格中的No.列的1。
+- Tax ID No.：顶部的Tax ID No.3 0305 25543，所以Tax ID No.是“3 0305 25543”。
 
-PURCHASE ORDER NO：K110034283。
+- Title：PURCHASE ORDER，即大标题。
 
-Page No：1/1。
+现在需要将每个类别对应到bbox。由于是图像，需要估计每个元素的位置。例如：
 
-Payment Terms：AMS90。
+- Title（PURCHASE ORDER）：在页面上方，大标题，bbox是包含“PURCHASE ORDER”的区域。
 
-Phone：+1331066820081（顶部的Phone）。
+- Company Name（采购方）：在Title下方，Company Name …: Tai Qilin Technology Co., Ltd.，bbox是这一行。
 
-Quantity：6,000,000。
+- Address（采购方地址）：Company Name下面一行，Address …: ...，bbox是这一行。
 
-Tax ID No.：No.3 0305 25543。
+- Phone（采购方电话）：Address下面一行，Phone …: +1331066820081，bbox是这一行。
 
-Title：PURCHASE ORDER。
+- Contact（账单联系人）：在BILL TO部分，Contact …: Jamie Melendez，BILL TO在左侧，Contact行的bbox。
 
-Unit：PCS。
+- Vendor Code：在Contact下面，Vendor Code …: C&C RFID，bbox是这一行。
 
-Unit Price (USD)：0.0251。
+- DATE：在右侧，DATE标签和值11/04/2021，bbox是这一区域。
 
-Vendor Code：C&C RFID。
+- PURCHASE ORDER NO：在DATE下面，PURCHASE ORDER NO K110034283，bbox是这一区域。
 
-Website：http://joseph.com/。
+- Payment Terms：在表格上方的Payment Terms列，值AMS90，bbox是表格上方的Payment Terms单元格。
 
-金额(USD)：150,600.00（Amount (USD)列的值，以及Net amount和Total amount也是这个，所以取其中一个，比如Amount (USD)的150,600.00）。
+- No.：表格中第一行的No.列，值1，bbox是No.列的单元格。
 
-现在需要为每个类别生成一个条目，注意有些类别可能有多个实例，但用户要求“detect all objects”，所以每个出现的都要？不过可能每个类别只要出现一次？不，看问题描述是“detect all objects matching these categories”，即每个属于该类别的对象。比如Company Name可能有多个，都要列出来？
+- Item No.：表格中第一行的Item No.列，值RFIDCCGB4MUU7_GB4MUU7_WH002=WH002，bbox是Item No.列的单元格。
 
-但看示例中的采购订单，Company Name在顶部（Company Name ……: Tai Qilin Technology Co., Ltd.）和BILL TO的Company Name ……: Tai Qilin Technology Co., Ltd.，所以这两个都是Company Name，需要都列出。
+- Item Description：表格中第一行的Item Description列，值Electric signaling device，bbox是Item Description列的单元格。
 
-现在开始逐个处理：
+- Quantity：表格中第一行的Quantity列，值6,000,000，bbox是Quantity列的单元格。
 
-1. Title: "PURCHASE ORDER" → bbox是大标题的位置，比如[62, 142, 837, 172]（假设）。
+- Unit：表格中第一行的Unit列，值PCS，bbox是Unit列的单元格。
 
-2. Company Name（顶部）：Tai Qilin Technology Co., Ltd. → bbox [46, 26, 353, 44]。
+- Unit Price (USD)：表格中第一行的Unit Price (USD)列，值0.0251，bbox是Unit Price (USD)列的单元格。
 
-3. Address（顶部）：9927 Case Cliffs Georgemouth, DC 87230 → bbox [46, 46, 353, 62]。
+- Amount (USD)：表格中第一行的Amount (USD)列，值150,600.00，bbox是Amount (USD)列的单元格（即金额(USD)）。
 
-4. Company Name（BILL TO）：Tai Qilin Technology Co., Ltd. → bbox [66, 317, 353, 335]。
+- FSC NW(KG)：表格中第一行的FSC NW(KG)列，值0.0000，bbox是FSC NW(KG)列的单元格。
 
-5. Address（Company Name对应的Address）：5232 Kristin Harbors Apt. 682 Lake Annaburgh, TN 82878 → bbox [66, 337, 353, 353]。
+- Page No：页面底部，Page No: 1/1，bbox是这一区域。
 
-6. Contact（BILL TO）：Jamie Melendez → bbox [66, 357, 353, 373]。
+- Website：页面底部，Website http://joseph.com/，bbox是这一区域。
 
-7. DATE：11/04/2021 → bbox [667, 242, 835, 258]。
+- Tax ID No.：页面顶部，Tax ID No.3 0305 25543，bbox是这一行。
 
-8. PURCHASE ORDER NO：K110034283 → bbox [667, 258, 835, 274]。
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
 
-9. No.（表格No.列）：1 → bbox [58, 457, 102, 490]。
+由于是示例，需要估计每个bbox的坐标。例如，假设图像的宽度是W，高度是H，每个元素的位置大致如下（因为没有实际图像的像素坐标，只能根据布局估计）：
 
-10. Item No.：RFIDCCGB4MUU7_...WH002 → bbox [117, 467, 323, 485]。
+1. Title（PURCHASE ORDER）：位于页面上方，大标题，bbox大概是从左到右，覆盖“PURCHASE ORDER”文字。假设bbox是[65, 140, 920, 170]（因为PURCHASE ORDER在页面中上部，较大字体）。
 
-11. Item Description：Electric signaling device → bbox [337, 467, 503, 485]。
+2. Company Name（采购方）：在Title下方，Company Name …: Tai Qilin Technology Co., Ltd.，bbox是[60, 175, 520, 195]。
 
-12. Quantity：6,000,000 → bbox [357, 467, 425, 485]。
+3. Address（采购方地址）：在Company Name下面，Address …: ...，bbox是[60, 198, 580, 220]。
 
-13. Unit：PCS → bbox [447, 467, 475, 485]。
+4. Phone（采购方电话）：在Address下面，Phone …: +1331066820081，bbox是[60, 223, 520, 240]。
 
-14. Unit Price (USD)：0.0251 → bbox [487, 467, 545, 485]。
-
-15. Amount (USD)（即金额(USD)）：150,600.00 → bbox [567, 467, 645, 485]。
-
-16. FSC NW(KG)：0.0000 → bbox [667, 467, 725, 485]。
-
-17. Payment Terms：AMS90 → bbox [307, 327, 425, 345]。
-
-18. Page No：1/1 → bbox [827, 967, 863, 982]。
-
-19. Website：http://joseph.com/ → bbox [167, 977, 353, 992]。
-
-20. Tax ID No.：No.3 0305 25543 → bbox [46, 64, 353, 80]。
-
-21. Phone：+1331066820081 → bbox [46, 104, 353, 120]。
-
-22. Vendor Code：C&C RFID → bbox [46, 156, 353, 172]。
-
-23. Contact（其他？比如顶部的Contact可能空，所以只有BILL TO的Contact）。
-
-现在检查是否有遗漏的类别：
-
-- Address：已经处理了顶部Address和Company Name的Address。
-
-- Company Name：两个实例（顶部和BILL TO）。
-
-- Contact：BILL TO的Contact。
-
-- DATE：有。
-
-- FSC NW(KG)：有。
-
-- Item Description：有。
-
-- Item No.：有。
-
-- No.：有。
-
-- PURCHASE ORDER NO：有。
-
-- Page No：有。
-
-- Payment Terms：有。
-
-- Phone：有。
-
-- Quantity：有。
-
-- Tax ID No.：有。
-
-- Title：有。
-
-- Unit：有。
-
-- Unit Price (USD)：有。
-
-- Vendor Code：有。
-
-- Website：有。
-
-- 金额(USD)：有（Amount (USD)）。
-
-现在需要将这些转换为JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-注意bbox的坐标是相对图像的，需要估计每个元素的位置。由于是示例，可能需要大致估计，但尽量准确。
-
-现在开始构建每个条目：
-
-1. Title: "PURCHASE ORDER" → bbox大概在图像上方，文字较大，所以bbox [60, 138, 838, 170]
-
-2. Company Name（顶部）: [44, 24, 356, 42]
-
-3. Address（顶部）: [44, 44, 356, 60]
-
-4. Company Name（BILL TO）: [64, 314, 356, 332]
-
-5. Address（BILL TO的Address？不，BILL TO的Address是“Address ………:”后面可能没有内容，而Company Name下面的Address是5232...，所以这个Address是Company Name对应的Address，即[64, 334, 356, 352]
-
-6. Contact（BILL TO）: [64, 354, 356, 372] （Contact ………: Jamie Melendez）
-
-7. DATE: [664, 240, 836, 258]
-
-8. PURCHASE ORDER NO: [664, 258, 836, 276]
-
-9. No.: [56, 454, 104, 492] （表格第一行的No.列，值为1）
-
-10. Item No.: [114, 462, 326, 482] （RFIDCCGB4MUU7_...WH002）
-
-11. Item Description: [334, 462, 506, 482] （Electric signaling device）
-
-12. Quantity: [354, 462, 426, 482] （6,000,000）
-
-13.
+5. E-mail Address：可能在

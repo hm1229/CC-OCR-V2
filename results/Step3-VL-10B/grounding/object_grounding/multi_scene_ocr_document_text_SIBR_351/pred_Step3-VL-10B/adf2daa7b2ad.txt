@@ -1,262 +1,236 @@
-用户现在需要从销售合同里提取指定类别的对象，每个对象要标bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从销售合同中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看Company Name：图顶部“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”，所以这个是Company Name。
+首先看Company Name：图顶部是“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”，所以这个是公司名称。
 
-Address：公司地址，比如“30337 Zachary Mountain Suite 997 Annaside, ID 49657”和“湖南省英县魏都石家庄路C座 657649”这两个地址，需要确认。看图片里的地址部分，上面的英文地址和下面的中文地址都是Address。
+Address：公司地址是“30337 Zachary Mountain Suite 997 Annaside, ID 49657 湖南省英县魏都石家庄路C座 657649”，这部分是地址。
 
-Contact Person：Buyer和Consignee里的Contact Person，比如Buyer的Nina Lutz，Consignee的Cory Martin，这两个都是Contact Person。
+Contact Person：Buyer的Contact Person是Nina Lutz，Consignee的是Cory Martin。需要看哪个Contact Person？可能需要看对应的。比如Buyer的Contact Person是Nina Lutz，Consignee的是Cory Martin。但需要确定每个Contact Person的标签。不过先列出来。
 
-Contract No.：图中Contract No.对应的是HCNC20211019X-3，看右边的Contract No.字段。
+Contract No.：图中Contract No.是HCNC20211019X-3，对应位置。
 
-From：Shipped by部分的From是Wuhan, CHINA，属于From。
+From：Shipped by的From是Wuhan, CHINA。
 
-Invoice Date：Invoice Date是28 October 2021。
+Invoice Date：28 October 2021。
 
-Invoice No.：Invoice No.是HCNC20211019X-3。
+Invoice No.：HCNC20211019X-3。
 
-Item：表格里的Item列，第一行是1，对应Item的标识。
+Item：表格中的Item是1，对应CNC System (whole set)。
 
 Payment Terms：100% by T/T in advance。
 
-Phone number：Buyer的Phone number是3077811990，Consignee的是0790718913，这两个都是Phone number。
+Phone number：Buyer的Phone number是3077811990，Consignee的是0790718913。
 
-Price Terms：CFR RIJEKA。
+Price Terms：CFR RIJeka。
 
-Product Name：CNC System (whole set) Type: HNC-808XPM，属于Product Name。
+Product Name：CNC System (whole set)。
 
-Qty.：表格里的Qty.列，第一行是1，第二行可能也是？看表格里Qty.列的数值，第一行是1，第二行可能空？但Total里的Qty.？不，看表格中的Qty.列，第一行是1，第二行可能没有？看表格结构，Item 1下面的Qty.是1，然后下面还有一行可能是其他？不过图中Item 1的Qty.是1，然后下面有个300的可能是其他费用？不过先看明确的。
+Qty.：1（第一行）和可能的其他？看表格中Qty.列是1（第一行）和可能的另一行？看表格里第一行Qty是1，第二行可能没有？看表格里的Item 1下的Qty是1，然后下面有个300的可能是其他？不，看Total Amount是3096，其中2796+300=3096。所以Item 1的Qty是1，然后可能另一个项目？不过看表格里的Item列是1，然后下面的行可能对应其他？不过先看主要的。
 
 Requested by：HuaZhongCNC。
 
-Shipped by：Sea？不，Shipped by: Sea？看Shipped by字段，图中Shipped by: Sea？不，看Shipped by: 后面是Sea？不，看原文“Shipped by: Sea”？不，原文是“Shipped by:”然后下面是“Sea”？不，看图片中的“Shipped by:”后面是“Sea”吗？看图片里的“Shipped by:”下面是“Sea”？不，看“Shipped by:”右边的内容，应该是运输方式？不，看“Shipped by:”后面是“Sea”？然后“From”是Wuhan, CHINA，“To”是CROATIA。所以Shipped by可能是指承运方？但图中Shipped by: 后面是“Sea”？可能我看错了。再看原文：
+Shipped by：Sea（因为Shipped by: Sea）。
 
-Shipped by: 
-AWB# or B/L# 
-From To 
-Wuhan, CHINA 
-CROATIA 
+Tax number：Buyer和Consignee的Tax number都是HR55024332149。
 
-所以Shipped by: 这里可能没有内容？或者Shipped by是“Sea”？不，可能Shipped by是指运输方式？不，可能图中的“Shipped by:”后面是空白？或者看“Shipped by:”对应的是运输方式？可能需要再检查。不过先处理其他。
+Title：SALES CONTRACT是标题。
 
-Tax number：Buyer和Consignee的Tax number都是HR55024332149，所以Tax number是这个。
+To：Shipped by的To是CROATIA。
 
-Title：标题是“SALES CONTRACT”，所以Title是这个。
+Total USD：3,096.00。
 
-To：CROATIA，是To字段。
+Type：HNC-808XPM（在CNC System的Type字段）。
 
-Total USD：Total Amount是$3,096.00，所以Total USD是这个数值。
+Unit：set（第一行的Unit是set）。
 
-Type：CNC System的Type是HNC-808XPM，属于Type。
+Unit price USD/set：2,796.00（第一行的Unit price）。
 
-Unit：表格中的Unit是set，所以Unit是set。
+传真/FAX：+63-88-70076128（图中的传真信息）。
 
-Unit price USD/set：第一行的Unit price是$2,796.00，第二行是$300.00？不，看表格里的Unit price USD/set列，第一行是$2,796.00，第二行可能对应另一个项目？图中Item 1下面有两行？不，看表格结构：
+电话/TEL：+83-60-78061782（图中的电话信息）。
 
-Item | P/N & Description | Qty. | Unit | Unit price USD/set | Total USD
-1 | CNC System (whole set) Type: HNC-808XPM | 1 | set | $2,796.00 | $2,796.00
-| | | | $300.00 | $300.00
-Total Amount | | | | $3,096.00 | $3,096.00
+AMOUNT IN WORDS：SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY。
 
-所以Unit price USD/set列有两个数值？但可能第二行是其他费用，比如运费？不过不管，先提取存在的。
-
-电话/TEL：图中的“电话/TEL:+83-60-78061782”
-
-传真/FAX：“传真/FAX:+63-88-70076128”
-
-AMOUNT IN WORDS：“SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY.”
-
-现在需要逐个列出每个类别，找到对应的bbox。
+现在需要逐个对应每个标签，找到它们的bbox。
 
 现在开始逐个处理：
 
-1. Company Name：顶部的“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”。bbox大概是[125, 28, 875, 47]左右？看图片中的公司名称位置，第一行是“东方峻景网络有限公司”，第二行是英文。所以bbox是包含这两行的区域。
+1. Company Name：图顶部的“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”，bbox是包含这两行的区域。看坐标，公司名称在上方，所以bbox大概是[125, 28, 875, 47]左右？需要看图片中的位置。原图片中公司名称是“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”，所以bbox是[120, 26, 878, 48]。
 
-2. Address：有两个地址，英文地址“30337 Zachary Mountain Suite 997 Annaside, ID 49657”和中文地址“湖南省英县魏都石家庄路C座 657649”。需要分别找。英文地址在公司名称下面，中文地址在电话/传真上面。所以两个Address实例？但可能用户需要所有Address，所以两个都要。
+2. Address：公司地址是“30337 Zachary Mountain Suite 997 Annaside, ID 49657 湖南省英县魏都石家庄路C座 657649”，这部分在公司名称下方，所以bbox是[100, 50, 660, 72]左右？看原文中的地址行：“30337 Zachary Mountain Suite 997 Annaside, ID 49657 湖南省英县魏都石家庄路C座 657649”，所以bbox是包含这行的区域。
 
-3. Contact Person：Buyer的Contact Person是Nina Lutz，Consignee的是Cory Martin。所以两个Contact Person。
+3. Contact Person：Buyer的Contact Person是Nina Lutz，位于Buyer部分。Buyer的Contact Person行是“Contact Person:Nina Lutz”，所以bbox是Buyer区域内的Contact Person部分。Consignee的Contact Person是Cory Martin，位于Consignee部分。需要确定是哪个Contact Person？可能需要看问题中的Contact Person，可能有两个，但先看Buyer的。Buyer的Contact Person的bbox：在Buyer列下的Contact Person行，即“Contact Person:Nina Lutz”所在的区域，大概在Buyer表格的第二行。
 
-4. Contract No.：右边的Contract No.是HCNC20211019X-3，对应字段“Contract No.:”后面的值。
+4. Contract No.：图中Contract No.是HCNC20211019X-3，位于右侧的列，对应“Contract No.: HCNC20211019X-3”，所以bbox是该行的区域。
 
-5. From：Shipped by部分的From是Wuhan, CHINA。
+5. From：Shipped by的From是Wuhan, CHINA，位于“From”列，对应“From Wuhan, CHINA”，所以bbox是该位置。
 
-6. Invoice Date：Invoice Date: 28 October 2021。
+6. Invoice Date：28 October 2021，位于Invoice Date: 后面，所以bbox是该行。
 
-7. Invoice No.：Invoice No.: HCNC20211019X-3。
+7. Invoice No.：HCNC20211019X-3，位于Invoice No.: 后面，所以bbox是该行。
 
-8. Item：表格中的Item列，第一行是1，所以Item的标识是“1”所在的单元格。
+8. Item：表格中的Item列是1，对应第一行的Item是1，所以bbox是Item列的单元格，值为1。
 
-9. Payment Terms：100% by T/T in advance。
+9. Payment Terms：100% by T/T in advance，位于Payment Terms: 后面，所以bbox是该行。
 
-10. Phone number：Buyer的Phone number:3077811990；Consignee的Phone number:0790718913。两个Phone number。
+10. Phone number：Buyer的Phone number是3077811990，位于Buyer的Phone number行；Consignee的Phone number是0790718913，位于Consignee的Phone number行。需要看哪个？可能两个都要，但先看Buyer的。
 
-11. Price Terms：CFR RIJEKA。
+11. Price Terms：CFR RIJeka，位于Price Terms: 后面，所以bbox是该行。
 
-12. Product Name：CNC System (whole set) Type: HNC-808XPM，属于Product Name。
+12. Product Name：CNC System (whole set)，位于P&N & Description列，所以bbox是该单元格。
 
-13. Qty.：表格中Qty.列的数值，第一行是1，第二行可能空？但Total里的Qty.？不，看表格中Qty.列，第一行是1，对应Item 1的数量。
+13. Qty.：1（第一行的Qty列），所以bbox是Qty列的单元格，值为1。
 
-14. Requested by：HuaZhongCNC。
+14. Requested by：HuaZhongCNC，位于Requested by: 后面，所以bbox是该行。
 
-15. Shipped by：图中“Shipped by:”后面的内容？看原文“Shipped by:”下面是“Sea”？不，看“Shipped by:”右边的区域，可能Shipped by是指运输方式？或者可能Shipped by是“Sea”？或者可能图中的“Shipped by:”后面没有内容，而“From”和“To”是运输的起止。可能Shipped by是指承运商，但图中可能没有明确，不过看原文“Shipped by:”后面是“Sea”？不，再看图片中的“Shipped by:”下面是“Sea”吗？看图片中的“Shipped by:”行，下面是“AWB# or B/L#”，然后“From”是Wuhan, CHINA，“To”是CROATIA。所以Shipped by可能是指运输方式是Sea，所以Shipped by的值是Sea？
+15. Shipped by：Sea，位于Shipped by: 后面，所以bbox是该行。
 
-16. Tax number：Buyer和Consignee的Tax number都是HR55024332149，所以两个Tax number实例？
+16. Tax number：HR55024332149，Buyer和Consignee的Tax number都是这个，所以bbox是Tax number行的单元格。
 
-17. Title：SALES CONTRACT，是标题。
+17. Title：SALES CONTRACT，位于大标题，所以bbox是“SALES CONTRACT”所在的行。
 
-18. To：CROATIA，是To字段的值。
+18. To：CROATIA，位于Shipped by的To列，对应“To CROATIA”，所以bbox是该行。
 
-19. Total USD：Total Amount是$3,096.00，所以Total USD是这个数值。
+19. Total USD：3,096.00，位于Total Amount行的Total列，所以bbox是该单元格。
 
-20. Type：CNC System的Type是HNC-808XPM。
+20. Type：HNC-808XPM，位于CNC System的Type字段，所以bbox是该单元格。
 
-21. Unit：表格中的Unit是set。
+21. Unit：set，位于Unit列，对应第一行的Unit是set，所以bbox是该单元格。
 
-22. Unit price USD/set：第一行的Unit price是$2,796.00，第二行是$300.00？不，看表格中Unit price USD/set列，第一行是$2,796.00，第二行对应的是另一个项目的unit price？比如可能第二行是其他费用，比如安装费？但图中第二行的Unit price是$300.00，所以有两个Unit price USD/set的值？
+22. Unit price USD/set：2,796.00，位于Unit price列，对应第一行的Unit price是2,796.00，所以bbox是该单元格。
 
-23. 电话/TEL：+83-60-78061782。
+23. 传真/FAX：+63-88-70076128，位于图中的“传真/FAX: +63-88-70076128”，所以bbox是该行。
 
-24. 传真/FAX：+63-88-70076128。
+24. 电话/TEL：+83-60-78061782，位于图中的“电话/TEL:+83-60-78061782”，所以bbox是该行。
 
-25. AMOUNT IN WORDS：SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY.
+25. AMOUNT IN WORDS：SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY，位于图中的AMOUNT IN WORDS: 后面，所以bbox是该行。
 
-现在需要为每个类别找到对应的bbox，注意每个实例。比如Address有两个，Contact Person有两个，Phone number有两个，Tax number有两个，等等。
+现在需要为每个标签找到对应的bbox。由于是图像，需要估计每个元素的位置。以下是逐个的JSON条目：
 
-现在开始逐个列出，确保每个类别都覆盖：
+- Company Name: bbox是公司名称的区域，即“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”，对应坐标大概是[122, 24, 876, 46]
+- Address: 公司地址行，即“30337 Zachary Mountain Suite 997 Annaside, ID 49657 湖南省英县魏都石家庄路C座 657649”，bbox是[98, 52, 662, 74]
+- Contact Person (Buyer): “Contact Person:Nina Lutz”在Buyer部分，Buyer的Contact Person行，bbox是Buyer表格内的对应行，比如Buyer列下的Contact Person，大概在[150, 140, 380, 162]
+- Contract No.: “Contract No.: HCNC20211019X-3”在右侧列，bbox是[680, 230, 920, 252]
+- From: “From Wuhan, CHINA”在Shipped by的From列，bbox是[580, 330, 720, 352]
+- Invoice Date: “28 October 2021”在Invoice Date: 后面，bbox是[680, 240, 850, 262]
+- Invoice No.: “HCNC20211019X-3”在Invoice No.: 后面，bbox是[680, 210, 850, 232]
+- Item: 表格中Item列的值1，bbox是[70, 370, 120, 392]（Item列的单元格）
+- Payment Terms: “100% by T/T in advance”在Payment Terms: 后面，bbox是[580, 380, 780, 402]
+- Phone number (Buyer): “Phone number:3077811990”在Buyer部分，bbox是[150, 170, 380, 192]
+- Price Terms: “CFR RIJeka”在Price Terms: 后面，bbox是[580, 350, 780, 372]
+- Product Name: “CNC System (whole set)”在P&N & Description列，bbox是[190, 380, 450, 402]
+- Qty.: 表格中Qty列的值1，bbox是[320, 370, 360, 392]
+- Requested by: “HuaZhongCNC”在Requested by: 后面，bbox是[680, 250, 850, 272]
+- Shipped by: “Sea”在Shipped by: 后面，bbox是[580, 310, 620, 332]
+- Tax number (Buyer): “Tax number:HR55024332149”在Buyer部分，bbox是[150, 190, 380, 212]
+- Title: “SALES CONTRACT”大标题，bbox是[330, 250, 670, 272]
+- To: “CROATIA”在Shipped by的To列，bbox是[680, 340, 850, 362]
+- Total USD: “$ 3,096.00”在Total Amount行的Total列，bbox是[720, 420, 850, 442]
+- Type: “HNC-808XPM”在CNC System的Type字段，bbox是[220, 390, 320, 412]
+- Unit: “set”在Unit列，bbox是[400, 370, 430, 392]
+- Unit price USD/set: “$ 2,796.00”在Unit price列，bbox是[470, 370, 600, 392]
+- 传真/FAX: “传真/FAX:+63-88-70076128”在图中的传真行，bbox是[90, 60, 230, 82]
+- 电话/TEL: “电话/TEL:+83-60-78061782”在图中的电话行，bbox是[90, 62, 230, 84]
+- AMOUNT IN WORDS: “SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY”在AMOUNT IN WORDS: 后面，bbox是[70, 450, 850, 472]
 
-- Company Name: 包含“东方峻景网络有限公司 Dongfang Junjing Network Co., Ltd.”的区域。bbox大概是从顶部公司名称的位置，比如x1=120, y1=25, x2=875, y2=45（假设图片坐标，需要看实际位置，但大致范围）。
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。需要注意坐标的准确性，可能需要根据图像的布局调整，但大致范围正确即可。
 
-- Address: 第一个英文地址“30337 Zachary Mountain Suite 997 Annaside, ID 49657”；第二个中文地址“湖南省英县魏都石家庄路C座 657649”。这两个都是Address。
+另外，检查是否有遗漏的标签。比如Consignee的Contact Person是Cory Martin，是否需要包含？问题中的Contact Person可能指Buyer或Consignee，但需要看。原问题中的Contact Person可能需要两个？但先看问题中的类别是“Contact Person”，可能需要确定。不过原问题中的类别是“Contact Person”，可能需要看哪个。但根据图中的Buyer和Consignee都有Contact Person，可能需要都包含？但原问题中的类别是“Contact Person”，可能需要看是否有多个。但先处理Buyer的，因为可能用户需要的是主要的。不过可能需要再检查。
 
-- Contact Person: Buyer的Nina Lutz；Consignee的Cory Martin。两个。
+另外，Shipped by的值是“Sea”，所以Shipped by的label对应。
 
-- Contract No.: HCNC20211019X-3（在Contract No.字段）。
+现在，将所有24个标签（AMOUNT IN WORDS, Address, Company Name, Contact Person, Contract No., From, Invoice Date, Invoice No., Item, Payment Terms, Phone number, Price Terms, Product Name, Qty., Requested by, Shipped by, Tax number, Title, To, Total USD, Type, Unit, Unit price USD/set, 传真/FAX, 电话/TEL）共25个？数一下：
 
-- From: Wuhan, CHINA（在From字段）。
+1. AMOUNT IN WORDS
+2. Address
+3. Company Name
+4. Contact Person
+5. Contract No.
+6. From
+7. Invoice Date
+8. Invoice No.
+9. Item
+10. Payment Terms
+11. Phone number
+12. Price Terms
+13. Product Name
+14. Qty.
+15. Requested by
+16. Shipped by
+17. Tax number
+18. Title
+19. To
+20. Total USD
+21. Type
+22. Unit
+23. Unit price USD/set
+24. 传真/FAX
+25. 电话/TEL
 
-- Invoice Date: 28 October 2021（在Invoice Date字段）。
+共25个类别，需要确保每个都有对应的bbox。
 
-- Invoice No.: HCNC20211019X-3（在Invoice No.字段）。
-
-- Item: 表格中Item列的“1”（第一行Item单元格）。
-
-- Payment Terms: 100% by T/T in advance（在Payment Terms字段）。
-
-- Phone number: Buyer的3077811990；Consignee的0790718913。两个。
-
-- Price Terms: CFR RIJEKA（在Price Terms字段）。
-
-- Product Name: CNC System (whole set) Type: HNC-808XPM（在P/N & Description列）。
-
-- Qty.: 表格中Qty.列的“1”（第一行Qty单元格）。
-
-- Requested by: HuaZhongCNC（在Requested by字段）。
-
-- Shipped by: Sea？或者看“Shipped by:”后面的内容，图中“Shipped by:”下面是“Sea”吗？看原文“Shipped by:”右边的区域，可能Shipped by是指运输方式，即Sea。所以Shipped by的值是Sea。
-
-- Tax number: Buyer的HR55024332149；Consignee的HR55024332149。两个。
-
-- Title: SALES CONTRACT（大标题）。
-
-- To: CROATIA（在To字段）。
-
-- Total USD: $3,096.00（Total Amount行的Total USD列）。
-
-- Type: HNC-808XPM（在Product Name的Type部分）。
-
-- Unit: set（在Unit列）。
-
-- Unit price USD/set: $2,796.00（第一行Unit price列）；$300.00（第二行Unit price列？因为第二行可能对应其他费用，比如运费？但图中第二行的Unit price是$300.00，Total是$300.00，所以这两个都是Unit price USD/set的值）。
-
-- 电话/TEL: +83-60-78061782（在电话/TEL字段）。
-
-- 传真/FAX: +63-88-70076128（在传真/FAX字段）。
-
-- AMOUNT IN WORDS: SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY.（在AMOUNT IN WORDS字段）。
-
-现在需要将这些转换为JSON数组，每个元素是bbox和label。需要注意bbox的准确性，因为是图片中的位置，需要估计每个元素的位置。
+现在，编写每个的JSON条目：
 
 例如：
 
-Company Name的bbox：假设公司名称在图片上方，从x=100到x=900，y=20到y=40左右。
-
-Address（英文）：在公司名称下方，电话/传真上方，内容是“30337 Zachary Mountain Suite 997 Annaside, ID 49657”。
-
-Address（中文）：在英文地址下方，电话/传真上方，内容是“湖南省英县魏都石家庄路C座 657649”。
-
-Contact Person（Buyer）：在Buyer部分的Contact Person: Nina Lutz。
-
-Contact Person（Consignee）：在Consignee部分的Contact Person: Cory Martin。
-
-Contract No.：在右侧Contract No.: HCNC20211019X-3。
-
-From：在Shipped by部分的From: Wuhan, CHINA。
-
-Invoice Date：在Invoice Date: 28 October 2021。
-
-Invoice No.：在Invoice No.: HCNC20211019X-3。
-
-Item：在表格的Item列，第一行的“1”。
-
-Payment Terms：在Payment Terms: 100% by T/T in advance。
-
-Phone number（Buyer）：在Buyer部分的Phone number:3077811990。
-
-Phone number（Consignee）：在Consignee部分的Phone number:0790718913。
-
-Price Terms：在Price Terms: CFR RIJEKA。
-
-Product Name：在P/N & Description列的“CNC System (whole set) Type: HNC-808XPM”。
-
-Qty.：在表格的Qty.列，第一行的“1”。
-
-Requested by：在Requested by: HuaZhongCNC。
-
-Shipped by：在Shipped by: Sea（假设Shipped by的值是Sea，因为运输方式是Sea）。
-
-Tax number（Buyer）：在Buyer部分的Tax number: HR55024332149。
-
-Tax number（Consignee）：在Consignee部分的Tax number: HR55024332149。
-
-Title：在“SALES CONTRACT”这个大标题。
-
-To：在To: CROATIA。
-
-Total USD：在Total Amount行的Total USD列，值为$3,096.00。
-
-Type：在Product Name中的“HNC-808XPM”。
-
-Unit：在表格的Unit列，值为“set”。
-
-Unit price USD/set（第一行）：在Unit price列，值为$2,796.00。
-
-Unit price USD/set（第二行）：在Unit price列，值为$300.00（因为第二行的Total是$300.00，所以Unit price也是$300.00，Qty可能是1？）。
-
-电话/TEL：在“电话/TEL:+83-60-78061782”。
-
-传真/FAX：在“传真/FAX:+63-88-70076128”。
-
-AMOUNT IN WORDS：在“AMOUNT IN WORDS: SAY U.S. DOLLARS THREE THOUSAND AND NINETY-SIX ONLY.”。
-
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。由于是图像，bbox的坐标需要大致估计，比如以图片的宽度和高度为参考，假设图片宽度是1000，高度是1000（实际可能不同，但这里按相对位置）。
-
-例如，Company Name的bbox可能是[100, 20, 900, 45]。
-
-Address（英文）：[50, 50, 600, 75]。
-
-Address（中文）：[50, 75, 600, 95]。
-
-Contact Person（Buyer）：[100, 100, 400, 150]（假设Buyer部分的位置）。
-
-Contact Person（Consignee）：[100, 200, 400, 250]。
-
-Contract No.：[700, 100, 900, 120]。
-
-From：[700, 300, 850, 320]（From: Wuhan, CHINA）。
-
-Invoice Date：[600, 150, 750, 170]（Invoice Date: 28 October 2021）。
-
-Invoice No.：[600, 120, 750, 140]（Invoice No.: HCNC20211019X-3）。
-
-Item：[50, 300, 100, 320]（表格的Item列，第一行的“1”）。
-
-Payment Terms：[60
+{
+  "bbox_2d": [120, 24, 878, 48],
+  "label": "Company Name"
+},
+{
+  "bbox_2d": [98, 52, 662, 74],
+  "label": "Address"
+},
+{
+  "bbox_2d": [150, 142, 380, 164],
+  "label": "Contact Person"
+},
+{
+  "bbox_2d": [682, 232, 920, 254],
+  "label": "Contract No."
+},
+{
+  "bbox_2d": [582, 332, 720, 354],
+  "label": "From"
+},
+{
+  "bbox_2d": [682, 242, 850, 264],
+  "label": "Invoice Date"
+},
+{
+  "bbox_2d": [682, 212, 850, 234],
+  "label": "Invoice No."
+},
+{
+  "bbox_2d": [70, 372, 120, 394],
+  "label": "Item"
+},
+{
+  "bbox_2d": [582, 382, 780, 404],
+  "label": "Payment Terms"
+},
+{
+  "bbox_2d": [150, 172, 380, 194],
+  "label": "Phone number"
+},
+{
+  "bbox_2d": [582, 352, 780, 374],
+  "label": "Price Terms"
+},
+{
+  "bbox_2d": [192, 382, 450, 404],
+  "label": "Product Name"
+},
+{
+  "bbox_2d": [322, 372, 362, 394],
+  "label": "Qty."
+},
+{
+  "bbox_2d": [682, 252, 850, 274],
+  "label": "Requested by"
+},
+{
+  "bbox_2d": [582, 312, 622, 334],
+  "label": "Shipped by"
+},
+{
+  "bbox_2d": [150, 19

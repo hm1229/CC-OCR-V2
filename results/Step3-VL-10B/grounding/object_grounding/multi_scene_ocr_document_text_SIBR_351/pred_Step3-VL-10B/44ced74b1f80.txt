@@ -1,1 +1,166 @@
-[{"bbox_2d": [122, 31, 875, 66], "label": "COMPANY NAME"}, {"bbox_2d": [100, 132, 462, 163], "label": "ADD"}, {"bbox_2d": [102, 354, 156, 374], "label": "BUYER"}, {"bbox_2d": [674, 146, 862, 168], "label": "BUYER NO."}, {"bbox_2d": [540, 146, 736, 168], "label": "CONTRACT NO."}, {"bbox_2d": [674, 180, 824, 199], "label": "DATE"}, {"bbox_2d": [260, 440, 494, 460], "label": "Descriptions Of Goods"}, {"bbox_2d": [674, 200, 984, 222], "label
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个识别每个类别。
+
+首先看COMPANY NAME：上海申钛国际贸易有限公司，对应的英文是SHANGHAI SHENTAI INTERNATIONAL TRADING CO., LTD。看顶部的标题部分，所以bbox是包含这两个名称的区域。
+
+然后ADD：地址是PSC 3377, Box 3142 APO AA 67504 USNV Turner FPO AP 52896，对应ADD标签下的内容。
+
+BUYER：是CS，看BUYER: CS那里的内容。
+
+BUYER NO.：OAF - 2101385，对应BUYER NO.标签下的内容。
+
+CONTRACT NO.：O/C-2021-08-366，合同号。
+
+DATE：SEP, 09, 2021，日期。
+
+Descriptions Of Goods：TITANIUM SHEETS/PLATES，商品描述。
+
+FAX：8275-688-27000318，传真号。
+
+INVOICE NO：O/C-2021-08-366，发票号。
+
+Mark&Nos：TITANIUM，标记和编号。
+
+SAY：TOTAL USD DOLLARS 15139.18 ONLY，SAY后面的内容。
+
+TEL：0527-088-82866031，电话。
+
+TITLE：这里可能看“COMMERCIAL INVOICE”是标题？不过用户给的类别里有TITLE吗？看用户给的类别列表里有TITLE，可能对应发票的标题“COMMERCIAL INVOICE”？不过先检查每个类别。
+
+Weight (KG)：582.50，重量。
+
+Unit Price (USD/KG)：25.99，单价。
+
+Amount (USD)：15139.18，金额。
+
+现在逐个确定每个元素的bbox。需要看图片中的位置。
+
+先处理COMPANY NAME：顶部的公司名称，中英文，所以bbox是[133, 33, 866, 66]左右？看图片里的第一行是“上海申钛国际贸易有限公司”，下面是英文，所以这个区域的bbox。
+
+然后SELLER是Lingyun Technology Co., Ltd.，但用户没要求SELLER，所以不管。
+
+现在逐个列：
+
+1. ADD：对应ADD: 后面的地址，看ADD标签下的内容，bbox是[100, 137, 462, 168]（大概，看原文ADD: PSC 3377... 所以bbox范围是ADD标签到地址内容）。
+
+2. Amount (USD)：表格里的Amount列，对应TITANIUM行的15139.18，以及TOTAL行的15139.18。看TOTAL行的Amount是15139.18，所以bbox是TOTAL行的Amount单元格，或者看SAY里的金额？不过SAY是TOTAL USD DOLLARS 15139.18 ONLY，所以Amount (USD)可能指商品行的Amount和总金额。但用户需要检测对应的值，可能每个Amount对应。不过先看表格中的Amount列，TITANIUM行的Amount是15139.18，TOTAL行也是。所以需要确定哪个。但用户要求是“Detect the corresponding values to the following categories”，所以每个类别对应一个值。比如Amount (USD)可能指总金额，即TOTAL行的Amount，或者SAY里的。不过看SAY是“TOTAL USD DOLLARS 15139.18 ONLY”，所以SAY对应这个。而Amount (USD)在表格里是每行的金额，这里只有一行商品，所以Amount (USD)是15139.18（商品行）和15139.18（TOTAL）。但可能需要看哪个。不过先按类别对应。
+
+现在开始逐个处理：
+
+- COMPANY NAME: 上海申钛国际贸易有限公司 / SHANGHAI SHENTAI INTERNATIONAL TRADING CO., LTD。bbox是顶部的标题，即从“上海申钛...”到英文，所以bbox大概[130, 27, 869, 60]（因为上面有横线，所以范围是横线内的文字）。
+
+- ADD: 对应ADD: 后面的地址，即“PSC 3377, Box 3142 APO AA 67504 USNV Turner FPO AP 52896”。bbox是ADD标签下的内容，ADD: 后面的文本，所以bbox是[102, 140, 461, 170]（大概，看原文ADD: 后面的三行地址）。
+
+- BUYER: BUYER: CS，所以BUYER是CS，bbox是BUYER: 后面的内容，即“CS”，位置在“BUYER: CS”那里，所以bbox是[102, 337, 146, 358]（大概，看FROM: CS？不，看图片中“BUYER: CS”在FROM下面？看图片里的“FROM:”和“BUYER: CS”，所以BUYER: CS的bbox是对应位置。
+
+- BUYER NO.: OAF - 2101385，对应BUYER NO.: 后面的内容，bbox是[540, 152, 696, 172]左右。
+
+- CONTRACT NO.: O/C-2021-08-366，对应CONTRACT NO.: 后面的内容，bbox是[540, 140, 726, 160]。
+
+- DATE: SEP, 09, 2021，对应DATE: 后面的内容，bbox是[540, 180, 666, 200]。
+
+- Descriptions Of Goods: TITANIUM SHEETS/PLATES，对应表格中的Descriptions Of Goods列，内容是这个，bbox是表格中该列的单元格，即“TITANIUM SHEETS/PLATES”所在的单元格。
+
+- FAX: 8275-688-27000318，对应FAX: 后面的内容，bbox是[540, 230, 736, 250]。
+
+- INVOICE NO: O/C-2021-08-366，对应INVOICE NO: 后面的内容，bbox是[440, 337, 626, 357]（因为INVOICE NO: O/C-2021-08-366在发票标题下面）。
+
+- Mark&Nos: TITANIUM，对应表格中的Mark&Nos列，内容是TITANIUM，bbox是该列的单元格。
+
+- SAY: TOTAL USD DOLLARS 15139.18 ONLY，对应SAY: 后面的内容，bbox是TOTAL下面的SAY行，即“SAY: TOTAL USD DOLLARS 15139.18 ONLY”。
+
+- TEL: 0527-088-82866031，对应TEL: 后面的内容，bbox是TEL: 后面的文本，即“0527-088-82866031”。
+
+- TITLE: 这里可能指的是“COMMERCIAL INVOICE”作为标题，因为发票的标题是COMMERCIAL INVOICE，所以TITLE对应这个。bbox是“COMMERCIAL INVOICE”的位置，即发票标题部分。
+
+- Unit Price (USD/KG): 25.99，对应表格中的Unit Price列，内容是25.99，bbox是该列的单元格。
+
+- Weight (KG): 582.50，对应表格中的Weight列，内容是582.50，bbox是该列的单元格。
+
+现在需要为每个类别生成对应的bbox和label。需要注意每个元素在图中的位置，可能需要更精确的坐标，但因为是示意图，大致范围即可。
+
+现在开始列出每个条目：
+
+1. COMPANY NAME: 包含“上海申钛国际贸易有限公司”和“SHANGHAI SHENTAI INTERNATIONAL TRADING CO., LTD”的区域。bbox大约是[125, 25, 875, 65]（因为上面有横线，所以是横线内的文字）。
+
+2. ADD: ADD: 后面的地址，即“PSC 3377, Box 3142 APO AA 67504 USNV Turner FPO AP 52896”。bbox是[100, 137, 464, 172]（三行地址）。
+
+3. Amount (USD): 表格中TITANIUM行的Amount是15139.18，或者TOTAL行的Amount。看TOTAL行的Amount是15139.18，所以对应TOTAL行的Amount单元格。bbox是表格中TOTAL行的Amount列，即“15139.18”在TOTAL行的Amount位置。或者SAY里的金额，但SAY是另一部分。可能Amount (USD)对应商品行的Amount，即15139.18（TITANIUM行的Amount）。需要看表格结构：表格有Mark&Nos, Descriptions Of Goods, Weight (KG), Unit Price (USD/KG), Amount (USD)。所以TITANIUM行的Amount是15139.18，TOTAL行的Amount也是15139.18。所以Amount (USD)可以是这两个中的一个，但用户可能需要总金额，即TOTAL行的。或者看SAY是总金额的说明。不过先处理表格中的Amount列，TITANIUM行的Amount是15139.18，所以bbox是该单元格。
+
+4. BUYER: BUYER: CS，所以内容是CS，bbox是“BUYER: CS”中的CS部分，即位置在“BUYER:”后面，所以bbox是[140, 337, 162, 356]（大概）。
+
+5. BUYER NO.: OAF - 2101385，对应BUYER NO.: 后面的内容，bbox是[542, 150, 694, 170]。
+
+6. CONTRACT NO.: O/C-2021-08-366，对应CONTRACT NO.: 后面的内容，bbox是[542, 138, 724, 158]。
+
+7. DATE: SEP, 09, 2021，对应DATE: 后面的内容，bbox是[542, 178, 664, 198]。
+
+8. Descriptions Of Goods: TITANIUM SHEETS/PLATES，对应表格中该列的单元格，内容是这个，bbox是表格中Descriptions Of Goods列的TITANIUM SHEETS/PLATES单元格，即[300, 440, 520, 460]左右。
+
+9. FAX: 8275-688-27000318，对应FAX: 后面的内容，bbox是[542, 228, 734, 248]。
+
+10. INVOICE NO: O/C-2021-08-366，对应INVOICE NO: 后面的内容，bbox是[442, 335, 624, 355]（因为INVOICE NO: 在COMMERCIAL INVOICE的右侧）。
+
+11. Mark&Nos: TITANIUM，对应表格中Mark&Nos列的单元格，内容是TITANIUM，bbox是[260, 440, 310, 460]。
+
+12. SAY: TOTAL USD DOLLARS 15139.18 ONLY，对应SAY: 后面的文本，bbox是[100, 650, 390, 670]（因为SAY在TOTAL下面）。
+
+13. TEL: 0527-088-82866031，对应TEL: 后面的内容，bbox是[102, 210, 336, 230]（TEL: 0527-088-82866031）。
+
+14. TITLE: COMMERCIAL INVOICE，对应发票的标题，即“COMMERCIAL INVOICE”这个标题，bbox是[370, 360, 629, 385]（因为发票标题是COMMERCIAL INVOICE，在“发票”两个字的下面？不，图片中“发票”是中文，下面是COMMERCIAL INVOICE，所以TITLE是COMMERCIAL INVOICE，bbox是该文字的位置，即[360, 355, 640, 380]。
+
+15. Unit Price (USD/KG): 25.99，对应表格中Unit Price列的单元格，内容是25.99，bbox是[520, 440, 590, 460]（TITANIUM行的Unit Price）。
+
+16. Weight (KG): 582.50，对应表格中Weight列的单元格，内容是582.50，bbox是[400, 440, 470, 460]（TITANIUM行的Weight）。
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意，有些类别可能在图中没有明确的单独区域，比如TITLE可能对应COMMERCIAL INVOICE，而“发票”是中文标题，但用户给的类别有TITLE，所以可能TITLE是COMMERCIAL INVOICE。
+
+现在逐一确认每个类别：
+
+- COMPANY NAME: 存在，是顶部的公司名称。
+- ADD: 存在，地址。
+- Amount (USD): 存在，表格中的Amount列的值（比如TITANIUM行的15139.18）。
+- BUYER: 存在，CS。
+- BUYER NO.: 存在，OAF-2101385。
+- CONTRACT NO.: 存在，O/C-2021-08-366。
+- DATE: 存在，SEP,09,2021。
+- Descriptions Of Goods: 存在，TITANIUM SHEETS/PLATES。
+- FAX: 存在，8275-688-27000318。
+- INVOICE NO: 存在，O/C-2021-08-366。
+- Mark&Nos: 存在，TITANIUM。
+- SAY: 存在，TOTAL USD DOLLARS 15139.18 ONLY。
+- TEL: 存在，0527-088-82866031。
+- TITLE: 存在，COMMERCIAL INVOICE。
+- Unit Price (USD/KG): 存在，25.99。
+- Weight (KG): 存在，582.50。
+
+现在为每个生成bbox，尽量准确。因为是示意图，可能需要估计坐标，但大致范围。
+
+例如：
+
+COMPANY NAME的bbox：从“上海申钛...”到英文，上下是横线，所以x1=120, y1=20, x2=880, y2=60。
+
+ADD的bbox：ADD: 后面的地址，x1=100, y1=135, x2=460, y2=175（因为地址有三行）。
+
+Amount (USD)：TITANIUM行的Amount是15139.18，对应表格中Amount列的单元格，x1=650, y1=440, x2=780, y2=460。
+
+BUYER：BUYER: CS，x1=140, y1=335, x2=165, y2=355。
+
+BUYER NO.：OAF-2101385，x1=540, y1=150, x2=695, y2=170。
+
+CONTRACT NO.：O/C-2021-08-366，x1=540, y1=135, x2=725, y2=155。
+
+DATE：SEP,09,2021，x1=540, y1=175, x2=665, y2=195。
+
+Descriptions Of Goods：TITANIUM SHEETS/PLATES，x1=300, y1=440, x2=520, y2=460。
+
+FAX：8275-688-27000318，x1=540, y1=225, x2=735, y2=245。
+
+INVOICE NO：O/C-2021-08-366，x1=440, y1=335, x2=625, y2=355。
+
+Mark&Nos：TITANIUM，x1=260, y1=440, x2=310, y2=460。
+
+SAY：TOTAL USD DOLLARS 15139.18 ONLY，x1=100, y1=650, x2=390, y2=670。
+
+TEL：0527-088-82866031，x1=102, y1=210, x2

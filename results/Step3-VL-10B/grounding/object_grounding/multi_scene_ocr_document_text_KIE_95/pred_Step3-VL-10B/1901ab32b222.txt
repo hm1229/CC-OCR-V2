@@ -1,10 +1,66 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The invoice has "01-02-2018" which is the date. Let's check where that is. It's in the section with the time, so the date is 01-02-2018.
+
+doc_no_receipt_no: The tax invoice number is 192636. Let's find that. It says "TAX INVOICE NO : 192636".
+
+seller_address: The address of the store. Let's look at the top part: "PASARAYA BORONG SUPER SEVEN NO. 1 Jalan Euro 1 Off Jalan Batu Tiga Sungai Buloh Seksyen U3 Shah Alam,40150". That's the seller address.
+
+seller_gst_id: The GST ID is given as "GST ID : 000639090688".
+
+seller_name: The company name is "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)".
+
+seller_phone: The telephone number is "TEL : 03-78590861".
+
+total_amount: The net total is RM42.10, which is the total amount after rounding. Let's check "Net Total 42.10".
+
+total_tax: The GST amount is 2.01 RM, as seen in the GST Summary under SR (6%) Tax Amt is 2.01.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The text "01-02-2018" is in the middle left, next to the time. Let's check the coordinates. The line is "01-02-2018 09:52:50 AM (RM)". So the date part is "01-02-2018".
+
+2. doc_no_receipt_no: "TAX INVOICE NO : 192636" — the number is 192636.
+
+3. seller_address: The address lines from "PASARAYA BORONG..." down to "40150".
+
+4. seller_gst_id: "GST ID : 000639090688" — the ID is 000639090688.
+
+5. seller_name: "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)" and "PASARAYA BORONG SUPER SEVEN" — the main company name is the first line.
+
+6. seller_phone: "TEL : 03-78590861" — the phone number.
+
+7. total_amount: "Net Total 42.10" — the amount is 42.10.
+
+8. total_tax: In GST Summary, SR (6%) Tax Amt is 2.01.
+
+Now, let's define each bounding box.
+
+For date: The text "01-02-2018" is located in the section below the operator, so the coordinates would be around where that date is printed. Let's check the image: the line is "01-02-2018 09:52:50 AM (RM)". So the date is the first part of that line.
+
+doc_no_receipt_no: The tax invoice number is "192636" in "TAX INVOICE NO : 192636".
+
+seller_address: The address block includes multiple lines: "PASARAYA BORONG SUPER SEVEN", "NO. 1 Jalan Euro 1", "Off Jalan Batu Tiga", "Sungai Buloh Seksyen U3 Shah Alam,40150". So the bounding box covers these lines.
+
+seller_gst_id: The line "GST ID : 000639090688" — the ID is the number after GST ID.
+
+seller_name: The top part: "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)" and "PASARAYA BORONG SUPER SEVEN" — the main company name is the first line, but the store name is also part of it. Let's take the first line as the seller name.
+
+seller_phone: The line "TEL : 03-78590861" — the phone number.
+
+total_amount: The "Net Total" line shows "42.10" (RM42.10).
+
+total_tax: The GST Summary's Tax Amt for SR (6%) is 2.01.
+
+Now, let's structure each entry with bbox and label.
+</think>
 [
-    {"bbox_2d": [45, 600, 200, 625], "label": "date"},
-    {"bbox_2d": [205, 530, 305, 548], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [40, 200, 525, 295], "label": "seller_address"},
-    {"bbox_2d": [105, 305, 285, 322], "label": "seller_gst_id"},
-    {"bbox_2d": [40, 14, 325, 35], "label": "seller_name"},
-    {"bbox_2d": [115, 335, 235, 352], "label": "seller_phone"},
-    {"bbox_2d": [250, 700, 335, 720], "label": "total_amount"},
-    {"bbox_2d": [335, 835, 375, 852], "label": "total_tax"}
+    {"bbox_2d": [45, 527, 190, 546], "label": "date"},
+    {"bbox_2d": [144, 557, 265, 574], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [44, 102, 593, 197], "label": "seller_address"},
+    {"bbox_2d": [104, 297, 337, 314], "label": "seller_gst_id"},
+    {"bbox_2d": [44, 64, 337, 82], "label": "seller_name"},
+    {"bbox_2d": [104, 304, 246, 321], "label": "seller_phone"},
+    {"bbox_2d": [264, 622, 337, 640], "label": "total_amount"},
+    {"bbox_2d": [334, 707, 377, 724], "label": "total_tax"}
 ]

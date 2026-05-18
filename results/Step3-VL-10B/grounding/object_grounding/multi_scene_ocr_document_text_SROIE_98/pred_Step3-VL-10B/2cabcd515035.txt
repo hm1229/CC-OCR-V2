@@ -1,6 +1,310 @@
+Got it, let's look at the receipt and identify each category.
+
+First, company: The top has CALTEX BIRU PETROLEUM. Let's check the text. The company name is CALTEX BIRU PETROLEUM.
+
+Address: The address lines are KELANA JAYA. 47301 PETALING SELANGOR DARUL EHSAN. Let's find that section.
+
+Date: The date is on the transaction part, 11/16 (from the timestamp 11/16 09:58...). So the date is 11/16.
+
+Total: The total amount before tax is RM 6.40. Let's check the "Total" line.
+
+Now, let's map each:
+
+Company: The text "CALTEX BIRU PETROLEUM" is in the upper part. Let's get the bounding box.
+
+Address: The lines starting with KELANA JAYA... up to GST No. So the address block.
+
+Date: The date part is in the transaction details, the "te" line has 11/16.
+
+Total: The "Total" line shows RM 6.40.
+
+Let's check each element's position.
+
+For company: The logo and text. The company name is "CALTEX BIRU PETROLEUM". Let's find the bounding box.
+
+Looking at the image, the company is in the upper center. The text "CALTEX" is with the star, then "BIRU PETROLEUM" below. So the company label's text is that.
+
+Address: The lines below Co.No: ... up to GST No. So the address is "KELANA JAYA. 47301 PETALING SELANGOR DARUL EHSAN."
+
+Date: The date is part of the transaction timestamp: "11/16" in "11/16 09:58...".
+
+Total: The line "Total RM 6.40".
+
+Now, let's define each bounding box.
+
+First, company: The text "CALTEX BIRU PETROLEUM" is in the header. Let's check the coordinates. The company name is in the upper part, so the bounding box would cover that area.
+
+Address: The address lines are from "KELANA JAYA. 47301 PETALING" to "SELANGOR DARUL EHSAN." So that's the address.
+
+Date: The date is in the transaction section, where it says "11/16" (the date part of the timestamp).
+
+Total: The "Total" line, which is "Total RM 6.40".
+
+Let's extract each:
+
+1. Company: The text "CALTEX BIRU PETROLEUM" – the bounding box around that text.
+
+2. Address: The address lines: "KELANA JAYA. 47301 PETALING SELANGOR DARUL EHSAN."
+
+3. Date: The date "11/16" from the timestamp "11/16 09:58 64051...".
+
+4. Total: The total amount "RM 6.40" from the "Total" line.
+
+Now, let's check the image for exact positions.
+
+For company: The text is centered above the Co.No. So the bounding box for company is the area containing "CALTEX" and "BIRU PETROLEUM".
+
+Address: The lines below Co.No: "Co.No:001684044-P" then the address lines. So the address is the block starting with KELANA JAYA.
+
+Date: In the transaction details, there's a line with "te" (date) and then "11/16 09:58...". So the date is "11/16".
+
+Total: The line labeled "Total" with value RM 6.40.
+
+Now, let's create the JSON entries.
+
+First, company:
+
+{"bbox_2d": [245, 175, 755, 202], "label": "company"} – wait, need to check the actual text. The company name is "CALTEX BIRU PETROLEUM". Let's see the image: the text is "CALTEX" with the star, then below "BIRU PETROLEUM". So the company's text is in that area.
+
+Address: The address is "KELANA JAYA. 47301 PETALING SELANGOR DARUL EHSAN." Let's find the bounding box for that.
+
+Date: The date is part of the timestamp: "11/16" in the line "11/16 09:58 64051 01 0004 437". So the date is "11/16".
+
+Total: The "Total" line: "Total RM 6.40".
+
+Let me check each element's location on the image.
+
+- Company: The text "CALTEX BIRU PETROLEUM" is in the upper part, centered. The bounding box would be around that text.
+
+- Address: The lines from "KELANA JAYA. 47301 PETALING" to "SELANGOR DARUL EHSAN." So that's the address.
+
+- Date: The date is in the transaction section, where it's written as "11/16" (the day/month/year part of the timestamp).
+
+- Total: The line that says "Total RM 6.40".
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text "CALTEX" is with the star logo, then "BIRU PETROLEUM" below. So the company's text is in the area:
+
+The star logo is at the top, then "CALTEX" is next to it, then below that "BIRU PETROLEUM". So the company name includes both. Let's take the bounding box that covers "CALTEX BIRU PETROLEUM".
+
+Looking at the image, the coordinates for company would be the region where "CALTEX" and "BIRU PETROLEUM" are printed.
+
+For address:
+
+The address lines are:
+
+KELANA JAYA. 47301 PETALING
+
+SELANGOR DARUL EHSAN.
+
+So the bounding box for address is the area containing these lines.
+
+For date:
+
+The date is in the transaction details, the line that has "te" (date) and then the date "11/16". So the date part is "11/16".
+
+For total:
+
+The line labeled "Total" with the amount RM 6.40.
+
+Now, let's write the JSON array.
+
+First, company:
+
+{"bbox_2d": [242, 192, 757, 220], "label": "company"} – approximate, but need to check.
+
+Alternatively, let's check the exact text positions.
+
+Another approach: look for each label.
+
+Company: The text "CALTEX BIRU PETROLEUM" – the company name.
+
+Address: The address is the location of the petrol station: "KELANA JAYA. 47301 PETALING SELANGOR DARUL EHSAN."
+
+Date: The transaction date is "11/16" (from the timestamp "11/16 09:58...").
+
+Total: The total amount before tax is "RM 6.40" (from the "Total" line).
+
+Now, let's confirm each:
+
+- Company: The text "CALTEX BIRU PETROLEUM" is present. Bounding box around that.
+
+- Address: The address lines are present. Bounding box around those lines.
+
+- Date: The date "11/16" is in the transaction details.
+
+- Total: The total amount is "6.40 RM" (or RM 6.40).
+
+Now, let's create the entries.
+
+1. Company: The text "CALTEX BIRU PETROLEUM" is in the header. Let's find the coordinates. The image has the CALTEX logo and text. The bounding box for company would be the area containing "CALTEX" and "BIRU PETROLEUM".
+
+2. Address: The address is the block starting with "KELANA JAYA. 47301 PETALING" down to "SELANGOR DARUL EHSAN.".
+
+3. Date: The date is part of the transaction timestamp: "11/16" (the first part of the date-time string).
+
+4. Total: The line labeled "Total" with value "RM 6.40".
+
+Now, let's check the image for the total. The "Total" line is:
+
+Total RM 6.40
+
+Yes, that's the total.
+
+Date: The transaction date is "11/16" (from "11/16 09:58...").
+
+Address: The address lines are:
+
+KELANA JAYA. 47301 PETALING
+
+SELANGOR DARUL EHSAN.
+
+Company: CALTEX BIRU PETROLEUM.
+
+Now, let's assign bounding boxes.
+
+For company:
+
+The text "CALTEX" is above "BIRU PETROLEUM". Let's take the bounding box that includes both. The coordinates would be around the center top.
+
+For address:
+
+The address is below the Co.No line. Let's check the lines:
+
+Co.No:001684044-P
+
+KELANA JAYA. 47301 PETALING
+
+SELANGOR DARUL EHSAN.
+
+GST No.001410277376
+
+So the address is the two lines between Co.No and GST No.
+
+For date:
+
+In the transaction section, there's a line with "te" (date) and then the date "11/16". The timestamp is "11/16 09:58 64051 01 0004 437". So the date part is "11/16".
+
+For total:
+
+The line "Total RM 6.40" is present.
+
+Now, let's write the JSON.
+
+Each entry is a dictionary with bbox_2d and label.
+
+Let's estimate the bounding boxes:
+
+- Company: The text "CALTEX BIRU PETROLEUM" is centered. Let's say the bounding box is [240, 170, 760, 210] (approximate, covering the logo and text).
+
+- Address: The address lines are from y-coordinate around where "KELANA JAYA..." is. Let's say [240, 230, 760, 280] (covers the address lines).
+
+- Date: The date "11/16" is in the transaction details, which is lower part. Let's find the line: "11/16 09:58..." so the date part is there. Bounding box around "11/16".
+
+- Total: The "Total" line is above the cash and change due. Let's find the line "Total RM 6.40". Bounding box around that.
+
+Now, let's check the image again.
+
+The receipt has:
+
+After "staff food" and "Tax invoice", the items:
+
+Sweetie Ban Kacang Merah RM 3.20 S
+
+Sweetie Potato Bun RM 3.20 S
+
+Total RM 6.40
+
+Cash RM 50.00
+
+Change Due RM 43.60
+
+Then 6.00% TAX S RM 0.36
+
+Total Exclusive of Tax RM 6.04
+
+Then transaction number, and the date-time line: "11/16 09:58 64051 01 0004 437"
+
+So the date is "11/16" in that line.
+
+Total is "Total RM 6.40".
+
+Address is the location: "KELANA JAYA. 47301 PETALING SELANGOR DARUL EHSAN."
+
+Company is "CALTEX BIRU PETROLEUM".
+
+Now, let's define each with their bounding boxes.
+
+For company:
+
+The text "CALTEX" is with the star, then "BIRU PETROLEUM" below. The bounding box should include both. Let's check the image: the star is on the left, then "CALTEX" is next to it, then below that "BIRU PETROLEUM". So the company name is in that area.
+
+For address:
+
+The address lines are:
+
+KELANA JAYA. 47301 PETALING
+
+SELANGOR DARUL EHSAN.
+
+These are below the Co.No line.
+
+For date:
+
+The date is part of the transaction details, specifically the "te" (date) field, which shows "11/16".
+
+For total:
+
+The line labeled "Total" with the amount RM 6.40.
+
+Now, let's create the JSON array.
+
 [
-    {"bbox_2d": [244, 197, 755, 227], "label": "company"},
-    {"bbox_2d": [244, 247, 755, 307], "label": "address"},
-    {"bbox_2d": [11, 877, 164, 907], "label": "date"},
-    {"bbox_2d": [325, 457, 693, 482], "label": "total"}
+  {
+    "bbox_2d": [245, 180, 755, 215],
+    "label": "company"
+  },
+  {
+    "bbox_2d": [240, 240, 760, 290],
+    "label": "address"
+  },
+  {
+    "bbox_2d": [10, 850, 100, 880],
+    "label": "date"
+  },
+  {
+    "bbox_2d": [240, 440, 320, 465],
+    "label": "total"
+  }
 ]
+
+Wait, need to check the date's position. The date line is "11/16 09:58...", so the date is "11/16". Let's find where that is. In the image, the transaction details have a line with "te" (date) and "Time" (time), so the date is the part before the time. The coordinates for that line: the text "11/16" is there.
+
+For total, the "Total" line is between the items and the cash. Let's check the line: "Total RM 6.40". So the bounding box for total should cover that line.
+
+Let me adjust the bounding boxes more accurately.
+
+Company: The text "CALTEX BIRU PETROLEUM" is in the upper part. Let's take the bounding box from the star logo to the text. The star is at the top center, then "CALTEX" is next to it, then "BIRU PETROLEUM" below. So the company's text is in the area where the logo and text are. Let's say the bounding box is [220, 160, 780, 220].
+
+Address: The address is from "KELANA JAYA. 47301 PETALING" to "SELANGOR DARUL EHSAN." So the bounding box is [240, 250, 760, 295].
+
+Date: The date is in the transaction section, the line that starts with "11/16". Let's find the coordinates of that line. The line is: "11/16 09:58 64051 01 0004 437". So the date part is "11/16". The bounding box for the date would be around that part. Let's say the line is at the lower middle, so the bounding box is [10, 860, 150, 890] (approximate, covering the date part).
+
+Total: The "Total" line is "Total RM 6.40". Let's find its position. It's after the two items. So the line is between the items and the cash. The bounding box for total is around that line: [240, 430, 320, 455].
+
+Now, let's verify each label:
+
+- company: correct, the company name is CALTEX BIRU PETROLEUM.
+
+- address: correct, the address lines are there.
+
+- date: correct, the transaction date is 11/16.
+
+- total: correct, the total amount before tax is RM 6.40.
+
+I think these are the correct mappings.
+</think>
+[{"bbox_2d": [242, 175, 757, 210], "label": "company"}, {"bbox_2d": [240, 240, 760, 290], "label": "address"}, {"bbox_2d": [12, 855, 145, 885], "label": "date"}, {"bbox_2d": [240, 435, 325, 460], "label": "total"}]

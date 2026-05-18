@@ -1,1 +1,38 @@
-[{"bbox_2d": [92, 127, 877, 152], "label": "company"}, {"bbox_2d": [92, 162, 877, 192], "label": "address"}, {"bbox_2d": [720, 962, 825, 985], "label": "date"}, {"bbox_2d": [42, 332, 877, 358], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The company name is "Guardian Health And Beauty Sdn Bhd". Let's check the text. The line starts with that.
+- Address: The address lines are "631 & G32, grd Fir, 101 Mall Bandar Puchong Java". Let's confirm.
+- Date: The date is at the bottom, "09/03/18".
+- Total: The total (GST incl) is 9.95 RM.
+
+Now, find the bounding boxes for each.
+
+For company: The text "Guardian Health And Beauty Sdn Bhd" is in the upper part. Let's check the coordinates.
+
+Address: The lines below the company name: "631 & G32, grd Fir, 101 Mall Bandar Puchong Java".
+
+Date: The bottom part has "09/03/18".
+
+Total: The line "TOTAL (GST INCL) 9.95".
+
+Let's map each:
+
+1. Company: "Guardian Health And Beauty Sdn Bhd" – bbox around that line.
+2. Address: The address lines (631 & G32... Java).
+3. Date: "09/03/18" at the bottom.
+4. Total: "TOTAL (GST INCL) 9.95" – the total amount.
+
+Now, check the exact positions.
+
+Looking at the image:
+
+- Company: The line is "Guardian Health And Beauty Sdn Bhd" – let's get its bounding box.
+- Address: The next lines: "631 & G32, grd Fir, 101 Mall Bandar Puchong Java" – that's the address.
+- Date: The last line has "09/03/18" – that's the date.
+- Total: The line "TOTAL (GST INCL) 9.95" – that's the total.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [92, 124, 877, 147], "label": "company"}, {"bbox_2d": [92, 152, 877, 197], "label": "address"}, {"bbox_2d": [559, 962, 667, 984], "label": "date"}, {"bbox_2d": [92, 247, 877, 269], "label": "total"}]

@@ -1,0 +1,224 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看标题“INFORMATION INVOICE”是标题，对应标题类别。然后地址是“天津市洁县南湖钟路J座 881612”，属于地址。邮政编码是“510623”，对应邮政编码/Postcode。电话是“Tel86-88-03866832”，电话/Tel。网址是“http://davis.org/”，网址。公司名称及旅行社是“信诚致远信息酒店 Alibaba Group”，对应公司名称及旅行社/CompanyName&Agent。公司名可能也是这个，不过看是否有单独的公司名，这里公司名称及旅行社里包含公司名，所以公司名可能对应“信诚致远信息酒店”。然后姓名/Name是“蒋冬梅”。房间号码/Room NO是“1221”。到达日期/Arrival Date是“2020-09-23”。离店日期/Departure Date是“2020-09-25”。打印日期/PrintDate是“2020-09-25”。收银员/Cashier NO是“赵淑珍”。账单号/Folio NO是“775022”。页码/PageNO是“1”。然后表格里的Date 日期列，比如“2020-09-23”和“2020-09-24”；Description 内容是“房费 Room Rate”；Reference 明细是“1221 0”；Charges CNY是“500.00”和“500.00”；合计Total是“1,000.00”；结算Balance是“1,000.00 CNY”。
+
+现在需要逐个定位每个元素的bbox。先处理各个字段：
+
+1. 标题：信诚致远信息酒店（顶部的标题？不，标题是“INFORMATION INVOICE”那个，看图片左上方“信诚致远信息酒店”是酒店名，然后“INFORMATION INVOICE”是标题。所以标题是“INFORMATION INVOICE”所在的区域。看图片中“INFORMATION INVOICE”是标题，所以bbox对应这个文字的位置。
+
+然后地址：右上角“天津市洁县南湖钟路J座 881612” → 地址。
+
+邮政编码/Postcode：“邮政编码/Postcode: 510623” → 邮政编码。
+
+电话/Tel：“电话/Tel86-88-03866832” → 电话。
+
+网址：“http://davis.org/” → 网址。
+
+公司名称及旅行社/CompanyName&Agent：“公司名称及旅行社/CompanyName&Agent ：信诚致远信息酒店 Alibaba Group” → 对应这个字段。
+
+公司名：可能“信诚致远信息酒店”是公司名，所以公司名的label是公司名，对应这个名称。
+
+姓名/Name：“姓名/Name: 蒋冬梅” → 姓名。
+
+房间号码/Room NO：“房间号码/Room NO ：1221” → 房间号码。
+
+到达日期/Arrival Date：“到达日期/Arrival Date: 2020-09-23” → 到达日期。
+
+离店日期/Departure Date：“离店日期/Departure Date: 2020-09-25” → 离店日期。
+
+打印日期/PrintDate：“打印日期/PrintDate: 2020-09-25” → 打印日期。
+
+收银员/Cashier NO：“收银员/Cashier NO: 赵淑珍” → 收银员。
+
+账单号/Folio NO：“账单号/Folio NO: 775022” → 账单号。
+
+页码/PageNO：“页码/PageNO.：1” → 页码。
+
+然后表格部分：
+
+Date 日期列的两个日期：2020-09-23和2020-09-24，每个对应Date 日期。
+
+Description 内容列的“房费 Room Rate”（两个条目）。
+
+Reference 明细列的“1221 0”（两个条目）。
+
+Charges CNY列的“500.00”和“500.00”。
+
+合计Total：“合计 Total: 1,000.00” → 合计。
+
+结算Balance：“结算 Balance: 1,000.00 CNY” → 结算。
+
+现在需要把每个元素的bbox找出来。因为是图片，需要估计每个文字的位置。比如：
+
+- 标题“INFORMATION INVOICE”：在姓名上方，所以bbox大概是[109, 137, 340, 158]左右（看图片中的位置）。
+
+- 地址：右上角“天津市洁县南湖钟路J座 881612” → bbox [625, 5, 885, 22]。
+
+- 邮政编码：右上角“邮政编码/Postcode: 510623” → bbox [625, 25, 765, 42]。
+
+- 电话：右上角“电话/Tel86-88-03866832” → bbox [625, 45, 835, 62]。
+
+- 网址：右上角“http://davis.org/” → bbox [625, 65, 765, 82]。
+
+- 公司名称及旅行社：中间部分“公司名称及旅行社/CompanyName&Agent ：信诚致远信息酒店 Alibaba Group” → bbox [109, 237, 595, 258]（因为公司名称及旅行社在账单号下面？看图片中的布局：公司名称及旅行社/CompanyName&Agent ：信诚致远信息酒店 Alibaba Group，所以这部分的bbox。
+
+- 公司名：信诚致远信息酒店，可能和公司名称及旅行社中的公司名重复，但需要看是否有单独的公司名字段。可能公司名就是“信诚致远信息酒店”，所以对应公司名的label，bbox是公司名称及旅行社中的公司名部分，即“信诚致远信息酒店”。
+
+- 姓名/Name：“姓名/Name: 蒋冬梅” → bbox [109, 162, 295, 181]。
+
+- 会员号：可能没有在要求中，所以不处理。团队名称也没有要求。确认号也没有。所以继续。
+
+- 房间号码/Room NO：“房间号码/Room NO ：1221” → bbox [445, 157, 605, 176]。
+
+- 到达日期/Arrival Date：“到达日期/Arrival Date: 2020-09-23” → bbox [610, 162, 795, 181]。
+
+- 离店日期/Departure Date：“离店日期/Departure Date: 2020-09-25” → bbox [610, 183, 795, 202]。
+
+- 收银员/Cashier NO：“收银员/Cashier NO: 赵淑珍” → bbox [610, 205, 765, 224]。
+
+- 打印日期/PrintDate：“打印日期/PrintDate: 2020-09-25” → bbox [610, 227, 795, 246]。
+
+- 页码/PageNO：“页码/PageNO.：1” → bbox [610, 249, 695, 268]。
+
+- 账单号/Folio NO：“账单号/Folio NO: 775022” → bbox [109, 200, 295, 219]。
+
+然后表格部分：
+
+表格的表头是Date 日期、Description 内容、Reference 明细、Charges CNY、Credits CNY。然后两行数据：
+
+第一行日期：2020-09-23 → Date 日期，bbox对应表格中第一行日期单元格。
+
+描述内容：房费 Room Rate → Description 内容，第一行内容单元格。
+
+Reference 明细：1221 0 → Reference 明细，第一行参考单元格。
+
+Charges CNY：500.00 → Charges CNY，第一行费用单元格。
+
+第二行日期：2020-09-24 → Date 日期，第二行日期单元格。
+
+描述内容：房费 Room Rate → Description 内容，第二行内容单元格。
+
+Reference 明细：1221 0 → Reference 明细，第二行参考单元格。
+
+Charges CNY：500.00 → Charges CNY，第二行费用单元格。
+
+合计Total：“合计 Total: 1,000.00” → bbox在表格下方，对应合计的位置。
+
+结算Balance：“结算 Balance: 1,000.00 CNY” → 结算的位置。
+
+现在需要把所有要求的类别都列出来，确保没有遗漏。要求的类别有：Charges CNY, Date 日期, Description 内容, Reference 明细, 公司名, 公司名称及旅行社/CompanyName&Agent, 到达日期/Arrival Date, 合计 Total, 地址, 姓名/Name, 房间号码/Room NO, 打印日期/PrintDate, 收银员/Cashier NO, 标题, 电话/Tel, 离店日期/Departure Date, 结算Balance, 网址, 账单号/Folio NO, 邮政编码/Postcode, 页码/PageNO.
+
+现在逐个检查每个类别是否在图中存在：
+
+- Charges CNY：存在，两行的500.00。
+- Date 日期：存在，两行的日期。
+- Description 内容：存在，两行的房费。
+- Reference 明细：存在，两行的1221 0。
+- 公司名：存在，信诚致远信息酒店。
+- 公司名称及旅行社/CompanyName&Agent：存在，包含公司名和Alibaba Group。
+- 到达日期/Arrival Date：存在。
+- 合计 Total：存在。
+- 地址：存在。
+- 姓名/Name：存在。
+- 房间号码/Room NO：存在。
+- 打印日期/PrintDate：存在。
+- 收银员/Cashier NO：存在。
+- 标题：存在（INFORMATION INVOICE）。
+- 电话/Tel：存在。
+- 离店日期/Departure Date：存在。
+- 结算Balance：存在。
+- 网址：存在。
+- 账单号/Folio NO：存在。
+- 邮政编码/Postcode：存在。
+- 页码/PageNO：存在。
+
+现在需要为每个类别生成对应的bbox和label。由于是图片，需要估计每个元素的位置，这里尽量准确。
+
+现在开始构建每个条目：
+
+1. 标题（INFORMATION INVOICE）：
+   - bbox：看图片中“INFORMATION INVOICE”在姓名上方，所以坐标大概是[110, 135, 340, 155]（因为图片中“信诚致远信息酒店”在上方，然后是INFORMATION INVOICE，所以这个是标题）。
+   - label：标题
+
+2. 地址（天津市洁县南湖钟路J座 881612）：
+   - bbox：右上角，[620, 5, 885, 20]
+   - label：地址
+
+3. 邮政编码/Postcode（510623）：
+   - bbox：[620, 25, 765, 40]
+   - label：邮政编码/Postcode
+
+4. 电话/Tel（86-88-03866832）：
+   - bbox：[620, 45, 835, 60]
+   - label：电话/Tel
+
+5. 网址（http://davis.org/）：
+   - bbox：[620, 65, 765, 80]
+   - label：网址
+
+6. 公司名称及旅行社/CompanyName&Agent（信诚致远信息酒店 Alibaba Group）：
+   - bbox：[110, 235, 595, 255]（因为公司名称及旅行社在账单号下面，看图片中的布局，这部分文字的位置）
+   - label：公司名称及旅行社/CompanyName&Agent
+
+7. 公司名（信诚致远信息酒店）：
+   - bbox：在公司名称及旅行社中的公司名部分，即“信诚致远信息酒店”，所以bbox可以是[295, 237, 485, 255]（因为公司名称及旅行社是“公司名称及旅行社/CompanyName&Agent ：信诚致远信息酒店 Alibaba Group”，所以公司名是“信诚致远信息酒店”）
+   - label：公司名
+
+8. 姓名/Name（蒋冬梅）：
+   - bbox：[110, 160, 295, 180]
+   - label：姓名/Name
+
+9. 房间号码/Room NO（1221）：
+   - bbox：[445, 155, 605, 175]
+   - label：房间号码/Room NO
+
+10. 到达日期/Arrival Date（2020-09-23）：
+    - bbox：[610, 160, 795, 180]
+    - label：到达日期/Arrival Date
+
+11. 离店日期/Departure Date（2020-09-25）：
+    - bbox：[610, 180, 795, 200]
+    - label：离店日期/Departure Date
+
+12. 收银员/Cashier NO（赵淑珍）：
+    - bbox：[610, 200, 765, 220]
+    - label：收银员/Cashier NO
+
+13. 打印日期/PrintDate（2020-09-25）：
+    - bbox：[610, 220, 795, 240]
+    - label：打印日期/PrintDate
+
+14. 页码/PageNO（1）：
+    - bbox：[610, 240, 695, 260]
+    - label：页码/PageNO
+
+15. 账单号/Folio NO（775022）：
+    - bbox：[110, 200, 295, 220]
+    - label：账单号/Folio NO
+
+16. Charges CNY（500.00，两行）：
+    - 第一行：对应2020-09-23的Charges CNY，bbox在表格中第一行Charges列，比如[730, 300, 850, 320]
+    - 第二行：2020-09-24的Charges CNY，bbox[730, 325, 850, 345]
+    - label：Charges CNY（两个条目，但需要分别列出？不过可能每个出现都算，但用户要求是检测所有对象，所以每个实例都要？不过可能合并？不，每个出现的Charges CNY都要。但看要求是“detect all objects matching these categories”，所以每个符合的都要。但可能表格中的两个Charges CNY都是Charges CNY类别，所以两个条目。
+
+17. Date 日期（2020-09-23和2020-09-24）：
+    - 第一行日期：2020-09-23，bbox在表格第一行Date列，比如[100, 300, 220, 320]
+    - 第二行日期：2020-09-24，bbox[100, 325, 220, 345]
+    - label：Date 日期（两个条目）
+
+18. Description 内容（房费 Room Rate，两行）：
+    - 第一行：2020-09-23的内容，bbox在表格第一行Description列，比如[250, 300, 400, 320]
+    - 第二行：2020-09-24的内容，bbox[250, 325, 400, 345]
+    - label：Description 内容（两个条目）
+
+19. Reference 明细（1221 0，两行）：
+    - 第一行：1221 0，bbox在表格第一行Reference列，比如[420, 300, 550, 320]
+    - 第二行：1221 0，bbox[420, 325, 550, 345]
+    - label：Reference 明细（两个条目）
+
+20. 合计 Total（1,000.00）：
+    - bbox：在表格下方，比如[650, 850, 850, 870]
+    - label：合计 Total
+
+21. 结算 Balance（1,000.00 CNY）：
+    - bbox

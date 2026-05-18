@@ -1,10 +1,84 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The receipt has "06/03/18 18:01" which is the date and time. So the date is 06/03/18.
+
+doc_no_receipt_no: The Slip No. is 8010180429. That's the document number.
+
+seller_address: The address is "No 8, Jalan 7/188, Desa Tun Razak 56000 Kuala Lumpur, Malaysia" and also mentions AEON SHAH ALAM, but the main address is the one with the company details.
+
+seller_gst_id: The GST Reg No. is 001492992000.
+
+seller_name: The company name is "POPULAR BOOK CO. (M) SDN BHD".
+
+seller_phone: The Tel is 03-55235214.
+
+total_amount: The Total RM is 30.70 (after cash payment, but the total amount before rounding? Wait, the Total RM is 30.70. Let me check. The "Total RM" line shows 30.70.
+
+total_tax: The GST Summary has Tax (RM) as 1.74. Let's confirm: GST is 6%, and the tax amount is 1.74.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The line "06/03/18 18:01" is the date. Let's find its coordinates. The text is in the upper part of the transaction details.
+
+2. doc_no_receipt_no: "Slip No.: 8010180429" — the slip number is the document number.
+
+3. seller_address: The address lines: "No 8, Jalan 7/188, Desa Tun Razak 56000 Kuala Lumpur, Malaysia" and "AEON SHAH ALAM" is part of the location, but the main address is the company address.
+
+4. seller_gst_id: "(GST Reg No. 001492992000)" — that's the GST ID.
+
+5. seller_name: "POPULAR BOOK CO. (M) SDN BHD" — the top of the receipt.
+
+6. seller_phone: "Tel : 03-55235214" — the telephone number.
+
+7. total_amount: "Total RM 30.70" — the total amount after rounding.
+
+8. total_tax: "GST Summary ... Tax (RM) 1.74" — the tax amount.
+
+Now, let's extract each with their bounding boxes.
+
+First, seller_name: The top part, "POPULAR BOOK CO. (M) SDN BHD" — the bounding box would be around that text.
+
+seller_gst_id: The line with (GST Reg No. 001492992000) — so the text inside the parentheses.
+
+seller_address: The address lines: "No 8, Jalan 7/188, Desa Tun Razak 56000 Kuala Lumpur, Malaysia" and maybe the AEON part, but the main address is that line.
+
+seller_phone: "Tel : 03-55235214" — the telephone line.
+
+date: "06/03/18 18:01" — the transaction date and time.
+
+doc_no_receipt_no: "Slip No.: 8010180429" — the slip number.
+
+total_amount: "Total RM 30.70" — the total amount after cash.
+
+total_tax: "Tax (RM) 1.74" in the GST Summary.
+
+Let's check each:
+
+- date: The line starts with 06/03/18 18:01. Let's find the coordinates. The text is in the section after the company info, so the bounding box for that line.
+
+- doc_no_receipt_no: The Slip No. is 8010180429. The line is "06/03/18 18:01 Slip No.: 8010180429 Supervisor Trans: 196796". So the Slip No. is part of that line.
+
+- seller_address: The address is "No 8, Jalan 7/188, Desa Tun Razak 56000 Kuala Lumpur, Malaysia" — that's a block of text.
+
+- seller_gst_id: "(GST Reg No. 001492992000)" — the line below the company number.
+
+- seller_name: "POPULAR BOOK CO. (M) SDN BHD" — the main title.
+
+- seller_phone: "Tel : 03-55235214" — below the address.
+
+- total_amount: "Total RM 30.70" — in the total section.
+
+- total_tax: "Tax (RM) 1.74" — in the GST Summary row.
+
+Now, let's structure each as a JSON object with bbox and label.
+</think>
 [
-    {"bbox_2d": [44, 477, 210, 498], "label": "date"},
-    {"bbox_2d": [310, 477, 437, 498], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [101, 302, 597, 323], "label": "seller_address"},
-    {"bbox_2d": [144, 237, 332, 256], "label": "seller_gst_id"},
-    {"bbox_2d": [101, 12, 597, 48], "label": "seller_name"},
-    {"bbox_2d": [154, 312, 285, 331], "label": "seller_phone"},
-    {"bbox_2d": [254, 617, 332, 636], "label": "total_amount"},
-    {"bbox_2d": [332, 687, 377, 706], "label": "total_tax"}
+    {"bbox_2d": [44, 479, 244, 499], "label": "date"},
+    {"bbox_2d": [490, 482, 846, 499], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [101, 232, 597, 267], "label": "seller_address"},
+    {"bbox_2d": [154, 242, 346, 258], "label": "seller_gst_id"},
+    {"bbox_2d": [89, 12, 535, 47], "label": "seller_name"},
+    {"bbox_2d": [154, 294, 325, 310], "label": "seller_phone"},
+    {"bbox_2d": [224, 604, 346, 620], "label": "total_amount"},
+    {"bbox_2d": [305, 697, 382, 713], "label": "total_tax"}
 ]

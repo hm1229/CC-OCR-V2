@@ -1,1 +1,33 @@
-[{"bbox_2d": [34, 37, 966, 100], "label": "company"}, {"bbox_2d": [98, 200, 902, 247], "label": "address"}, {"bbox_2d": [402, 320, 597, 347], "label": "date"}, {"bbox_2d": [20, 532, 979, 557], "label": "total"}]
+Got it, let's extract the required information from the invoice.
+
+First, the company name: "PASARAYA BORONG PINTAR SDN BHD" is at the top. Let's check the bounding box.
+
+Address: The address line is "NO 19-G&19-1&19-2 JALAN TASIK UTAMA 4, MEDAN NIAGA TASIK DAMAI". Let's find that.
+
+Date: The date is "14/02/2018" which is in the timestamp section.
+
+Total: The total amount is "1.45" under "Total Includes GST 0%".
+
+Now, let's map each to their categories.
+
+For company: The text "PASARAYA BORONG PINTAR SDN BHD" is the company. Let's get its coordinates.
+
+Address: The address lines are below the BR No. Let's check the lines.
+
+Date: The date is part of "14/02/2018 5:37:44PM".
+
+Total: The total is "1.45" in the Total Includes GST line.
+
+Let's verify each:
+
+Company: The topmost text, so bbox would be around that line.
+
+Address: The lines starting with NO 19-G&... up to MEDAN NIAGA...
+
+Date: The date part is 14/02/2018.
+
+Total: The total amount is 1.45 (the Total Includes GST 0% line has 1.45).
+
+Now, let's structure the JSON array.
+</think>
+[{"bbox_2d": [34, 34, 966, 67], "label": "company"}, {"bbox_2d": [98, 200, 902, 247], "label": "address"}, {"bbox_2d": [402, 320, 597, 344], "label": "date"}, {"bbox_2d": [325, 532, 934, 557], "label": "total"}]

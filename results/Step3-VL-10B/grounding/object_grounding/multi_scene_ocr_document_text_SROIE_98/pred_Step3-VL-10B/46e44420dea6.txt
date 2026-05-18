@@ -1,6 +1,35 @@
-[
-    {"bbox_2d": [322, 134, 664, 154], "label": "company"},
-    {"bbox_2d": [322, 156, 664, 184], "label": "address"},
-    {"bbox_2d": [322, 220, 482, 240], "label": "date"},
-    {"bbox_2d": [496, 332, 556, 350], "label": "total"}
-]
+Got it, let's extract the information from the receipt. First, identify each category.
+
+Company: The company name is BHPetrol Permas Jaya 2. Let's check the text. The top part has "BHPetrol Permas Jaya 2" so that's the company.
+
+Address: The address lines are LOT PTD 101051, Jalan Permas 10/10, 81750 Masai, Johor. So combine those.
+
+Date: The transaction date is 08-05-2018. Let's check the line "08-05-2018 08:17:16" so the date part is 08-05-2018.
+
+Total: The total amount is RM 50.00, so the total value is 50.00.
+
+Now, map each to their bounding boxes.
+
+First, company: The text "BHPetrol Permas Jaya 2" is in the middle top. Let's find its coordinates.
+
+Address: The lines below the company: LOT PTD 101051, Jalan Permas 10/10, 81750 Masai, Johor.
+
+Date: The line with "08-05-2018 08:17:16" — the date is the first part.
+
+Total: The line "TOTAL AMOUNT CASH RM 50.00" — the total is 50.00.
+
+Now, create the JSON entries.
+
+Check each element's position.
+
+For company: The text is centered. Let's see the bounding box. The company name is in the upper part, so the coordinates would be around where that text is.
+
+Address: The address lines are below the company, so the bounding box covers those lines.
+
+Date: The transaction date line is "08-05-2018 08:17:16 Cashier: 465" — the date is the first part.
+
+Total: The total amount is in the section where "TOTAL AMOUNT" and "CASH RM 50.00" is.
+
+Let's structure each entry.
+</think>
+[{"bbox_2d": [390, 114, 609, 144], "label": "company"}, {"bbox_2d": [390, 146, 609, 172], "label": "address"}, {"bbox_2d": [390, 174, 609, 198], "label": "address"}, {"bbox_2d": [390, 198, 609, 214], "label": "address"}, {"bbox_2d": [390, 232, 609, 248], "label": "date"}, {"bbox_2d": [434, 704, 546, 722], "label": "total"}]

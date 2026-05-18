@@ -1,10 +1,96 @@
+Got it, let's extract each required field from the invoice.
+
+First, find the date. On the invoice, under "CASH" section, Date: 23/01/2018. So that's the date.
+
+Doc_no_receipt_no: Receipt No. : CS1801/27037. So that's the receipt number.
+
+Seller_address: The address is NO. 53, JALAN BEESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN. Let's check the top part of the invoice.
+
+Seller_gst_id: GST No. : 000689913856. That's the GST number.
+
+Seller_name: TEO HENG STATIONERY & BOOKS. The top of the invoice has the name.
+
+Seller_phone: TEL : 03-3271 9872. That's the phone number.
+
+Total_amount: Look at the TOTAL section, which is 18.00. Let's check the "TOTAL" line.
+
+Total_tax: TOTAL TAX is 1.02. Also, in GST SUMMARY, the tax is 1.02.
+
+Now, map each to their bounding boxes.
+
+Let's go step by step.
+
+1. date: The text "Date : 23/01/2018" is in the receipt section. Let's find the coordinates. The date is in the line after Receipt No.
+
+2. doc_no_receipt_no: "Receipt No. : CS1801/27037" — the receipt number is CS1801/27037.
+
+3. seller_address: The address lines: NO. 53, JALAN BEESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN. These are under the seller name.
+
+4. seller_gst_id: "GST No. : 000689913856" — that's the GST number.
+
+5. seller_name: "TEO HENG STATIONERY & BOOKS" — the top header.
+
+6. seller_phone: "TEL : 03-3271 9872" — the telephone number.
+
+7. total_amount: The "TOTAL" amount is 18.00, which is in the section where TOTAL is listed.
+
+8. total_tax: "TOTAL TAX" is 1.02.
+
+Now, need to find the bounding boxes for each. Let's check the image.
+
+For seller_name: The top part, "TEO HENG STATIONERY & BOOKS" is centered. Bounding box would be around that text.
+
+Seller_address: The lines below the name: NO. 53, JALAN BEESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN.
+
+Seller_gst_id: "GST No. : 000689913856" — below the address.
+
+Seller_phone: "TEL : 03-3271 9872" — next line.
+
+Date: In the "CASH" section, "Date : 23/01/2018" — the date field.
+
+Doc_no_receipt_no: "Receipt No. : CS1801/27037" — receipt number.
+
+Total_amount: The "TOTAL" line shows 18.00. Let's check the line "TOTAL : 18.00" in the cash section.
+
+Total_tax: "TOTAL TAX 1.02" — that's the total tax.
+
+Now, let's define each entry.
+
+Let's list each:
+
+- date: The text "23/01/2018" is part of "Date : 23/01/2018". The bounding box for this line.
+
+- doc_no_receipt_no: "CS1801/27037" from "Receipt No. : CS1801/27037".
+
+- seller_address: The address block: "NO. 53, JALAN BEESAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN".
+
+- seller_gst_id: "000689913856" from "GST No. : 000689913856".
+
+- seller_name: "TEO HENG STATIONERY & BOOKS".
+
+- seller_phone: "03-3271 9872" from "TEL : 03-3271 9872".
+
+- total_amount: "18.00" from the "TOTAL" line (the amount after TOTAL:).
+
+- total_tax: "1.02" from "TOTAL TAX 1.02".
+
+Now, need to get the coordinates. Let's assume the image's layout.
+
+For example, seller_name is at the top, centered. Let's check the coordinates.
+
+But since the problem says to return the bounding box in relative format (x1, y1, x2, y2) where the image is the whole, we need to estimate.
+
+Alternatively, maybe the exact positions can be inferred.
+
+Let's proceed to create the JSON array.
+</think>
 [
-    {"bbox_2d": [290, 145, 708, 165], "label": "seller_name"},
-    {"bbox_2d": [290, 167, 708, 190], "label": "seller_address"},
-    {"bbox_2d": [290, 200, 708, 217], "label": "seller_gst_id"},
-    {"bbox_2d": [290, 192, 470, 210], "label": "seller_phone"},
-    {"bbox_2d": [120, 300, 340, 320], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [360, 300, 490, 320], "label": "date"},
-    {"bbox_2d": [500, 440, 560, 458], "label": "total_amount"},
-    {"bbox_2d": [500, 458, 540, 476], "label": "total_tax"}
+    {"bbox_2d": [110, 297, 238, 312], "label": "date"},
+    {"bbox_2d": [225, 297, 346, 312], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [270, 202, 595, 237], "label": "seller_address"},
+    {"bbox_2d": [305, 240, 432, 255], "label": "seller_gst_id"},
+    {"bbox_2d": [270, 192, 595, 210], "label": "seller_name"},
+    {"bbox_2d": [270, 257, 346, 272], "label": "seller_phone"},
+    {"bbox_2d": [335, 375, 390, 390], "label": "total_amount"},
+    {"bbox_2d": [335, 385, 365, 399], "label": "total_tax"}
 ]

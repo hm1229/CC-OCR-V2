@@ -1,209 +1,178 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的类别。首先得逐个分析每个类别在图中的位置。
 
-首先看TITLE，就是INVOICE那个大标题，对应图中的“INVOICE”部分。然后COMPANY NAME是顶部的鑫博腾飞网络有限公司，中英文。ADDRESS的话，TO部分的地址，还有顶部的公司地址？需要看每个类别。
+首先看ADDRESS：TO部分的地址，0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426。需要确认这个是收货方地址，属于ADDRESS。
 
-先列出来每个类别：
+AMOUNT：表格里的USD 8,900.00，对应AMOUNT。
 
-1. ADDRESS：TO部分的地址，0366 Priscilla Views...和4270 Daniel Loop...；另外顶部的公司地址9182 Johnson Ports Apt...也是ADDRESS？可能需要看。但先看TO的地址是收货方地址，属于ADDRESS。另外顶部的公司地址也是ADDRESS？需要确认。不过先处理每个类别。
+Account Number：Beneficiary Bank下面的Account Number: 2111112011463000011235。
 
-2. AMOUNT：图中USD 8,900.00，对应AMOUNT。
+Beneficiary：Beneficiary: Xinbotengfei Network Co., Ltd.
 
-3. Account Number：Beneficiary Bank下面的Account Number: 2111112011463000011235。
+Beneficiary Bank：BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH
 
-4. Beneficiary：Beneficiary: Xinbotengfei Network Co., Ltd.
+COMPANY NAME：顶部的鑫博腾飞网络有限公司，Xinbotengfei Network Co., Ltd.
 
-5. Beneficiary Bank：BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH
+CONTRACT NO.：INVOICE NO.旁边的M01ACI2021I079S2（因为CONTRACT NO.和INVOICE NO.相同）。
 
-6. COMPANY NAME：顶部的鑫博腾飞网络有限公司，Xinbotengfei Network Co., Ltd.
+COUNTRY OF ORIGIN：COUNTRY OF ORIGIN:CHINA
 
-7. CONTRACT NO.：INVOICE NO.旁边的M01ACI2021I079S2，因为CONTRACT NO.和INVOICE NO.相同。
+Email：顶部的Email:deannastevens@fry.com（注意看顶部信息里的Email部分）。
 
-8. COUNTRY OF ORIGIN：COUNTRY OF ORIGIN:CHINA
+FAX：顶部的FAX:704-56222243
 
-9. Email：顶部的Email:deannastevens@fry.com
+GROSS WEIGHT：GROSS WEIGHT: @ 28 / 1120 KGS
 
-10. FAX：顶部的FAX:704-56222243
+INVOICE DATE：Nov.22.2021
 
-11. GROSS WEIGHT：GROSS WEIGHT: @ 28 / 1120 KGS
+INVOICE NO.：M01ACI2021I079S2
 
-12. INVOICE DATE：Nov.22.2021
+NET WEIGHT：NET WEIGHT: @ 25 / 1000 KGS
 
-13. INVOICE NO.：M01ACI2021I079S2
+PRODUCT NAME：L-ISOLEUCINE 40DRUMS WITH 2 PALLETS
 
-14. NET WEIGHT：NET WEIGHT: @ 25 / 1000 KGS
+Post Code：顶部的Post Code:110014（看顶部地址里的Post Code）
 
-15. PRODUCT NAME：L-ISOLEUCINE 40DRUMS WITH 2 PALLETS
+QUANTITY：QUANTITY: @ 1000 KGS（这里quantity是数量，看QUANTITY: @ 1000 KGS）
 
-16. Post Code：顶部的Post Code:110014，还有TO部分的NC 21755和TX 50426也是Post Code？需要看。顶部的Post Code是110014，属于Post Code。
+QUANTITY OF PACKING：QUANTITY OF PACKING: 40 DRUMS
 
-17. QUANTITY：QUANTITY: @ 1000 KGS（这里的数量是1000 KGS？或者看QUANTITY OF PACKING是40 DRUMS，QUANTITY可能是指总数量？图中QUANTITY: @ 1000 KGS，所以QUANTITY是1000 KGS对应的数量？
+SHIPPING MARKS：SHIPPING MARKS下面的N/M
 
-18. QUANTITY OF PACKING：40 DRUMS
+Swift Code：Swift Code: COMMNCNSHSYG
 
-19. SHIPPING MARKS：N/M
+TEL：顶部的TEL:498-23027550
 
-20. Swift Code：COMM C N S H S Y G（图中Swift Code: COMM C N S H S Y G？看原文是COMM C N S H S Y G？图中是COMM C N S H S Y G？原文是Swift Code: COMM C N S H S Y G？看图片中的Swift Code: COMM C N S H S Y G？不，图中是“Swift Code: COMM C N S H S Y G”？看图片里的内容：“Swift Code: COMM C N S H S Y G”？不，原图中是“Swift Code: COMM C N S H S Y G”？看用户提供的图中，Beneficiary Bank部分的Swift Code是COMM C N S H S Y G？看原文：“Swift Code: COMM C N S H S Y G”？不，图中是“Swift Code: COMM C N S H S Y G”？可能我看错了，原图中是“COMM C N S H S Y G”？不，看用户提供的图中的内容：
+TERMS OF PAYMENT：TERMS OF PAYMENT: T/T in Advance
 
-在Beneficiary Bank部分：
+TITLE：INVOICE（大标题）
 
-Beneficiary Bank: BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH
+UNIT PRICE：UNIT PRICE: AT USD 8.9/KG FOB SHANGHAI,CHINA
 
-Swift Code: COMM C N S H S Y G？不，原图中是“COMM C N S H S Y G”？不，看用户提供的图中的文字是“Swift Code: COMM C N S H S Y G”？不，看用户给的图里的内容：
+现在需要逐个确定每个的bbox。需要看图片中的位置。
 
-“Swift Code: COMM C N S H S Y G”？不，原图中是“COMM C N S H S Y G”？可能实际是“COMM C N S H S Y G”？不管，按图中的内容提取。
+先处理每个类别：
 
-21. TEL：顶部的TEL:498-23027550
+1. ADDRESS：TO后面的地址，即“0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426” —— 对应TO部分的地址，bbox是TO右边的地址区域。
 
-22. TERMS OF PAYMENT：T/T in Advance
+2. AMOUNT：表格中最后一行的USD 8,900.00 —— 在QUANTITY & DESCRIPTION列对应行的AMOUNT列。
 
-23. TITLE：INVOICE（大标题）
+3. Account Number：Beneficiary Bank部分的Account Number: 2111112011463000011235 —— 灰色背景区域里的Account Number。
 
-24. UNIT PRICE：AT USD 8.9/KG FOB SHANGHAI, CHINA
+4. Beneficiary：Beneficiary: Xinbotengfei Network Co., Ltd. —— 灰色背景里的Beneficiary行。
 
-现在需要逐个确定每个类别的bbox。需要看每个元素在图中的位置。
+5. Beneficiary Bank：BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH —— 灰色背景里的Beneficiary Bank行。
 
-首先处理TITLE：图中“INVOICE”是大标题，位于中间偏上，所以bbox是包含“INVOICE”的区域。
+6. COMPANY NAME：顶部的“鑫博腾飞网络有限公司 Xinbotengfei Network Co., Ltd.” —— 最上方的公司名称。
 
-COMPANY NAME：顶部的“鑫博腾飞网络有限公司”和“Xinbotengfei Network Co., Ltd.”，所以bbox是顶部的公司名称部分。
+7. CONTRACT NO.：INVOICE NO.右边的M01ACI2021I079S2 —— 右侧INVOICE NO.和CONTRACT NO.都是这个值，看CONTRACT NO.的标签对应。
 
-ADDRESS：TO部分的地址，即“0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426”，还有顶部的公司地址“9182 Johnson Ports Apt. 311 Mclaughlinmouth, VA 40561”也是ADDRESS？可能需要看，但用户要求的是检测所有匹配的，所以两个地址？但先看TO的地址是收货方地址，属于ADDRESS。另外顶部的公司地址也是ADDRESS吗？可能需要都算。但先看问题中的类别是ADDRESS，所以需要找到所有地址。
+8. COUNTRY OF ORIGIN：COUNTRY OF ORIGIN:CHINA —— 在QUANTITY & DESCRIPTION下方的COUNTRY OF ORIGIN行。
 
-现在开始逐个列：
+9. Email：顶部的Email:deannastevens@fry.com —— 顶部地址行的Email部分。
 
-1. TITLE: "INVOICE" → 找到图中的大标题，bbox大概在中间，比如x范围是320到680左右，y在发票标题位置。
+10. FAX：顶部的FAX:704-56222243 —— 顶部地址行的FAX部分。
 
-2. COMPANY NAME: 顶部的“鑫博腾飞网络有限公司”和英文，bbox是顶部的公司名称，包括中英文。
+11. GROSS WEIGHT：GROSS WEIGHT: @ 28 / 1120 KGS —— 在QUANTITY & DESCRIPTION下方的GROSS WEIGHT行。
 
-3. CONTRACT NO.: 右侧的“M01ACI2021I079S2”（INVOICE NO.和CONTRACT NO.相同）。
+12. INVOICE DATE：Nov.22.2021 —— 右侧INVOICE DATE标签对应的内容。
 
-4. INVOICE NO.: 同上，M01ACI2021I079S2。
+13. INVOICE NO.：M01ACI2021I079S2 —— 右侧INVOICE NO.标签对应的内容。
 
-5. INVOICE DATE: "Nov.22.2021"。
+14. NET WEIGHT：NET WEIGHT: @ 25 / 1000 KGS —— 在QUANTITY & DESCRIPTION下方的NET WEIGHT行。
 
-6. COUNTRY OF ORIGIN: "CHINA"。
+15. PRODUCT NAME：L-ISOLEUCINE 40DRUMS WITH 2 PALLETS —— QUANTITY & DESCRIPTION列的第一行内容。
 
-7. PRODUCT NAME: "L-ISOLEUCINE 40DRUMS WITH 2 PALLETS"。
+16. Post Code：110014 —— 顶部地址行的Post Code:110014。
 
-8. QUANTITY: "1000 KGS"（在QUANTITY: @ 1000 KGS）。
+17. QUANTITY：@ 1000 KGS —— QUANTITY: @ 1000 KGS（在COUNTRY OF ORIGIN下面的QUANTITY行）。
 
-9. QUANTITY OF PACKING: "40 DRUMS"。
+18. QUANTITY OF PACKING：40 DRUMS —— QUANTITY OF PACKING: 40 DRUMS（在QUANTITY下面）。
 
-10. NET WEIGHT: "25 / 1000 KGS"。
+19. SHIPPING MARKS：N/M —— SHIPPING MARKS列的内容。
 
-11. GROSS WEIGHT: "28 / 1120 KGS"。
+20. Swift Code：COMMNCNSHSYG —— 灰色背景里的Swift Code: COMMNCNSHSYG。
 
-12. UNIT PRICE: "AT USD 8.9/KG FOB SHANGHAI, CHINA"。
+21. TEL：498-23027550 —— 顶部地址行的TEL:498-23027550。
 
-13. AMOUNT: "8,900.00"（USD 8,900.00）。
+22. TERMS OF PAYMENT：T/T in Advance —— TERMS OF PAYMENT标签对应的内容。
 
-14. TERMS OF PAYMENT: "T/T in Advance"。
+23. TITLE：INVOICE —— 大标题“INVOICE”。
 
-15. TEL: "498-23027550"（顶部的TEL）。
+24. UNIT PRICE：AT USD 8.9/KG FOB SHANGHAI,CHINA —— UNIT PRICE标签对应的内容。
 
-16. FAX: "704-56222243"（顶部的FAX）。
+现在需要为每个确定bbox。因为是图片中的位置，需要估计每个元素的位置。比如：
 
-17. Email: "deannastevens@fry.com"（顶部的Email）。
+- COMPANY NAME：最上方的公司名称，bbox是顶部的两行文字，即“鑫博腾飞网络有限公司”和“Xinbotengfei Network Co., Ltd.”，以及下面的地址行？不，公司名称是标题部分，所以bbox是包含这两个名称的区域，比如从顶部的公司名称到下面的地址线之间的上方。
 
-18. Post Code: 顶部的"110014"（Post Code:110014），还有TO部分的"21755"（NC 21755）和"50426"（TX 50426）也是Post Code？需要看。Post Code类别，所以这三个？但可能主要看顶部的Post Code:110014，因为其他是州的邮编？不过按图中的Post Code标注，顶部有“Post Code 110014”，所以这个是Post Code。
+- TITLE：INVOICE是大标题，位于中间偏上的“INVOICE”文字，所以bbox是那个大写的INVOICE。
 
-19. Beneficiary: "Xinbotengfei Network Co., Ltd."（Beneficiary: 后面的内容）。
+现在开始逐个构建：
 
-20. Beneficiary Bank: "BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH"。
+1. ADDRESS: TO后面的地址，即“0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426” —— 对应TO右侧的地址，bbox大概是[200, 300, 500, 330]（需要看实际位置，TO在左侧，地址在TO右边，所以bbox是TO右边的文本区域）。
 
-21. Swift Code: "COMM C N S H S Y G"（图中的Swift Code: COMM C N S H S Y G？看用户提供的图中是“COMM C N S H S Y G”？原图中是“COMM C N S H S Y G”？不，看用户给的图中的内容：“Swift Code: COMM C N S H S Y G”？不，用户提供的图中Beneficiary Bank部分的Swift Code是“COMM C N S H S Y G”？看原文中的Swift Code: COMM C N S H S Y G？可能实际是“COMM C N S H S Y G”？不管，按图中的内容。
+2. AMOUNT: USD 8,900.00 —— 在表格的AMOUNT列，对应行的数值，bbox是表格中最后一行的AMOUNT单元格，即[650, 600, 850, 620]左右。
 
-22. Account Number: "2111112011463000011235"（Account Number: 后面的数字）。
+3. Account Number: 2111112011463000011235 —— 灰色背景中的Account Number行，bbox是灰色区域内的该行，比如[100, 750, 550, 770]（灰色区域是Beneficiary部分，所以Account Number在灰色区域内的文字）。
 
-23. SHIPPING MARKS: "N/M"。
+4. Beneficiary: Xinbotengfei Network Co., Ltd. —— 灰色区域内的Beneficiary行，bbox是灰色区域内的该行，比如[100, 720, 550, 740]。
 
-24. ADDRESS：TO部分的地址，即“0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426”；另外顶部的公司地址“9182 Johnson Ports Apt. 311 Mclaughlinmouth, VA 40561”也是ADDRESS。需要确认是否都算。比如，顶部的地址是公司地址，属于ADDRESS；TO的地址是收货地址，也属于ADDRESS。所以两个ADDRESS？
+5. Beneficiary Bank: BANK OF COMMUNICATIONS CO. LTD LIAONING PROVINCIAL BRANCH —— 灰色区域内的Beneficiary Bank行，bbox是灰色区域内的该行，比如[100, 740, 550, 760]。
 
-现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个元素的位置。例如：
+6. COMPANY NAME: 鑫博腾飞网络有限公司 Xinbotengfei Network Co., Ltd. —— 最上方的公司名称，bbox是顶部的两行文字，比如[250, 50, 750, 100]（因为公司名称在发票顶部，大标题上方）。
 
-- COMPANY NAME：顶部的公司名称，包括中英文，bbox是[125, 38, 875, 100]左右（因为顶部的公司名称在上方，包含中英文和地址行）。
+7. CONTRACT NO.: M01ACI2021I079S2 —— 右侧CONTRACT NO.标签对应的内容，bbox是右侧INVOICE NO.和CONTRACT NO.的区域，比如[690, 300, 850, 320]（因为CONTRACT NO.和INVOICE NO.在同一行，看右侧的标签）。
 
-- TITLE：INVOICE，位于中间，大字体，bbox是[320, 200, 680, 250]左右。
+8. COUNTRY OF ORIGIN: CHINA —— 在QUANTITY & DESCRIPTION下方的COUNTRY OF ORIGIN行，bbox是该行的文本，比如[100, 450, 300, 470]。
 
-- INVOICE NO.：右侧的M01ACI2021I079S2，bbox是[600, 330, 900, 350]。
+9. Email: deannastevens@fry.com —— 顶部地址行的Email部分，顶部的地址行是“9182 Johnson Ports Apt. 311 Mclaughlinmouth, VA 40561 Post Code 110014 FAX 704-56222243 TEL 498-23027550 Email:deannastevens@fry.com”，所以Email的bbox是该行的Email部分，比如[650, 150, 850, 170]。
 
-- INVOICE DATE：Nov.22.2021，bbox是[600, 355, 900, 375]。
+10. FAX: 704-56222243 —— 顶部地址行的FAX部分，bbox是该行的FAX部分，比如[520, 150, 650, 170]。
 
-- CONTRACT NO.：同INVOICE NO.，因为图中CONTRACT NO.也是M01ACI2021I079S2，所以bbox同上。
+11. GROSS WEIGHT: @ 28 / 1120 KGS —— 在QUANTITY & DESCRIPTION下方的GROSS WEIGHT行，bbox是该行的文本，比如[100, 480, 350, 495]。
 
-- COUNTRY OF ORIGIN：CHINA，在产品描述下方，bbox是[20, 440, 350, 460]。
+12. INVOICE DATE: Nov.22.2021 —— 右侧INVOICE DATE标签对应的内容，bbox是右侧INVOICE DATE的区域，比如[690, 320, 850, 340]。
 
-- PRODUCT NAME：L-ISOLEUCINE...，在QUANTITY & DESCRIPTION列，bbox是[20, 465, 350, 490]。
+13. INVOICE NO.: M01ACI2021I079S2 —— 右侧INVOICE NO.标签对应的内容，bbox是右侧INVOICE NO.的区域，比如[690, 290, 850, 310]。
 
-- QUANTITY：1000 KGS，在COUNTRY OF ORIGIN下面，@ 1000 KGS，bbox是[20, 475, 350, 495]。
+14. NET WEIGHT: @ 25 / 1000 KGS —— 在QUANTITY & DESCRIPTION下方的NET WEIGHT行，bbox是该行的文本，比如[100, 460, 350, 475]。
 
-- QUANTITY OF PACKING：40 DRUMS，在QUANTITY下面，bbox是[20, 495, 350, 510]。
+15. PRODUCT NAME: L-ISOLEUCINE 40DRUMS WITH 2 PALLETS —— QUANTITY & DESCRIPTION列的第一行，bbox是该单元格的文本，比如[100, 400, 500, 420]。
 
-- NET WEIGHT：25 / 1000 KGS，在QUANTITY OF PACKING下面，bbox是[20, 515, 350, 530]。
+16. Post Code: 110014 —— 顶部地址行的Post Code部分，bbox是该行的Post Code部分，比如[420, 150, 520, 170]。
 
-- GROSS WEIGHT：28 / 1120 KGS，在NET WEIGHT下面，bbox是[20, 535, 350, 550]。
+17. QUANTITY: @ 1000 KGS —— 在COUNTRY OF ORIGIN下面的QUANTITY行，bbox是该行的文本，比如[100, 430, 300, 445]。
 
-- UNIT PRICE：AT USD 8.9/KG...，在GROSS WEIGHT下面，bbox是[20, 560, 550, 580]。
+18. QUANTITY OF PACKING: 40 DRUMS —— 在QUANTITY下面的QUANTITY OF PACKING行，bbox是该行的文本，比如[100, 445, 300, 460]。
 
-- AMOUNT：8,900.00，在UNIT PRICE右边的USD列，bbox是[570, 565, 800, 590]。
+19. SHIPPING MARKS: N/M —— SHIPPING MARKS列的内容，bbox是该单元格的文本，比如[100, 780, 550, 800]。
 
-- TERMS OF PAYMENT：T/T in Advance，在UNIT PRICE下面，bbox是[20, 600, 550, 620]。
+20. Swift Code: COMMNCNSHSYG —— 灰色背景中的Swift Code行，bbox是灰色区域内的该行，比如[100, 760, 550, 775]。
 
-- TEL：498-23027550，顶部的TEL，bbox是[520, 70, 650, 85]（因为顶部有TEL:498-23027550）。
+21. TEL: 498-23027550 —— 顶部地址行的TEL部分，bbox是该行的TEL部分，比如[550, 150, 650, 170]。
 
-- FAX：704-56222243，顶部的FAX，bbox是[600, 70, 720, 85]。
+22. TERMS OF PAYMENT: T/T in Advance —— TERMS OF PAYMENT标签对应的内容，bbox是该标签下的文本，比如[100, 650, 550, 670]。
 
-- Email：deannastevens@fry.com，顶部的Email，bbox是[720, 70, 880, 85]。
+23. TITLE: INVOICE —— 大标题“INVOICE”，bbox是中间的大写文字，比如[450, 200, 550, 250]（因为INVOICE在发票的中间偏上，大字号）。
 
-- Post Code：110014，顶部的Post Code:110014，bbox是[420, 70, 500, 85]。
+24. UNIT PRICE: AT USD 8.9/KG FOB SHANGHAI,CHINA —— UNIT PRICE标签对应的内容，bbox是该标签下的文本，比如[100, 620, 550, 640]。
 
-- Beneficiary：Xinbotengfei Network Co., Ltd.，在支付信息中的Beneficiary: 后面，bbox是[150, 650, 550, 670]。
+现在需要将这些整理成JSON数组，每个元素包含bbox和label。需要注意bbox的坐标是相对图片的，这里假设图片的坐标系统，每个元素的bbox需要准确对应。
 
-- Beneficiary Bank：BANK OF COMMUNICATIONS...，在Beneficiary下面，bbox是[150, 675, 550, 695]。
+现在开始列出每个条目：
 
-- Swift Code：COMM C N S H S Y G，Beneficiary Bank下面，bbox是[150, 695, 550, 710]。
-
-- Account Number：2111112011463000011235，Beneficiary Bank下面，bbox是[150, 710, 550, 725]。
-
-- SHIPPING MARKS：N/M，在SHIPPING MARKS列，bbox是[20, 730, 350, 750]。
-
-- ADDRESS（TO部分）：0366 Priscilla Views...，在TO: 后面，bbox是[100, 335, 550, 360]（因为TO: 后面是地址，两行）。
-
-- ADDRESS（顶部公司地址）：9182 Johnson Ports Apt...，在最顶部，bbox是[100, 90, 520, 105]。
-
-现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意有些类别可能重复，比如INVOICE NO.和CONTRACT NO.是同一个值，所以两个条目？因为类别是CONTRACT NO.和INVOICE NO.，所以都要列。
-
-现在开始构建每个条目：
-
-1. COMPANY NAME: 顶部的公司名称，包含中英文。bbox是[125, 38, 875, 100]（假设）。
-
-2. TITLE: INVOICE，bbox是[320, 200, 680, 250]。
-
-3. INVOICE NO.: M01ACI2021I079S2，bbox是[605, 332, 900, 352]。
-
-4. CONTRACT NO.: M01ACI2021I079S2，bbox同上（因为图中CONTRACT NO.也是这个值）。
-
-5. INVOICE DATE: Nov.22.2021，bbox是[605, 355, 900, 375]。
-
-6. COUNTRY OF ORIGIN: CHINA，bbox是[20, 442, 350, 462]。
-
-7. PRODUCT NAME: L-ISOLEUCINE 40DRUMS WITH 2 PALLETS，bbox是[20, 467, 350, 487]。
-
-8. QUANTITY: 1000 KGS（@ 1000 KGS），bbox是[20, 477, 350, 497]。
-
-9. QUANTITY OF PACKING: 40 DRUMS，bbox是[20, 497, 350, 517]。
-
-10. NET WEIGHT: 25 / 1000 KGS，bbox是[20, 517, 350, 537]。
-
-11. GROSS WEIGHT: 28 / 1120 KGS，bbox是[20, 537, 350, 557]。
-
-12. UNIT PRICE: AT USD 8.9/KG FOB SHANGHAI, CHINA，bbox是[20, 562, 550, 582]。
-
-13. AMOUNT: 8,900.00，bbox是[572, 567, 800, 587]。
-
-14. TERMS OF PAYMENT: T/T in Advance，bbox是[20, 602, 550, 622]。
-
-15. TEL: 498-23027550，bbox是[522, 72, 652, 92]（顶部的TEL）。
-
-16. FAX: 704-56222243，bbox是[602, 72, 722, 92]。
-
-17.
+1. COMPANY NAME: 鑫博腾飞网络有限公司 Xinbotengfei Network Co., Ltd. —— bbox是顶部公司名称，比如[250, 50, 750, 100]
+2. TITLE: INVOICE —— bbox是大标题，比如[450, 220, 550, 260]
+3. ADDRESS: 0366 Priscilla Views Bakerberg, NC 21755 4270 Daniel Loop Zamorastad, TX 50426 —— TO右边的地址，bbox比如[200, 300, 500, 330]
+4. INVOICE NO.: M01ACI2021I079S2 —— 右侧INVOICE NO.，bbox比如[690, 290, 850, 310]
+5. CONTRACT NO.: M01ACI2021I079S2 —— 右侧CONTRACT NO.，bbox比如[690, 320, 850, 340]
+6. INVOICE DATE: Nov.22.2021 —— 右侧INVOICE DATE，bbox比如[690, 320, 850, 340]？不，INVOICE DATE是Nov.22.2021，对应标签是INVOICE DATE:，所以bbox是该标签右侧的内容，比如[690, 320, 850, 340]中的内容是日期，所以标签是INVOICE DATE:，内容是Nov.22.2021，所以bbox是内容部分，比如[700, 325, 840, 345]
+7. PRODUCT NAME: L-ISOLEUCINE 40DRUMS WITH 2 PALLETS —— QUANTITY & DESCRIPTION列的第一行，bbox比如[100, 400, 500, 420]
+8. COUNTRY OF ORIGIN: CHINA —— COUNTRY OF ORIGIN:CHINA，bbox比如[100, 450, 300, 470]
+9. QUANTITY: @ 1000 KGS —— QUANTITY: @ 1000 KGS，bbox比如[100, 430, 300, 445]
+10. QUANTITY OF PACKING: 40 DRUMS —— QUANTITY OF PACKING: 40 DRUMS，bbox比如[100, 445, 300, 460]
+11. NET WEIGHT: @ 25 / 1000 KGS —— NET WEIGHT: @ 25 / 1000 KGS，bbox比如[100, 460, 350, 475]
+12. GROSS WEIGHT: @ 28 / 1120 KGS —— GROSS WEIGHT: @ 28 / 1120 KGS，bbox比如[100, 480, 350, 495]
+13. UNIT PRICE: AT USD 8.9/KG FOB SHANGHAI,CHINA —— UNIT PRICE: AT USD 8.9/KG FOB SHANGHAI,CHINA，bbox比如[100, 620, 550, 640]
+14. TERMS OF PAYMENT: T/T in Advance —— TERMS OF PAYMENT: T/T in Advance，bbox比如[100, 650, 550, 670]
+15. AMOUNT: 8,900.00 —— AMOUNT列的数值，USD 8,900.00，bbox比如[650, 600, 850, 620]
+1

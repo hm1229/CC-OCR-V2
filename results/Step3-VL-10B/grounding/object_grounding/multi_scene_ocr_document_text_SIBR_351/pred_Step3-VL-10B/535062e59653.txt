@@ -1,148 +1,186 @@
-用户现在需要检测图像中的各个指定类别。首先得逐个看每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个标签在图中的位置。
 
 首先看COMPANY NAME：图顶部是Philip in Information Co., Ltd.，所以这个是公司名。
 
-Add：地址是27291 Wilson Lakes...，对应Add标签。
+Add：地址是27291 Wilson Lakes Nicholaschester, FL 48096，对应Add标签。
 
-COMMODITY：图中有COMMODITY字段，值是AS BELOW。
+COMMODITY：图中COMMODITY下面是AS BELOW，所以这个是商品类别。
 
-COUNTRY OF ORIGIN：看有没有国家，地址里的FL是佛罗里达（美国），但可能图中是否有？或者看MADE IN CHINA，所以COUNTRY OF ORIGIN可能是CHINA？不过图中MADE IN CHINA在MARKS & NOS.里，所以COUNTRY OF ORIGIN对应这个？或者看是否有其他。不过先继续。
+COUNTRY OF ORIGIN：看MADE IN CHINA，所以国家是China，对应COUNTRY OF ORIGIN。
 
-DATE：图中INVOICE右边DATE: 10/Nov/21。
+DATE：发票右上角DATE: 10/Nov/21，所以日期是这个。
 
-ESCRIPION OF GOOD：应该是DESCRIPTION OF GOOD，图中的列标题。
+ESCRIPION OF GOOD：应该是DESCRIPTION OF GOOD，图中的列标题，下面有CHEESECLOTH等，所以这个是商品描述的列。
 
-Fax：图中Fax: 38-439-81650856。
+Fax：图中Fax: 38-439-81650856，对应Fax标签。
 
-INV NO.：HMC-21125。
+INV NO.：HMC-21125，是发票号。
 
-NUMBER：可能看各个数量，比如2448 PCS等，但NUMBER可能指数量列？或者看是否有其他。不过先看其他。
+NUMBER：可能需要看哪里，比如数量？或者可能其他，但先看其他。或者可能SAILING ON OR ABOUT是15/Nov/21，属于SAILING ON OR ABOUT。
 
-PAYMENT TERMS：T/T。
+PAYMENT TERMS：T/T，对应支付条款。
 
-QUANTITY：列中的数量，比如2448 PCS等。
+QUANTITY：比如2448 PCS等，是数量列。
 
-SAILING ON OR ABOUT：图中SAILING ON OR ABOUT对应的15/Nov/21。
+SAILING ON OR ABOUT：15/Nov/21，是 sailing的日期。
 
-SHIPPED BY：SEA FREIGHT。
+SHIPPED BY：SEA FREIGHT，是运输方式。
 
-SPECIFICATION：可能看MARKS & NOS.里的内容，比如Q.E.P.等，或者COMMODITY下的AS BELOW？不过可能需要对应。
+SPECIFICATION：可能看MARKS & NOS.下面的Q.E.P.等，或者可能其他，但图中MARKS & NOS.列有Q.E.P.、TS等，可能SPECIFICATION对应这些标记？
 
-TITLE：INVOICE是标题。
+TITLE：可能标题是INVOICE，图中大标题是INVOICE，所以TITLE是INVOICE。
 
-Tel：03-553-45886961。
+Tel：03-553-45886961，电话。
 
-UNIT PRICE：列中的单价，比如USD 0.570等。
+UNIT PRICE：比如0.570 USD等，是单价列。
 
-现在逐个找每个类别：
+现在需要逐个对应每个标签，找到它们的bbox。
 
-1. COMPANY NAME：[144, 33, 632, 57]（公司名称行）
-2. Add：[100, 57, 422, 73]（地址行）
-3. COMMODITY：[40, 137, 122, 154]（COMMODITY标签）
-4. COUNTRY OF ORIGIN：图中MADE IN CHINA在MARKS & NOS.列，所以对应COUNTRY OF ORIGIN？因为MADE IN CHINA是产地。看MARKS & NOS.里的MADE IN CHINA，所以这个是COUNTRY OF ORIGIN的体现。所以COUNTRY OF ORIGIN的bbox是包含MADE IN CHINA的部分？或者看是否有其他。可能图中没有明确的COUNTRY OF ORIGIN字段，但MADE IN CHINA是产地，所以对应。
-5. DATE：[514, 157, 622, 174]（DATE: 10/Nov/21）
-6. ESCRIPTION OF GOOD：应该是DESCRIPTION OF GOOD，图中的列标题，[122, 622, 393, 643]（列标题）
-7. Fax：[100, 73, 422, 89]（Fax行）
-8. INV NO.：[44, 157, 100, 174]（INV NO.标签，值是HMC-21125）
-9. NUMBER：可能指数量，比如各个数量值，比如2448 PCS等，但需要看是否有NUMBER标签。或者可能图中没有明确的NUMBER，但可能用户指的是数量列？或者可能其他。不过先看其他类别。
-10. PAYMENT TERMS：[200, 237, 322, 254]（PAYMENT TERMS标签，值是T/T）
-11. QUANTITY：列标题[332, 622, 424, 643]（QUANTITY列）
-12. SAILING ON OR ABOUT：[40, 237, 200, 254]（SAILING ON OR ABOUT标签，值是15/Nov/21）
-13. SHIPPED BY：[40, 200, 144, 217]（SHIPPED BY标签，值是SEA FREIGHT）
-14. SPECIFICATION：可能对应COMMODITY下的AS BELOW？或者MARKS & NOS.？或者看是否有其他。或者可能图中没有明确的SPECIFICATION，但可能需要再检查。或者可能用户中的SPECIFICATION是指商品规格，比如CHEESECLOTH等是商品描述，而MARKS & NOS.是标记。可能这里SPECIFICATION对应DESCRIPTION OF GOOD？不过之前ESCRIPION OF GOOD是DESCRIPTION OF GOOD，所以可能SPECIFICATION是其他？或者可能图中没有，暂时先处理其他。
-15. TITLE：INVOICE是标题，[444, 137, 666, 163]（INVOICE大标题）
-16. Tel：[100, 61, 322, 77]（Tel行）
-17. UNIT PRICE：列标题[454, 622, 566, 643]（UNIT PRICE列）
+现在开始整理每个标签：
 
-现在需要确认每个类别的存在：
+1. COMPANY NAME：图顶部文字“Philip in Information Co., Ltd.”，bbox是公司名称的位置，大概在上方居中。
+2. Add：地址行，Add: 27291 Wilson Lakes Nicholaschester, FL 48096
+3. COMMODITY：COMMODITY: AS BELOW
+4. COUNTRY OF ORIGIN：MADE IN CHINA，对应国家
+5. DATE：DATE: 10/Nov/21
+6. DESCRIPTION OF GOOD：列标题“DESCRIPTION OF GOOD”
+7. Fax：Fax: 38-439-81650856
+8. INV NO.：INV NO. HMC-21125
+9. NUMBER：可能需要看，比如数量中的数字？或者可能“NUMBER”对应哪个？或者可能用户给的标签中的NUMBER可能是指数量？但QUANTITY是数量列，所以可能NUMBER是其他？或者可能图中没有明确的NUMBER，但先看其他。
+10. PAYMENT TERMS：T/T
+11. QUANTITY：列标题“QUANTITY”，比如2448 PCS等
+12. SAILING ON OR ABOUT：15/Nov/21（在SAILING ON OR ABOUT行）
+13. SHIPPED BY：SEA FREIGHT
+14. SPECIFICATION：MARKS & NOS.列的内容，比如Q.E.P.、TS等，可能对应SPECIFICATION
+15. TITLE：INVOICE（大标题）
+16. Tel：Tel: 03-553-45886961
+17. UNIT PRICE：列标题“UNIT PRICE”，比如USD 0.570等
+18. AMOUNT：列标题“AMOUNT”，比如USD 1395.36等
 
-- AMOUNT：列标题[674, 622, 774, 643]（AMOUNT列）
-- Add：已找到
-- COMMODITY：已找到
-- COMPANY NAME：已找到
-- COUNTRY OF ORIGIN：MADE IN CHINA在MARKS & NOS.列，所以看MARKS & NOS.中的MADE IN CHINA，其位置是[40, 622, 154, 643]（MARKS & NOS.列中的MADE IN CHINA行）
-- DATE：已找到
-- ESCRIPTION OF GOOD：即DESCRIPTION OF GOOD，列标题
-- Fax：已找到
-- INV NO.：已找到
-- NUMBER：可能图中没有明确的NUMBER，但可能用户指的是数量中的数字？或者可能NUMBER是列中的数量值，比如2448等，但标签是QUANTITY。可能用户中的NUMBER是其他？或者可能图中没有NUMBER，需要再检查。或者可能NUMBER是INVOICE编号？不，INV NO.是编号。可能用户中的NUMBER是笔误？或者可能图中没有，暂时先看其他。
-- PAYMENT TERMS：已找到
-- QUANTITY：已找到
-- SAILING ON OR ABOUT：已找到
-- SHIPPED BY：已找到
-- SPECIFICATION：可能图中没有，或者可能COMMODITY下的AS BELOW是规格？或者可能MARKS & NOS.是规格？比如Q.E.P.等是标记，属于SPECIFICATION？可能需要将MARKS & NOS.视为SPECIFICATION？比如Q.E.P.、TS等是标记，属于规格。所以SPECIFICATION对应MARKS & NOS.列的内容，比如Q.E.P.等。所以SPECIFICATION的bbox是MARKS & NOS.列的标题？或者内容？比如Q.E.P.所在的行，[40, 622, 154, 643]是MARKS & NOS.列的标题，下面的Q.E.P.等是内容。可能SPECIFICATION是MARKS & NOS.中的内容，比如Q.E.P.、TS等。所以需要确定。
-- TITLE：INVOICE是标题，已找到
-- Tel：已找到
-- UNIT PRICE：已找到
-- AMOUNT：列标题和总金额，比如TOTAL: USD 41725.40，以及每个商品的AMOUNT列。所以AMOUNT列的标题是[674, 622, 774, 643]，总金额是TOTAL: 后面的USD 41725.40，其位置在底部。
-
-现在整理所有需要的类别，确保每个都覆盖：
-
-现在列出所有要求的类别：
-
-AMOUNT, Add, COMMODITY, COMPANY NAME, COUNTRY OF ORIGIN, DATE, ESCRIPTION OF GOOD, Fax, INV NO., NUMBER, PAYMENT TERMS, QUANTITY, SAILING ON OR ABOUT, SHIPPED BY, SPECIFICATION, TITLE, Tel, UNIT PRICE.
+现在需要为每个标签找到对应的bbox。需要看每个元素在图中的位置。
 
 现在逐个处理：
 
-1. AMOUNT：列标题（[674, 622, 774, 643]）和总金额（TOTAL: USD 41725.40，位置在表格底部，TOTAL: 右边的金额）。但可能列标题是主要的，所以取列标题的bbox。
-2. Add：地址行，[100, 57, 422, 73]
-3. COMMODITY：标签“COMMODITY”及其值“AS BELOW”，bbox是[40, 137, 122, 154]（标签位置）
-4. COMPANY NAME：公司名称“Philip in Information Co., Ltd.”，bbox是[144, 33, 632, 57]
-5. COUNTRY OF ORIGIN：MADE IN CHINA，位于MARKS & NOS.列中，对应行的文本，bbox是[40, 622, 154, 643]（MARKS & NOS.列的标题？不，MADE IN CHINA是该列下的内容，看行：在MARKS & NOS.列中，最后一行是MADE IN CHINA，所以其位置是该列的单元格，即[40, 622, 154, 643]是列标题，内容是下面的行，比如MADE IN CHINA在该列的某一行，比如最后一行（TILE MARKER行的MARKS & NOS.是MADE IN CHINA？看表格结构：
+- COMPANY NAME: 文字“Philip in Information Co., Ltd.”，位置在发票顶部，bbox大概是从x=180到x=880左右，y在上方。
+- Add: “Add: 27291 Wilson Lakes Nicholaschester, FL 48096” 这行文字。
+- COMMODITY: “COMMODITY” 及其下面的“AS BELOW”
+- COUNTRY OF ORIGIN: “MADE IN CHINA” 在MARKS & NOS.列的最后一行。
+- DATE: “DATE: 10/Nov/21” 在发票右上角。
+- DESCRIPTION OF GOOD: 列标题“DESCRIPTION OF GOOD”在表格的第二列。
+- Fax: “Fax: 38-439-81650856” 这行。
+- INV NO.: “INV NO.” 及其值“HMC-21125”
+- PAYMENT TERMS: “PAYMENT TERMS” 及其值“T/T”
+- QUANTITY: 列标题“QUANTITY”在表格的第三列。
+- SAILING ON OR ABOUT: “SAILING ON OR ABOUT” 及其值“15/Nov/21”
+- SHIPPED BY: “SHIPPED BY” 及其值“SEA FREIGHT”
+- SPECIFICATION: 可能对应MARKS & NOS.列的内容，比如“Q.E.P.”、“TS”等，因为MARKS & NOS.是标记和编号，属于规格。
+- TITLE: “INVOICE” 大标题。
+- Tel: “Tel: 03-553-45886961” 这行。
+- UNIT PRICE: 列标题“UNIT PRICE”在表格的第四列。
+- AMOUNT: 列标题“AMOUNT”在表格的第五列。
 
-MARKS & NOS.列的内容：
+现在需要确定每个标签的bbox。例如：
 
-Q.E.P.
+对于COMPANY NAME，文字是“Philip in Information Co., Ltd.”，其位置在图的上方，所以bbox的x范围大概是从180到880（因为图中公司名是居中的大字体），y坐标是顶部区域。
 
-TS
+Add的行是“Add: 27291 Wilson Lakes Nicholaschester, FL 48096”，在公司名下面，Tel上面。
 
-C/NO.
+COMMODITY的标签是“COMMODITY”，其值是“AS BELOW”，在INV NO.和DATE下面。
 
-MADE IN CHINA
+COUNTRY OF ORIGIN是“MADE IN CHINA”，在MARKS & NOS.列的最后一行（看表格的MARKS & NOS.列，最后一行是MADE IN CHINA）。
 
-然后每个商品行对应。所以MADE IN CHINA是MARKS & NOS.列中的一个条目，其位置是该列的单元格，比如在C/NO.下面，所以bbox是该单元格的位置，大约是[40, 650, 154, 670]左右？可能需要更准确，但大致是包含MADE IN CHINA的区域。
-6. DATE：[514, 157, 622, 174]（DATE: 10/Nov/21）
-7. ESCRIPTION OF GOOD：即DESCRIPTION OF GOOD，列标题，[122, 622, 393, 643]
-8. Fax：[100, 73, 422, 89]（Fax: 38-439-81650856）
-9. INV NO.：[44, 157, 100, 174]（INV NO.标签，值HMC-21125）
-10. NUMBER：可能图中没有明确的NUMBER，或者可能用户指的是数量中的数字？比如2448等是数量，属于QUANTITY。或者可能NUMBER是INVOICE编号？不，INV NO.是编号。可能用户中的NUMBER是笔误，或者图中没有，暂时可能遗漏？或者可能NUMBER是列中的数量值，比如2448 PCS中的2448是数量，属于QUANTITY。所以可能NUMBER不存在？但必须处理所有要求的类别，可能我哪里错了。再看要求的类别中的NUMBER，可能图中没有，或者可能“NUMBER”是指商品的数量编号？或者可能图中的“NUMBER”是其他。或者可能用户中的NUMBER是“INVOICE NUMBER”？不，INV NO.是。可能这里NUMBER是多余的，或者可能图中某个部分。比如在SHIPPED BY等部分没有。或者可能NUMBER是“SAILING ON OR ABOUT”中的日期？不。可能暂时先标记，或者可能我漏看了。
-11. PAYMENT TERMS：[200, 237, 322, 254]（PAYMENT TERMS: T/T）
-12. QUANTITY：列标题[332, 622, 424, 643]（QUANTITY列）
-13. SAILING ON OR ABOUT：[40, 237, 200, 254]（SAILING ON OR ABOUT: 15/Nov/21）
-14. SHIPPED BY：[40, 200, 144, 217]（SHIPPED BY: SEA FREIGHT）
-15. SPECIFICATION：可能对应MARKS & NOS.中的标记，比如Q.E.P.、TS等，这些是商品的标记，属于规格。所以SPECIFICATION的bbox是MARKS & NOS.列的内容，比如Q.E.P.所在的单元格，[40, 622, 154, 643]是列标题，内容是下面的行，比如Q.E.P.在第一行，所以其位置是[40, 643, 154, 663]（假设行高）。或者可能SPECIFICATION是COMMODITY下的AS BELOW？不太对。或者可能图中没有SPECIFICATION，但必须包含，所以可能需要找其他。或者可能“SPECIFICATION”是“COMMODITY”？不，COMMODITY是商品种类。可能用户中的SPECIFICATION是“MARKS & NOS.”，因为标记是规格的一部分。所以将MARKS & NOS.列视为SPECIFICATION，其标题是[40, 622, 154, 643]。
-16. TITLE：INVOICE，[444, 137, 666, 163]（大标题INVOICE）
-17. Tel：[100, 61, 322, 77]（Tel: 03-553-45886961）
-18. UNIT PRICE：列标题[454, 622, 566, 643]（UNIT PRICE列）
+DATE是“DATE: 10/Nov/21”，在发票标题“INVOICE”的右侧。
 
-现在检查是否有遗漏的类别：AMOUNT, Add, COMMODITY, COMPANY NAME, COUNTRY OF ORIGIN, DATE, ESCRIPTION OF GOOD, Fax, INV NO., NUMBER, PAYMENT TERMS, QUANTITY, SAILING ON OR ABOUT, SHIPPED BY, SPECIFICATION, TITLE, Tel, UNIT PRICE。共18个类别。
+DESCRIPTION OF GOOD是表格中的第二列标题，文字是“DESCRIPTION OF GOOD”。
 
-现在处理NUMBER：可能图中没有明确的“NUMBER”标签，或者可能“NUMBER”是指商品的数量（QUANTITY）？但QUANTITY已经单独列出。或者可能“NUMBER”是INVOICE编号？不，INV NO.是。或者可能“NUMBER”是其他，比如“C/NO.”（Commercial Number）在MARKS & NOS.列中，C/NO.是其中一个条目，可能C/NO.属于NUMBER？比如C/NO.是Commercial Number，即编号。所以C/NO.所在的单元格是NUMBER的体现。C/NO.在MARKS & NOS.列中，位于TS下面，所以其位置是该列的单元格，比如[40, 670, 154, 690]左右。所以NUMBER对应C/NO.，因为C/NO.是编号（Commercial Number）。所以NUMBER的bbox是包含C/NO.的单元格。
+Fax是“Fax: 38-439-81650856”，在Tel下面。
 
-现在整理所有：
+INV NO.是“INV NO.”标签和其值“HMC-21125”，在左上方，DATE的左边。
 
-- AMOUNT: 列标题[674, 622, 774, 643]，以及总金额TOTAL: USD 41725.40，其位置在表格底部，TOTAL: 右边的金额，bbox大约是[674, 700, 774, 720]（总金额行）
-- Add: [100, 57, 422, 73]
-- COMMODITY: [40, 137, 122, 154]（标签）
-- COMPANY NAME: [144, 33, 632, 57]
-- COUNTRY OF ORIGIN: MADE IN CHINA，位于MARKS & NOS.列的某一行，比如最后一行，bbox是[40, 690, 154, 710]（假设行位置）
-- DATE: [514, 157, 622, 174]
-- ESCRIPTION OF GOOD: [122, 622, 393, 643]（列标题）
-- Fax: [100, 73, 422, 89]
-- INV NO.: [44, 157, 100, 174]（标签）
-- NUMBER: C/NO.，位于MARKS & NOS.列，bbox是[40, 650, 154, 670]（C/NO.所在的单元格）
-- PAYMENT TERMS: [200, 237, 322, 254]
-- QUANTITY: [332, 622, 424, 643]（列标题）
-- SAILING ON OR ABOUT: [40, 237, 200, 254]
-- SHIPPED BY: [40, 200, 144, 217]
-- SPECIFICATION: MARKS & NOS.列的标题或内容，比如Q.E.P.等，取列标题[40, 622, 154, 643]
-- TITLE: [444, 137, 666, 163]（INVOICE）
-- Tel: [100, 61, 322, 77]
-- UNIT PRICE: [454, 622, 566, 643]（列标题）
+PAYMENT TERMS是“PAYMENT TERMS”标签和其值“T/T”，在SAILING ON OR ABOUT的下面。
 
-现在需要将每个类别对应一个bbox，确保准确。可能有些近似，但尽量。
+QUANTITY是表格中的第三列标题“QUANTITY”。
 
-现在编写JSON数组：
+SAILING ON OR ABOUT是“SAILING ON OR ABOUT”标签和其值“15/Nov/21”，在SHIPPED BY和TO的下面。
 
-[
-  {"bbox_2d": [144, 33, 632, 57], "label
+SHIPPED BY是“SHIPPED BY”标签和其值“SEA FREIGHT”，在COMMODITY的下面。
+
+SPECIFICATION可能对应MARKS & NOS.列的内容，比如“Q.E.P.”、“TS”、“C/NO.”、“MADE IN CHINA”这些，因为这些是标记和编号，属于规格信息。
+
+TITLE是“INVOICE”这个大标题，加粗且下划线。
+
+Tel是“Tel: 03-553-45886961”，在Add和Fax之间。
+
+UNIT PRICE是表格中的第四列标题“UNIT PRICE”。
+
+AMOUNT是表格中的第五列标题“AMOUNT”，以及每一行的金额值。
+
+现在需要将每个标签对应到具体的bbox。由于是图像，需要估计每个元素的位置。例如：
+
+1. COMPANY NAME: bbox [182, 28, 882, 62] （因为公司名是第一行，字体较大）
+2. Add: bbox [100, 64, 882, 84] （Add行）
+3. COMMODITY: bbox [40, 140, 925, 160] （COMMODITY标签和AS BELOW）
+4. COUNTRY OF ORIGIN: bbox [40, 720, 150, 740] （MADE IN CHINA在MARKS & NOS.列的最后一行，对应COUNTRY OF ORIGIN）
+5. DATE: bbox [670, 140, 925, 160] （DATE: 10/Nov/21在右上角）
+6. DESCRIPTION OF GOOD: bbox [140, 590, 490, 610] （列标题，表格的第二列）
+7. Fax: bbox [100, 86, 882, 106] （Fax行）
+8. INV NO.: bbox [40, 162, 425, 182] （INV NO.和HMC-21125）
+9. PAYMENT TERMS: bbox [40, 300, 425, 320] （PAYMENT TERMS和T/T）
+10. QUANTITY: bbox [490, 590, 630, 610] （列标题QUANTITY）
+11. SAILING ON OR ABOUT: bbox [40, 270, 425, 290] （SAILING ON OR ABOUT和15/Nov/21）
+12. SHIPPED BY: bbox [40, 230, 425, 250] （SHIPPED BY和SEA FREIGHT）
+13. SPECIFICATION: bbox [40, 590, 140, 720] （MARKS & NOS.列的内容，比如Q.E.P.、TS等，属于规格）
+14. TITLE: bbox [425, 140, 925, 170] （INVOICE大标题，加粗下划线）
+15. Tel: bbox [100, 68, 882, 88] （Tel行）
+16. UNIT PRICE: bbox [630, 590, 770, 610] （列标题UNIT PRICE）
+17. AMOUNT: bbox [770, 590, 925, 610] （列标题AMOUNT）
+
+现在需要检查每个标签是否都覆盖。用户提供的标签列表是：AMOUNT, Add, COMMODITY, COMPANY NAME, COUNTRY OF ORIGIN, DATE, ESCRIPTION OF GOOD（应该是DESCRIPTION OF GOOD的笔误）, Fax, INV NO., NUMBER, PAYMENT TERMS, QUANTITY, SAILING ON OR ABOUT, SHIPPED BY, SPECIFICATION, TITLE, Tel, UNIT PRICE。
+
+注意用户给的ESCRIPION OF GOOD是笔误，应该是DESCRIPTION OF GOOD。另外NUMBER这个标签，图中是否有对应的？可能NUMBER是指数量？但QUANTITY已经是数量列，可能NUMBER是其他？或者可能图中没有明确的NUMBER，或者可能我漏看了。再检查图中的内容，是否有“NUMBER”这个字段？图中没有明显的“NUMBER”标签，可能用户可能把数量列的编号？或者可能NUMBER是其他，比如发票中的编号？但INV NO.已经是发票号。可能NUMBER是多余的，或者可能我哪里错了。再看用户提供的标签列表中的NUMBER，需要找对应的。可能图中没有NUMBER，或者可能在其他地方。比如在MARKS & NOS.中的C/NO.（Commercial Number？），但不确定。或者可能NUMBER是指商品的数量？但QUANTITY已经是数量。可能用户可能有误，或者可能我漏看了。暂时先处理其他标签，再看NUMBER。
+
+另外，检查所有标签：
+
+- AMOUNT：有，列标题和金额值。
+- Add：有。
+- COMMODITY：有。
+- COMPANY NAME：有。
+- COUNTRY OF ORIGIN：有（MADE IN CHINA）。
+- DATE：有。
+- DESCRIPTION OF GOOD：有（用户写的ESCRIPION是笔误）。
+- Fax：有。
+- INV NO.：有。
+- NUMBER：需要找，可能图中没有，或者可能在其他地方。比如在SAILING ON OR ABOUT的“ABOUT”后面？不。或者可能NUMBER是“2880 SETS”中的2880？但那是QUANTITY。可能用户可能把“NUMBER”对应到某个数量？或者可能图中没有NUMBER，这时候可能需要确认。但根据用户提供的标签，必须包含NUMBER，所以再检查图。图中是否有“NUMBER”这个标签？看所有文字，没有“NUMBER”字样。可能用户可能输入错误，或者可能我漏看了。或者可能“NUMBER”是指发票中的编号？但INV NO.已经是。或者可能“NUMBER”是“TOTAL”？但TOTAL是总金额。可能这里可能用户有误，或者可能我需要再检查。暂时先假设NUMBER可能对应某个部分，或者可能图中没有，但根据任务要求，必须检测所有给定的标签，所以可能我哪里错了。再看用户提供的标签列表中的NUMBER，可能是指“QUANTITY”中的数量？但QUANTITY已经是单独的标签。或者可能“NUMBER”是“MARKS & NOS.”中的编号？比如C/NO.是Commercial Number，属于NUMBER？可能C/NO.对应NUMBER？因为C/NO.是Commercial Number（商业编号），所以可能NUMBER对应C/NO.所在的行。比如在MARKS & NOS.列中，有一行是C/NO.，所以可能NUMBER对应C/NO.的标记。这样，NUMBER的bbox是MARKS & NOS.列中C/NO.的位置，即在Q.E.P.、TS、C/NO.、MADE IN CHINA中的C/NO.行。
+
+现在重新整理：
+
+- NUMBER: 对应C/NO.（Commercial Number），在MARKS & NOS.列中，所以bbox是该行的MARKS & NOS.部分，即包含C/NO.的单元格。
+
+现在继续处理每个标签：
+
+现在列出所有标签和对应的bbox及label：
+
+1. COMPANY NAME: bbox [182, 28, 882, 62], label "COMPANY NAME"
+2. Add: bbox [100, 64, 882, 84], label "Add"
+3. COMMODITY: bbox [40, 140, 925, 160], label "COMMODITY"
+4. COUNTRY OF ORIGIN: bbox [40, 720, 150, 740], label "COUNTRY OF ORIGIN" （因为MADE IN CHINA是产地）
+5. DATE: bbox [670, 140, 925, 160], label "DATE"
+6. DESCRIPTION OF GOOD: bbox [140, 590, 490, 610], label "DESCRIPTION OF GOOD" （用户写的ESCRIPION是笔误，修正为DESCRIPTION）
+7. Fax: bbox [100, 86, 882, 106], label "Fax"
+8. INV NO.: bbox [40, 162, 425, 182], label "INV NO."
+9. NUMBER: bbox [40, 690, 140, 710], label "NUMBER" （对应C/NO.行，因为C/NO.是Commercial Number，属于编号）
+10. PAYMENT TERMS: bbox [40, 300, 425, 320], label "PAYMENT TERMS"
+11. QUANTITY: bbox [490, 590, 630, 610], label "QUANTITY"
+12. SAILING ON OR ABOUT: bbox [40, 270, 425, 290], label "SAILING ON OR ABOUT"
+13. SHIPPED BY: bbox [40, 230, 425, 250], label "SHIPPED BY"
+14. SPECIFICATION: bbox [40, 590, 140, 720], label "SPECIFICATION" （MARKS & NOS.列的内容，如Q.E.P.、TS等，属于规格标记）
+15. TITLE: bbox [425, 140, 925, 170], label "TITLE" （INVOICE是标题）
+16. Tel: bbox [100, 68, 882, 88], label "Tel"
+17. UNIT PRICE: bbox [630, 590, 770, 610], label "UNIT PRICE"
+18. AMOUNT: bbox [770, 590, 925, 610], label "AMOUNT"
+
+现在需要验证每个标签是否都存在。例如，NUMBER对应C/NO.，因为C/NO.是Commercial Number，属于编号类，所以合理。SPECIFICATION对应MARKS & NOS.列，因为这些是商品的标记和编号，属于规格。COUNTRY OF ORIGIN对应MADE IN CHINA，正确。
+
+现在将这些整理成JSON数组，每个元素是{"bbox_2d": [x1, y1, x2, y2], "label": "category"}。
+
+需要注意坐标的估计，因为是图像，需要大致确定每个元素的位置。例如，图中的表格部分，MARKS & NOS.列的行包括Q.E.P.、TS、C/NO.、MADE IN CHINA，所以C/NO.在第三行（Q.E.P.是第一行，TS第二行，C/NO.第三行，MADE IN CHINA第四行）。所以C/NO.的bbox在MARKS & NOS.列的第三行，即y坐标大约在690左右（因为表格的行是垂直排列的，每

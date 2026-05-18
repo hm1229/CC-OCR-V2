@@ -1,214 +1,98 @@
-用户现在需要检测指定类别在商业发票中的各个元素。首先得逐个分析每个类别对应的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先看ADD：在ISSUER部分，ADD:Unit 0188 Box 5598 DPO AE 56645，所以ADD的bbox是对应这部分。
+首先看Company Name（公司名称）：ISSUER部分的Lanjin Electronics Information Co., Ltd.，还有TO部分的公司名也是这个，所以公司名是Lanjin Electronics Information Co., Ltd.。对应的bbox是ISSUER下的公司名，比如[23, 64, 340, 82]左右？需要看原文。
 
-Address：TO部分的地址，Lanjin Electronics Information Co., Ltd.下面的PSC 9295, Box 5395 AP0 AP 75784，还有ISSUER的地址也是Address？不过看类别里有Address，可能需要确认。不过先看每个类别。
+然后ADD（地址）：ISSUER的ADD是Unit 0188 Box 5598 DPO AE 56645，2229 Gary Loop Jonesberg, DC 27162。所以ADD的bbox是[23, 84, 340, 112]（因为ADD:后面的内容）。
 
-Amount：在表格里的Amount列，对应US$15,000.00的位置。
+Address：可能和ADD是同一个？不过看问题里的Address，可能TO部分的地址是PSC 9295, Box 5395 AP0 AP 75784，所以Address是TO的地址，即[23, 138, 340, 156]（TO下面的地址）。
 
-Company Name：ISSUER和TO里的Lanjin Electronics Information Co., Ltd.，所以Company Name是这个公司名。
+Amount：在表格里的Amount列，对应PLASTIC BOX MOULD的金额是US$15,000.00，还有TOTAL的金额也是这个？看TOTAL行的Amount？不，TOTAL的Amount是US$15,000.00？看表格里的Amount列，PLASTIC BOX MOULD的Amount是US$15,000.00，所以Amount的bbox是对应那个单元格，比如[640, 320, 750, 340]左右？或者看TOTAL的Amount？不，TOTAL行可能没有单独的Amount，看表格中的Amount列，每个商品的Amount。这里只有一个商品，所以Amount是US$15,000.00，对应的bbox是[720, 330, 830, 350]（因为Amount列的单元格）。
 
-Country of origin of goods：CHINA，对应那个字段。
+Country of origin of goods：CHINA，对应的bbox是[330, 320, 420, 340]（Country of origin of goods下面的CHINA）。
 
-Date：2021/9/29，Invoice No旁边的Date。
+Date：2021/9/29，在Invoice No右边的Date列，bbox是[370, 290, 490, 310]（Date下面的2021/9/29）。
 
-GROSS WEIGHT：2220KGS，底部的GROSS WEIGHT。
+GROSS WEIGHT：2220KGS，在表格下方，bbox是[450, 520, 560, 540]（GROSS WEIGHT: 2220KGS）。
 
-Invoice No：FY210620，在Invoice No字段。
+Invoice No：FY210620，在Invoice No标签下的编号，bbox是[300, 300, 370, 320]（Invoice No. FY210620）。
 
-Numbers and kind of package description of go：表格里的列，比如PLASTIC BOX MOULDR是description of goods，所以这个列对应的内容。
+Numbers and kind of package description of go：这里看表格的列，Numbers and kind of package:description of go，对应PLASTIC BOX MOULD的描述，所以这个字段的内容是PLASTIC BOX MOULD，bbox是[130, 440, 420, 460]（因为Marks & Numbers右边的列是Numbers and kind of package:description of go，对应内容是PLASTIC BOX MOULD）。
 
-Quantity：表格里的Quantity列，值是1。
+Quantity：1，对应Quantity列的数值，bbox是[420, 440, 460, 460]（Quantity列的1）。
 
-TOTAL：TOTAL: 1 SETS，对应TOTAL的标签。
+TOTAL：1 SETS，TOTAL行的Quantity是1，单位是SETS，所以TOTAL的标签对应TOTAL: 1 SETS，bbox是[250, 490, 320, 510]（TOTAL: 后面的1）。
 
-Terms of payment：T/T，在Terms of payment字段。
+Terms of payment：T/T，在Terms of payment下面的T/T，bbox是[330, 360, 420, 380]（Terms of payment T/T）。
 
-Title：商业发票（COMMERCIAL INVOICE）是Title。
+Title：商业发票，即COMMERCIAL INVOICE，还有中文“商业发票”，所以Title是“商业发票 COMMERCIAL INVOICE”，bbox是[440, 220, 660, 260]（中间的商业发票标题）。
 
-Unit Price：US$15,000.00是Unit Price列的值？不，Unit Price是$15,000.00，Amount是US$15,000.00。看表格里的Unit Price列是US$15,000.00？不，看表格结构：Marks & Numbers | Numbers and kind of package: description of go | Quantity | Unit Price | Amount。所以Unit Price列的值是US$15,000.00？不，看表格里的行，PLASTIC BOX MOULDR那一行，Quantity是1，Unit Price是US$15,000.00？不对，看图片里的表格：PLASTIC BOX MOULDR对应的Quantity是1，Unit Price是US$15,000.00？不，看图片中的表格部分：
+Unit Price：US$15,000.00，对应Unit Price列的数值，bbox是[500, 440, 600, 460]（Unit Price列的US$15,000.00）。
 
-在Marks & Numbers和Numbers and kind of package: description of go这一列是PLASTIC BOX MOULDR，Quantity是1，Unit Price是US$15,000.00？不，看图片里的内容：
+fax：0780-51129167，在ISSUER的tel和fax部分，fax: 0780-51129167，bbox是[110, 100, 240, 118]（因为tel和fax在同一行，tel是5118-69123770，fax是0780-51129167，所以fax的bbox是[240, 100, 340, 118]？看原文：tel:5118−69123770 fax:0780−51129167，所以fax的标签对应fax:后面的内容，bbox是[290, 102, 390, 120]。
 
-“PLASTIC BOX MOULDR”在Numbers and kind of package: description of go列，Quantity是1，Unit Price是US$15,000.00？然后Amount是US$15,000.00。所以Unit Price是US$15,000.00，Amount也是这个值？可能表格里的Unit Price和Amount是同一值？不过先按类别找。
+tel：5118−69123770，在ISSUER的tel部分，bbox是[110, 102, 240, 120]（tel:5118−69123770）。
 
-fax：ISSUER部分的fax: 0780-51129167。
+现在需要逐个确认每个标签的对应bbox和内容。需要注意每个元素在图中的位置，可能需要更精确的坐标，但因为是示意图，尽量根据布局判断。
 
-tel：ISSUER部分的tel:5118-69123770。
+现在整理每个类别：
 
-现在逐个列出每个类别的bbox和label：
+1. ADD：ISSUER的ADD地址，即Unit 0188 Box 5598 DPO AE 56645，2229 Gary Loop Jonesberg, DC 27162。对应bbox是[23, 86, 340, 114]（因为ADD:后面的内容，两行地址）。
 
-1. ADD：ISSUER下的ADD:Unit 0188 Box 5598 DPO AE 56645，地址是2229 Gary Loop Jonesberg, DC 27162？不，ADD是Unit 0188 Box 5598 DPO AE 56645，而下面的2229...是地址？看原文：
+2. Address：TO部分的地址，即PSC 9295, Box 5395 AP0 AP 75784。对应bbox是[23, 140, 340, 158]（TO下面的地址）。
 
-ISSUER
-Lanjin Electronics Information Co., Ltd.
-ADD:Unit 0188 Box 5598 DPO AE 56645
-2229 Gary Loop Jonesberg, DC 27162
-tel:5118-69123770 fax:0780-51129167
+3. Amount：商品的金额，即US$15,000.00，对应表格中Amount列的单元格，比如[725, 332, 825, 352]（因为PLASTIC BOX MOULD行的Amount是US$15,000.00）。
 
-所以ADD是“Unit 0188 Box 5598 DPO AE 56645”，而2229...是Address？因为类别里有ADD和Address。所以ADD对应ADD:...，Address对应2229 Gary Loop Jonesberg, DC 27162（ISSUER的地址）和TO部分的地址PSC 9295, Box 5395 AP0 AP 75784？不过看类别里的Address，可能需要看哪个是Address。不过先处理每个类别：
+4. Company Name：ISSUER和TO的公司名，Lanjin Electronics Information Co., Ltd.。对应bbox是[23, 66, 340, 84]（ISSUER的公司名）。
 
-现在开始列每个类别：
+5. Country of origin of goods：CHINA，对应bbox是[332, 322, 422, 342]（Country of origin of goods下面的CHINA）。
 
-- ADD：对应ISSUER下的ADD行，即“ADD:Unit 0188 Box 5598 DPO AE 56645”，bbox是包含这行的区域。看图片中ISSUER部分的ADD是第三行（Lanjin...是第一行，ADD是第二行？不，原文：
+6. Date：2021/9/29，对应bbox是[372, 292, 490, 312]（Date列的日期）。
 
-ISSUER
-Lanjin Electronics Information Co., Ltd.
-ADD:Unit 0188 Box 5598 DPO AE 56645
-2229 Gary Loop Jonesberg, DC 27162
-tel:5118-69123770 fax:0780-51129167
+7. GROSS WEIGHT：2220KGS，对应bbox是[452, 522, 562, 542]（GROSS WEIGHT: 2220KGS）。
 
-所以ADD是第二行（ADD:...），地址是第三行（2229...）。所以ADD的label是ADD，bbox是对应“ADD:Unit 0188 Box 5598 DPO AE 56645”的区域。
+8. Invoice No：FY210620，对应bbox是[302, 302, 370, 322]（Invoice No. FY210620）。
 
-- Address：TO部分的地址是“PSC 9295, Box 5395 AP0 AP 75784”，而ISSUER的地址是“2229 Gary Loop Jonesberg, DC 27162”。类别里有Address，可能需要看哪个。不过可能TO的地址是Address，因为TO是收件人，所以Address是TO的地址。看TO部分：
+9. Numbers and kind of package description of go：PLASTIC BOX MOULD，对应bbox是[132, 442, 420, 462]（该列的描述内容）。
 
-TO
-Lanjin Electronics Information Co., Ltd.
-PSC 9295, Box 5395 AP0 AP 75784
+10. Quantity：1，对应bbox是[422, 442, 462, 462]（Quantity列的数值）。
 
-所以Address是“PSC 9295, Box 5395 AP0 AP 75784”。
+11. TOTAL：1（SETS），对应TOTAL: 后面的1，bbox是[252, 492, 320, 512]（TOTAL: 1）。
 
-- Amount：在表格的Amount列，对应“US$15,000.00”（PLASTIC BOX MOULDR那一行的Amount）。
+12. Terms of payment：T/T，对应bbox是[332, 362, 420, 382]（Terms of payment T/T）。
 
-- Company Name：ISSUER和TO中的“Lanjin Electronics Information Co., Ltd.”，所以Company Name是这个公司名，出现两次？但可能只需要一个，看哪个位置。比如ISSUER的Company Name是Lanjin...，TO的也是，所以选其中一个，比如ISSUER的。
+13. Title：商业发票（COMMERCIAL INVOICE），对应bbox是[442, 222, 660, 262]（中间的标题部分）。
 
-- Country of origin of goods：CHINA，对应表格中的“Country of origin of goods”字段下的CHINA。
+14. Unit Price：US$15,000.00，对应bbox是[502, 442, 602, 462]（Unit Price列的数值）。
 
-- Date：Invoice No旁边的Date，即“2021/9/29”。
+15. fax：0780-51129167，对应bbox是[292, 104, 390, 124]（fax:后面的内容）。
 
-- GROSS WEIGHT：底部的“GROSS WEIGHT: 2220KGS”。
+16. tel：5118-69123770，对应bbox是[112, 104, 240, 124]（tel:后面的内容）。
 
-- Invoice No：Invoice No字段下的“FY210620”。
-
-- Numbers and kind of package description of go：表格中的列，对应“PLASTIC BOX MOULDR”（description of goods）。
-
-- Quantity：表格中的Quantity列，值为“1”（PLASTIC BOX MOULDR那一行的Quantity）。
-
-- TOTAL：表格中的“TOTAL:”后面的“1 SETS”。
-
-- Terms of payment：表格中的“Terms of payment”字段下的“T/T”。
-
-- Title：商业发票（COMMERCIAL INVOICE）是标题，所以Title是“商业发票 COMMERCIAL INVOICE”。
-
-- Unit Price：表格中的Unit Price列，值为“US$15,000.00”（PLASTIC BOX MOULDR那一行的Unit Price）。
-
-- fax：ISSUER部分的“fax:0780-51129167”。
-
-- tel：ISSUER部分的“tel:5118-69123770”。
-
-现在需要为每个类别确定bbox。因为是图片，需要估计每个元素的位置。以下是每个类别的分析：
-
-1. ADD：
-   - 文本：ADD:Unit 0188 Box 5598 DPO AE 56645
-   - 位置：ISSUER部分，第二行（Lanjin...是第一行，ADD是第二行）
-   - bbox：大概在左侧上方，对应坐标范围。假设图片中左侧上方的ADD行，bbox是[25, 140, 232, 162]（需要看实际，但这里按结构）
-
-2. Address：
-   - 文本：PSC 9295, Box 5395 AP0 AP 75784（TO部分的地址）
-   - 位置：TO部分，第二行（Lanjin...是第一行，地址是第二行）
-   - bbox：[25, 220, 232, 242]
-
-3. Amount：
-   - 文本：US$15,000.00（在Amount列，对应PLASTIC BOX MOULDR行）
-   - 位置：表格右侧的Amount列，对应行的最右边
-   - bbox：[625, 490, 750, 512]
-
-4. Company Name：
-   - 文本：Lanjin Electronics Information Co., Ltd.（ISSUER部分的第一行）
-   - bbox：[25, 100, 332, 122]
-
-5. Country of origin of goods：
-   - 文本：CHINA（在Country of origin of goods字段下）
-   - bbox：[400, 320, 445, 342]
-
-6. Date：
-   - 文本：2021/9/29（Invoice No右边的Date字段）
-   - bbox：[400, 240, 525, 262]
-
-7. GROSS WEIGHT：
-   - 文本：GROSS WEIGHT: 2220KGS（在表格下方）
-   - bbox：[450, 600, 590, 622]
-
-8. Invoice No：
-   - 文本：FY210620（Invoice No字段下的值）
-   - bbox：[380, 250, 435, 272]
-
-9. Numbers and kind of package description of go：
-   - 文本：PLASTIC BOX MOULDR（在该列下的内容）
-   - bbox：[120, 520, 400, 542]
-
-10. Quantity：
-    - 文本：1（在Quantity列，对应PLASTIC BOX MOULDR行）
-    - bbox：[420, 520, 440, 542]
-
-11. TOTAL：
-    - 文本：TOTAL:（在表格下方，TOTAL标签）
-    - bbox：[300, 540, 355, 562]
-
-12. Terms of payment：
-    - 文本：T/T（在Terms of payment字段下的值）
-    - bbox：[380, 350, 405, 372]
-
-13. Title：
-    - 文本：商业发票 COMMERCIAL INVOICE（中间上方的大标题）
-    - bbox：[380, 150, 750, 190]
-
-14. Unit Price：
-    - 文本：US$15,000.00（在Unit Price列，对应PLASTIC BOX MOULDR行）
-    - bbox：[450, 520, 530, 542]
-
-15. fax：
-    - 文本：fax:0780-51129167（ISSUER部分的fax行）
-    - bbox：[25, 170, 232, 192]
-
-16. tel：
-    - 文本：tel:5118-69123770（ISSUER部分的tel行）
-    - bbox：[25, 170, 232, 192]（和fax同一行，tel在前，fax在后）
-
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。注意bbox的坐标是相对图片的，这里需要大致估计，但因为是示例，可能需要根据图片结构。
+现在需要将这些整理成JSON数组，每个元素包含bbox_2d和label。需要注意bbox的坐标是相对图中的位置，可能需要根据图像的布局来估计，但因为是示例，尽量准确。
 
 现在逐个列出：
 
-1. ADD: [25, 142, 230, 164], label: "ADD"
-2. Address: [25, 222, 230, 244], label: "Address"
-3. Amount: [626, 492, 748, 514], label: "Amount"
-4. Company Name: [25, 102, 330, 124], label: "Company Name"
-5. Country of origin of goods: [402, 322, 443, 344], label: "Country of origin of goods"
-6. Date: [402, 242, 524, 264], label: "Date"
-7. GROSS WEIGHT: [452, 602, 588, 624], label: "GROSS WEIGHT"
-8. Invoice No: [382, 252, 434, 274], label: "Invoice No"
-9. Numbers and kind of package description of go: [122, 522, 400, 544], label: "Numbers and kind of package description of go"
-10. Quantity: [422, 522, 440, 544], label: "Quantity"
-11. TOTAL: [302, 542, 354, 564], label: "TOTAL"
-12. Terms of payment: [382, 352, 404, 374], label: "Terms of payment"
-13. Title: [382, 152, 748, 192], label: "Title"
-14. Unit Price: [452, 522, 530, 544], label: "Unit Price"
-15. fax: [25, 172, 230, 194], label: "fax"
-16. tel: [25, 172, 230, 194], label: "tel" （因为tel和fax在同一行，tel在前，所以bbox可能覆盖tel部分，比如tel:5118-69123770的范围是[25,172,150,194]，而fax是[152,172,230,194]，所以需要分开。比如tel的bbox是[25,172,140,194]，fax是[150,172,230,194]。）
+- ADD: [23, 86, 340, 114], label "ADD"
+- Address: [23, 140, 340, 158], label "Address"
+- Amount: [725, 332, 825, 352], label "Amount"
+- Company Name: [23, 66, 340, 84], label "Company Name"
+- Country of origin of goods: [332, 322, 422, 342], label "Country of origin of goods"
+- Date: [372, 292, 490, 312], label "Date"
+- GROSS WEIGHT: [452, 522, 562, 542], label "GROSS WEIGHT"
+- Invoice No: [302, 302, 370, 322], label "Invoice No"
+- Numbers and kind of package description of go: [132, 442, 420, 462], label "Numbers and kind of package description of go"
+- Quantity: [422, 442, 462, 462], label "Quantity"
+- TOTAL: [252, 492, 320, 512], label "TOTAL"
+- Terms of payment: [332, 362, 420, 382], label "Terms of payment"
+- Title: [442, 222, 660, 262], label "Title"
+- Unit Price: [502, 442, 602, 462], label "Unit Price"
+- fax: [292, 104, 390, 124], label "fax"
+- tel: [112, 104, 240, 124], label "tel"
 
-现在修正tel和fax的bbox：
+需要检查是否有遗漏或错误。比如TOTAL的描述是“1 SETS”，所以TOTAL的标签对应TOTAL: 1，而SETS是单位，可能TOTAL的label是“TOTAL”，对应数值是1。另外，Numbers and kind of package description of go这一列，图中的列标题是“Numbers and kind of package: description of go”，所以对应的内容是PLASTIC BOX MOULD，所以这个字段的bbox是该列的内容区域。
 
-tel: [25, 172, 145, 194] （因为tel:5118-69123770，长度较长，所以从25到大约145）
+另外，确认每个标签都覆盖了问题中的类别：ADD, Address, Amount, Company Name, Country of origin of goods, Date, GROSS WEIGHT, Invoice No, Numbers and kind of package description of go, Quantity, TOTAL, Terms of payment, Title, Unit Price, fax, tel。共16个类别，现在检查是否都包含。
 
-fax: [155, 172, 230, 194] （fax:0780-51129167，从155开始）
-
-现在重新整理所有16个类别：
-
-1. ADD: [25, 140, 232, 162] → label ADD
-2. Address: [25, 220, 232, 242] → label Address（TO的地址）
-3. Amount: [625, 490, 750, 512] → label Amount
-4. Company Name: [25, 100, 332, 122] → label Company Name（ISSUER的公司名）
-5. Country of origin of goods: [400, 320, 445, 342] → label Country of origin of goods
-6. Date: [400, 240, 525, 262] → label Date
-7. GROSS WEIGHT: [450, 600, 590, 622] → label GROSS WEIGHT
-8. Invoice No: [380, 250, 435, 272] → label Invoice No
-9. Numbers and kind of package description of go: [120, 520, 400, 542] → label Numbers and kind of package description of go
-10. Quantity: [420, 520, 440, 542] → label Quantity
-11. TOTAL: [300, 540, 355, 562] → label TOTAL
-12. Terms of payment: [380, 350, 405, 372] → label Terms of payment
-13. Title: [380, 150, 750, 190] → label Title
-14. Unit Price: [450, 520, 530, 542] → label Unit Price
-15. fax: [155, 172, 230, 194] → label fax
-16. tel: [25, 172, 145, 194] → label tel
-
-现在需要确认每个类别都覆盖到了，没有遗漏。用户要求的类别是：ADD, Address, Amount, Company Name, Country of origin of goods, Date, GROSS WEIGHT
+是的，16个类别都列出来了。现在将这些整理成JSON数组。
+</think>
+[{"bbox_2d": [23, 86, 340, 114], "label": "ADD"}, {"bbox_2d": [23, 140, 340, 158], "label": "Address"}, {"bbox_2d": [725, 332, 825, 352], "label": "Amount"}, {"bbox_2d": [23, 66, 340, 84], "label": "Company Name"}, {"bbox_2d": [332, 322, 422, 342], "label": "Country of origin of goods"}, {"bbox_2d": [372, 292, 490, 312], "label": "Date"}, {"bbox_2d": [452, 522, 562, 542], "label": "GROSS WEIGHT"}, {"bbox_2d": [302, 302, 370, 322], "label": "Invoice No"}, {"bbox_2d": [132, 442, 420, 462], "label": "Numbers and kind of package description of go"}, {"bbox_2d": [422, 442, 462, 462], "label": "Quantity"}, {"bbox_2d": [252, 492, 320, 512], "label": "TOTAL"}, {"bbox_2d": [332, 362, 420, 382], "label": "Terms of payment"}, {"bbox_2d": [442, 222, 660, 262], "label": "Title"}, {"bbox_2d": [502, 442, 602, 462], "label": "Unit Price"}, {"bbox_2d": [292, 104, 390, 124], "label": "fax"}, {"bbox_2d": [112, 104, 240, 124], "label": "tel"}]

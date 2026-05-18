@@ -1,0 +1,115 @@
+用户现在需要从商业发票中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name：顶部的Lanjin Electronic Technology Co., Ltd.，还有SELLER部分的公司名。比如顶部的公司名是[214, 53, 785, 74]左右？然后SELLER的公司名是[37, 207, 490, 230]。需要确认每个出现的Company Name。
+
+然后BATCH#：在右上角，BATCH#9/10，对应位置是[734, 197, 796, 212]左右。
+
+INVOICE：INVOICE:CI210822-M072-9，位置在右上角，[697, 193, 767, 208]。
+
+DATE：11st Jan, 2022，位置是[727, 195, 827, 208]。
+
+PO#：PO#PO-USA-02374，位置是[734, 200, 824, 214]。
+
+PROJECT：PROJECT: Cabin Creek，位置是[734, 204, 834, 218]。
+
+Consignee部分的IO R#：IOR#: 81-4816270，位置是[37, 452, 152, 468]。
+
+ship to：1490 Post Office, Biscoe NC 27209，位置是[37, 522, 272, 538]。
+
+Contact：SELLER部分的Contact: David Hall，位置是[37, 302, 152, 318]。
+
+Email：SELLER部分的Email: vle@gilbert.biz，位置是[320, 304, 440, 318]。
+
+Tel（SELLER的Tel）：Tel: +86-658-06266180，位置是[37, 320, 190, 336]。
+
+Fax（SELLER的Fax）：Fax: +86-886-38650061，位置是[320, 322, 470, 336]。
+
+Consignee的TEL：TEL: 029-886-7233，位置是[37, 476, 137, 490]。
+
+Fax（顶部的Fax）：Fax: +60-888-66051636，位置是[402, 62, 552, 76]。
+
+Tel（顶部的Tel）：Tel: +26-608-06568618，位置是[372, 64, 452, 76]。
+
+Shipping Mark：比如N/M，对应列的Shipping Mark，比如第一行的N/M是[50, 622, 140, 638]。
+
+Item No：比如VD10P-100S134-LC-SH032-M072-REV.A(840517-REV.A)，位置是[152, 622, 422, 638]。
+
+Descriptions：Slewing Drive，位置是[432, 622, 572, 638]。
+
+Quantity：112，位置是[582, 622, 622, 638]。
+
+Unit Price(USD)：$497.80，位置是[642, 622, 732, 638]。
+
+Amount(USD)：$55,753.60，位置是[742, 622, 842, 638]。
+
+Total Amount：$111,507.20，位置是[742, 732, 872, 748]。
+
+Total Piece：224，位置是[500, 732, 552, 748]。
+
+Payment Term：EXW，位置是[28, 776, 122, 792]。
+
+Slewing Drive HS Code：8483409090，位置是[102, 778, 232, 792]。
+
+WE CERTIFY THAT：下面的认证文字，位置是[28, 812, 862, 848]。
+
+ATTN：在Notify Party部分，ATTN: Edward Maxwell，位置是[622, 476, 702, 490]。
+
+Address：多个地址，比如顶部公司地址7991 Williams Ridges Apt. 780 East Michelle, NJ 69123，位置是[214, 57, 785, 71]；SELLER地址130 Brown Causeway Apt. 813 Lake Heathertown, OR 79557，位置是[37, 232, 490, 248]；Consignee地址USCGC Mason FPO AA 05884，位置是[37, 306, 190, 322]；ship to地址1490 Post Office, Biscoe NC 27209，位置是[37, 522, 272, 538]；Notify Party地址18255 Humble Pkwy, Humble, Texas 77338，位置是[622, 392, 772, 408]；Consignee的Denvip Davis地址？不，Consignee的IOR#下面的Denvip Davis是联系人？不，Consignee的TEL是029-886-7233，而ship to是另一个地址。还有Notify Party的地址是18255 Humble Pkwy...，所以Address类别需要找所有地址部分。
+
+现在需要逐个列出每个类别，确保覆盖所有要求的标签。可能有些标签在图中出现多次，比如Company Name出现两次（顶部和SELLER），但需要都检测吗？题目是“detect all objects matching these categories”，所以每个出现的都要检测。
+
+现在开始整理每个标签的实例：
+
+1. ATTN：在Notify Party部分，ATTN: Edward Maxwell → [622, 482, 702, 496]
+2. Address：多个，比如顶部公司地址（Lanjin Electronic Technology Co., Ltd.的地址）[214, 57, 785, 71]；SELLER地址[37, 232, 490, 248]；Consignee地址（USCGC Mason FPO AA 05884）[37, 306, 190, 322]；ship to地址[37, 522, 272, 538]；Notify Party地址（18255 Humble Pkwy...）[622, 392, 772, 408]；Consignee的Denvip Davis？不，Denvip Davis是联系人？不，Consignee部分的IOR#下面是Denvip Davis，TEL是029-886-7233，所以Denvip Davis是Name？可能Name是Denvip Davis，属于Name类别。另外，Contact是David Hall（SELLER的Contact）。
+3. Amount(USD)：每个商品行的Amount，比如第一行$55,753.60，第二行$55,753.60，还有Total Amount $111,507.20 → 所以有三个Amount(USD)实例？需要看每个Amount(USD)列的单元格。第一行Amount是$55,753.60，第二行也是，然后Total Amount是总和。所以每个商品行的Amount和Total Amount都是Amount(USD)。
+4. BATCH#：BATCH#9/10 → [734, 197, 796, 212]
+5. Company Name：顶部的Lanjin Electronic Technology Co., Ltd. [214, 53, 785, 74]；SELLER的Lanjin Electronic Technology Co., Ltd. [37, 207, 490, 230]
+6. Contact：SELLER的Contact: David Hall → [37, 302, 152, 318]
+7. DATE：11st Jan, 2022 → [727, 195, 827, 208]
+8. Descriptions：Slewing Drive（两行）→ 每个商品行的Descriptions列，比如第一行Slewing Drive [432, 622, 572, 638]，第二行也是。
+9. Email：SELLER的Email: vle@gilbert.biz → [320, 304, 440, 318]
+10. Fax：多个，顶部的Fax: +60-888-66051636 [402, 62, 552, 76]；SELLER的Fax: +86-886-38650061 [320, 322, 470, 336]；Consignee的TEL下面没有Fax？不，Consignee部分没有Fax，是TEL。另外，是否有其他Fax？比如Notify Party没有Fax，所以主要的Fax是顶部和SELLER的。
+11. INVOICE：INVOICE:CI210822-M072-9 → [697, 193, 767, 208]
+12. IOR#：IOR#: 81-4816270 → [37, 452, 152, 468]
+13. Item No：每个商品行的Item No，比如VD10P-100S134-LC-SH032-M072-REV.A(840517-REV.A) [152, 622, 422, 638]，第二行的Item No [152, 648, 422, 664]
+14. Name：Consignee部分的Denvip Davis → [37, 464, 127, 478]（因为IOR#下面是Denvip Davis，所以Name是Denvip Davis）
+15. PO#：PO#PO-USA-02374 → [734, 200, 824, 214]
+16. PROJECT：PROJECT: Cabin Creek → [734, 204, 834, 218]
+17. Payment Term：EXW → [28, 776, 122, 792]
+18. Phone Number：多个，比如顶部的Tel是Phone Number，SELLER的Tel，Consignee的TEL，ship to没有，Notify Party的电话281-913-2800也是Phone Number。需要确认Phone Number的定义，图中的Tel和TEL都是电话号码。比如顶部的Tel: +26-608-06568618是Phone Number；SELLER的Tel: +86-658-06266180是Phone Number；Consignee的TEL: 029-886-7233是Phone Number；Notify Party的281-913-2800是Phone Number。
+19. Quantity：每个商品行的Quantity，比如112（两行）→ [582, 622, 622, 638]，第二行的Quantity [582, 648, 622, 664]
+20. Shipping Mark：每个商品行的Shipping Mark，比如N/M（两行）→ [50, 622, 140, 638]，第二行的Shipping Mark [50, 648, 140, 664]
+21. Slewing Drive HS Code：8483409090 → [102, 778, 232, 792]
+22. TEL：Consignee的TEL: 029-886-7233 → [37, 476, 137, 490]（这里的TEL是大写的，属于TEL类别）
+23. Tel：SELLER的Tel: +86-658-06266180（注意是Tel，不是TEL，图中SELLER的Tel是“Tel: +86-658-06266180”，而Consignee的是“TEL: ...”，所以区分Tel和TEL？题目中的类别有Tel和TEL，所以需要看。题目中的类别是Tel和TEL，所以SELLER的Tel是Tel，Consignee的TEL是TEL。
+24. Title：可能没有明确的Title，比如“COMMERICAL INVOICE”是Title？但题目中的Title是否需要？看题目给的类别里有Title，可能“COMMERICAL INVOICE”是Title，位置是[372, 132, 627, 154]。
+25. Unit Price(USD)：每个商品行的Unit Price，比如$497.80（两行）→ [642, 622, 732, 638]，第二行的Unit Price [642, 648, 732, 664]
+26. WE CERTIFY THAT：下面的认证文字“WE CERTIFY THAT: THIS SHIPMENT...” → [28, 812, 862, 848]
+27. ship to：1490 Post Office, Biscoe NC 27209 → [37, 522, 272, 538]
+
+现在需要将每个检测到的实例列出来，确保每个类别都覆盖。需要注意有些类别可能没有出现，比如Name中的Denvip Davis是Name，Contact是David Hall，Company Name是两个，Address是多个，等等。
+
+现在开始构建JSON数组，每个元素是bbox和label。需要确保每个检测到的对象都包含。
+
+首先处理Title：“COMMERICAL INVOICE”是标题，所以Title的bbox是[372, 132, 627, 154]，label是Title。
+
+然后逐个处理：
+
+1. ATTN: [622, 482, 702, 496], label: ATTN
+2. Address（顶部公司地址）: [214, 57, 785, 71], label: Address
+3. Address（SELLER地址）: [37, 232, 490, 248], label: Address
+4. Address（Consignee地址）: [37, 306, 190, 322], label: Address
+5. Address（ship to地址）: [37, 522, 272, 538], label: Address
+6. Address（Notify Party地址）: [622, 392, 772, 408], label: Address
+7. Address（Consignee的Denvip Davis？不，Denvip Davis是Name，不是Address。Consignee的IOR#下面的Denvip Davis是Name，所以Name的bbox是[37, 464, 127, 478], label: Name
+8. Amount(USD)（第一行商品Amount）: [742, 622, 842, 638], label: Amount(USD)
+9. Amount(USD)（第二行商品Amount）: [742, 648, 842, 664], label: Amount(USD)
+10. Amount(USD)（Total Amount）: [742, 732, 872, 748], label: Amount(USD)
+11. BATCH#: [734, 197, 796, 212], label: BATCH#
+12. Company Name（顶部）: [214, 53, 785, 74], label: Company Name
+13. Company Name（SELLER）: [37, 207, 490, 230], label: Company Name
+14. Contact: [37, 302, 152, 318], label: Contact
+15. DATE: [727, 195, 827, 208], label: DATE
+16. Descriptions（第一行）: [432, 622, 572, 638], label: Descriptions
+17. Descriptions（第二行）: [432, 648, 572, 664

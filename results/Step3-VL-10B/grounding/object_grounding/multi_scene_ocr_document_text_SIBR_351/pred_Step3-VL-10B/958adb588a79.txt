@@ -1,1 +1,167 @@
-[{"bbox_2d": [212, 22, 786, 100], "label": "Company Name"}, {"bbox_2d": [202, 106, 462, 258], "label": "Address"}, {"bbox_2d": [652, 427, 838, 447], "label": "Amount"}, {"bbox_2d": [422, 202, 552, 222], "label": "Date of Invoice"}, {"bbox_2d": [204, 3
+用户现在需要从发票中提取各个字段的值和对应的类别。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name：图中最上方的“巨奥网络有限公司 Joao Network Co., Ltd.”，所以这个是公司名称。
+
+Address：看From部分的SHANGHAI？不，To部分的地址是PT FSCM...的地址，而From的地址是SHANGHAI？另外巨奥网络的地址是7860 Villanueva Trail Apt. 813 North Edgastad, AZ 96714。需要确认每个Address。不过可能用户需要的是各个字段。先列出来：
+
+Address：可能有多个，比如To的地址是“PT FSCM MANUFACTURING INDONESIA JL. PULOGADUNG NO. 30 KAWASAN INDUSTRI PULOGADUNG JAKARTA TIMUR-13930-INDONESIA”，还有巨奥网络的地址“7860 Villanueva Trail Apt. 813 North Edgastad, AZ 96714”。需要看每个类别对应的Address。比如From的地址是SHANGHAI？看From: SHANGHAI，所以From的地址是SHANGHAI。而Destination是Issued By: JAKARTA，所以Destination是JAKARTA。
+
+Invoice No.：NJ-LMLC0159，在Invoice No.对应的位置。
+
+S/C No.：POIRK3439。
+
+Date of Invoice：FEB.17, 2022。
+
+FAX：(36-06) 8642889-21。
+
+From：SHANGHAI。
+
+NPWP：01.062.051.6 - 007.000。
+
+TEL P：(10-66) 0632421 (HUNTING)。
+
+Title：Invoice，图中有“INVOICE”大标题。
+
+Unit Price：CNY 110.00。
+
+Amount：CNY 222,750.00（总金额）。
+
+Descriptions & Quantities：PART FOR MOTORCYCLE CHAIN KOMPONEN PIN RCH(40CRNI) 2025KGS ( PPRO14550 / 3)。
+
+企业管理信息查询结果：A类企业。
+
+现在逐个对应：
+
+1. Company Name：巨奥网络有限公司 Joao Network Co., Ltd.，位置是顶部公司名称部分。bbox大概是[214, 24, 767, 102]左右？看原文中的公司名称是“巨奥网络有限公司 Joao Network Co., Ltd. 7860 Villanueva Trail Apt. 813 North Edgastad, AZ 96714”，所以Company Name的bbox是包含公司名称和英文的那部分。
+
+2. Address：巨奥网络的地址是7860 Villanueva Trail Apt. 813 North Edgastad, AZ 96714，属于From的公司地址？或者To的地址是对方的地址。需要明确每个Address对应的类别。比如To的地址是“PT FSCM MANUFACTURING INDONESIA...JAKARTA TIMUR-13930-INDONESIA”，这个是To的地址，属于Address类别。另外From的地址是SHANGHAI，也是Address。还有Issued By的JAKARTA是Destination？因为Issued By是JAKARTA，所以Destination是JAKARTA。
+
+现在整理每个类别：
+
+- Address：需要看哪些是地址。比如To的地址块：PT FSCM...JAKARTA TIMUR-13930-INDONESIA，这个是To的地址，属于Address。另外巨奥网络的地址是7860...AZ 96714，也是Address（From的公司地址？因为From是SHANGHAI，可能SHANGHAI是城市，而巨奥网络的地址是详细地址。需要看发票中的From部分，From: SHANGHAI，所以From的地址是SHANGHAI。而巨奥网络的地址是公司抬头的地址，属于Company Name的地址部分，可能也算Address。
+
+不过可能用户需要的是每个字段对应。现在按顺序处理每个类别：
+
+Address：图中“To:”后面的地址，即“PT FSCM MANUFACTURING INDONESIA JL. PULOGADUNG NO. 30 KAWASAN INDUSTRI PULOGADUNG JAKARTA TIMUR-13930-INDONESIA”，这个是Address。另外巨奥网络的地址“7860 Villanueva Trail Apt. 813 North Edgastad, AZ 96714”也是Address（公司地址）。
+
+Amount：总金额是CNY 222,750.00，对应TOTAL行的Amount列，以及每个项目的Amount。这里Total的Amount是CNY 222,750.00，所以Amount的bbox是TOTAL行的Amount单元格，即“CNY 222,750.00”。
+
+Company Name：“巨奥网络有限公司 Joao Network Co., Ltd.”，是公司名称，bbox是顶部的公司名称部分。
+
+Date of Invoice：“FEB.17, 2022”，在Date of Invoice对应的位置。
+
+Descriptions & Quantities：表格中的“Descriptions & Quantities”列下的内容，即“PART FOR MOTORCYCLE CHAIN KOMPONEN PIN RCH(40CRNI) 2025KGS ( PPRO14550 / 3)”。
+
+Destination：Issued By: JAKARTA，所以Destination是JAKARTA。
+
+FAX：“(36-06) 8642889-21”，在FAX对应的位置。
+
+From：“SHANGHAI”，在From: 后面。
+
+Invoice No.：“NJ-LMLC0159”，在Invoice No.对应的位置。
+
+NPWP：“01.062.051.6 - 007.000”，在NPWP对应的位置。
+
+S/C No.：“POIRK3439”，在S/C No.对应的位置。
+
+TEL P：“(10-66) 0632421 (HUNTING)”，在TEL P对应的位置。
+
+Title：“INVOICE”，大标题部分。
+
+Unit Price：“CNY 110.00”，在Unit Price列下的数值。
+
+企业管理信息查询结果：“A类企业”，在发票下方的说明部分。
+
+现在需要为每个类别找到对应的bbox。需要看图片中的位置：
+
+1. Company Name：最上方的“巨奥网络有限公司 Joao Network Co., Ltd. 7860 Villanueva Trail Apt. 813 North Edgastad, AZ 96714”，所以bbox是[212, 22, 769, 100]左右（因为文字是居中的，所以范围覆盖公司名称和地址）。
+
+2. Address（To的地址）：“To:”后面的地址，即从“PT FSCM...INDONESIA”到“JAKARTA TIMUR-13930-INDONESIA”，bbox是[200, 102, 490, 194]（大概范围，因为To的地址是多行，需要包含所有行）。
+
+3. Amount（总金额）：TOTAL行的Amount列，即“CNY 222,750.00”，在表格的TOTAL行，Amount列，bbox是[650, 330, 820, 350]左右（看表格结构，TOTAL行的Amount单元格）。
+
+4. Date of Invoice：“FEB.17, 2022”，在Date of Invoice对应的位置，即右侧Date of Invoice列下的内容，bbox是[510, 130, 660, 150]。
+
+5. Descriptions & Quantities：表格中“Descriptions & Quantities”列下的内容，即“PART FOR MOTORCYCLE CHAIN... ( PPRO14550 / 3)”，bbox是[250, 220, 620, 320]（因为该列是描述和数量，对应单元格）。
+
+6. Destination：Issued By: JAKARTA，即“Issued By:”后面的JAKARTA，bbox是[590, 240, 650, 260]（看Issued By: JAKARTA的位置）。
+
+7. FAX：“(36-06) 8642889-21”，在FAX对应的位置，即FAX: 后面的内容，bbox是[200, 194, 330, 214]。
+
+8. From：“SHANGHAI”，在From: 后面，bbox是[200, 300, 250, 320]（From: SHANGHAI的位置）。
+
+9. Invoice No.：“NJ-LMLC0159”，在Invoice No.对应的位置，即Invoice No.: 后面的内容，bbox是[510, 102, 620, 122]。
+
+10. NPWP：“01.062.051.6 - 007.000”，在NPWP对应的位置，即NPWP: 后面的内容，bbox是[200, 214, 350, 234]。
+
+11. S/C No.：“POIRK3439”，在S/C No.对应的位置，即S/C No.: 后面的内容，bbox是[510, 112, 620, 132]。
+
+12. TEL P：“(10-66) 0632421 (HUNTING)”，在TEL P对应的位置，即TEL P: 后面的内容，bbox是[200, 144, 420, 164]。
+
+13. Title：“INVOICE”，大标题，bbox是[450, 300, 550, 320]（因为Invoice在From和Issued By之间，大写）。
+
+14. Unit Price：“CNY 110.00”，在Unit Price列下的数值，对应项目行的Unit Price，bbox是[600, 280, 700, 300]（项目行的Unit Price单元格）。
+
+15. 企业管理信息查询结果：“A类企业”，在发票下方的说明，即“企业管理信息查询结果: A类企业”，bbox是[100, 680, 300, 700]。
+
+现在需要将每个类别对应到这些bbox。需要注意每个元素的准确位置，可能需要更精确的坐标，但根据图片内容大致划分。
+
+现在整理成JSON数组：
+
+每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}
+
+现在逐个处理：
+
+1. Company Name：公司名称是“巨奥网络有限公司 Joao Network Co., Ltd.”，其地址是7860...AZ 96714，所以整个公司抬头的名称和地址。bbox大概是从顶部开始，包含公司名称和地址的区域。比如x1=210, y1=20, x2=770, y2=100。
+
+2. Address（To的地址）：To: 后面的所有地址行，即“PT FSCM...JAKARTA TIMUR-13930-INDONESIA”，bbox是x1=200, y1=105, x2=490, y2=190（因为To的地址是多行，从PT FSCM开始到JAKARTA TIMUR...）。
+
+3. Amount（总金额）：TOTAL行的Amount列，即“CNY 222,750.00”，在表格的TOTAL行，Amount列。看表格结构，TOTAL行的Amount单元格，bbox是x1=650, y1=330, x2=820, y2=350。
+
+4. Date of Invoice：“FEB.17, 2022”，在Date of Invoice列，对应位置是右侧，bbox是x1=510, y1=130, x2=660, y2=150。
+
+5. Descriptions & Quantities：表格中“Descriptions & Quantities”列下的内容，即项目描述，bbox是x1=250, y1=220, x2=620, y2=320（因为该列是描述和数量，对应单元格）。
+
+6. Destination：Issued By: JAKARTA，即“Issued By:”后面的JAKARTA，bbox是x1=590, y1=240, x2=650, y2=260。
+
+7. FAX：“(36-06) 8642889-21”，在FAX: 后面，bbox是x1=200, y1=195, x2=330, y2=215。
+
+8. From：“SHANGHAI”，在From: 后面，bbox是x1=200, y1=300, x2=250, y2=320。
+
+9. Invoice No.：“NJ-LMLC0159”，在Invoice No.: 后面，bbox是x1=510, y1=102, x2=620, y2=122。
+
+10. NPWP：“01.062.051.6 - 007.000”，在NPWP: 后面，bbox是x1=200, y1=215, x2=350, y2=235。
+
+11. S/C No.：“POIRK3439”，在S/C No.: 后面，bbox是x1=510, y1=112, x2=620, y2=132。
+
+12. TEL P：“(10-66) 0632421 (HUNTING)”，在TEL P: 后面，bbox是x1=200, y1=145, x2=420, y2=165。
+
+13. Title：“INVOICE”，大标题，bbox是x1=450, y1=300, x2=550, y2=320（因为Invoice在From和Issued By之间，居中显示）。
+
+14. Unit Price：“CNY 110.00”，在Unit Price列下的项目行，bbox是x1=600, y1=280, x2=700, y2=300。
+
+15. 企业管理信息查询结果：“A类企业”，在发票下方，即“企业管理信息查询结果: A类企业”，bbox是x1=100, y1=680, x2=300, y2=700。
+
+现在需要确认每个类别的存在，然后生成JSON数组。注意有些类别可能有多个实例，但这里每个类别对应一个主要实例。
+
+现在编写每个条目：
+
+[
+{"bbox_2d": [212, 22, 769, 100], "label": "Company Name"},
+{"bbox_2d": [200, 105, 490, 190], "label": "Address"},
+{"bbox_2d": [650, 330, 820, 350], "label": "Amount"},
+{"bbox_2d": [510, 130, 660, 150], "label": "Date of Invoice"},
+{"bbox_2d": [250, 220, 620, 320], "label": "Descriptions & Quantities"},
+{"bbox_2d": [590, 240, 650, 260], "label": "Destination"},
+{"bbox_2d": [200, 195, 330, 215], "label": "FAX"},
+{"bbox_2d": [200, 300, 250, 320], "label": "From"},
+{"bbox_2d": [510, 102, 620, 122], "label": "Invoice No."},
+{"bbox_2d": [200, 215, 350, 235], "label": "NPWP"},
+{"bbox_2d": [510, 112, 620, 132], "label": "S/C No."},
+{"bbox_2d": [200, 145, 420, 165], "label": "TEL P"},
+{"bbox_2d": [450, 300, 550, 320], "label": "Title"},
+{"bbox_2d": [600, 280, 700, 300], "label": "Unit Price"},
+{"bbox_2d": [100, 680, 300, 700], "label": "企业管理信息查询结果"}
+]
+
+需要检查是否有遗漏或错误。比如Title是“INVOICE”，在图中确实有“INVOICE”大写。企业管理信息查询结果是“A类企业”，在图中下方有“企业管理信息查询结果: A类企业”。其他字段如Amount是总金额，对应TOTAL行的Amount。Unit Price是项目行的单价。Descriptions & Quantities是项目描述。Date of Invoice是FEB.17,2022。Invoice No.是NJ-L

@@ -1,1 +1,29 @@
-[{"bbox_2d": [452, 104, 550, 126], "label": "company"}, {"bbox_2d": [277, 130, 723, 182], "label": "address"}, {"bbox_2d": [704, 462, 800, 484], "label": "date"}, {"bbox_2d": [525, 592, 595, 614], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The top part says "THONG RECIPE" which is the company name.
+- Address: The address lines are "16G BLOCK B ,ZENITH CORPORATE PARK JALAN SS7/26, 47301 PETALING JAYA SELANGOR". Let's check the bounding box for that.
+- Date: The order date is "27/06/18" which is in the order line.
+- Total: The total amount is "58.70" in the TOTAL section.
+
+Now, find the bounding boxes for each.
+
+Company: "THONG RECIPE" is at the top. Let's check the coordinates. The text is centered, so the bounding box would cover that line.
+
+Address: The address spans multiple lines: "16G BLOCK B ,ZENITH CORPORATE PARK", "JALAN SS7/26, 47301", "PETALING JAYA SELANGOR". So the combined area for address.
+
+Date: The date "27/06/18" is on the same line as OrderNo, right side.
+
+Total: The "TOTAL: 58.70" is a prominent line.
+
+Let's map each:
+
+1. Company: "THONG RECIPE" – the text is in the header. Bounding box around that line.
+2. Address: The lines from "16G BLOCK B..." to "PETALING JAYA SELANGOR".
+3. Date: "27/06/18" – in the order section, right side.
+4. Total: "58.70" – in the TOTAL line.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [292, 103, 707, 154], "label": "company"}, {"bbox_2d": [158, 117, 707, 192], "label": "address"}, {"bbox_2d": [544, 462, 622, 484], "label": "date"}, {"bbox_2d": [25, 547, 975, 580], "label": "total"}]

@@ -1,1 +1,21 @@
-[{"bbox_2d": [355, 145, 644, 163], "label": "date"}, {"bbox_2d": [425, 225, 574, 245], "label": "seller_name"}, {"bbox_2d": [425, 248, 574, 280], "label": "seller_address"}, {"bbox_2d": [425, 915, 574, 935], "label": "seller_phone"}, {"bbox_2d": [565, 845, 625, 863], "label": "total_amount"}]
+Got it, let's extract the information from the receipt. First, identify each category.
+
+1. Date: Look for the transaction date. The line has "10-04-2018 08:11:53". So that's the date.
+2. Seller_address: The address part is "BHPetrol Permas Jaya 2 LOT PTD 101051 Jalan Permas 10/10 81750 Masai, Johor".
+3. Seller_name: The name is "BHPetrol Permas Jaya 2" (the business name).
+4. Seller_phone: The customer service number is "1-300-22-2828" at the bottom.
+5. Total_amount: The total amount is "RM 50.00" under TOTAL AMOUNT.
+
+Now, find the bounding boxes for each.
+
+Check each element:
+
+- Date: The line with "10-04-2018 08:11:53" is the date.
+- Seller_address: The address lines below the business name.
+- Seller_name: The line "BHPetrol Permas Jaya 2".
+- Seller_phone: The customer service line "Customer Service 1-300-22-2828".
+- Total_amount: The line "TOTAL AMOUNT" and "CASH RM 50.00" — the amount is 50.00.
+
+Now, map each to their bounding boxes.
+</think>
+[{"bbox_2d": [100, 110, 899, 167], "label": "date"}, {"bbox_2d": [320, 227, 679, 260], "label": "seller_name"}, {"bbox_2d": [332, 262, 667, 282], "label": "seller_address"}, {"bbox_2d": [320, 302, 679, 322], "label": "seller_phone"}, {"bbox_2d": [320, 447, 679, 467], "label": "total_amount"}]

@@ -1,1 +1,37 @@
-[{"bbox_2d": [232, 232, 767, 250], "label": "company"}, {"bbox_2d": [234, 252, 766, 300], "label": "address"}, {"bbox_2d": [722, 252, 782, 268], "label": "date"}, {"bbox_2d": [662, 322, 720, 342], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The business name is "PASAR MINI JIN SENG". Let's check the text.
+- Address: The address lines are "379, JALAN PERMAS SATU, BANDAR BARU PERNAS JAYA 81750 PLENTONG, JOHOR."
+- Date: The date on the receipt is "03/03/18" (from the top right near the taxinv number).
+- Total: The total amount is "33.80" (under TL:RM).
+
+Now, find the bounding boxes for each.
+
+First, company: The line with "PASAR MINI JIN SENG" is the company name. Let's check the coordinates.
+
+Address: The address block includes the lines after the company name.
+
+Date: The date "03/03/18" is in the upper right section, next to the taxinv.
+
+Total: The total is "33.80" in the subtotal section, labeled as TL:RM.
+
+Let's map each:
+
+1. Company: "PASAR MINI JIN SENG" – the text is in the middle top part.
+2. Address: The address lines (379, JALAN... JOHOR.)
+3. Date: "03/03/18"
+4. Total: "33.80"
+
+Now, check the bounding boxes.
+
+For company: The text "PASAR MINI JIN SENG" is in the section. Let's see the coordinates. The receipt's company name is in the upper part, so the bounding box would cover that line.
+
+Address: The address spans multiple lines: 379, JALAN PERMAS SATU, BANDAR BARU PERNAS JAYA 81750 PLENTONG, JOHOR.
+
+Date: The date is "03/03/18" which is on the right side, same line as TAXINV:001-1541798.
+
+Total: The total amount is "33.80" which is under SUBTOTAL: and labeled TL:RM.
+
+Now, let's define each entry.
+</think>
+[{"bbox_2d": [203, 227, 782, 298], "label": "company"}, {"bbox_2d": [203, 237, 782, 300], "label": "address"}, {"bbox_2d": [697, 247, 756, 262], "label": "date"}, {"bbox_2d": [316, 325, 382, 346], "label": "total"}]

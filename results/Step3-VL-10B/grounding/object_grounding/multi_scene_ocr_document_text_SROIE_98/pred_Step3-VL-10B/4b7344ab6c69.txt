@@ -1,1 +1,33 @@
-[{"bbox_2d": [440, 97, 560, 116], "label": "company"}, {"bbox_2d": [440, 120, 560, 165], "label": "address"}, {"bbox_2d": [440, 210, 560, 230], "label": "date"}, {"bbox_2d": [440, 330, 680, 355], "label": "total"}]
+Got it, let's extract the required information from the invoice.
+
+First, find the address. The address is listed under the company name: "LOT S10NB & S12NB, RESTORAN JEJANTAS SG. BULOH, ARAH UTARA, PLUS BERHAD." Let's check the coordinates.
+
+Company: "SOUP & PORRIDGE" is the company name.
+
+Date: "05-06-2018 07:24:41" is the date.
+
+Total: The total amount is 20.70, which is in the "TOTAL:" section.
+
+Now, map each to their bounding boxes.
+
+For address: The lines from "LOT S10NB..." to "ARAH UTARA, PLUS BERHAD." So the bounding box covers that part.
+
+Company: "SOUP & PORRIDGE" is the top part.
+
+Date: The line with "Date : 05-06-2018 07:24:41"
+
+Total: The "TOTAL: 20.70" line.
+
+Let's check each:
+
+1. address: The text block starting from "LOT S10NB & S12NB," down to "ARAH UTARA, PLUS BERHAD." Let's get the coordinates.
+
+2. company: "SOUP & PORRIDGE" is the first line after the top.
+
+3. date: The line labeled "Date : ..."
+
+4. total: The line with "TOTAL: 20.70"
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [144, 20, 855, 105], "label": "company"}, {"bbox_2d": [144, 22, 855, 107], "label": "address"}, {"bbox_2d": [144, 302, 340, 322], "label": "date"}, {"bbox_2d": [144, 525, 855, 550], "label": "total"}]

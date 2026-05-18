@@ -1,253 +1,173 @@
-用户现在需要从商业发票中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个分析每个标签在图中的位置。
 
-首先看+69-01-9016622：在Customer部分的Tel，对应Gujarat下面的Tel。看坐标，Customer的Tel是+69-01-9016622，所以找到这个位置。
+首先看+69-01-9016622，这是Customer的Tel，对应图中Customer部分的Tel: +69-01-9016622。然后Address，比如Supplier的地址或者Customer的地址。先看各个部分：
 
-Address：需要看各个地址，比如Supplier的地址，Customer的地址，Beneficiary Address等。比如Supplier的地址是3184 Amanda Gateway...，Customer的地址是40753 Shaun Forge...，Beneficiary Address是054 Jackson Street Apt. 789 Port Jordansic...等。需要确认每个Address的实例，但可能先找明显的。
+先列出来所有需要的标签，然后找每个的bbox。
 
-Amount USD：在表格里的Amount US$列，比如34656.00，还有总计的34656.00。看表格中的Amount US$单元格。
+1. +69-01-9016622：在Customer的Tel，位置是Customer部分的Tel字段。看Customer的Tel: +69-01-9016622，所以bbox是对应这个文本的位置。
 
-Attn：Customer部分的Attn: Jacob Boyer，所以Attn是这个标签。
+2. Address：比如Supplier的地址是3184 Amanda Gateway West Brandonmouth, FL 89015 89862 Brown Keys North Cynthiamouth, TX 94606；Customer的地址是40753 Shaun Forge Bonillafurt, UT 54059。需要确定哪个Address？可能看各个部分。比如Customer的Address是40753 Shaun Forge Bonillafurt, UT 54059，Gujarat. 392130 -INDIA. 这里Gujarat是地区，Address可能指Customer的地址。需要看标签对应。
 
-Bank ADDRESS：在BANK INFORMATION里的Bank ADDRESS，对应Wewangming Media Co., Ltd.的地址78340 Harris Trail Thomasborough, IN 90754（可能需要看具体位置）。
+3. Amount USD：在表格里的Amount US$列，比如34656.00，还有总计34656.00。看TOTAL行的Amount US$是34656.00。
 
-Beneficiary A/C No：Beneficiary A/C No: 1831.8142.5000.0020.75，这个是Beneficiary A/C No。
+4. Attn：Customer的Attn: Jacob Boyer，所以Attn是Jacob Boyer。
 
-Beneficiary Address：Beneficiary Address: 054 Jackson Street Apt. 789 Port Jordansic USS Sanchez FPO AA 90328。
+5. Bank ADDRESS：Beneficiary Bank的地址是Wewangming Media Co., Ltd. 78340 Harris Trail Thomasborough, IN 90754（看BANK INFORMATION里的Beneficiary Bank的Bank ADDRESS？不，Beneficiary Bank的Bank ADDRESS是Wewangming Media Co., Ltd. 78340 Harris Trail Thomasborough, IN 90754？看BANK INFORMATION部分，Beneficiary Bank是Wewangming Media Co., Ltd.，其Bank ADDRESS是78340 Harris Trail Thomasborough, IN 90754（可能图中的地址）。
 
-Beneficiary Name：Beneficiary Name: JIANGXI KAIYUAN FRAGRANCE CO., LTD。
+6. Beneficiary A/C No：图中Beneficiary A/C No是1831.8142.5000.0020.75（看Beneficiary A/C No: 后面的号码）。
 
-CAS-No：在Description里的UN CAS-#: 4707-47-5，所以CAS-No是这个。
+7. Beneficiary Address：图中Beneficiary Address是054 Jackson Street Apt. 789 Port Jordansid USS Sanchez FPO AA 90328（看Beneficiary Address: 后面的内容）。
 
-Cell：Supplier部分的Cell: +86-15679669926。
+8. Beneficiary Name：图中Beneficiary Name是JIANG XI KAIYUAN FRAGRANCE CO., LTD（看Beneficiary Name: 后面的名称）。
 
-Company Name：Supplier和Customer的Company Name都是Wewangming Media Co., Ltd.，还有Beneficiary Name里的JIANGXI...也是公司名？不过看标签里的Company Name，可能指Supplier或Customer的公司名。
+9. CAS-No：在Description里的UN CAS- No.: 4707-47-5，所以CAS-No是4707-47-5。
 
-Customer lterm：表格里的Customer Item列，比如961442。
+10. Cell：Supplier的Cell: +86-15679669926，所以Cell是这个号码。
 
-Customs-HS No.：Description里的Customs-HS No.:29182990。
+11. Company Name：Supplier的Company Name是Wewangming Media Co., Ltd.；Customer的Company Name也是Wewangming Media Co., Ltd.。需要看哪个，可能Supplier的Company Name是Wewangming Media Co., Ltd.（左上角Supplier部分）。
 
-DELIVERY：DELIVERY: ASASP。
+12. Customer lterm：表格中的Customer Item是961442，所以Customer lterm是961442（注意标签是Customer lterm，可能拼写是Customer Item）。
 
-E-mail：Supplier部分的E-mail: justinayala@barnett.info。
+13. Customs-HS No.：在Description里的Customs-HS No.:29182990，所以Customs-HS No.是29182990。
 
-Fr：Supplier部分的Fr. Vicki Cooper，所以Fr是这个。
+14. DELIVERY：DELIVERY: ASASP，所以DELIVERY是ASASP。
 
-GSTIN No：GSTIN No.: 24AABCF1120G1ZF。
+15. E-mail：Supplier的E-mail: justinayala@barnett.info，所以E-mail是这个。
 
-Gujarat：Customer部分的Gujarat. 392130 - INDIA.
+16. Fr：Supplier的Fr: Vicki Cooper，所以Fr是Vicki Cooper。
 
-IEC No.：IEC No.: 0307088901。
+17. GSTIN No：图中GSTIN No.: 24AABCF1120G1ZF，所以GSTIN No是这个。
 
-INVOICE DATE：INVOICE DATE: 18th, Oct, 2021。
+18. Gujarat：Customer部分的Gujarat. 392130 -INDIA.，所以Gujarat是Gujarat. 392130 -INDIA.。
 
-INVOICE NO：INVOICE NO: FMN211018。
+19. IEC No.：IEC No.: 0307088901，所以IEC No.是这个。
 
-Model No：表格里的Model No列，比如VMS211014。
+20. INVOICE DATE：INVOICE DATE: 18th, Oct, 2021，所以INVOICE DATE是18th, Oct, 2021。
 
-P.O NO：P.O NO: 4500938504。
+21. INVOICE NO：INVOICE NO: FMN211018，所以INVOICE NO是FMN211018。
 
-PAN NO：PAN No.: AABCF1120G。
+22. Model No：表格中的Model No是VMS211014，所以Model No是VMS211014。
 
-PAYMENT：PAYMENT: 90 Days from invoice date.
+23. P.O NO：P.O NO: 4500938504，所以P.O NO是4500938504。
 
-PRICE US $/KG：表格里的PRICE US $/KG列，比如$45.60。
+24. PAN NO：PAN No.: AABCF1120G，所以PAN NO是AABCF1120G。
 
-Packing：表格里的Packing列，比如30*25kilos and 1*10kg Fiber drum。
+25. PAYMENT：PAYMENT: 90 Days from invoice date.，所以PAYMENT是90 Days from invoice date.
 
-Product Name：Description里的Veramoss/Oakmoss/Phenomoss (Methyl atraate), neutral packing& Labels. 这个是Product Name。
+26. PRICE US $/KG：表格中的PRICE US $/KG是$45.60，所以PRICE US $/KG是$45.60。
 
-QTY/KG：表格里的QTY/KG列，比如760。
+27. Packing：表格中的Packing是30*25kilos and 1*10kg Fiber drum，所以Packing是这个。
 
-SHIPMENT：SHIPMENT: CIF PORT OF NHAVEA SHEVA, IN。
+28. Product Name：表格中的Description是Veramoss/Oakmoss/Phenomoss (Methyl atraate), neutral packing& Labels.，所以Product Name是这个。
 
-Swift BIC：有两个Swift BIC，Intermediary Bank的Swift BIC: BKCHCNBJXXX，Beneficiary Bank的Swift BIC: JXRCN CNBJXXX（看图片中的内容，Beneficiary Bank的Swift BIC是JXRCN CNBJXXX？需要看图片里的文字）。
+29. QTY/KG：表格中的QTY/KG是760，所以QTY/KG是760。
 
-TRANSPORT DETAILS：TRANSPORT DETAILS: CIF(Costs, insurance & freight)PORT OF NHAVEA SHEVA, IN。
+30. SHIPMENT：SHIPMENT: CIF PORT OF NHAVEA SHEVA, IN，所以SHIPMENT是CIF PORT OF NHAVEA SHEVA, IN。
 
-Tel：Supplier部分的Tel: +59-064-6688367，Customer部分的Tel: +69-01-9016622（之前+69-01-9016622是Customer的Tel，属于Tel类别）。
+31. Swift BIC：有两个Swift BIC，Intermediary Bank的Swift BIC是BKCHCNBJXXX，Beneficiary Bank的Swift BIC是JXRCCNBJXXX。需要看哪个？可能Intermediary Bank的Swift BIC是BKCHCNBJXXX，Beneficiary Bank的Swift BIC是JXRCCNBJXXX。需要确定标签对应的。比如Intermediary Bank的Swift BIC是BKCHCNBJXXX，Beneficiary Bank的Swift BIC是JXRCCNBJXXX。需要看标签是哪个，可能用户需要的是Beneficiary Bank的Swift BIC？或者Intermediary的？看BANK INFORMATION里的Intermediary Bank的Swift BIC: BKCHCNBJXXX；Beneficiary Bank的Swift BIC: JXRCCNBJXXX。所以需要看标签是哪个，可能两个都要？但标签是Swift BIC，可能需要看哪个部分。比如图中Beneficiary Bank的Swift BIC是JXRCCNBJXXX，所以对应。
 
-Title：可能没有明确的Title，或者看标题COMMERCIAL INVOICE是Title？但标签里有Title，可能需要检查。不过可能图中没有明确的Title对象，或者可能其他部分。不过先看其他。
+32. TRANSPORT DETAILS：TRANSPORT DETAILS: CIF(Costs, insurance & freight)PORT OF NHAVEA SHEVA, IN，所以TRANSPORT DETAILS是这个。
 
-UN Transport：Description里的UN Transport: Not regulated。
+33. Tel：Supplier的Tel: +59-064-6688367，所以Tel是这个。
 
-现在需要逐个列出每个检测到的对象，确保每个类别都有对应的bbox。
+34. Title：可能没有明确的Title，或者看是否有Title字段？图中可能没有Title，或者可能其他部分？比如Supplier的Fr是Vicki Cooper，可能Title是Fr？但标签是Title，可能需要检查。或者可能没有，但根据问题中的标签列表，Title是其中一个，需要找。可能图中没有明确的Title，或者可能Supplier的名称是Company Name，而Title可能没有。或者可能看其他部分，比如Customer的Attn是Jacob Boyer，可能没有Title。可能需要再检查。
 
-现在开始整理：
+35. UN Transport：在Description里的UN Transport: Not regulated，所以UN Transport是Not regulated。
 
-1. +69-01-9016622：Customer的Tel，位置在Customer部分，Gujarat下面的Tel。看坐标，Customer的Tel是+69-01-9016622，所以bbox是Customer区域的Tel行。
-
-看图片中Customer部分：
-
-Customer: Wewangming Media Co., Ltd.
-40753 Shaun Forge Bonillafurt, UT 54059
-Gujarat. 392130 - INDIA.
-Tel: +69-01-9016622
-Attn.: Jacob Boyer
-
-所以+69-01-9016622的bbox是对应Tel的行，坐标大概在Customer部分的Tel字段。
-
-2. Address：比如Supplier的地址：
-
-Supplier: Wewangming Media Co., Ltd.
-3184 Amanda Gateway West Brandonmouth, FL 89015
-89862 Brown Keys North Cynthiamouth, TX 94606
-
-这个是Supplier的Address，所以Address的bbox是Supplier的地址部分。
-
-另外Customer的Address是40753 Shaun Forge...，Beneficiary Address是054 Jackson Street...等。需要选一个，比如Supplier的Address。
-
-3. Amount USD：表格中的Amount US$列，比如第一行的34656.00，还有总计的34656.00。看表格里的Amount US$单元格，比如第一行的Amount US$是34656.00，所以bbox是表格中Amount US$列的单元格。
-
-4. Attn：Customer部分的Attn.: Jacob Boyer，所以Attn的bbox是Attn.字段。
-
-5. Bank ADDRESS：BANK INFORMATION下的Bank ADDRESS: Wewangming Media Co., Ltd. 78340 Harris Trail Thomasborough, IN 90754（看图片中的Bank ADDRESS行）。
-
-6. Beneficiary A/C No：Beneficiary A/C No: 1831.8142.5000.0020.75，对应Beneficiary A/C No字段。
-
-7. Beneficiary Address：Beneficiary Address: 054 Jackson Street Apt. 789 Port Jordansic USS Sanchez FPO AA 90328，对应Beneficiary Address字段。
-
-8. Beneficiary Name：Beneficiary Name: JIANGXI KAIYUAN FRAGRANCE CO., LTD，对应Beneficiary Name字段。
-
-9. CAS-No：Description中的UN CAS-#: 4707-47-5，所以CAS-No的bbox是这个位置。
-
-10. Cell：Supplier部分的Cell: +86-15679669926，对应Cell字段。
-
-11. Company Name：Supplier的Company Name是Wewangming Media Co., Ltd.，所以Company Name的bbox是Supplier的名称。
-
-12. Customer lterm：表格中的Customer Item列，比如961442，对应Customer Item字段。
-
-13. Customs-HS No.：Description中的Customs-HS No.:29182990，对应Customs-HS No.字段。
-
-14. DELIVERY：DELIVERY: ASASP，对应DELIVERY字段。
-
-15. E-mail：Supplier部分的E-mail: justinayala@barnett.info，对应E-mail字段。
-
-16. Fr：Supplier部分的Fr. Vicki Cooper，对应Fr字段。
-
-17. GSTIN No：GSTIN No.: 24AABCF1120G1ZF，对应GSTIN No.字段。
-
-18. Gujarat：Customer部分的Gujarat. 392130 - INDIA.，对应Gujarat字段。
-
-19. IEC No.：IEC No.: 0307088901，对应IEC No.字段。
-
-20. INVOICE DATE：INVOICE DATE: 18th, Oct, 2021，对应INVOICE DATE字段。
-
-21. INVOICE NO：INVOICE NO: FMN211018，对应INVOICE NO字段。
-
-22. Model No：表格中的Model No列，比如VMS211014，对应Model No字段。
-
-23. P.O NO：P.O NO: 4500938504，对应P.O NO字段。
-
-24. PAN NO：PAN No.: AABCF1120G，对应PAN NO字段。
-
-25. PAYMENT：PAYMENT: 90 Days from invoice date.，对应PAYMENT字段。
-
-26. PRICE US $/KG：表格中的PRICE US $/KG列，比如$45.60，对应PRICE US $/KG字段。
-
-27. Packing：表格中的Packing列，比如30*25kilos and 1*10kg Fiber drum，对应Packing字段。
-
-28. Product Name：Description中的Veramoss/Oakmoss/Phenomoss (Methyl atraate), neutral packing& Labels.，对应Product Name字段。
-
-29. QTY/KG：表格中的QTY/KG列，比如760，对应QTY/KG字段。
-
-30. SHIPMENT：SHIPMENT: CIF PORT OF NHAVEA SHEVA, IN，对应SHIPMENT字段。
-
-31. Swift BIC：Intermediary Bank的Swift BIC: BKCHCNBJXXX，对应Swift BIC（Intermediary Bank的）；Beneficiary Bank的Swift BIC: JXRCN CNBJXXX（看图片中的Beneficiary Bank Swift BIC是JXRCN CNBJXXX？图片中Beneficiary Bank的Swift BIC是JXRCN CNBJXXX吗？看图片里的BANK INFORMATION部分：
-
-Intermediary Bank: BANK OF CHINA Swift BIC: BKCHCNBJXXX
-
-Beneficiary Bank: Wewangming Media Co., Ltd. Swift BIC: JXRCN CNBJXXX（可能图片中的Beneficiary Bank Swift BIC是JXRCN CNBJXXX？需要看图片中的文字，图片里Beneficiary Bank的Swift BIC是JXRCN CNBJXXX吗？看图片中的“Swift BIC: JXRCN CNBJXXX”在Beneficiary Bank下面。所以有两个Swift BIC，需要都检测吗？标签是Swift BIC，所以每个Swift BIC实例都要列。
-
-32. TRANSPORT DETAILS：TRANSPORT DETAILS: CIF(Costs, insurance & freight)PORT OF NHAVEA SHEVA, IN，对应TRANSPORT DETAILS字段。
-
-33. Tel：Supplier部分的Tel: +59-064-6688367，对应Tel字段（Customer的Tel是+69-01-9016622，也属于Tel类别，所以有两个Tel实例？但标签是Tel，所以都要检测。比如Supplier的Tel和Customer的Tel都是Tel类别。）
-
-34. Title：COMMERCIAL INVOICE是标题，所以Title的bbox是页面顶部的COMMERCIAL INVOICE。
-
-35. UN Transport：Description中的UN Transport: Not regulated，对应UN Transport字段。
-
-现在需要为每个类别生成对应的bbox和label。需要注意每个对象在图中的位置，可能有些类别有多个实例，但需要确保每个检测到的都列出。
+现在需要逐个确定每个标签的bbox。需要看每个元素在图中的位置，用坐标框选。
 
 现在开始逐个处理：
 
-1. +69-01-9016622：
-   - 位置：Customer部分的Tel行，即“Tel: +69-01-9016622”
-   - bbox：需要看坐标，Customer区域在右侧，Gujarat下面的Tel。假设图中的坐标，Customer的Tel是右侧部分，对应y轴大概在Customer信息的Tel行。具体坐标可能需要估计，比如Customer的Tel在图中的位置是右侧，Gujarat. 392130 - INDIA. 下面一行是Tel: +69-01-9016622，所以bbox大概是[675, 230, 825, 245]（假设）。
+1. +69-01-9016622：Customer的Tel，位置在Customer部分，Tel: +69-01-9016622。看Customer的Tel字段，对应坐标。Customer部分在右上角，Tel: +69-01-9016622。所以bbox是包含这个文本的区域。
 
-2. Address（Supplier的地址）：
-   - Supplier的地址是“3184 Amanda Gateway West Brandonmouth, FL 89015”和“89862 Brown Keys North Cynthiamouth, TX 94606”
-   - bbox：Supplier部分的地址，即Supplier名称下面的两行地址。比如[25, 100, 490, 135]（包含两行地址）。
+2. Address：比如Customer的地址是40753 Shaun Forge Bonillafurt, UT 54059，Gujarat. 392130 -INDIA.。所以Address是这个地址部分。或者Supplier的地址是3184 Amanda Gateway West Brandonmouth, FL 89015 89862 Brown Keys North Cynthiamouth, TX 94606。需要确定哪个Address。可能标签Address对应Customer的地址，即40753 Shaun Forge Bonillafurt, UT 54059。
 
-3. Amount USD（表格中的Amount US$列，第一行）：
-   - 表格中第一行的Amount US$是34656.00，对应单元格。
-   - bbox：表格中Amount US$列的第一个单元格，即“34656.00”所在的位置。表格的列是Model No, Customer Item, Description, Packing, QTY/KG, PRICE US $/KG, Amount US$。所以Amount US$列的单元格，第一行的Amount US$是34656.00，bbox大概在表格的最右列，第一行。
+3. Amount USD：表格中最后一行TOTAL的Amount US$是34656.00，或者单个行的34656.00。看TOTAL行的Amount US$列，数值是34656.00。所以bbox是TOTAL行的Amount US$单元格。
 
-4. Attn（Customer的Attn.）：
-   - Customer部分的Attn.: Jacob Boyer
-   - bbox：Customer信息中的Attn.行，即“Attn.: Jacob Boyer”所在的位置，右侧部分。
+4. Attn：Customer的Attn: Jacob Boyer，所以Attn是Jacob Boyer，对应Customer部分的Attn字段。
 
-5. Bank ADDRESS（Beneficiary Bank的地址？不，Bank ADDRESS是Intermediary Bank的Bank ADDRESS？看BANK INFORMATION部分：
+5. Bank ADDRESS：Beneficiary Bank的Bank ADDRESS是Wewangming Media Co., Ltd. 78340 Harris Trail Thomasborough, IN 90754（看BANK INFORMATION里的Beneficiary Bank的Bank ADDRESS行）。
 
-   - Intermediary Bank: BANK OF CHINA
-   - Bank ADDRESS: Wewangming Media Co., Ltd. 78340 Harris Trail Thomasborough, IN 90754（看图片中的Bank ADDRESS行，对应Intermediary Bank的Bank ADDRESS？不，图片中的BANK INFORMATION下：
+6. Beneficiary A/C No：Beneficiary A/C No: 1831.8142.5000.0020.75，对应图中的Beneficiary A/C No字段后的数值。
 
-     Intermediary Bank: BANK OF CHINA
-     Swift BIC: BKCHCNBJXXX
-     Beneficiary Bank: Wewangming Media Co., Ltd.
-     Bank ADDRESS: 78340 Harris Trail Thomasborough, IN 90754（可能图片中的Bank ADDRESS是Beneficiary Bank的地址？看图片中的“Bank ADDRESS:”后面是Wewangming Media Co., Ltd.的地址，即78340 Harris Trail Thomasborough, IN 90754。所以Bank ADDRESS的bbox是这个地址行。
+7. Beneficiary Address：Beneficiary Address: 054 Jackson Street Apt. 789 Port Jordansid USS Sanchez FPO AA 90328，对应图中的Beneficiary Address字段后的地址。
 
-6. Beneficiary A/C No：
-   - Beneficiary A/C No: 1831.8142.5000.0020.75
-   - bbox：Beneficiary A/C No行，对应图片中的“Beneficiary A/C No: 1831.8142.5000.0020.75”
+8. Beneficiary Name：Beneficiary Name: JIANG XI KAIYUAN FRAGRANCE CO., LTD，对应图中的Beneficiary Name字段后的名称。
 
-7. Beneficiary Address：
-   - Beneficiary Address: 054 Jackson Street Apt. 789 Port Jordansic USS Sanchez FPO AA 90328
-   - bbox：Beneficiary Address行，对应图片中的该地址。
+9. CAS-No：UN CAS- No.: 4707-47-5，对应Description中的CAS编号。
 
-8. Beneficiary Name：
-   - Beneficiary Name: JIANGXI KAIYUAN FRAGRANCE CO., LTD
-   - bbox：Beneficiary Name行，对应图片中的该名称。
+10. Cell：Supplier的Cell: +86-15679669926，对应Supplier部分的Cell字段。
 
-9. CAS-No：
-   - UN CAS-#: 4707-47-5
-   - bbox：Description中的UN CAS-#行，即“UN CAS-#: 4707-47-5”
+11. Company Name：Supplier的Company Name是Wewangming Media Co., Ltd.（左上角Supplier部分的名称）。
 
-10. Cell：
-    - Cell: +86-15679669926
-    - bbox：Supplier部分的Cell行，即“Cell: +86-15679669926”
+12. Customer lterm：表格中的Customer Item是961442，对应Customer Item列的数值。
 
-11. Company Name（Supplier的Company Name）：
-    - Supplier: Wewangming Media Co., Ltd.
-    - bbox：Supplier名称行，即“Wewangming Media Co., Ltd.”
+13. Customs-HS No.：Customs-HS No.:29182990，对应Description中的Customs-HS编号。
 
-12. Customer lterm（Customer Item）：
-    - Customer Item: 961442
-    - bbox：表格中的Customer Item列，即“961442”所在单元格。
+14. DELIVERY：DELIVERY: ASASP，对应DELIVERY字段后的值。
 
-13. Customs-HS No.：
-    - Customs-HS No.:29182990
-    - bbox：Description中的Customs-HS No.行，即“Customs-HS No.:29182990”
+15. E-mail：Supplier的E-mail: justinayala@barnett.info，对应Supplier部分的E-mail字段。
 
-14. DELIVERY：
-    - DELIVERY: ASASP
-    - bbox：DELIVERY行，即“DELIVERY: ASASP”
+16. Fr：Supplier的Fr: Vicki Cooper，对应Supplier部分的Fr字段。
 
-15. E-mail：
-    - E-mail: justinayala@barnett.info
-    - bbox：Supplier部分的E-mail行，即“E-mail: justinayala@barnett.info”
+17. GSTIN No：GSTIN No.: 24AABCF1120G1ZF，对应图中的GSTIN No字段后的值。
 
-16. Fr：
-    - Fr. Vicki Cooper
-    - bbox：Supplier部分的Fr.行，即“Fr. Vicki Cooper”
+18. Gujarat：Gujarat. 392130 -INDIA.，对应Customer部分的Gujarat字段。
 
-17. GSTIN No.：
-    - GSTIN No.: 24AABCF1120G1ZF
-    - bbox：GSTIN No.行，即“GSTIN No.: 24AABCF1120G1ZF”
+19. IEC No.：IEC No.: 0307088901，对应图中的IEC No字段后的值。
 
-18. Gujarat：
-    - Gujarat. 392130 - INDIA.
-    - bbox：Customer部分的Gujarat行，即“Gujarat. 392130 - INDIA.”
+20. INVOICE DATE：INVOICE DATE: 18th, Oct, 2021，对应INVOICE DATE字段后的值。
 
-19. IEC No.：
-    - IEC No.: 0307088901
-    - bbox：IEC No.行，即“IEC No
+21. INVOICE NO：INVOICE NO: FMN211018，对应INVOICE NO字段后的值。
+
+22. Model No：Model No: VMS211014，对应表格中的Model No列的值。
+
+23. P.O NO：P.O NO: 4500938504，对应P.O NO字段后的值。
+
+24. PAN NO：PAN No.: AABCF1120G，对应图中的PAN No字段后的值。
+
+25. PAYMENT：PAYMENT: 90 Days from invoice date.，对应PAYMENT字段后的值。
+
+26. PRICE US $/KG：PRICE US $/KG: $45.60，对应表格中的PRICE US $/KG列的值。
+
+27. Packing：Packing: 30*25kilos and 1*10kg Fiber drum，对应表格中的Packing列的值。
+
+28. Product Name：Product Name: Veramoss/Oakmoss/Phenomoss (Methyl atraate), neutral packing& Labels.，对应Description列的值。
+
+29. QTY/KG：QTY/KG: 760，对应表格中的QTY/KG列的值。
+
+30. SHIPMENT：SHIPMENT: CIF PORT OF NHAVEA SHEVA, IN，对应SHIPMENT字段后的值。
+
+31. Swift BIC：Intermediary Bank的Swift BIC: BKCHCNBJXXX，或者Beneficiary Bank的Swift BIC: JXRCCNBJXXX。看BANK INFORMATION里的Intermediary Bank的Swift BIC是BKCHCNBJXXX，Beneficiary Bank的Swift BIC是JXRCCNBJXXX。需要确定哪个。比如Beneficiary Bank的Swift BIC是JXRCCNBJXXX，对应Beneficiary Bank的Swift BIC字段。
+
+32. TRANSPORT DETAILS：TRANSPORT DETAILS: CIF(Costs, insurance & freight)PORT OF NHAVEA SHEVA, IN，对应TRANSPORT DETAILS字段后的值。
+
+33. Tel：Supplier的Tel: +59-064-6688367，对应Supplier部分的Tel字段。
+
+34. Title：可能图中没有明确的Title，或者可能“Fr”是Title？但标签是Title，可能需要检查。或者可能没有，但根据问题中的标签列表，必须包含。可能图中没有Title，或者可能其他部分。比如Supplier的名称是Company Name，而Title可能不存在，但可能用户提供的标签中有Title，需要找。或者可能“Fr”是Title？不太确定，可能需要再检查。或者可能图中没有Title，暂时标记为无？但必须处理。或者可能“Title”对应的是Supplier或Customer的名称？不，Company Name是公司名。可能Title是“Fr”？比如Fr: Vicki Cooper，这里的Fr是Title？可能Title是“Fr”？不太对。或者可能图中没有Title，可能我漏看了。再看发票，标题是COMMERCIAL INVOICE，所以Title是COMMERCIAL INVOICE？但标签是Title，可能对应发票的标题。所以Title是COMMERCIAL INVOICE，对应发票最上方的大标题。
+
+35. UN Transport：UN Transport: Not regulated，对应Description中的UN Transport字段。
+
+现在需要为每个标签确定bbox。由于是文本提取，需要估计每个元素的位置。例如：
+
+- COMMERCIAL INVOICE是标题，所以Title的bbox是顶部的大标题。
+
+现在开始构建每个条目的JSON：
+
+1. +69-01-9016622：Customer的Tel，位置在Customer部分，Tel: +69-01-9016622。Customer在右上角，所以bbox大概是[690, 225, 825, 240]（假设坐标，需要看实际图的布局，这里用相对位置）。
+
+2. Address：Customer的地址是40753 Shaun Forge Bonillafurt, UT 54059，Gujarat. 392130 -INDIA.。所以Address的bbox是Customer部分的地址行，比如[690, 190, 925, 210]。
+
+3. Amount USD：TOTAL行的Amount US$是34656.00，对应表格最后一行的Amount US$列，bbox是[690, 370, 825, 385]（假设）。
+
+4. Attn：Customer的Attn: Jacob Boyer，bbox是Customer部分的Attn行，[690, 250, 825, 265]。
+
+5. Bank ADDRESS：Beneficiary Bank的Bank ADDRESS是Wewangming Media Co., Ltd. 78340 Harris Trail Thomasborough, IN 90754，对应BANK INFORMATION中的Beneficiary Bank的Bank ADDRESS行，bbox是[225, 630, 525, 645]（假设）。
+
+6. Beneficiary A/C No：Beneficiary A/C No: 1831.8142.5000.0020.75，对应BANK INFORMATION中的Beneficiary A/C No行，bbox是[225, 660, 425, 675]。
+
+7. Beneficiary Address：Beneficiary Address: 054 Jackson Street Apt. 789 Port Jordansid USS Sanchez FPO AA 90328，对应BANK INFORMATION中的Beneficiary Address行，bbox是[225, 690, 525, 705]。
+
+8. Beneficiary Name：Beneficiary Name: JIANG XI KAIYUAN FRAGRANCE CO., LTD，对应BANK INFORMATION中的Beneficiary Name行，bbox是[225, 620, 425, 635]。
+
+9. CAS-No：UN CAS- No.: 4707-47-5，对应表格中Description列的CAS编号，bbox是[325, 290, 4

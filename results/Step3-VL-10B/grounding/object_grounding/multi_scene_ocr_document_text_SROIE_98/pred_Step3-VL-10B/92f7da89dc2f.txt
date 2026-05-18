@@ -1,1 +1,20 @@
-[{"bbox_2d": [44, 117, 957, 140], "label": "company"}, {"bbox_2d": [44, 142, 957, 238], "label": "address"}, {"bbox_2d": [140, 302, 957, 325], "label": "date"}, {"bbox_2d": [144, 605, 957, 628], "label": "total"}]
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+1. Company: The company name is "FLORISM DE ART (940075-X)". Let's check the text. The line starts with that.
+2. Address: The address details are the lines below the company: LOT 2.70.00, LEVEL 2, PAVILION KUALA LUMPUR, 168, JALAN BUKIT BINTANG, 55100 KUALA LUMPUR, MALAYSIA.
+3. Date: The date is "14/01/2018 05:03:35 PM" from the "Date :" field.
+4. Total: The rounded total is "750.00" in "Rounded Total (RM):".
+
+Now, find the bounding boxes for each.
+
+For company: The text "FLORISM DE ART (940075-X)" is in the upper part. Let's check the coordinates.
+
+Address: The block of address lines.
+
+Date: The line with "Date : 14/01/2018 05:03:35 PM".
+
+Total: The line "Rounded Total (RM): 750.00".
+
+Let's map each.
+</think>
+[{"bbox_2d": [44, 117, 949, 184], "label": "company"}, {"bbox_2d": [44, 137, 949, 247], "label": "address"}, {"bbox_2d": [144, 312, 949, 332], "label": "date"}, {"bbox_2d": [205, 537, 949, 560], "label": "total"}]

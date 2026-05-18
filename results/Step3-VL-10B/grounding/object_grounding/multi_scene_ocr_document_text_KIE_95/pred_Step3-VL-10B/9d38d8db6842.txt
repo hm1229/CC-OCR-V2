@@ -1,1 +1,97 @@
-[{"bbox_2d": [309, 102, 407, 117], "label": "date"}, {"bbox_2d": [154, 457, 327, 472], "label": "doc_no_receipt_no"}, {"bbox_2d": [309, 119, 507, 147], "label": "seller_address"}, {"bbox_2d": [309, 127, 376, 139], "label": "seller_name"}, {"bbox_2d": [434, 237, 527, 252], "label": "total_amount"}, {"bbox_2d": [507, 243, 560, 258], "label": "total_tax"}, {"bbox_2d": [309, 937, 434, 952], "label": "seller_gst_id"}]
+Got it, let's extract each required field from the invoice.
+
+First, date: The invoice has "03 Mar 2018 18:22" so that's the date.
+
+doc_no_receipt_no: The invoice number is "OR18030302170430" (from Invoice # field).
+
+seller_address: The address is "12, Jalan Tampol 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor (867388-U)".
+
+seller_gst_id: Let's check. The GST REG number is at the bottom: "GST REG #000658195584". So that's the seller's GST ID.
+
+seller_name: The company name is "UNIHAKKA INTERNATIONAL SDN BHD".
+
+total_amount: The total amount is "Nett Total: $8.20" or "Total Amount: $8.20". Let's check the line: "Total Amount: $8.20".
+
+total_tax: The GST amount is "$0.46" (from GST @6%: $0.46).
+
+Now, map each to their bounding boxes.
+
+Let's go step by step.
+
+1. date: The text "03 Mar 2018 18:22" is in the header section. Let's find its coordinates.
+
+Looking at the image, the date is above the company name. So the bounding box for date is around that line.
+
+2. doc_no_receipt_no: Invoice # is "OR18030302170430". The label is "Invoice #:".
+
+3. seller_address: The address lines: "12, Jalan Tampol 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor (867388-U)".
+
+4. seller_gst_id: The GST REG number at the bottom: "GST REG #000658195584".
+
+5. seller_name: "UNIHAKKA INTERNATIONAL SDN BHD".
+
+6. total_amount: "Total Amount: $8.20" (or Nett Total: $8.20, but Total Amount is listed as $8.20).
+
+7. total_tax: "GST @6%: $0.46" so the tax amount is $0.46.
+
+Now, let's define each bounding box.
+
+For date: The line "03 Mar 2018 18:22" is in the upper part of the invoice, below the handwritten number. Let's check the coordinates.
+
+The image's text for date is at the top part of the company info. Let's assume the bounding box is around that line.
+
+doc_no_receipt_no: The invoice number line: "Invoice #: OR18030302170430".
+
+seller_address: The address block: "12, Jalan Tampol 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor (867388-U)".
+
+seller_gst_id: The line "GST REG #000658195584" at the bottom.
+
+seller_name: "UNIHAKKA INTERNATIONAL SDN BHD" is the company name.
+
+total_amount: The line "Total Amount: $8.20" (or "Nett Total: $8.20" — check the invoice: "Total Amount: $8.20" and "Nett Total: $8.20". Let's take the Total Amount line.
+
+total_tax: The line "GST @6%: $0.46" so the tax amount is $0.46.
+
+Now, let's create the JSON entries.
+
+Each entry has bbox_2d and label.
+
+Let's list them:
+
+1. date: The text "03 Mar 2018 18:22" — find its position. In the image, it's above the company name. Let's check the coordinates. The bounding box would be around that line.
+
+2. doc_no_receipt_no: Invoice # line. The text is "Invoice #: OR18030302170430". So the value is OR18030302170430.
+
+3. seller_address: The address lines.
+
+4. seller_gst_id: GST REG #000658195584.
+
+5. seller_name: UNIHAKKA INTERNATIONAL SDN BHD.
+
+6. total_amount: $8.20 (from Total Amount: $8.20).
+
+7. total_tax: $0.46 (from GST @6%: $0.46).
+
+Now, assign bounding boxes. Since the image is a bit low-res, but we can estimate.
+
+For example:
+
+- seller_name: The line "UNIHAKKA INTERNATIONAL SDN BHD" is in the center top. Bounding box: [225, 150, 775, 170] (approx).
+
+- date: "03 Mar 2018 18:22" is above seller_name. Bounding box: [325, 125, 467, 140].
+
+- doc_no_receipt_no: "Invoice #: OR18030302170430" — the number is OR18030302170430. Bounding box: [325, 230, 525, 245].
+
+- seller_address: The address lines: "12, Jalan Tampol 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor (867388-U)". Bounding box: [325, 175, 775, 195].
+
+- seller_gst_id: "GST REG #000658195584" at the bottom. Bounding box: [450, 930, 625, 945].
+
+- total_amount: "Total Amount: $8.20" — in the item summary. Bounding box: [450, 320, 625, 335].
+
+- total_tax: "GST @6%: $0.46" — in the same area. Bounding box: [550, 325, 625, 340].
+
+Now, let's structure each as a JSON object.
+
+Make sure each has "bbox_2d" and "label".
+</think>
+[{"bbox_2d": [325, 125, 467, 142], "label": "date"}, {"bbox_2d": [325, 232, 523, 248], "label": "doc_no_receipt_no"}, {"bbox_2d": [325, 177, 773, 195], "label": "seller_address"}, {"bbox_2d": [452, 932, 623, 948], "label": "seller_gst_id"}, {"bbox_2d": [227, 152, 771, 170], "label": "seller_name"}, {"bbox_2d": [452, 322, 623, 338], "label": "total_amount"}, {"bbox_2d": [552, 327, 623, 343], "label": "total_tax"}]

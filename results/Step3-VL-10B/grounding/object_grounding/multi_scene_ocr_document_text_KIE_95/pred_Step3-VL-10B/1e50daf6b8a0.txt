@@ -1,10 +1,91 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is 12/01/2018. Let's check where that is. On the invoice, under Date: 12/01/2018. So the bounding box for that area.
+
+doc_no_receipt_no: Receipt # is CS00489817. So that's the receipt number.
+
+seller_address: The address is NO 18, 20, 22, JALAN BUNGA TANJONG 2/16, 40000 SHAH ALAM, SELANGOR. Let's check the top part of the invoice.
+
+seller_gst_id: GST ID: 000886677504. That's the GST ID.
+
+seller_name: PRINT EXPERT SDN BHD. The company name at the top.
+
+seller_phone: TEL: 03-55250588. The telephone number.
+
+total_amount: Total Sales (inclusive of GST) is 4.25. Let's check that line.
+
+total_tax: Total GST is 0.24. Or in the GST summary, Tax (RM) is 0.24. Let's confirm.
+
+Now, let's map each label to their bounding boxes.
+
+1. date: The date field is "Date: 12/01/2018". So the coordinates around that text.
+
+2. doc_no_receipt_no: "Receipt #: CS00489817" — that's the receipt number.
+
+3. seller_address: The address lines: "NO 18, 20, 22, JALAN BUNGA TANJONG 2/16, 40000 SHAH ALAM, SELANGOR"
+
+4. seller_gst_id: "GST ID: 000886677504"
+
+5. seller_name: "PRINT EXPERT SDN BHD" (and the (989625-A) part, but the main name is the first line)
+
+6. seller_phone: "TEL: 03-55250588"
+
+7. total_amount: "Total Sales (inclusive of GST) 4.25" — the amount is 4.25.
+
+8. total_tax: "Total GST 0.24" — the tax amount is 0.24.
+
+Now, let's find the bounding boxes for each.
+
+Let's check the image structure:
+
+- Seller name: top part, "PRINT EXPERT SDN BHD" — coordinates would be the top section.
+
+- Seller address: below the name, the address lines.
+
+- Seller GST ID: below address, "GST ID: ..."
+
+- Seller phone: below GST ID, "TEL: ..."
+
+- Receipt # and Table: next section. Receipt # is CS00489817.
+
+- Date and Time: Date is 12/01/2018.
+
+- Total Sales (inclusive of GST) is 4.25 — that's the total amount.
+
+- Total GST is 0.24 — that's the total tax.
+
+Now, let's define each bounding box.
+
+For date: The line with "Date: 12/01/2018" — let's see the position. In the receipt, the Date is in the section with Receipt #, Staff, Cashier, Date, Time. So the Date field is there.
+
+Let's list each:
+
+1. date: [the area containing "12/01/2018"]
+   - Bounding box: Let's check the coordinates. The text "Date 12/01/2018" is in the middle section. Let's assume the coordinates for that line.
+
+2. doc_no_receipt_no: "CS00489817" under Receipt #.
+
+3. seller_address: The address lines: "NO 18, 20, 22, JALAN BUNGA TANJONG 2/16, 40000 SHAH ALAM, SELANGOR"
+
+4. seller_gst_id: "000886677504" under GST ID.
+
+5. seller_name: "PRINT EXPERT SDN BHD" (the main header)
+
+6. seller_phone: "03-55250588" under TEL.
+
+7. total_amount: "4.25" under "Total Sales (inclusive of GST)"
+
+8. total_tax: "0.24" under "Total GST" or in GST summary.
+
+Now, let's create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [105, 52, 540, 75], "label": "seller_name"},
-    {"bbox_2d": [105, 150, 380, 170], "label": "seller_phone"},
-    {"bbox_2d": [105, 175, 520, 195], "label": "seller_gst_id"},
-    {"bbox_2d": [105, 100, 540, 145], "label": "seller_address"},
-    {"bbox_2d": [105, 290, 320, 310], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [400, 290, 540, 310], "label": "date"},
-    {"bbox_2d": [250, 440, 540, 460], "label": "total_amount"},
-    {"bbox_2d": [300, 470, 450, 490], "label": "total_tax"}
+    {"bbox_2d": [190, 309, 327, 330], "label": "date"},
+    {"bbox_2d": [190, 310, 327, 331], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [101, 227, 492, 264], "label": "seller_address"},
+    {"bbox_2d": [245, 312, 427, 331], "label": "seller_gst_id"},
+    {"bbox_2d": [101, 190, 376, 212], "label": "seller_name"},
+    {"bbox_2d": [245, 329, 388, 348], "label": "seller_phone"},
+    {"bbox_2d": [427, 597, 496, 616], "label": "total_amount"},
+    {"bbox_2d": [514, 542, 556, 561], "label": "total_tax"}
 ]

@@ -1,1 +1,194 @@
-[{"bbox_2d": [105, 35, 585, 55], "label": "标题"}, {"bbox_2d": [50, 120, 350, 160], "label": "地址"}, {"bbox_2d": [250, 950, 550, 970], "label": "公司名"}, {"bbox_2d": [60, 382, 225, 405], "label": "Arrival 入住日期"}, {"bbox_2d": [325, 382, 490, 402], "label": "Depart 离店日期"}, {"bbox_2d": [230, 382, 400, 402], "label": "Time 入住时间"}, {"bbox_2d": [490, 382, 660, 402], "label": "Time 离店时间"}, {"bbox_2d": [600, 152, 850, 172], "label": "RoomNo. 房号"}, {"bbox_2d": [600, 182, 850, 202], "label": "Loyalty No. 会员号码"}, {"bbox_2d": [600, 212, 850, 232], "label": "No. of Guests 住店人数"}, {"bbox_2d": [600, 242, 850, 262], "label": "Confirmation No. 确认号"}, {"bbox_2d": [600, 272, 850, 292], "label": "Cashier 收银员"}, {"bbox_2d": [600, 302, 850, 322], "label": "Time printed 打印时间"}, {"bbox_2d": [600, 8, 850, 23], "label": "Tel 电话"}, {"bbox_2d": [650, 10, 850, 25], "label": "Fax 传真"}, {"bbox_2d": [750, 242, 850, 262], "label": "Invoice # 账单号"}, {"bbox_2d": [80, 555, 160, 575], "label": "DATE 日期"}, {"bbox_2d": [170, 555, 300, 575], "label": "DESCRIPTION 项目"}, {"bbox_2d": [320, 530, 450, 550], "label": "CHARGES 消费"}, {"bbox_2d": [500, 530, 620, 550], "label": "CREDITS 付款"}, {"bbox_2d": [100, 600, 350, 625], "label": "Balance 余额"}]
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
+
+首先看标题“INFORMATION INVOICE”，对应标题。然后公司名是“Oriental Junjing Information Hotel”（东方峻景信息酒店）。地址是上面的“PSC 8028 Box 1503 APO AE 03903 Yuhang District Hangzhou ZJS 310000 China”。然后各个字段：
+
+Arrival 入住日期：图中Arrive 16-07-20，对应入住日期。看位置是Arrive 16-07-20，所以bbox要找这个区域。
+
+Balance 余额：图中“Balance 余额 CNY499.99”，对应数值是CNY499.99，标签是Balance 余额。
+
+CHARGES 消费：比如Accommodation的CHARGES是499.99，Total总计也是499.99，所以CHARGES列的数值。
+
+CREDITS 付款：对应0.00，比如Total总计的CREDITS是0.00。
+
+Cashier 收银员：Jon Weeks，对应标签。
+
+Confirmation No. 确认号：81655659，看右侧的Confirmation No.。
+
+DATE 日期：16-07-20，对应表格里的DATE列。
+
+DESCRIPTION 项目：Accommodation，表格里的项目。
+
+Depart 离店日期：17-07-20，Depart 17-07-20。
+
+Fax 传真：图中右上角Fax:86 2573578860。
+
+Invoice # 账单号：17641899，Invoice # 对应的数值。
+
+Loyalty No. 会员号码：XXXXX1366，Loyalty No. 对应的。
+
+No. of Guests 住店人数：1，No. of Guest 对应的。
+
+Page # 页数：1，Page # 对应的。
+
+RoomNo. 房号：0618，Room No. 对应的。
+
+Tel 电话：86 8872508857，右上角Tel:86 8872508857。
+
+Time printed 打印时间：17-JUL-20，Time printed 对应的。
+
+Time 入住时间：11:17，Time（入住时间）对应的是11:17。
+
+Time 离店时间：00:00，Time（离店时间）对应的是00:00。
+
+现在需要逐个确定每个元素的bbox。先看标题“INFORMATION INVOICE”在顶部，所以标题的bbox是上方的“INFORMATION INVOICE”。
+
+公司名是底部的“Oriental Junjing Information Hotel”，地址是上方的“PSC 8028 Box 1503 APO AE 03903 Yuhang District Hangzhou ZJS 310000 China”。
+
+然后逐个处理：
+
+1. 标题：INFORMATION INVOICE，位置在发票顶部，所以bbox大概是[109, 29, 527, 47]左右（看图片中的位置）。
+
+2. 公司名：Oriental Junjing Information Hotel，底部，所以bbox是[125, 957, 509, 975]左右。
+
+3. 地址：PSC 8028 Box 1503 APO AE 03903 Yuhang District Hangzhou ZJS 310000 China，位置在公司名上方，所以bbox是[64, 107, 357, 135]左右（看图片中的文字）。
+
+然后其他字段：
+
+Arrival 入住日期：Arrive 16-07-20，对应位置是左侧Arrive 16-07-20，所以bbox是[40, 325, 156, 345]（Arrive 入住日期的标签和值）。
+
+Balance 余额：图中“Balance 余额 CNY499.99”，位置在表格下方，所以bbox是[333, 600, 666, 620]左右，标签是Balance 余额。
+
+CHARGES 消费：比如Accommodation行的CHARGES是499.99，Total总计的CHARGES也是499.99，所以看CHARGES列的数值，比如在表格中CHARGES列对应499.99，bbox是[363, 535, 494, 555]（Total总计的CHARGES）。
+
+CREDITS 付款：Total总计的CREDITS是0.00，bbox是[602, 535, 694, 555]。
+
+Cashier 收银员：Jon Weeks，位置在右侧Cashier收银员: Jon Weeks，所以bbox是[602, 195, 725, 215]。
+
+Confirmation No. 确认号：81655659，位置在右侧Confirmation No.: 81655659，bbox是[602, 205, 725, 225]。
+
+DATE 日期：16-07-20，表格中的DATE列，对应行的DATE是16-07-20，bbox是[77, 505, 152, 525]。
+
+DESCRIPTION 项目：Accommodation，表格中的DESCRIPTION列，对应行的项目是Accommodation，bbox是[175, 505, 302, 525]。
+
+Depart 离店日期：17-07-20，Depart 17-07-20，位置在Arrive右侧，bbox是[325, 325, 417, 345]。
+
+Fax 传真：86 2573578860，右上角Fax:86 2573578860，bbox是[695, 12, 825, 28]。
+
+Invoice # 账单号：17641899，Invoice # 17641899，位置在右侧Invoice # 17641899，bbox是[602, 245, 725, 265]。
+
+Loyalty No. 会员号码：XXXXX1366，Loyalty No.: XXXXX1366，位置在右侧Loyalty No.: XXXXX1366，bbox是[602, 155, 725, 175]。
+
+No. of Guests 住店人数：1，No. of Guest: 1，位置在右侧No. of Guest: 1，bbox是[602, 165, 725, 185]。
+
+Page # 页数：1，Page #: 1，位置在右侧Page #: 1，bbox是[602, 175, 725, 195]。
+
+RoomNo. 房号：0618，Room No.: 0618，位置在右侧Room No.: 0618，bbox是[602, 135, 725, 155]。
+
+Tel 电话：86 8872508857，右上角Tel:86 8872508857，bbox是[695, 14, 825, 30]。
+
+Time printed 打印时间：17-JUL-20，Time printed: 17-JUL-20，位置在右侧Time printed: 17-JUL-20，bbox是[602, 285, 725, 305]。
+
+Time 入住时间：11:17，Time（入住时间）11:17，位置在Arrive的Time 11:17，bbox是[175, 325, 240, 345]。
+
+Time 离店时间：00:00，Time（离店时间）00:00，位置在Depart的Time 00:00，bbox是[502, 325, 577, 345]。
+
+现在需要把每个类别对应起来，确保每个标签都有对应的bbox。需要注意有些字段可能在图中的位置，比如“Arrive 入住日期”是Arrive 16-07-20，所以标签是Arrival 入住日期，对应的bbox是包含Arrive和日期的部分。
+
+现在整理所有需要的类别：
+
+- 标题：INFORMATION INVOICE
+- 公司名：Oriental Junjing Information Hotel
+- 地址：PSC 8028 Box 1503 APO AE 03903 Yuhang District Hangzhou ZJS 310000 China
+- Arrival 入住日期：16-07-20（Arrive 16-07-20）
+- Balance 余额：CNY499.99
+- CHARGES 消费：499.99（Total总计的CHARGES）
+- CREDITS 付款：0.00（Total总计的CREDITS）
+- Cashier 收银员：Jon Weeks
+- Confirmation No. 确认号：81655659
+- DATE 日期：16-07-20
+- DESCRIPTION 项目：Accommodation
+- Depart 离店日期：17-07-20
+- Fax 传真：86 2573578860
+- Invoice # 账单号：17641899
+- Loyalty No. 会员号码：XXXXX1366
+- No. of Guests 住店人数：1
+- Page # 页数：1
+- RoomNo. 房号：0618
+- Tel 电话：86 8872508857
+- Time printed 打印时间：17-JUL-20
+- Time 入住时间：11:17
+- Time 离店时间：00:00
+
+现在需要为每个标签确定bbox。例如：
+
+标题“INFORMATION INVOICE”的bbox：在发票顶部，文字是“INFORMATION INVOICE”，所以坐标大概是x1=100, y1=30, x2=520, y2=50（根据图片比例）。
+
+公司名“Oriental Junjing Information Hotel”的bbox：在底部，文字是“Oriental Junjing Information Hotel”，所以x1=120, y1=950, x2=510, y2=970。
+
+地址的bbox：包含“PSC 8028 Box 1503 APO AE 03903 Yuhang District Hangzhou ZJS 310000 China”，位置在公司名上方，所以x1=60, y1=100, x2=360, y2=130。
+
+Arrival 入住日期：Arrive 16-07-20，位置在左侧，Arrive标签和日期，所以x1=40, y1=320, x2=160, y2=340。
+
+Balance 余额：CNY499.99，位置在表格下方，Balance 余额 CNY499.99，所以x1=330, y1=600, x2=670, y2=620。
+
+CHARGES 消费：499.99（Total总计的CHARGES列），Total 总计 行的CHARGES是499.99，所以x1=360, y1=530, x2=490, y2=550。
+
+CREDITS 付款：0.00（Total总计的CREDITS列），所以x1=600, y1=530, x2=690, y2=550。
+
+Cashier 收银员：Jon Weeks，位置在右侧Cashier收银员: Jon Weeks，所以x1=600, y1=190, x2=720, y2=210。
+
+Confirmation No. 确认号：81655659，位置在右侧Confirmation No.: 81655659，x1=600, y1=200, x2=720, y2=220。
+
+DATE 日期：16-07-20，表格中DATE列的值，x1=70, y1=500, x2=150, y2=520。
+
+DESCRIPTION 项目：Accommodation，表格中DESCRIPTION列的值，x1=170, y1=500, x2=300, y2=520。
+
+Depart 离店日期：17-07-20，Depart标签和日期，x1=320, y1=320, x2=420, y2=340。
+
+Fax 传真：86 2573578860，右上角Fax:86 2573578860，x1=690, y1=10, x2=820, y2=30。
+
+Invoice # 账单号：17641899，位置在右侧Invoice # 17641899，x1=600, y1=240, x2=720, y2=260。
+
+Loyalty No. 会员号码：XXXXX1366，位置在右侧Loyalty No.: XXXXX1366，x1=600, y1=150, x2=720, y2=170。
+
+No. of Guests 住店人数：1，位置在右侧No. of Guest: 1，x1=600, y1=160, x2=720, y2=180。
+
+Page # 页数：1，位置在右侧Page #: 1，x1=600, y1=170, x2=720, y2=190。
+
+RoomNo. 房号：0618，位置在右侧Room No.: 0618，x1=600, y1=130, x2=720, y2=150。
+
+Tel 电话：86 8872508857，右上角Tel:86 8872508857，x1=690, y1=10, x2=820, y2=30（和Fax同区域，Tel在Fax上方？看图片右上角：Tel 电话:86 8872508857，Fax 传真:86 2573578860，所以Tel的bbox是x1=690, y1=8, x2=820, y2=28）。
+
+Time printed 打印时间：17-JUL-20，位置在右侧Time printed: 17-JUL-20，x1=600, y1=280, x2=720, y2=300。
+
+Time 入住时间：11:17，位置在Arrive的Time 11:17，x1=170, y1=320, x2=240, y2=340。
+
+Time 离店时间：00:00，位置在Depart的Time 00:00，x1=500, y1=320, x2=570, y2=340。
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意坐标是相对图片的，可能需要根据图片比例调整，但大致位置正确即可。现在开始逐个列出：
+
+1. 标题：INFORMATION INVOICE
+   bbox: [109, 29, 527, 47]
+   label: 标题
+
+2. 公司名：Oriental Junjing Information Hotel
+   bbox: [125, 957, 509, 975]
+   label: 公司名
+
+3. 地址：PSC 8028 Box 1503 APO AE 03903 Yuhang District Hangzhou ZJS 310000 China
+   bbox: [64, 107, 357, 135]
+   label: 地址
+
+4. Arrival 入住日期：Arrive 16-07-20
+   bbox: [40, 325, 156, 345]
+   label: Arrival 入住日期
+
+5. Balance 余额：CNY499.99
+   bbox: [333, 600, 666, 620]
+   label: Balance 余额
+
+6. CHARGES 消费：499.99（Total总计的CHARGES）
+   bbox: [363, 535, 494, 555]
+   label: CHARG

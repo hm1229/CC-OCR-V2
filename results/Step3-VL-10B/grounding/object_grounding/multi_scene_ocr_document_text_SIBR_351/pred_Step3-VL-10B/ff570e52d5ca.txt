@@ -1,202 +1,225 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看Tel：图左上角有Tel 8832-71065228，所以Tel的bbox是包含这个文字的区域。
+首先看Tel：图左上角有Tel 8832-71065228，所以Tel的bbox是包含这个电话的区域。
 
-Fax：同理，Fax 207721605870，找到对应的区域。
+Fax：Fax 207721605870，对应Fax的区域。
 
-Invoice No（发票号码）：SSZ-21215，对应位置。
+Invoice No（发票号码）：SSZ-21215，对应标签是Invoice No (发票号码)。
 
-Invoice Date（发票日期）：2021/10/26，对应。
+Invoice Date (发票日期)：2021/10/26，对应发票日期。
 
-Purchase Order（订单号）：PO31693，对应。
+Purchase Order (订单号)：PO31693，对应订单号。
 
-Sold to的Address（购货方地址）：Hetai Technology Co., Ltd. 212 Ashley Mall Apt. 508 South Christopher, IA 39577，这是Address。
+Sold to的Address（购货方地址）：Hetai Technology Co., Ltd. 212 Ashley Mall Apt. 508 South Christopher, IA 39577。
 
-ship to的Address（运抵地址）：Hetai Technology Co., Ltd. 2535 Nathan Junctions Suite 702 West Rachelshire, NH 87245，也是Address。
+ship to的Address（运抵地址）：Hetai Technology Co., Ltd. 2535 Nathan Junctions Suite 702 West Rachelshire, NH 87245。
 
-Port of shipment（装运口岸）：Shanghai，对应。
+Port of shipment (装运口岸)：Shanghai，Sea是交货方式？不，Mode of delivery是Sea，Port of shipment是Shanghai。
 
-Mode of delivery（交货方式）：Sea，对应。
+Port of destination (目的口岸)：Port Klang。
 
-Port of destination（目的口岸）：Port Klang，对应。
+Item name：Sikaflex-252 Black (600ml/ssg*20)。
 
-Item name：Sikaflex-252 Black (600ml/ssg*20)，对应。
+No：1。
 
-No：1，对应行的编号。
+Quantity：1,460.00。
 
-Quantity：1,460.00，对应数量。
+Unit：SSG。
 
-Unit：SSG，对应单位。
+Price：3.6300。
 
-Price：3.6300，对应价格。
+Amount：5,299.80，TOTAL也是这个数。
 
-Amount：5,299.80，对应金额，还有TOTAL的5,299.80也是Amount。
+Banker：Hetai Technology Co., Ltd.，Hetai Technology Co., Ltd.（看Banker字段对应的是Hetai Technology Co., Ltd.）。
 
-Banker：Hetai Technology Co., Ltd.，对应银行信息。
+SWIFT：CITICNSX。
 
-SWIFT：CITICNSX，对应。
+Account No：1749656006 (USD)。
 
-Account No：1749656006 (USD)，对应。
+Payment Terms：15DaysNet。
 
-Payment Terms：15DaysNet，对应。
+O/F:USD:50是Remark里的，但用户需要的Payment Terms是15DaysNet。
 
-Remark里的O/F:USD:50可能不是需要的，但看类别里有O/F:USD:50属于Remark？不，用户给的类别里没有Remark，所以看用户给的类别中的Payment Terms是15DaysNet，正确。
+Title：可能是指发票标题“INVOICE 发票”，但图中右上角有INVOICE 发票，所以Title是这个。
 
-Title：发票的标题是INVOICE 发票，所以Title是这个标题部分。
+USD：TOTAL后面的C&F是C&F，然后Amount是USD，所以USD对应TOTAL行的USD。
 
-USD：TOTAL后面的USD，以及金额的单位是USD，所以找USD出现的地方，比如TOTAL行的USD。
+现在需要逐个确定每个类别的bbox。需要看每个元素在图中的位置，用坐标范围。
 
-现在逐个整理：
+先列出来每个类别：
 
-1. Tel：坐标看左上角，Tel 8832-71065228，bbox大概[25, 105, 225, 125]左右（需要看图像中的位置，图中Tel在左上方，对应文字）。
+1. Account No：图中“Account No”对应的是1749656006 (USD)，位置在左下角，Banker下面。看坐标，这部分的bbox是包含“Account No”标签和数值的区域。看原文中“Account No”在左下角，对应数值是1749656006 (USD)。所以bbox是该行的区域。
 
-2. Fax：Fax 207721605870，bbox [385, 105, 565, 125]。
+2. Address：需要看购货方和运抵方的地址。Sold to的地址是“212 Ashley Mall Apt. 508 South Christopher, IA 39577”，ship to的地址是“2535 Nathan Junctions Suite 702 West Rachelshire, NH 87245”。可能需要分别处理，但用户可能需要两个地址？不过看问题中的Address是单数，可能需要看是否有主要地址。或者可能Address指的是公司地址，比如Sold to的公司地址。需要看每个Address的标签。Sold to的标题是“Sold to (购货方)”，下面的地址是其Address。ship to的“ship to (运抵)”下面的是ship to的Address。所以可能有两个Address，但需要看问题中的要求。不过先处理每个字段。
 
-3. Invoice No（发票号码）：SSZ-21215，对应位置在Invoice No行，右边是（发票号码）SSZ-21215，所以bbox [110, 108, 235, 125]。
+3. Amount：表格中的Amount列，比如5,299.80，TOTAL也是5,299.80。所以Amount的值是5,299.80，对应表格中的Amount列。
 
-4. Invoice Date（发票日期）：2021/10/26，对应（发票日期）2021/10/26，bbox [110, 128, 235, 145]。
+4. Banker：图中“Banker”对应的是“Hetai Technology Co., Ltd.”，在左下角，Payment Terms下面。
 
-5. Purchase Order（订单号）：PO31693，对应（订单号）PO31693，bbox [110, 148, 235, 165]。
+5. Company Name：Sold to和ship to的公司都是Hetai Technology Co., Ltd.，所以Company Name是这个。
 
-6. Address（购货方）：Hetai Technology Co., Ltd. 212 Ashley Mall Apt. 508 South Christopher, IA 39577，sold to部分，bbox [25, 225, 340, 245]。
+6. Fax：图中“Fax”对应的是207721605870，左上角。
 
-7. Address（运抵方）：Hetai Technology Co., Ltd. 2535 Nathan Junctions Suite 702 West Rachelshire, NH 87245，ship to部分，bbox [485, 225, 860, 245]。
+7. Invoice Date (发票日期)：2021/10/26，对应“发票日期”标签。
 
-8. Port of shipment（装运口岸）：Shanghai，对应Port of shipment: Shanghai，bbox [55, 305, 325, 320]。
+8. Invoice No (发票号码)：SSZ-21215，对应“发票号码”。
 
-9. Mode of delivery（交货方式）：Sea，对应Mode of delivery: Sea，bbox [55, 325, 325, 340]。
+9. Item name：Sikaflex-252 Black (600ml/ssg*20)，表格中的Item name列。
 
-10. Port of destination（目的口岸）：Port Klang，对应Port of destination: Port Klang，bbox [55, 345, 325, 360]。
+10. Mode of delivery (交货方式)：Sea，对应“Mode of delivery(交货方式):”后面的Sea。
 
-11. Item name：Sikaflex-252 Black (600ml/ssg*20)，对应表格中的Item name列，bbox [100, 375, 375, 395]。
+11. No：表格中的No列，值是1。
 
-12. No：1，对应表格中的No列，第一行的No是1，bbox [55, 375, 75, 395]。
+12. Payment Terms：15DaysNet，对应“Payment Terms”标签。
 
-13. Quantity：1,460.00，对应Quantity列，bbox [225, 375, 375, 395]。
+13. Port of destination (目的口岸)：Port Klang，对应“Port of destination(目的口岸):”后面的Port Klang。
 
-14. Unit：SSG，对应Unit列，bbox [375, 375, 455, 395]。
+14. Port of shipment (装运口岸)：Shanghai，对应“Port of shipment(装运口岸):”后面的Shanghai。
 
-15. Price：3.6300，对应Price列，bbox [475, 375, 555, 395]。
+15. Price：3.6300，表格中的Price列。
 
-16. Amount：5,299.80，对应Amount列，第一行的Amount是5,299.80，还有TOTAL的5,299.80，所以两个Amount？但看TOTAL行的Amount也是5,299.80，所以需要看。第一行的Amount是5,299.80，TOTAL行的Amount是5,299.80，所以这两个都是Amount。但先看第一行的Amount：bbox [625, 375, 725, 395]。TOTAL的Amount：bbox [625, 405, 725, 425]（因为TOTAL行的Amount列）。
+16. Purchase Order (订单号)：PO31693，对应“Purchase Order(订单号):”后面的PO31693。
 
-17. Banker：Hetai Technology Co., Ltd.，在Banker行，对应文字，bbox [25, 475, 340, 490]（看Remark下面的Banker: Hetai Technology Co., Ltd.）。
+17. Quantity：1,460.00，表格中的Quantity列。
 
-18. SWIFT：CITICNSX，对应SWIFT: CITICNSX，bbox [25, 495, 340, 510]。
+18. SWIFT：CITICNSX，对应“SWIFT”标签。
 
-19. Account No：1749656006 (USD)，对应Account No: 1749656006 (USD)，bbox [25, 515, 340, 530]。
+19. Tel：8832-71065228，图中“Tel”标签。
 
-20. Payment Terms：15DaysNet，对应Payment Terms: 15DaysNet，bbox [25, 465, 340, 480]（看Remark上面的Payment Terms: 15DaysNet）。
+20. Title：INVOICE 发票，图中右上角的“INVOICE 发票”。
 
-21. Title：INVOICE 发票，右上角的标题，bbox [725, 250, 825, 275]（因为图中右上角有INVOICE 发票）。
+21. USD：TOTAL行的“USD”，对应“TOTAL”下面的C&F和USD。
 
-22. USD：TOTAL后面的USD，以及金额的单位是USD，比如TOTAL行的USD，bbox [505, 410, 535, 425]（TOTAL行的USD）。
+22. Unit：SSG，表格中的Unit列。
 
-现在需要确认每个类别的存在，然后整理成JSON数组。注意有些类别可能重复，比如Amount有两个，但都要列出来吗？用户要求“detect all objects”，所以每个出现的都要检测。
+现在需要为每个类别找到对应的bbox。需要看每个元素在图中的位置，用坐标范围。因为是图片，需要估计每个区域的x1,y1,x2,y2。
 
-现在开始逐个列出：
+先处理每个条目：
 
-- Tel: [25, 103, 228, 125], label: Tel
-- Fax: [382, 103, 567, 125], label: Fax
-- Invoice No (发票号码): [112, 108, 233, 125], label: Invoice No (发票号码)
-- Invoice Date (发票日期): [112, 128, 233, 145], label: Invoice Date (发票日期)
-- Purchase Order (订单号): [112, 148, 233, 165], label: Purchase Order (订单号)
-- Address (购货方): [27, 227, 338, 247], label: Address
-- Address (运抵方): [487, 227, 858, 247], label: Address
-- Port of shipment (装运口岸): [57, 307, 323, 323], label: Port of shipment (装运口岸)
-- Mode of delivery (交货方式): [57, 327, 323, 343], label: Mode of delivery (交货方式)
-- Port of destination (目的口岸): [57, 347, 323, 363], label: Port of destination (目的口岸)
-- Item name: [102, 377, 373, 393], label: Item name
-- No: [57, 377, 73, 393], label: No
-- Quantity: [227, 377, 373, 393], label: Quantity
-- Unit: [375, 377, 453, 393], label: Unit
-- Price: [477, 377, 553, 393], label: Price
-- Amount (第一行): [627, 377, 723, 393], label: Amount
-- Amount (TOTAL行): [627, 407, 723, 423], label: Amount
-- Banker: [27, 477, 338, 493], label: Banker
-- SWIFT: [27, 497, 338, 513], label: SWIFT
-- Account No: [27, 517, 338, 533], label: Account No
-- Payment Terms: [27, 467, 338, 483], label: Payment Terms
-- Title: [727, 252, 823, 272], label: Title
-- USD (TOTAL行): [507, 412, 533, 428], label: USD
-
-现在需要检查是否有遗漏的类别，比如USD在金额中的单位，还有O/F:USD:50中的USD？但用户给的类别是USD，所以只要图中出现USD的地方。另外，TOTAL行的C&F是运输术语，不是类别中的，所以不考虑。
-
-现在整理成JSON数组，每个元素是bbox和label。注意bbox的坐标是相对图像的，需要根据图像中的位置估算。比如图中的Tel在左上方，坐标范围大概是x从25到228，y从103到125（假设图像的y轴从上到下，所以顶部是y小，底部y大）。
-
-现在开始构建每个条目：
-
-1. Tel: bbox [25, 103, 228, 125], label "Tel"
-2. Fax: bbox [382, 103, 567, 125], label "Fax"
-3. Invoice No (发票号码): bbox [112, 108, 233, 125], label "Invoice No (发票号码)"
-4. Invoice Date (发票日期): bbox [112, 128, 233, 145], label "Invoice Date (发票日期)"
-5. Purchase Order (订单号): bbox [112, 148, 233, 165], label "Purchase Order (订单号)"
-6. Address (购货方): bbox [27, 227, 338, 247], label "Address"
-7. Address (运抵方): bbox [487, 227, 858, 247], label "Address"
-8. Port of shipment (装运口岸): bbox [57, 307, 323, 323], label "Port of shipment (装运口岸)"
-9. Mode of delivery (交货方式): bbox [57, 327, 323, 343], label "Mode of delivery (交货方式)"
-10. Port of destination (目的口岸): bbox [57, 347, 323, 363], label "Port of destination (目的口岸)"
-11. Item name: bbox [102, 377, 373, 393], label "Item name"
-12. No: bbox [57, 377, 73, 393], label "No"
-13. Quantity: bbox [227, 377, 373, 393], label "Quantity"
-14. Unit: bbox [375, 377, 453, 393], label "Unit"
-15. Price: bbox [477, 377, 553, 393], label "Price"
-16. Amount: bbox [627, 377, 723, 393], label "Amount"
-17. Amount: bbox [627, 407, 723, 423], label "Amount"
-18. Banker: bbox [27, 477, 338, 493], label "Banker"
-19. SWIFT: bbox [27, 497, 338, 513], label "SWIFT"
-20. Account No: bbox [27, 517, 338, 533], label "Account No"
-21. Payment Terms: bbox [27, 467, 338, 483], label "Payment Terms"
-22. Title: bbox [727, 252, 823, 272], label "Title"
-23. USD: bbox [507, 412, 533, 428], label "USD"
-
-现在需要确认每个类别都覆盖了用户要求的列表：Account No, Address, Amount, Banker, Company Name, Fax, Invoice Date (发票日期), Invoice No (发票号码), Item name, Mode of delivery (交货方式), No, Payment Terms, Port of destination (目的口岸), Port of shipment (装运口岸), Price, Purchase Order (订单号), Quantity, SWIFT, Tel, Title, USD, Unit。
-
-检查Company Name：图中的Company Name是Hetai Technology Co., Ltd.，在Sold to和ship to的公司名称，所以需要提取Company Name。比如Sold to的Company Name是Hetai Technology Co., Ltd.，ship to的也是。所以需要添加Company Name的条目。
-
-哦，刚才漏了Company Name。用户要求的类别中有Company Name，所以需要找到Company Name的位置。
-
-Company Name在Sold to部分：Hetai Technology Co., Ltd.，所以bbox [27, 225, 175, 242]（因为Sold to下面的公司名称）。同样ship to的Company Name也是Hetai Technology Co., Ltd.，所以有两个Company Name？但可能只需要一个，或者都提取。
-
-现在补充Company Name：
-
-- Company Name (购货方): bbox [27, 225, 175, 242], label "Company Name"
-- Company Name (运抵方): bbox [487, 225, 625, 242], label "Company Name"
-
-现在检查用户给的类别列表，确实有Company Name，所以必须包含。
-
-现在重新检查所有类别：
-
-用户要求的类别列表：
-
-Account No, Address, Amount, Banker, Company Name, Fax, Invoice Date (发票日期), Invoice No (发票号码), Item name, Mode of delivery (交货方式), No, Payment Terms, Port of destination (目的口岸), Port of shipment (装运口岸), Price, Purchase Order (订单号), Quantity, SWIFT, Tel, Title, USD, Unit。
-
-现在逐个确认：
-
-- Account No：已包含
-- Address：已包含（两个地址）
-- Amount：已包含（两个Amount）
-- Banker：已包含
-- Company Name：需要添加，之前漏了
-- Fax：已包含
-- Invoice Date (发票日期)：已包含
-- Invoice No (发票号码)：已包含
-- Item name：已包含
-- Mode of delivery (交货方式)：已包含
-- No：已包含
-- Payment Terms：已包含
-- Port of destination (目的口岸)：已包含
-- Port of shipment (装运口岸)：已包含
-- Price：已包含
-- Purchase Order (订单号)：已包含
-- Quantity：已包含
-- SWIFT：已包含
-- Tel：已包含
-- Title：已包含
-- USD：已包含
-- Unit：已包含
-
-现在补充Company Name的两个实例（购货方和运抵方的公司名称）：
-
-24. Company Name (购货方): bbox [27, 225, 175, 242], label "Company Name"
-25. Company Name (运抵方): bbox [487, 225, 625,
+- Account No：在左下角，文字“Account No”和数值“1749656006 (USD)”。看原文中的位置，这部分在“SWIFT”下面，“Account No”标签。所以bbox大概是[16, 957, 222, 975]左右？需要看图片中的布局。图中左下角的Remark部分：
+
+Remark
+O/F:USD:50
+Payment Terms 15DaysNet
+Banker Hetai Technology Co., Ltd. , Hetai Technology Co., Ltd.
+SWIFT CITICNSX
+Account No 1749656006 (USD)
+
+所以Account No的标签是“Account No”，数值是“1749656006 (USD)”。所以bbox是包含“Account No”和数值的区域，比如x从左边开始，y在下方。假设图中这部分的坐标，比如x1=16, y1=950, x2=220, y2=970。
+
+- Address：Sold to的地址是“212 Ashley Mall Apt. 508 South Christopher, IA 39577”，位于“Sold to (购货方)”下面。所以bbox是该地址的区域。比如x1=25, 300（大概），y1=220, y2=240。另外ship to的地址是“2535 Nathan Junctions Suite 702 West Rachelshire, NH 87245”，在“ship to (运抵)”下面。可能需要两个Address，但问题中的Address是单数，可能需要看是否有主要的。或者可能Address指的是公司地址，比如Sold to的公司地址。这里可能需要将两个地址都考虑，但先看问题中的要求，可能每个Address对应一个。比如Sold to的Address是“212 Ashley Mall Apt. 508 South Christopher, IA 39577”，ship to的Address是“2535 Nathan Junctions Suite 702 West Rachelshire, NH 87245”。所以需要两个Address条目？
+
+- Amount：表格中的Amount列，值是5,299.80（对应No 1的Amount）和TOTAL的5,299.80。所以Amount的值是5,299.80，bbox是表格中Amount列的单元格，比如x1=650, y1=300, x2=750, y2=320（大概）。
+
+- Banker：在左下角，“Banker”标签对应的是“Hetai Technology Co., Ltd.”，所以bbox是“Banker”和其值的区域，比如x1=16, y1=850, x2=250, y2=870。
+
+- Company Name：Sold to和ship to的公司都是Hetai Technology Co., Ltd.，所以Company Name是这个，bbox是“Sold to”或“ship to”中的公司名称，比如Sold to的公司名称是“Hetai Technology Co., Ltd.”，位于“Sold to (购货方)”下面，所以bbox是该公司的名称区域，比如x1=25, y1=200, x2=350, y2=220。
+
+- Fax：图中“Fax”标签和数值“207721605870”，位于左上角，Tel的右边。所以bbox是x1=250, y1=10, x2=350, y2=30。
+
+- Invoice Date (发票日期)：对应“发票日期”标签和数值“2021/10/26”，在Invoice No下面。所以bbox是x1=150, y1=140, x2=250, y2=160。
+
+- Invoice No (发票号码)：对应“发票号码”标签和数值“SSZ-21215”，在Invoice No行。bbox是x1=150, y1=110, x2=250, y2=130。
+
+- Item name：表格中的Item name列，值是“Sikaflex-252 Black (600ml/ssg*20)”，bbox是x1=100, y1=280, x2=400, y2=300。
+
+- Mode of delivery (交货方式)：对应“Mode of delivery(交货方式):”标签和数值“Sea”，在Port of shipment下面。bbox是x1=100, y1=310, x2=200, y2=330。
+
+- No：表格中的No列，值是“1”，bbox是x1=50, y1=280, x2=100, y2=300。
+
+- Payment Terms：对应“Payment Terms”标签和数值“15DaysNet”，在Remark下面。bbox是x1=16, y1=820, x2=250, y2=840。
+
+- Port of destination (目的口岸)：对应“Port of destination(目的口岸):”标签和数值“Port Klang”，在ship to部分。bbox是x1=500, y1=320, x2=650, y2=340。
+
+- Port of shipment (装运口岸)：对应“Port of shipment(装运口岸):”标签和数值“Shanghai”，在Sold to部分。bbox是x1=50, y1=300, x2=150, y2=320。
+
+- Price：表格中的Price列，值是“3.6300”，bbox是x1=400, y1=280, x2=500, y2=300。
+
+- Purchase Order (订单号)：对应“Purchase Order(订单号):”标签和数值“PO31693”，在Delivery Date下面。bbox是x1=150, y1=160, x2=250, y2=180。
+
+- Quantity：表格中的Quantity列，值是“1,460.00”，bbox是x1=250, y1=280, x2=350, y2=300。
+
+- SWIFT：对应“SWIFT”标签和数值“CITICNSX”，在Account No上面。bbox是x1=16, y1=920, x2=250, y2=940。
+
+- Tel：对应“Tel”标签和数值“8832-71065228”，在左上角。bbox是x1=25, y1=10, x2=150, y2=30。
+
+- Title：对应“INVOICE 发票”，在右上角。bbox是x1=850, y1=100, x2=950, y2=130。
+
+- USD：对应“TOTAL”行的“USD”，在TOTAL下面。bbox是x1=600, y1=340, x2=650, y2=360。
+
+- Unit：表格中的Unit列，值是“SSG”，bbox是x1=350, y1=280, x2=450, y2=300。
+
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。需要注意每个类别的唯一性，比如Address可能有两个，但需要看是否都存在。另外，有些字段可能在图中没有，比如Title是否是“INVOICE 发票”？是的，图中右上角有“INVOICE 发票”，所以Title是这个。
+
+现在开始逐个构建：
+
+1. Account No：
+   - bbox：看“Account No”在图中的位置，左下角，文字“Account No”和“1749656006 (USD)”。假设坐标范围是[16, 950, 222, 975]（需要根据图的布局，可能需要更准确，但大致范围）。
+   - label: "Account No"
+
+2. Address（Sold to的地址）：
+   - bbox：Sold to部分的地址“212 Ashley Mall Apt. 508 South Christopher, IA 39577”，位于“Sold to (购货方)”下方。坐标大概[25, 220, 350, 240]
+   - label: "Address"
+
+3. Amount：
+   - bbox：表格中No 1的Amount列，值5,299.80，坐标大概[650, 300, 750, 320]
+   - label: "Amount"
+
+4. Banker：
+   - bbox：“Banker”标签和值“Hetai Technology Co., Ltd.”，坐标[16, 850, 250, 870]
+   - label: "Banker"
+
+5. Company Name：
+   - bbox：Sold to的公司名称“Hetai Technology Co., Ltd.”，坐标[25, 200, 350, 220]
+   - label: "Company Name"
+
+6. Fax：
+   - bbox：“Fax”和“207721605870”，坐标[250, 10, 350, 30]
+   - label: "Fax"
+
+7. Invoice Date (发票日期)：
+   - bbox：“发票日期”和“2021/10/26”，坐标[150, 140, 250, 160]
+   - label: "Invoice Date (发票日期)"
+
+8. Invoice No (发票号码)：
+   - bbox：“发票号码”和“SSZ-21215”，坐标[150, 110, 250, 130]
+   - label: "Invoice No (发票号码)"
+
+9. Item name：
+   - bbox：“Sikaflex-252 Black (600ml/ssg*20)”，坐标[100, 280, 400, 300]
+   - label: "Item name"
+
+10. Mode of delivery (交货方式)：
+    - bbox：“Sea”，坐标[100, 310, 200, 330]
+    - label: "Mode of delivery (交货方式)"
+
+11. No：
+    - bbox：“1”，坐标[50, 280, 100, 300]
+    - label: "No"
+
+12. Payment Terms：
+    - bbox：“15DaysNet”，坐标[16, 820, 250, 840]
+    - label: "Payment Terms"
+
+13. Port of destination (目的口岸)：
+    - bbox：“Port Klang”，坐标[500, 320, 650, 340]
+    - label: "Port of destination (目的口岸)"
+
+14. Port of shipment (装运口岸)：
+    - bbox：“Shanghai”，坐标[50, 300, 150, 320]
+    - label: "Port of shipment (装运口岸)"
+
+15. Price：
+    - bbox：“3.6300”，坐标[400, 280, 500, 300]
+    - label: "Price"
+
+16. Purchase Order (订单号)：
+    - bbox：“PO31693”，坐标[150, 160, 250, 180]
+    - label: "Purchase Order (订单号)"
+
+17. Quantity：
+    - bbox：“1,460.00”，坐标[250, 280, 350, 300]
+    - label: "Quantity"
+
+18. SWIFT：
+    - bbox：“CITICNSX”，坐标[16, 920

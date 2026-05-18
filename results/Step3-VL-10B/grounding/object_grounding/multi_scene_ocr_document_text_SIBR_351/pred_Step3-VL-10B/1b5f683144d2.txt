@@ -1,295 +1,211 @@
-用户现在需要从发票中检测指定的各个对象，每个对象要找到对应的bbox和label。首先得逐个看每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看2195737，这是Shipping number，在表格里Delivery address部分的Shipping number列，值是2195737。看对应的单元格位置。
+首先看Company name，发票底部有Easy Power Technology Co., Ltd.，还有顶部的Invoice address和Customer address也是这个公司。比如底部的Company name是Easy Power Technology Co., Ltd.，对应bbox是底部的公司名。
 
-然后ATTN：在Delivery address里的ATTN: Meghan Schaefer，所以ATTN是标签。
+然后ATTN：Delivery address里的ATTN : Meghan Schaefer，所以ATTN的值是Meghan Schaefer，bbox是Delivery address部分的ATTN行。
 
-Address：可能有多个地址，比如Invoice address、Customer address、Delivery address这些都属于Address类别？需要看每个地址部分。比如Invoice address的Easy Power Technology...是Company name？不，Company name是Easy Power Technology Co., Ltd.，出现多次。先理清楚每个类别。
+Address：Delivery address的地址是33 GUL CIRCLE, JURONG SINGAPORE 629570 SINGAPORE，所以Address对应这个。
 
-先列所有要检测的类别，然后逐个找：
-
-1. 2195737：看Shipping number，对应表格中Shipping number列的值，位置在Delivery address部分的表格里，Shipping number行，值是2195737。看坐标，应该在表格的Shipping number列，对应行的单元格。
-
-2. A Slot：在Invoice details里的描述部分，有“A Slot: A6, Basic IO for KCI”，所以A Slot是这个描述里的标签。
-
-3. ATTN：Delivery address里的“ATTN : Meghan Schaefer”，所以ATTN是这个标签。
-
-4. Address：比如Invoice address、Customer address、Delivery address都是地址，需要看每个地址块。比如Invoice address的文本是地址，Customer address也是，Delivery address也是。但可能需要看每个地址的标签。比如“Invoice address”是Address类别下的一个实例，同样Customer address和Delivery address也是。但可能需要确认每个Address的出现。不过可能更准确的是看每个地址的文本块。
-
-5. B Slot：在描述里“B Slot: No board”？不，看描述里的B Slot: B9, 1RO(NO), 5pcs of 41-240VAC？不对，看原文：“B Slot: B9, 1RO(NO), 5pcs of 41-240VAC”？不，原文是“B Slot: B9, 1RO(NO), 5pcs of 41-240VAC”？看用户提供的Invoice details里的描述：
-
-看用户提供的Invoice details部分的描述：
-
-“B Slot: A6, Basic IO for KCI
-
-A Slot: A3, 1RO(NO/NC), 1RC(NO/NC), therm
-
-C Slot: No board
-
-D Slot: B9, 1RO(NO), 5pcs of 41-240VAC
-
-E Slot: No board
-
-Manual: English”
-
-哦，可能我看错了。重新看用户提供的Invoice details里的描述部分：
-
-用户提供的Invoice details中的描述是：
-
-“132X0776
-
-NXPO2615-AXT1BSC-A6A300B900+BM1K+WT03
-
-+FL21
-
-+DNOT
-
-Vacon NXP Frequency Converter
-
-380 - 500 Vac (465-800 Vdc), 261 Amp, IPX
-
-Alpha-numeric display
-
-IEC61800-3 for IT networks
-
-Integrated Brake chopper
-
-A Slot: A6, Basic IO for KCI
-
-B Slot: A3, 1RO(NO/NC), 1RC(NO/NC), therm
-
-C Slot: No board
-
-D Slot: B9, 1RO(NO), 5pcs of 41-240VAC
-
-E Slot: No board
-
-Manual: English”
-
-所以B Slot是“B Slot: A3, 1RO(NO/NC), 1RC(NO/NC), therm”中的B Slot标签。
-
-C Slot是“C Slot: No board”中的C Slot标签。
-
-Company name：Easy Power Technology Co., Ltd.，在Invoice address、Customer address、底部的Easy Power Technology Co., Ltd.都是Company name。
-
-Contact：比如Contact person下的Contact，Sales representative下的Contact，Your reference下的Contact，这些Contact标签。
-
-Currency：在Terms of payment行的Currency列，值是CNY。
-
-Cust. order no.：在Information列的Cust. order no.，值是4503119863。
-
-Customer VAT no：在Cust. agreement行的Customer VAT no.，值是K2-0066153-2。
-
-Customer number：在Customer number行，值是E700。
-
-D Slot：在描述中的D Slot: B9, 1RO(NO), 5pcs of 41-240VAC，所以D Slot是标签。
-
-Danfoss order no：在Information列的Danfoss order no.，值是1605091926。
+Danfoss order no：在Contact person部分的Information里的Danfoss order no是1605091926，看表格里的对应位置。
 
 Date：Invoice number右边的Date是13.05.2022。
 
-Delivery date：在Delivery date列，值是16.05.2022。
+Delivery date：在Information里的Delivery date是16.05.2022。
 
-Delivery note no.：在Delivery note no.列，值是2003144037。
+Delivery note no.：是2003144037，在Orig. doc. ref.右边的Delivery note no.
 
-Direct tel.：比如Contact person下的Direct tel.，Sales representative下的Direct tel.，Your reference下的Direct tel.，这些Direct tel.标签。
+Direct tel.：比如Contact person里的Direct tel.是+3765157356，还有Sales representative里的Direct tel.是+3766135575，Your reference里的Direct tel.是6436553505。需要看每个出现的Direct tel.，但可能需要确定哪个是目标。不过先逐个处理。
 
-E-mail：Contact person下的E-mail，Sales representative下的E-mail，Your reference下的E-mail，这些E-mail标签。
+E-mail：Contact person里的E-mail是samuelramos@washington.com，Sales representative里的E-mail是ernest05@jones-marshall.com，Your reference里的E-mail可能没有？看Your reference部分的E-mail？Your reference里的Contact是Larry Shaw，Direct tel.是6436553505，Direct fax是Easy Power Technology Co., Ltd.？不，Your reference的E-mail可能没有，看表格里的E-mail列。
 
-Fax：Contact person下的Direct fax，Sales representative下的Direct fax，Your reference下的Direct fax，这些Fax标签。
+Internal number：Invoice number下面的Internal number是96615725。
 
-General conditions of sale：在Forwarding agent行的General conditions of sale，值是http://salesconditions.uk.danfoss.cn。
+Invoice number：是6100001236。
 
-Incoterms：在Incoterms行，值是FCA HAIYAN。
+Manual：在Product name部分的Manual: English，所以Manual是English。
 
-Internal number：Invoice number下面的Internal number，值是96615725。
+Net price：在Invoice details里的Net price是16,307.41。
 
-Invoice number：6100001236。
+Order date：是30.12.2021，在Order date列。
 
-Manual：在描述中的Manual: English，所以Manual是标签。
+Page number：底部有1 of 2，所以Page number是1 of 2。
 
-Net price：在Unit price和Net price列，比如16,307.41是Net price。
+Payment due date：是15.07.2022，在Payment due date列。
 
-Order date：在Order date列，值是30.12.2021。
+Pos.：是40，在Invoice details的Pos.列。
 
-Page number：底部的1 of 2，所以Page number是“1 of 2”。
+Product name：是132X0776对应的NXPO2615-AXT1BSC-A6A300B900+BM1K+WT03 +FL21 +DNOT Vacon NXP Frequency Converter 380 - 500 Vac (465-800 Vdc), 261 Amp, IPX Alpha-numeric display IEC61800-3 for IT networks Integrated Brake chopper A Slot: A6, Basic IO for KCI B Slot: A3, IRO(NO/NC), 1RO(NO/NC), therm C Slot: No board D Slot: B9, 1RO(NO), 5pcs of 41-240VAC E Slot: No board Manual: English，所以Product name是这个长描述。
 
-Payment due date：在Payment due date列，值是15.07.2022。
+Quantity：是1，在Quantity列。
 
-Pos.：Invoice details中的Pos.列，值是40。
+Shipping date：是13.05.2022，在Shipping date列。
 
-Product name：Material number and description列的内容，比如NXPO2615-AXT1BSC-A6A300B900+BM1K+WT03等，属于Product name。
+Tel：底部的Tel: +99-916-63876958，还有其他Tel？比如Contact person的Direct tel.是+3765157356，Sales representative的Direct tel.是+3766135575，Your reference的Direct tel.是6436553505。需要看哪个Tel是目标，可能底部的Tel是公司总机。
 
-Quantity：Quantity列，值是1。
+Terms of payment：是From 16-15 Next month +60 days，在Terms of payment列。
 
-Shipping date：在Shipping date列，值是13.05.2022。
+Unit：是PC，在Unit列，Quantity是1，Unit是PC。
 
-Tel：底部的Tel: +99-916-63876958，所以Tel是标签。
-
-Terms of payment：在Terms of payment行，值是From 16-15 Next month +60 days。
-
-Unit：Unit列，值是PC。
-
-Unit price：Unit price列，值是16,307.41（？看表格里的Unit price是16,307.41？不，看表格里的Unit price列是“16,307.41”？看用户提供的Invoice details表格：
-
-Pos. | Quantity | Unit | Material number and description | Unit price | Net price
-
-40 | 1 | PC | ... | 16,307.41 | 16,307.41
-
-所以Unit price是16,307.41，Net price也是。
+Unit price：是16,307.41，在Unit price列。
 
 VAT number：底部的VAT number: 913205947558549609。
 
-现在需要逐个确定每个类别的bbox。因为是图像中的位置，需要估计每个元素的位置。比如：
-
-- 2195737：在Delivery address部分的表格中，Shipping number列，对应行的单元格。看表格中的Shipping number行，值是2195737。这个表格在Delivery address下面，所以bbox大概是对应那个单元格的位置。
-
-- ATTN：在Delivery address的开头，“ATTN : Meghan Schaefer”，所以bbox是这个文本的位置。
-
-- Company name：比如Invoice address中的“Easy Power Technology Co., Ltd.”，Customer address中的“Easy Power Technology Co., Ltd.”，底部的“Easy Power Technology Co., Ltd.”。需要选其中一个，比如底部的Company name。
-
-- Contact：比如Your reference下的Contact是“Larry Shaw”，所以Contact标签是“Contact”这个词，在Your reference部分的标签。
-
-- Currency：在Terms of payment行的Currency列，值是CNY，所以Currency标签是“Currency”这个词。
-
-- Cust. order no.：在Information列的“Cust. order no.”标签，对应值是4503119863。
-
-- Customer VAT no：在Cust. agreement行的“Customer VAT no.”标签。
-
-- Customer number：在Customer number行的“Customer number”标签。
-
-- D Slot：在描述中的“D Slot: B9, 1RO(NO), 5pcs of 41-240VAC”中的“D Slot”标签。
-
-- Danfoss order no：在Information列的“Danfoss order no.”标签。
-
-- Date：在Invoice number右边的“Date”标签，值是13.05.2022。
-
-- Delivery date：在Delivery date列的“Delivery date”标签，值是16.05.2022。
-
-- Delivery note no.：在Delivery note no.列的“Delivery note no.”标签，值是2003144037。
-
-- Direct tel.：比如Contact person下的“Direct tel.:”标签，值是+3765157356。
-
-- E-mail：Contact person下的“E-mail:”标签，值是samuelramos@washington.com。
-
-- Fax：Contact person下的“Direct fax:”标签（虽然这里可能没有值，但标签存在）。
-
-- General conditions of sale：在Forwarding agent行的“General conditions of sale:”标签，后面是链接。
-
-- Incoterms：在Incoterms行的“Incoterms”标签，值是FCA HAIYAN。
-
-- Internal number：在Invoice number下面的“Internal number”标签，值是96615725。
-
-- Invoice number：在Invoice number标签，值是6100001236。
-
-- Manual：在描述中的“Manual: English”中的“Manual”标签。
-
-- Net price：在Net price列的“Net price”标签，值是16,307.41。
-
-- Order date：在Order date列的“Order date”标签，值是30.12.2021。
-
-- Page number：在底部的“1 of 2”中的“Page number”（虽然文本是“1 of 2”，但属于Page number类别）。
-
-- Payment due date：在Payment due date列的“Payment due date”标签，值是15.07.2022。
-
-- Pos.：在Invoice details中的“Pos.”标签，值是40。
-
-- Product name：在Material number and description列的内容，属于Product name，标签是该列的标题？或者该列的内容是Product name，所以Product name是这个列的描述。
-
-- Quantity：在Quantity列的“Quantity”标签，值是1。
-
-- Shipping date：在Shipping date列的“Shipping date”标签，值是13.05.2022。
-
-- Tel：在底部的“Tel: +99-916-63876958”中的“Tel”标签。
-
-- Terms of payment：在Terms of payment行的“Terms of payment”标签，值是From 16-15 Next month +60 days。
-
-- Unit：在Unit列的“Unit”标签，值是PC。
-
-- Unit price：在Unit price列的“Unit price”标签，值是16,307.41。
-
-- VAT number：在底部的“VAT number: 913205947558549609”中的“VAT number”标签。
-
-现在需要将每个类别对应到图像中的位置，生成bbox。由于是示意图，需要大致估计每个元素的坐标。例如：
-
-- Invoice number的“6100001236”在发票上方，Date是13.05.2022，所以这两个的bbox。
-
-- Company name：底部的“Easy Power Technology Co., Ltd.”，bbox是底部左侧的文本。
-
-- Contact：Your reference下的“Contact”标签，对应“Larry Shaw”上方的“Contact”文字。
-
-- Currency：在表格中“Currency”列的标签，对应CNY的位置。
-
-- Cust. order no.：在Information列的“Cust. order no.”标签，对应值4503119863的位置。
-
-- Customer VAT no：在Cust. agreement行的“Customer VAT no.”标签，对应K2-0066153-2的位置。
-
-- Customer number：在Customer number行的“Customer number”标签，对应E700的位置。
-
-- D Slot：在描述中的“D Slot: B9, 1RO(NO), 5pcs of 41-240VAC”中的“D Slot”文字，bbox是该行的起始部分。
-
-- Danfoss order no：在Information列的“Danfoss order no.”标签，对应1605091926的位置。
-
-- Date：在Invoice number右侧的“Date”标签，对应13.05.2022的位置。
-
-- Delivery date：在表格中“Delivery date”列的标签，对应16.05.2022的位置。
-
-- Delivery note no.：在“Delivery note no.”列的标签，对应2003144037的位置。
-
-- Direct tel.：Contact person下的“Direct tel.:”标签，对应+3765157356的位置。
-
-- E-mail：Contact person下的“E-mail:”标签，对应samuelramos@washington.com的位置。
-
-- Fax：Contact person下的“Direct fax:”标签（可能没有值，但标签存在）。
-
-- General conditions of sale：在“General conditions of sale:”标签，对应后面的链接。
-
-- Incoterms：在“Incoterms”标签，对应FCA HAIYAN的位置。
-
-- Internal number：在“Internal number”标签，对应96615725的位置。
-
-- Invoice number：在“Invoice number”标签，对应6100001236的位置。
-
-- Manual：在“Manual: English”中的“Manual”标签。
-
-- Net price：在“Net price”列的标签，对应16,307.41的位置。
-
-- Order date：在“Order date”列的标签，对应30.12.2021的位置。
-
-- Page number：在底部的“1 of 2”中的文本，属于Page number。
-
-- Payment due date：在“Payment due date”列的标签，对应15.07.2022的位置。
-
-- Pos.：在“Pos.”列的标签，对应40的位置。
-
-- Product name：在“Material number and description”列的内容，属于Product name，该列的标题是Product name的标识。
-
-- Quantity：在“Quantity”列的标签，对应1的位置。
-
-- Shipping date：在“Shipping date”列的标签，对应13.05.2022的位置。
-
-- Tel：在底部的“Tel: +99-916-63876958”中的“Tel”标签。
-
-- Terms of payment：在“Terms of payment”列的标签，对应From 16-15 Next month +60 days的位置。
-
-- Unit：在“Unit”列的标签，对应PC的位置。
-
-- Unit price：在“Unit price”列的标签，对应16,307.41的位置。
-
-- VAT number：在底部的“VAT number: 913205947558549609”中的“VAT number”标签。
-
-- 2195737：在Shipping number列的值，对应2195737的位置。
-
-- A Slot：在描述中的“A Slot: A6, Basic IO for KCI”中的“A Slot”标签。
-
-- B Slot：在描述中的“B Slot: A3, 1RO(NO/NC), 1RC(NO/NC), therm”中的“B Slot”标签。
-
-- C Slot：在描述中的“C Slot: No board”中的“C Slot”标签。
-
-- Address：比如Invoice address的文本块，Customer address的文本块，Delivery address的文本块。例如Invoice address的“Easy Power Technology Co., Ltd. Unit 5719 Box 9969 DPO AA 13748 USS Hawkins FPO AA 93000”是Address。
-
-现在需要将所有这些类别都列出来，每个对应一个bbox。由于是图像，需要尽可能准确。但可能有些类别在图中存在，有些可能没有？比如Page number是“1 of 2”，存在。VAT number存在。现在开始构建JSON数组。
-
-注意：每个对象是检测到的，所以每个类别可能有多个实例，但用户要求“detect all objects matching these categories”，所以每个出现的实例都要列？还是每个类别只要存在就列一次？看问题描述：“For each detected object, provide: 1. bbox_2d... 2. label...” 所以每个检测到的实例（即每个出现的位置）都要列。例如，Company name出现多次，每次都要列？但可能用户希望每个类别至少有一个实例，或者所有实例。但根据问题中的“detect all objects matching these categories”，应该是指所有属于这些类别的对象，每个对象（即每个出现的元素）。
-
-但可能更实际的是，每个类别在图中出现的次数，比如Company name在Invoice address、Customer address、底部都有，所以三个实例。但可能用户希望每个类别只要存在就列一个？或者全部。但需要看示例。不过可能图中的每个标签（如“Invoice number”是标签，其值是6100001236，所以“Invoice number”这个标签是一个对象，其bbox是标签文字的位置，而值是另一个？不，问题中的类别是标签的名称，比如“Invoice number”是类别，对应图中的“Invoice number
+Cust. order no.：是4503119863，在Cust. order no.列。
+
+Customer VAT no：是K2-0066153-2，在Customer VAT no.列。
+
+Customer number：是E700，在Customer number列。
+
+D Slot：在Product name里的D Slot: B9, 1RO(NO), 5pcs of 41-240VAC，所以D Slot是B9, 1RO(NO), 5pcs of 41-240VAC。
+
+B Slot：在Product name里的B Slot: A3, IRO(NO/NC), 1RO(NO/NC), therm，所以B Slot是A3, IRO(NO/NC), 1RO(NO/NC), therm。
+
+C Slot：在Product name里的C Slot: No board，所以C Slot是No board。
+
+A Slot：在Product name里的A Slot: A6, Basic IO for KCI，所以A Slot是A6, Basic IO for KCI。
+
+Incoterms：是FCA HAIYAN，在Incoterms列。
+
+General conditions of sale：是http://salesconditions.uk.danfoss.cn，在General conditions of sale部分。
+
+Fax：底部的Fax: +06-679-18568003，还有其他Fax？比如Contact person的Direct fax没有？看Contact person的Direct fax是空？Sales representative的Direct fax是空？Your reference的Direct fax是Easy Power Technology Co., Ltd.？不，Your reference的Direct fax可能没有，底部的Fax是公司总机的传真。
+
+现在需要逐个确定每个类别的bbox。因为图是发票，需要看每个字段的位置。
+
+先整理每个类别：
+
+1. A Slot: 在Product name中的“A Slot: A6, Basic IO for KCI” → 找到对应的文本位置。
+2. ATTN: Delivery address中的“ATTN : Meghan Schaefer” → 对应bbox。
+3. Address: Delivery address的地址“33 GUL CIRCLE, JURONG SINGAPORE 629570 SINGAPORE” → 包含这个地址的区域。
+4. B Slot: Product name中的“B Slot: A3, IRO(NO/NC), 1RO(NO/NC), therm”。
+5. C Slot: Product name中的“C Slot: No board”。
+6. Company name: 底部的“Easy Power Technology Co., Ltd.”，或者顶部的Invoice address和Customer address的公司名，比如底部的Company name是“Easy Power Technology Co., Ltd.”。
+7. Contact: 比如Contact person里的“SG Cust. Service(CSC)”是Contact，还有Your reference里的“Larry Shaw”是Contact。
+8. Currency: CNY，在Currency列。
+9. Cust. order no.: 4503119863，在Cust. order no.列。
+10. Customer VAT no: K2-0066153-2，在Customer VAT no.列。
+11. Customer number: E700，在Customer number列。
+12. D Slot: Product name中的“D Slot: B9, 1RO(NO), 5pcs of 41-240VAC”。
+13. Danfoss order no: 1605091926，在Danfoss order no.列。
+14. Date: 13.05.2022，在Date列。
+15. Delivery date: 16.05.2022，在Delivery date列。
+16. Delivery note no.: 2003144037，在Delivery note no.列。
+17. Direct tel.: 比如Contact person的Direct tel.是+3765157356，对应位置。
+18. E-mail: 比如Contact person的E-mail是samuelramos@washington.com。
+19. Fax: 底部的Fax: +06-679-18568003。
+20. General conditions of sale: http://salesconditions.uk.danfoss.cn，在General conditions of sale部分。
+21. Incoterms: FCA HAIYAN，在Incoterms列。
+22. Internal number: 96615725，在Internal number列。
+23. Invoice number: 6100001236，在Invoice number列。
+24. Manual: English，在Manual: English。
+25. Net price: 16,307.41，在Net price列。
+26. Order date: 30.12.2021，在Order date列。
+27. Page number: 1 of 2，在底部的“1 of 2”。
+28. Payment due date: 15.07.2022，在Payment due date列。
+29. Pos.: 40，在Pos.列。
+30. Product name: 整个产品描述，包括NXPO2615...等。
+31. Quantity: 1，在Quantity列。
+32. Shipping date: 13.05.2022，在Shipping date列。
+33. Tel: +99-916-63876958，底部的Tel。
+34. Terms of payment: From 16-15 Next month +60 days，在Terms of payment列。
+35. Unit: PC，在Unit列。
+36. Unit price: 16,307.41，在Unit price列。
+37. VAT number: 913205947558549609，在VAT number列。
+
+现在需要为每个类别找到对应的bbox。由于图中的元素位置，需要大致确定每个区域。
+
+例如：
+
+- Invoice number: 位置在Invoice number标签右边，值是6100001236，bbox是包含这个数字的区域，大概在发票上方偏左。
+- Internal number: 在Invoice number下面，是96615725。
+- Date: 在Invoice number右边，是13.05.2022。
+- Danfoss order no: 在Contact person的Information列，值是1605091926。
+- Cust. order no.: 同一Information列，值是4503119863。
+- Order date: 右边列，值是30.12.2021。
+- Payment due date: 右边列，值是15.07.2022。
+- Currency: 右边列，CNY。
+- Terms of payment: Information列，From 16-15 Next month +60 days。
+- Shipping date: 右边列，13.05.2022。
+- Delivery date: 右边列，16.05.2022。
+- Cust. agreement: 可能没有在列表中，但用户需要的是指定的类别，所以不考虑。
+- Customer VAT no: Information列，K2-0066153-2。
+- Incoterms: Information列，FCA HAIYAN。
+- Shipping by: 可能没有，用户需要的是Delivery note no.是2003144037，在Orig. doc. ref.右边。
+- Delivery note no.: 2003144037。
+- General conditions of sale: 在Your reference部分的Forwarding agent右边，有General conditions of sale: http://...。
+- Contact person的Contact是SG Cust. Service(CSC)，Direct tel.是+3765157356，E-mail是samuelramos@washington.com。
+- Sales representative的Contact是SG Cust. Service(CSC)，Direct tel.是+3766135575，E-mail是ernest05@jones-marshall.com。
+- Your reference的Contact是Larry Shaw，Direct tel.是6436553505，Direct fax是Easy Power Technology Co., Ltd.？不，Your reference的Direct fax可能没有，看表格里的Your reference部分，Contact是Larry Shaw，Direct tel.是6436553505，Direct fax是（可能空），E-mail是（可能空）。
+- Company name: 底部的Easy Power Technology Co., Ltd.，还有顶部的Invoice address和Customer address的公司名，比如Invoice address的Company name是Easy Power Technology Co., Ltd.。
+- Address: Delivery address的地址，即33 GUL CIRCLE...。
+- ATTN: Delivery address的ATTN : Meghan Schaefer。
+- A Slot: Product name中的A Slot: A6, Basic IO for KCI。
+- B Slot: Product name中的B Slot: A3, IRO(NO/NC), 1RO(NO/NC), therm。
+- C Slot: Product name中的C Slot: No board。
+- D Slot: Product name中的D Slot: B9, 1RO(NO), 5pcs of 41-240VAC。
+- Pos.: 40（在Invoice details的Pos.列）。
+- Quantity: 1（Quantity列）。
+- Unit: PC（Unit列）。
+- Product name: 整个产品描述，从132X0776开始到Manual: English。
+- Unit price: 16,307.41（Unit price列）。
+- Net price: 16,307.41（Net price列）。
+- Page number: 1 of 2（底部右侧）。
+- Tel: 底部的Tel: +99-916-63876958。
+- Fax: 底部的Fax: +06-679-18568003。
+- VAT number: 底部的VAT number: 913205947558549609。
+- Direct tel.（比如Contact person的）：+3765157356，对应位置。
+- E-mail（Contact person的）：samuelramos@washington.com。
+- Internal number: 96615725。
+- Invoice number: 6100001236。
+- Date: 13.05.2022。
+- Delivery date: 16.05.2022。
+- Delivery note no.: 2003144037。
+- Customer number: E700。
+- Customer VAT no: K2-0066153-2。
+- Cust. order no.: 4503119863。
+- Danfoss order no: 1605091926。
+- Order date: 30.12.2021。
+- Payment due date: 15.07.2022。
+- Currency: CNY。
+- Terms of payment: From 16-15 Next month +60 days。
+- Shipping date: 13.05.2022。
+- Shipping by: 可能没有在列表中，用户没要求。
+- General conditions of sale: http://salesconditions.uk.danfoss.cn。
+- Incoterms: FCA HAIYAN。
+- Manual: English。
+- Quantity: 1。
+- Pos.: 40。
+- Unit: PC。
+- Unit price: 16,307.41。
+- Net price: 16,307.41。
+- Page number: 1 of 2。
+- Tel: +99-916-63876958。
+- Fax: +06-679-18568003。
+- VAT number: 913205947558549609。
+- Company name: Easy Power Technology Co., Ltd.（多个位置，比如底部）。
+- Address: 33 GUL CIRCLE, JURONG SINGAPORE 629570 SINGAPORE。
+- ATTN: Meghan Schaefer。
+- A Slot: A6, Basic IO for KCI。
+- B Slot: A3, IRO(NO/NC), 1RO(NO/NC), therm。
+- C Slot: No board。
+- D Slot: B9, 1RO(NO), 5pcs of 41-240VAC。
+- Contact: 比如Larry Shaw（Your reference的Contact）。
+- Direct tel.: 6436553505（Your reference的Direct tel.）。
+- E-mail: 可能没有在Your reference，看其他部分。
+- 现在需要将每个类别对应到一个bbox，可能有些类别在图中的位置需要准确。
+
+由于手动标注每个bbox比较困难，但根据问题要求，需要返回每个检测到的对象的bbox和label。现在需要列出所有要求的类别，并确保每个都有对应的bbox。
+
+现在开始构建JSON数组：
+
+1. A Slot: 找到Product name中的A Slot行，bbox大概在Invoice details的Product name区域，对应文字“A Slot: A6, Basic IO for KCI”。
+2. ATTN: Delivery address的ATTN行，bbox是“ATTN : Meghan Schaefer”。
+3. Address: Delivery address的地址部分，包括33 GUL CIRCLE...。
+4. B Slot: Product name中的B Slot行。
+5. C Slot: Product name中的C Slot行。
+6. Company name: 底部的“Easy Power Technology Co., Ltd.”，bbox是底部公司名。
+7. Contact: Your reference中的“Larry Shaw”，在Your reference的Contact列。
+8. Currency: CNY，在Currency列。
+9. Cust. order no.: 4503119863，在Cust. order no.列。
+10. Customer VAT no: K2-0066153-2，在Customer VAT no.列。
+11. Customer number: E700，在Customer number列

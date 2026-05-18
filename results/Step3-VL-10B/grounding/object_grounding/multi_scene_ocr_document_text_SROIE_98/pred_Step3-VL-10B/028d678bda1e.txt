@@ -1,1 +1,33 @@
-[{"bbox_2d": [210, 106, 788, 130], "label": "company"}, {"bbox_2d": [212, 140, 787, 175], "label": "address"}, {"bbox_2d": [325, 300, 425, 320], "label": "date"}, {"bbox_2d": [21, 580, 979, 610], "label": "total"}]
+Got it, let's extract the required information from the tax invoice.
+
+First, identify the company. The top of the invoice has "EVERGREEN LIGHT SDN BHD" which is the company name.
+
+Next, the address. The address lines are: NO.7-1, JALAN PUTERI 7/11, BANDAR FUTERI, 47100 PUCHONG, BELANGOR. Let's check the bounding box for that.
+
+Then, the date. The invoice has "18/09/2017" which is the date.
+
+Total: The total amount is "26.00" under "Total Incl GST".
+
+Now, let's map each category with their bounding boxes.
+
+Company: The text "EVERGREEN LIGHT SDN BHD" is at the top. Let's find its coordinates.
+
+Address: The address block includes the lines from NO.7-1 to 47100 PUCHONG, BELANGOR.
+
+Date: The date is "18/09/2017" which is in the line with EDDIE, #01-01, etc.
+
+Total: The "Total Incl GST" is RM 26.00, so the total value is 26.00.
+
+Let's check each element's position.
+
+For company: The text is centered at the top. Bounding box would cover that line.
+
+Address: The address lines are below the company name, including the phone and fax, but the main address is NO.7-1... Let's check the lines.
+
+Date: The date is 18/09/2017, which is in the header section of the invoice details.
+
+Total: The total amount is clearly marked as "Total Incl GST" with RM 26.00.
+
+Now, let's structure each entry.
+</think>
+[{"bbox_2d": [214, 20, 785, 38], "label": "company"}, {"bbox_2d": [234, 24, 765, 100], "label": "address"}, {"bbox_2d": [325, 325, 427, 344], "label": "date"}, {"bbox_2d": [334, 692, 979, 717], "label": "total"}]

@@ -1,143 +1,185 @@
-用户现在需要检测图像中的各个指定对象，先逐个看。首先标题是Rainbow Online Hotel和INFORMATION INVOICE结账单，所以标题要找。然后Name/宾客姓名是陆桂英。Arrival Time/到店时间是2020/9/6 22:30:57。Bill No./账单号是B80001200000100185。Credit/付款看表格里的Credit列，比如-200.00。Date/日期是表格里的日期列，比如2020/9/6等。Debit/消费是表格里的Debit列，比如572.00、372.00。Departure Time/离店时间是2020/9/7 12:00:00。Description/项目是表格里的项目，比如Alipay QR Code等。Operator/操作员是ZHAOHONGLI NO01。Print Time/打印时间是2020/9/7 9:14:55。Res.No./预订单号是R04021000714000801。Room No./房间号码是8817，Room No/房号也是8817（可能重复？看表格里的Room No/房号列）。公司名这里Company/公司，但图像中公司名可能没有填写？看图像里Company/公司那栏，可能没有内容？不过先检查每个类别。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个看每个类别，找到对应的区域。
 
-现在逐个处理：
+首先看标题，标题是“Rainbow Online Hotel”和“INFORMATION INVOICE 结账单”。然后逐个处理每个标签：
 
-1. 标题：Rainbow Online Hotel和INFORMATION INVOICE 结账单。看图像顶部，Rainbow Online Hotel是标题，INFORMATION INVOICE也是标题部分。所以标题的bbox要覆盖这两个。
+1. Arrival Time/到店时间：对应值是2020/9/6 22:30:57，看发票里的Arrival Time那行。
+2. Bill No./账单号：B80001200000100185，对应Bill No.那行。
+3. Credit/付款：看表格里的Credit列，有-200.00等，不过要找对应的项目。比如2020/9/7的Alipay QR Code的Credit是-200.00。
+4. Date/日期：表格里的Date列，比如2020/9/6等。
+5. Debit/消费：比如572.00、372.00这些。
+6. Departure Time/离店时间：2020/9/7 12:00:00。
+7. Description/项目：比如Alipay QR Code/支付宝扫码（线下）、Room Charge/房费等。
+8. Name/宾客姓名：陆桂英。
+9. Operator/操作员：ZHAOHONGLI NO01。
+10. Print Time/打印时间：2020/9/7 9:14:55。
+11. Res.No./预订单号：R04021000714000801。
+12. Room No./房间号码：8817。
+13. Room No/房号：表格里的Room No/房号列，比如8817。
+14. 公司名：发票里Company/公司那行，可能没有内容？看图片里Company/公司后面是空的？需要检查。
+15. 标题：Rainbow Online Hotel 和 INFORMATION INVOICE 结账单，所以标题是这两个部分。
 
-2. Name/宾客姓名：对应“Name/宾客姓名”行，值是陆桂英。看图像中“Name/宾客姓名”标签和内容。
+现在需要为每个类别找到对应的bbox。需要看每个标签在发票中的位置。
 
-3. Arrival Time/到店时间：Arrival Time/到店时间 对应的值是2020/9/6 22:30:57。
+先列每个标签：
 
-4. Bill No./账单号：Bill No./账单号 对应B80001200000100185。
+- 标题：包含“Rainbow Online Hotel”和“INFORMATION INVOICE 结账单”。看发票上方，Rainbow Online Hotel是标题，然后INFORMATION INVOICE 结账单也是标题部分。所以标题的bbox是包含这两个的区域。比如“Rainbow Online Hotel”在上方，然后下面的INFORMATION INVOICE 结账单。所以标题的bbox可以是整体的标题区域，比如x从大概330到660左右（因为是居中的大标题）。
 
-5. Credit/付款：表格中的Credit列，比如2020/9/7那行的-200.00，还有可能其他？看表格里的Credit列，有-200.00。
+然后逐个处理：
 
-6. Date/日期：表格中的Date列，比如2020/9/6、2020/9/6、2020/9/7。
+1. Name/宾客姓名：标签是“Name/宾客姓名”，值是陆桂英。看发票中“Name/宾客姓名”对应的内容，位置在左侧，值是陆桂英。bbox是包含“Name/宾客姓名”和“陆桂英”的区域。
 
-7. Debit/消费：表格中的Debit列，比如572.00、372.00。
+2. Room No./房间号码：标签是“om No./房间号码”（可能原文是Room No./房间号码，看图片里的“om No./房间号码”前面应该是Room No.，可能OCR错误，图片中是“om No./房间号码”对应8817。所以Room No./房间号码的值是8817，标签是Room No./房间号码。
 
-8. Departure Time/离店时间：2020/9/7 12:00:00。
+3. Arrival Time/到店时间：标签是“Arrival Time/到店时间”，值是2020/9/6 22:30:57。看图片中“Arrival Time/到店时间”对应的内容。
 
-9. Description/项目：表格中的Description列，比如Alipay QR Code/支付宝扫码（线下）、Room Charge/房费、Alipay QR Code/支付宝扫码（线下）。
+4. Departure Time/离店时间：标签是“Departure Time/离店时间”，值是2020/9/7 12:00:00。
 
-10. Operator/操作员：ZHAOHONGLI NO01。
+5. CRS No./中央预订号：可能用户没列，但用户需要的是指定的类别，所以看用户给的类别列表。
 
-11. Print Time/打印时间：2020/9/7 9:14:55。
+现在用户需要的类别是：Arrival Time/到店时间, Bill No./账单号, Credit/付款, Date/日期, Debit/消费, Departure Time/离店时间, Description/项目, Name/宾客姓名, Operator/操作员, Print Time/打印时间, Res.No./预订单号, Room No./房间号码, Room No/房号, 公司名, 标题。
 
-12. Res.No./预订单号：R04021000714000801。
+现在逐个找每个类别的bbox和label：
 
-13. Room No./房间号码：8817（看“Room No./房间号码”行的值）。
+- 标题：包含“Rainbow Online Hotel”和“INFORMATION INVOICE 结账单”。看图片中上方的“Rainbow Online Hotel”和下面的“INFORMATION INVOICE 结账单”。所以标题的bbox是这两个文字的区域。比如“Rainbow Online Hotel”的bbox是[345, 60, 654, 90]左右（因为是居中的大标题），然后“INFORMATION INVOICE 结账单”是[425, 125, 574, 155]左右。所以标题可以合并这两个，或者分别？但用户要的是“标题”这个类别，所以整体标题的区域。
 
-14. Room No/房号：表格中的Room No/房号列，值是8817（三行都是8817）。
+- Name/宾客姓名：标签是“Name/宾客姓名”，值是陆桂英。在发票中，左侧“Name/宾客姓名”对应的内容，位置大概是左侧，文字是“Name/宾客姓名”和“陆桂英”。所以bbox是包含这两个的区域，比如x从20到150左右，y对应位置。
 
-15. 公司名：Company/公司，图像中Company/公司那栏可能没有内容？看图像里“Company/公司”后面是否有内容，图像中可能没有填写，所以可能没有检测到？但需要看是否有。图像中“Company/公司”这一行，后面可能空白，所以公司名可能不存在？但用户要求检测所有匹配的，如果没有的话可能不包含。但先看图像中的Company/公司，是否有内容？看原图，Company/公司 右边可能没有文字，所以公司名可能没有，或者可能我漏看了？再检查图像：图像中“Company/公司”这一行，后面没有内容，所以公司名可能没有，或者可能用户提供的类别中的“公司名”是否对应？可能需要确认。另外标题是Rainbow Online Hotel和INFORMATION INVOICE，所以标题的bbox要包含这两个。
+- Room No./房间号码：标签是“om No./房间号码”（图片中是“om No./房间号码”，前面可能缺了R，即Room No.），值是8817。所以Room No./房间号码的标签对应这个，bbox是包含“om No./房间号码”和“8817”的区域。
 
-现在开始整理每个对象的bbox和label：
+- Arrival Time/到店时间：标签是“Arrival Time/到店时间”，值是2020/9/6 22:30:57。对应图片中的“Arrival Time/到店时间”和时间值。
 
-首先标题：Rainbow Online Hotel 是标题，INFORMATION INVOICE 结账单也是标题。看图像顶部，“Rainbow Online Hotel”在上方，然后“INFORMATION INVOICE”下面是“结账单”。所以标题的bbox可以是包含这两个的区域。比如“Rainbow Online Hotel”的位置，和“INFORMATION INVOICE 结账单”的位置。
+- Departure Time/离店时间：标签是“Departure Time/离店时间”，值是2020/9/7 12:00:00。
 
-然后Name/宾客姓名：标签是“Name/宾客姓名”，内容是“陆桂英”。看图像中“Name/宾客姓名”这一行，标签和内容的位置。
+- Bill No./账单号：标签是“Bill No./账单号”，值是B80001200000100185。
 
-Arrival Time/到店时间：标签“Arrival Time/到店时间”，内容“2020/9/6 22:30:57”。
+- Res.No./预订单号：标签是“Res.No./预订单号”，值是R04021000714000801。
 
-Bill No./账单号：标签“Bill No./账单号”，内容“B80001200000100185”。
+- Operator/操作员：标签是“Operator/操作员”，值是ZHAOHONGLI NO01。
 
-Credit/付款：表格中的“Credit/付款”列，比如第三行（2020/9/7）的-200.00，还有可能其他？看表格里的Credit列，有-200.00，另外其他行可能没有Credit值（比如第一行Alipay QR Code的Credit是空？看表格结构：Date、Description、Reference、Room No/房号、Debit、Credit。第一行2020/9/6 Alipay QR Code，Debit是空？不，看图像中的表格：
+- Print Time/打印时间：标签是“Print Time/打印时间”，值是2020/9/7 9:14:55。
 
-第一行（2020/9/6）：Description是Alipay QR Code/支付宝扫码（线下），Reference是空？Room No/房号是8817，Debit是572.00，Credit是空？
+- Date/日期：在表格中的Date列，比如2020/9/6等，对应标签是Date/日期，每个日期行的Date值。
 
-第二行（2020/9/6）：Description是Room Charge/房费，Reference是8817？不，看图像中的表格列：Date/日期，Description/项目，Reference/备注，Room No/房号，Debit/消费，Credit/付款。
+- Description/项目：表格中的Description/项目列，比如Alipay QR Code/支付宝扫码（线下）、Room Charge/房费等。
 
-看图像中的表格内容：
+- Debit/消费：表格中的Debit/消费列，比如572.00、372.00等。
 
-第一行（2020/9/6）：Description是Alipay QR Code/支付宝扫码（线下），Reference/备注是空？Room No/房号是8817，Debit/消费是572.00，Credit/付款是空？
+- Credit/付款：表格中的Credit/付款列，比如-200.00等。
 
-第二行（2020/9/6）：Description是Room Charge/房费，Reference/备注是8817？不，看图像中的第二行：Room Charge/房费，Room No/房号是8817，Debit是372.00，Credit是空？
+- Room No/房号：表格中的Room No/房号列，比如8817（每个项目对应的房号）。
 
-第三行（2020/9/7）：Description是Alipay QR Code/支付宝扫码（线下），Room No/房号是8817，Debit是空？Credit是-200.00？
+- 公司名：Company/公司，图片中Company/公司后面没有内容，所以可能值为空，但需要看是否有内容。图片中Company/公司那行，后面是空的，所以公司名的值是空，但标签是公司名，需要找对应的区域。
 
-然后总Debit是372.00？不，图像中总Debit是¥372.00？看图像底部“¥372.00”是总消费？可能表格中的Debit是各项消费，Credit是付款。比如第一行Debit 572.00，第二行Debit 372.00，第三行Credit -200.00，总Debit是572+372=944，减去200是744？但图像中显示“¥372.00”可能是总房费？可能我理解错了，但不管怎样，Credit/付款列中的值是-200.00，所以要检测Credit/付款这个类别，对应表格中的Credit列。
+现在需要为每个类别生成一个条目，包含bbox和label。需要确定每个类别的位置。
 
-现在逐个列出：
+现在开始逐个处理：
 
-1. 标题：Rainbow Online Hotel 和 INFORMATION INVOICE 结账单。看图像中“Rainbow Online Hotel”是标题，下面“INFORMATION INVOICE”和“结账单”也是标题部分。所以标题的bbox可以是包含这两个的区域。比如“Rainbow Online Hotel”的位置大约在图像上方中间，文字是Rainbow Online Hotel。然后“INFORMATION INVOICE”在下面，中文“结账单”在下面。所以标题的bbox可以是这两个部分的组合。
+1. 标题：
+   - 包含“Rainbow Online Hotel”和“INFORMATION INVOICE 结账单”。
+   - “Rainbow Online Hotel”的bbox：看图片上方，文字是Rainbow Online Hotel，位置在页面上方居中。假设坐标是x1=340, y1=65, x2=655, y2=85。
+   - “INFORMATION INVOICE 结账单”在下面，x1=420, y1=120, x2=575, y2=145。
+   - 所以标题的bbox可以是合并这两个，或者分别？但用户要的是“标题”这个类别，所以可以取这两个的主要部分，比如整体标题区域是[330, 55, 665, 150]（包含两个标题）。
 
-2. Name/宾客姓名：标签“Name/宾客姓名”和内容“陆桂英”。看图像中“Name/宾客姓名”在左侧，内容是陆桂英。bbox需要覆盖标签和内容。
+2. Name/宾客姓名：
+   - 标签是“Name/宾客姓名”，值是“陆桂英”。
+   - 在发票中，左侧“Name/宾客姓名”对应的内容，位置大概是左侧，文字“Name/宾客姓名”和“陆桂英”。看图片中“Name/宾客姓名”在左侧，对应值是陆桂英。bbox：x1=25, y1=200, x2=200, y2=230（假设，需要看实际位置，图片中“Name/宾客姓名”是左侧的标签，值在右边）。
 
-3. Arrival Time/到店时间：标签“Arrival Time/到店时间”和内容“2020/9/6 22:30:57”。
+3. Room No./房间号码：
+   - 标签是“om No./房间号码”（实际是Room No.，可能OCR错误），值是8817。
+   - 对应图片中的“om No./房间号码”和“8817”。bbox：x1=100, y1=250, x2=300, y2=280（包含标签和值）。
 
-4. Bill No./账单号：标签“Bill No./账单号”和内容“B80001200000100185”。
+4. Arrival Time/到店时间：
+   - 标签是“Arrival Time/到店时间”，值是2020/9/6 22:30:57。
+   - 对应图片中的“Arrival Time/到店时间”和时间。bbox：x1=100, y1=280, x2=350, y2=310。
 
-5. Credit/付款：表格中的“Credit/付款”列，比如第三行的-200.00。需要找到Credit列的标题和对应的值？或者只要检测到该类别存在，比如列标题“Credit/付款”是存在的，或者该列中的值。用户要求检测所有匹配的objects，可能是指每个类别对应的内容，比如列标题或者该列中的数据。但根据问题描述，“Detect all objects matching these categories”，可能是指每个类别对应的一个对象，比如标签和内容。但可能更简单的是，每个类别在文档中的出现，比如标签“Credit/付款”是列标题，或者该列中的数值。但可能需要看图像中的列标题“Credit/付款”是存在的，所以检测列标题。
+5. Departure Time/离店时间：
+   - 标签是“Departure Time/离店时间”，值是2020/9/7 12:00:00。
+   - 对应图片中的“Departure Time/离店时间”和时间。bbox：x1=100, y1=310, x2=350, y2=340。
 
-6. Date/日期：列标题“Date/日期”以及该列中的日期值，比如2020/9/6等。但可能检测列标题“Date/日期”。
+6. Bill No./账单号：
+   - 标签是“Bill No./账单号”，值是B80001200000100185。
+   - 对应图片中的“Bill No./账单号”和账单号。bbox：x1=400, y1=250, x2=650, y2=280。
 
-7. Debit/消费：列标题“Debit/消费”以及该列中的数值，比如572.00等。
+7. Res.No./预订单号：
+   - 标签是“Res.No./预订单号”，值是R04021000714000801。
+   - 对应图片中的“Res.No./预订单号”和号码。bbox：x1=400, y1=200, x2=650, y2=230。
 
-8. Departure Time/离店时间：标签“Departure Time/离店时间”和内容“2020/9/7 12:00:00”。
+8. Operator/操作员：
+   - 标签是“Operator/操作员”，值是ZHAOHONGLI NO01。
+   - 对应图片中的“Operator/操作员”和操作员。bbox：x1=400, y1=340, x2=650, y2=370。
 
-9. Description/项目：列标题“Description/项目”以及该列中的项目描述，比如Alipay QR Code等。
+9. Print Time/打印时间：
+   - 标签是“Print Time/打印时间”，值是2020/9/7 9:14:55。
+   - 对应图片中的“Print Time/打印时间”和时间。bbox：x1=400, y1=370, x2=650, y2=400。
 
-10. Operator/操作员：标签“Operator/操作员”和内容“ZHAOHONGLI NO01”。
+10. Date/日期：
+    - 表格中的Date列，比如2020/9/6等。每个日期行的Date值。比如第一行Date是2020/9/6，对应标签Date/日期。bbox：x1=50, y1=450, x2=150, y2=480（包含Date列的表头和内容）。
 
-11. Print Time/打印时间：标签“Print Time/打印时间”和内容“2020/9/7 9:14:55”。
+11. Description/项目：
+    - 表格中的Description/项目列，比如Alipay QR Code/支付宝扫码（线下）。bbox：x1=150, y1=450, x2=350, y2=480（表头和内容）。
 
-12. Res.No./预订单号：标签“Res.No./预订单号”和内容“R04021000714000801”。
+12. Debit/消费：
+    - 表格中的Debit/消费列，比如572.00。bbox：x1=400, y1=450, x2=550, y2=480（表头和内容）。
 
-13. Room No./房间号码：标签“Room No./房间号码”和内容“8817”。
+13. Credit/付款：
+    - 表格中的Credit/付款列，比如-200.00。bbox：x1=600, y1=450, x2=750, y2=480（表头和内容）。
 
-14. Room No/房号：列标题“Room No/房号”以及该列中的房号（8817）。
+14. Room No/房号：
+    - 表格中的Room No/房号列，比如8817。bbox：x1=350, y1=450, x2=450, y2=480（表头和内容）。
 
-15. 公司名：标签“Company/公司”以及可能的内容，但图像中Company/公司后面没有内容，所以可能没有，或者如果存在的话。看图像中“Company/公司”这一行，是否有内容？图像中“Company/公司”在左侧，右边可能空白，所以公司名可能没有，或者可能用户提供的类别中的“公司名”是否对应？可能需要确认，但如果没有内容，可能不检测。但再看图像，可能“Company/公司”是存在的标签，所以检测标签“Company/公司”作为公司名的类别。
+15. 公司名：
+    - Company/公司，对应图片中的“Company/公司”行，后面没有内容。bbox：x1=50, y1=300, x2=200, y2=330（包含Company/公司标签）。
 
-现在开始为每个类别确定bbox：
+现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
 
-- 标题：Rainbow Online Hotel 的位置，文字是“Rainbow Online Hotel”，在图像上方。然后“INFORMATION INVOICE”和“结账单”在下面。所以标题的bbox可以是包含这两个的区域。比如“Rainbow Online Hotel”的bbox是[385, 50, 614, 80]左右（假设图像坐标，需要看实际位置）。然后“INFORMATION INVOICE”是[385, 100, 614, 130]，“结账单”是[445, 135, 554, 160]。所以标题可以合并为这两个部分，或者分别？但可能“Rainbow Online Hotel”是主标题，“INFORMATION INVOICE 结账单”是副标题，所以标题类别包含这两个。
+需要注意的是，有些类别可能在发票中没有对应内容（比如公司名可能为空，但标签存在），但需要尽量找到。
 
-- Name/宾客姓名：标签“Name/宾客姓名”在左侧，内容“陆桂英”。看图像中“Name/宾客姓名”是“Name/宾客姓名”，对应内容是“陆桂英”。bbox：标签的位置和内容的位置，比如标签在左侧，内容在右侧。假设标签的x范围是20-150，y是150-180，内容是160-250，y同。所以bbox可以是包含标签和内容的区域，比如[25, 200, 200, 230]（标签）和[220, 200, 300, 230]（内容），但需要看实际图像。可能更简单的是，找到“Name/宾客姓名”这一行的整个区域，包括标签和内容。
+现在开始构建每个条目：
 
-- Arrival Time/到店时间：标签“Arrival Time/到店时间”和内容“2020/9/6 22:30:57”。标签在左侧，内容在右侧。比如标签是“Arrival Time/到店时间”，内容是“2020/9/6 22:30:57”。bbox覆盖这两部分。
+1. 标题：
+   - bbox：包含“Rainbow Online Hotel”和“INFORMATION INVOICE 结账单”。假设“Rainbow Online Hotel”的位置是x1=342, y1=62, x2=656, y2=88；“INFORMATION INVOICE 结账单”是x1=423, y1=122, x2=576, y2=148。合并的话，取一个大的bbox，比如x1=330, y1=55, x2=665, y2=150。
+   - label：标题
 
-- Bill No./账单号：标签“Bill No./账单号”和内容“B80001200000100185”。
+2. Name/宾客姓名：
+   - bbox：x1=28, y1=205, x2=205, y2=232（包含标签和值“陆桂英”）
+   - label：Name/宾客姓名
 
-- Credit/付款：列标题“Credit/付款”在表格的表头，以及该列中的数值（比如-200.00）。表头的“Credit/付款”是列标题，所以检测列标题的bbox。
+3. Room No./房间号码：
+   - bbox：x1=105, y1=255, x2=305, y2=282（包含“om No./房间号码”和“8817”）
+   - label：Room No./房间号码
 
-- Date/日期：列标题“Date/日期”在表格表头。
+4. Arrival Time/到店时间：
+   - bbox：x1=105, y1=285, x2=355, y2=312（包含标签和时间“2020/9/6 22:30:57”）
+   - label：Arrival Time/到店时间
 
-- Debit/消费：列标题“Debit/消费”在表格表头，以及该列中的数值（572.00, 372.00等）。
+5. Departure Time/离店时间：
+   - bbox：x1=105, y1=315, x2=355, y2=342（包含标签和时间“2020/9/7 12:00:00”）
+   - label：Departure Time/离店时间
 
-- Departure Time/离店时间：标签“Departure Time/离店时间”和内容“2020/9/7 12:00:00”。
+6. Bill No./账单号：
+   - bbox：x1=405, y1=255, x2=655, y2=282（包含“Bill No./账单号”和“B80001200000100185”）
+   - label：Bill No./账单号
 
-- Description/项目：列标题“Description/项目”在表格表头，以及该列中的项目描述（Alipay QR Code等）。
+7. Res.No./预订单号：
+   - bbox：x1=405, y1=205, x2=655, y2=232（包含“Res.No./预订单号”和“R04021000714000801”）
+   - label：Res.No./预订单号
 
-- Operator/操作员：标签“Operator/操作员”和内容“ZHAOHONGLI NO01”。
+8. Operator/操作员：
+   - bbox：x1=405, y1=345, x2=655, y2=372（包含“Operator/操作员”和“ZHAOHONGLI NO01”）
+   - label：Operator/操作员
 
-- Print Time/打印时间：标签“Print Time/打印时间”和内容“2020/9/7 9:14:55”。
+9. Print Time/打印时间：
+   - bbox：x1=405, y1=375, x2=655, y2=402（包含“Print Time/打印时间”和“2020/9/7 9:14:55”）
+   - label：Print Time/打印时间
 
-- Res.No./预订单号：标签“Res.No./预订单号”和内容“R04021000714000801”。
+10. Date/日期：
+    - bbox：x1=55, y1=455, x2=155, y2=482（包含Date列的表头和内容，比如2020/9/6等）
+    - label：Date/日期
 
-- Room No./房间号码：标签“Room No./房间号码”和内容“8817”。
+11. Description/项目：
+    - bbox：x1=155, y1=455, x2=355, y2=482（包含Description/项目列的表头和内容，比如Alipay QR Code...）
+    - label：Description/项目
 
-- Room No/房号：列标题“Room No/房号”在表格表头，以及该列中的房号（8817）。
-
-- 公司名：标签“Company/公司”在左侧，可能没有内容，但标签存在，所以检测标签“Company/公司”作为公司名的类别。
-
-现在需要为每个类别生成一个条目，每个条目是bbox和label。需要注意的是，有些类别可能在图像中是列标题，有些是标签和内容。但根据问题要求，“Detect all objects matching these categories”，可能每个类别对应一个对象，比如列标题或者该类别下的内容。但可能更准确的是，每个类别在文档中出现的元素，比如标签、列标题、数值等。但可能用户希望的是每个类别对应一个实例，比如：
-
-例如，标题是“Rainbow Online Hotel”和“INFORMATION INVOICE 结账单”，所以两个标题？或者合并。但可能“Rainbow Online Hotel”是标题，下面的“INFORMATION INVOICE”和“结账单”也是标题的一部分，所以一个标题对象。
-
-现在开始逐一处理，假设图像中的坐标（因为是图片，需要估计，但根据常规布局）：
-
-1. 标题（Rainbow Online Hotel）：位于图像上方，文字是Rainbow Online Hotel。bbox大约是[380, 55, 619, 85]。
-
-2. 标题（INFORMATION INVOICE 结账单）：位于Rainbow Online Hotel下方，文字是INFORMATION INVOICE和结账单。bbox大约是[385, 105, 614, 140]（包含英文和中文）。
-
-但可能合并为一个标题对象，因为是同一标题。或者分开？可能“Rainbow Online Hotel”是酒店名称，作为标题；“INFORMATION INVOICE 结账单”是文档类型标题。所以两个标题？但用户要求“标题”类别，可能包含这两个。
-
-3. Name/宾客姓名：标签“Name/宾客姓名”和内容“陆桂英”。标签在左侧，内容在右侧。bbox：标签的x范围约20-150，y约200-230；内容x约220-300，y同。所以整体bbox可以是[20, 195, 320, 235]（包含标签和内容）。
-
-4. Arrival Time/到店时间：标签“Arrival Time/到店时间”和内容“2020/9/6 22:30:57”。标签在左侧，内容在右侧。bbox：[20, 240, 320, 275]。
-
-5. Bill No./账单号：标签“Bill No./账单号”和内容“B80001200000100185”。bbox：[20, 275, 320, 310]。
-
-6. Credit/付款：
+12. Debit/消费：
+    - bbox：x1=405, y1=455, x2=555, y2=482（包含Debit/消费列的表头和内容，比如572.00等）
+    - label：

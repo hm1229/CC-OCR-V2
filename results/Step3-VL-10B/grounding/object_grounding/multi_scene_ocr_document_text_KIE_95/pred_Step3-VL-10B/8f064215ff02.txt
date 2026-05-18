@@ -1,9 +1,31 @@
-[
-    {"bbox_2d": [234, 232, 364, 247], "label": "date"},
-    {"bbox_2d": [150, 477, 337, 492], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [234, 249, 540, 270], "label": "seller_address"},
-    {"bbox_2d": [234, 260, 296, 273], "label": "seller_gst_id"},
-    {"bbox_2d": [234, 217, 540, 232], "label": "seller_name"},
-    {"bbox_2d": [337, 317, 437, 332], "label": "total_amount"},
-    {"bbox_2d": [400, 332, 462, 347], "label": "total_tax"}
-]
+Got it, let's extract each required field from the invoice.
+
+First, date: The invoice has "21 Mar 2018 17:59". Let's find that line.
+
+doc_no_receipt_no: Invoice # is OR18032102170360. Check the line "Invoice #: OR18032102170360".
+
+seller_address: The address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor (867388U)". Let's confirm the lines.
+
+seller_gst_id: Looking for GST reg. There's "GST REG #000658195584". That's the GST ID.
+
+seller_name: The top says "UNIHAKKA INTERNATIONAL SDN BHD".
+
+total_amount: The total amount is $8.70, as per "Total Amount: $8.70".
+
+total_tax: GST @6% is $0.49, so total tax is $0.49.
+
+Now, map each to their bounding boxes.
+
+Let's check each element:
+
+1. date: "21 Mar 2018 17:59" – located below the company name.
+2. doc_no_receipt_no: "Invoice #: OR18032102170360" – the invoice number line.
+3. seller_address: The address lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi, 81200 Johor Bahru, Johor (867388U)".
+4. seller_gst_id: "GST REG #000658195584" – in the GST Summary section.
+5. seller_name: "UNIHAKKA INTERNATIONAL SDN BHD" – top of the invoice.
+6. total_amount: "Total Amount: $8.70" – in the payment section.
+7. total_tax: "GST @6%: $0.49" – the tax amount.
+
+Now, create the JSON array with each entry's bbox and label.
+</think>
+[{"bbox_2d": [234, 232, 364, 247], "label": "date"}, {"bbox_2d": [144, 294, 332, 309], "label": "doc_no_receipt_no"}, {"bbox_2d": [234, 249, 540, 270], "label": "seller_address"}, {"bbox_2d": [305, 320, 357, 332], "label": "seller_gst_id"}, {"bbox_2d": [325, 247, 540, 262], "label": "seller_name"}, {"bbox_2d": [425, 317, 538, 332], "label": "total_amount"}, {"bbox_2d": [538, 317, 584, 332], "label": "total_tax"}]

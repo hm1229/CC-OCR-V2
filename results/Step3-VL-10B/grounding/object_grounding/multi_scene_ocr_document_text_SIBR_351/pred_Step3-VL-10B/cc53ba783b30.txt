@@ -1,236 +1,159 @@
-用户现在需要检测图像中的各个指定对象，先逐个分析。首先看每个类别对应的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个需要的类别，找到它们在图中的位置。
 
-首先，Company Name是顶部的“创亿信息有限公司 Chuangyi Information Co., Ltd.”。然后ADD是TO下面的“ADD: 01507 Rebecca Island Davidfort, WV 15824”里的ADD。Add在底部有“Add: 2094 Maria Squares Apt. 304 West Kelseymouth, NJ 86706”。Fax是底部的Fax: 4361-00-12068593。Invoice Date是右上角的Invoice Date: Nov.11th, 2021。Invoice No是Invoice No.: RBOSK-2021-030。PACKAGE是表格里的PACKAGE列。PRODUCT NAME是表格的PRODUCT NAME列。TOTAL AMOUNT是表格里的TOTAL AMOUNT列，还有下面的Total Amount: Say Total...。Tel是底部的Tel: 1091-10-62334228。Title是COMMERCIAL INVOICE。Total Amount可能有两个？不，看用户给的类别里有Total Amount和Total Amount（可能重复？不看用户给的列表，用户给的类别里有Total Amount和Total Amount？不，用户给的类别是：1.Terms of Payment, 2.Time of Shipment, 3.Port of Shipment, 4.Port of Destination, ADD, Add, Company Name, Fax, Invoice Date, Invoice No, PACKAGE, PRODUCT NAME, TOTAL AMOUNT, Tel, Title, Total Amount, UNIT PRICE(US$/KG) (CIF Hamburg by Sea), VOLUME (KG), Web。注意Total Amount出现两次？不，看用户给的列表里有“Total Amount”和“Total Amount”？不，看用户提供的类别列表：
+首先看1.Terms of Payment：图中“1.Terms of Payment: T/T 30 days from B/L date”，所以对应的标签是1.Terms of Payment，内容是T/T 30 days from B/L date。然后找bbox，看这部分的位置。
 
-用户给的类别是：
+2.Time of Shipment：对应“2.Time of Shipment: ASAP”，标签是2.Time of Shipment。
 
-1.Terms of Payment,
+3.Port of Shipment：“3.Port of Shipment: Shanghai / China”，标签3.Port of Shipment。
 
-2.Time of Shipment,
+4.Port of Destination：“4.Port of Destination: Hamburg / Germany”，标签4.Port of Destination。
 
-3.Port of Shipment,
+ADD：图中“ADD: 01507 Rebecca Island Davidfort, WV 15824”，标签ADD。
 
-4.Port of Destination,
+Add：底部的Add是“Add: 2094 Maria Squares Apt. 304 West Kelseymouth, NJ 86706”，标签Add。
 
-ADD,
+Company Name：顶部的“创亿信息有限公司 Chuangyi Information Co., Ltd.”，标签Company Name。
 
-Add,
+Fax：底部的“Fax: 4361-00-12068593”，标签Fax。
 
-Company Name,
+Invoice Date：“Invoice Date: Nov.11th, 2021”，标签Invoice Date。
 
-Fax,
+Invoice No：“Invoice No.: RBOSK-2021-030”，标签Invoice No。
 
-Invoice Date,
+PACKAGE：表格中的PACKAGE列，比如20KG/CARTON等，标签PACKAGE。
 
-Invoice No,
+PRODUCT NAME：表格中的PRODUCT NAME列，比如Photoinitiator 184等，标签PRODUCT NAME。
 
-PACKAGE,
+TOTAL AMOUNT：表格中的TOTAL AMOUNT列，比如US$98,040.00等，还有Total Amount的总和，标签TOTAL AMOUNT。
 
-PRODUCT NAME,
+Tel：底部的“Tel: 1091-10-62334228”，标签Tel。
 
-TOTAL AMOUNT,
+Title：可能是指“COMMERCIAL INVOICE”？不过看用户给的Title，可能图中的标题？不过再看，用户给的Title可能对应“创亿信息有限公司”上方？不，再检查。或者可能Title是“COMMERCIAL INVOICE”？不过看用户提供的类别里有Title，需要找。另外Total Amount（大写）是“Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only”，标签Total Amount（注意用户给的类别里有Total Amount和Total Amount？看用户给的类别里有“Total Amount”和“Total Amount”？不，用户给的类别里是“Total Amount”和“Total Amount”？不，看用户提供的类别列表：Total Amount（可能是指小写总和）和Total Amount（大写？不，用户给的类别里是“Total Amount”和“Total Amount”？不，看用户给的类别：Total Amount（小写）和Total Amount（大写？不，用户给的类别里有“Total Amount”和“Total Amount”？不，看用户提供的类别列表中的“Total Amount”和“Total Amount”？不，用户给的类别是：
 
-Tel,
+Total Amount（小写总和，比如US$125,040.00）和Total Amount（大写，Say Total...）？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户提供的类别列表中的“Total Amount”是其中一个，另一个是“Total Amount”？不，用户给的类别里有“Total Amount”（可能对应表格中的TOTAL AMOUNT列的总和行，即US$125,040.00）和“Total Amount”（大写部分）？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户提供的类别列表中的“Total Amount”是其中一个，另一个是“Total Amount”？可能用户这里的“Total Amount”是指小写的总金额，而大写的是另一个？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户提供的类别列表：
 
-Title,
+用户提供的类别包括：Total Amount（可能对应表格中的TOTAL AMOUNT列的总和，即US$125,040.00），以及“Total Amount”（大写部分，Say Total...）？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户给的类别列表中的“Total Amount”是其中一个，另一个是“Total Amount”？可能我搞错了，再看用户提供的类别：
 
-Total Amount, （这里可能重复？不，看用户给的原文是“Total Amount:”在表格里的TOTAL AMOUNT列，还有下面的“Total Amount: Say Total...”也是Total Amount。但用户给的类别里有“TOTAL AMOUNT”和“Total Amount”？看用户提供的类别列表中的“TOTAL AMOUNT”和“Total Amount”是两个？不，看用户给的列表：
-
-用户提供的类别列表中的项目：
-
-... Total Amount, Tel, Title, Total Amount, ... 这里可能用户输入时的重复？不，看用户给的原始请求中的类别列表：
-
-“1.Terms of Payment, 2.Time of Shipment, 3.Port of Shipment, 4.Port of Destination, ADD, Add, Company Name, Fax, Invoice Date, Invoice No, PACKAGE, PRODUCT NAME, TOTAL AMOUNT, Tel, Title, Total Amount, UNIT PRICE(US$/KG) (CIF Hamburg by Sea), VOLUME (KG), Web.”
-
-哦，这里“Total Amount”出现了两次？不，看“TOTAL AMOUNT”（大写）和“Total Amount”（首字母大写）？可能用户输入时的笔误，但按实际图像中的内容，表格里的“TOTAL AMOUNT”是大写的，下面的“Total Amount:”是首字母大写。但需要看每个类别对应。
-
-现在逐个处理：
-
-1. Terms of Payment：在下方的1. Terms of Payment: T/T 30 days from B/L date → 找到这个标签。
-
-2. Time of Shipment：2. Time of Shipment: ASAP → 标签。
-
-3. Port of Shipment：3. Port of Shipment: Shanghai / China → 标签。
-
-4. Port of Destination：4. Port of Destination: Hamburg / Germany → 标签。
-
-ADD：TO: 下面的ADD: 01507... → 标签是ADD。
-
-Add：底部的Add: 2094... → 标签是Add。
-
-Company Name：顶部的“创亿信息有限公司 Chuangyi Information Co., Ltd.” → 标签是Company Name。
-
-Fax：底部的Fax: 4361-00-12068593 → 标签是Fax。
-
-Invoice Date：右上角的Invoice Date: Nov.11th, 2021 → 标签是Invoice Date。
-
-Invoice No：Invoice No.: RBOSK-2021-030 → 标签是Invoice No。
-
-PACKAGE：表格中的PACKAGE列，比如20KG/CARTON等 → 标签是PACKAGE。
-
-PRODUCT NAME：表格中的PRODUCT NAME列，比如Photoinitiator 184等 → 标签是PRODUCT NAME。
-
-TOTAL AMOUNT：表格中的TOTAL AMOUNT列，比如US$98,040.00等，还有TOTAL行的US$125,040.00 → 标签是TOTAL AMOUNT（注意用户给的类别里有TOTAL AMOUNT）。
-
-Tel：底部的Tel: 1091-10-62334228 → 标签是Tel。
-
-Title：COMMERCIAL INVOICE → 标签是Title。
-
-Total Amount：下面的“Total Amount: Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only” → 这里的Total Amount是另一个，但用户给的类别里有“Total Amount”（可能和TOTAL AMOUNT是同一个？但看用户给的类别里有“TOTAL AMOUNT”和“Total Amount”两个？不，看用户给的类别列表中的“TOTAL AMOUNT”和“Total Amount”是分开的？不，再看用户提供的原始类别列表：
-
-用户提供的类别是：
+用户需要检测的类别列表：
 
 1.Terms of Payment, 2.Time of Shipment, 3.Port of Shipment, 4.Port of Destination, ADD, Add, Company Name, Fax, Invoice Date, Invoice No, PACKAGE, PRODUCT NAME, TOTAL AMOUNT, Tel, Title, Total Amount, UNIT PRICE(US$/KG) (CIF Hamburg by Sea), VOLUME (KG), Web.
 
-哦，这里“TOTAL AMOUNT”和“Total Amount”是两个不同的标签？可能用户输入时的错误，但按图像中的内容，表格里的“TOTAL AMOUNT”是列标题，而下面的“Total Amount:”是总金额的说明。所以需要分别处理。
+注意这里有“Total Amount”和“Total Amount”？不，看用户给的是“Total Amount”（可能是指表格中的TOTAL AMOUNT列的总和，比如US$125,040.00）和“Total Amount”（大写部分，Say Total...）？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户给的类别里是“Total Amount”（小写）和“Total Amount”（大写？不，用户给的类别里是“Total Amount”和“Total Amount”？不，看用户提供的类别中的“Total Amount”是其中一个，另一个是“Total Amount”？可能用户输入时的重复？或者可能“Total Amount”是指表格中的TOTAL AMOUNT列的每个行的总金额，而“Total Amount”（大写）是总的大写。但根据用户提供的类别，需要分别处理。
 
-UNIT PRICE(US$/KG) (CIF Hamburg by Sea)：表格中的UNIT PRICE列 → 标签是这个。
+现在逐个处理：
 
-VOLUME (KG)：表格中的VOLUME (KG)列 → 标签是这个。
+1. 1.Terms of Payment：内容是T/T 30 days from B/L date。在图中“1.Terms of Payment: T/T 30 days from B/L date”这部分。bbox需要确定位置。看这部分在“Total Amount:”下方，左边的文本。坐标大概是从左到右，这部分的行。
 
-Web：底部的Web: http://bryant.com/ → 标签是Web。
+2. 2.Time of Shipment：ASAP，对应“2.Time of Shipment: ASAP”。
 
-现在需要为每个类别找到对应的bbox。
+3. 3.Port of Shipment：Shanghai / China，对应“3.Port of Shipment: Shanghai / China”。
 
-现在开始逐个分析：
+4. 4.Port of Destination：Hamburg / Germany，对应“4.Port of Destination: Hamburg / Germany”。
 
-1. Terms of Payment：在图像中是“1.Terms of Payment: T/T 30 days from B/L date” → 找到这个文本的位置。bbox需要确定。
+5. ADD：ADD: 01507 Rebecca Island Davidfort, WV 15824。在TO:下面。
 
-2. Time of Shipment：“2.Time of Shipment: ASAP” → 位置。
+6. Add：底部的Add: 2094 Maria Squares Apt. 304 West Kelseymouth, NJ 86706。在最底部的地址行。
 
-3. Port of Shipment：“3.Port of Shipment: Shanghai / China” → 位置。
+7. Company Name：创亿信息有限公司 Chuangyi Information Co., Ltd.。在顶部。
 
-4. Port of Destination：“4.Port of Destination: Hamburg / Germany” → 位置。
+8. Fax：Fax: 4361-00-12068593。在底部的联系信息。
 
-5. ADD：“ADD: 01507 Rebecca Island Davidfort, WV 15824” → 位置在TO:下面。
+9. Invoice Date：Invoice Date: Nov.11th, 2021。在Invoice No.的右边。
 
-6. Add：底部的“Add: 2094 Maria Squares Apt. 304 West Kelseymouth, NJ 86706” → 位置在底部。
+10. Invoice No：Invoice No.: RBOSK-2021-030。在左上方。
 
-7. Company Name：顶部的“创亿信息有限公司 Chuangyi Information Co., Ltd.” → 位置在最上方。
+11. PACKAGE：表格中的PACKAGE列，比如20KG/CARTON等。表格的列标题是PACKAGE，所以标签是PACKAGE，对应列的内容。
 
-8. Fax：底部的“Fax: 4361-00-12068593” → 位置在底部。
+12. PRODUCT NAME：表格中的PRODUCT NAME列，比如Photoinitiator 184等。列标题是PRODUCT NAME。
 
-9. Invoice Date：“Invoice Date: Nov.11th, 2021” → 右上角。
+13. TOTAL AMOUNT：表格中的TOTAL AMOUNT列，比如US$98,040.00等，以及总和行的US$125,040.00。这里可能需要取总和行的TOTAL AMOUNT，即TOTAL:行的TOTAL AMOUNT是US$125,040.00。另外还有大写的Total Amount（Say Total...），但用户给的类别里有“Total Amount”和“Total Amount”？不，用户给的类别里有“Total Amount”（可能指小写的总金额）和“Total Amount”（大写？不，看用户给的类别里是“Total Amount”和“Total Amount”？不，用户给的类别里是“Total Amount”（小写）和“Total Amount”（大写？不，用户给的类别里是“Total Amount”和“Total Amount”？可能用户这里的“Total Amount”是指表格中的TOTAL AMOUNT列的总和，而大写的是另一个“Total Amount”？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户提供的类别列表中的“Total Amount”是其中一个，另一个是“Total Amount”？可能我需要再检查用户提供的类别：
 
-10. Invoice No：“Invoice No.: RBOSK-2021-030” → 左上方，Invoice No: 后面的内容。
+用户提供的类别列表中的“Total Amount”和“Total Amount”？不，看用户给的是：
 
-11. PACKAGE：表格中的PACKAGE列，比如每个产品的包装，如20KG/CARTON等。表格的列标题是PACKAGE，所以列的标题位置。
+Total Amount（可能是指表格中的TOTAL AMOUNT列的总和，比如US$125,040.00），以及“Total Amount”（大写部分，Say Total...）？但用户给的类别里有“Total Amount”和“Total Amount”？不，用户给的类别里是“Total Amount”（小写）和“Total Amount”（大写？不，用户给的类别里是“Total Amount”和“Total Amount”？可能用户输入时的错误，或者“Total Amount”是指小写的总金额，而大写的是“Total Amount”（大写）？但用户给的类别里有“Total Amount”和“Total Amount”？不，看用户提供的类别中的“Total Amount”是其中一个，另一个是“Total Amount”？可能我搞错了，先处理小写的Total Amount，即表格中TOTAL:行的TOTAL AMOUNT是US$125,040.00，对应标签Total Amount。
 
-12. PRODUCT NAME：表格中的PRODUCT NAME列，列标题。
+另外大写的Total Amount是“Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only”，对应标签Total Amount？不，用户给的类别里有“Total Amount”和“Total Amount”？不，用户给的类别里是“Total Amount”（可能指小写）和“Total Amount”（大写？不，用户给的类别里是“Total Amount”和“Total Amount”？可能用户这里的“Total Amount”是指小写的总金额，而大写的是另一个字段？但用户给的类别里有“Total Amount”和“Total Amount”？可能用户提供的类别中“Total Amount”是小写，而“Total Amount”（大写）是另一个？但看用户给的类别列表中的“Total Amount”是其中一个，另一个是“Total Amount”？可能我需要再看用户提供的类别：
 
-13. TOTAL AMOUNT：表格中的TOTAL AMOUNT列，列标题，以及TOTAL行的总金额（US$125,040.00）。
+用户提供的类别列表：
 
-14. Tel：底部的“Tel: 1091-10-62334228” → 底部。
+1.Terms of Payment, 2.Time of Shipment, 3.Port of Shipment, 4.Port of Destination, ADD, Add, Company Name, Fax, Invoice Date, Invoice No, PACKAGE, PRODUCT NAME, TOTAL AMOUNT, Tel, Title, Total Amount, UNIT PRICE(US$/KG) (CIF Hamburg by Sea), VOLUME (KG), Web.
 
-15. Title：“COMMERCIAL INVOICE” → 中间偏上的蓝色大写标题。
+注意这里有“TOTAL AMOUNT”和“Total Amount”？不，看用户写的是“TOTAL AMOUNT”和“Total Amount”？不，用户写的是“TOTAL AMOUNT”（大写）和“Total Amount”（首字母大写？不，看用户给的是“TOTAL AMOUNT”和“Total Amount”？可能用户输入时的大小写问题，或者“TOTAL AMOUNT”是表格中的列标题，而“Total Amount”是总的大写。但根据图中的内容，表格中的列是“TOTAL AMOUNT”，而下面有“Total Amount: Say Total...”。所以“TOTAL AMOUNT”是列标题，对应标签TOTAL AMOUNT；“Total Amount”（大写）是总的大写，对应标签Total Amount。
 
-16. Total Amount：下面的“Total Amount: Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only” → 这里的Total Amount是总金额的大写说明。
+现在继续：
 
-17. UNIT PRICE(US$/KG) (CIF Hamburg by Sea)：表格中的UNIT PRICE列的标题，包含括号里的内容。
+14. Tel：Tel: 1091-10-62334228。在底部联系信息。
 
-18. VOLUME (KG)：表格中的VOLUME (KG)列的标题。
+15. Title：可能是指“COMMERCIAL INVOICE”？因为图中有“COMMERCIAL INVOICE”作为标题。所以Title对应“COMMERCIAL INVOICE”。
 
-19. Web：底部的“Web: http://bryant.com/” → 底部。
+16. Total Amount（大写）：Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only。对应标签Total Amount（因为用户给的类别里有Total Amount）。
 
-现在需要为每个类别确定bbox。由于是图像，需要估计每个元素的位置。这里假设图像的坐标系统，x从左到右，y从上到下。
+17. UNIT PRICE(US$/KG) (CIF Hamburg by Sea)：表格中的UNIT PRICE列，比如US$8.60等。列标题是这个，所以标签是这个。
 
-现在开始列出每个对象的bbox和label：
+18. VOLUME (KG)：表格中的VOLUME (KG)列，比如11400等。列标题是这个，标签是VOLUME (KG)。
 
-- Company Name：顶部，文字“创亿信息有限公司 Chuangyi Information Co., Ltd.”。bbox大概在[250, 15, 750, 50]左右（因为是顶部居中）。
+19. Web：Web: http://bryant.com/。在底部联系信息。
 
-- Title：COMMERCIAL INVOICE，蓝色大写，在Company Name下面。bbox大概[350, 190, 650, 220]。
+现在需要为每个类别找到对应的bbox。需要确定每个元素在图中的位置。
 
-- Invoice No：Invoice No.: RBOSK-2021-030，左上方。bbox大概[110, 225, 330, 245]。
+现在逐个处理：
 
-- Invoice Date：Invoice Date: Nov.11th, 2021，右上方。bbox大概[670, 225, 920, 245]。
+1. 1.Terms of Payment：内容是“T/T 30 days from B/L date”，位于“Total Amount:”下方，左边的文本。bbox大概是从图中该行的起始到结束。看这部分在图中的位置，大约是x从左边开始，y在条款部分。具体坐标需要估计，比如：
 
-- TO: ADD: ...：ADD: 01507...，在Invoice No和Invoice Date下面。bbox大概[110, 250, 540, 270]（ADD是其中的一部分）。
+看“1.Terms of Payment: T/T 30 days from B/L date”这部分，其bbox的x1大概是120（因为左边是1.的编号），y1是条款部分的y坐标，比如在图中“Total Amount:”下面，所以y范围大概是中下部。
 
-- ADD：标签是ADD，对应ADD: ...中的ADD。所以ADD的label是ADD，bbox是ADD: 前面的文本，即“ADD:”的位置。大概[110, 255, 150, 270]。
+2. 2.Time of Shipment：“ASAP”，对应“2.Time of Shipment: ASAP”。bbox类似，x从120开始，y在1.Terms下面。
 
-- Product Description下的表格：
+3. 3.Port of Shipment：“Shanghai / China”，对应“3.Port of Shipment: Shanghai / China”。bbox在2.下面。
 
-  - PRODUCT NAME列标题：表格的第一列，标题是PRODUCT NAME。bbox大概在表格的左列，列标题位置。表格的列标题行，PRODUCT NAME在第一列，所以bbox是表格中该列的标题单元格，比如[110, 340, 250, 365]（假设表格的列标题行）。
+4. 4.Port of Destination：“Hamburg / Germany”，对应“4.Port of Destination: Hamburg / Germany”。bbox在3.下面。
 
-  - VOLUME (KG)列标题：第二列，标题是VOLUME (KG)。bbox大概[260, 340, 350, 365]。
+5. ADD：“ADD: 01507 Rebecca Island Davidfort, WV 15824”，位于“TO:”下面。bbox是ADD: 后面的内容，x在ADD:的位置，y在TO:下方。
 
-  - UNIT PRICE(US$/KG) (CIF Hamburg by Sea)列标题：第三列，标题是UNIT PRICE(...)。bbox大概[360, 340, 550, 365]。
+6. Add：“Add: 2094 Maria Squares Apt. 304 West Kelseymouth, NJ 86706”，位于图的最底部，联系信息行。bbox是底部的Add: 开始的地址。
 
-  - TOTAL AMOUNT列标题：第四列，标题是TOTAL AMOUNT。bbox大概[560, 340, 690, 365]。
+7. Company Name：“创亿信息有限公司 Chuangyi Information Co., Ltd.”，位于图的顶部。bbox是顶部的公司名称和英文。
 
-  - PACKAGE列标题：第五列，标题是PACKAGE。bbox大概[700, 340, 820, 365]。
+8. Fax：“Fax: 4361-00-12068593”，位于底部联系信息，Tel旁边。bbox是Fax: 后面的号码。
 
-  - 每个产品的行，比如Photoinitiator 184的PRODUCT NAME，VOLUME是11400，UNIT PRICE是US$8.60，TOTAL AMOUNT是US$98,040.00，PACKAGE是20KG/CARTON。这些行中的内容属于对应列，但标签是列标题，所以列标题的bbox是列的标题单元格。
+9. Invoice Date：“Invoice Date: Nov.11th, 2021”，位于Invoice No.的右侧。bbox是Invoice Date: 后面的日期。
 
-- TOTAL AMOUNT（表格中的TOTAL行）：表格中TOTAL行的TOTAL AMOUNT列的值是US$125,040.00。bbox大概在表格中TOTAL行的TOTAL AMOUNT列，比如[560, 440, 690, 465]（假设行的位置）。
+10. Invoice No：“Invoice No.: RBOSK-2021-030”，位于图的左上方，Invoice Date的左侧。bbox是Invoice No.: 后面的编号。
 
-- Total Amount（大写说明）：下面的“Total Amount: Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only”。bbox大概在表格下方，比如[110, 470, 890, 490]。
+11. PACKAGE：表格中的PACKAGE列，列标题是“PACKAGE”，所以bbox是表格的列标题位置，以及该列的内容（如20KG/CARTON）。但标签是PACKAGE，所以取列标题的bbox。
 
-- Terms of Payment：1. Terms of Payment: T/T 30 days from B/L date。bbox大概在下方，比如[110, 520, 540, 540]。
+12. PRODUCT NAME：表格中的PRODUCT NAME列，列标题是“PRODUCT NAME”，bbox是列标题的位置。
 
-- Time of Shipment：2. Time of Shipment: ASAP。bbox大概在Terms of Payment下面，比如[110, 545, 320, 565]。
+13. TOTAL AMOUNT：表格中的TOTAL AMOUNT列，列标题是“TOTAL AMOUNT”，以及总和行的TOTAL AMOUNT（US$125,040.00）。这里可能取总和行的TOTAL AMOUNT，即TOTAL:行的TOTAL AMOUNT单元格。bbox是该单元格的位置。
 
-- Port of Shipment：3. Port of Shipment: Shanghai / China。bbox大概在Time of Shipment下面，比如[110, 570, 420, 590]。
+14. Tel：“Tel: 1091-10-62334228”，位于底部联系信息，Fax的左侧。bbox是Tel: 后面的号码。
 
-- Port of Destination：4. Port of Destination: Hamburg / Germany。bbox大概在Port of Shipment下面，比如[110, 595, 500, 615]。
+15. Title：“COMMERCIAL INVOICE”，位于公司名称下方，是大标题。bbox是“COMMERCIAL INVOICE”的位置。
 
-- Add：底部的Add: 2094...。bbox大概在最底部，比如[450, 960, 890, 980]（因为底部的Add在地址行）。
+16. Total Amount（大写）：“Say Total US Dollar One Hundred And Twenty-five Thousand And Forty only”，位于“Total Amount:”后面。bbox是这部分文本的位置。
 
-- Fax：底部的Fax: 4361-00-12068593。bbox大概在Add旁边，比如[450, 965, 650, 985]。
+17. UNIT PRICE(US$/KG) (CIF Hamburg by Sea)：表格中的UNIT PRICE列，列标题是这个，bbox是列标题的位置。
 
-- Tel：底部的Tel: 1091-10-62334228。bbox大概在Fax旁边，比如[300, 965, 450, 985]。
+18. VOLUME (KG)：表格中的VOLUME (KG)列，列标题是这个，bbox是列标题的位置。
 
-- Web：底部的Web: http://bryant.com/。bbox大概在Tel旁边，比如[650, 965, 890, 985]。
+19. Web：“Web: http://bryant.com/”，位于底部联系信息，最右侧。bbox是Web: 后面的网址。
 
-现在需要将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+现在需要将每个类别对应到其bbox和label。由于是文本提取，需要准确找到每个元素的位置。
 
-注意，有些类别可能有多个实例，比如Total Amount在表格列和大写说明处，但用户要求检测所有对象，所以需要都包含吗？看用户要求“Detect all objects matching these categories”，即每个类别对应的所有实例？或者每个类别出现一次？不，是检测所有属于该类别的对象。例如，Total Amount类别可能有两个实例：表格中的TOTAL AMOUNT列（列标题）和下面的Total Amount: 大写说明。但需要看用户给的类别列表中的“TOTAL AMOUNT”和“Total Amount”是两个不同的标签吗？看用户给的类别列表中的“TOTAL AMOUNT”和“Total Amount”是分开的，所以：
+现在开始构建JSON数组：
 
-- “TOTAL AMOUNT”对应表格中的列标题和TOTAL行的金额（列中的TOTAL AMOUNT）。
+首先处理Company Name：
 
-- “Total Amount”对应下面的大写说明的Total Amount。
+- 公司名称在顶部，文字是“创亿信息有限公司 Chuangyi Information Co., Ltd.”。bbox大约是x从100到900（因为是顶部居中），y在顶部。所以bbox_2d大概是[100, 10, 900, 50]（估计）。
 
-现在开始构建每个条目：
+然后Title是“COMMERCIAL INVOICE”，在公司名称下方，所以bbox是[320, 150, 680, 180]（估计）。
 
-1. Company Name：顶部公司名称。
-bbox_2d：假设图像中公司名称在上方，居中。比如x1=250, y1=20, x2=750, y2=50。
-label: Company Name
+Invoice No: RBOSK-2021-030，位于左上方，Invoice Date的左边。bbox是[110, 200, 350, 220]。
 
-2. Title：COMMERCIAL INVOICE。
-bbox_2d：x1=330, y1=200, x2=670, y2=230。
-label: Title
+Invoice Date: Nov.11th, 2021，位于Invoice No的右边。bbox是[600, 200, 850, 220]。
 
-3. Invoice No：Invoice No: RBOSK-2021-030。
-bbox_2d：x1=100, y1=230, x2=330, y2=250。
-label: Invoice No
+ADD: 01507 Rebecca Island Davidfort, WV 15824，位于TO:下面。TO:是“TO:”，然后ADD:。所以ADD的bbox是[110, 250, 520, 270]。
 
-4. Invoice Date：Invoice Date: Nov.11th, 2021。
-bbox_2d：x1=650, y1=230, x2=920, y2=250。
-label: Invoice Date
+Add: 2094 Maria Squares Apt. 304 West Kelseymouth, NJ 86706，位于最底部，联系信息行。bbox是[450, 950, 900, 970]（估计，因为底部有Add: ...）。
 
-5. ADD：ADD: 01507...中的ADD。
-bbox_2d：x1=100, y1=260, x2=150, y2=280。
-label: ADD
-
-6. Add：底部的Add: 2094...。
-bbox_2d：x1=450, y1=960, x2=890, y2=980。
-label: Add
-
-7. Product Name（列标题）：表格中PRODUCT NAME列的标题。
-bbox_2d：x1=100, y1=340, x2=250, y2=360。
-label: PRODUCT NAME
-
-8. VOLUME (KG)（列标题）：表格中VOLUME (KG)列的标题。
-bbox_2d：x1=260, y1=340, x2=350, y2=360。
-label: VOLUME (KG)
-
-9. UNIT PRICE(US$/KG) (CIF Hamburg by Sea)（列标题）：表格中该列的标题。
-bbox_2d：x1=360, y1=340, x2=550, y2=360。
-label: UNIT PRICE(US$/KG) (CIF Hamburg by Sea)
-
-10. TOTAL AMOUNT（列标题）：表格中TOTAL AMOUNT列的标题。
-bbox_2d：x1=560, y1=340, x2=690, y2=360。
-label: TOTAL AMOUNT
-
-11. PACKAGE（列标题）：表格中PACKAGE列的标题。
-bbox_2d：x1=7
+Fax:

@@ -1,1 +1,19 @@
-[{"bbox_2d": [65, 56, 327, 92], "label": "name"}, {"bbox_2d": [430, 108, 576, 126], "label": "email"}, {"bbox_2d": [663, 108, 951, 126], "label": "phone"}]
+用户现在需要提取email、name、phone三个信息。首先看name是赵天阔，对应顶部大标题。然后email是blog.tiankuo-tech.virt，带信封图标。phone是+86 135-0000-9988，带电话图标。现在要确定每个的bbox。
+
+先看name：赵天阔在最上方黑色区域，文字是“赵天阔”，所以bbox是[68, 56, 322, 90]左右？看图片里的布局，顶部黑色背景，白色大字“赵天阔”，所以坐标范围。
+
+然后email：在联系信息里，blog.tiankuo-tech.virt，前面有信封图标，位置是“blog.tiankuo-tech.virt”对应的部分。看图片中联系信息行，第一个是blog...，所以bbox是[428, 92, 577, 112]左右？
+
+phone是+86 135-0000-9988，带电话图标，位置在联系信息里，所以bbox是[675, 92, 947, 112]左右？
+
+现在逐一确认：
+
+name：赵天阔，位于页面最上方黑色区域，文字是“赵天阔”，所以bbox是[68, 56, 322, 90]（因为图片中“赵天阔”是大标题，字体较大）。
+
+email：blog.tiankuo-tech.virt，对应联系信息中的第一个，带信封图标，所以看图片里的文字“blog.tiankuo-tech.virt”在联系栏，位置是“blog.tiankuo-tech.virt”前面有信封，所以bbox是[430, 93, 576, 113]（因为原内容是“blog.tiankuo-tech.virt”）。
+
+phone：+86 135-0000-9988，带电话图标，所以是“+86 135-0000-9988”这部分，bbox是[677, 93, 945, 113]。
+
+现在整理成JSON数组，每个对象包含bbox和label。
+</think>
+[{"bbox_2d": [68, 56, 322, 90], "label": "name"}, {"bbox_2d": [430, 93, 576, 113], "label": "email"}, {"bbox_2d": [677, 93, 945, 113], "label": "phone"}]

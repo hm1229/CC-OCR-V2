@@ -1,9 +1,59 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: Looking at the order details, there's "25/12/2016" which is the date. Let me check where that is. The line says "ORD #64 -REG #2- 25/12/2016 13:51:47". So the date is 25/12/2016.
+
+doc_no_receipt_no: The invoice number is "INV# 001780200112117". So that's the document number.
+
+seller_address: The address is "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor". Let's check the text.
+
+seller_gst_id: The GST ID is "(GST ID No: 000504664064)". So that's the GST ID.
+
+seller_name: "Golden Arches Restaurants Sdn Bhd (65351-M)".
+
+total_amount: The total rounded is 29.30. Let's check the "Total Rounded" line, which is 29.30.
+
+total_tax: The tax included is 1.66, as per "TOTAL INCLUDES 6% GST 1.66". So that's the tax amount.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is in the order line: "25/12/2016". Let's find the coordinates. The line is "ORD #64 -REG #2- 25/12/2016 13:51:47". So the date part is there.
+
+2. doc_no_receipt_no: "INV# 001780200112117" is the invoice number.
+
+3. seller_address: The address block from "Level 6, Bangunan TH..." down to "Selangor".
+
+4. seller_gst_id: "(GST ID No: 000504664064)".
+
+5. seller_name: "Golden Arches Restaurants Sdn Bhd (65351-M)".
+
+6. total_amount: "Total Rounded 29.30" — the amount is 29.30.
+
+7. total_tax: "TOTAL INCLUDES 6% GST 1.66" — the tax is 1.66.
+
+Now, let's define each bounding box.
+
+For date: The text "25/12/2016" is in the line "ORD #64 -REG #2- 25/12/2016 13:51:47". Let's check the position. The coordinates would be around that line.
+
+doc_no_receipt_no: "INV# 001780200112117" — that's the invoice number line.
+
+seller_address: The address lines: "Level 6, Bangunan TH, Damansara Uptown3 No.3, Jalan SS21/39,47400 Petaling Jaya Selangor".
+
+seller_gst_id: "(GST ID No: 000504664064)" — that's part of the address block.
+
+seller_name: "Golden Arches Restaurants Sdn Bhd (65351-M)" — above the address.
+
+total_amount: "Total Rounded 29.30" — the line with "Total Rounded" and the amount.
+
+total_tax: "TOTAL INCLUDES 6% GST 1.66" — the line showing the tax amount.
+
+Now, let's structure each entry.
+</think>
 [
-    {"bbox_2d": [244, 534, 366, 554], "label": "date"},
-    {"bbox_2d": [108, 557, 346, 576], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [98, 437, 902, 494], "label": "seller_address"},
-    {"bbox_2d": [144, 497, 464, 515], "label": "seller_gst_id"},
-    {"bbox_2d": [152, 302, 502, 320], "label": "seller_name"},
-    {"bbox_2d": [444, 607, 522, 625], "label": "total_amount"},
-    {"bbox_2d": [902, 700, 936, 718], "label": "total_tax"}
+    {"bbox_2d": [244, 532, 364, 552], "label": "date"},
+    {"bbox_2d": [144, 592, 340, 610], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [98, 227, 607, 292], "label": "seller_address"},
+    {"bbox_2d": [154, 294, 464, 312], "label": "seller_gst_id"},
+    {"bbox_2d": [144, 227, 464, 245], "label": "seller_name"},
+    {"bbox_2d": [325, 692, 388, 710], "label": "total_amount"},
+    {"bbox_2d": [634, 732, 677, 750], "label": "total_tax"}
 ]

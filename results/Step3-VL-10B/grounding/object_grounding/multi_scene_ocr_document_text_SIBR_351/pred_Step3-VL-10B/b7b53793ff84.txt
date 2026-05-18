@@ -1,128 +1,118 @@
-用户现在需要检测图像中的各个指定对象，然后输出对应的bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看公司名：图中有“MBP Software Media Hotel”和“MBP软件传媒酒店”，所以公司名的bbox。然后地址是右上角的“3938 Meza Roads Joshuafurt, VT 45481”和“吉林省城市沈河刘路座 718508”。邮编是“邮编：300120”。电话Tel是“电话Tel: +55-85-2285-9568”。传真Fax是“传真Fax: +88-29-5258-5868”。标题是“INFORMATION INVOICE”。人名是“Joyce Young”和“Anna Berg”（收银员那里的Anna Berg？看Cashier收银员对应的是Anna Berg，所以人名可能有两个？不过先看每个类别。
+首先看标题“INFORMATION INVOICE”是标题。然后公司名是MBP Software Media Hotel和MBP软件传媒酒店。地址是3938 Meza Roads Joshuafurt, VT 45481和吉林省城市沈河刘路座718508。邮编是300120。电话Tel是+55-85-2285-9568。传真Fax是+88-29-5258-5868。人名是Joyce Young和Anna Berg（收银员）。Room房号是0802。Arrival Date入住日期是11-05-20。Arrival Time入住时间是10:20。Departure Date离店日期是11-06-20。Departure Time离店时间是00:00。Date Printed打印日期是11-06-20。Invoice No.账单号是297604。Confirmation No.确认号是98507987。Loyalty No.会员号码是XXXXX5477。No. of Guest住后人数是1。Page No.页是1。Cashier收银员是Anna Berg。然后看表格里的DATE日期，比如11-05-20和11-06-20；DESCRIPTION项目是Accommodation；CHARGES消费是400.01、-0.01、400.00；CREDITS付款是0.00。Balance余额是CNY400.00。
 
-然后Arrival Date 入住日期：图中“Arrival Date 11-05-20 入住日期”。Arrival Time 入住时间：“Arrival Time 10:20 入住时间”。Departure Date 离店日期：“Departure Date 11-06-20 离店日期”。Departure Time 离店时间：“Departure Time 00:00 离店时间”。Room 房号：“Room 房号： 0802”。Loyalty No.会员号码：“Loyalty No. 会员号码： XXXXX5477”。No. of Guest 住后人数：“No. of Guest 住店人数： 1”。Confirmation No. 确认号：“Confirmation No. 确认号： 98507987”。Cashier 收银员：“Cashier 收银员： Anna Berg”。Page No. 页：“Page No. 页： 1”。Date Printed 打印日期：“Date Printed 打印日期： 11-06-20”。Invoice No. 账单号：“Invoice No. 297604 账单号”。DATE 日期：表格里的“DATE 日期”列，比如11-05-20和11-06-20。DESCRIPTION 项目：“DESCRIPTION 项目”列，比如Accommodation。CHARGES 消费：表格里的CHARGES列，数值400.01等。CREDITS 付款：CREDITS列，数值-0.01等。Balance 余额：“Balance 余额”行，CNY400.00。
+现在需要逐个确定每个类别的bbox。先列出来每个类别：
 
-现在需要逐个定位每个元素的bbox。先整理每个类别：
+1. Arrival Date 入住日期：图中“Arrival Date 11-05-20”，位置在左侧，对应文字区域。
+2. Arrival Time 入住时间：“Arrival Time 10:20”
+3. Balance 余额：“Balance 余额 CNY400.00”
+4. CHARGES 消费：表格中的CHARGES列，数值400.01等
+5. CREDITS 付款：表格中的CREDITS列，数值0.00
+6. Cashier 收银员：“Cashier 收银员：Anna Berg”
+7. Confirmation No. 确认号：“Confirmation No. 确认号：98507987”
+8. DATE 日期：表格中的DATE列，比如11-05-20和11-06-20
+9. DESCRIPTION 项目：表格中的DESCRIPTION列，Accommodation
+10. Date Printed 打印日期：“Date Printed 打印日期：11-06-20”
+11. Departure Date 离店日期：“Departure Date 11-06-20”
+12. Departure Time 离店时间：“Departure Time 00:00”
+13. Loyalty No.会员号码：“Loyalty No. 会员号码：XXXXX5477”
+14. No. of Guest 住后人数：“No. of Guest 住后人数：1”
+15. Page No. 页：“Page No. 页：1”
+16. Room 房号：“Room 房号：0802”
+17. lnvoice No. 账单号：“Invoice No. 账单号：297604”（注意拼写是Invoice，用户给的是lnvoice，可能是输入错误，按图中的Invoice No.）
+18. 人名：Joyce Young（客人）和Anna Berg（收银员，但人名可能指客人？看“Joyce Young”是客人姓名，所以人名是Joyce Young）
+19. 传真Fax：“传真Fax：+88-29-5258-5868”
+20. 公司名：“MBP Software Media Hotel”和“MBP软件传媒酒店”
+21. 地址：“3938 Meza Roads Joshuafurt, VT 45481”和“吉林省城市沈河刘路座 718508”
+22. 标题：“INFORMATION INVOICE”
+23. 电话Tel：“电话Tel：+55-85-2285-9568”
+24. 邮编：“邮编：300120”
 
-1. 公司名（MBP Software Media Hotel / MBP软件传媒酒店）：看顶部的“MBP Software Media Hotel”和下面的“MBP软件传媒酒店”，所以bbox是包含这两个的区域。比如顶部的英文和中文，所以公司名的bbox可能是[437, 27, 598, 50]（英文）和[445, 53, 593, 75]（中文）？或者合并？不过可能看整体，公司名是这两个，所以取包含的区域。
+现在需要为每个类别找到对应的bbox。需要看图片中的位置，比如公司名在上方，MBP Software Media Hotel是英文，下面MBP软件传媒酒店是中文。地址在右侧上方。邮编在地址下面。电话Tel在邮编下面。传真Fax在电话Tel下面。然后右侧的Room房号等信息在右侧栏。左侧的客人信息是Joyce Young。Arrival和Departure信息在中间偏左。表格在中间偏下。
 
-2. 地址：右上角的“3938 Meza Roads Joshuafurt, VT 45481”和“USCGC Reyes FPO AE 17471 吉林省城市沈河刘路座 718508”。所以地址的bbox是右上角的两行地址。
+现在逐个处理：
 
-3. 邮编：“邮编：300120”对应的区域。
+- 标题“INFORMATION INVOICE”：在左侧上方，文字是大写的，所以bbox大概是[37, 137, 302, 158]左右（看图片中的位置，原文中“INFORMATION INVOICE”是标题，所以确定位置）。
+- 公司名（英文）：MBP Software Media Hotel，位置在上方中间，bbox [453, 52, 600, 72]；公司名（中文）：MBP软件传媒酒店，bbox [453, 74, 600, 94]。
+- 地址（英文）：3938 Meza Roads Joshuafurt, VT 45481，bbox [675, 54, 910, 68]；地址（中文）：吉林省城市沈河刘路座 718508，bbox [675, 76, 800, 92]。
+- 邮编：300120，bbox [675, 96, 735, 112]。
+- 电话Tel：+55-85-2285-9568，bbox [675, 114, 825, 130]。
+- 传真Fax：+88-29-5258-5868，bbox [675, 132, 825, 148]。
+- 人名（客人）：Joyce Young，bbox [102, 325, 176, 345]。
+- Room 房号：0802，右侧栏，bbox [590, 192, 635, 212]（看右侧“Room 房号： 0802”）。
+- Loyalty No.会员号码：XXXXX5477，右侧栏，bbox [590, 214, 695, 234]。
+- No. of Guest 住后人数：1，右侧栏，bbox [590, 236, 605, 256]。
+- Confirmation No. 确认号：98507987，右侧栏，bbox [590, 258, 695, 278]。
+- Cashier 收银员：Anna Berg，右侧栏，bbox [590, 280, 645, 298]。
+- Page No. 页：1，右侧栏，bbox [590, 302, 605, 322]。
+- Date Printed 打印日期：11-06-20，右侧栏，bbox [590, 324, 695, 344]。
+- Invoice No. 账单号：297604，右侧栏，bbox [590, 346, 695, 366]。
+- Arrival Date 入住日期：11-05-20，中间偏左，bbox [37, 352, 225, 372]（“Arrival Date 11-05-20”）。
+- Arrival Time 入住时间：10:20，中间偏左，bbox [237, 352, 345, 372]（“Arrival Time 10:20”）。
+- Departure Date 离店日期：11-06-20，中间偏左，bbox [37, 374, 250, 394]（“Departure Date 11-06-20”）。
+- Departure Time 离店时间：00:00，中间偏左，bbox [375, 374, 475, 394]（“Departure Time 00:00”）。
+- Date Printed 打印日期（另一个？不，之前的Date Printed是右侧的，这里确认是右侧的Date Printed：11-06-20，已经处理过）。
+- lnvoice No. 账单号：297604，右侧的Invoice No.，已经处理。
+- DATE 日期：表格中的DATE列，比如11-05-20和11-06-20，看表格里的行，第一行DATE是11-05-20，第二行是11-06-20。所以第一个DATE的bbox是[37, 592, 132, 612]（对应11-05-20），第二个DATE是[37, 614, 132, 634]（对应11-06-20）。
+- DESCRIPTION 项目：表格中的DESCRIPTION列，对应Accommodation，第一行是11-05-20的Accommodation，第二行是11-06-20的Accommodation。所以第一个DESCRIPTION的bbox是[145, 592, 292, 612]（“Accommodation”对应11-05-20），第二个是[145, 614, 292, 634]（对应11-06-20）。
+- CHARGES 消费：表格中的CHARGES列，数值分别是400.01（11-05-20行）、-0.01（11-06-20行）、400.00（Total行）。所以第一个CHARGES的bbox是[312, 592, 445, 612]（400.01），第二个是[312, 614, 445, 634]（-0.01），Total的CHARGES是[312, 636, 445, 656]（400.00）。
+- CREDITS 付款：表格中的CREDITS列，数值都是0.00（Total行和下面的Balance？不，看表格中CREDITS列，11-05-20行是空？不，看图片中的表格：
 
-4. 电话Tel：“电话Tel: +55-85-2285-9568”
+表格结构：
 
-5. 传真Fax：“传真Fax: +88-29-5258-5868”
+DATE | DESCRIPTION | CHARGES | CREDITS
 
-6. 标题：“INFORMATION INVOICE”
+11-05-20 | Accommodation | 400.01 | 
 
-7. 人名：Joyce Young（在左侧）和Anna Berg（Cashier收银员处）。所以人名有两个实例？需要看每个出现的人名。
+11-06-20 | Accommodation | -0.01 | 
 
-8. Arrival Date 入住日期：“Arrival Date 11-05-20 入住日期”这部分。
+Total |  | 400.00 | 0.00
 
-9. Arrival Time 入住时间：“Arrival Time 10:20 入住时间”
+Balance | 余额 | CNY400.00 | 
 
-10. Departure Date 离店日期：“Departure Date 11-06-20 离店日期”
+所以CREDITS列在Total行是0.00，其他行可能没有。所以CREDITS的数值是0.00，对应Total行的CREDITS，bbox是[475, 636, 590, 656]（0.00）。
 
-11. Departure Time 离店时间：“Departure Time 00:00 离店时间”
+- Balance 余额：CNY400.00，对应Balance行的CHARGES列？不，Balance行是“Balance 余额 CNY400.00”，在表格下方，所以bbox是[312, 676, 445, 696]（CNY400.00）。
 
-12. Room 房号：“Room 房号： 0802”
+现在需要把所有类别列出来，确保每个都有对应的bbox和label。需要注意有些类别可能重复，比如DATE有两个日期，但需要分别处理吗？不，用户要求是“detect the corresponding values to the following categories”，每个类别对应一个值，所以每个类别在图中出现一次的实例。
 
-13. Loyalty No.会员号码：“Loyalty No. 会员号码： XXXXX5477”
+现在整理所有类别：
 
-14. No. of Guest 住后人数：“No. of Guest 住店人数： 1”
+1. Arrival Date 入住日期：值是11-05-20，bbox对应“Arrival Date 11-05-20”的位置。
+2. Arrival Time 入住时间：10:20，对应“Arrival Time 10:20”。
+3. Balance 余额：CNY400.00，对应“Balance 余额 CNY400.00”。
+4. CHARGES 消费：总消费是400.00（Total行的CHARGES），或者看所有CHARGES的总和？但图中Total的CHARGES是400.00，所以取这个值。
+5. CREDITS 付款：0.00（Total行的CREDITS）。
+6. Cashier 收银员：Anna Berg，对应“Cashier 收银员：Anna Berg”。
+7. Confirmation No. 确认号：98507987，对应“Confirmation No. 确认号：98507987”。
+8. DATE 日期：比如取其中一个日期，比如11-05-20（因为是入住日期，也是表格中的第一个日期）。
+9. DESCRIPTION 项目：Accommodation（表格中的项目）。
+10. Date Printed 打印日期：11-06-20，对应“Date Printed 打印日期：11-06-20”。
+11. Departure Date 离店日期：11-06-20，对应“Departure Date 11-06-20”。
+12. Departure Time 离店时间：00:00，对应“Departure Time 00:00”。
+13. Loyalty No.会员号码：XXXXX5477，对应“Loyalty No. 会员号码：XXXXX5477”。
+14. No. of Guest 住后人数：1，对应“No. of Guest 住后人数：1”。
+15. Page No. 页：1，对应“Page No. 页：1”。
+16. Room 房号：0802，对应“Room 房号：0802”。
+17. lnvoice No. 账单号：297604，对应“Invoice No. 账单号：297604”（注意用户写的是lnvoice，可能是拼写错误，按图中的Invoice No.）。
+18. 人名：Joyce Young，对应“Joyce Young”。
+19. 传真Fax：+88-29-5258-5868，对应“传真Fax：+88-29-5258-5868”。
+20. 公司名：MBP Software Media Hotel（英文）和MBP软件传媒酒店（中文），可能需要选一个，比如英文的。
+21. 地址：3938 Meza Roads Joshuafurt, VT 45481（英文地址）。
+22. 标题：INFORMATION INVOICE。
+23. 电话Tel：+55-85-2285-9568，对应“电话Tel：+55-85-2285-9568”。
+24. 邮编：300120，对应“邮编：300120”。
 
-15. Confirmation No. 确认号：“Confirmation No. 确认号： 98507987”
+现在需要为每个类别生成一个条目，确保每个类别都有。现在开始逐个构建JSON数组：
 
-16. Cashier 收银员：“Cashier 收银员： Anna Berg”
-
-17. Page No. 页：“Page No. 页： 1”
-
-18. Date Printed 打印日期：“Date Printed 打印日期： 11-06-20”
-
-19. Invoice No. 账单号：“Invoice No. 297604 账单号”
-
-20. DATE 日期：表格中的“DATE 日期”列，比如第一行的11-05-20，第二行的11-06-20。所以DATE的标签是列标题，bbox是“DATE 日期”所在的单元格。
-
-21. DESCRIPTION 项目：列标题“DESCRIPTION 项目”，以及下面的Accommodation等项目。
-
-22. CHARGES 消费：列标题“CHARGES 消费”，以及下面的400.01等数值。
-
-23. CREDITS 付款：列标题“CREDITS 付款”，以及下面的-0.01等数值。
-
-24. Balance 余额：“Balance 余额”行，以及CNY400.00。
-
-现在需要为每个类别找到对应的bbox。需要注意每个元素在图中的位置，用坐标表示（x1,y1,x2,y2），相对格式（比如图像的宽度和高度作为1000的话，需要估计位置）。
-
-现在开始逐个处理：
-
-- 公司名（MBP Software Media Hotel）：位于顶部中间偏右，英文。bbox大概[435, 27, 596, 49]。中文“MBP软件传媒酒店”在下面，[442, 52, 592, 74]。可以合并为一个公司名，因为是同一公司。所以公司名的bbox可以是包含这两个的区域，比如[433, 25, 598, 76]。
-
-- 地址：右上角的地址，包括“3938 Meza Roads Joshuafurt, VT 45481”和“USCGC Reyes FPO AE 17471 吉林省城市沈河刘路座 718508”。bbox是[675, 27, 925, 68]（因为这两行地址在右上角）。
-
-- 邮编：“邮编：300120”在地址下面，所以bbox是[675, 87, 757, 105]（看图像中的位置，邮编在电话上面）。
-
-- 电话Tel：“电话Tel: +55-85-2285-9568”在邮编下面，bbox是[675, 110, 825, 128]。
-
-- 传真Fax：“传真Fax: +88-29-5258-5868”在电话下面，bbox是[675, 133, 835, 151]。
-
-- 标题：“INFORMATION INVOICE”在左侧上方，大写，bbox是[54, 142, 302, 164]。
-
-- 人名：Joyce Young在标题下方，左侧，bbox是[54, 325, 154, 345]。Anna Berg在右侧Cashier收银员处，bbox是[875, 457, 935, 475]（因为Cashier收银员： Anna Berg，所以Anna Berg是人名）。
-
-- Arrival Date 入住日期：“Arrival Date 11-05-20 入住日期”在左侧，Arrival Time左边，bbox是[54, 365, 262, 387]（Arrival Date 11-05-20 入住日期）。
-
-- Arrival Time 入住时间：“Arrival Time 10:20 入住时间”在Arrival Date右边，bbox是[302, 365, 437, 387]。
-
-- Departure Date 离店日期：“Departure Date 11-06-20 离店日期”在Arrival Time右边，bbox是[500, 365, 692, 387]。
-
-- Departure Time 离店时间：“Departure Time 00:00 离店时间”在Departure Date右边，bbox是[700, 365, 875, 387]。
-
-- Room 房号：“Room 房号： 0802”在右侧，Loyalty No.上面，bbox是[675, 200, 875, 222]（Room 房号： 0802）。
-
-- Loyalty No.会员号码：“Loyalty No. 会员号码： XXXXX5477”在Room下面，bbox是[675, 225, 925, 247]。
-
-- No. of Guest 住后人数：“No. of Guest 住店人数： 1”在Loyalty No.下面，bbox是[675, 250, 925, 272]。
-
-- Confirmation No. 确认号：“Confirmation No. 确认号： 98507987”在No. of Guest下面，bbox是[675, 275, 925, 297]。
-
-- Cashier 收银员：“Cashier 收银员： Anna Berg”在Confirmation No.下面，bbox是[675, 300, 925, 322]（因为Cashier收银员： 后面是Anna Berg）。
-
-- Page No. 页：“Page No. 页： 1”在Cashier下面，bbox是[675, 325, 875, 345]。
-
-- Date Printed 打印日期：“Date Printed 打印日期： 11-06-20”在Page No.下面，bbox是[675, 347, 925, 369]。
-
-- Invoice No. 账单号：“Invoice No. 297604 账单号”在Date Printed下面，bbox是[700, 370, 925, 392]（Invoice No. 297604 账单号）。
-
-- DATE 日期：表格中的“DATE 日期”列标题，位于表格左上方，bbox是[40, 530, 154, 552]（DATE 日期）。
-
-- DESCRIPTION 项目：表格中的“DESCRIPTION 项目”列标题，位于DATE右边，bbox是[162, 530, 325, 552]（DESCRIPTION 项目）。
-
-- CHARGES 消费：表格中的“CHARGES 消费”列标题，位于DESCRIPTION右边，bbox是[337, 530, 537, 552]（CHARGES 消费）。
-
-- CREDITS 付款：表格中的“CREDITS 付款”列标题，位于CHARGES右边，bbox是[547, 530, 725, 552]（CREDITS 付款）。
-
-- Balance 余额：“Balance 余额”行，位于表格下方，bbox是[40, 630, 154, 652]（Balance 余额）。
-
-现在需要检查每个类别是否都覆盖，并且没有重复或遗漏。然后将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-需要注意坐标的估计，因为是相对图像的，假设图像宽度和高度为1000，所以每个点的x和y是相对于整个图像的。比如图像中，公司名在顶部中间，x范围大概430到595，y是25到75左右。地址在右上角，x从670到925，y从25到68。邮编在地址下面，y85到105。电话在邮编下面，y110到128。传真在电话下面，y133到151。标题在左侧，y140到164。人名Joyce Young在y320到345，x50到155。Anna Berg在右侧Cashier处，x870到935，y455到475。Arrival Date在y360到385，x50到260。Arrival Time在y360到385，x300到435。Departure Date在y360到385，x500到690。Departure Time在y360到385，x700到870。Room房号在y195到220，x670到875。Loyalty No在y220到245，x670到925。No. of Guest在y245到270，x670到925。Confirmation No在y270到295，x670到925。Cashier在y295到320，x670到925。Page No在y320到345，x670到875。Date Printed在y340到365，x670到925。Invoice No在y360到385，x700到925。DATE列标题在y525到550，x40到155。DESCRIPTION列标题在y525到550，x160到325。CHARGES列标题在y525到550，x335到535。CREDITS列标题在y525到550，x545到725。Balance在y625到650，x40到155。
-
-现在将这些整理成JSON数组。需要注意每个类别只出现一次？不，比如人名有两个（Joyce Young和Anna Berg），所以需要两个条目。同样，Arrival Date、Arrival Time等是各自的条目。
-
-现在开始构建每个条目：
-
-1. 公司名：MBP Software Media Hotel / MBP软件传媒酒店 → label: 公司名，bbox: [433,25,598,76]
-2. 地址：右上角的地址 → label: 地址，bbox: [673,27,926,68]
-3. 邮编：邮编：300120 → label: 邮编，bbox: [673,87,756,106]
-4. 电话Tel：电话Tel: +55-85-2285-9568 → label: 电话Tel，bbox: [673,110,824,129]
-5. 传真Fax：传真Fax: +88-29-5258-5868 → label: 传真Fax，bbox: [673,133,834,152]
-6. 标题：INFORMATION INVOICE → label: 标题，bbox: [52,142,303,163]
-7. 人名（Joyce Young）：Joyce Young → label: 人名，bbox: [52,325,154,345]
-8. 人名（Anna Berg）：Anna Berg（Cashier处）→ label: 人名，bbox: [874,456,935,475]
-9. Arrival Date 入住日期：Arrival Date 11-05-20 入住日期 → label: Arrival Date 入住日期，bbox: [52,365,262,387]
-10. Arrival Time 入住时间：Arrival Time 10:20 入住时间 → label: Arrival Time 入住时间，bbox: [302,365,437,387]
-11. Departure Date 离店日期：Departure Date 11-06-20 离店日期 → label: Departure Date 离店日期，bbox: [500,365,692,387]
-12. Departure Time 离店时间：Departure Time 00:00 离店时间 → label: Departure Time
+1. 标题：INFORMATION INVOICE → bbox是包含该文字的区域，比如[37, 137, 302, 158]（看图片中“INFORMATION INVOICE”在左侧，上方）。
+2. 公司名（英文）：MBP Software Media Hotel → bbox [453, 52, 600, 72]。
+3. 公司名（中文）：MBP软件传媒酒店 → bbox [453, 74, 600, 94]。
+4. 地址（英文）：3938 Meza Roads Joshuafurt, VT 45481 → bbox [675, 54, 910, 68]。
+5. 地址（中文）：吉林省城市沈河刘路座 718508 → bbox [675, 76, 800, 92]。
+6. 邮编：300120 → bbox [675, 96, 735, 112]。
+7. 电话Tel：+55-85-2285-9568 → bbox [675, 114, 825, 130]。
+8. 传真Fax：+88-29-5258-5868 → bbox [675, 132, 825, 148]。
+9. 人名（客人）：Joyce Young → bbox [102, 325, 176, 345]。
+10. Room 房号：0802 → bbox [590, 192, 6

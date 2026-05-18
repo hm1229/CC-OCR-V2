@@ -1,217 +1,143 @@
-用户现在需要从商业发票中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个分析每个标签在图中的位置。
 
-首先看公司名称（COMPANY NAME）：顶部的Tai Chi Network Co., Ltd.，还有TO部分的Tai Chi Network Co., Ltd.。先看顶部的公司名，地址是ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，所以公司名是Tai Chi Network Co., Ltd.，对应第一个位置。
+首先看COMPANY NAME，发票顶部是Tai Chi Network Co., Ltd.，所以这个是公司名。然后ADD，顶部的ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048。ADDRESS可能和ADD重复？不过看下面OUR BANK的ADD是7738 Tabitha Port Hammondside, UT...。需要区分。先列出来每个标签：
 
-然后ADD（地址）：顶部的ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，还有OUR BANK下面的ADD:7738 Tabitha Port Hammondside, UT... 这里可能有两个ADD？但看题目中的ADD类别，需要看哪些是。先处理顶部的ADD。
-
-FAX：顶部的FAX:881821533608。
-
-TEL：顶部的TEL:389226387959。
-
-INVOICE No.：S UZ210510079-14。
-
-INVOICE DATE：16TH SEP,2021。
-
-S/C No.：21IN32ZJ0510079。
-
-PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE。
-
-COUNTRY OF ORIGIN：CHINA。
-
-QUANTITY：9,000KGS。
-
-AMOUNT：USD15,957.00（在商品行和TOTAL处）。
-
-TOTAL对应的AMOUNT是USD15,957.00。
-
-SWIFT NO：BKCHCNBJ...（图中是BKCHCNBJ.？看图片里的SWIFT NO: BKCHCNBJ.）
-
-TLX：34116 BOCJS CN。
-
-A/C NO.：532658191164。
-
-TERM OF PAYMENT：DA。
-
-TITLE是COMMERCIAL INVOICE。
-
-USD是单位价格和金额中的USD，比如UNIT PRICE是USD 1.773PER KG，AMOUNT是USD15,957.00。
-
-现在逐个找每个类别：
-
-1. COMPANY NAME：顶部的“Tai Chi Network Co., Ltd.”，bbox是[37, 12, 846, 37]（因为顶部大标题）。
-
-2. ADD（顶部公司地址）：ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，对应bbox是[65, 37, 446, 52]（看原文中的ADD行）。
-
-3. ADDRESS：可能和ADD重复？但题目中的ADDRESS可能是指TO部分的地址？TO部分的地址是PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619，这部分是客户地址，属于ADDRESS？需要看。但题目中的类别有ADD和ADDRESS，可能ADD是公司自己的地址，ADDRESS是客户地址？需要区分。看题目中的类别：ADD是单独的，ADDRESS可能是指客户地址？但先看原文中的TO部分的地址，是客户的信息，可能属于ADDRESS。不过先处理明确的。
-
-4. AMOUNT：商品行的AMOUNT是USD15,957.00，TOTAL处的AMOUNT也是USD15,957.00。需要看哪个。比如商品行的AMOUNT列的值是USD15,957.00，TOTAL行的AMOUNT也是。所以选其中一个，比如商品行的。
-
-5. COUNTRY OF ORIGIN：CHINA，在商品描述下面，COUNTRY OF ORIGIN: CHINA，bbox对应位置。
-
-6. FAX：顶部的FAX:881821533608，bbox是[754, 37, 867, 52]。
-
-7. INVOICE DATE：16TH SEP,2021，对应位置。
-
-8. INVOICE No.：S UZ210510079-14，对应位置。
-
-9. PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE，商品描述中的。
-
-10. QUANTITY：9,000KGS，数量列。
-
-11. S/C No.：21IN32ZJ0510079，S/C No.行。
-
-12. SWIFT NO：BKCHCNBJ...（图中是SWIFT NO: BKCHCNBJ.？看图片中的SWIFT NO: BKCHCNBJ.）
-
-13. TEL：389226387959，顶部的TEL。
-
-14. TERM OF PAYMENT：DA，对应位置。
-
-15. TITLE：COMMERCIAL INVOICE，大标题。
-
-16. TLX：34116 BOCJS CN，OUR BANK下面的TLX。
-
-17. USD：在UNIT PRICE和AMOUNT中的USD，比如UNIT PRICE是USD 1.773PER KG，AMOUNT是USD15,957.00，所以可以选其中一个，比如AMOUNT中的USD。
-
-现在需要逐个确定每个类别的bbox和label。需要仔细看图片中的每个元素。
-
-现在开始列每个：
-
-- COMPANY NAME：顶部的“Tai Chi Network Co., Ltd.”，bbox是[37, 12, 846, 37]（因为第一行是公司名，然后是ADD等）。
-
-- ADD（公司地址）：ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，对应行是ADD:...，在公司名下面，所以bbox是[65, 40, 446, 55]（看原文中的ADD行：ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048 TEL:...）。
-
-- FAX：FAX:881821533608，在同一行的最右边，bbox是[754, 40, 867, 55]。
-
-- TEL：TEL:389226387959，在ADD和FAX之间，bbox是[452, 40, 598, 55]。
-
-- TITLE：COMMERCIAL INVOICE，大标题，bbox是[375, 237, 625, 267]（因为中间大标题是COMMERCIAL INVOICE）。
-
-- TO部分的公司名也是COMPANY NAME？不，TO是客户，所以公司名是顶部的出口方，TO是进口方。所以出口方的公司名是顶部的Tai Chi Network Co., Ltd.，是COMPANY NAME。
-
-- INVOICE No.：S UZ210510079-14，在INVOICE No.标签右边，bbox是[452, 240, 598, 258]（看原文中的INVOICE No. S UZ210510079-14）。
-
-- INVOICE DATE：16TH SEP,2021，在INVOICE DATE标签右边，bbox是[452, 258, 598, 276]。
-
-- S/C No.：21IN32ZJ0510079，在S/C No.标签右边，bbox是[452, 276, 598, 294]。
-
-- TERM OF PAYMENT：DA，在TERM OF PAYMENT标签右边，bbox是[675, 240, 754, 258]（因为TERM OF PAYMENT DA）。
-
-- MARKS & NO.等是表格的表头，然后是商品描述。
-
-- PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE，在DESCRIPTION OF GOODS列，bbox是[142, 300, 442, 320]（看商品行的描述）。
-
-- COUNTRY OF ORIGIN：CHINA，在商品描述下面，COUNTRY OF ORIGIN: CHINA，bbox是[142, 320, 302, 338]。
-
-- QUANTITY：9,000KGS，在QUANTITY列，bbox是[452, 300, 542, 320]（因为数量是9,000KGS）。
-
-- UNIT PRICE：USD 1.773PER KG，在UNIT PRICE列，这里需要找USD，所以UNIT PRICE中的USD是USD类别，bbox是[552, 300, 692, 320]（因为是USD 1.773PER KG）。
-
-- AMOUNT：USD15,957.00，在AMOUNT列，商品行的AMOUNT是USD15,957.00，bbox是[652, 300, 775, 320]。
-
-- TOTAL：TOTAL: 后面的AMOUNT是USD15,957.00，所以TOTAL行的AMOUNT也是，bbox是[25, 460, 82, 478]（TOTAL:）和对应的金额。
-
-- A/C NO.：532658191164，在OUR BANK部分的A/C NO.标签右边，bbox是[142, 530, 242, 548]（A/C NO.: 532658191164）。
-
-- SWIFT NO.：BKCHCNBJ...，在SWIFT NO.标签右边，原文中是SWIFT NO.: BKCHCNBJ.（可能图片中的部分），bbox是[342, 530, 442, 548]（SWIFT NO.: BKCHCNBJ.）。
-
-- TLX：34116 BOCJS CN，在TLX标签右边，bbox是[142, 548, 242, 566]（TLX: 34116 BOCJS CN）。
-
-- ADD（客户地址，即TO部分的地址）：TO部分的地址是PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619，这部分属于ADDRESS？因为题目中的类别有ADDRESS，而ADD是公司自己的地址（顶部的ADD）。所以TO部分的地址是客户地址，属于ADDRESS。bbox是[65, 240, 446, 260]（TO: Tai Chi Network Co., Ltd. PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619）。
-
-现在需要确认每个类别的存在，然后整理成JSON数组。
-
-现在列出所有需要的类别，确保没有遗漏：
-
-A/C NO.：有，532658191164
-
-ADD：顶部公司地址（4125 Holt Field...）和客户地址？不，题目中的ADD是单独的，看原文中的ADD是顶部的，而客户地址是TO部分的，可能属于ADDRESS。所以ADD是顶部的公司地址。
-
-ADDRESS：客户地址（TO部分的地址）
-
-AMOUNT：商品行和TOTAL的金额，选其中一个，比如商品行的USD15,957.00
-
-COMPANY NAME：顶部的Tai Chi Network Co., Ltd.
-
-COUNTRY OF ORIGIN：CHINA
-
-FAX：881821533608
-
-INVOICE DATE：16TH SEP,2021
-
-INVOICE No.：S UZ210510079-14
-
-PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE
-
-QUANTITY：9,000KGS
-
-S/C No.：21IN32ZJ0510079
-
-SWIFT NO：BKCHCNBJ...（图中的SWIFT NO: BKCHCNBJ.）
-
-TEL：389226387959
-
-TERM OF PAYMENT：DA
-
-TITLE：COMMERCIAL INVOICE
-
-TLX：34116 BOCJS CN
-
-USD：在UNIT PRICE或AMOUNT中的USD，比如AMOUNT的USD15,957.00
+A/C NO.：图中A/C NO.: 532658191164，位置在OUR BANK部分。
+ADD：顶部的ADD是公司地址，4125 Holt Field Apt. 709 Michaelland, CO 63048；另外OUR BANK的ADD是7738 Tabitha Port Hammondside, UT...。需要看标签对应。用户给的标签里有ADD，可能指公司顶部的ADD？或者看问题中的标签，用户列的ADD是其中一个类别。需要看每个标签对应。
 
 现在逐个处理：
 
-1. COMPANY NAME：顶部的“Tai Chi Network Co., Ltd.”，bbox是[37, 12, 846, 37]（因为第一行是公司名，字体较大）
+1. A/C NO.：在OUR BANK部分，A/C NO.: 532658191164。看位置，图中A/C NO.的值是532658191164，所以bbox是对应这个位置。
+2. ADD：顶部的ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048。所以这个是公司地址。
+3. ADDRESS：可能和ADD重复？或者看是否有其他ADDRESS。比如TO部分的地址是PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619，这可能是客户地址。但用户标签里有ADDRESS吗？看用户给的标签列表：A/C NO., ADD, ADDRESS, AMOUNT, COMPANY NAME, COUNTRY OF ORIGIN, FAX, INVOICE DATE, INVOICE No., PRODUCT NAME, QUANTITY, S/C No., SWIFT NO, TEL, TERM OF PAYMENT, TITLE, TLX, USD。所以ADDRESS可能是指客户地址？需要看。不过先看每个标签在图中的存在。
 
-2. ADD（公司地址）：ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，bbox是[65, 40, 446, 55]（在公司名下面一行，ADD开头）
+4. AMOUNT：商品的AMOUNT是USD15,957.00，总金额也是这个。
+5. COMPANY NAME：Tai Chi Network Co., Ltd.，顶部的公司名。
+6. COUNTRY OF ORIGIN：图中COUNTRY OF ORIGIN: CHINA。
+7. FAX：顶部的FAX:881821533608。
+8. INVOICE DATE：16TH SEP,2021。
+9. INVOICE No.：SUZ210510079-14。
+10. PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE。
+11. QUANTITY：9,000KGS。
+12. S/C No.：21IN32ZJ0510079。
+13. SWIFT NO：图中SWIFT NO.: BKCHCNBJ（可能后面有数字，图中是BKCHCNBJ...）。
+14. TEL：顶部的TEL:389226387959。
+15. TERM OF PAYMENT：DA。
+16. TITLE：COMMERCIAL INVOICE是标题。
+17. TLX：34116 BOCJS CN。
+18. USD：单位价格是USD 1.773PER KG，金额是USD15,957.00，所以USD是货币单位，对应金额中的USD。
 
-3. FAX：FAX:881821533608，bbox是[754, 40, 867, 55]（同一行的最右边）
+现在需要为每个标签找到对应的bbox。需要看每个元素在图中的位置。
 
-4. TEL：TEL:389226387959，bbox是[452, 40, 598, 55]（在ADD和FAX之间）
+现在开始逐个分析：
 
-5. TITLE：COMMERCIAL INVOICE，bbox是[375, 237, 625, 267]（中间大标题，字体最大）
+- COMPANY NAME：顶部的“Tai Chi Network Co., Ltd.”，bbox是[37, 12, 847, 37]（因为顶部公司名，ADD等在下面）。
+- ADD（公司地址）：ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，bbox是[65, 37, 447, 52]（因为ADD:后面的内容）。
+- FAX：FAX:881821533608，bbox是[757, 37, 887, 52]。
+- TEL：TEL:389226387959，bbox是[453, 37, 746, 52]。
+- TITLE：COMMERCIAL INVOICE，bbox是[325, 200, 675, 237]（因为大标题）。
+- TO部分的公司地址（客户地址）：PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619，这可能对应ADDRESS？因为用户标签有ADDRESS，所以这个是客户地址，即ADDRESS。
+- INVOICE No.：SUZ210510079-14，bbox是[453, 202, 596, 221]。
+- INVOICE DATE：16TH SEP,2021，bbox是[453, 224, 596, 242]。
+- S/C No.：21IN32ZJ0510079，bbox是[453, 246, 596, 264]。
+- PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE，bbox是[142, 302, 400, 320]。
+- COUNTRY OF ORIGIN：CHINA，bbox是[142, 322, 246, 338]。
+- QUANTITY：9,000KGS，bbox是[453, 302, 546, 320]。
+- UNIT PRICE：USD 1.773PER KG，bbox是[556, 302, 700, 320]。
+- AMOUNT：USD15,957.00，bbox是[710, 302, 864, 320]。
+- TOTAL：USD15,957.00，bbox是[32, 462, 87, 478]（TOTAL: 后面的金额）。
+- OUR BANK：BANK OF CHINA, JIANGSU BRANCH，bbox是[37, 532, 525, 550]。
+- ADD（银行地址）：7738 Tabitha Port Hammondside, UT...，bbox是[58, 552, 525, 568]。
+- TLX：34116 BOCJS CN，bbox是[37, 570, 246, 586]。
+- SWIFT NO.：BKCHCNBJ...，bbox是[142, 572, 325, 588]。
+- A/C NO.：532658191164，bbox是[142, 590, 296, 606]。
+- TERM OF PAYMENT：DA，bbox是[706, 202, 776, 220]。
+- USD：在UNIT PRICE和AMOUNT中的USD，比如AMOUNT是USD15,957.00，所以USD是货币单位，对应这个值中的USD。但可能需要看是否有单独的USD标签，比如单位是USD，所以可能对应UNIT PRICE中的USD。
 
-6. INVOICE No.：S UZ210510079-14，bbox是[452, 240, 598, 258]（INVOICE No.标签右侧）
+现在需要把每个标签对应到图中的元素，确保每个标签都有对应的bbox。
 
-7. INVOICE DATE：16TH SEP,2021，bbox是[452, 258, 598, 276]（INVOICE DATE标签右侧）
+现在整理每个标签：
 
-8. S/C No.：21IN32ZJ0510079，bbox是[452, 276, 598, 294]（S/C No.标签右侧）
+1. A/C NO.：对应银行的A/C NO.，值是532658191164，bbox是[142, 590, 296, 606]（因为A/C NO.: 532658191164在图中）。
+2. ADD：公司顶部的地址，ADD:4125 Holt Field Apt. 709 Michaelland, CO 63048，bbox是[65, 37, 447, 52]。
+3. ADDRESS：客户地址，即TO部分的PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619，bbox是[100, 204, 437, 242]（因为TO: 后面的地址）。
+4. AMOUNT：商品的金额USD15,957.00，bbox是[710, 302, 864, 320]。
+5. COMPANY NAME：Tai Chi Network Co., Ltd.，bbox是[37, 12, 847, 37]。
+6. COUNTRY OF ORIGIN：CHINA，bbox是[142, 322, 246, 338]。
+7. FAX：881821533608，bbox是[757, 37, 887, 52]。
+8. INVOICE DATE：16TH SEP,2021，bbox是[453, 224, 596, 242]。
+9. INVOICE No.：SUZ210510079-14，bbox是[453, 202, 596, 221]。
+10. PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE，bbox是[142, 302, 400, 320]。
+11. QUANTITY：9,000KGS，bbox是[453, 302, 546, 320]。
+12. S/C No.：21IN32ZJ0510079，bbox是[453, 246, 596, 264]。
+13. SWIFT NO：BKCHCNBJ（图中是SWIFT NO.: BKCHCNBJ...），bbox是[142, 572, 325, 588]。
+14. TEL：389226387959，bbox是[453, 37, 746, 52]。
+15. TERM OF PAYMENT：DA，bbox是[706, 202, 776, 220]。
+16. TITLE：COMMERCIAL INVOICE，bbox是[325, 200, 675, 237]。
+17. TLX：34116 BOCJS CN，bbox是[37, 570, 246, 586]。
+18. USD：在AMOUNT中的USD15,957.00，所以USD是货币单位，对应这个值，bbox是[710, 302, 725, 320]（因为USD在金额前面）。
 
-9. TERM OF PAYMENT：DA，bbox是[675, 240, 754, 258]（TERM OF PAYMENT标签右侧）
+现在需要检查每个标签是否都覆盖，然后生成JSON数组。注意每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
 
-10. TO的ADDRESS（客户地址）：PSC 3782, Box 9781 APO AE 23990 Unit 0212 Box 1895 DPO AP 21619，bbox是[65, 240, 446, 260]（TO: Tai Chi Network Co., Ltd. 下面的地址）
+现在逐个确认：
 
-11. PRODUCT NAME：SALICYLIC ACID TECHNICAL GRADE，bbox是[142, 300, 442, 320]（商品描述列）
+- COMPANY NAME：正确，顶部公司名。
+- ADD（公司地址）：正确。
+- FAX：正确。
+- TEL：正确。
+- TITLE：COMMERCIAL INVOICE是标题。
+- INVOICE No.：正确。
+- INVOICE DATE：正确。
+- S/C No.：正确。
+- PRODUCT NAME：正确。
+- COUNTRY OF ORIGIN：正确。
+- QUANTITY：正确。
+- AMOUNT：正确。
+- TOTAL：可能用户标签中没有TOTAL，所以不考虑。用户标签里有AMOUNT，所以用商品的AMOUNT。
+- ADDRESS：客户地址，即TO部分的地址。
+- A/C NO.：银行的账号。
+- SWIFT NO：银行的SWIFT。
+- TLX：银行的TLX。
+- TERM OF PAYMENT：DA。
+- USD：金额中的USD。
 
-12. COUNTRY OF ORIGIN：CHINA，bbox是[142, 320, 302, 338]（COUNTRY OF ORIGIN: CHINA）
+现在把所有标签列出来，确保没有遗漏用户提供的标签列表：
 
-13. QUANTITY：9,000KGS，bbox是[452, 300, 542, 320]（数量列，对应9,000KGS）
+用户提供的标签列表：A/C NO., ADD, ADDRESS, AMOUNT, COMPANY NAME, COUNTRY OF ORIGIN, FAX, INVOICE DATE, INVOICE No., PRODUCT NAME, QUANTITY, S/C No., SWIFT NO, TEL, TERM OF PAYMENT, TITLE, TLX, USD。共18个标签，现在检查每个都有对应的条目。
 
-14. AMOUNT（商品行）：USD15,957.00，bbox是[652, 300, 775, 320]（金额列，对应USD15,957.00）
+现在为每个标签分配bbox：
 
-15. TOTAL的AMOUNT：USD15,957.00，bbox是[652, 460, 775, 478]（TOTAL行的金额）
+1. A/C NO.：[142, 590, 296, 606]（图中A/C NO.: 532658191164的位置）
+2. ADD：[65, 37, 447, 52]（公司顶部的ADD:...）
+3. ADDRESS：[100, 204, 437, 242]（TO: 后面的地址，PSC 3782...）
+4. AMOUNT：[710, 302, 864, 320]（商品的AMOUNT列的值）
+5. COMPANY NAME：[37, 12, 847, 37]（顶部公司名）
+6. COUNTRY OF ORIGIN：[142, 322, 246, 338]（COUNTRY OF ORIGIN: CHINA）
+7. FAX：[757, 37, 887, 52]（FAX:...）
+8. INVOICE DATE：[453, 224, 596, 242]（16TH SEP,2021）
+9. INVOICE No.：[453, 202, 596, 221]（SUZ210510079-14）
+10. PRODUCT NAME：[142, 302, 400, 320]（SALICYLIC ACID TECHNICAL GRADE）
+11. QUANTITY：[453, 302, 546, 320]（9,000KGS）
+12. S/C No.：[453, 246, 596, 264]（21IN32ZJ0510079）
+13. SWIFT NO：[142, 572, 325, 588]（SWIFT NO.: BKCHCNBJ...）
+14. TEL：[453, 37, 746, 52]（TEL:389226387959）
+15. TERM OF PAYMENT：[706, 202, 776, 220]（DA）
+16. TITLE：[325, 200, 675, 237]（COMMERCIAL INVOICE）
+17. TLX：[37, 570, 246, 586]（TLX:34116 BOCJS CN）
+18. USD：[710, 302, 725, 320]（AMOUNT中的USD，因为AMOUNT是USD15,957.00，所以USD是前面的货币符号）
 
-16. A/C NO.：532658191164，bbox是[142, 530, 242, 548]（A/C NO.标签右侧）
+现在需要确认每个bbox的坐标是否正确，可能需要根据图中的位置调整。比如，图中的元素位置：
 
-17. SWIFT NO.：BKCHCNBJ...，bbox是[342, 530, 442, 548]（SWIFT NO.标签右侧，图中是BKCHCNBJ.）
+- 公司名在最顶部，所以bbox的y1是12左右，x1是37，x2是847（因为公司名是Tai Chi Network Co., Ltd.，长度覆盖）。
+- ADD在公司名下面，ADD:4125...，所以y是37左右，x从65开始。
+- FAX在TEL右边，FAX:8818...，y也是37左右。
+- TEL在ADD和FAX之间，TEL:3892...，y37。
+- TITLE是COMMERCIAL INVOICE，在中间偏上，y200左右。
+- TO部分的地址在TITLE下面，y204左右。
+- INVOICE No.、INVOICE DATE、S/C No.在TITLE右边，y202、224、246左右。
+- 商品信息在表格里，y302左右是PRODUCT NAME、COUNTRY OF ORIGIN，y302是QUANTITY、UNIT PRICE、AMOUNT。
+- 银行信息在TOTAL下面，y532左右是OUR BANK，y552是银行地址（ADD），y570是TLX，y572是SWIFT NO.，y590是A/C NO.。
 
-18. TLX：34116 BOCJS CN，bbox是[142, 548, 242, 566]（TLX标签右侧）
-
-19. USD：在UNIT PRICE中的USD 1.773PER KG，bbox是[552, 300, 692, 320]（UNIT PRICE列，包含USD）
-
-现在需要检查是否有重复或遗漏。比如USD在AMOUNT中也有，所以可以选其中一个。另外，确保每个类别都覆盖。
-
-现在整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-注意bbox的坐标是相对的，基于图片的宽度和高度，这里假设图片的坐标是按像素，但因为是示例，需要大致估计。不过实际中可能需要更准确，但根据题目要求，只要合理即可。
-
-现在开始构建每个条目：
-
-1. COMPANY NAME: [37,12,846,37]
-2. ADD: [65,40,446,55]
-3. FAX: [754,40,867,55]
-4. TEL: [452,40,598,55]
-5. TITLE: [375,237,625,267]
-6. INVOICE No.: [452,240,598,258]
-7. INVOICE DATE: [452,258,598,276]
-8. S/C No.: [452,276,598,294]
-9. TERM OF PAYMENT: [675,2
+现在将这些信息整理成JSON数组，每个元素包含bbox和label。
+</think>
+[{"bbox_2d": [37, 12, 847, 37], "label": "COMPANY NAME"}, {"bbox_2d": [65, 37, 447, 52], "label": "ADD"}, {"bbox_2d": [757, 37, 887, 52], "label": "FAX"}, {"bbox_2d": [453, 37, 746, 52], "label": "TEL"}, {"

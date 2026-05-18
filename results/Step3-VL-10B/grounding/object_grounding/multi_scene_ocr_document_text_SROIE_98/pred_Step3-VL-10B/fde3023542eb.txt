@@ -1,1 +1,40 @@
-[{"bbox_2d": [106, 106, 894, 173], "label": "company"}, {"bbox_2d": [102, 181, 896, 279], "label": "address"}, {"bbox_2d": [152, 926, 228, 949], "label": "date"}, {"bbox_2d": [104, 330, 896, 355], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is MR. D.I.Y.(KUCHAI) SDN BHD. Let's check the text. The top part has that.
+- Address: The address lines are LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR.
+- Date: The date is 19-03-18 (from the timestamp at the bottom).
+- Total: The total incl. GST is RM 11.90. Let's check the line "total incl. GST @6% RM 11.90".
+
+Now, find the bounding boxes for each.
+
+First, company: The company name is in the upper part. Let's check the coordinates. The text "MR. D.I.Y.(KUCHAI) SDN BHD" is the company.
+
+Address: The address block is from "LOT 1851-A & 1851-B..." down to "SELANGOR".
+
+Date: The date is in the line "19-03-18 13:09 SH01 B026..." so the date part is 19-03-18.
+
+Total: The total line is "total incl. GST @6% RM 11.90".
+
+Now, let's map each to their bounding boxes.
+
+For company: The text is at the top, so the bounding box would cover that line.
+
+Address: The lines from LOT... to SELANGOR.
+
+Date: The timestamp's date part.
+
+Total: The total amount line.
+
+Let's check each element's position.
+
+1. Company: "MR. D.I.Y.(KUCHAI) SDN BHD (CO Reg : 750441-W)" — the main company name is the first line.
+
+2. Address: The lines starting with LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR.
+
+3. Date: "19-03-18" in the line "19-03-18 13:09 SH01 B026 T3 R000129969"
+
+4. Total: "total incl. GST @6% RM 11.90"
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [108, 109, 892, 164], "label": "company"}, {"bbox_2d": [101, 200, 892, 282], "label": "address"}, {"bbox_2d": [190, 922, 256, 942], "label": "date"}, {"bbox_2d": [24, 332, 979, 356], "label": "total"}]

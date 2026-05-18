@@ -1,0 +1,241 @@
+用户现在需要从发票中提取所有指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看Company Name：图顶部的Hongri Sibo Technology Co., Ltd.，还有下面Customer里的Hongri Sibo Technology Co., Ltd.。需要确认。另外Title是INVOICE。
+
+然后A/C NO：在底部Beneficiary bank部分，A/C NO.: 390-000883-011。
+
+Address：顶部的地址264 Oconnor Underpass...，还有Customer的地址Unit 7253 Box 8674...，Delivery address可能也是地址，但看类别里的Address应该是指公司的地址？需要看每个部分。
+
+Beneficiary bank：HSBC BANK (CHINA) COMPANY LIMITED WUXI BRANCH。
+
+Customer Order Number：4500309700。
+
+Customer Reference：CHAMBERLAIN Valerie。
+
+Customer ref：2140017239（在Customer Order Number下面）。
+
+Date：2022-03-25。
+
+Delivery Manner：By sea。
+
+Description of Goods：PARACETAMOL/ACETAMINOPHEN DENSE POWDER IN 800KG/BAG。
+
+Due date：2022-05-10。
+
+FOB Value：958038（在price consist里的FOB Value）。
+
+Fax：1608281509018（顶部的Fax）。
+
+Freight：81280（price consist里的Freight）。
+
+Insurance：202（price consist里的Insurance）。
+
+Invoice No.：NWP22032502。
+
+NO.：表格里的No.列，比如1。
+
+Novacyl Order Number：NWP22116。
+
+Novacyl Reference：ZHANG Anita。
+
+Payment condition：30 days eof month by the 10th。
+
+Quantity(kg)：16000（表格里的Quantity(kg)）。
+
+Swift code：HSBCCNNSHWUX（底部的Swift code）。
+
+Tel：1110805092086（顶部的Tel）。
+
+Title：INVOICE（大写的INVOICE）。
+
+Total：1039520（price consist里的Total，还有表格里的Total Amount？不，Total在price consist的Total是1039520，另外表格里的Total Amount也是1039520？需要看。另外Total Amount(CNY)是表格里的Total Amount列的值1039520。
+
+Unit Price(CNY)：64.97（表格里的Unit Price(CNY)）。
+
+进料加工手册号：C230421A0610 出口第1项。
+
+项号：表格里的项号，比如1（第一行的项号是1）。
+
+现在需要逐个定位每个元素的bbox。因为是图片，需要估计坐标。先处理每个类别：
+
+1. Company Name：顶部的Hongri Sibo Technology Co., Ltd.，坐标大概是顶部偏上的文字。另外Customer里的公司名也是Company Name？可能需要看。但通常Company Name是开票方的公司名，即顶部的Hongri Sibo Technology Co., Ltd.。所以第一个Company Name的bbox是[330, 12, 669, 28]左右？看原文顶部：
+
+Hongri Sibo Technology Co., Ltd.
+264 Oconnor Underpass Suite 341 East Stacy, ME 10846
+District, Wuxi, China 214185
+Tel: 1110805092086 Fax: 1608281509018
+
+所以Company Name是第一行，bbox大概x1=330, y1=10, x2=669, y2=26。
+
+然后Title是INVOICE，大写的，位置在中间偏上，所以Title的bbox是[494, 220, 557, 242]左右（因为原文中INVOICE是大写，单独一行）。
+
+A/C NO：在底部，A/C NO.: 390-000883-011，所以bbox是[112, 950, 337, 968]左右（看原文底部的A/C NO.）。
+
+Address：开票方的地址是264 Oconnor Underpass...，所以Address的bbox是[330, 20, 669, 36]（包含地址行）。另外Customer的地址是Unit 7253 Box 8674...，也是Address类别？因为类别里有Address，所以需要看。但可能用户需要所有Address，包括开票方和客户地址。但先看开票方的Address：264 Oconnor Underpass Suite 341 East Stacy, ME 10846 District, Wuxi, China 214185，所以bbox是[330, 22, 669, 38]。
+
+Beneficiary bank：HSBC BANK (CHINA) COMPANY LIMITED WUXI BRANCH，位于底部，所以bbox是[112, 832, 669, 850]左右。
+
+Customer Order Number：4500309700，位于Customer Order Number: 后面，所以bbox是[112, 332, 292, 350]。
+
+Customer Reference：CHAMBERLAIN Valerie，位于Customer Reference: 后面，bbox是[112, 220, 325, 238]。
+
+Customer ref：2140017239，位于Customer ref: 后面，在Customer Order Number下面，所以bbox是[112, 352, 345, 370]。
+
+Date：2022-03-25，位于Date: 后面，bbox是[630, 232, 740, 250]。
+
+Delivery Manner：By sea，位于Delivery Manner: 后面，bbox是[112, 472, 162, 490]。
+
+Description of Goods：PARACETAMOL/ACETAMINOPHEN DENSE POWDER IN 800KG/BAG，表格中的Description列，bbox是[225, 620, 505, 640]（看表格里的内容）。
+
+Due date：2022-05-10，位于Due date: 后面，bbox是[630, 352, 740, 370]。
+
+FOB Value：958038，位于price consist里的FOB Value，bbox是[570, 600, 630, 618]（看price consist表格）。
+
+Fax：1608281509018，位于顶部Fax: 后面，bbox是[440, 30, 630, 48]。
+
+Freight：81280，位于price consist里的Freight，bbox是[570, 618, 630, 636]。
+
+Insurance：202，位于price consist里的Insurance，bbox是[570, 636, 630, 654]。
+
+Invoice No.：NWP22032502，位于Invoice No.: 后面，bbox是[630, 240, 770, 258]。
+
+NO.：表格中的No.列，第一行的No.是1，所以bbox是[100, 520, 120, 540]（表格的No.列标题）。
+
+Novacyl Order Number：NWP22116，位于Novacyl Order Number: 后面，bbox是[440, 352, 520, 370]。
+
+Novacyl Reference：ZHANG Anita，位于Novacyl Reference: 后面，bbox是[440, 232, 540, 250]。
+
+Payment condition：30 days eof month by the 10th，位于Payment condition: 后面，bbox是[630, 300, 820, 318]。
+
+Quantity(kg)：16000，表格中的Quantity(kg)列，第一行的值，bbox是[330, 620, 390, 640]。
+
+Swift code：HSBCCNNSHWUX，位于底部Swift code: 后面，bbox是[112, 860, 337, 878]。
+
+Tel：1110805092086，位于顶部Tel: 后面，bbox是[330, 30, 440, 48]。
+
+Total：1039520，price consist里的Total，bbox是[570, 654, 630, 672]。
+
+Total Amount(CNY)：1039520，表格中的Total Amount列，第一行的值，bbox是[590, 620, 690, 640]。
+
+Unit Price(CNY)：64.97，表格中的Unit Price(CNY)列，第一行的值，bbox是[420, 620, 490, 640]。
+
+进料加工手册号：C230421A0610 出口第1项，位于表格上方，bbox是[112, 520, 337, 538]。
+
+项号：表格中的项号，第一行的项号是1（项号列），bbox是[120, 520, 140, 540]（项号列的标题？或者看表格里的项号，比如第一行的项号是1，对应No.列？可能项号是表格中的“项号”列，即第二列，比如项号1，所以bbox是[140, 520, 160, 540]？看表格结构：
+
+表格的列是No.、项号、Description... 所以项号列是第二列，第一行的项号是1，所以项号的bbox是[140, 620, 160, 640]（第一行的项号值）。
+
+现在需要把所有这些整理成JSON数组，每个元素包含bbox和label。需要注意有些类别可能重复，比如Total有两个？不，Total在price consist里是总和，Total Amount(CNY)是表格里的总金额，可能是一样的。但需要按类别区分。
+
+现在开始逐个列出：
+
+1. Company Name（开票方）：[330, 10, 669, 28], label: Company Name
+2. Title（INVOICE）：[494, 220, 557, 242], label: Title
+3. A/C NO：[112, 950, 337, 968], label: A/C NO
+4. Address（开票方地址）：[330, 22, 669, 38], label: Address
+5. Beneficiary bank：[112, 832, 669, 850], label: Beneficiary bank
+6. Customer Order Number：[112, 332, 292, 350], label: Customer Order Number
+7. Customer Reference：[112, 220, 325, 238], label: Customer Reference
+8. Customer ref：[112, 352, 345, 370], label: Customer ref
+9. Date：[630, 232, 740, 250], label: Date
+10. Delivery Manner：[112, 472, 162, 490], label: Delivery Manner
+11. Description of Goods：[225, 620, 505, 640], label: Description of Goods
+12. Due date：[630, 352, 740, 370], label: Due date
+13. FOB Value：[570, 600, 630, 618], label: FOB Value
+14. Fax：[440, 30, 630, 48], label: Fax
+15. Freight：[570, 618, 630, 636], label: Freight
+16. Insurance：[570, 636, 630, 654], label: Insurance
+17. Invoice No.：[630, 240, 770, 258], label: Invoice No.
+18. NO.：[100, 520, 120, 540], label: NO.
+19. Novacyl Order Number：[440, 352, 520, 370], label: Novacyl Order Number
+20. Novacyl Reference：[440, 232, 540, 250], label: Novacyl Reference
+21. Payment condition：[630, 300, 820, 318], label: Payment condition
+22. Quantity(kg)：[330, 620, 390, 640], label: Quantity(kg)
+23. Swift code：[112, 860, 337, 878], label: Swift code
+24. Tel：[330, 30, 440, 48], label: Tel
+25. Total：[570, 654, 630, 672], label: Total
+26. Total Amount(CNY)：[590, 620, 690, 640], label: Total Amount(CNY)
+27. Unit Price(CNY)：[420, 620, 490, 640], label: Unit Price(CNY)
+28. 进料加工手册号：[112, 520, 337, 538], label: 进料加工手册号
+29. 项号：[140, 620, 160, 640], label: 项号
+
+现在需要检查是否有遗漏。比如Customer的Address（Unit 7253 Box...）是否是Address类别？是的，因为Address是地址，所以需要添加：
+
+Address（客户地址）：[112, 270, 440, 320]（看Customer部分的地址：Hongri Sibo Technology Co., Ltd. ROUSSILLON Unit 7253 Box 8674 DPO AE 63439 USC GC Brown FPO AA 34375），所以bbox是[112, 272, 440, 322]，label: Address。
+
+另外Delivery address：Delivery address: 后面的内容，可能也是Address，但图中Delivery address: 后面没有填写？看原文Delivery address: 后面是空的？不，原文中Delivery address: 可能没有内容，所以可能没有。但Customer的地址是存在的，所以需要添加这个Address。
+
+现在补充：
+
+30. Address（客户地址）：[112, 272, 440, 322], label: Address
+
+另外，Novacyl Order Number的bbox是否正确？Novacyl Order Number: NWP22116，所以位置在Novacyl Order Number: 后面，对应bbox是[440, 352, 520, 370]，正确。
+
+再检查项号：表格中的“项号”列，第一行的项号是1，对应表格中第二列（项号列），所以项号的值是1，bbox是[140, 620, 160, 640]（因为表格中No.是第一列，项号是第二列，所以项号列的标题是“项号”，然后第一行的项号是1，所以项号的bbox是该单元格的位置）。
+
+现在确认所有类别：
+
+A/C NO ✔️
+
+Address（开票方和客户）✔️
+
+Beneficiary bank ✔️
+
+Company Name（开票方）✔️
+
+Customer Order Number ✔️
+
+Customer Reference ✔️
+
+Customer ref ✔️
+
+Date ✔️
+
+Delivery Manner ✔️
+
+Description of Goods ✔️
+
+Due date ✔️
+
+FOB Value ✔️
+
+Fax ✔️
+
+Freight ✔️
+
+Insurance ✔️
+
+Invoice No. ✔️
+
+NO. ✔️
+
+Novacyl Order Number ✔️
+
+Novacyl Reference ✔️
+
+Payment condition ✔️
+
+Quantity(kg) ✔️
+
+Swift code ✔️
+
+Tel ✔️
+
+Title ✔️
+
+Total ✔️
+
+Total Amount(CNY) ✔️
+
+Unit Price(CNY) ✔️
+
+进料加工手册号 ✔️
+
+项号 ✔️
+
+现在将这些整理成JSON数组，每个元素是对象，包含bbox和label。注意bbox的坐标是相对的，基于图片的宽度和高度，这里假设图片的坐标系统，每个元素的x1, y1, x2, y2是大致的范围。
+
+现在编写JSON：
+
+[
+    {"bbox_2d": [330

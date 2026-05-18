@@ -1,1 +1,51 @@
-[{"bbox_2d": [337, 206, 662, 228], "label": "company"}, {"bbox_2d": [337, 242, 662, 292], "label": "address"}, {"bbox_2d": [325, 302, 675, 316], "label": "date"}, {"bbox_2d": [473, 682, 527, 696], "label": "total"}]
+用户现在需要从发票中提取address、company、date、total这几个类别。首先看每个部分：
+
+company：抬头是BOOK TALK (MUTIARA RINI) SDN BHD，所以找这个公司名称的区域。看发票上方的标题部分。
+
+address：下面的地址是NO. 53 & 55, JALAN UTAMA 34, MUTIARA RINI, SKUDAI, JOHOR. 这部分是地址。
+
+date：Date: 21/6/2018 9:14:08 PM，这个是日期时间。
+
+total：Rounded Total(RM): 9.30，所以总金额是9.30。
+
+现在要确定每个的bbox。先看company的区域，标题部分“BOOK TALK (MUTIARA RINI) SDN BHD”以及下面的编号等，但主要公司名称是这个。然后address是下面的地址行。date是Date字段的内容。total是Rounded Total那里的数值。
+
+现在逐个分析：
+
+1. company：对应“BOOK TALK (MUTIARA RINI) SDN BHD”，看其位置在发票上方，所以bbox大概是包含这个文字的区域。看原文中的位置，从“BOOK TALK (MUTIARA RINI) SDN BHD”到下面的GST Reg.等，但公司名称是主要标识，所以bbox可以是包含该公司的文字区域。
+
+2. address：是“NO. 53 & 55, JALAN UTAMA 34, MUTIARA RINI, SKUDAI, JOHOR.” 这部分。
+
+3. date：“21/6/2018 9:14:08 PM” 对应Date字段。
+
+4. total：“9.30” 对应Rounded Total(RM)的值。
+
+现在需要确定每个的坐标。先看发票的结构：
+
+- 公司名称：BOOK TALK (MUTIARA RINI) SDN BHD，位于上方，所以bbox的x范围大概是中间偏上，y是顶部区域。
+
+- 地址：在公司名称下面，NO. 53 & 55... 这部分。
+
+- 日期：在Document No.下面，Date: 后面的内容。
+
+- 总金额：Rounded Total(RM): 9.30，所以数值是9.30。
+
+现在具体看每个元素的位置：
+
+Company的bbox：看文字“BOOK TALK (MUTIARA RINI) SDN BHD”以及下面的1203399-T等，但主要公司名称是这个，所以bbox可以是包含该公司的区域，比如从“BOOK TALK...”到“JOHOR.”上面的部分？不，地址是下面的，公司是上面的名称。所以公司是“BOOK TALK (MUTIARA RINI) SDN BHD”，其位置在发票上方，所以bbox的坐标大概是：
+
+x1: 330（因为原文中是居中，所以看水平位置），y1: 200左右？可能需要更准确。不过根据OCR的内容，先提取文字对应的位置。
+
+另外，可能更简单的是看每个字段的标签：
+
+- company: "BOOK TALK (MUTIARA RINI) SDN BHD" → 对应的bbox是包含该文字的区域，比如在发票顶部，所以bbox是[337, 187, 662, 207]左右（因为原文中是居中，所以x范围是中间，y是上方）。
+
+- address: "NO. 53 & 55, JALAN UTAMA 34, MUTIARA RINI, SKUDAI, JOHOR." → 这部分在公司名称下面，所以bbox是[350, 225, 649, 260]左右。
+
+- date: "21/6/2018 9:14:08 PM" → 对应Date: 后面的内容，位置在Document No.下面，所以bbox是[320, 305, 500, 320]左右（因为Date: 后面是时间）。
+
+- total: "9.30" → 对应Rounded Total(RM): 后面的数值，所以bbox是[505, 455, 550, 470]左右（因为Rounded Total(RM): 9.30，所以数值是9.30）。
+
+现在需要确认每个的label和bbox。然后整理成JSON数组。
+</think>
+[{"bbox_2d": [337, 187, 662, 207], "label": "company"}, {"bbox_2d": [350, 225, 649, 260], "label": "address"}, {"bbox_2d": [320, 305, 500, 320], "label": "date"}, {"bbox_2d": [505, 455, 550, 470], "label": "total"}]

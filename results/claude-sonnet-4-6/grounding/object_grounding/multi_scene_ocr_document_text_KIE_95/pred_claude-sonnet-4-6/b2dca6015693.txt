@@ -1,11 +1,25 @@
 ```json
 [
-  {"bbox_2d": [100, 270, 700, 370], "label": "seller_name"},
-  {"bbox_2d": [100, 370, 700, 510], "label": "seller_address"},
-  {"bbox_2d": [100, 540, 700, 580], "label": "seller_gst_id"},
-  {"bbox_2d": [100, 590, 400, 640], "label": "date"},
-  {"bbox_2d": [400, 610, 750, 650], "label": "doc_no_receipt_no"},
-  {"bbox_2d": [400, 790, 750, 840], "label": "total_amount"},
-  {"bbox_2d": [400, 860, 750, 900], "label": "total_tax"}
+  {"bbox_2d": [116, 270, 480, 290], "label": "date"},
+  {"bbox_2d": [480, 285, 700, 305], "label": "doc_no_receipt_no"},
+  {"bbox_2d": [116, 355, 680, 430], "label": "seller_address"},
+  {"bbox_2d": [116, 455, 680, 475], "label": "seller_gst_id"},
+  {"bbox_2d": [116, 270, 680, 310], "label": "seller_name"},
+  {"bbox_2d": [600, 620, 720, 645], "label": "total_amount"},
+  {"bbox_2d": [600, 670, 720, 690], "label": "total_tax"}
+]
+```
+
+Wait, let me re-examine the receipt more carefully and provide accurate bounding boxes.
+
+```json
+[
+  {"bbox_2d": [100, 258, 350, 278], "label": "date"},
+  {"bbox_2d": [430, 278, 700, 298], "label": "doc_no_receipt_no"},
+  {"bbox_2d": [110, 330, 680, 430], "label": "seller_address"},
+  {"bbox_2d": [110, 448, 680, 468], "label": "seller_gst_id"},
+  {"bbox_2d": [110, 268, 680, 318], "label": "seller_name"},
+  {"bbox_2d": [620, 608, 730, 628], "label": "total_amount"},
+  {"bbox_2d": [580, 658, 730, 678], "label": "total_tax"}
 ]
 ```

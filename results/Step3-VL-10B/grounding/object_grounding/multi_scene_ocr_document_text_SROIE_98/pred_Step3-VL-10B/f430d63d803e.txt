@@ -1,18 +1,40 @@
-[
-  {
-    "bbox_2d": [205, 90, 792, 115],
-    "label": "company"
-  },
-  {
-    "bbox_2d": [205, 135, 792, 190],
-    "label": "address"
-  },
-  {
-    "bbox_2d": [205, 240, 792, 265],
-    "label": "date"
-  },
-  {
-    "bbox_2d": [205, 345, 792, 365],
-    "label": "total"
-  }
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The restaurant name is "RESTORAN WAN SHENG" and the business number. Let's check the text. The company name is at the top.
+- Address: The address lines: No.2, Jalan Temenggung 19/9, Seksyen 9, Bandar Mahkota Cheras, 43200 Cheras, Selangor.
+- Date: The date on the invoice is "02-04-2018 19:30:26".
+- Total: The total amount is "6.00" (TOTAL: 6.00).
+
+Now, find the bounding boxes for each.
+
+First, company: The text "RESTORAN WAN SHENG" is the company name. Let's check the coordinates. The top part has the company name.
+
+Address: The lines from "No.2, Jalan Temenggung..." to "43200 Cheras, Selangor".
+
+Date: The line "Date : 02-04-2018 19:30:26".
+
+Total: The "TOTAL: 6.00" line.
+
+Let's map each:
+
+1. Company: "RESTORAN WAN SHENG" and the business number. The main company name is the first line. Bounding box for company would be the area containing "RESTORAN WAN SHENG".
+
+2. Address: The block of address text.
+
+3. Date: The date line.
+
+4. Total: The total amount, which is "6.00" in the TOTAL line.
+
+Now, check the image's text positions.
+
+For company: The text "RESTORAN WAN SHENG" is at the top, so the bounding box is around that line.
+
+Address: The lines below the company number: "No.2, Jalan Temenggung 19/9, Seksyen 9, Bandar Mahkota Cheras, 43200 Cheras, Selangor".
+
+Date: "Date : 02-04-2018 19:30:26".
+
+Total: "TOTAL: 6.00" (the big total).
+
+Let's define each entry.
+</think>
+[{"bbox_2d": [92, 109, 422, 132], "label": "company"}, {"bbox_2d": [92, 144, 542, 200], "label": "address"}, {"bbox_2d": [92, 244, 337, 267], "label": "date"}, {"bbox_2d": [92, 484, 954, 507], "label": "total"}]

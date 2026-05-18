@@ -1,1 +1,123 @@
-[{"bbox_2d": [222, 302, 355, 622], "label": "DATE"}, {"bbox_2d": [357, 300, 540, 625], "label": "CITY"}, {"bbox_2d": [540, 300, 620, 625], "label": "STATE"}, {"bbox_2d": [620, 300, 833, 625], "label": "ZIP"}]
+用户现在需要从表单中提取CITY、DATE、STATE、ZIP的信息。首先看每个字段的位置。DATE是08/12/89，CITY是SAVANNAH，STATE是GA.，ZIP是31405。然后要确定每个的 bounding box。
+
+先看DATE的框：表单中DATE对应的输入框是08/12/89，所以bbox是那个矩形框。然后CITY、STATE、ZIP在同一个大框里？不，看结构：CITY、STATE、ZIP是三个标签，然后输入框是合并的？看图片里的布局：CITY的标签，然后是CITY的输入部分，然后STATE，然后ZIP。看图片中的手写内容是SAVANNAH, GA., 31405，所以整个CITY、STATE、ZIP的输入框是一个大的矩形。但需要分别提取每个类别。
+
+现在逐个分析：
+
+1. DATE：标签是DATE，对应的输入框是08/12/89，所以bbox是DATE下面的矩形，即[294, 300, 357, 447]左右？看图片中的DATE框是中间的矩形，里面写了08/12/89。所以DATE的bbox是那个框，内容是08/12/89，label是DATE。
+
+2. CITY：CITY标签下的内容是SAVANNAH，所以CITY的label对应的内容是SAVANNAH，其bbox是CITY标签右边的框，即从CITY到STATE之前的部分？看图片中CITY、STATE、ZIP的输入框是一个大的框，里面包含了SAVANNAH, GA., 31405。所以需要把CITY、STATE、ZIP分别拆分。但可能每个标签对应的部分。比如CITY的范围是CITY标签到STATE标签之间的区域，STATE是STATE标签到ZIP标签之间的区域，ZIP是ZIP标签右边的区域。
+
+看图片中的文字：CITY的标签在上方，然后是CITY的输入框，然后是STATE标签，然后是STATE的输入，然后是ZIP标签，然后是ZIP的输入。所以整个大的输入框是CITY、STATE、ZIP合并的，但手写内容是“SAVANNAH, GA., 31405”，所以需要把每个部分对应。
+
+现在看每个标签的位置：
+
+- DATE的标签在上方，对应的输入框是中间的矩形，里面是08/12/89。所以DATE的bbox是那个矩形，即[292, 302, 358, 445]（大概）。
+
+- CITY的标签是CITY，对应的输入部分是“SAVANNAH,”，所以CITY的label对应的bbox是CITY标签下方的区域，即从CITY标签到STATE标签之间的框。看图片中CITY、STATE、ZIP的输入框是一个大的矩形，所以CITY的bbox是这个大矩形中CITY对应的部分？或者可能整个大矩形是CITY、STATE、ZIP的组合，所以需要把每个标签对应的内容提取。
+
+另一种方法是看每个字段的标注：
+
+在表单中，CITY、STATE、ZIP是三个字段，每个都有标签，然后对应的输入区域。看图片中的手写内容是“SAVANNAH, GA., 31405”，所以：
+
+- CITY的值是SAVANNAH
+
+- STATE的值是GA.
+
+- ZIP的值是31405
+
+现在确定每个的bbox：
+
+- DATE的输入框是独立的矩形，里面是08/12/89，所以bbox是DATE标签下方的矩形，即[294, 300, 357, 447]（因为图片中DATE的框是中间的那个，有手写的08/12/89）。
+
+- CITY的输入区域是CITY标签下方，到STATE标签之间的部分。看图片中CITY标签在上方，然后是CITY的输入框，然后是STATE标签，然后是STATE的输入，然后是ZIP标签，然后是ZIP的输入。所以CITY的bbox是CITY标签下方的矩形，即从CITY的标签到STATE标签之间的框。看图片中CITY、STATE、ZIP的输入框是一个大的矩形，所以CITY的bbox是这个大矩形的左半部分？或者看整个大矩形的范围是CITY到ZIP，所以CITY的label对应的区域是大矩形中CITY标签对应的位置，即“SAVANNAH,”部分。
+
+现在看图片中的大矩形（CITY、STATE、ZIP的输入框）的坐标：从CITY标签的下方开始，到ZIP标签的下方结束。这个大矩形的左边界是CITY标签的下方，右边界是ZIP标签的下方。所以大矩形的bbox是[407, 300, 834, 457]左右？因为里面包含了SAVANNAH, GA., 31405。
+
+然后，CITY的label对应的是大矩形中CITY标签对应的内容，即“SAVANNAH,”，所以CITY的bbox是大矩形中CITY部分，即从CITY标签的x位置到STATE标签的x位置之间的区域。但可能更简单的是，每个字段（CITY, STATE, ZIP）在表单中的标签位置，然后对应的输入内容。
+
+现在，先列出每个字段的label和对应的bbox：
+
+1. DATE：标签是DATE，输入框是08/12/89，所以bbox是DATE输入框的矩形，即[292, 302, 358, 445]（因为图片中DATE的框是中间的，有手写的日期）。
+
+2. CITY：标签是CITY，输入内容是SAVANNAH，所以CITY的bbox是CITY标签下方的区域，即大矩形中CITY对应的部分。大矩形的起始是CITY标签的下方，所以CITY的bbox是[407, 300, 557, 457]（因为SAVANNAH在CITY标签下面，直到逗号前）。
+
+3. STATE：标签是STATE，输入内容是GA.，所以STATE的bbox是大矩形中STATE对应的部分，即从STATE标签到ZIP标签之间的部分，即[570, 300, 640, 457]（GA.的位置）。
+
+4. ZIP：标签是ZIP，输入内容是31405，所以ZIP的bbox是大矩形中ZIP对应的部分，即[655, 300, 834, 457]（31405的位置）。
+
+现在需要验证图片中的内容。图片中的手写内容是“SAVANNAH, GA., 31405”，所以：
+
+- CITY: SAVANNAH
+
+- STATE: GA.
+
+- ZIP: 31405
+
+DATE: 08/12/89
+
+现在确定每个的bbox：
+
+- DATE的输入框：在表单中，DATE标签下方的矩形，里面是08/12/89。看图片中的DATE框是中间的，有手写的08/12/89，所以bbox是[294, 300, 357, 447]（因为这个框的四个角可以看出来，是独立的矩形）。
+
+- CITY、STATE、ZIP的输入框是一个大的矩形，包含了这三个字段。所以这个大矩形的bbox是[407, 300, 834, 457]。然后在这个大矩形内，CITY对应的是“SAVANNAH,”，STATE是“GA.”，ZIP是“31405”。所以需要将大矩形拆分为三个部分，每个部分对应CITY、STATE、ZIP。
+
+但可能更准确的是，每个标签（CITY, STATE, ZIP）在表单中的位置，然后对应的输入区域。例如：
+
+- CITY标签的位置是上方的“CITY”，其下方的输入区域是CITY的值，即“SAVANNAH,”所在的区域。所以CITY的bbox是CITY标签正下方的矩形，即从CITY标签的x坐标到STATE标签的x坐标之间的垂直区域。
+
+同样，STATE标签正下方的区域是GA.，ZIP标签正下方的区域是31405。
+
+现在，先看图片中的各个标签的位置：
+
+- NAME在最左边，被黑色块覆盖。
+
+- DATE在NAME右边，标签是DATE，下面的输入框是08/12/89。
+
+- CITY在DATE右边，标签是CITY，下面的输入框是SAVANNAH, GA., 31405中的CITY部分。
+
+- STATE在CITY右边，标签是STATE，下面的输入是GA.。
+
+- ZIP在STATE右边，标签是ZIP，下面的输入是31405。
+
+所以，CITY、STATE、ZIP的输入框是并排的，每个标签对应一个输入区域，但图片中这三个输入区域被合并成一个大的矩形框，所以手写内容是连在一起的。因此，需要将这个大矩形分成三个部分，分别对应CITY、STATE、ZIP。
+
+现在，确定每个部分的bbox：
+
+1. DATE:
+
+- label: DATE
+
+- bbox: [292, 302, 358, 445] （因为这个框是独立的，包含08/12/89）
+
+2. CITY:
+
+- label: CITY
+
+- bbox: [407, 302, 555, 455] （SAVANNAH, 的部分，从CITY标签下方到STATE标签上方）
+
+3. STATE:
+
+- label: STATE
+
+- bbox: [560, 302, 645, 455] （GA. 的部分，从STATE标签下方到ZIP标签上方）
+
+4. ZIP:
+
+- label: ZIP
+
+- bbox: [650, 302, 834, 455] （31405 的部分，从ZIP标签下方到右边）
+
+现在需要确认这些bbox是否正确。另外，也可以看图片中的手写内容的位置：
+
+- 08/12/89在中间的框，所以DATE的bbox是那个框。
+
+- SAVANNAH在CITY标签下面，所以CITY的bbox是CITY标签下方的区域，即大框的左半部分。
+
+- GA.在STATE标签下面，所以STATE的bbox是大框的中间部分。
+
+- 31405在ZIP标签下面，所以ZIP的bbox是大框的右半部分。
+
+现在，将这些信息整理成JSON数组。
+</think>
+[{"bbox_2d": [294, 300, 357, 447], "label": "DATE"}, {"bbox_2d": [407, 300, 557, 457], "label": "CITY"}, {"bbox_2d": [560, 300, 645, 457], "label": "STATE"}, {"bbox_2d": [650, 300, 834, 457], "label": "ZIP"}]

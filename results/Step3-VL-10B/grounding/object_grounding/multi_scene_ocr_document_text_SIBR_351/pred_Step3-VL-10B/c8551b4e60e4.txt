@@ -1,319 +1,103 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
-
-首先看Company Name：Chuanghui Information Co., Ltd. 出现在顶部和Ship to那里。比如顶部的Chuanghui Information Co., Ltd. 是一个Company Name。另外Ship to里的也是，Invoice to里的Novartis Integrated Services Limited是Invoice to的公司？不，Invoice to是Novartis Integrated Services Limited，所以Company Name可能有多个？不过先看每个类别。
-
-先列所有需要的类别，然后找每个的实例。
-
-1. Address：比如Chuanghui的地址，Unit 4734 Box 7193 DP0 AA 30851 544 Mia Place North Julie, MT 80189；还有Ship to的地址Main Warehouse Ringaskiddy Co Cork；Bank Address是28751 Javier Union Morganstan, OK 17344。这些是Address类别。
-
-2. Amount USD：表格里的Amount USD列，比如1,187,199.00，还有VAT的0.00？不，VAT是0.00，属于VAT类别。Amount USD是商品的金额，比如1,187,199.00。
-
-3. Bank Address：Industrial and Commercial Bank of China Suzhou Branch的地址28751 Javier Union Morganstan, OK 17344。
-
-4. Bank Key：102305502489。
-
-5. Bank account：1102024809914017950。
-
-6. Bank name：Industrial and Commercial Bank of China Suzhou Branch。
-
-7. Company Name：Chuanghui Information Co., Ltd.（顶部和Ship to的公司），Novartis Integrated Services Limited（Invoice to的公司）。
-
-8. County of Origin：CHINA。
-
-9. Date：2021/07/24。
-
-10. Fax：+26-286-08158555。
-
-11. Invoice No.：21860755。
-
-12. Invoice Total Incl. Tax：1,187,199.00。
-
-13. Invoice to：Novartis Integrated Services Limited NIS Purchasing。
-
-14. KG Total Gross Weight：7,494.00 KG（Total Gross Weight对应的数值）。
-
-15. Novartis Material Code：805853。
-
-16. Order No.：4500798615。
-
-17. PALLET SIZE：1.1*1.1*0.86M3。
-
-18. Phone：+25-056-8155862。
-
-19. Price per Unit USD：219.00。
-
-20. Product Name：PYRENAMIN 07；3-二甲氨基-1-(3-吡啶基)-2-丙烯酮（Novartis Material Code对应的描述）。
-
-21. Quantity：5,421.00KG。
-
-22. SWIFT code：ICBKCNBJSZU。
-
-23. Serial No.：202107005。
-
-24. TOTAL PACKAGES：30 PALLETS。
-
-25. Title：INVOICE（大标题）。
-
-26. Total Net weight KG：5,421.00 KG。
-
-27. VAT：0.00。
-
-现在需要逐个确定每个元素的bbox。因为是图片，需要看每个部分的位置。比如：
-
-- Company Name（顶部）：Chuanghui Information Co., Ltd. 的位置是顶部右侧，文字是“Chuanghui Information Co., Ltd.”，bbox大概在顶部区域，比如x从520到820左右，y是顶部。
-
-- Address（Chuanghui的地址）：Unit 4734 Box 7193 DP0 AA 30851 544 Mia Place North Julie, MT 80189，这部分在顶部公司名称下方。
-
-- Amount USD：在表格的Amount USD列，对应数值1,187,199.00，还有VAT的0.00是VAT类别，不是Amount USD。所以Amount USD是商品行的金额。
-
-- Bank Address：在Bank Address: 28751 Javier Union Morganstan, OK 17344，这部分在银行信息里。
-
-- Bank Key：Bank Key: 102305502489。
-
-- Bank account：Bank account: 1102024809914017950。
-
-- Bank name：Bank name: Industrial and Commercial Bank of China Suzhou Branch。
-
-- County of Origin：Country of Origin CHINA，对应位置在Invoice信息里的Country of Origin。
-
-- Date：Date 2021/07/24，在Country of Origin下面。
-
-- Fax：Fax: +26-286-08158555，在顶部公司信息的Fax行。
-
-- Invoice No.：Invoice No. 21860755，在Serial No.下面。
-
-- Invoice Total Incl. Tax：Invoice Total Incl. Tax 1,187,199.00，在VAT下面。
-
-- Invoice to：Invoice to: Novartis Integrated Services Limited NIS Purchasing，对应位置在Ship to右边。
-
-- KG Total Gross Weight：Total Gross Weight 7,494.00 KG，对应标签是KG Total Gross Weight。
-
-- Novartis Material Code：Novartis Material Code: 805853，在产品描述里。
-
-- Order No.：Order No. 4500798615，在Delivery Doc下面。
-
-- PALLET SIZE：PALLET SIZE: 1.1*1.1*0.86M3，在产品信息下面。
-
-- Phone：Phone: +25-056-8155862，在顶部公司信息的Phone行。
-
-- Price per Unit USD：Price per Unit USD 219.00，在表格的Price per Unit列。
-
-- Product Name：0010 801525 PYRENAMIN 07；3-二甲氨基-1-(3-吡啶基)-2-丙烯酮，这两个是Product Name。
-
-- Quantity：5,421.00KG，在表格的Quantity列。
-
-- SWIFT code：SWIFT code: ICBKCNBJSZU，在银行信息里。
-
-- Serial No.：Serial No. 202107005，在Invoice信息的Serial No.。
-
-- TOTAL PACKAGES：TOTAL PACKAGES: 30 PALLETS，在PALLET SIZE下面。
-
-- Title：INVOICE，大标题，居中位置。
-
-- Total Net weight KG：Total Net Weight 5,421.00 KG，对应标签是Total Net weight KG。
-
-- VAT：VAT 0.00，在Total Net Weight上面。
-
-现在需要为每个类别生成一个条目，注意有些类别可能有多个实例，但用户要求“detect all objects”，所以每个出现的都要列？不过可能每个类别在发票中出现一次，比如Company Name可能有两个（Chuanghui和Novartis），但需要看。不过先按每个类别在发票中的出现情况。
-
-现在开始逐个处理：
-
-1. Company Name（Chuanghui Information Co., Ltd. 顶部）：
-bbox：看顶部文字，Chuanghui Information Co., Ltd. 的位置，x大概从520到820，y是顶部（比如y1=150, y2=170左右，假设图片坐标，但实际需要看。不过可能更简单的是看每个元素的位置。）
-
-不过可能更有效的是先列出所有需要的类别，然后在图中找到对应的位置。
-
-现在，先整理每个类别对应的元素：
-
-- Address：
-  - Chuanghui的地址：Unit 4734 Box 7193 DP0 AA 30851 544 Mia Place North Julie, MT 80189
-  - Ship to的地址：Main Warehouse Ringaskiddy Co Cork
-  - Bank Address：28751 Javier Union Morganstan, OK 17344
-  这三个都是Address类别，所以需要三个条目？
-
-但用户给的类别是“Address”作为一个类别，所以每个Address实例都要列。比如：
-
-Address（Chuanghui地址）：bbox是顶部公司信息下方的地址行。
-
-Address（Ship to地址）：Ship to: 下面的Main Warehouse Ringaskiddy Co Cork。
-
-Address（Bank Address）：Bank Address: 后面的内容。
-
-- Amount USD：
-  商品行的Amount USD是1,187,199.00，所以一个条目。
-
-- Bank Address：同上，Bank Address的条目。
-
-- Bank Key：Bank Key: 102305502489，一个条目。
-
-- Bank account：Bank account: 1102024809914017950，一个条目。
-
-- Bank name：Bank name: Industrial and Commercial Bank of China Suzhou Branch，一个条目。
-
-- Company Name：
-  - Chuanghui Information Co., Ltd.（顶部和Ship to的公司，两个实例？因为Ship to也是Chuanghui，所以Ship to的Company Name也是Chuanghui，而Invoice to是Novartis Integrated Services Limited，所以Company Name有两个：Chuanghui和Novartis。）
-
-- County of Origin：CHINA，一个条目。
-
-- Date：2021/07/24，一个条目。
-
-- Fax：+26-286-08158555，一个条目。
-
-- Invoice No.：21860755，一个条目。
-
-- Invoice Total Incl. Tax：1,187,199.00，一个条目。
-
-- Invoice to：Novartis Integrated Services Limited NIS Purchasing，一个条目。
-
-- KG Total Gross Weight：7,494.00 KG（Total Gross Weight的数值），一个条目。
-
-- Novartis Material Code：805853，一个条目。
-
-- Order No.：4500798615，一个条目。
-
-- PALLET SIZE：1.1*1.1*0.86M3，一个条目。
-
-- Phone：+25-056-8155862，一个条目。
-
-- Price per Unit USD：219.00，一个条目。
-
-- Product Name：
-  - PYRENAMIN 07
-  - 3-二甲氨基-1-(3-吡啶基)-2-丙烯酮
-  两个条目？
-
-- Quantity：5,421.00KG，一个条目。
-
-- SWIFT code：ICBKCNBJSZU，一个条目。
-
-- Serial No.：202107005，一个条目。
-
-- TOTAL PACKAGES：30 PALLETS，一个条目。
-
-- Title：INVOICE，一个条目。
-
-- Total Net weight KG：5,421.00 KG，一个条目。
-
-- VAT：0.00，一个条目。
-
-现在需要为每个类别生成对应的bbox和label。由于是图片，需要估计每个元素的位置。比如：
-
-Title（INVOICE）：在发票中间偏上的大标题，文字是“INVOICE”，所以bbox是包含这个标题的区域，比如x从100到900，y在300左右（假设图片的坐标，因为实际图片中INVOICE是大写，居中）。
-
-Serial No.：在Invoice信息部分，Serial No. 202107005，对应位置在右上方，和Invoice No.等并列。bbox是该行的区域。
-
-Invoice No.：21860755，对应Serial No.下面的行。
-
-Order No.：4500798615，在Order No.标签下的数值。
-
-Delivery Doc：可能没有内容，但Country of Origin是CHINA，Date是2021/07/24。
-
-Ship to：Chuanghui Information Co., Ltd. Main Warehouse Ringaskiddy Co Cork，这部分的Address是Ship to的地址。
-
-Invoice to：Novartis Integrated Services Limited NIS Purchasing，这部分是Invoice to的公司信息。
-
-Company Name（Chuanghui）：顶部的Chuanghui Information Co., Ltd.，以及Ship to中的Chuanghui Information Co., Ltd.，所以两个Company Name实例。
-
-Company Name（Novartis）：Invoice to中的Novartis Integrated Services Limited。
-
-现在，开始构建每个条目：
-
-1. Company Name（顶部Chuanghui）：
-bbox：[520, 100, 820, 120]（假设，实际看图片中公司名称的位置，顶部右侧）
-label: Company Name
-
-2. Address（Chuanghui的地址）：
-bbox：[520, 125, 820, 150]（地址行）
-label: Address
-
-3. Phone（Chuanghui的Phone）：
-bbox：[520, 155, 620, 170]（Phone: +25-056-8155862）
-label: Phone
-
-4. Fax（Chuanghui的Fax）：
-bbox：[520, 175, 620, 190]（Fax: +26-286-08158555）
-label: Fax
-
-5. Serial No.：
-bbox：[670, 200, 750, 215]（Serial No. 202107005）
-label: Serial No.
-
-6. Invoice No.：
-bbox：[670, 215, 750, 230]（Invoice No. 21860755）
-label: Invoice No.
-
-7. Order No.：
-bbox：[670, 230, 770, 245]（Order No. 4500798615）
-label: Order No.
-
-8. Delivery Doc：
-可能没有内容，跳过。Country of Origin：
-bbox：[670, 245, 750, 260]（Country of Origin CHINA）
-label: County of Origin
-
-9. Date：
-bbox：[670, 260, 750, 275]（Date 2021/07/24）
-label: Date
-
-10. Ship to: Company Name（Chuanghui）：
-bbox：[100, 300, 350, 320]（Ship to: Chuanghui Information Co., Ltd.）
-label: Company Name
-
-11. Ship to: Address（Main Warehouse...）：
-bbox：[100, 325, 350, 350]（Main Warehouse Ringaskiddy Co Cork）
-label: Address
-
-12. Invoice to: Company Name（Novartis）：
-bbox：[450, 300, 650, 330]（Invoice to: Novartis Integrated Services Limited NIS Purchasing）
-label: Invoice to
-
-13. Title（INVOICE）：
-bbox：[100, 370, 900, 390]（大标题INVOICE）
-label: Title
-
-14. Item Material / Description（Product Name）：
-- PYRENAMIN 07：
-bbox：[100, 420, 400, 440]（0010 801525 PYRENAMIN 07）
-label: Product Name
-
-- 3-二甲氨基-1-(3-吡啶基)-2-丙烯酮：
-bbox：[100, 445, 400, 465]（Novartis Material Code: 805853 3-二甲氨基-1-(3-吡啶基)-2-丙烯酮）
-label: Product Name
-
-15. Quantity：
-bbox：[420, 420, 520, 440]（5,421.00KG）
-label: Quantity
-
-16. Price per Unit USD：
-bbox：[540, 420, 640, 440]（219.00）
-label: Price per Unit USD
-
-17. Amount USD：
-bbox：[660, 420, 760, 440]（1,187,199.00）
-label: Amount USD
-
-18. PALLET SIZE：
-bbox：[100, 470, 300, 490]（PALLET SIZE: 1.1*1.1*0.86M3）
-label: PALLET SIZE
-
-19. TOTAL PACKAGES：
-bbox：[100, 490, 300, 505]（TOTAL PACKAGES: 30 PALLETS）
-label: TOTAL PACKAGES
-
-20. VAT：
-bbox：[660, 520, 760, 540]（VAT 0.00）
-label: VAT
-
-21. Invoice Total Incl. Tax：
-bbox：[660, 545, 760, 560]（Invoice Total Incl. Tax 1,187,199.00）
-label: Invoice Total Incl.Tax
-
-22. Total Net weight KG：
-bbox：[100, 570, 300, 585]（Total Net Weight 5,421.00 KG）
-label: Total Net weight KG
-
-23. Total Gross Weight：
-bbox：[100, 585, 300, 600]（Total Gross Weight 7,494.00 KG）
-label: KG Total Gross Weight
-
-2
+用户现在需要从发票中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name，图顶部是Chuanghui Information Co., Ltd.，所以Company Name对应这个。然后Address是Chuanghui Information Co., Ltd.的地址，Unit 4734...这些。然后Amount USD是1,187,199.00。Bank Address是Industrial and Commercial Bank of China Suzhou Branch的地址28751 Javier Union...。Bank Key是102305502489。Bank account是1102024809914017950。Bank name是Industrial and Commercial Bank of China Suzhou Branch。County of Origin是CHINA。Date是2021/07/24。Fax是+26-286-08158555。Invoice No.是21860755。Invoice Total Incl.Tax是1,187,199.00。Invoice to是Novartis Integrated Services Limited NIS Purchasing。KG Total Gross Weight是7,494.00。Novartis Material Code是805853。Order No.是4500798615。PALLET SIZE是1.1*1.1*0.86M3。Phone是+25-056-81558862。Price per Unit USD是219.00。Product Name是PYRENAMIN 07和3-二甲氨基-1-(3-吡啶基)-2-丙烯酮。Quantity是5,421.00KG。SWIFT code是ICBKCNBJSZU。Serial No.是202107005。TOTAL PACKAGES是30 PALLETS。Title是INVOICE。Total Net weight KG是5,421.00。VAT是0.00。
+
+现在需要为每个类别找到对应的bbox。需要看每个元素在图中的位置，比如Title是“INVOICE”这个大标题，所以bbox是对应的位置。然后逐个处理：
+
+1. Address：Chuanghui Information Co., Ltd.的地址，Unit 4734 Box 7193 DP0 AA 30851 544 Mia Place North Julie, MT 80189。这部分在图的右上角，所以bbox是[609, 10, 885, 158]左右？需要看原文中的地址部分。
+
+看原文中的地址部分：
+
+Chuanghui Information Co., Ltd.
+Unit 4734 Box 7193 DP0 AA 30851
+544 Mia Place North Julie, MT 80189
+215537 Phone: +25-056-81558862
+Fax: +26-286-08158555
+
+所以Address是这三行地址，bbox应该是包含这三行的区域，比如x从609到885，y从10到158左右。
+
+然后Company Name是Chuanghui Information Co., Ltd.，在Ship to和Invoice to里的公司名，以及顶部的公司名。顶部的Company Name是Chuanghui Information Co., Ltd.，所以bbox是[609, 10, 885, 30]左右。
+
+现在逐个处理每个类别：
+
+- Address: 对应Chuanghui Information Co., Ltd.的地址，即Unit 4734... Julie, MT 80189。看原文中的地址部分，所以bbox是[609, 12, 885, 156]（包含三行地址）。
+- Amount USD: 1,187,199.00，在表格的最后一行Amount列。看表格中的Amount USD是1,187,199.00，对应位置在Item行的Amount列，所以bbox是[1153, 472, 1475, 492]？不，看发票中的Amount USD列，数值是1,187,199.00，对应行的Amount列。另外Invoice Total Incl.Tax也是这个数，所以需要确认。看发票中的“Amount USD”列下的数值是1,187,199.00，所以bbox是对应那个单元格。
+- Bank Address: Industrial and Commercial Bank of China Suzhou Branch的地址28751 Javier Union Morganstad, OK 17344。这部分在Bank account下面，所以bbox是[105, 777, 632, 794]左右。
+- Bank Key: 102305502489，在Bank Key: 后面的数值，bbox是[110, 796, 295, 812]。
+- Bank account: 1102024809914017950，在Bank account: 后面的数值，bbox是[110, 757, 495, 773]。
+- Bank name: Industrial and Commercial Bank of China Suzhou Branch，在Bank name: 后面，bbox是[110, 765, 565, 781]。
+- Company Name: Chuanghui Information Co., Ltd.，顶部的公司名，bbox是[609, 10, 885, 30]。
+- County of Origin: CHINA，在Date上面的Country of Origin行，值是CHINA，bbox是[625, 302, 705, 318]。
+- Date: 2021/07/24，在Date行，bbox是[625, 314, 735, 330]。
+- Fax: +26-286-08158555，在顶部的Fax行，bbox是[609, 156, 885, 172]。
+- Invoice No.: 21860755，在Invoice No.行，值是21860755，bbox是[625, 274, 735, 290]。
+- Invoice Total Incl.Tax: 1,187,199.00，在Invoice Total Incl. Tax行，值是1,187,199.00，bbox是[625, 624, 885, 640]。
+- Invoice to: Novartis Integrated Services Limited NIS Purchasing，在Invoice to: 下面的内容，bbox是[625, 240, 885, 294]（因为Invoice to下面有四行：Novartis, Integrated Services Limited, NIS Purchasing）。
+- KG Total Gross Weight: 7,494.00，在Total Gross Weight行，值是7,494.00，单位KG，所以bbox是[625, 734, 885, 750]。
+- Novartis Material Code: 805853，在Novartis Material Code: 后面的数值，bbox是[110, 477, 295, 493]。
+- Order No.: 4500798615，在Order No.行，值是4500798615，bbox是[625, 292, 885, 308]。
+- PALLET SIZE: 1.1*1.1*0.86M3，在PALLET SIZE行，值是1.1*1.1*0.86M3，bbox是[110, 487, 375, 503]。
+- Phone: +25-056-81558862，在顶部的Phone行，bbox是[609, 158, 885, 174]。
+- Price per Unit USD: 219.00，在Price per Unit USD列，值是219.00，对应表格中的数值，bbox是[425, 472, 535, 492]。
+- Product Name: PYRENAMIN 07和3-二甲氨基-1-(3-吡啶基)-2-丙烯酮，这是Item Material / Description中的内容，所以bbox是[110, 442, 425, 460]（包含两行描述）。
+- Quantity: 5,421.00KG，在Quantity列，值是5,421.00KG，bbox是[305, 472, 425, 492]。
+- SWIFT code: ICBKCNBJSZU，在SWIFT code: 后面的数值，bbox是[110, 802, 325, 818]。
+- Serial No.: 202107005，在Serial No.行，值是202107005，bbox是[625, 254, 735, 270]。
+- TOTAL PACKAGES: 30 PALLETS，在TOTAL PACKAGES行，值是30 PALLETS，bbox是[110, 505, 375, 521]。
+- Title: INVOICE，在发票的大标题，bbox是[115, 330, 885, 360]（因为INVOICE是大写，居中）。
+- Total Net weight KG: 5,421.00，在Total Net Weight行，值是5,421.00，单位KG，bbox是[625, 714, 885, 730]。
+- VAT: 0.00，在VAT行，值是0.00，bbox是[625, 604, 885, 620]。
+
+现在需要将每个类别对应到这些bbox和label。需要确保每个类别都覆盖到，没有遗漏。
+
+现在整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
+
+需要注意坐标的准确性，可能需要根据图片的布局来估计。比如：
+
+- Company Name: 顶部的公司名，Chuanghui Information Co., Ltd.，bbox是[610, 10, 883, 32]
+- Address: 公司地址，Unit 4734... Julie, MT 80189，bbox是[610, 34, 883, 156]（包含三行地址）
+- Phone: +25-056-81558862，bbox是[610, 158, 883, 176]
+- Fax: +26-286-08158555，bbox是[610, 178, 883, 196]
+- Ship to: Chuanghui Information Co., Ltd. Main Warehouse Ringaskiddy Co Cork，这部分可能不需要，因为用户没要求Ship to，但用户要求的是Address（公司地址），所以Address是公司地址。
+
+现在逐个处理所有要求的类别：
+
+1. Address: 对应Chuanghui Information Co., Ltd.的地址（Unit 4734... Julie, MT 80189）→ bbox [609, 32, 885, 154]
+2. Amount USD: 1,187,199.00（在Item的Amount列）→ bbox [1153, 470, 1475, 490]？不，看发票中的表格，Item的Quantity是5,421.00KG，Price per Unit USD是219.00，Amount USD是1,187,199.00。所以Amount USD的单元格是对应数值，bbox是[750, 472, 885, 492]（因为Amount列在最右边）
+3. Bank Address: 28751 Javier Union Morganstad, OK 17344 → bbox [110, 777, 632, 794]
+4. Bank Key: 102305502489 → bbox [110, 796, 295, 812]
+5. Bank account: 1102024809914017950 → bbox [110, 757, 495, 773]
+6. Bank name: Industrial and Commercial Bank of China Suzhou Branch → bbox [110, 765, 565, 781]
+7. Company Name: Chuanghui Information Co., Ltd.（顶部）→ bbox [609, 10, 885, 30]
+8. County of Origin: CHINA → bbox [625, 302, 705, 318]
+9. Date: 2021/07/24 → bbox [625, 314, 735, 330]
+10. Fax: +26-286-08158555 → bbox [609, 178, 885, 196]
+11. Invoice No.: 21860755 → bbox [625, 274, 735, 290]
+12. Invoice Total Incl.Tax: 1,187,199.00 → bbox [625, 624, 885, 640]
+13. Invoice to: Novartis Integrated Services Limited NIS Purchasing → bbox [625, 240, 885, 294]（四行内容）
+14. KG Total Gross Weight: 7,494.00 → bbox [625, 734, 885, 750]
+15. Novartis Material Code: 805853 → bbox [110, 477, 295, 493]
+16. Order No.: 4500798615 → bbox [625, 292, 885, 308]
+17. PALLET SIZE: 1.1*1.1*0.86M3 → bbox [110, 487, 375, 503]
+18. Phone: +25-056-81558862 → bbox [609, 158, 885, 176]
+19. Price per Unit USD: 219.00 → bbox [425, 472, 535, 492]
+20. Product Name: PYRENAMIN 07 3-二甲氨基-1-(3-吡啶基)-2-丙烯酮 → bbox [110, 442, 425, 460]（两行描述）
+21. Quantity: 5,421.00KG → bbox [305, 472, 425, 492]
+22. SWIFT code: ICBKCNBJSZU → bbox [110, 802, 325, 818]
+23. Serial No.: 202107005 → bbox [625, 254, 735, 270]
+24. TOTAL PACKAGES: 30 PALLETS → bbox [110, 505, 375, 521]
+25. Title: INVOICE → bbox [115, 330, 885, 360]（大标题）
+26. Total Net weight KG: 5,421.00 → bbox [625, 714, 885, 730]
+27. VAT: 0.00 → bbox [625, 604, 885, 620]
+
+现在需要检查是否有重复或遗漏。用户要求的类别列表是：
+
+Address, Amount USD, Bank Address, Bank Key, Bank account, Bank name, Company Name, County of Origin, Date, Fax, Invoice No., Invoice Total Incl.Tax, Invoice to, KG Total Gross Weight, Novartis Material Code, Order No., PALLET SIZE, Phone, Price per Unit USD, Product Name, Quantity, SWIFT code, Serial No., TOTAL PACKAGES, Title, Total Net weight KG, VAT。
+
+共27个类别，现在数一下上面的列表，每个都对应了。现在需要将每个的bbox和label整理成JSON数组。
+
+注意：有些bbox的坐标可能需要更精确，但因为是示意图，大致范围即可。另外，确保每个类别只出现一次。
+
+现在编写JSON数组：
+</think>
+[{"bbox_2d": [609, 32, 885, 154], "label": "Address"}, {"bbox_2d": [750, 472, 885, 492], "label": "Amount USD"}, {"bbox_2d": [110, 777, 63

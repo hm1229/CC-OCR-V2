@@ -1,25 +1,3 @@
-I need to find phone numbers in this document image.
-
-Looking at the document, I can identify a phone number in the header section: "139-2222-3333"
-
-Let me locate this in the image. The phone number appears in the top right area of the header section.
-
-[0.828, 0.098, 0.941, 0.114] - This would be around where "139-2222-" starts
-Actually, looking more carefully at the layout, the phone number "139-2222-3333" appears to span across two lines in the header due to text wrapping.
-
-Let me identify the complete phone number area:
-- "139-2222-" appears at the end of one line
-- "3333" appears at the start of the next line
-
-Looking at the header: "smq.sec@chengyue-cloud.net | 139-2222-"
-and then "3333 | smq-cloud.io" on the next line
-
-The phone number is "139-2222-3333"
-
-For the bounding box, I need to estimate where this phone number appears:
-- The "139-2222-" part is in the upper right area
-- The "3333" part is below it on the left side of the second header line
-
-Let me provide a bounding box that encompasses the full phone number across both lines:
-
-[{"bbox_2d": [0.828, 0.098, 0.941, 0.129], "label": "phone"}]
+```json
+[{"bbox_2d": [0.824, 0.094, 0.939, 0.112], "label": "phone"}]
+```

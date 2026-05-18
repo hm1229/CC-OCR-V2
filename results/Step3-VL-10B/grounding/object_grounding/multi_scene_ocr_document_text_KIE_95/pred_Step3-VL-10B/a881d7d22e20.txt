@@ -1,9 +1,163 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The receipt has "29 Jun 18 06:01:34 PM" which is the transaction date. Also, the closed time is "29 Jun 18 06:25:04 PM". Let's check which one is the date. The main transaction date is probably the one with the time of the check. Let's look for the date field. The line "29 Jun 18 06:01:34 PM" is the date of the transaction.
+
+doc_no_receipt_no: The receipt number is "Chk 276703" and the table number is "TBL35 / 1". Wait, the doc_no might be the check number. Let's check the receipt. The "Chk 276703" is the check number. Also, the receipt has "TBL35 / 1" which is the table number. But the question is doc_no_receipt_no. Let's see, maybe the receipt number is part of the check. Let's check the fields. The receipt has "Chk 276703" so that's the document number.
+
+seller_address: The address is "JALAN TEMENGGUNG 23/9 BANDAR MAHKOTA CHERAS 43200 SELANGOR DARUL EHSAN, MALAYSIA". Let's find that section.
+
+seller_gst_id: The GST ID is "0 0 0 1 6 4 2 7 0 0 8 0" (with spaces, but the value is 000164270080 maybe). The line says "GST ID:0 0 0 1 6 4 2 7 0 0 8 0".
+
+seller_name: The top of the receipt has "PappaRich BMC".
+
+total_amount: The total after adjustment is "TTL ATF RND 46.90" and the payment is 56.90, change due 10.00. The total amount paid is 56.90 (CASH), but the total of the items is 46.89 + 0.01 adjustment = 46.90. Wait, the "Total:" is 46.89, then RND ADJ 0.01, so TTL ATF RND is 46.90. So total_amount is 46.90.
+
+total_tax: The GST is at 0%, so total_tax is 0.00. Let's check the GST summary: S=GST @0%: 46.90, GST(RM) 0.00. So total_tax is 0.00.
+
+Now let's map each:
+
+date: The date is "29 Jun 18" (from the transaction time line: "29 Jun 18 06:01:34 PM"). Let's check the bounding box for that line.
+
+doc_no_receipt_no: The check number is "Chk 276703" and the table number is "TBL35 / 1". But the receipt number might be the check number. Let's check the line "Chk 276703 Guest1" — so Chk 276703 is the document number.
+
+seller_address: The address lines are from "JALAN TEMENGGUNG 23/9" down to "MALAYSIA".
+
+seller_gst_id: The line "GST ID:0 0 0 1 6 4 2 7 0 0 8 0".
+
+seller_name: The top line "PappaRich BMC".
+
+total_amount: The "TTL ATF RND 46.90" is the total amount after tax and adjustment.
+
+total_tax: The GST amount is 0.00, as per "GST AT 0%" and the GST summary shows GST(RM) 0.00.
+
+Now let's find the bounding boxes for each.
+
+1. date: The line "29 Jun 18 06:01:34 PM" — let's check the coordinates. The receipt's text: that line is under "Chk 276703 Guest1". So the date is part of that line.
+
+2. doc_no_receipt_no: "Chk 276703" is the document number. Let's check the line "Chk 276703 Guest1" — the Chk number is the doc_no.
+
+3. seller_address: The address block is from "NO.19 & 21" down to "MALAYSIA". Let's check the lines:
+
+NO.19 & 21
+
+JALAN TEMENGGUNG 23/9
+
+BANDAR MAHKOTA CHERAS
+
+43200 SELANGOR DARUL EHSAN, MALAYSIA
+
+4. seller_gst_id: The line "GST ID:0 0 0 1 6 4 2 7 0 0 8 0"
+
+5. seller_name: The top line "PappaRich BMC"
+
+6. total_amount: The line "TTL ATF RND 46.90" — that's the total amount after all adjustments.
+
+7. total_tax: The GST amount is 0.00, which is in the GST summary: "GST(RM) 0.00" for S=GST @0% and Z=GST @0%.
+
+Now let's define each bounding box.
+
+First, seller_name: The top of the receipt, "PappaRich BMC" — the text is centered. Let's check the coordinates. The first line is "PappaRich BMC" — so the bounding box for that line.
+
+doc_no_receipt_no: The line "Chk 276703 Guest1" — the Chk number is the document number. So the text "Chk 276703" is part of that line.
+
+date: The line "29 Jun 18 06:01:34 PM" — that's the transaction date.
+
+seller_address: The address lines: from "NO.19 & 21" to "MALAYSIA". Let's check the lines:
+
+"NO.19 & 21"
+
+"JALAN TEMENGGUNG 23/9"
+
+"BANDAR MAHKOTA CHERAS"
+
+"43200 SELANGOR DARUL EHSAN, MALAYSIA"
+
+These are the address lines.
+
+seller_gst_id: The line "GST ID:0 0 0 1 6 4 2 7 0 0 8 0" — that's the GST ID.
+
+total_amount: The line "TTL ATF RND 46.90" — total amount.
+
+total_tax: The GST amount is 0.00, which is in the GST summary. Let's check the line "GSTSummary Amount(RM) GST(RM)" and then "S=GST @0%: 46.90 0.00" — so the GST(RM) is 0.00. So total_tax is 0.00, which is the GST amount.
+
+Now, let's list each with their bounding boxes.
+
+Let's go step by step.
+
+1. seller_name: The text "PappaRich BMC" is at the top. Let's find its position. The first line of the receipt is "PappaRich BMC". So the bounding box would be around that line.
+
+2. doc_no_receipt_no: The check number is "Chk 276703". Let's look at the line "Chk 276703 Guest1". The "Chk 276703" is the document number.
+
+3. date: The date is "29 Jun 18" from the line "29 Jun 18 06:01:34 PM".
+
+4. seller_address: The address block includes multiple lines. Let's check the lines:
+
+- "NO.19 & 21"
+- "JALAN TEMENGGUNG 23/9"
+- "BANDAR MAHKOTA CHERAS"
+- "43200 SELANGOR DARUL EHSAN, MALAYSIA"
+
+These are all part of the seller address.
+
+5. seller_gst_id: The line "GST ID:0 0 0 1 6 4 2 7 0 0 8 0"
+
+6. total_amount: The line "TTL ATF RND 46.90" — this is the total amount after adjustments.
+
+7. total_tax: The GST amount is 0.00, which is in the GST summary. For example, the line "S=GST @0%: 46.90 0.00" — the GST(RM) is 0.00. So total_tax is 0.00.
+
+Now, let's assign each label with their bounding boxes.
+
+First, let's identify the coordinates. Since the image is a receipt, we can estimate the bounding boxes based on the text positions.
+
+Let's list each:
+
+- seller_name: The top line "PappaRich BMC". Let's check the text: the first line is centered. Bounding box: [229, 29, 770, 52] (approx, since the text is "PappaRich BMC" — the image shows it as "PappaRi ch BMC" but probably OCR error, but the intended is PappaRich BMC).
+
+- doc_no_receipt_no: The line "Chk 276703 Guest1". The "Chk 276703" is the document number. Bounding box: [22, 447, 277, 470] (since "Chk 276703" is on the left, Guest1 on the right).
+
+- date: The line "29 Jun 18 06:01:34 PM". Bounding box: [22, 487, 490, 510] (the date and time).
+
+- seller_address: The address lines. Let's take the block from "NO.19 & 21" to "MALAYSIA". The lines are:
+
+  - "NO.19 & 21" — line after the name.
+  - "JALAN TEMENGGUNG 23/9"
+  - "BANDAR MAHKOTA CHERAS"
+  - "43200 SELANGOR DARUL EHSAN, MALAYSIA"
+
+  So the bounding box would cover these lines. Let's check the coordinates. The address starts after the name and before the tax invoice. So the lines are from y around 100 to y around 180.
+
+- seller_gst_id: The line "GST ID:0 0 0 1 6 4 2 7 0 0 8 0". This is below the address and above the counter info. Bounding box: [22, 237, 880, 258] (since "GST ID:..." is there).
+
+- total_amount: The line "TTL ATF RND 46.90". Let's find where that is. Looking at the receipt, after the subtotal, service charge, total, etc. The "TTL ATF RND 46.90" is the total amount. Bounding box: [22, 620, 320, 642] (approx, since the text is there).
+
+- total_tax: The GST amount is 0.00. Let's check the GST summary section. The line "S=GST @0%: 46.90 0.00" — the GST(RM) is 0.00. So the total_tax is 0.00. Bounding box: [22, 920, 320, 942] (the GST summary lines).
+
+Now, let's structure each entry.
+
+Let's verify each:
+
+1. date: The transaction date is "29 Jun 18 06:01:34 PM". The label is "date".
+
+2. doc_no_receipt_no: The check number is "Chk 276703". Label is "doc_no_receipt_no".
+
+3. seller_address: The address block. Label is "seller_address".
+
+4. seller_gst_id: The GST ID line. Label is "seller_gst_id".
+
+5. seller_name: The top name. Label is "seller_name".
+
+6. total_amount: The total after adjustments (TTL ATF RND 46.90). Label is "total_amount".
+
+7. total_tax: The GST amount, which is 0.00. Label is "total_tax".
+
+Now, let's write the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [229, 29, 770, 52], "label": "seller_name"},
-    {"bbox_2d": [229, 62, 770, 172], "label": "seller_address"},
-    {"bbox_2d": [229, 182, 820, 205], "label": "seller_gst_id"},
-    {"bbox_2d": [229, 282, 370, 305], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [229, 312, 520, 335], "label": "date"},
-    {"bbox_2d": [229, 442, 520, 465], "label": "total_amount"},
-    {"bbox_2d": [460, 625, 520, 645], "label": "total_tax"}
+    {"bbox_2d": [229, 30, 770, 53], "label": "seller_name"},
+    {"bbox_2d": [22, 447, 277, 470], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [22, 487, 490, 510], "label": "date"},
+    {"bbox_2d": [22, 110, 877, 190], "label": "seller_address"},
+    {"bbox_2d": [22, 237, 880, 258], "label": "seller_gst_id"},
+    {"bbox_2d": [22, 620, 320, 642], "label": "total_amount"},
+    {"bbox_2d": [22, 920, 320, 942], "label": "total_tax"}
 ]

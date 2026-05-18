@@ -1,125 +1,111 @@
-用户现在需要识别图片中的各个指定对象，先逐个看。首先看公司名是Elixin Media Hotel和飞利信传媒酒店，标题是INFORMATION INVOICE。地址是PSC 3897...那部分。邮编是300120。电话Tel是+82-62-8855-595。传真Fax是+58-88-5869-2285。然后Room房号是0802。Loyalty NO.会员号码是XXXXX5477。No.of Guest住店人数是1。Confirmation No.确认号是9775754。Cashier收银员是Joanne Cobb。Page No.页是1。Date Printed打印日期是11-06-20。Invoice No.账单号是297288。Departure Date离店日期是11-05-20。Departure Time离店时间是10:20。Arrival Date入住日期是11-04-20。Arrival Time入住时间是21:12。然后表格里的DATE日期列，DESCRIPTION项目列，CHARGES消费列，CREDITS付款列。还有Balance余额是CNY0.00。另外两个DESCRIPTION项目，比如Accommodation和PPP。现在要逐个对应。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个识别每个类别在图中的位置。
 
-先列出来每个元素：
+首先看公司名：Elixin Media Hotel 和 飞利信传媒酒店，对应公司名。地址是PSC 3897...那部分，地址。标题是INFORMATION INVOICE。电话Tel是+82-62-8855-595。邮编是300120。传真Fax是+82-88-5869-2285。然后各个字段：
 
-公司名：Elixin Media Hotel（英文）和飞利信传媒酒店（中文），看位置。标题是INFORMATION INVOICE。地址是PSC 3897, Box 8860 APO AP 93419...那部分。邮编是邮编：300120。电话Tel是电话Tel: +82-62-8855-595。传真Fax是传真Fax: +58-88-5869-2285。Room房号：Room 房号： 0802。Loyalty NO.会员号码：Loyalty No. 会员号码： XXXXX5477。No.of Guest住店人数：No. of Guest 住店人数： 1。Confirmation No.确认号：Confirmation No. 确认号： 9775754。Cashier收银员：Cashier 收银员： Joanne Cobb。Page No.页：Page No. 页： 1。Date Printed打印日期：Date Printed 打印日期： 11-06-20。Invoice No.账单号：Invoice No. 账单号： 297288。Arrival Date入住日期：Arrival Date 入住日期 11-04-20。Arrival Time入住时间：Arrival Time 入住时间 21:12。Departure Date离店日期：Departure Date 离店日期 11-05-20。Departure Time离店时间：Departure Time 离店时间 10:20。DATE日期：表格里的DATE列，比如11-04-20等。DESCRIPTION项目：表格里的项目，比如Accommodation、PPP等。CHARGES消费：表格里的CHARGES列，比如400.01等。CREDITS付款：表格里的CREDITS列，比如-0.01等。Balance余额：Balance 余额 CNY0.00。
+Room 房号：0802，对应Room 房号。Loyalty NO.会员号码：XXXXX5477。No.of Guest 住店人数：1。Confirmation No.确认号：9775754。Cashier 收银员：Joanne Cobb。Page No.页：1。Date Printed 打印日期：11-06-20。Departure Date 离店日期：11-05-20。Departure Time 离店时间：10:20。Invoice No. 账单号：297288。Arrival Date入住日期：11-04-20。Arrival Time 入住时间：21:12。Balance 余额：CNY0.00。CHARGES 消费：比如400.01等，Total总计的CHARGES是400.00。CREDITS 付款：400.00。DATE 日期：比如11-04-20等。ADESCRIPTION 项目：Accommodation、PPP等。还有重复的DESCRIPTION 项目（可能用户输入重复，但看字段）。
 
-现在需要为每个类别找到对应的bbox。先看图片中的各个部分：
+现在需要把每个类别对应到图中的位置，用bbox。先整理每个标签：
 
-1. 公司名（Elixin Media Hotel）：在顶部中间，文字是Elixin Media Hotel，下面有中文飞利信传媒酒店。所以公司名的bbox是包含这两个的区域？或者分开？看用户给的类别是“公司名”，所以英文和中文都是公司名。看位置：Elixin Media Hotel的位置是x大概在中间上方，文字。飞利信传媒酒店在下面。所以可能两个？但看用户给的类别是“公司名”，所以需要看。先看Elixin Media Hotel的bbox：比如坐标，图片中Elixin Media Hotel在上方，字体较大。假设bbox是[420, 28, 610, 48]左右？然后中文飞利信传媒酒店是[420, 32, 540, 46]？可能需要更准确。不过先处理每个元素。
+1. 公司名：Elixin Media Hotel 和 飞利信传媒酒店，看顶部中间。bbox大概是[444, 28, 610, 47]（英文）和[444, 50, 596, 68]（中文）。
+2. 地址：PSC 3897...那部分，右上角。bbox是[649, 28, 800, 60]左右。
+3. 标题：INFORMATION INVOICE，左上方。bbox是[44, 140, 236, 162]。
+4. 电话Tel：+82-62-8855-595，右上角。bbox是[649, 87, 775, 103]。
+5. 邮编：300120，右上角。bbox是[649, 75, 696, 87]。
+6. 传真Fax：+82-88-5869-2285，右上角。bbox是[649, 105, 785, 121]。
+7. Room 房号：0802，右侧。bbox是[594, 140, 636, 156]（Room: 0802）。
+8. Loyalty NO.会员号码：XXXXX5477，右侧。bbox是[594, 156, 726, 172]（Loyalty No.: XXXXXX5477）。
+9. No.of Guest 住店人数：1，右侧。bbox是[594, 172, 636, 188]（No. of Guest: 1）。
+10. Confirmation No.确认号：9775754，右侧。bbox是[594, 188, 726, 204]（Confirmation No.: 9775754）。
+11. Cashier 收银员：Joanne Cobb，右侧。bbox是[594, 204, 696, 220]（Cashier: Joanne Cobb）。
+12. Page No.页：1，右侧。bbox是[594, 220, 636, 236]（Page No.: 1）。
+13. Date Printed 打印日期：11-06-20，右侧。bbox是[594, 236, 696, 252]（Date Printed: 11-06-20）。
+14. Arrival Date入住日期：11-04-20，左侧。bbox是[44, 280, 156, 300]（Arrival Date 11-04-20）。
+15. Arrival Time 入住时间：21:12，左侧。bbox是[176, 280, 268, 300]（Arrival Time 21:12）。
+16. Departure Date 离店日期：11-05-20，左侧。bbox是[316, 280, 428, 300]（Departure Date 11-05-20）。
+17. Departure Time 离店时间：10:20，左侧。bbox是[448, 280, 540, 300]（Departure Time 10:20）。
+18. Invoice No. 账单号：297288，右侧。bbox是[594, 300, 696, 316]（Invoice No.: 297288）。
+19. Balance 余额：CNY0.00，底部。bbox是[236, 600, 364, 620]（Balance: CNY0.00）。
+20. CHARGES 消费：比如Total总计的CHARGES是400.00，看表格里的CHARGES列。比如11-04-20的Accommodation是400.01，CHARGES列。bbox对应每个消费项，但可能取Total的CHARGES：400.00，位置在Total总计的CHARGES列。
+21. CREDITS 付款：Total的CREDITS是400.00，对应CREDITS列。
+22. DATE 日期：表格中的DATE列，比如11-04-20等，bbox是表格的DATE列标题，比如[44, 440, 156, 460]（DATE 日期）。
+23. DESCRIPTION 项目：表格中的项目，比如Accommodation、PPP等，列标题是DESCRIPTION，bbox是[176, 440, 326, 460]（DESCRIPTION 项目）。
+24. 另一个DESCRIPTION 项目？可能用户输入重复，但看字段里有ADESCRIPTION 项目和DESCRIPTION 项目？看用户给的类别里有ADESCRIPTION 项目和DESCRIPTION 项目，可能是输入错误，但按图中的项目列，DESCRIPTION是项目列，所以ADESCRIPTION可能是重复，或者看是否有其他。不过图中项目列是DESCRIPTION，所以可能用户中的ADESCRIPTION是笔误，对应DESCRIPTION 项目。
 
-另外，标题是INFORMATION INVOICE，在左上方，所以标题的bbox是[50, 140, 230, 160]左右。
+现在需要把每个类别对应到图中的元素，确保每个标签都有对应的bbox。现在逐一列出：
 
-地址：PSC 3897, Box 8860 APO AP 93419...这部分在右上角，所以地址的bbox是[645, 8, 800, 40]左右，包含USCGC Powell...和广东省...。
+- 公司名：Elixin Media Hotel（英文）和飞利信传媒酒店（中文）。英文在顶部中间，中文在其下方。所以公司名的bbox可以是[442, 28, 612, 46]（英文）和[442, 50, 596, 68]（中文）。但可能合并？不过看用户需要的是每个类别，公司名是一个类别，所以取包含两者的区域？或者分开？但通常公司名是酒店名称，所以英文和中文都是公司名，所以可以取包含两者的区域，比如[440, 26, 600, 68]。
+- 地址：右上角的PSC 3897...地址，bbox是[647, 28, 802, 60]（包含PSC和USCGC等）以及广东省...地址，所以整体地址是[647, 28, 802, 82]（因为有两行地址：PSC...和广东省...）。
+- 标题：INFORMATION INVOICE，左上方，bbox是[46, 142, 234, 160]。
+- 电话Tel：+82-62-8855-595，右上角，bbox是[647, 87, 773, 105]。
+- 邮编：300120，右上角，bbox是[647, 75, 694, 89]。
+- 传真Fax：+82-88-5869-2285，右上角，bbox是[647, 107, 783, 125]。
+- Room 房号：0802，右侧，Room: 0802，bbox是[592, 142, 636, 158]。
+- Loyalty NO.会员号码：XXXXX5477，右侧，Loyalty No.: XXXXXX5477，bbox是[592, 158, 724, 174]。
+- No.of Guest 住店人数：1，右侧，No. of Guest: 1，bbox是[592, 174, 634, 190]。
+- Confirmation No.确认号：9775754，右侧，Confirmation No.: 9775754，bbox是[592, 190, 724, 206]。
+- Cashier 收银员：Joanne Cobb，右侧，Cashier: Joanne Cobb，bbox是[592, 206, 694, 222]。
+- Page No.页：1，右侧，Page No.: 1，bbox是[592, 222, 634, 238]。
+- Date Printed 打印日期：11-06-20，右侧，Date Printed: 11-06-20，bbox是[592, 238, 694, 254]。
+- Arrival Date入住日期：11-04-20，左侧，Arrival Date 11-04-20，bbox是[44, 282, 156, 298]。
+- Arrival Time 入住时间：21:12，左侧，Arrival Time 21:12，bbox是[176, 282, 268, 298]。
+- Departure Date 离店日期：11-05-20，左侧，Departure Date 11-05-20，bbox是[316, 282, 428, 298]。
+- Departure Time 离店时间：10:20，左侧，Departure Time 10:20，bbox是[448, 282, 540, 298]。
+- Invoice No. 账单号：297288，右侧，Invoice No.: 297288，bbox是[592, 300, 694, 316]。
+- Balance 余额：CNY0.00，底部，Balance: CNY0.00，bbox是[234, 602, 364, 620]。
+- CHARGES 消费：Total总计的CHARGES是400.00，看表格中Total行的CHARGES列，bbox是[326, 590, 448, 610]（Total: 400.00 对应CHARGES）。
+- CREDITS 付款：Total行的CREDITS是400.00，bbox是[448, 590, 570, 610]（CREDITS: 400.00）。
+- DATE 日期：表格的DATE列，列标题，bbox是[44, 442, 156, 460]。
+- DESCRIPTION 项目：表格的项目列，列标题，bbox是[176, 442, 326, 460]。
+- ADESCRIPTION 项目：可能和DESCRIPTION重复，图中没有ADESCRIPTION，可能是输入错误，或者看是否有其他项目？比如图中的项目是Accommodation、PPP等，属于DESCRIPTION，所以ADESCRIPTION可能是笔误，可能用户把DESCRIPTION写成ADESCRIPTION，所以对应DESCRIPTION 项目，已经包含。但用户给的类别中有ADESCRIPTION 项目和DESCRIPTION 项目，可能是重复，需要检查。看用户提供的类别列表：
 
-邮编：邮编：300120，在地址下面，所以邮编的bbox是[645, 45, 695, 60]左右。
+用户给的类别有：ADESCRIPTION 项目, Arrival Date入住日期, Arrival Time 入住时间, Balance 余额, CHARGES 消费, CREDITS 付款, Cashier 收银员, Confirmation No.确认号, DATE 日期, DESCRIPTION 项目, Date Printed 打印日期, Departure Date 离店日期, Departure Time 离店时间, Loyalty NO.会员号码, No.of Guest 住店人数, Page No.页, Room 房号, lnvoice No. 账单号, 传真Fax, 公司名, 地址, 标题, 电话Tel, 邮编.
 
-电话Tel：电话Tel: +82-62-8855-595，在邮编下面，所以电话Tel的bbox是[645, 62, 770, 75]左右。
+注意“lnvoice”是Invoice的笔误，所以lnvoice No. 账单号就是Invoice No. 账单号。
 
-传真Fax：传真Fax: +58-88-5869-2285，在电话下面，所以传真Fax的bbox是[645, 75, 785, 88]左右。
+现在检查每个类别是否都覆盖：
 
-Room房号：Room 房号： 0802，在右侧，所以Room房号的bbox是[600, 145, 800, 165]左右（看原文Room 房号： 0802）。
+- ADESCRIPTION 项目：图中项目列是DESCRIPTION，可能用户输入错误，比如ADESCRIPTION是笔误，或者是否有其他？看表格中的项目是Accommodation、PPP等，属于DESCRIPTION，所以ADESCRIPTION可能不存在，或者和DESCRIPTION是同一个？但用户列了两个，可能需要看是否有。或者可能图中的“DESCRIPTION”是项目，而“ADESCRIPTION”是另一个？不，图中只有DESCRIPTION列。所以可能用户中的ADESCRIPTION是错误，应该对应DESCRIPTION 项目。但按用户给的类别，需要包含所有，所以可能ADESCRIPTION项目在图中没有，或者可能我漏看了。再看图片中的项目列是“DESCRIPTION”，所以ADESCRIPTION可能是重复或错误，暂时按用户给的类别处理，可能ADESCRIPTION项目对应图中的项目列，即DESCRIPTION，所以ADESCRIPTION和DESCRIPTION是同一个？但用户列了两个，可能需要都处理？不，可能用户输入时的错误，比如把DESCRIPTION写成ADESCRIPTION。现在先处理存在的。
 
-Loyalty NO.会员号码：Loyalty No. 会员号码： XXXXX5477，在Room下面，所以Loyalty NO.会员号码的bbox是[600, 165, 800, 185]左右。
+现在整理所有类别，确保每个都有对应的bbox：
 
-No.of Guest住店人数：No. of Guest 住店人数： 1，在Loyalty下面，所以No.of Guest住店人数的bbox是[600, 185, 800, 205]左右。
+现在列出所有25个类别（用户给的列表数一下）：
 
-Confirmation No.确认号：Confirmation No. 确认号： 9775754，在No.of Guest下面，所以Confirmation No.确认号的bbox是[600, 205, 800, 225]左右。
+1. ADESCRIPTION 项目
+2. Arrival Date入住日期
+3. Arrival Time 入住时间
+4. Balance 余额
+5. CHARGES 消费
+6. CREDITS 付款
+7. Cashier 收银员
+8. Confirmation No.确认号
+9. DATE 日期
+10. DESCRIPTION 项目
+11. Date Printed 打印日期
+12. Departure Date 离店日期
+13. Departure Time 离店时间
+14. Loyalty NO.会员号码
+15. No.of Guest 住店人数
+16. Page No.页
+17. Room 房号
+18. lnvoice No. 账单号
+19. 传真Fax
+20. 公司名
+21. 地址
+22. 标题
+23. 电话Tel
+24. 邮编
 
-Cashier收银员：Cashier 收银员： Joanne Cobb，在Confirmation下面，所以Cashier收银员的bbox是[600, 225, 800, 245]左右（看原文Cashier 收银员： Joanne Cobb）。
+共24个类别（数一下：1-24）。
 
-Page No.页：Page No. 页： 1，在Cashier下面，所以Page No.页的bbox是[600, 245, 800, 265]左右。
+现在逐个对应：
 
-Date Printed打印日期：Date Printed 打印日期： 11-06-20，在Page No.下面，所以Date Printed打印日期的bbox是[600, 265, 800, 285]左右。
+1. ADESCRIPTION 项目：图中项目列是DESCRIPTION，可能用户笔误，假设是同一个，对应DESCRIPTION 项目？但用户列了两个，可能ADESCRIPTION是另一个？不，图中没有ADESCRIPTION，可能用户错误，或者看是否有其他。或者可能“ADESCRIPTION”是“DESCRIPTION”的重复，所以可能ADESCRIPTION项目对应图中的项目列，即DESCRIPTION，所以ADESCRIPTION的bbox和DESCRIPTION的bbox一样？但用户要求每个类别，所以可能ADESCRIPTION项目在图中没有，或者可能我漏看了。再看图片中的项目列是“DESCRIPTION”，所以ADESCRIPTION可能不存在，或者用户输入错误。暂时先处理存在的，可能ADESCRIPTION是笔误，对应DESCRIPTION 项目，所以ADESCRIPTION的bbox和DESCRIPTION的bbox相同？但用户需要每个类别，所以可能需要检查。
 
-Invoice No.账单号：Invoice No. 账单号： 297288，在Date Printed下面，所以Invoice No.账单号的bbox是[600, 285, 800, 305]左右（看原文Invoice No. 账单号 297288）。
+或者可能图中的“DESCRIPTION”是项目，而“ADESCRIPTION”是另一个字段？不，图中没有。可能用户把“DESCRIPTION”写成了“ADESCRIPTION”和“DESCRIPTION”两个，所以需要都包含，但实际图中只有一个，所以可能其中一个错误。现在先按图中存在的字段处理，确保每个用户给的类别都有对应。
 
-Arrival Date入住日期：Arrival Date 入住日期 11-04-20，在左侧，所以Arrival Date入住日期的bbox是[50, 320, 300, 340]左右（看原文Arrival Date 11-04-20 入住日期）。
+现在继续：
 
-Arrival Time入住时间：Arrival Time 入住时间 21:12，在Arrival Date右边，所以Arrival Time入住时间的bbox是[320, 320, 500, 340]左右（原文Arrival Time 21:12 入住时间）。
-
-Departure Date离店日期：Departure Date 离店日期 11-05-20，在Arrival Date右边，所以Departure Date离店日期的bbox是[520, 320, 700, 340]左右（原文Departure Date 11-05-20 离店日期）。
-
-Departure Time离店时间：Departure Time 离店时间 10:20，在Departure Date右边，所以Departure Time离店时间的bbox是[720, 320, 880, 340]左右（原文Departure Time 10:20 离店时间）。
-
-DATE日期：表格中的DATE列，比如11-04-20等，看表格的DATE列标题，所以DATE日期的bbox是[50, 440, 150, 460]左右（表格的DATE列，第一行是DATE 日期）。
-
-DESCRIPTION项目：表格中的DESCRIPTION列标题，比如Accommodation等，所以DESCRIPTION项目（列标题）的bbox是[160, 440, 300, 460]左右（表格的DESCRIPTION项目列标题）。
-
-CHARGES消费：表格中的CHARGES列标题，比如400.01等，所以CHARGES消费的bbox是[320, 440, 450, 460]左右（表格的CHARGES消费列标题）。
-
-CREDITS付款：表格中的CREDITS列标题，比如-0.01等，所以CREDITS付款的bbox是[470, 440, 600, 460]左右（表格的CREDITS付款列标题）。
-
-另外，表格中的DESCRIPTION项目（具体项目，比如Accommodation、PPP）也是ADESCRIPTION 项目，所以每个项目行的DESCRIPTION也是。比如11-04-20对应的Accommodation是ADESCRIPTION 项目，11-05-20的Accommodation也是，11-05-20的PPP也是。但可能用户需要的是列标题还是所有项目？看用户给的类别是“ADESCRIPTION 项目”，所以列标题和项目都算？不过可能先处理列标题。另外Balance余额是Balance 余额 CNY0.00，在表格下方，所以Balance余额的bbox是[50, 600, 800, 620]左右（看原文Balance 余额 CNY0.00）。
-
-现在需要把所有类别列出来，然后对应bbox。可能有些类别在图中存在，比如：
-
-- 公司名：Elixin Media Hotel（英文）和飞利信传媒酒店（中文）
-- 标题：INFORMATION INVOICE
-- 地址：PSC 3897...广东省...
-- 邮编：300120
-- 电话Tel：+82-62-8855-595
-- 传真Fax：+58-88-5869-2285
-- Room 房号：0802
-- Loyalty NO.会员号码：XXXXX5477
-- No.of Guest 住店人数：1
-- Confirmation No.确认号：9775754
-- Cashier 收银员：Joanne Cobb
-- Page No.页：1
-- Date Printed 打印日期：11-06-20
-- Invoice No. 账单号：297288
-- Arrival Date入住日期：11-04-20
-- Arrival Time 入住时间：21:12
-- Departure Date 离店日期：11-05-20
-- Departure Time 离店时间：10:20
-- DATE 日期：表格中的DATE列（比如11-04-20等的列标题）
-- DESCRIPTION 项目：表格中的项目列（列标题和具体项目，比如Accommodation、PPP）
-- CHARGES 消费：表格中的CHARGES列（列标题和具体数值）
-- CREDITS 付款：表格中的CREDITS列（列标题和具体数值）
-- Balance 余额：CNY0.00
-
-现在需要为每个类别生成一个条目，注意有些类别可能重复，比如DESCRIPTION 项目在列标题和项目行都有，但用户可能需要所有出现的？不过先按图中的元素逐一处理。
-
-现在开始整理每个类别：
-
-1. 公司名（Elixin Media Hotel）：bbox大概在[425, 29, 605, 48]（英文），中文飞利信传媒酒店是[425, 33, 540, 47]。但可能合并？或者分开？看用户给的类别是“公司名”，所以两个都是公司名，可能需要两个条目？但可能图中公司名是Elixin Media Hotel（英文）和中文翻译，所以可以视为一个公司名的两个部分，或者作为一个整体。不过可能更简单的是看主要的公司名是Elixin Media Hotel，所以取英文的bbox。
-
-2. 标题（INFORMATION INVOICE）：bbox是[55, 145, 230, 165]（因为图中“INFORMATION INVOICE”在左侧上方）。
-
-3. 地址：右上角的地址，包括PSC 3897, Box 8860 APO AP 93419...USCGC Powell...广东省...，所以bbox是[640, 8, 800, 50]左右。
-
-4. 邮编：邮编：300120，bbox是[640, 50, 695, 65]。
-
-5. 电话Tel：电话Tel: +82-62-8855-595，bbox是[640, 65, 770, 80]。
-
-6. 传真Fax：传真Fax: +58-88-5869-2285，bbox是[640, 80, 785, 95]。
-
-7. Room 房号：Room 房号： 0802，bbox是[600, 145, 800, 165]（看原文Room 房号： 0802在右侧）。
-
-8. Loyalty NO.会员号码：Loyalty No. 会员号码： XXXXX5477，bbox是[600, 165, 800, 185]。
-
-9. No.of Guest 住店人数：No. of Guest 住店人数： 1，bbox是[600, 185, 800, 205]。
-
-10. Confirmation No.确认号：Confirmation No. 确认号： 9775754，bbox是[600, 205, 800, 225]。
-
-11. Cashier 收银员：Cashier 收银员： Joanne Cobb，bbox是[600, 225, 800, 245]（看原文Cashier 收银员： Joanne Cobb）。
-
-12. Page No.页：Page No. 页： 1，bbox是[600, 245, 800, 265]。
-
-13. Date Printed 打印日期：Date Printed 打印日期： 11-06-20，bbox是[600, 265, 800, 285]。
-
-14. Invoice No. 账单号：Invoice No. 账单号： 297288，bbox是[600, 285, 800, 305]（看原文Invoice No. 账单号 297288）。
-
-15. Arrival Date入住日期：Arrival Date 11-04-20 入住日期，bbox是[50, 320, 300, 340]（看原文Arrival Date 11-04-20 入住日期）。
-
-16. Arrival Time 入住时间：Arrival Time 21:12 入住时间，bbox是[320, 320, 500, 340]（原文Arrival Time 21:12 入住时间）。
-
-17. Departure Date 离店日期：Departure Date 11-05-20 离店日期，bbox是[520, 320, 700, 340]（原文Departure Date 11-05-20 离店日期）。
-
-18. Departure Time 离店时间：Departure Time 10:20 离店时间，bbox是[720, 320, 880, 340]（原文Departure Time 10:20 离店时间）。
-
-19. DATE 日期：表格中的DATE列，比如第一行的DATE 日期，bbox是[50, 440, 150, 460]（表格的DATE列标题）。
-
-20. DESCRIPTION 项目（列标题）：表格中的DESCRIPTION项目列标题，bbox是[160, 440, 300, 460]（列标题）。
-
-21. CHARGES 消费（列标题）：表格中的CHARGES消费列标题，bbox是[320, 440, 4
+2. Arrival Date入住日期：有，bbox [44,282,156,298]
+3. Arrival Time 入住时间：有，[176,282,268,298]
+4. Balance 余额：有，[234,602,364,620]
+5. CHARGES 消费：Total的CHARGES是400.00，对应bbox [326,590,448,610]（Total行的CH

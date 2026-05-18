@@ -1,9 +1,211 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The invoice has "26/02/2018 17:31" so that's the date. Let's check where that is. The line with INV No # has the date.
+
+doc_no_receipt_no: The INV No # is BWMCO2000047293. Let's find that.
+
+seller_address: The address lines are Lot F1-01, 6, Jalan 8/27A, Seksyen 5 Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia.
+
+seller_gst_id: GST Reg. No : 000313901056.
+
+seller_name: Eco-Shop Marketing Sdn Bhd.
+
+total_amount: The Total is 16.31, but after Rounding Adj, Balance Due is 16.30. Wait, the Total line says Total: 16.31, then Rounding Adj: -0.01, so Balance Due is 16.30. But total_amount might refer to the total before adjustment? Let me check. The question says total_amount. Let's see the Total line: "Total : 7 16.31". So the total amount of items is 16.31. But Balance Due is 16.30. Maybe total_amount is the total of the items, which is 16.31.
+
+total_tax: In GST Summary, SR 6% is 15.40 (the amount) and tax is 0.91. So total_tax would be 0.91.
+
+Now, let's map each:
+
+1. date: "26/02/2018 17:31" — find the bounding box for that line.
+2. doc_no_receipt_no: "BWMCO2000047293" — from INV No # line.
+3. seller_address: the address block from Lot F1-01... to Malaysia.
+4. seller_gst_id: "000313901056" — from GST Reg. No.
+5. seller_name: "Eco-Shop Marketing Sdn Bhd" — top of the invoice.
+6. total_amount: "16.31" — from the Total line (before rounding adj).
+7. total_tax: "0.91" — from GST Summary, SR 6% tax amount.
+
+Now, let's check each element's position.
+
+First, seller_name: "Eco-Shop Marketing Sdn Bhd" — that's in the header.
+
+seller_gst_id: "GST Reg. No : 000313901056" — the number is 000313901056.
+
+seller_address: the lines starting from "Lot F1-01, 6, Jalan 8/27A," down to "Malaysia."
+
+doc_no_receipt_no: "INV No # : BWMCO2000047293" — so the number is BWMCO2000047293.
+
+date: "26/02/2018 17:31" — next line after INV No #.
+
+total_amount: The line "Total : 7 16.31" — the 16.31 is the total.
+
+total_tax: In GST Summary, "SR 6% 15.40 0.91" — the tax amount is 0.91.
+
+Now, let's define the bounding boxes. Since the image is a receipt, each line's coordinates can be approximated.
+
+Let's list each:
+
+- date: The line with "26/02/2018 17:31" — let's check the y-coordinates. The INV No # is on a line, then the next line is the date and time.
+
+- doc_no_receipt_no: The INV No # line: "INV No # : BWMCO2000047293"
+
+- seller_address: The block from "Lot F1-01, 6, Jalan 8/27A," to "Malaysia." — multiple lines.
+
+- seller_gst_id: "GST Reg. No : 000313901056" — the line after seller_name.
+
+- seller_name: "Eco-Shop Marketing Sdn Bhd" — top line under TAX INVOICE.
+
+- total_amount: The line "Total : 7 16.31" — the 16.31 is the total amount of items.
+
+- total_tax: The line in GST Summary where the tax is shown, which is 0.91 (the third column for SR 6%).
+
+Now, let's create the JSON entries.
+
+For each label, find the corresponding bbox.
+
+Let's go step by step.
+
+1. date: The text "26/02/2018 17:31" is in the line after INV No #. Let's assume the bounding box covers that line.
+
+2. doc_no_receipt_no: The invoice number is "BWMCO2000047293" in the line "INV No # : BWMCO2000047293".
+
+3. seller_address: The address lines: "Lot F1-01, 6, Jalan 8/27A, Seksyen 5 Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia." — this is a block of text.
+
+4. seller_gst_id: "000313901056" from "GST Reg. No : 000313901056".
+
+5. seller_name: "Eco-Shop Marketing Sdn Bhd" — the line below TAX INVOICE.
+
+6. total_amount: "16.31" from the "Total : 7 16.31" line.
+
+7. total_tax: "0.91" from the GST Summary line "SR 6% 15.40 0.91".
+
+Now, let's check the positions.
+
+Let's outline each:
+
+- seller_name: [x1, y1, x2, y2] — the line "Eco-Shop Marketing Sdn Bhd" is in the upper part.
+
+- seller_gst_id: The line "GST Reg. No : 000313901056" — the number is the key.
+
+- seller_address: The lines starting from "Lot F1-01..." down to "Malaysia."
+
+- doc_no_receipt_no: The line "INV No # : BWMCO2000047293" — the number is the value.
+
+- date: The line "26/02/2018 17:31" — next to INV No #.
+
+- total_amount: The line "Total : 7 16.31" — the amount is 16.31.
+
+- total_tax: The line in GST Summary where the tax amount is 0.91 (the third column for SR 6%).
+
+Now, let's create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's define the bounding boxes roughly. Since the image is a receipt, the coordinates can be estimated based on the text positions.
+
+For example:
+
+- seller_name: The text is centered, so the bbox would cover the line "Eco-Shop Marketing Sdn Bhd". Let's say the y-range is from the top (TAX INVOICE) down a few lines.
+
+But maybe better to look at the exact text positions.
+
+Alternatively, since the problem is to detect the values, the key is to map each category to the correct text.
+
+Let's list each:
+
+1. date: "26/02/2018 17:31" — label: date
+2. doc_no_receipt_no: "BWMCO2000047293" — label: doc_no_receipt_no
+3. seller_address: "Lot F1-01, 6, Jalan 8/27A, Seksyen 5 Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia." — label: seller_address
+4. seller_gst_id: "000313901056" — label: seller_gst_id
+5. seller_name: "Eco-Shop Marketing Sdn Bhd" — label: seller_name
+6. total_amount: "16.31" — label: total_amount (from Total line)
+7. total_tax: "0.91" — label: total_tax (from GST Summary SR 6% tax)
+
+Now, for the bounding boxes, since the image is a single receipt, each text's position can be identified.
+
+Let's check the image:
+
+- TAX INVOICE is at the top.
+
+- Then Eco-Shop Marketing Sdn Bhd (seller_name)
+
+- Then GST Reg. No : 000313901056 (seller_gst_id)
+
+- Then Company No : ... (not needed)
+
+- Then Lot F1-01... (seller_address)
+
+- Then INV No # : BWMCO2000047293 (doc_no_receipt_no)
+
+- Then 26/02/2018 17:31 (date)
+
+- Then CS : ... (not needed)
+
+- Then the item list.
+
+- Then Total : 7 16.31 (total_amount is 16.31)
+
+- Then Rounding Adj: -0.01
+
+- Then Balance Due: 16.30 (but total_amount is the sum of items, which is 16.31)
+
+- Then GST Summary: SR 6% 15.40 0.91 (so total_tax is 0.91)
+
+Now, let's assign the bounding boxes.
+
+For example, the date is in the line after INV No #, so the coordinates for that line.
+
+The doc_no_receipt_no is the invoice number in the INV No # line.
+
+Seller_address is the block of address lines.
+
+Seller_gst_id is the GST Reg. No line's number.
+
+Seller_name is the line below TAX INVOICE.
+
+Total_amount is the Total line's amount.
+
+Total_tax is the GST Summary's tax amount (0.91).
+
+Now, let's write the JSON.
+
+Each entry:
+
 [
-    {"bbox_2d": [144, 277, 346, 297], "label": "date"},
-    {"bbox_2d": [204, 297, 490, 314], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [144, 304, 920, 372], "label": "seller_address"},
-    {"bbox_2d": [234, 242, 566, 258], "label": "seller_gst_id"},
-    {"bbox_2d": [144, 224, 456, 240], "label": "seller_name"},
-    {"bbox_2d": [634, 437, 696, 455], "label": "total_amount"},
-    {"bbox_2d": [896, 622, 928, 640], "label": "total_tax"}
+  {
+    "bbox_2d": [x1, y1, x2, y2],
+    "label": "date"
+  },
+  ... for each category
+]
+
+But since we need to provide the bounding box, we need to estimate the coordinates. However, in the absence of exact pixel values, we can describe the region based on the text's location.
+
+Alternatively, maybe the problem expects the key values, and the bounding box is the area containing the value.
+
+Let's proceed.
+
+1. date: The text "26/02/2018 17:31" is located in the line after the invoice number. Let's assume the bounding box is around that line.
+
+2. doc_no_receipt_no: The invoice number "BWMCO2000047293" is in the line "INV No # : BWMCO2000047293".
+
+3. seller_address: The address lines from "Lot F1-01, 6, Jalan 8/27A," to "Malaysia." — this is a multi-line block.
+
+4. seller_gst_id: The text "000313901056" is in the line "GST Reg. No : 000313901056".
+
+5. seller_name: The text "Eco-Shop Marketing Sdn Bhd" is in the line below "TAX INVOICE".
+
+6. total_amount: The text "16.31" is in the line "Total : 7 16.31".
+
+7. total_tax: The text "0.91" is in the line "SR 6% 15.40 0.91" under GST Summary.
+
+Now, let's create the JSON array with these.
+</think>
+[
+  {"bbox_2d": [144, 282, 340, 302], "label": "date"},
+  {"bbox_2d": [234, 298, 477, 317], "label": "doc_no_receipt_no"},
+  {"bbox_2d": [150, 320, 595, 380], "label": "seller_address"},
+  {"bbox_2d": [234, 242, 566, 259], "label": "seller_gst_id"},
+  {"bbox_2d": [144, 212, 494, 229], "label": "seller_name"},
+  {"bbox_2d": [320, 442, 384, 460], "label": "total_amount"},
+  {"bbox_2d": [694, 622, 726, 640], "label": "total_tax"}
 ]

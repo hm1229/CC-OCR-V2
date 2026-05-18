@@ -1,0 +1,269 @@
+Got it, let's go through the document and identify each category.
+
+First, address: The shop's address is "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM". Let's check where that is. The address line is in the top part.
+
+Company: The company name is "SANYU STATIONERY SHOP" and also "Owned By: SANYU SUPPLY SDN BHD (1135772-K)". So the main company is SANYU STATIONERY SHOP, and the owned by is the company entity. Let's pick the main shop name as the company.
+
+Date: The date on the invoice is "23/11/2017" under INV NO.
+
+Total: There are a few totals. The Final Total is 10.90 SR, and the Cash is 20.00, Change 9.10. But the "Total" section has Total 10.89, Round Adj 0.01, Final Total 10.90. Let's check which total is relevant. The Final Total is 10.90, which is the amount paid. Also, the GST Summary has Amount(RM) 10.27, but maybe the main total is Final Total.
+
+Let's list each:
+
+Address: The address lines. Let's check the text: "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM" — that's the address.
+
+Company: "SANYU STATIONERY SHOP" is the company name at the top. Also, "Owned By: SANYU SUPPLY SDN BHD (1135772-K)" — that's the company owning it. Let's take the main shop name as the company.
+
+Date: "Date : 23/11/2017"
+
+Total: Let's check the "Final Total" which is 10.90. Also, the "Total Sales Inclusive GST @6%" is 10.89, but Final Total is 10.90. Let's confirm the labels.
+
+Now, let's map each:
+
+1. Address: The line with the shop's address. Let's find the bounding box. The text is "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM". Let's check the coordinates.
+
+2. Company: The top line "SANYU STATIONERY SHOP" is the company name. Also, "Owned By: SANYU SUPPLY SDN BHD (1135772-K)" — that's another company entity. Let's include both? Wait, the problem says "company" category. The main shop is the company, and the owned by is the legal entity. Let's check the document: "Owned By : SANYU SUPPLY SDN BHD (1135772-K)". So that's the company.
+
+3. Date: "Date : 23/11/2017" — that's clear.
+
+4. Total: Let's check the "Final Total" which is 10.90. Also, the cash amount is 20.00, but the total of the sale is Final Total 10.90. Let's check the sections.
+
+Now, let's extract each:
+
+- Address: The address lines. Let's check the text: "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM" — this is the address.
+
+- Company: "SANYU STATIONERY SHOP" (the shop name) and "SANYU SUPPLY SDN BHD (1135772-K)" (owned by). Let's see which is the company. The problem says "company", so the main business is SANYU STATIONERY SHOP, and the owned by is the company that owns it. Let's include both? But maybe the main company is the shop name.
+
+Wait, the document has "SANYU STATIONERY SHOP" as the title, then "Owned By: SANYU SUPPLY SDN BHD (1135772-K)". So the company (the business entity) is SANYU SUPPLY SDN BHD, and the shop is the trading name. But the category is "company", so perhaps the owned by line is the company.
+
+Alternatively, the shop name is the company. Let's check the problem statement: "company" — the document's company is likely the shop's name, but the GST ID is for SANYU SUPPLY SDN BHD. Let's check the GST ID line: "GST ID No: 001531760640" — that's associated with the owned by. So the company is SANYU SUPPLY SDN BHD.
+
+Let's proceed.
+
+Now, let's list each category with their bounding boxes.
+
+First, address:
+
+The address is in the top part: "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM". Let's find the coordinates. The text is between the shop name and the mobile number.
+
+Looking at the image, the address lines are:
+
+NO. 31G&33G, JALAN SETIA INDAH X ,U13/X
+40170 SETIA ALAM
+
+So the bounding box for address would cover these lines.
+
+Company: "SANYU SUPPLY SDN BHD (1135772-K)" — the line "Owned By : SANYU SUPPLY SDN BHD (1135772-K)".
+
+Date: "Date : 23/11/2017" — in the lower part, next to INV NO.
+
+Total: Let's check the "Final Total" which is 10.90. Let's find where that is. In the invoice, after Round Adj, Final Total is 10.90. Also, the cash is 20.00, change 9.10. But the total of the sale is Final Total. Let's check the line "Final Total 10.90".
+
+Now, let's define each:
+
+1. Address: The address text. Let's check the coordinates. The address is in the upper section, below the shop name.
+
+2. Company: The "Owned By" line.
+
+3. Date: The date line.
+
+4. Total: The Final Total line.
+
+Let's check each element:
+
+- Address: The text "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM" — this is a single line? Let's check the image: it's two lines: "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X" and "40170 SETIA ALAM". So the address is these two lines.
+
+- Company: "SANYU SUPPLY SDN BHD (1135772-K)" — from "Owned By : SANYU SUPPLY SDN BHD (1135772-K)".
+
+- Date: "23/11/2017" — from "Date : 23/11/2017".
+
+- Total: Let's check the "Final Total" which is 10.90. Let's find the line: "Final Total 10.90".
+
+Now, let's map the bounding boxes.
+
+First, address:
+
+The address is in the top part. Let's look at the image's text:
+
+"SANYU STATIONERY SHOP
+NO. 31G&33G, JALAN SETIA INDAH X ,U13/X
+40170 SETIA ALAM
+Mobile /Whatsapps : +6012-918 7937
+Tel: +603-3362 4137"
+
+So the address is the two lines: "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X" and "40170 SETIA ALAM". Let's take the bounding box for these lines.
+
+Company: "Owned By : SANYU SUPPLY SDN BHD (1135772-K)" — that's the line below GST ID.
+
+Date: "Date : 23/11/2017" — in the section with INV NO.
+
+Total: Let's check the "Final Total" line. In the invoice, after the sales items, there's:
+
+Total Sales Inclusive GST @6% 10.89
+Discount 0.00
+Total 10.89
+Round Adj 0.01
+Final Total 10.90
+
+So the Final Total is 10.90. Let's take that line.
+
+Now, let's create the JSON entries.
+
+For address:
+
+The text is "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X" and "40170 SETIA ALAM". Let's check the coordinates. Let's assume the bounding box covers these two lines.
+
+For company:
+
+The line "Owned By : SANYU SUPPLY SDN BHD (1135772-K)".
+
+For date:
+
+The line "Date : 23/11/2017".
+
+For total:
+
+The line "Final Total 10.90".
+
+Now, let's check if there are other totals. The GST Summary has Amount(RM) 10.27, but that's part of GST. The main total for the sale is Final Total.
+
+Let's confirm each category:
+
+- address: present
+- company: present (SANYU SUPPLY SDN BHD)
+- date: present (23/11/2017)
+- total: present (Final Total 10.90)
+
+Now, let's write the JSON.
+
+First, address:
+
+The address text is in the upper part. Let's find the exact bounding box. Let's look at the image:
+
+The lines are:
+
+NO. 31G&33G, JALAN SETIA INDAH X ,U13/X
+40170 SETIA ALAM
+
+So the bounding box for address would be the area covering these two lines.
+
+Company: The line "Owned By : SANYU SUPPLY SDN BHD (1135772-K)" — let's check the coordinates.
+
+Date: The line "Date : 23/11/2017" — next to INV NO.
+
+Total: The line "Final Total 10.90" — in the middle section of the invoice.
+
+Now, let's code the bounding boxes. Since we need to provide relative coordinates (x1, y1, x2, y2) where the image is the whole document.
+
+Let's estimate the coordinates:
+
+- Address: The address is below the shop name. Let's say the top of the address is around y=100 (approx), and covers two lines. Let's check the image's structure.
+
+Alternatively, since the problem says "relative format" [x1, y1, x2, y2], we can look at the positions.
+
+But maybe better to check each element:
+
+1. Address: The text "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM" — let's take the bounding box as the area containing these lines.
+
+2. Company: "SANYU SUPPLY SDN BHD (1135772-K)" — from "Owned By : SANYU SUPPLY SDN BHD (1135772-K)".
+
+3. Date: "23/11/2017" — from "Date : 23/11/2017".
+
+4. Total: "10.90" in the Final Total line.
+
+Now, let's list each:
+
+- Address: The address lines. Let's check the exact text in the image: "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X" and "40170 SETIA ALAM". So the bounding box for address is the region containing these two lines.
+
+- Company: The line "Owned By : SANYU SUPPLY SDN BHD (1135772-K)".
+
+- Date: The line "Date : 23/11/2017".
+
+- Total: The line "Final Total 10.90".
+
+Now, let's create the JSON array.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's check the positions:
+
+For address:
+
+The address is in the upper section, below the shop name. Let's assume the coordinates are:
+
+x1: around 90 (left margin), y1: around 110 (after shop name), x2: around 500 (end of line), y2: around 140 (for the second line).
+
+But maybe more accurately, let's look at the image's text layout.
+
+Alternatively, since the problem is about detecting the objects, and the answer should be the JSON, let's proceed.
+
+Another approach: look for each category.
+
+Address: The text that is the shop's physical address. In the image, it's "NO. 31G&33G, JALAN SETIA INDAH X ,U13/X 40170 SETIA ALAM".
+
+Company: The company that issued the invoice, which is "SANYU SUPPLY SDN BHD (1135772-K)" (from Owned By).
+
+Date: The invoice date, "23/11/2017".
+
+Total: The total amount paid, which is the Final Total of 10.90 SR.
+
+Now, let's define the bounding boxes.
+
+For address:
+
+The text spans from the left (after the shop name) to the right, two lines. Let's take the bounding box as [92, 112, 520, 145] (approx).
+
+For company:
+
+The line "Owned By : SANYU SUPPLY SDN BHD (1135772-K)" — let's say [92, 200, 520, 225].
+
+For date:
+
+The line "Date : 23/11/2017" — [450, 620, 620, 640] (approx, since it's next to INV NO).
+
+For total:
+
+The line "Final Total 10.90" — let's find where that is. In the invoice, after Round Adj, Final Total is 10.90. Let's check the middle section: the Total Sales... then Discount, Total, Round Adj, Final Total. So the Final Total line is around the middle. Let's say [320, 540, 420, 560] (the text "Final Total 10.90").
+
+Now, let's compile the JSON.
+
+But maybe the exact coordinates are not critical as long as the regions are correct. Let's proceed.
+
+Final JSON:
+
+[
+  {"bbox_2d": [92, 110, 525, 145], "label": "address"},
+  {"bbox_2d": [92, 200, 525, 225], "label": "company"},
+  {"bbox_2d": [550, 620, 625, 640], "label": "date"},
+  {"bbox_2d": [325, 550, 425, 570], "label": "total"}
+]
+
+Wait, but let's check the date line: "INV NO: CS-SA-0126340 Date : 23/11/2017" — so the date is part of that line. The bounding box for date should cover "23/11/2017".
+
+For total, the Final Total is in the section:
+
+Total Sales Inclusive GST @6% 10.89
+Discount 0.00
+Total 10.89
+Round Adj 0.01
+Final Total 10.90
+
+So the line "Final Total 10.90" — the text "Final Total" and "10.90". Let's check the coordinates for that line.
+
+Alternatively, maybe the "Total" category refers to the "Total" line (10.89) or Final Total. But the problem says "total", which is the final amount. Let's confirm.
+
+Also, the cash is 20.00, but that's payment, not the total of the sale. The sale total is Final Total 10.90.
+
+Now, let's check if there are other totals. The GST Summary has Amount(RM) 10.27, but that's part of GST calculation. The main total for the transaction is Final Total.
+
+So, the total category is the Final Total.
+
+Now, let's adjust the bounding boxes.
+
+Another check: the company could also be the shop name "SANYU STATIONERY SHOP". Let's see: the problem says "company". The shop is a company, and the owned by is the legal entity. Which one to choose? The problem says "company", so perhaps the main business name is the company. Let's check the document: the top is "SANYU STATIONERY SHOP" which is the company name, and "Owned By: SANYU SUPPLY SDN BHD" is the legal owner. So both are companies, but maybe the primary company is the shop name.
+
+Let's check the problem statement: "Detect all objects matching these categories in this document image: address, company, date, total."
+
+So "company" — the document's company is SANYU STATIONERY SHOP, as that's the business name. The "Owned By" is the entity that owns it, which is also a company. But maybe the problem expects the main company name, which is the shop's name.
+
+Let's check the image: the first line is "SANYU STATIONERY SHOP" —

@@ -1,0 +1,253 @@
+用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看ADDRESS：发件人和收件人的地址。比如ISSUER的地址是Unit 5566 Box 2430 DPO AP 43623，还有CONSIGNEE的地址Unit 4601 Box 8779 DPO AP 83850，以及444 Smith Bypass Longshire, IN 53919。这些都属于ADDRESS。
+
+然后AMOUNT：表格中的AMOUNT列，比如US$10,747.02，还有TOTAL里的US$10,747.02。
+
+COMPANY NAME：ISSUER是Moment Technology Co., Ltd.，CONSIGNEE是MECAFER，这些是公司名。
+
+DATE：发票上的日期2021/12/20。
+
+DESCRIPTION OF GOODS：表格中的“AUTO-DARKENING WELDING HELMET”。
+
+FAX：ISSUER的FAX: 7685+003-49088023。
+
+FROM：NINGBO, CHINA。
+
+INVOICE No.：GX-20210818-A250。
+
+MARKS：461409。
+
+PHONE NO.：CONSIGNEE的PHONE NO.++018434435750，还有ISSUER的TEL和FAX？不，PHONE NO.是收件人的那个。
+
+QTY (PCS)：1666。
+
+SHIPMENT：BY SEA。
+
+TEL：ISSUER的TEL: 0977+857-28546480。
+
+TITLE：COMMERCIAL INVOICE是标题。
+
+TO：VALENCE,FRANCE。
+
+UNIT PRICE：US$6.4508。
+
+现在需要逐个定位每个元素的bbox。先看各个部分：
+
+1. ISSUER的公司名：Moment Technology Co., Ltd. → COMPANY NAME，bbox是对应位置。
+2. ISSUER的地址：Unit 5566 Box 2430 DPO AP 43623 → ADDRESS。
+3. ISSUER的TEL：0977+857-28546480 → TEL。
+4. ISSUER的FAX：7685+003-49088023 → FAX。
+5. CONSIGNEE的公司名：MECAFER → COMPANY NAME。
+6. CONSIGNEE的地址：Unit 4601 Box 8779 DPO AP 83850 和 444 Smith Bypass Longshire, IN 53919 → ADDRESS（两个地址？但可能合并？不过看原文是两行，所以可能两个ADDRESS？不过先看每个元素。
+7. CONSIGNEE的PHONE NO.：++018434435750 → PHONE NO.。
+8. SHIPMENT：BY SEA → SHIPMENT。
+9. FROM：NINGBO, CHINA → FROM。
+10. TO：VALENCE,FRANCE → TO。
+11. COMMERCIAL INVOICE → TITLE。
+12. INVOICE No.：GX-20210818-A250 → INVOICE No.。
+13. DATE：2021/12/20 → DATE。
+14. MARKS：461409 → MARKS。
+15. DESCRIPTION OF GOODS：AUTO-DARKENING WELDING HELMET → DESCRIPTION OF GOODS。
+16. QTY (PCS)：1666 → QTY (PCS)。
+17. UNIT PRICE：US$6.4508 → UNIT PRICE。
+18. AMOUNT：US$10,747.02（表格里的）和TOTAL里的US$10,747.02 → AMOUNT（两个？但看TOTAL里的也是AMOUNT）。
+19. TOTAL里的1666 PCS和USD → 这里TOTAL的QTY是1666，单位是PCS，金额是US$10,747.02，所以TOTAL的AMOUNT也是US$10,747.02。
+
+现在需要把每个类别对应的位置找出来，注意不要重复，每个实例都要列出来吗？题目是“detect all objects matching these categories”，所以每个出现的实例都要检测。
+
+现在开始逐个处理：
+
+- COMPANY NAME：
+  - Moment Technology Co., Ltd.（ISSUER）→ bbox对应位置。
+  - MECAFER（CONSIGNEE）→ bbox对应位置。
+
+- ADDRESS：
+  - ISSUER的地址：Unit 5566 Box 2430 DPO AP 43623 → 位置在ISSUER下方。
+  - CONSIGNEE的第一个地址：Unit 4601 Box 8779 DPO AP 83850 → CONSIGNEE下方第一行。
+  - CONSIGNEE的第二个地址：444 Smith Bypass Longshire, IN 53919 → CONSIGNEE下方第二行。
+
+- TEL：ISSUER的TEL: 0977+857-28546480 → 对应位置。
+
+- FAX：ISSUER的FAX: 7685+003-49088023 → 对应位置。
+
+- PHONE NO.：CONSIGNEE的PHONE NO.++018434435750 → 对应位置。
+
+- SHIPMENT：BY SEA → 对应位置。
+
+- FROM：NINGBO, CHINA → 对应位置。
+
+- TO：VALENCE,FRANCE → 对应位置。
+
+- TITLE：COMMERCIAL INVOICE → 大标题。
+
+- INVOICE No.：GX-20210818-A250 → 对应位置。
+
+- DATE：2021/12/20 → 对应位置。
+
+- MARKS：461409 → 对应位置（在MARKS列下的内容）。
+
+- DESCRIPTION OF GOODS：AUTO-DARKENING WELDING HELMET → 对应表格中的描述。
+
+- QTY (PCS)：1666（表格中的数量，以及TOTAL中的1666）→ 表格中的QTY是1666，TOTAL中的QTY也是1666，所以两个实例？
+
+- UNIT PRICE：US$6.4508 → 表格中的单价。
+
+- AMOUNT：表格中的AMOUNT是US$10,747.02，TOTAL中的AMOUNT也是US$10,747.02 → 两个实例？
+
+现在需要确定每个元素的bbox。因为是图片中的位置，需要看每个文本的位置。
+
+现在开始构建每个条目：
+
+1. ISSUER的COMPANY NAME：Moment Technology Co., Ltd. → bbox大概在上方，ISSUER: 右边的公司名。看原文ISSUER: Moment Technology Co., Ltd. 所以bbox是包含这个文本的区域。
+
+2. ISSUER的ADDRESS：Unit 5566 Box 2430 DPO AP 43623 → 在公司名下方。
+
+3. ISSUER的TEL：0977+857-28546480 → TEL: 后面的号码。
+
+4. ISSUER的FAX：7685+003-49088023 → FAX: 后面的号码。
+
+5. CONSIGNEE的COMPANY NAME：MECAFER → CONSIGNEE: 后面的公司名。
+
+6. CONSIGNEE的ADDRESS（第一行）：Unit 4601 Box 8779 DPO AP 83850 → 在MECAFER下方第一行。
+
+7. CONSIGNEE的ADDRESS（第二行）：444 Smith Bypass Longshire, IN 53919 → 在第一行地址下方。
+
+8. CONSIGNEE的PHONE NO.：PHONE NO.+ ++018434435750 → 对应位置。
+
+9. SHIPMENT：BY SEA → SHIPMENT: 后面的内容。
+
+10. FROM：NINGBO, CHINA → FROM: 后面的内容。
+
+11. TO：VALENCE,FRANCE → TO: 后面的内容。
+
+12. TITLE：COMMERCIAL INVOICE → 大标题，居中。
+
+13. INVOICE No.：GX-20210818-A250 → 在INVOICE No.列下的内容。
+
+14. DATE：2021/12/20 → 在DATE列下的内容。
+
+15. MARKS：461409 → 在MARKS列下的内容（对应行的MARKS单元格）。
+
+16. DESCRIPTION OF GOODS：AUTO-DARKENING WELDING HELMET → 在DESCRIPTION OF GOODS列下的内容。
+
+17. QTY (PCS)：1666（表格中的数量单元格）和TOTAL中的1666（TOTAL行的QTY）→ 两个实例。
+
+18. UNIT PRICE：US$6.4508 → 在UNIT PRICE列下的内容。
+
+19. AMOUNT：US$10,747.02（表格中的AMOUNT单元格）和TOTAL中的US$10,747.02（TOTAL行的AMOUNT）→ 两个实例。
+
+现在需要将这些都列出来，每个作为单独的JSON对象。
+
+现在开始逐个写：
+
+- COMPANY NAME: Moment Technology Co., Ltd. → bbox需要看位置，假设在图中上方，ISSUER: 右边的文本。比如坐标范围大概是x从180到370左右（假设图的宽度是整个页面，这里需要估计，但可能更准确的是看原文中的位置。不过因为是示例，可能需要根据文本位置。）
+
+不过可能更简单的是，先列出所有类别出现的实例：
+
+现在整理每个类别：
+
+1. ADDRESS:
+   - ISSUER地址: Unit 5566 Box 2430 DPO AP 43623
+   - CONSIGNEE地址1: Unit 4601 Box 8779 DPO AP 83850
+   - CONSIGNEE地址2: 444 Smith Bypass Longshire, IN 53919
+
+2. AMOUNT:
+   - 表格中的AMOUNT: US$10,747.02
+   - TOTAL中的AMOUNT: US$10,747.02
+
+3. COMPANY NAME:
+   - ISSUER: Moment Technology Co., Ltd.
+   - CONSIGNEE: MECAFER
+
+4. DATE: 2021/12/20
+
+5. DESCRIPTION OF GOODS: AUTO-DARKENING WELDING HELMET
+
+6. FAX: 7685+003-49088023
+
+7. FROM: NINGBO, CHINA
+
+8. INVOICE No.: GX-20210818-A250
+
+9. MARKS: 461409
+
+10. PHONE NO.: ++018434435750
+
+11. QTY (PCS):
+    - 表格中的QTY: 1666
+    - TOTAL中的QTY: 1666
+
+12. SHIPMENT: BY SEA
+
+13. TEL: 0977+857-28546480
+
+14. TITLE: COMMERCIAL INVOICE
+
+15. TO: VALENCE,FRANCE
+
+16. UNIT PRICE: US$6.4508
+
+现在需要为每个实例生成bbox。因为是图片，需要估计每个文本的边界框。例如，对于ISSUER的公司名“Moment Technology Co., Ltd.”，其在图中的位置是上方偏左，ISSUER: 右边的文本。假设图的坐标系统，每个元素的bbox可以大致确定。
+
+现在开始构建JSON数组：
+
+每个元素的结构是{"bbox_2d": [x1, y1, x2, y2], "label": "category"}
+
+现在逐个处理：
+
+1. ISSUER的COMPANY NAME: "Moment Technology Co., Ltd." → bbox大概覆盖该文本。假设在图中上方，x范围是180到370，y范围是150到170（假设）。
+
+2. ISSUER的ADDRESS: "Unit 5566 Box 2430 DPO AP 43623" → 在公司名下方，x180-420，y170-190。
+
+3. ISSUER的TEL: "0977+857-28546480" → TEL: 后面的号码，x200-380，y190-210。
+
+4. ISSUER的FAX: "7685+003-49088023" → FAX: 后面的号码，x200-380，y210-230。
+
+5. CONSIGNEE的COMPANY NAME: "MECAFER" → CONSIGNEE: 右边的文本，x200-260，y230-250。
+
+6. CONSIGNEE的ADDRESS1: "Unit 4601 Box 8779 DPO AP 83850" → 在MECAFER下方，x200-420，y250-270。
+
+7. CONSIGNEE的ADDRESS2: "444 Smith Bypass Longshire, IN 53919" → 在ADDRESS1下方，x200-520，y270-290。
+
+8. CONSIGNEE的PHONE NO.: "++018434435750" → PHONE NO.+ 后面的号码，x200-380，y290-310。
+
+9. SHIPMENT: "BY SEA" → SHIPMENT: 后面的内容，x200-260，y310-330。
+
+10. FROM: "NINGBO, CHINA" → FROM: 后面的内容，x200-320，y330-350。
+
+11. TO: "VALENCE,FRANCE" → TO: 后面的内容，x200-360，y350-370。
+
+12. TITLE: "COMMERCIAL INVOICE" → 大标题，居中，x400-650，y370-400（假设）。
+
+13. INVOICE No.: "GX-20210818-A250" → 在INVOICE No.列下的内容，x500-650，y370-390。
+
+14. DATE: "2021/12/20" → 在DATE列下的内容，x650-750，y370-390。
+
+15. MARKS: "461409" → 在MARKS列下的内容，x100-150，y400-420（对应表格行）。
+
+16. DESCRIPTION OF GOODS: "AUTO-DARKENING WELDING HELMET" → 在DESCRIPTION OF GOODS列下的内容，x200-500，y400-420。
+
+17. QTY (PCS) 表格中的: "1666" → 在QTY (PCS)列下的内容，x300-350，y400-420。
+
+18. QTY (PCS) TOTAL中的: "1666" → 在TOTAL行的QTY，x300-350，y500-520。
+
+19. UNIT PRICE: "US$6.4508" → 在UNIT PRICE列下的内容，x400-480，y400-420。
+
+20. AMOUNT 表格中的: "US$10,747.02" → 在AMOUNT列下的内容，x500-600，y400-420。
+
+21. AMOUNT TOTAL中的: "US$10,747.02" → 在TOTAL行的AMOUNT，x500-600，y500-520。
+
+现在需要将这些都列出来，注意每个实例。现在开始编写JSON数组：
+
+[
+  {"bbox_2d": [185, 152, 370, 172], "label": "COMPANY NAME"},
+  {"bbox_2d": [185, 174, 420, 194], "label": "ADDRESS"},
+  {"bbox_2d": [202, 196, 380, 216], "label": "TEL"},
+  {"bbox_2d": [202, 218, 380, 238], "label": "FAX"},
+  {"bbox_2d": [202, 252, 260, 272], "label": "COMPANY NAME"},
+  {"bbox_2d": [202, 274, 420, 294], "label": "ADDRESS"},
+  {"bbox_2d": [202, 296, 520, 316], "label": "ADDRESS"},
+  {"bbox_2d": [202, 318, 380, 338], "label": "PHONE NO."},
+  {"bbox_2d": [202, 338, 260, 358], "label": "SHIPMENT"},
+  {"bbox_2d

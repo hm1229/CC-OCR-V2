@@ -1,6 +1,99 @@
-[
-    {"bbox_2d": [390, 112, 609, 132], "label": "company"},
-    {"bbox_2d": [375, 147, 624, 172], "label": "address"},
-    {"bbox_2d": [437, 127, 562, 143], "label": "date"},
-    {"bbox_2d": [505, 247, 620, 262], "label": "total"}
-]
+Got it, let's extract the required information from the invoice.
+
+First, identify each category:
+
+- Company: The company name is "UNIHAKKA INTERNATIONAL SDN BHD". Let's find its bounding box.
+- Address: The address is "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor".
+- Date: The date is "07 Jun 2018 18:23".
+- Total: The net total is "RM8.20" (from "Nett Total: RM8.20").
+
+Now, check each element's position on the image.
+
+For company: The text "UNIHAKKA INTERNATIONAL SDN BHD" is in the upper part of the invoice.
+
+Address: Below the company and date, the address lines.
+
+Date: The line with "07 Jun 2018 18:23" and the reference "(867388-U)".
+
+Total: Look for the total amount, which is "Nett Total: RM8.20" or the payment mode's amount (CASH RM8.20). Let's confirm the total amount.
+
+Let's map each:
+
+1. Company: [214, 132, 777, 149] (approx, need to check the text)
+Wait, the image has "UNIHAKKA INTERNATIONAL SDN BHD" centered. Let's check the coordinates.
+
+Alternatively, look at the text:
+
+- Company: "UNIHAKKA INTERNATIONAL SDN BHD" – the bounding box would cover that line.
+- Address: The lines starting with "12, Jalan Tampoi..." up to "Johor".
+- Date: "07 Jun 2018 18:23" – that's the date line.
+- Total: The "Nett Total: RM8.20" is the total.
+
+Now, let's define each entry.
+
+First, company:
+
+The company name is in the middle top. Let's check the text: "UNIHAKKA INTERNATIONAL SDN BHD" – the bounding box is around that.
+
+Address: The address is the block below the date: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor"
+
+Date: "07 Jun 2018 18:23" (the line with the date and time)
+
+Total: "Nett Total: RM8.20" – the total amount.
+
+Now, let's create the JSON array.
+
+Check each element:
+
+- Company: bbox for "UNIHAKKA INTERNATIONAL SDN BHD" – let's see the image. The text is centered, so the coordinates would be from the left to right where that text is.
+
+- Address: the lines below the date, which is the address block.
+
+- Date: the line with "07 Jun 2018 18:23" and the reference.
+
+- Total: the "Nett Total: RM8.20" is in the right section of the invoice, near the payment mode.
+
+Let me verify the total. The "Total Amount: RM8.19" then rounding to RM0.01, so net total is RM8.20. So the total is RM8.20.
+
+Now, let's structure each entry.
+
+For company:
+
+{"bbox_2d": [213, 133, 776, 149], "label": "company"}
+
+Address:
+
+The address spans multiple lines: "12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor" – so the bounding box would cover that block.
+
+Date: "07 Jun 2018 18:23" – the line above the address.
+
+Total: "Nett Total: RM8.20" – the line that says Nett Total.
+
+Let me check the image again.
+
+Looking at the image:
+
+- Company: UNIHAKKA INTERNATIONAL SDN BHD (centered, above the date)
+- Date: 07 Jun 2018 18:23 (with (867388-U) below)
+- Address: 12, Jalan Tampoi 7/4, Kawasan Perindustrian Tampoi,81200 Johor Bahru, Johor (below the date)
+- Total: Nett Total: RM8.20 (in the section where Total Amount, GST, etc. are listed)
+
+Now, let's get the coordinates.
+
+Assuming the image's text positions:
+
+Company: The text is in the upper middle. Let's take the bounding box as the area containing "UNIHAKKA INTERNATIONAL SDN BHD".
+
+Address: The block starting with "12, Jalan Tampoi..." up to "Johor".
+
+Date: The line "07 Jun 2018 18:23" and the reference.
+
+Total: The "Nett Total: RM8.20" is in the right part, below the item list.
+
+Now, let's write the JSON entries.
+
+Each entry is a separate object in the array.
+
+So the final array should have four entries: company, address, date, total.
+</think>
+[{"bbox_2d": [214, 132, 776, 149], "label": "company"}, {"bbox_2d": [124, 150, 537, 182], "label": "address"}, {"bbox_2d": [214, 140, 347, 154], "label": "date"}, {"bbox_2d": [442, 234, 557, 248], "label": "total"}]

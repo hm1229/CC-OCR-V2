@@ -1,8 +1,102 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date on the invoice is 10-05-17. Let's check where that is. In the receipt, there's a line with 01:57PM, 563498, 10-05-17. So the date is 10-05-17.
+
+doc_no_receipt_no: The top number is 31705509, which is probably the receipt number. Let's check. The top left has 31705509, so that's the doc_no_receipt_no.
+
+seller_address: The address lines are LOT P.T. 2811, JALAN ANGSA, TAKAN BERKELEY, 41150 KLANG, SELANGOR, 1422-TMN DESA JAYA. Let's find the bounding box for that.
+
+seller_gst_id: GST ID. NO : 000181747712. That's the GST ID.
+
+seller_name: 99 SPEED MART S/8 (519537-X). That's the seller name.
+
+total_amount: Total Sales (Inclusive GST) RM 72.74. So the total amount is 72.74.
+
+total_tax: Let's check the GST Summary. For s=6%, tax is 2.74. The other is z=0%, tax 0.00. So total tax is 2.74.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is "10-05-17" which is in the line with time and invoice number. Let's check the coordinates. The text "10-05-17" is on the right side of that line.
+
+2. doc_no_receipt_no: The top number "31705509" is at the top of the receipt.
+
+3. seller_address: The address block includes multiple lines: LOT P.T. 2811, JALAN ANGSA, TAKAN BERKELEY, 41150 KLANG, SELANGOR, 1422-TMN DESA JAYA. Let's find the bounding box covering these lines.
+
+4. seller_gst_id: The line "GST ID. NO : 000181747712" is the GST ID.
+
+5. seller_name: "99 SPEED MART S/8 (519537-X)" is the seller name.
+
+6. total_amount: "Total Sales (Inclusive GST) RM 72.74" — the amount is 72.74.
+
+7. total_tax: From GST Summary, the tax for s=6% is 2.74, and z=0% is 0.00. So total tax is 2.74.
+
+Now, let's define each bounding box.
+
+- date: The text "10-05-17" is in the line that has "01:57PM" and "563498". Let's check the position. The coordinates for that text would be around the right part of that line.
+
+- doc_no_receipt_no: The top number "31705509" is at the very top, centered maybe. The bounding box is [44, 12, 422, 52] (approx, since it's the first line).
+
+- seller_address: The address lines start from "LOT P.T. 2811..." down to "1422-TMN DESA JAYA". Let's check the lines:
+
+"LOT P.T. 2811, JALAN ANGSA,"
+"TAKAN BERKELEY"
+"41150 KLANG, SELANGOR"
+"1422-TMN DESA JAYA"
+
+So the bounding box covers these lines.
+
+- seller_gst_id: The line "GST ID. NO : 000181747712" — find that line.
+
+- seller_name: "99 SPEED MART S/8 (519537-X)" — the line after the top number.
+
+- total_amount: The line "Total Sales (Inclusive GST) RM 72.74" — the amount is 72.74.
+
+- total_tax: The GST Summary shows "Tax(RM)" column, with 2.74 and 0.00. The total tax is 2.74 (since the other is 0). So the total tax is 2.74.
+
+Now, let's structure each entry.
+
+Let's list each:
+
+1. date: "10-05-17" — find its bounding box. In the receipt, the date is on the right side of the line that has time (01:57PM) and invoice number (563498). Let's check the coordinates. The text "10-05-17" is in the middle-right area.
+
+2. doc_no_receipt_no: "31705509" — topmost number.
+
+3. seller_address: The block of address lines.
+
+4. seller_gst_id: "000181747712" (from GST ID line).
+
+5. seller_name: "99 SPEED MART S/8 (519537-X)".
+
+6. total_amount: "72.74" (from Total Sales line).
+
+7. total_tax: "2.74" (from GST Summary, s=6% tax).
+
+Now, let's assign bounding boxes.
+
+For example:
+
+- doc_no_receipt_no: The text "31705509" is at the top, so [40, 10, 425, 50] (approx).
+
+- seller_name: The line "99 SPEED MART S/8 (519537-X)" is below the top number. Bounding box: [92, 120, 546, 140] (approx).
+
+- seller_address: The lines from "LOT P.T. 2811..." to "1422-TMN DESA JAYA". Let's check the y-coordinates. The address starts after the seller name. So the bounding box would cover multiple lines.
+
+- seller_gst_id: The line "GST ID. NO : 000181747712" — find that line. Bounding box: [92, 220, 546, 240] (approx).
+
+- date: The "10-05-17" is in the line with "01:57PM 563498 10-05-17". So the date is the rightmost part of that line. Bounding box: [770, 220, 860, 240] (approx).
+
+- total_amount: The line "Total Sales (Inclusive GST) RM 72.74" — the amount is 72.74. Bounding box: [220, 620, 420, 640] (approx, since the text is there).
+
+- total_tax: The GST Summary's Tax(RM) column, the value 2.74. Let's check the GST Summary section. The line for s=6% has Tax(RM) 2.74. So the bounding box for that tax value.
+
+Now, let's compile all into the JSON array.
+</think>
 [
-    {"bbox_2d": [38, 12, 306, 52], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [92, 125, 537, 147], "label": "seller_name"},
-    {"bbox_2d": [92, 152, 537, 200], "label": "seller_address"},
-    {"bbox_2d": [92, 222, 537, 242], "label": "seller_gst_id"},
-    {"bbox_2d": [877, 275, 975, 295], "label": "date"},
-    {"bbox_2d": [92, 442, 537, 462], "label": "total_amount"},
-    {"bbox_2d": [4
+    {"bbox_2d": [772, 225, 862, 245], "label": "date"},
+    {"bbox_2d": [44, 14, 422, 50], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [92, 185, 544, 265], "label": "seller_address"},
+    {"bbox_2d": [92, 235, 544, 255], "label": "seller_gst_id"},
+    {"bbox_2d": [92, 125, 546, 145], "label": "seller_name"},
+    {"bbox_2d": [222, 625, 322, 645], "label": "total_amount"},
+    {"bbox_2d": [302, 845, 338, 865], "label": "total_tax"}
+]

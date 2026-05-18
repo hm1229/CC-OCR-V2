@@ -1,10 +1,68 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The date is on the invoice, next to Doc No. It's 13/01/2018. Let's check the location.
+
+Doc No. is CS00012726, so doc_no_receipt_no is that.
+
+Seller address: The address is NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR.
+
+Seller GST ID: GST ID : 000750673920.
+
+Seller name: SYARIKAT PERNIAGAAN GIN KEE (81109-A).
+
+Seller phone: TEL : 03-40210276.
+
+Total amount: Total Sales (Inclusive of GST) is 12.72.
+
+Total tax: Total GST is 0.72.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The date is "13/01/2018" in the section where Doc No. and Date are. Let's find the coordinates.
+
+Looking at the invoice, the line "Date: 13/01/2018" is present. So the bounding box for date is around that text.
+
+2. doc_no_receipt_no: "CS00012726" is the Doc No.
+
+3. seller_address: The address lines: NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR.
+
+4. seller_gst_id: "000750673920" from GST ID.
+
+5. seller_name: "SYARIKAT PERNIAGAAN GIN KEE (81109-A)".
+
+6. seller_phone: "03-40210276" from TEL.
+
+7. total_amount: "12.72" from Total Sales (Inclusive of GST).
+
+8. total_tax: "0.72" from Total GST.
+
+Now, let's check each element's position.
+
+For date: The text "Date: 13/01/2018" is in the section below "CASH". Let's get the bounding box.
+
+Doc No. is "CS00012726" next to "Doc No. :".
+
+Seller address: The lines from "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR." are in the top part.
+
+Seller GST ID: "GST ID : 000750673920" is there.
+
+Seller name: The top line "SYARIKAT PERNIAGAAN GIN KEE (81109-A)".
+
+Seller phone: "TEL : 03-40210276".
+
+Total amount: The line "Total Sales (Inclusive of GST) : 12.72".
+
+Total tax: "Total GST : 0.72".
+
+Now, let's structure each as a JSON object with bbox and label.
+</think>
 [
-    {"bbox_2d": [444, 232, 588, 252], "label": "date"},
+    {"bbox_2d": [444, 232, 594, 252], "label": "date"},
     {"bbox_2d": [297, 232, 427, 252], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [325, 256, 675, 300], "label": "seller_address"},
-    {"bbox_2d": [357, 302, 642, 322], "label": "seller_gst_id"},
+    {"bbox_2d": [325, 200, 675, 260], "label": "seller_address"},
+    {"bbox_2d": [337, 272, 662, 292], "label": "seller_gst_id"},
     {"bbox_2d": [144, 117, 855, 142], "label": "seller_name"},
-    {"bbox_2d": [375, 326, 496, 346], "label": "seller_phone"},
-    {"bbox_2d": [325, 484, 432, 504], "label": "total_amount"},
-    {"bbox_2d": [450, 432, 496, 452], "label": "total_tax"}
+    {"bbox_2d": [375, 292, 496, 312], "label": "seller_phone"},
+    {"bbox_2d": [325, 525, 437, 545], "label": "total_amount"},
+    {"bbox_2d": [444, 532, 500, 552], "label": "total_tax"}
 ]

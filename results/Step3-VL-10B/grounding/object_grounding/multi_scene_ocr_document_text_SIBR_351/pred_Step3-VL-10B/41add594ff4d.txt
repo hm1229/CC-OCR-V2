@@ -1,242 +1,303 @@
-Got it, let's go through each category and find the corresponding elements in the image.
+Got it, let's go through each category and find the corresponding values in the image. First, I need to identify each element.
 
-First, let's list all the categories and check where they appear.
+Starting with ADDRESS: There are multiple addresses. Let's check the consignee address. The consignee's address is "7647 Jennifer Plaza Suite 711 East Samanthaborough, DE 09923". Let's note that.
 
-1. Add: The top address line "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976" — so that's the Add category.
-2. Address: There are multiple addresses. Let's check each. For SELLER, there's "813 Shawn Crossing Wolffurt, WV 28148" and "554 Jamie Ford Port Brianport, WV 01436". For CONSIGNEE, "7647 Jennifer Plaza Suite 711 East Samanthaborough, DE 09923". Also, BUYER is "SAME AS CONSIGNEE" but the address is same as consignee. Let's pick one, maybe the SELLER's address.
-3. Attn: For CONSIGNEE, "Attn: Mr. Michael Craig" — that's the Attn category.
-4. BUYER: The section labeled "BUYER" with "SAME AS CONSIGNEE".
-5. COMPANY NAME: Let's see. SELLER's company? The SELLER section has addresses but maybe the consignee is CTS (Malaysia) Sdn Bhd. So "CTS (Malaysia) Sdn Bhd" is a company name.
-6. DATE: "DATE: 17 Mar, 2022"
-7. Descriptions: The column in the table labeled "Descriptions" and the entries like "Transmission belt".
-8. Fax: There are multiple fax numbers. For example, SELLER's fax: "Fax:+28 89565561800", and the top Add's fax: "Fax:+85 88590160256".
-9. HS Code: "HS Code: 4010390000"
-10. INCOTERMS: "INCOTERMS: FOB"
-11. INVOICE NO: "INVOICE NO: SQLM-22001WVCM"
-12. Item No.: The column "Item No." in the table, entries like "GY-15XNS5A".
-13. L (MM): Column labeled "L (MM)" in the table.
-14. NOTIFY PARTY: "NOTIFY PARTY" section with "SAME AS CONSIGNEE".
-15. No: Column "No." in the table (the serial number).
-16. PACKAGE: "PACKAGE: Plywood case."
-17. PAYMENT ITEM: "PAYMENT ITEM: TT in advance"
-18. PO NO: "PO NO:SQLM-22001WCM"
-19. Qty.: Column "Qty." in the table.
-20. Shipping Mark: Column "Shipping Mark" in the table, entries like "CTS (Malaysia)".
-21. Sub-Total (USD): Column "Sub-Total (USD)" in the table.
-22. T (MM): Column "T (MM)" in the table.
-23. TITLE: The main title "COMMERCIAL INVOICE" — that's the TITLE.
-24. TOTAL OF: The line "TOTAL OF" in the table.
-25. Tel: Multiple tel numbers. For example, SELLER's Tel: "+09 00562621882", top Add's Tel: "+20 60892801256".
-26. Unit: Column "Unit" in the table (entries like "roll").
-27. Unit Price: Column "Unit Price" in the table.
-28. W (MM): Column "W (MM)" in the table.
+Add: The top address is "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976". So that's the Add field.
 
-Now, let's map each category to their bounding boxes. Let's go step by step.
+Address: Maybe the seller's address? The seller has two addresses: "813 Shawn Crossing Wolffurt, WV 28148" and "554 Jamie Ford Port Brianport, WV 01436". But maybe the main address for the company. Wait, the problem says "Address" as a category. Let's check the labels.
 
-First, the Add category: The top line "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976". Let's find its coordinates. The image's top part has that address. So bbox for Add is around that line.
+Attn: For the consignee, Attn: Mr. Michael Craig.
 
-Then Address: Let's take the SELLER's address, first line "813 Shawn Crossing Wolffurt, WV 28148". That's an address.
+BUYER: The buyer is "SAME AS CONSIGNEE".
 
-Attn: "Attn: Mr. Michael Craig" under CONSIGNEE.
+COMPANY NAME: The consignee is "CTS (Malaysia) Sdn Bhd". Also, the seller's company? The seller's info is under SELLER, but maybe the company name for consignee.
 
-BUYER: The label "BUYER" and the text "SAME AS CONSIGNEE".
+DATE: "17 Mar, 2022".
 
-COMPANY NAME: "CTS (Malaysia) Sdn Bhd" under CONSIGNEE.
+Descriptions: The column in the table is "Descriptions", which has "Transmission belt" for each row.
 
-DATE: "DATE: 17 Mar, 2022" — right side of the invoice.
+Fax: For the seller, Fax:+28 89565561800. Also, the top Add has Fax:+85 88590160256. Let's check which one. The problem says "Fax" as a category, so need to find all fax entries, but maybe the main one. Let's check the seller's fax: "Fax:+28 89565561800".
 
-Descriptions: The column header in the table, and the entries. Let's take the column header "Descriptions".
+HS Code: "4010390000" at the bottom.
 
-Fax: Let's take the top Add's Fax: "Fax:+85 88590160256".
+INCOTERMS: "FOB".
 
-HS Code: "HS Code: 4010390000" at the bottom.
+INVOICE NO: "SQLM-22001WVCM".
 
-INCOTERMS: "INCOTERMS: FOB" on the right side.
+Item No.: The column "Item No." in the table, values like GY-15XNSA, etc.
 
-INVOICE NO: "INVOICE NO: SQLM-22001WVCM" on the right.
+L (MM): The column "L (MM)" with values 111000, 111000, 115000, 115000.
+
+NOTIFY PARTY: "SAME AS CONSIGNEE".
+
+No: The column "No." in the table, numbers 1,2,3,4.
+
+PACKAGE: "Plywood case."
+
+PAYMENT ITEM: "TT in advance".
+
+PO NO: "SQLM-22001WCM".
+
+Qty.: The column "Qty." with 1.00 each.
+
+Shipping Mark: The column "Shipping Mark" with "CTS (Malaysia)" for rows 2-4, and empty for row 1? Wait, row 1's shipping mark is empty? Let's check the table. The first row's shipping mark is empty, then rows 2-4 have "CTS (Malaysia)".
+
+Sub-Total (USD): The column "Sub-Total (USD)" with values 846.40, 1257.10, etc.
+
+T (MM): The column "T (MM)" with 1.5, 1.5, 2.3, 2.3.
+
+TITLE: The title is "COMMERCIAL INVOICE".
+
+TOTAL OF: The line "TOTAL OF" with the total amount.
+
+Tel: For the seller, "Tel: +09 00562621882". Also, consignee's Tel: +076-2592893. Top Add's Tel: +20 60892801256.
+
+Unit: The column "Unit" with "roll" for each.
+
+Unit Price: The column "Unit Price" with 846.40, 1257.10, etc.
+
+W (MM): The column "W (MM)" with 200, 300, 200, 300.
+
+Now, let's map each category to their occurrences. Let's list each required category and find the corresponding bounding box.
+
+First, let's handle each category:
+
+1. ADDRESS: Let's check the consignee address. The consignee's address is "7647 Jennifer Plaza Suite 711 East Samanthaborough, DE 09923". Let's find its bounding box.
+
+2. Add: The top address line: "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976". Bounding box for that.
+
+3. Address: Maybe the seller's address. Let's check the seller's address block. The seller has two addresses: "813 Shawn Crossing Wolffurt, WV 28148" and "554 Jamie Ford Port Brianport, WV 01436". Let's take one, maybe the first.
+
+4. Attn: "Attn: Mr. Michael Craig" under consignee.
+
+5. BUYER: "BUYER" label and the value "SAME AS CONSIGNEE". The label is "BUYER", so the text "BUYER" is the category, but the value is "SAME AS CONSIGNEE". Wait, the problem says "detect the corresponding values to the following categories". So for each category, find the value's bounding box.
+
+Wait, the instruction is: "For each detected object, provide: 1. bbox_2d: bounding box coordinates [x1, y1, x2, y2] in 1000 relative format 2. label: one of (list of categories)". So each entry is a (bbox, label) pair where label is the category, and the bbox is around the value for that category.
+
+Let's go step by step.
+
+First, list all categories and find their values:
+
+- ADDRESS: Let's check the consignee's address. The text is "7647 Jennifer Plaza Suite 711 East Samanthaborough, DE 09923". Let's find its coordinates.
+
+- Add: The top address: "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976". The "Add:" is part of this line.
+
+- Address: Maybe the seller's address. Let's check the seller's first address: "813 Shawn Crossing Wolffurt, WV 28148". Or the second address. Let's check the seller's section.
+
+- Attn: "Attn: Mr. Michael Craig" — the text "Attn: Mr. Michael Craig".
+
+- BUYER: The label "BUYER" and the value "SAME AS CONSIGNEE". But the category is BUYER, so the value is "SAME AS CONSIGNEE".
+
+- COMPANY NAME: The consignee's company name is "CTS (Malaysia) Sdn Bhd". Also, the seller's company? The seller's section is labeled SELLER, but the company name for seller might not be explicit, but consignee's is clear.
+
+- DATE: "17 Mar, 2022" — the date field.
+
+- Descriptions: The column header "Descriptions" and the values in that column (Transmission belt, etc.). But the category is Descriptions, so the column header or the values? Probably the column's content, but maybe the header.
+
+- Fax: The seller's fax: "Fax:+28 89565561800". Also, the top Add has Fax:+85 88590160256. Let's check which one is relevant. The problem says "Fax" as a category, so any instance.
+
+- HS Code: "4010390000" at the bottom.
+
+- INCOTERMS: "FOB" — the line "INCOTERMS: FOB".
+
+- INVOICE NO: "SQLM-22001WVCM" — the line "INVOICE NO: SQLM-22001WVCM".
+
+- Item No.: The column header "Item No." and the values (GY-15XNSA, etc.). The category is Item No., so the column header or the values. Let's take the column header.
+
+- L (MM): The column header "L (MM)" and the values (111000, etc.).
+
+- NOTIFY PARTY: "NOTIFY PARTY" label and the value "SAME AS CONSIGNEE".
+
+- No: The column header "No." and the numbers (1,2,3,4).
+
+- PACKAGE: "Plywood case." — the line "PACKAGE: Plywood case."
+
+- PAYMENT ITEM: "TT in advance" — the line "PAYMENT ITEM: TT in advance".
+
+- PO NO: "SQLM-22001WCM" — the line "PO NO:SQLM-22001WCM".
+
+- Qty.: The column header "Qty." and the values (1.00, etc.).
+
+- Shipping Mark: The column header "Shipping Mark" and the values (CTS (Malaysia) for some rows).
+
+- Sub-Total (USD): The column header "Sub-Total (USD)" and the values (846.40, etc.).
+
+- T (MM): The column header "T (MM)" and the values (1.5, etc.).
+
+- TITLE: "COMMERCIAL INVOICE" — the main title.
+
+- TOTAL OF: The line "TOTAL OF" and the total amount "S4,511.00".
+
+- Tel: The seller's Tel: "+09 00562621882" — the line "Tel: +09 00562621882".
+
+- Unit: The column header "Unit" and the values ("roll", etc.).
+
+- Unit Price: The column header "Unit Price" and the values (846.40, etc.).
+
+- W (MM): The column header "W (MM)" and the values (200, etc.).
+
+Now, let's extract each with bounding boxes. Let's start with the top Add:
+
+Add: The line "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976" — coordinates. Let's assume the image's top part. The Add is in the very top, so bounding box would be around that text.
+
+Then, the SELLER section's address: "813 Shawn Crossing Wolffurt, WV 28148" — that's an address.
+
+Attn: "Attn: Mr. Michael Craig" — under consignee.
+
+BUYER: The text "BUYER" and "SAME AS CONSIGNEE". Let's take the value "SAME AS CONSIGNEE" under BUYER.
+
+COMPANY NAME: "CTS (Malaysia) Sdn Bhd" — the consignee's company name.
+
+DATE: "17 Mar, 2022" — the date field.
+
+Descriptions: The column header "Descriptions" in the table.
+
+Fax: Let's take the seller's fax: "Fax:+28 89565561800" — the line under SELLER.
+
+HS Code: "4010390000" — at the bottom left.
+
+INCOTERMS: "FOB" — the line "INCOTERMS: FOB".
+
+INVOICE NO: "SQLM-22001WVCM" — the line "INVOICE NO: SQLM-22001WVCM".
 
 Item No.: The column header "Item No." in the table.
 
-L (MM): Column header "L (MM)".
+L (MM): The column header "L (MM)" in the table.
 
-NOTIFY PARTY: The label "NOTIFY PARTY" and "SAME AS CONSIGNEE".
+NOTIFY PARTY: "SAME AS CONSIGNEE" under NOTIFY PARTY.
 
-No: Column header "No." in the table.
+No: The column header "No." in the table.
 
-PACKAGE: "PACKAGE: Plywood case." on the right.
+PACKAGE: "Plywood case." — the line "PACKAGE: Plywood case."
 
-PAYMENT ITEM: "PAYMENT ITEM: TT in advance" on the right.
+PAYMENT ITEM: "TT in advance" — the line "PAYMENT ITEM: TT in advance".
 
-PO NO: "PO NO:SQLM-22001WCM" on the right.
+PO NO: "SQLM-22001WCM" — the line "PO NO:SQLM-22001WCM".
 
-Qty.: Column header "Qty.".
+Qty.: The column header "Qty." in the table.
 
-Shipping Mark: Column header "Shipping Mark" and the entries like "CTS (Malaysia)".
+Shipping Mark: The column header "Shipping Mark" in the table.
 
-Sub-Total (USD): Column header "Sub-Total (USD)".
+Sub-Total (USD): The column header "Sub-Total (USD)" in the table.
 
-T (MM): Column header "T (MM)".
+T (MM): The column header "T (MM)" in the table.
 
 TITLE: "COMMERCIAL INVOICE" — the main title.
 
-TOTAL OF: The line "TOTAL OF" in the table.
+TOTAL OF: The line "TOTAL OF" and the total amount.
 
-Tel: Let's take the SELLER's Tel: "Tel: +09 00562621882".
+Tel: Let's take the consignee's Tel: "+076-2592893" — under consignee's address.
 
-Unit: Column header "Unit" and entries like "roll".
+Unit: The column header "Unit" in the table.
 
-Unit Price: Column header "Unit Price".
+Unit Price: The column header "Unit Price" in the table.
 
-W (MM): Column header "W (MM)".
+W (MM): The column header "W (MM)" in the table.
 
-Now, let's create the JSON array with each entry.
+Now, let's map each category with their bounding boxes. Let's go through each:
 
-Let's start listing each:
+1. ADDRESS: Let's take the consignee's address: "7647 Jennifer Plaza Suite 711 East Samanthaborough, DE 09923". Let's find its position. In the image, under CONSIGNEE, Address: that line.
 
-1. Add: The top address line. Bounding box: Let's check the image. The top has "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976". So coordinates would be the top part. Let's assume the image's top section.
+2. Add: The top line "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976".
 
-2. Address: SELLER's first address: "813 Shawn Crossing Wolffurt, WV 28148". Let's get its bbox.
+3. Address: Let's take the seller's first address: "813 Shawn Crossing Wolffurt, WV 28148".
 
-3. Attn: "Attn: Mr. Michael Craig" — under CONSIGNEE.
+4. Attn: "Attn: Mr. Michael Craig" — under CONSIGNEE.
 
-4. BUYER: The label "BUYER" and the text. The label "BUYER" is a category, so the text "BUYER" itself.
+5. BUYER: "SAME AS CONSIGNEE" — under BUYER.
 
-5. COMPANY NAME: "CTS (Malaysia) Sdn Bhd" — the consignee's company name.
+6. COMPANY NAME: "CTS (Malaysia) Sdn Bhd" — under CONSIGNEE.
 
-6. DATE: "17 Mar, 2022" — the date value.
+7. DATE: "17 Mar, 2022" — next to DATE:.
 
-7. Descriptions: The column header "Descriptions" in the table.
+8. Descriptions: The column header "Descriptions" in the table (green header row).
 
-8. Fax: The top Add's Fax: "+85 88590160256" — the text after "Fax:".
+9. Fax: Let's take the top Add's Fax: "+85 88590160256" — but maybe the seller's fax is more relevant. Let's check the seller's section: "Fax:+28 89565561800".
 
-9. HS Code: "4010390000" — the code.
+10. HS Code: "4010390000" — at the bottom left.
 
-10. INCOTERMS: "FOB" — the term.
+11. INCOTERMS: "FOB" — under INCOTERMS:.
 
-11. INVOICE NO: "SQLM-22001WVCM" — the invoice number.
+12. INVOICE NO: "SQLM-22001WVCM" — under INVOICE NO:.
 
-12. Item No.: The column header "Item No.".
+13. Item No.: The column header "Item No." in the table.
 
-13. L (MM): Column header "L (MM)".
+14. L (MM): The column header "L (MM)" in the table.
 
-14. NOTIFY PARTY: The label "NOTIFY PARTY" and the text "SAME AS CONSIGNEE".
+15. NOTIFY PARTY: "SAME AS CONSIGNEE" — under NOTIFY PARTY.
 
-15. No: Column header "No.".
+16. No: The column header "No." in the table.
 
-16. PACKAGE: "Plywood case." — the package description.
+17. PACKAGE: "Plywood case." — under PACKAGE:.
 
-17. PAYMENT ITEM: "TT in advance" — the payment item.
+18. PAYMENT ITEM: "TT in advance" — under PAYMENT ITEM:.
 
-18. PO NO: "SQLM-22001WCM" — the PO number.
+19. PO NO: "SQLM-22001WCM" — under PO NO:.
 
-19. Qty.: Column header "Qty.".
+20. Qty.: The column header "Qty." in the table.
 
-20. Shipping Mark: Column header "Shipping Mark" and the entries (like "CTS (Malaysia)").
+21. Shipping Mark: The column header "Shipping Mark" in the table.
 
-21. Sub-Total (USD): Column header "Sub-Total (USD)".
+22. Sub-Total (USD): The column header "Sub-Total (USD)" in the table.
 
-22. T (MM): Column header "T (MM)".
+23. T (MM): The column header "T (MM)" in the table.
 
-23. TITLE: "COMMERCIAL INVOICE" — the main title.
+24. TITLE: "COMMERCIAL INVOICE" — the main title.
 
-24. TOTAL OF: The line "TOTAL OF" in the table.
+25. TOTAL OF: The line "TOTAL OF" and the total amount "S4,511.00". Let's take the "TOTAL OF" label.
 
-25. Tel: SELLER's Tel: "+09 00562621882" — the telephone number.
+26. Tel: Let's take the seller's Tel: "+09 00562621882" — under SELLER.
 
-26. Unit: Column header "Unit" and entries (like "roll").
+27. Unit: The column header "Unit" in the table.
 
-27. Unit Price: Column header "Unit Price".
+28. Unit Price: The column header "Unit Price" in the table.
 
-28. W (MM): Column header "W (MM)".
+29. W (MM): The column header "W (MM)" in the table.
 
-Now, let's check each category and assign the correct bounding box. Since the image is provided, we need to estimate the coordinates. But in the problem, we need to return the bounding boxes as per the image.
+Now, let's create the JSON array. Each entry is a dictionary with "bbox_2d" and "label".
 
-Let's go through each:
+Let's start with the TITLE:
 
-- Add: The top line "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976" — this is in the top part of the image. Let's say the coordinates are [96, 10, 627, 28] (approx, since the image's top has that address).
+- "COMMERCIAL INVOICE" is the title. Bounding box around that text.
 
-- Address: Let's take the SELLER's address line "813 Shawn Crossing Wolffurt, WV 28148" — this is under SELLER. Bbox: [34, 200, 477, 220].
+Then, Add:
 
-- Attn: "Attn: Mr. Michael Craig" — under CONSIGNEE. Bbox: [34, 300, 477, 320].
+- The top Add line: "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976". Let's assume coordinates. Since the image is a standard layout, the top part has Add, Tel, Fax.
 
-- BUYER: The label "BUYER" — right side, above "SAME AS CONSIGNEE". Bbox: [590, 240, 638, 258].
+For example, the Add line is at the very top, so [220, 10, 780, 30] (approximate, but in the problem, we need to be precise. However, since it's a text extraction, we can note the positions relative to the image.
 
-- COMPANY NAME: "CTS (Malaysia) Sdn Bhd" — under CONSIGNEE. Bbox: [34, 290, 477, 310].
+But since the user provided the image, and we need to map each category, let's list all:
 
-- DATE: "17 Mar, 2022" — right side, under INVOICE NO. Bbox: [590, 250, 664, 268].
+Let's go step by step for each category:
 
-- Descriptions: The column header in the table. The table's "Descriptions" column. Bbox: [100, 430, 225, 455] (the header row).
+1. ADDRESS (consignee address):
+   - Text: "7647 Jennifer Plaza Suite 711 East Samanthaborough, DE 09923"
+   - Bounding box: Let's find where it is. Under CONSIGNEE, Address: line. So in the image, that's the address block for consignee.
 
-- Fax: Top Add's Fax: "+85 88590160256" — top part, next to Tel. Bbox: [420, 110, 590, 128].
+2. Add (top address):
+   - Text: "Add:960 Brandon Greens Suite 783 New Christopherland, WA 46976"
+   - Bounding box: Topmost line.
 
-- HS Code: "4010390000" — bottom left. Bbox: [25, 620, 200, 638].
+3. Address (seller's address, first line):
+   - Text: "813 Shawn Crossing Wolffurt, WV 28148"
+   - Bounding box: Under SELLER, first address line.
 
-- INCOTERMS: "FOB" — right side, under DATE. Bbox: [590, 270, 627, 288].
-
-- INVOICE NO: "SQLM-22001WVCM" — right side, top. Bbox: [590, 220, 730, 238].
-
-- Item No.: Column header in table. Bbox: [320, 430, 395, 455].
-
-- L (MM): Column header in table. Bbox: [440, 430, 495, 455].
-
-- NOTIFY PARTY: Label "NOTIFY PARTY" — right side, under BUYER. Bbox: [590, 330, 677, 348].
-
-- No: Column header in table (the serial number column). Bbox: [100, 430, 130, 455].
-
-- PACKAGE: "Plywood case." — right side, under PACKAGE. Bbox: [590, 290, 682, 308].
-
-- PAYMENT ITEM: "TT in advance" — right side, under PAYMENT ITEM. Bbox: [590, 280, 682, 298].
-
-- PO NO: "SQLM-22001WCM" — right side, under PO NO. Bbox: [590, 260, 710, 278].
-
-- Qty.: Column header in table. Bbox: [470, 430, 495, 455].
-
-- Shipping Mark: Column header in table. Bbox: [25, 430, 100, 455] (the header row's first column).
-
-- Sub-Total (USD): Column header in table. Bbox: [620, 430, 715, 455].
-
-- T (MM): Column header in table. Bbox: [280, 430, 325, 455].
-
-- TITLE: "COMMERCIAL INVOICE" — main title. Bbox: [250, 300, 750, 330] (approx, the large text in the middle).
-
-- TOTAL OF: The line "TOTAL OF" in the table. Bbox: [25, 540, 775, 560] (the dashed line with "TOTAL OF" text).
-
-- Tel: SELLER's Tel: "+09 00562621882" — under SELLER. Bbox: [34, 240, 285, 258].
-
-- Unit: Column header in table. Bbox: [540, 430, 565, 455].
-
-- Unit Price: Column header in table. Bbox: [595, 430, 660, 455].
-
-- W (MM): Column header in table. Bbox: [360, 430, 395, 455].
-
-Now, let's compile all these into the JSON array. Each entry is a dictionary with "bbox_2d" and "label".
-
-Let's list them:
-
-1. Add: [96, 10, 627, 28], label "Add"
-2. Address: [34, 200, 477, 220], label "Address"
-3. Attn: [34, 300, 477, 320], label "Attn"
-4. BUYER: [590, 240, 638, 258], label "BUYER"
-5. COMPANY NAME: [34, 290, 477, 310], label "COMPANY NAME"
-6. DATE: [590, 250, 664, 268], label "DATE"
-7. Descriptions: [100, 430, 225, 455], label "Descriptions"
-8. Fax: [420, 110, 590, 128], label "Fax"
-9. HS Code: [25, 620, 200, 638], label "HS Code"
-10. INCOTERMS: [590, 270, 627, 288], label "INCOTERMS"
-11. INVOICE NO: [590, 220, 730, 238], label "INVOICE NO"
-12. Item No.: [320, 430, 395, 455], label "Item No."
-13. L (MM): [440, 430, 495, 455], label "L (MM)"
-14. NOTIFY PARTY: [590, 330, 677, 348], label "NOTIFY PARTY"
-15. No: [100, 430, 130, 455], label "No"
-16. PACKAGE: [590, 290, 682, 308], label "PACKAGE"
-17. PAYMENT ITEM: [590, 280, 682, 298], label "PAYMENT ITEM"
-18. PO NO: [590, 260, 710, 278], label "PO NO"
-19. Qty.: [470, 430, 495, 455], label "Qty."
-20. Shipping Mark: [25, 430, 100, 455], label "Shipping Mark"
-21. Sub-Total (USD): [620, 430, 715, 455], label "Sub-Total (USD)"
-22. T (MM): [280, 430, 325, 455], label "T (MM)"
-23. TITLE: [250, 300, 750, 330], label "TITLE"
-24. TOTAL OF: [25, 540, 775, 560], label "TOTAL OF"
-25. Tel: [34, 240, 285, 258], label "Tel"
-26. Unit: [540, 430, 565, 455], label "Unit"
-27. Unit Price: [595, 430,
+4. Attn:
+   - Text: "Attn: Mr. Michael Craig"
+   - Bounding box: Under CONSIGNEE, Attn: line.
+
+5. BUYER:
+   - Text: "SAME AS CONSIGNEE"
+   - Bounding box: Under BUYER label.
+
+6. COMPANY NAME:
+   - Text: "CTS (Malaysia) Sdn Bhd"
+   - Bounding box: Under CONSIGNEE, company name.
+
+7. DATE:
+   - Text: "17 Mar, 2022"
+   - Bounding box: Next to DATE: label.
+
+8. Descriptions:
+   - Text: "Descriptions" (column header)
+   -

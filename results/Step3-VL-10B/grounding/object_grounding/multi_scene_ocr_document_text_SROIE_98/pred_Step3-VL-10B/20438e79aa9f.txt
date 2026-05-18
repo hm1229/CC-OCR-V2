@@ -1,311 +1,106 @@
-Got it, let's go through the document and identify each category.
+Got it, let's extract the required information from the invoice.
 
-First, company: The top part has "TEO HENG STATIONERY & BOOKS" which is the company name. Let's check the bounding box for that.
+First, identify each category:
 
-Address: The address lines are "NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN". Let's find that.
+- Company: The top part has "TEO HENG STATIONERY & BOOKS". Let's check the bounding box for that text.
+- Address: The address lines are "NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN". Need to find that.
+- Date: The date is "15/03/2018" on the receipt.
+- Total: The total amount is 127.20 (CASH) or the total in GST summary is 120.00 (but the total payment is 127.20). Let's check the "TOTAL" line which is 127.20.
 
-Date: The date is "15/03/2018" on the receipt.
+Now, find the bounding boxes for each.
 
-Total: There are multiple totals, like the total amount (120.00), total tax (7.20), total cash (127.20). Let's check which ones to pick. The main total for the item is 120.00, and the total cash is 127.20. Let's see the required labels.
+Company: The company name is at the top of the invoice. Let's check the coordinates. The text "TEO HENG STATIONERY & BOOKS" is in the upper part of the white rectangle.
+
+Address: The address lines are below the company name. Let's capture that.
+
+Date: The date is next to the receipt number: "Date : 15/03/2018".
+
+Total: The total cash is 127.20, which is labeled as "TOTAL : 127.20".
+
+Let's map each:
+
+1. Company: [444, 92, 606, 114] (approx, need to check the text)
+Wait, the image's text: "TEO HENG STATIONERY & BOOKS" is the company. Let's get the exact bounding box.
+
+Looking at the image, the company name is in the top section of the invoice. Let's define the box.
+
+Address: The address is "NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN". Let's find that.
+
+Date: "15/03/2018" is in the receipt section.
+
+Total: The total amount paid is 127.20 (under TOTAL line).
+
+Now, let's structure each entry.
+
+First, company:
+
+The company name is "TEO HENG STATIONERY & BOOKS". Let's check the coordinates. The top part of the invoice has that text. Let's assume the bounding box covers that line.
+
+Address: The address lines are below the company, including the phone and fax, but the main address is the line with NO.53... Let's check.
+
+Date: The date is in the receipt section, next to Receipt No.
+
+Total: The total cash is 127.20, which is the "TOTAL" line.
 
 Now, let's list each:
 
-Company: The company name is at the top. Bounding box around "TEO HENG STATIONERY & BOOKS".
+- Company: bbox around "TEO HENG STATIONERY & BOOKS"
+- Address: bbox around the address lines (NO.53... SELANGOR DARUL EHSAN)
+- Date: bbox around "15/03/2018"
+- Total: bbox around "127.20" in the TOTAL line (or the total amount)
 
-Address: The address lines below the company name.
+Let's check the image details.
 
-Date: The date field "Date : 15/03/2018".
+For company: The text is at the top of the white rectangle. Let's take the coordinates. The image's company name is centered, so the box would be from the left to right of that line.
 
-Total: Let's check the "TOTAL" section. For example, "TOTAL : 127.20" (cash total) or the item total. Let's check the GST summary total as well. But the problem says "total" category, so any total amount.
+Address: The address is below the company, so the lines starting with NO.53... up to SELANGOR DARUL EHSAN.
 
-Let's extract each:
+Date: The date is on the line "Date : 15/03/2018" which is below the receipt number.
 
-1. Company: The text "TEO HENG STATIONERY & BOOKS" is the company. Let's get its bounding box.
+Total: The "TOTAL" line shows 127.20, which is the total amount.
 
-2. Address: The address lines: "NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN".
-
-3. Date: "15/03/2018" from the receipt date.
-
-4. Total: Let's take the "TOTAL" under the main section, which is 127.20 (CASH). Also, the item total is 120.00. Let's check which one is appropriate. The problem says "total" so maybe the overall total. Let's check the GST summary total: "TOTAL : 120.00" (amount) and tax 7.20. But the main total cash is 127.20.
-
-Now, let's map each:
-
-- Company: [229, 89, 767, 107] (approx, need to check the image. The company name is in the top part of the invoice.)
-
-- Address: The address lines are below the company. Let's check the text: "NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN". So the bounding box for that.
-
-- Date: The date is "15/03/2018" which is in the receipt section, next to Receipt No.
-
-- Total: Let's pick the "TOTAL" line which is 127.20 (CASH). The line "TOTAL : 127.20" in the main section.
-
-Now, let's verify each element's position.
+Now, let's create the JSON entries.
 
 First, company:
 
-The company name is "TEO HENG STATIONERY & BOOKS" at the top of the invoice. The bounding box would cover that text.
+{"bbox_2d": [442, 90, 607, 116], "label": "company"}
 
 Address:
 
-The address is listed as:
+The address lines are:
 
 NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI
 
 SELANGOR DARUL EHSAN
 
-So the bounding box includes these lines.
+So the bounding box would cover these lines. Let's check the coordinates. The address is below the company name, so:
+
+{"bbox_2d": [450, 134, 690, 160], "label": "address"} (approx, need to check the exact text)
 
 Date:
 
-The date is "15/03/2018" which is in the line "Date : 15/03/2018" under the receipt number.
+The date is "15/03/2018" in the receipt section. The line is "Receipt No.: CS1803/28617 Date : 15/03/2018". So the date's bbox is around that date.
+
+{"bbox_2d": [564, 298, 640, 314], "label": "date"}
 
 Total:
 
-Looking at the main total section:
+The total amount is 127.20, which is in the "TOTAL" line: "TOTAL : 127.20". Let's find that.
+
+In the invoice, after SUB-TOTAL, TOTAL TAX, etc., the TOTAL is 127.20. So the bbox for total is around that value.
+
+{"bbox_2d": [544, 334, 606, 350], "label": "total"} (or check the exact position)
+
+Wait, let's check the image's text for total. The line "TOTAL : 127.20" is present. Let's confirm.
+
+Yes, in the image, the section has:
 
 TOTAL : 127.20
 
 CASH : 127.20
 
-So the "TOTAL" here is 127.20. Also, the item total is 120.00 (Total Qty: 48, amount 120.00). Let's check which total is required. The problem says "total" category, so any total. Let's include the main total (127.20) and maybe the item total. But let's check the problem statement: "detect all objects matching these categories". So each occurrence? Or just one per category? The problem says "for each detected object", so maybe multiple if there are multiple totals. But let's check the example.
-
-Wait, the problem says "Detect all objects matching these categories in this document image: address, company, date, total."
-
-So for each category, find all instances. Let's check:
-
-- Company: only one instance (the company name at the top).
-
-- Address: one instance (the address block).
-
-- Date: one instance (the receipt date).
-
-- Total: multiple instances. Let's check:
-
-  - Total Qty: 48 (but that's quantity, not total amount). The "Total Amount" for the item is 120.00.
-
-  - SUB-TOTAL (EX): 120.00
-
-  - TOTAL TAX: 7.20
-
-  - TOTAL: 127.20 (this is the total amount including tax, since cash is 127.20)
-
-  - GST SUMMARY total amount: 120.00
-
-  - GST total tax: 7.20
-
-But the category is "total", which probably refers to the total amount of the transaction. Let's check the main "TOTAL" line which is 127.20. Also, the item total is 120.00. Let's see which ones are labeled as "total".
-
-In the invoice, the line "TOTAL : 127.20" is a clear total. Also, the "TOTAL" in the GST summary is for the amount (120.00) and tax (7.20). But maybe the problem considers the main total.
-
-Let's proceed to list each category with their bounding boxes.
-
-First, company:
-
-The company name is in the top part. Let's find the coordinates. The text "TEO HENG STATIONERY & BOOKS" is centered at the top of the invoice box.
-
-Address:
-
-The address lines are below the company name. Let's check the text:
-
-NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI
-
-SELANGOR DARUL EHSAN
-
-So the bounding box covers these lines.
-
-Date:
-
-The date is "15/03/2018" which is in the receipt section, next to "Receipt No. : CS1803/28617 Date : 15/03/2018"
-
-Total:
-
-Let's take the main total line: "TOTAL : 127.20" which is under the rounding section.
-
-Also, the item total is "Total Qty. : 48" and "AMOUNT (RM) 120.00". But "total" as a category likely refers to the overall total amount paid, which is 127.20.
-
-Now, let's define the bounding boxes.
-
-For company:
-
-The text "TEO HENG STATIONERY & BOOKS" is in the upper part of the invoice. Let's estimate the coordinates. The image's invoice is a rectangle. Let's assume the top part's company name is from x around 220 to 760, y around 90 to 110.
-
-Address:
-
-The address is below the company, so y around 115 to 140.
-
-Date:
-
-The date is in the receipt section, which is below the "SIMPLIFIED TAX INVOICE" and "CASH" headers. The date is on the same line as receipt number, so y around 200.
-
-Total:
-
-The main total is in the section after SUB-TOTAL, TOTAL TAX, etc. Let's find the line "TOTAL : 127.20" which is around y 300.
-
-Now, let's create the JSON array.
-
-First, company:
-
-{"bbox_2d": [229, 87, 767, 108], "label": "company"}
-
-Address:
-
-The address lines: "NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN". Let's check the exact text. The address is:
-
-NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI
-
-SELANGOR DARUL EHSAN
-
-So the bounding box would cover these lines. Let's say from x 230 to 765, y 110 to 145.
-
-{"bbox_2d": [232, 112, 764, 152], "label": "address"}
-
-Date:
-
-The date is "15/03/2018" in the line "Date : 15/03/2018". Let's find the coordinates. The receipt number is CS1803/28617, then Date : 15/03/2018. So the date is at x around 420, y around 210.
-
-{"bbox_2d": [425, 212, 585, 232], "label": "date"}
-
-Total:
-
-The main total is "TOTAL : 127.20". Let's check the line:
-
-TOTAL : 127.20
-
-CASH : 127.20
-
-So the "TOTAL" line is above that. Let's find the coordinates. The total is in the section after rounding. Let's say y around 280.
-
-Also, the item total is "Total Qty. : 48" and the amount is 120.00. Let's check if that's a total. The problem says "total", so maybe both the item total and the overall total. But let's check the problem statement: it says "detect all objects matching these categories". So if there are multiple totals, include them.
-
-First, the item total amount: in the table, the AMOUNT (RM) for the item is 120.00, and the line "Total Qty. : 48" and then the total amount is 120.00. So the line "Total : 48" (quantity) and "120.00" (amount). But the label is "total", which is the amount. Let's check the line "Total : 120.00" (the sub-total is also 120.00). Wait, the "Total Qty. : 48" is quantity, and the amount is 120.00. Then "SUB-TOTAL (EX) : 120.00". Then "TOTAL TAX : 7.20". Then "TOTAL : 127.20".
-
-So the "TOTAL" here is 127.20. Let's take that as one total.
-
-Also, the GST summary has "TOTAL : 120.00" (amount) and tax 7.20. So that's another total for the amount before tax.
-
-But the problem says "total" category, which is a bit ambiguous. Let's check the example. The user probably expects the main total of the transaction, which is 127.20 (cash paid). Let's include that.
-
-So the total entry:
-
-{"bbox_2d": [305, 295, 395, 315], "label": "total"}  // for TOTAL : 127.20
-
-Also, the item total amount is 120.00, which is the amount for the item. Let's check if that's a total. The line "Total : 120.00" (under Total Qty). Let's see:
-
-In the invoice, after the item table, it says:
-
-Total Qty. : 48
-
-120.00
-
-So that's the total amount for the item. So that's another total.
-
-So maybe two totals: the item total (120.00) and the overall total (127.20).
-
-Let's check the text:
-
-"Total Qty. : 48 120.00"
-
-So the amount is 120.00. Let's find the bounding box for that.
-
-The line "Total Qty. : 48" and then the amount is aligned. Let's say the amount 120.00 is in the same line.
-
-So for the item total:
-
-{"bbox_2d": [420, 310, 580, 330], "label": "total"}  // the 120.00 amount
-
-And the overall total:
-
-{"bbox_2d": [325, 335, 435, 355], "label": "total"}  // TOTAL : 127.20
-
-Also, the GST summary total amount is 120.00, which is the same as the item total. Let's check:
-
-In GST SUMMARY, "TOTAL : 120.00" (amount) and tax 7.20. So that's another total, but it's the same amount as the item total. Maybe it's redundant, but let's check if it's a separate total.
-
-But the problem says "detect all objects", so if there are multiple, include them. Let's list all possible totals.
-
-But maybe the problem expects the main total (cash) and the item total. Let's proceed.
-
-Now, let's compile all:
-
-1. Company: TEO HENG STATIONERY & BOOKS
-2. Address: NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI SELANGOR DARUL EHSAN
-3. Date: 15/03/2018
-4. Total: 120.00 (item total), 127.20 (overall total), 7.20 (total tax) — but tax is a type of total, but the category is "total", which might include all total amounts.
-
-But let's check the problem statement again: the categories are address, company, date, total. So "total" refers to any total amount in the document.
-
-Let's identify all total amounts:
-
-- Item total amount: 120.00 (under Total Qty)
-- Sub-total (EX): 120.00
-- Total tax: 7.20
-- Total (cash): 127.20
-- GST summary total amount: 120.00
-- GST summary total tax: 7.20
-
-But some of these are the same values. Let's check which are distinct entries.
-
-The main "TOTAL" line (cash) is 127.20, which is a key total. The item total is 120.00. Let's include both.
-
-Now, let's define the bounding boxes accurately.
-
-First, company:
-
-The company name is at the top of the invoice, above the address. Let's check the image: the text "TEO HENG STATIONERY & BOOKS" is in the upper part of the central white box.
-
-Bbox for company: [225, 85, 770, 109]
-
-Address:
-
-The address lines are below the company, including the phone numbers and GST number. Wait, the address is:
-
-NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI
-
-SELANGOR DARUL EHSAN
-
-TEL : 03-3271 9872
-
-FAX : 03-3271 9481
-
-GST No. : 000489913864
-
-So the address is the physical address, which is the first two lines. The TEL, FAX, GST are contact info, not address. So the address is the location: NO. 53, JALAN BESEAR, 45600 BATANG BERJUNTAI, SELANGOR DARUL EHSAN.
-
-Bbox for address: [230, 110, 765, 150] (covers the address lines)
-
-Date:
-
-The date is in the receipt section: "Date : 15/03/2018". Let's find the exact position. The receipt number is CS1803/28617, then Date is next to it.
-
-Bbox for date: [422, 210, 582, 230]
-
-Total:
-
-Let's take the main total (cash) which is "TOTAL : 127.20" and "CASH : 127.20". The line "TOTAL : 127.20" is a clear total.
-
-Bbox for total (cash): [320, 330, 440, 350]
-
-Also, the item total amount: in the section after the item table, it says "Total Qty. : 48" and the amount is 120.00. Let's check the line:
-
-Total Qty. : 48
-
-120.00
-
-So the amount 120.00 is the total for the item.
-
-Bbox for item total: [425, 315, 575, 335]
-
-Another total is the sub-total (EX): 120.00. Let's check:
-
-"SUB-TOTAL (EX) : 120.00"
-
-Bbox for sub-total: [325, 355, 445, 375]
-
-Total tax: "TOTAL TAX : 7.20"
-
-Bbox for total tax: [325, 375, 425, 395]
-
-GST summary total amount: "TOTAL : 120.00" in the GST SUMMARY section.
-
-Bbox for GST total amount: [325, 475, 445, 495]
-
-GST total tax: "7.20"
+So the total amount is 127.20.
+
+Now, let's compile all four entries.
+</think>
+[{"bbox_2d": [444, 92, 606, 114], "label": "company"}, {"bbox_2d": [450, 136, 692, 162], "label": "address"}, {"bbox_2d": [566, 298, 642, 316], "label": "date"}, {"bbox_2d": [546, 336, 604, 354], "label": "total"}]

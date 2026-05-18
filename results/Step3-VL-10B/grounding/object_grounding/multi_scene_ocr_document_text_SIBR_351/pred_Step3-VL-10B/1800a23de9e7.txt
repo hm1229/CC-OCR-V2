@@ -1,188 +1,105 @@
-用户现在需要从销售合同里提取指定类别的对象，每个对象要标bbox和label。首先得逐个看每个类别在图中的位置。
+用户现在需要从销售合同中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看Address：比如客户地址“088 Deborah Pine Apt. 664 North Stephenland, MS 30945”是Customer的地址，还有顶部的“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”也是地址。需要确认哪些是Address类别。另外Company Name是底部的“...OLOGY CO., LTD.”（虽然部分模糊，但有公司名称）。
+首先看Address：客户地址是“088 Deborah Pine Apt. 664 North Stephenville, MS 30945”，还有上方的“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”？不过看Customer部分的地址是SYM RISE AG的地址，所以Customer的Address是“088 Deborah Pine Apt. 664 North Stephenville, MS 30945”。另外上方的可能是销售方的地址？看顶部的地址是“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”，Tel和Fax等。需要确认每个字段。
 
-然后Amount USD：图中有“Total Amount USD: 13,320.00”和“Amount USD”列的数值，比如13,320.00。
+先列所有类别：
 
-Bestally Contract No.：图中“Bestally Contract No.: M662754”。
+Address：可能有两个？但看Customer的Address是SYM RISE AG的地址，即“088 Deborah Pine Apt. 664 North Stephenville, MS 30945”。另外顶部的地址是销售方（Murphy.biz？）的地址“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”。需要看哪个是对应。可能Customer的Address是其中一个，而顶部的是销售方的Address？但题目中的Address可能指Customer的Address？需要看每个字段。
 
-Customer No.：“Customer No.: C00104”。
+现在逐个处理：
 
-Customer Order No.：“Customer Order No.: 303/4501422923”。
+1. Address：看Customer部分的地址，即“088 Deborah Pine Apt. 664 North Stephenville, MS 30945”。对应的bbox是包含该地址的区域。在图中Customer: SYMRise AG下面的地址，所以bbox大概是[37, 312, 353, 332]左右？
 
-Date：“Date: 2021-10-15”。
+2. Amount USD：Total Amount USD是13,320.00，对应表格下方的Total Amount USD: 13,320.00。bbox是[677, 457, 827, 475]左右？
 
-Delivery Term：“Delivery Term: FOB XIAMEN BY SEA”。
+3. Bestally Contract No.：M662754，对应图中的“Bestally Contract No.: M662754”，bbox是[477, 212, 592, 229]。
 
-Delivery Time：“Delivery Time: 2022-01-22”。
+4. Company Name：图中下方有“...OLOGY CO., LTD.”，可能是销售方的公司名？或者看是否有其他公司名。另外Customer是SYM RISE AG，所以Company Name可能是销售方的公司，即图中下方的“...OLOGY CO., LTD.”，但可能被模糊了。或者看是否有其他。另外可能“SYM RISE AG”是Customer，而销售方是Murphy.biz？但图中下方有个公司名，可能是销售方。不过可能需要看。或者可能Company Name是“SYM RISE AG”？不，Customer是SYM RISE AG，所以Company Name应该是销售方的公司，即图中下方的“...OLOGY CO., LTD.”，但可能不清晰。或者可能图中的“Title”是SALES CONTRACT，所以Title是SALES CONTRACT。
 
-Description：“Description”列的内容，比如“天然甲位松油醇 TERPINEOL ALPHA NAT.”。
+5. Customer No.：C00104，对应“Customer No.: C00104”，bbox是[77, 222, 147, 238]。
 
-Fax：顶部的“Fax: +685517267595”。
+6. Customer Order No.：303/4501422923，对应“Customer Order No.: 303/45014222923”（注意图中是303/4501422923？看原文是303/4501422923？图中是303/4501422923？看原文“Customer Order No.: 303/4501422923”）。
 
-Item code：“Item Code: N30450”。
+7. Date：2021-10-15，对应“Date: 2021-10-15”，bbox是[517, 219, 602, 235]。
 
-POS：“POS”列的数值1。
+8. Delivery Term：FOB XIAMEN BY SEA，对应“Delivery Term: FOB XIAMEN BY SEA”，bbox是[58, 497, 337, 514]。
 
-Packaging：“Packaging”列的“10×185Kg/DRUM”。
+9. Delivery Time：2022-01-22，对应“Delivery Time: 2022-01-22”，bbox是[58, 507, 225, 524]。
 
-Payment Mode：“Payment Mode: T/T”。
+10. Description：天然甲位松油醇 TERPINEOL ALPHA NAT.，对应表格中的Description列，内容是“天然甲位松油醇 TERPINEOL ALPHA NAT.”，bbox是[277, 437, 492, 454]（因为表格中Description列的内容）。
 
-Payment Term：“Payment Term: 90 DAYS FROM B/L DATE”。
+11. Fax：+685517267595，对应顶部的“Fax: +685517267595”，bbox是[602, 200, 767, 217]。
 
-Price USD/Kg：“Price USD/Kg”列的7.20。
+12. Item code：N30450，对应表格中的Item Code列，值是N30450，bbox是[142, 447, 197, 464]。
 
-Quantity Kg：“Quantity Kg”列的1,850.00。
+13. POS：1，对应表格中的POS列，值是1，bbox是[62, 447, 77, 464]。
 
-Tel：客户Tel“Tel:99 (0) 7453/10-0954”和顶部的“Tel: +126316698523/5851888”。
+14. Packaging：10×185Kg/DRUM，对应表格中的Packaging列，值是10×185Kg/DRUM，bbox是[337, 447, 492, 464]。
 
-Title：“SALES CONTRACT”是标题。
+15. Payment Mode：T/T，对应“Payment Mode: T/T”，bbox是[58, 547, 117, 564]。
 
-Website：顶部的“http://murphy.biz/”。
+16. Payment Term：90 DAYS FROM B/L DATE，对应“Payment Term: 90 DAYS FROM B/L DATE”，bbox是[58, 537, 353, 554]。
 
-现在需要逐个定位每个元素的bbox。先看顶部的地址：13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864，这个是Address。然后Customer的地址是088 Deborah Pine Apt. 664 North Stephenland, MS 30945，也是Address。Company Name是底部的“...OLOGY CO., LTD.”，看图片中的公司名称部分，有“有限公司”和“OLOGY CO., LTD.”，所以Company Name的bbox是那个区域。
+17. Price USD/Kg：7.20，对应表格中的Price列，值是7.20，bbox是[602, 447, 667, 464]。
+
+18. Quantity Kg：1,850.00，对应表格中的Quantity Kg列，值是1,850.00，bbox是[277, 454, 362, 471]。
+
+19. Tel：客户Tel是99 (0) 7453/10-0954 和 14 (5) 9309/49-50330，另外顶部的Tel是+126316698523/5851888。需要看哪个是对应。题目中的Tel可能指Customer的Tel，即“Tel:99 (0) 7453/10-0954 14 (5) 9309/49-50330”，对应Customer部分的Tel，bbox是[37, 337, 237, 354]（因为图中Customer: SYMRise AG下面的Tel是“Tel:99 (0) 7453/10-0954 14 (5) 9309/49-50330”）。
+
+20. Title：SALES CONTRACT，对应图中的大标题“SALES CONTRACT”，bbox是[357, 237, 642, 267]（因为标题在中间，较大字体）。
+
+21. Website：http://murphy.biz/，对应顶部的“http://murphy.biz/”，bbox是[697, 197, 847, 214]。
+
+现在需要逐个确认每个类别的bbox和label，然后整理成JSON数组。
 
 现在开始逐个处理：
 
-1. Address（顶部的地址）：文字是“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”，位置在顶部，所以bbox大概是从左到右的那行。看坐标的话，图中顶部第一行是地址，所以bbox是[137, 152, 862, 169]左右？需要看原图的布局。原图中顶部的地址是“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”，然后是Tel和Fax。所以这个Address的bbox是包含这行文字的区域。
+1. Address（Customer的地址）：内容是“088 Deborah Pine Apt. 664 North Stephenville, MS 30945”，在图中Customer: SYMRise AG下方，所以bbox大约是[37, 312, 353, 332]。label是Address。
 
-2. Amount USD：有两个地方，Total Amount USD: 13,320.00，以及Amount USD列的13,320.00。需要看哪个是目标。图中“Total Amount USD: 13,320.00”是明确的，所以bbox是对应的位置，比如在表格下方，Total Amount USD的行。
+2. Amount USD：Total Amount USD: 13,320.00，对应表格下方的Total Amount USD行，Amount列是13,320.00。bbox是[677, 457, 827, 475]。label是Amount USD。
 
-3. Bestally Contract No.：“Bestally Contract No.: M662754”，位置在Date右边，所以bbox是包含这行的区域。
+3. Bestally Contract No.：M662754，对应“Bestally Contract No.: M662754”，bbox是[477, 212, 592, 229]。label是Bestally Contract No.
 
-4. Company Name：图中右下角有“...OLOGY CO., LTD.”，所以是Company Name，bbox是那个灰色块下面的文字，比如“OLOGY CO., LTD.”和“有限公司”。
+4. Company Name：图中下方有“...OLOGY CO., LTD.”，可能是销售方公司名，比如“XX OLOGY CO., LTD.”，但可能被模糊。另外看是否有其他公司名，比如Customer是SYM RISE AG，所以Company Name可能不是这个。或者可能图中的“Title”是SALES CONTRACT，而Company Name是销售方，即图中下方的公司名。假设是图中下方的“...OLOGY CO., LTD.”，bbox是[617, 587, 847, 627]（因为图中下方有个公司标志和文字，部分被模糊，但能看到“OLOGY CO., LTD.”）。label是Company Name。
 
-5. Customer No.：“Customer No.: C00104”，在左上方，Attention to: 下面。
+5. Customer No.：C00104，对应“Customer No.: C00104”，bbox是[77, 222, 147, 238]。label是Customer No.
 
-6. Customer Order No.：“Customer Order No.: 303/45014222923”（注意原图是303/4501422923？看原图中的Customer Order No.是303/4501422923）。
+6. Customer Order No.：303/4501422923，对应“Customer Order No.: 303/4501422923”，bbox是[477, 229, 652, 246]。label是Customer Order No.
 
-7. Date：“Date: 2021-10-15”，在Bestally Contract No.的左边。
+7. Date：2021-10-15，对应“Date: 2021-10-15”，bbox是[517, 219, 602, 235]。label是Date.
 
-8. Delivery Term：“Delivery Term: FOB XIAMEN BY SEA”，在表格下方，Delivery Term行。
+8. Delivery Term：FOB XIAMEN BY SEA，对应“Delivery Term: FOB XIAMEN BY SEA”，bbox是[58, 497, 337, 514]。label是Delivery Term.
 
-9. Delivery Time：“Delivery Time: 2022-01-22”，在Delivery Term下面。
+9. Delivery Time：2022-01-22，对应“Delivery Time: 2022-01-22”，bbox是[58, 507, 225, 524]。label是Delivery Time.
 
-10. Description：表格中的Description列，内容是“天然甲位松油醇 TERPINEOL ALPHA NAT.”，所以bbox是该单元格的内容。
+10. Description：天然甲位松油醇 TERPINEOL ALPHA NAT.，对应表格中Description列的内容，bbox是[277, 437, 492, 454]。label是Description.
 
-11. Fax：顶部的“Fax: +685517267595”，在Tel右边。
+11. Fax：+685517267595，对应顶部“Fax: +685517267595”，bbox是[602, 200, 767, 217]。label是Fax.
 
-12. Item code：表格中的Item Code列，值是N30450，对应POS 1的行。
+12. Item code：N30450，对应表格中Item Code列，值为N30450，bbox是[142, 447, 197, 464]。label是Item code.
 
-13. POS：表格中的POS列，值是1。
+13. POS：1，对应表格中POS列，值为1，bbox是[62, 447, 77, 464]。label是POS.
 
-14. Packaging：表格中的Packaging列，值是10×185Kg/DRUM。
+14. Packaging：10×185Kg/DRUM，对应表格中Packaging列，值为10×185Kg/DRUM，bbox是[337, 447, 492, 464]。label是Packaging.
 
-15. Payment Mode：“Payment Mode: T/T”，在Delivery Time下面。
+15. Payment Mode：T/T，对应“Payment Mode: T/T”，bbox是[58, 547, 117, 564]。label是Payment Mode.
 
-16. Payment Term：“Payment Term: 90 DAYS FROM B/L DATE”，在Payment Mode上面？不，看原图：Payment Term是“90 DAYS FROM B/L DATE”，Payment Mode是“T/T”，所以顺序是Payment Term在上，Payment Mode在下？看原图中的内容：
+16. Payment Term：90 DAYS FROM B/L DATE，对应“Payment Term: 90 DAYS FROM B/L DATE”，bbox是[58, 537, 353, 554]。label是Payment Term.
 
-Delivery Time: 2022-01-22
+17. Price USD/Kg：7.20，对应表格中Price列，值为7.20，bbox是[602, 447, 667, 464]。label是Price USD/Kg.
 
-Payment Term: 90 DAYS FROM B/L DATE
+18. Quantity Kg：1,850.00，对应表格中Quantity Kg列，值为1,850.00，bbox是[277, 454, 362, 471]。label是Quantity Kg.
 
-Payment Mode: T/T
+19. Tel：客户Tel是“Tel:99 (0) 7453/10-0954 14 (5) 9309/49-50330”，对应Customer部分的Tel，bbox是[37, 337, 237, 354]。label是Tel.
 
-Remark: 
+20. Title：SALES CONTRACT，对应大标题，bbox是[357, 237, 642, 267]。label是Title.
 
-所以Payment Term是“90 DAYS FROM B/L DATE”，Payment Mode是“T/T”。
+21. Website：http://murphy.biz/，对应顶部的Website，bbox是[697, 197, 847, 214]。label是Website.
 
-17. Price USD/Kg：表格中的Price USD/Kg列，值是7.20。
+现在需要检查是否有遗漏或错误。比如Company Name，图中下方的公司名是“...OLOGY CO., LTD.”，可能是销售方，所以Company Name的bbox是图中下方的公司标识区域，比如[617, 587, 847, 627]（因为图中下方有个灰色块和文字，能看到“OLOGY CO., LTD.”）。
 
-18. Quantity Kg：表格中的Quantity Kg列，值是1,850.00。
+另外，顶部的Address是“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”，这可能是销售方的Address，而Customer的Address是另一个。但题目中的Address可能需要看是否有多个，但用户要求的是“Address”类别，可能需要确定是哪个。但根据问题中的类别，可能Customer的Address是其中一个，而销售方的Address可能也是，但需要看。不过可能题目中的Address指的是Customer的Address，因为其他字段如Customer No.等都是关于Customer的。所以先处理Customer的Address。
 
-19. Tel：有两个Tel，一个是顶部的“Tel: +126316698523/5851888”，另一个是Customer的“Tel:99 (0) 7453/10-0954”和“14 (5) 9309/49-50330”。需要看是否都算，但类别是Tel，所以可能两个都算？但需要看题目中的要求，每个检测到的对象。不过可能用户需要所有出现的Tel。但先看顶部的Tel是“Tel: +126316698523/5851888”，Customer的Tel是“Tel:99 (0) 7453/10-0954”和下面的“14 (5) 9309/49-50330”（可能换行）。
-
-20. Title：“SALES CONTRACT”是大标题，所以是Title。
-
-21. Website：顶部的“http://murphy.biz/”是Website。
-
-现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个元素的位置。以下是对每个类别的处理：
-
-- Address（顶部地址）：[137, 150, 862, 168]（包含“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”）
-- Amount USD（Total Amount）：[675, 457, 862, 475]（“Total Amount USD: 13,320.00”）
-- Bestally Contract No.：[600, 238, 762, 256]（“Bestally Contract No.: M662754”）
-- Company Name：[685, 750, 862, 790]（图中右下角的“OLOGY CO., LTD.”和“有限公司”）
-- Customer No.：[65, 242, 152, 260]（“Customer No.: C00104”）
-- Customer Order No.：[600, 258, 862, 276]（“Customer Order No.: 303/4501422923”）
-- Date：[600, 230, 725, 248]（“Date: 2021-10-15”）
-- Delivery Term：[65, 477, 425, 495]（“Delivery Term: FOB XIAMEN BY SEA”）
-- Delivery Time：[65, 497, 225, 515]（“Delivery Time: 2022-01-22”）
-- Description：[275, 375, 495, 400]（“天然甲位松油醇 TERPINEOL ALPHA NAT.”）
-- Fax：[685, 152, 862, 168]（“Fax: +685517267595”）
-- Item code：[165, 375, 245, 393]（“N30450”）
-- POS：[65, 375, 95, 393]（“1”）
-- Packaging：[435, 375, 595, 393]（“10×185Kg/DRUM”）
-- Payment Mode：[65, 545, 175, 563]（“T/T”）
-- Payment Term：[65, 525, 425, 543]（“90 DAYS FROM B/L DATE”）
-- Price USD/Kg：[625, 375, 705, 393]（“7.20”）
-- Quantity Kg：[325, 375, 425, 393]（“1,850.00”）
-- Tel（顶部）：[325, 152, 585, 168]（“Tel: +126316698523/5851888”）
-- Tel（Customer）：[65, 310, 225, 328]（“Tel:99 (0) 7453/10-0954”）和[65, 328, 225, 346]（“14 (5) 9309/49-50330”）？可能合并？但看原图中Customer的Tel是两行：“Tel:99 (0) 7453/10-0954”和“14 (5) 9309/49-50330”，所以两个Tel条目？但类别是Tel，所以每个Tel都算。不过可能用户需要所有出现的Tel，所以需要检查。
-- Title：[325, 220, 675, 250]（“SALES CONTRACT”）
-- Website：[685, 158, 862, 172]（“http://murphy.biz/”）
-
-现在需要确保每个类别都被覆盖，并且没有遗漏。现在整理成JSON数组，每个元素是bbox和label。
-
-需要注意的是，有些元素可能有多个实例，比如Tel有两个（顶部和客户），但需要看题目要求是“detect all objects matching these categories”，所以每个实例都要列出来吗？比如Customer的Tel有两个行，所以是两个Tel对象？还是合并？看原图中的Customer部分：
-
-Customer: SYMRISE AG
-
-088 Deborah Pine Apt. 664 North Stephenland, MS 30945
-
-Tel:99 (0) 7453/10-0954
-
-14 (5) 9309/49-50330
-
-所以这里有两个Tel条目，所以需要两个Tel的bbox。另外顶部的Tel是一个，所以总共有三个Tel？不，顶部的Tel是“Tel: +126316698523/5851888”，然后Customer的Tel是两行，所以是三个Tel？但可能“14 (5) 9309/49-50330”是同一Tel的换行，所以可能算一个？需要看实际显示。原图中Customer的Tel部分是：
-
-Tel:99 (0) 7453/10-0954
-
-14 (5) 9309/49-50330
-
-这可能是两行，所以是两个Tel的条目？或者是一个Tel的两行显示。可能更准确的是，每个独立的Tel信息，所以顶部的Tel是一个，Customer的Tel是两个（因为换行了）。但可能在实际中，Customer的Tel是两个号码，所以是两个Tel对象。不过可能用户希望每个出现的Tel都作为单独的检测对象。
-
-现在继续处理，先列出所有类别：
-
-现在开始构建每个条目：
-
-1. Address（顶部）：bbox是包含“13792 Tammy Prairie Apt. 009 Lake Antoniofurt, LA 45864”的区域。在图中，这行在最上方，所以坐标大概是x从137到862，y从150到168。label: Address
-
-2. Amount USD（Total）：bbox是“Total Amount USD: 13,320.00”所在的行，y在457左右，x从675到862。label: Amount USD
-
-3. Bestally Contract No.：bbox是“Bestally Contract No.: M662754”，y在238左右，x从600到762。label: Bestally Contract No.
-
-4. Company Name：图中右下角的“OLOGY CO., LTD.”和“有限公司”，bbox是x从685到862，y从750到790。label: Company Name
-
-5. Customer No.：bbox是“Customer No.: C00104”，y在242左右，x从65到152。label: Customer No.
-
-6. Customer Order No.：bbox是“Customer Order No.: 303/4501422923”，y在258左右，x从600到862。label: Customer Order No.
-
-7. Date：bbox是“Date: 2021-10-15”，y在230左右，x从600到725。label: Date
-
-8. Delivery Term：bbox是“Delivery Term: FOB XIAMEN BY SEA”，y在477左右，x从65到425。label: Delivery Term
-
-9. Delivery Time：bbox是“Delivery Time: 2022-01-22”，y在497左右，x从65到225。label: Delivery Time
-
-10. Description：bbox是“天然甲位松油醇 TERPINEOL ALPHA NAT.”，在表格的Description列，y在375左右，x从275到495。label: Description
-
-11. Fax：bbox是“Fax: +685517267595”，y在152左右，x从685到862。label: Fax
-
-12. Item code：bbox是“N30450”，在Item Code列，y在375左右，x从165到245。label: Item code
-
-13. POS：bbox是“1”，在POS列，y在375左右，x从65到95。label: POS
-
-14. Packaging：bbox是“10×185Kg/DRUM”，在Packaging列，y在375左右，x从435到595。label: Packaging
-
-15. Payment Mode：bbox是“T/T”，y在545左右，x从65到175。label: Payment Mode
-
-16. Payment Term：bbox是“90 DAYS FROM B/L DATE”，y在525左右，x从65到425。label: Payment Term
-
-17. Price USD/Kg：bbox是“7.20”，在Price USD/Kg列，y在375左右，x从625到705。label: Price USD/Kg
-
-18. Quantity Kg：bbox是“1,850.00”，在Quantity Kg列，y在375左右，x从325到425。label: Quantity Kg
-
-19. Tel（顶部）：bbox是“Tel: +126316698523/5851888”，y在152左右，x从325到585。label: Tel
-
-20. Tel（Customer第一行）：bbox是“Tel:99 (0) 7453/10-0954”，y在310左右，x从65到225。label: Tel
-
-21. Tel（Customer第二行）：bbox是“14 (5) 9309/49-50330
+现在整理所有21个类别，每个对应一个条目。现在生成JSON数组。
+</think>
+[{"bbox_2d": [37, 312, 353, 332], "label": "Address"}, {"bbox_2d": [677, 457, 827, 475], "label": "Amount USD"}, {"bbox_2d": [477, 212, 592, 229], "label": "Bestally Contract No."}, {"bbox_2d": [617, 587, 847, 627], "label": "Company Name"}, {"bbox_2d": [77, 222, 147, 238], "label": "Customer No."}, {"bbox_2d": [477, 229, 652, 246], "label": "Customer Order No."}, {"bbox_2d": [517, 219, 602, 235], "label": "Date"}, {"bbox_2d": [58, 497, 337, 514], "label": "Delivery Term"}, {"bbox_2d": [58, 507, 225, 524], "label": "Delivery Time"}, {"bbox_2d": [277, 437, 492, 454], "label": "Description"}, {"bbox_2d": [602, 200, 767, 217], "label": "Fax"}, {"bbox_2d": [142, 447, 197, 464], "label": "Item code"}, {"bbox_2d": [62, 447, 77, 464], "label": "POS"}, {"bbox_2d": [337, 447, 492, 464], "label": "Packaging"}, {"bbox_2d": [58, 547, 117, 564], "label": "Payment Mode"}, {"bbox_2d": [58, 537, 353, 554], "label": "Payment Term"}, {"bbox_2d": [602, 447, 667, 464], "label": "Price USD/Kg"}, {"bbox_2d": [277, 454, 362, 471], "label": "Quantity Kg"}, {"bbox_2d": [37, 337, 237, 354], "label": "Tel"}, {"bbox_2d": [357, 237, 642, 267], "label": "Title"}, {"bbox_2d": [697, 197, 847, 214], "label": "Website"}]

@@ -1,133 +1,132 @@
-用户现在需要从商业发票中提取指定的各个对象，每个对象要找到对应的bbox和标签。首先得逐个分析每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个分析每个字段在图中的位置。
 
-首先看Company Name：图最上方是Lixin Electronic Technology Co., Ltd.，所以这个是Company Name。
+首先看Company Name，是Lixin Electronic Technology Co., Ltd.，在顶部。然后Address（Add）是3884 Williams Plains Suite 996 East Brianview, AR 54224。Tel是86-780-3555258。Fax是62-535-5508780。S/C NO.是210525。INVOICE NO.是20210719。Issued Date是19th July, 2021。Port of destination是USNS Wright FPO AP 86487。Quantity (boxes)是5184。Unit Price (FOB Shanghai)是USD 1.0008/box。Amount (USD)是5118.24。TOTAL AMOUNT也是5118.24。Carton No.是1 -- 108。Country of Origin是China。Description（Shipping Marks里的Description？看Shipping Marks里的Description: Phcy Care Denture Cleaning Tabs 48 pk。然后Description of Goods是Denture Cleansing Tablet, 48 tablets/box；12 boxes/middle box；4 middle boxes/carton。PDE是232819。Vendor Item No.是PC-03。Quantity（这里可能有两个Quantity？一个是Quantity: 48 packs，另一个是Quantity (boxes)是5184。需要区分。另外TEL是06824087178（TO部分的TEL）。Title是COMMERCIAL INVOICE。
 
-Address：Add:后面的地址，3884 Williams Plains Suite 996 East Brianview, AR 54224，对应Add标签？不过用户给的类别里有Add和Address？看用户给的类别里有Add，可能Add就是地址。看原文Add:后面的内容，所以Add对应这个地址。
+现在逐个对应：
 
-然后Amount (USD)：总金额那里，TOTAL AMOUNT: USD 5118.24，所以Amount (USD)是这个数值。
+1. Add：对应地址，图中Add: 3884... 所以Add的bbox是包含Add: 后面的内容。
+2. Address：可能和Add是同一个？不过图中Add就是地址，所以Address对应Add的内容。
+3. Amount (USD)：TOTAL AMOUNT里的USD 5118.24，以及Amount列的5118.24。
+4. Carton No.：Carton No.: 1 -- 108
+5. Company Name：Lixin Electronic Technology Co., Ltd.
+6. Country of Origin：Country of Origin: China
+7. Description：看Shipping Marks里的Description: Phcy Care Denture Cleaning Tabs 48 pk
+8. Description of Goods：Denture Cleansing Tablet, 48 tablets/box；12 boxes/middle box；4 middle boxes/carton
+9. Dimension：Dimensuon: 42.5*33.5*29 cm（注意拼写是Dimensuon，可能 typo）
+10. Fax：Fax: 62-535-5508780
+11. Gross Weight：Gross Weight: 10.5 kg
+12. INVOICE NO.：INVOICE NO.: 20210719
+13. Issued Date：Issued Date: 19th July, 2021
+14. PDE：PDE: 232819
+15. Port of destination：Port of destination: USNS Wright FPO AP 86487
+16. Quantity：Quantity: 48 packs（在Vendor Item No.上面的Quantity）
+17. Quantity (boxes)：Quantity (boxes)列的5184
+18. S/C NO.：S/C NO.: 210525
+19. TEL：TO部分的TEL: 06824087178
+20. Tel：公司部分的Tel: 86-780-3555258
+21. Title：COMMERCIAL INVOICE
+22. Unit Price (FOB Shanghai)：Unit Price (FOB Shanghai)列的USD 1.0008/box
+23. Vendor Item No.：Vendor Item No.: PC-03
 
-Carton No.：在表格里有Carton No.: 1 -- 108，所以找到这个。
+现在需要为每个标签找到对应的bbox。需要看每个元素在图中的位置。
 
-Country of Origin：表格里Country of Origin: China，对应这个类别。
+先列出来每个标签对应的元素：
 
-Description：看Shipping Marks里的Description: Phcy Care Denture Cleaning Tabs 48 pk，所以Description是这个。
+- Company Name: 顶部的Lixin Electronic Technology Co., Ltd.，bbox是[229, 29, 770, 55]左右（看原图的标题部分）
+- Add: Add: 3884 Williams Plains Suite 996 East Brianview, AR 54224，对应图中Add: 后面的内容，位置在公司名称下方，Tel上方。
+- Tel: 公司的Tel: 86-780-3555258，对应图中Tel: 后面的内容。
+- Fax: 公司的Fax: 62-535-5508780，对应图中Fax: 后面的内容。
+- Title: COMMERCIAL INVOICE，大标题。
+- S/C NO.: S/C NO.: 210525，右侧上方。
+- INVOICE NO.: INVOICE NO.: 20210719，右侧S/C NO.下面。
+- Issued Date: Issued Date: 19th July, 2021，右侧INVOICE NO.下面。
+- TO: 可能没有单独标签，但TEL是TO部分的TEL: 06824087178。
+- Port of loading: 可能没在标签里，用户给的标签里没有，所以不考虑。
+- Port of destination: Port of destination: USNS Wright FPO AP 86487，对应标签。
+- Shipping Marks列的内容：包括Sigma Company Limited...，Description: Phcy Care Denture Cleaning Tabs 48 pk，PDE: 232819，Vendor Item No.: PC-03，Quantity: 48 packs，Dimensuon: 42.5*33.5*29 cm，Gross Weight: 10.5 kg，Carton No.: 1 -- 108，Country of Origin: China。
+- Description of Goods列的内容：Denture Cleansing Tablet, 48 tablets/box；12 boxes/middle box；4 middle boxes/carton。
+- Quantity (boxes)列的数值：5184。
+- Unit Price (FOB Shanghai)列的数值：USD 1.0008/box。
+- Amount (USD)列的数值：5118.24。
+- TOTAL AMOUNT: USD 5118.24。
 
-Description of Goods：表格里Description of Goods列的内容，Denture Cleansing Tablet, 48 tablets/box等，对应这个类别。
+现在逐个处理每个标签：
 
-Dimension：表格里的Dimensuon: 42.5*33.5*29 cm，注意拼写可能是Dimension的笔误，但类别里有Dimension，所以对应这个。
+1. Add: 对应图中“Add: 3884 Williams Plains Suite 996 East Brianview, AR 54224”，bbox需要看位置。图中Add在公司信息下方，Tel上方。所以bbox大概是[379, 102, 620, 120]左右（需要看原图的排版，Add: 后面的地址）。
+2. Address: 其实Add就是地址，所以可能和Add是同一个？但用户标签里有Add和Address，可能Add是缩写，Address是全称，这里图中只有Add，所以Address可能对应Add的内容？或者可能用户把Add作为Address的同义。不过按图中的“Add:”就是地址，所以Address的标签对应Add的内容。
+3. Amount (USD): 对应TOTAL AMOUNT里的“USD 5118.24”，以及Amount列的5118.24。这里TOTAL AMOUNT的行是TOTAL AMOUNT: 右边是USD 5118.24，所以bbox是TOTAL AMOUNT行的右侧。
+4. Carton No.: 对应“Carton No.: 1 -- 108”，在Shipping Marks列的下方。
+5. Company Name: 顶部的“Lixin Electronic Technology Co., Ltd.”，bbox是[225, 33, 774, 57]（因为标题在上方，居中）。
+6. Country of Origin: 对应“Country of Origin: China”，在Shipping Marks列的下方。
+7. Description: 对应Shipping Marks中的“Description: Phcy Care Denture Cleaning Tabs 48 pk”。
+8. Description of Goods: 对应“Description of Goods”列的内容，即“Denture Cleansing Tablet, 48 tablets/box；12 boxes/middle box；4 middle boxes/carton”。
+9. Dimension: 对应“Dimensuon: 42.5*33.5*29 cm”（注意拼写错误，是Dimensuon）。
+10. Fax: 对应“Fax: 62-535-5508780”，在公司信息的右侧。
+11. Gross Weight: 对应“Gross Weight: 10.5 kg”。
+12. INVOICE NO.: 对应“INVOICE NO.: 20210719”，在右侧S/C NO.下方。
+13. Issued Date: 对应“Issued Date: 19th July, 2021”，在右侧INVOICE NO.下方。
+14. PDE: 对应“PDE: 232819”。
+15. Port of destination: 对应“Port of destination: USNS Wright FPO AP 86487”。
+16. Quantity: 对应“Quantity: 48 packs”（在Vendor Item No.上面的Quantity）。
+17. Quantity (boxes): 对应表格中“Quantity (boxes)”列的数值5184。
+18. S/C NO.: 对应“S/C NO.: 210525”，在右侧上方。
+19. TEL: 对应“TEL: 06824087178”（TO部分的TEL）。
+20. Tel: 对应公司部分的“Tel: 86-780-3555258”。
+21. Title: 对应“COMMERCIAL INVOICE”大标题。
+22. Unit Price (FOB Shanghai): 对应表格中“Unit Price (FOB Shanghai)”列的“USD 1.0008/box”。
+23. Vendor Item No.: 对应“Vendor Item No.: PC-03”。
 
-Fax：图上方Fax: 62-535-5508780，对应Fax类别。
+现在需要为每个标签确定bbox。由于是图像，需要估计每个元素的位置。例如：
 
-Gross Weight：表格里Gross Weight: 10.5 kg，对应这个。
+- Company Name: [229, 30, 770, 54]（标题行）
+- Add: [377, 104, 622, 122]（Add: 后面的地址）
+- Tel（公司）: [377, 124, 582, 142]（Tel: 后面的号码）
+- Fax（公司）: [622, 124, 782, 142]（Fax: 后面的号码）
+- Title: [142, 330, 857, 366]（COMMERCIAL INVOICE的大标题）
+- S/C NO.: [602, 330, 725, 348]（S/C NO.: 210525）
+- INVOICE NO.: [602, 348, 757, 366]（INVOICE NO.: 20210719）
+- Issued Date: [602, 366, 857, 384]（Issued Date: 19th July, 2021）
+- TO的TEL: [142, 384, 325, 402]（TEL: 06824087178）
+- Port of destination: [377, 402, 725, 420]（Port of destination: USNS Wright FPO AP 86487）
+- Port of loading: 可能没有在标签里，忽略。
+- Shipping Marks列的起始：表格的左列，包含Sigma Company Limited... 到Country of Origin: China。
+- Description（Shipping Marks中的Description）: 在Shipping Marks列中“Description: Phcy Care Denture Cleaning Tabs 48 pk”这部分。
+- Description of Goods: 表格的第二列，内容是Denture Cleansing Tablet... 到4 middle boxes/carton。
+- Quantity (boxes): 表格的第三列，数值5184。
+- Unit Price (FOB Shanghai): 表格的第四列，USD 1.0008/box。
+- Amount (USD): 表格的第五列，5118.24；以及TOTAL AMOUNT行的右侧，USD 5118.24。
+- Carton No.: 在Shipping Marks列中“Carton No.: 1 -- 108”。
+- Country of Origin: 在Shipping Marks列中“Country of Origin: China”。
+- Dimension: 在Shipping Marks列中“Dimensuon: 42.5*33.5*29 cm”。
+- Gross Weight: 在Shipping Marks列中“Gross Weight: 10.5 kg”。
+- PDE: 在Shipping Marks列中“PDE: 232819”。
+- Vendor Item No.: 在Shipping Marks列中“Vendor Item No.: PC-03”。
+- Quantity（48 packs）: 在Shipping Marks列中“Quantity: 48 packs”（在Vendor Item No.上面）。
 
-INVOICE NO.：右侧INVOICE NO.: 20210719，对应这个。
+现在需要将每个标签对应到这些元素，生成JSON数组。注意每个元素的label要准确，bbox是坐标范围（x1,y1,x2,y2）。
 
-Issued Date：右侧Issued Date: 19th July, 2021，对应这个。
+现在开始逐个构建：
 
-PDE：表格里PDE: 232819，对应这个。
-
-Port of destination：Port of destination: USNS Wright FPO AP 86487，对应这个。
-
-Quantity：表格里的Quantity (boxes)列是5184？不，看Quantity (boxes)是5184？看表格里的Quantity (boxes)列的数值是5184？然后Quantity（可能另一个Quantity？用户类别里有Quantity和Quantity (boxes)。看用户给的类别里有Quantity和Quantity (boxes)。看表格中Quantity (boxes)是5184，而Quantity可能是指其他？不，看表格里的Quantity (boxes)是列标题，然后对应的数值是5184。另外，Vendor Item No.里的Quantity: 48 packs，所以Quantity可能有两个？但用户类别里有Quantity和Quantity (boxes)。需要区分。看用户给的类别：Quantity和Quantity (boxes)。看表格中“Quantity (boxes)”是列，对应数值是5184；而“Quantity: 48 packs”是描述里的，属于Description里的内容？不，看表格中的行，Shipping Marks里的Quantity: 48 packs，这属于Description部分？不，看表格的列是Shipping Marks, Description of Goods, Quantity (boxes), Unit Price, Amount。所以Quantity (boxes)列的数值是5184，而Quantity（可能用户类别里的Quantity是另一个？不，用户给的类别里有Quantity和Quantity (boxes)。看用户提供的类别列表：Quantity, Quantity (boxes)。所以需要找到这两个。看表格中Quantity (boxes)是列，数值是5184；而Quantity可能是指其他？比如在Description里的Quantity: 48 packs，这属于Description里的内容，但用户类别里有Description，所以Description已经包含。而Quantity (boxes)是表格中的列，数值是5184。另外，用户类别里的Quantity可能是指其他？比如有没有单独的Quantity？看用户给的类别里有Quantity，可能是指表格中的Quantity (boxes)？不，用户明确列了Quantity和Quantity (boxes)作为两个类别。需要检查图中的内容。图中表格里的Quantity (boxes)列是“Quantity (boxes)”，对应的数值是5184。另外，在Shipping Marks里的“Quantity: 48 packs”属于Description部分，所以Quantity（单独的类别）可能没有？或者可能用户把Quantity (boxes)作为Quantity (boxes)，而Quantity可能是指其他？比如有没有其他Quantity？比如在Vendor Item No.里的Quantity: 48 packs，这属于Description里的内容，所以可能Quantity这个类别在图中没有？或者可能我搞错了。再看用户给的类别列表：Quantity, Quantity (boxes)。需要确认图中是否有这两个。图中表格的列是“Quantity (boxes)”，所以Quantity (boxes)存在。而Quantity（没有括号的）可能是指其他？比如在Port of loading等没有。或者可能用户把“Quantity: 48 packs”中的Quantity作为Quantity类别？因为“Quantity: 48 packs”在Shipping Marks里，属于Description的一部分？不，看表格的结构：Shipping Marks列包含多行信息，其中有一行是“Quantity: 48 packs”，这属于Shipping Marks列的内容，而Quantity (boxes)是另一个列，数值是5184。所以Quantity（单独的类别）可能是指“Quantity: 48 packs”中的Quantity，而Quantity (boxes)是表格中的列。所以需要把这两个都找出来。
-
-然后S/C NO.：右侧S/C NO.: 210525，对应这个。
-
-TEL：图中有多个TEL，比如公司上方的Tel: 86-780-3555258，还有TO部分的TEL: 06824087178。用户类别里有TEL和Tel。需要区分。用户类别里有TEL和Tel。看公司上方的Tel是公司电话，属于Tel类别；TO部分的TEL是客户电话，属于TEL类别？需要看用户给的类别：TEL, Tel。可能TEL是客户电话（TO部分的TEL: 06824087178），Tel是公司电话（公司上方的Tel: 86-780-3555258）。所以需要分别识别。
-
-Title：图中的“COMMERCIAL INVOICE”是标题，所以Title是这个。
-
-Unit Price (FOB Shanghai)：表格中的Unit Price (FOB Shanghai)列，数值是USD 1.0008/box，对应这个。
-
-Vendor ltem No.：表格中的Vendor Item No.: PC-03，对应这个（注意用户写的是Vendor ltem No.，可能是拼写错误，应该是Vendor Item No.）。
-
-现在逐个整理：
-
-1. Company Name：Lixin Electronic Technology Co., Ltd. → 位置在最上方，文字是这个。
-2. Address：Add: 3884 Williams Plains Suite 996 East Brianview, AR 54224 → 对应Add标签（用户类别里有Add）。
-3. Amount (USD)：TOTAL AMOUNT: USD 5118.24 → 金额部分。
-4. Carton No.：Carton No.: 1 -- 108 → 表格中的内容。
-5. Country of Origin：Country of Origin: China → 表格中的内容。
-6. Description：Description: Phcy Care Denture Cleaning Tabs 48 pk → Shipping Marks列中的Description部分。
-7. Description of Goods：Denture Cleansing Tablet, 48 tablets/box; 12 boxes/middle box; 4 middle boxes/carton → 表格中Description of Goods列的内容。
-8. Dimension：Dimensuon: 42.5*33.5*29 cm → 表格中的内容（注意拼写是Dimensuon，可能是Dimension的笔误，但类别是Dimension）。
-9. Fax：Fax: 62-535-5508780 → 公司上方的Fax。
-10. Gross Weight：Gross Weight: 10.5 kg → 表格中的内容。
-11. INVOICE NO.：INVOICE NO.: 20210719 → 右侧的发票号。
-12. Issued Date：Issued Date: 19th July, 2021 → 右侧的日期。
-13. PDE：PDE: 232819 → 表格中的内容。
-14. Port of destination：Port of destination: USNS Wright FPO AP 86487 → 右侧的目的港。
-15. Quantity：Quantity: 48 packs → Shipping Marks列中的Quantity（注意用户类别有Quantity，这里是指这个）。
-16. Quantity (boxes)：5184 → 表格中Quantity (boxes)列的数值。
-17. S/C NO.：S/C NO.: 210525 → 右侧的S/C号。
-18. TEL：TEL: 06824087178 → TO部分的电话。
-19. Tel：Tel: 86-780-3555258 → 公司上方的电话。
-20. Title：COMMERCIAL INVOICE → 标题部分。
-21. Unit Price (FOB Shanghai)：USD 1.0008/box → 表格中的单价列。
-22. Vendor ltem No.：Vendor Item No.: PC-03 → 表格中的供应商项目号。
-
-现在需要为每个类别找到对应的bbox。需要看每个元素在图中的位置，用坐标表示。因为是图片，需要估计每个元素的bounding box。
-
-首先，Company Name：位于图的顶部，文字是“Lixin Electronic Technology Co., Ltd.”，所以bbox大概是[375, 44, 625, 72]左右（假设图片的坐标，需要看实际位置，但大致是顶部居中）。
-
-Address（Add）：Add: 后面的地址，文字是“3884 Williams Plains Suite 996 East Brianview, AR 54224”，位于公司名称下方，Tel和Fax上方。所以bbox是[375, 88, 625, 105]左右。
-
-Amount (USD)：TOTAL AMOUNT: USD 5118.24，位于表格下方，所以bbox是[25, 720, 975, 750]左右（因为TOTAL AMOUNT在表格下面，横跨整个表格宽度）。
-
-Carton No.：表格中的“Carton No.: 1 -- 108”，在Shipping Marks列的下方，所以bbox是[25, 330, 350, 345]左右（看表格内的行）。
-
-Country of Origin：表格中的“Country of Origin: China”，在Shipping Marks列，所以bbox是[25, 350, 350, 365]左右。
-
-Description：表格中Shipping Marks列的“Description: Phcy Care Denture Cleaning Tabs 48 pk”，所以bbox是[25, 270, 350, 285]左右（看Shipping Marks列的内容）。
-
-Description of Goods：表格中Description of Goods列的内容，即“Denture Cleansing Tablet, 48 tablets/box; 12 boxes/middle box; 4 middle boxes/carton”，所以bbox是[375, 300, 625, 370]左右（列的范围）。
-
-Dimension：表格中的“Dimensuon: 42.5*33.5*29 cm”，在Shipping Marks列，所以bbox是[25, 370, 350, 385]左右。
-
-Fax：公司上方的“Fax: 62-535-5508780”，位于Add的右侧，所以bbox是[625, 88, 780, 105]左右。
-
-Gross Weight：表格中的“Gross Weight: 10.5 kg”，在Shipping Marks列，所以bbox是[25, 385, 350, 400]左右。
-
-INVOICE NO.：右侧的“INVOICE NO.: 20210719”，位于S/C NO.下方，所以bbox是[625, 140, 780, 155]左右。
-
-Issued Date：右侧的“Issued Date: 19th July, 2021”，位于INVOICE NO.下方，所以bbox是[625, 160, 830, 175]左右。
-
-PDE：表格中的“PDE: 232819”，在Shipping Marks列，所以bbox是[25, 290, 350, 305]左右。
-
-Port of destination：右侧的“Port of destination: USNS Wright FPO AP 86487”，位于Port of loading下方，所以bbox是[625, 190, 830, 205]左右。
-
-Quantity：表格中的“Quantity: 48 packs”在Shipping Marks列，所以bbox是[25, 310, 350, 325]左右（看Shipping Marks列中的Quantity行）。
-
-Quantity (boxes)：表格中“Quantity (boxes)”列的数值5184，所以bbox是[375, 390, 525, 410]左右（列的数值位置）。
-
-S/C NO.：右侧的“S/C NO.: 210525”，位于TO的右侧，所以bbox是[625, 120, 780, 135]左右。
-
-TEL：TO部分的“TEL: 06824087178”，位于TO的下方，所以bbox是[250, 170, 380, 185]左右（TO部分的TEL）。
-
-Tel：公司上方的“Tel: 86-780-3555258”，位于Add的下方，所以bbox是[375, 108, 525, 123]左右。
-
-Title：中间的“COMMERCIAL INVOICE”，大写，所以bbox是[250, 250, 750, 280]左右（居中位置）。
-
-Unit Price (FOB Shanghai)：表格中的“Unit Price (FOB Shanghai)”列，数值是USD 1.0008/box，所以bbox是[525, 390, 675, 410]左右（列的数值位置）。
-
-Vendor ltem No.：表格中的“Vendor Item No.: PC-03”，在Shipping Marks列，所以bbox是[25, 300, 350, 315]左右。
-
-现在需要将这些整理成JSON数组，每个元素包含bbox和label。需要注意每个元素的准确性，可能有些bbox需要调整，但大致方向正确。
-
-现在开始逐个列出：
-
-1. Company Name: bbox是公司名称的位置，文字是Lixin Electronic Technology Co., Ltd.，位于顶部，所以bbox大概[370, 40, 630, 70]（假设图片的y轴从上到下，x轴从左到右）。
-2. Address: Add: 后面的地址，bbox是[370, 90, 625, 105]（Add: 3884...）。
-3. Amount (USD): TOTAL AMOUNT: USD 5118.24，bbox是[20, 720, 980, 750]（横跨表格下方）。
-4. Carton No.: Carton No.: 1 -- 108，bbox是[20, 335, 350, 350]（表格内Shipping Marks列的Carton No.行）。
-5. Country of Origin: Country of Origin: China，bbox是[20, 360, 350, 375]（Shipping Marks列）。
-6. Description: Description: Phcy Care Denture Cleaning Tabs 48 pk，bbox是[20, 275, 350, 290]（Shipping Marks列的Description行）。
-7. Description of Goods: Denture Cleansing Tablet, 48 tablets/box; 12 boxes/middle box; 4 middle boxes/carton，bbox是[375, 305, 625, 375]（Description of Goods列的内容）。
-8. Dimension: Dimensuon: 42.5*33.5*29 cm，bbox是[20, 380, 350, 395]（Shipping Marks列）。
-9. Fax: Fax: 62-535-5508780，bbox是[625, 90, 780, 105]（公司信息右侧）。
-10. Gross Weight: Gross Weight: 10.5 kg，bbox是[20, 390, 350, 405]（Shipping Marks列）。
-11. INVOICE NO.: INVOICE NO.: 20210719，bbox是[625, 145, 780, 160]（右侧）。
-12. Issued Date: Issued Date: 19th July, 2021，bbox是[625, 165, 830, 180]（右侧）。
-13. PDE: PDE: 232819，bbox是[20, 295, 350, 310]（Shipping Marks列）。
-14. Port of destination: Port of destination: USNS Wright FPO AP 86487，bbox是[625, 195, 830, 210]（右侧）。
-15. Quantity: Quantity: 48 packs，bbox是[20, 315, 350, 330]（Shipping Marks列的Quantity行）。
-16. Quantity (boxes
+1. Company Name: 标题，bbox是[225, 29, 774, 57]（因为图中公司名称在顶部，居中，字体较大）
+2. Add: Add: 3884...，bbox是[376, 102, 623, 122]
+3. Address: 其实和Add是同一内容，可能用户把Add作为Address，所以Address的label对应Add的内容，bbox同Add？或者可能图中没有单独Address，只有Add，所以Address可能不需要？但用户标签里有Address，可能需要确认。不过图中只有Add，所以可能Address是Add的同义，所以Address的label对应Add的bbox。
+4. Amount (USD): TOTAL AMOUNT行的右侧，即TOTAL AMOUNT: 右边的USD 5118.24，bbox是[602, 702, 925, 724]（假设TOTAL AMOUNT在表格下方，行的右侧）
+5. Carton No.: Carton No.: 1 -- 108，bbox是[29, 570, 350, 588]（在Shipping Marks列中，对应行）
+6. Country of Origin: Country of Origin: China，bbox是[29, 588, 350, 606]
+7. Description: Description: Phcy Care Denture Cleaning Tabs 48 pk，bbox是[29, 370, 350, 388]（在Shipping Marks列中，Description行）
+8. Description of Goods: Denture Cleansing Tablet...，bbox是[370, 370, 620, 440]（表格第二列的内容）
+9. Dimension: Dimensuon: 42.5*33.5*29 cm，bbox是[29, 440, 350, 458]
+10. Fax: Fax: 62-535-5508780，bbox是[622, 102, 782, 122]（公司信息右侧）
+11. Gross Weight: Gross Weight: 10.5 kg，bbox是[29, 458, 350, 476]
+12. INVOICE NO.: INVOICE NO.: 20210719，bbox是[602, 348, 757, 366]
+13. Issued Date: Issued Date: 19th July, 2021，bbox是[602, 366, 857, 384]
+14. PDE: PDE: 232819，bbox是[29, 388, 350, 406]
+15. Port of destination: Port of destination: USNS Wright FPO AP 86487，bbox是[376, 420, 725, 440]
+16. Quantity: Quantity: 48 packs，bbox是[29, 406, 350, 424]（在PDE下面，Vendor Item No.上面的Quantity）
+17. Quantity (boxes): 5184，bbox是[510, 370, 570, 440]（表格第三列的数值）
+18. S/C NO.: S/C NO.: 210525，bbox是[602, 330, 725, 348]
+19. TEL: TEL: 06824087178（TO部分），bbox是[142, 384, 325, 402]
+20. Tel: Tel: 86-780-3555258（公司部分），bbox是[376, 124, 582, 142]
+21. Title: COMMERCIAL INVOICE，bbox是[142, 330, 857, 366]
+22. Unit Price (FOB Shanghai): USD 1.0008/box，bbox是[570, 370, 690, 440]（表格第四列）
+23. Vendor Item No.: Vendor Item No.: PC-

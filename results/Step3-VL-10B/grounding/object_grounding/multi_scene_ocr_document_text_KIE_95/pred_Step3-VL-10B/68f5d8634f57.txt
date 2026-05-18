@@ -1,10 +1,110 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The receipt has "DATE: 28/02/2016" so that's the date.
+
+doc_no_receipt_no: The receipt number is "CS00052997" from "RECEIPT #: CS00052997".
+
+seller_address: Let's check the address lines. The company address is "NO.54, BATU 5,JALAN IPOH, KG.BATU, 51200 KUALA LUMPUR".
+
+seller_gst_id: "GST NO: 001329332224" — that's the GST number.
+
+seller_name: "SIN THYE & COMPANY" is the company name.
+
+seller_phone: The phone number is "TEL: 03-6258 0869".
+
+total_amount: The total cash is 110.00, but wait, the sub-total is 103.77, but the total amount paid is 110.00. Let me check the "TOTAL CASH" which is 110.00. Alternatively, the "TOTAL" before cash is 110.00. Let's confirm: the "TOTAL" line shows 110.00, then CASH is 110.00. So total_amount is 110.00.
+
+total_tax: The tax total is 6.23, as seen in "TAX TOTAL: 6.23".
+
+Now, let's map each to their bounding boxes.
+
+For date: The line is "DATE: 28/02/2016" — find the coordinates of that text.
+
+doc_no_receipt_no: "RECEIPT #: CS00052997" — the receipt number.
+
+seller_address: The address lines: "NO.54, BATU 5,JALAN IPOH, KG.BATU, 51200 KUALA LUMPUR" — that's the address.
+
+seller_gst_id: "GST NO: 001329332224" — the GST number.
+
+seller_name: "SIN THYE & COMPANY" — the company name.
+
+seller_phone: "TEL: 03-6258 0869" — the phone number.
+
+total_amount: The "TOTAL CASH" is 110.00, or the "TOTAL" line which is 110.00. Let's check the section where "TOTAL" is listed. The line "TOTAL" has 110.00, then CASH is 110.00. So total_amount is 110.00.
+
+total_tax: "TAX TOTAL: 6.23" — that's the tax total.
+
+Now, let's extract each with their bounding boxes.
+
+First, identify each element's position.
+
+1. date: The text "28/02/2016" is in the receipt details. Let's check the line: "RECEIPT #: CS00052997 DATE: 28/02/2016". So the date is part of that line.
+
+2. doc_no_receipt_no: "CS00052997" from the receipt number.
+
+3. seller_address: The address block: "NO.54, BATU 5,JALAN IPOH, KG.BATU, 51200 KUALA LUMPUR".
+
+4. seller_gst_id: "001329332224" from "GST NO: 001329332224".
+
+5. seller_name: "SIN THYE & COMPANY".
+
+6. seller_phone: "03-6258 0869" from "TEL: 03-6258 0869".
+
+7. total_amount: The total cash is 110.00, which is in the "TOTAL CASH" line: "TOTAL CASH 110.00".
+
+8. total_tax: "6.23" from "TAX TOTAL: 6.23".
+
+Now, let's create the JSON array with each entry.
+
+For each label, find the corresponding bbox.
+
+Let's go step by step.
+
+- date: The text "28/02/2016" is in the line after receipt number. Let's check the coordinates. The line is "RECEIPT #: CS00052997 DATE: 28/02/2016". So the date is part of that line. The bounding box would cover the date part.
+
+- doc_no_receipt_no: "CS00052997" is the receipt number. The line is "RECEIPT #: CS00052997".
+
+- seller_address: The address lines: "NO.54, BATU 5,JALAN IPOH, KG.BATU, 51200 KUALA LUMPUR". Let's check the text above the phone number.
+
+- seller_gst_id: "001329332224" from "GST NO: 001329332224".
+
+- seller_name: "SIN THYE & COMPANY" is the company name at the top.
+
+- seller_phone: "03-6258 0869" from "TEL: 03-6258 0869".
+
+- total_amount: The total amount paid is 110.00, which is in the "TOTAL CASH" section. The line "TOTAL CASH 110.00" and "CASH 110.00". So the total amount is 110.00.
+
+- total_tax: "6.23" from the GST summary's "TAX TOTAL: 6.23".
+
+Now, let's define the bounding boxes. Since the image is a receipt, we need to estimate the coordinates. But in the problem, we can assume the positions based on the text.
+
+Let's list each:
+
+1. date: The text "28/02/2016" is in the receipt details line. Let's take the bounding box around that date.
+
+2. doc_no_receipt_no: The receipt number "CS00052997".
+
+3. seller_address: The address block.
+
+4. seller_gst_id: The GST number.
+
+5. seller_name: The company name.
+
+6. seller_phone: The telephone number.
+
+7. total_amount: The total cash amount (110.00).
+
+8. total_tax: The tax total (6.23).
+
+Now, construct the JSON array.
+</think>
 [
-    {"bbox_2d": [229, 302, 337, 322], "label": "date"},
-    {"bbox_2d": [254, 302, 425, 322], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [100, 232, 598, 262], "label": "seller_address"},
-    {"bbox_2d": [144, 242, 332, 260], "label": "seller_gst_id"},
-    {"bbox_2d": [100, 202, 494, 224], "label": "seller_name"},
-    {"bbox_2d": [154, 272, 294, 290], "label": "seller_phone"},
-    {"bbox_2d": [454, 532, 546, 552], "label": "total_amount"},
-    {"bbox_2d": [654, 602, 696, 620], "label": "total_tax"}
+    {"bbox_2d": [280, 302, 527, 322], "label": "date"},
+    {"bbox_2d": [205, 302, 337, 322], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [65, 234, 590, 272], "label": "seller_address"},
+    {"bbox_2d": [125, 242, 337, 258], "label": "seller_gst_id"},
+    {"bbox_2d": [65, 194, 496, 214], "label": "seller_name"},
+    {"bbox_2d": [135, 274, 295, 292], "label": "seller_phone"},
+    {"bbox_2d": [325, 454, 425, 472], "label": "total_amount"},
+    {"bbox_2d": [650, 524, 695, 542], "label": "total_tax"}
 ]

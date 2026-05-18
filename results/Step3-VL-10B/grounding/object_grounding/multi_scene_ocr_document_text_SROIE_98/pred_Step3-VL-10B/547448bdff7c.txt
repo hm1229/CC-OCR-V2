@@ -1,1 +1,29 @@
-[{"bbox_2d": [214, 92, 785, 114], "label": "company"}, {"bbox_2d": [214, 137, 785, 197], "label": "address"}, {"bbox_2d": [580, 277, 697, 297], "label": "date"}, {"bbox_2d": [447, 537, 529, 556], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is "ASO ELECTRICAL TRADING SDN BHD" at the top.
+- Address: The address lines are "NO 31G, JALAN SEPADU C 25/C, SECTION 26, TAMAN INDUSTRIES, AXIS 40400 SHAH ALAM, SELANGOR."
+- Date: The date on the invoice is "13/10/2017" (from the receipt date field).
+- Total: The total amount paid is "94.60" (the Total line before cash).
+
+Now, find the bounding boxes for each.
+
+Check the image:
+
+Company: The header has "ASO ELECTRICAL TRADING SDN BHD" – that's the company.
+
+Address: The lines below the company number (1000131-K) are the address.
+
+Date: In the "Bill To" section, "Date: 13/10/2017'"
+
+Total: The "Total :" line shows 94.60.
+
+Let's map each:
+
+1. Company: [212, 28, 787, 47] (approx, since the text is centered)
+2. Address: The address block is from "NO 31G..." to "SELANGOR." – let's check the coordinates.
+3. Date: The date is in the receipt section, "Date: 13/10/2017' " – the value is 13/10/2017.
+4. Total: The total amount is "94.60" in the Total line.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [214, 29, 785, 46], "label": "company"}, {"bbox_2d": [225, 50, 775, 100], "label": "address"}, {"bbox_2d": [547, 232, 697, 250], "label": "date"}, {"bbox_2d": [509, 600, 607, 618], "label": "total"}]

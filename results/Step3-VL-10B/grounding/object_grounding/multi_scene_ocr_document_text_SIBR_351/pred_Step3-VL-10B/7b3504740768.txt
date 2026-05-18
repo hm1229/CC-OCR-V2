@@ -1,123 +1,144 @@
-用户现在需要从发票中检测指定类别的对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+Got it, let's go through each category and find the corresponding values in the invoice. First, I need to identify each element.
 
-首先看COMPANY NAME：Huilai Computer Network Co., Ltd. 这个是公司名称，位置在顶部。然后ADDRESS：比如FOR ACCOUNT OF的地址，SHIP TO的地址，还有公司自己的地址（982 Meghan Mission Suite...）。需要区分不同的ADDRESS实例。然后INVOICE No.是2107HS25-002。COUNTRY OF ORIGIN是MADE IN CHINA，所以COUNTRY OF ORIGIN对应这个。CUTOFF DATE在PAYMENT TERMS里是END OF THE MONTH EVERY MONTH...里的CUTOFF DATE。DATE有JUL.27.2021（发票日期），SCHEDULED ON是JUL.30.2021。FAX有多个，比如公司FAX是(7259)11036098，FOR ACCOUNT OF的FAX是27-1-4068-1783，SHIP TO的FAX是7002-1-0438-7618。Tel同理，公司Tel是(0011)58837107，FOR ACCOUNT OF的TEL是84-1-3636-2781，SHIP TO的TEL是4004-0-1717-4348。QUANTITY是各个商品的数量，比如56,000，48,000等。AMOUNT是每个商品的金额，比如28,000.00等。Related.PO.是每个商品对应的PO号。CODE NO.是每个商品的代码，比如SF-ND1413S等。ARTICLE是商品名称，比如SAFEED NELATON CATHETER等。SCHEDULED ON是JUL.30.2021。SHIPPED PER是MILD WALTZ 2130E。PAGE NUMBER是Page 1 of 1。PAYMENT是PAYMENT TERMS里的内容，比如CUTOFF DATE...和PAYMENT:120DAYS LATER。P.C是310018（公司P.C）。MONTH在CUTOFF DATE里的EVERY MONTH。现在需要逐个识别这些元素，然后确定它们的bbox。
+Starting with COMPANY NAME: The top left has "Huilai Computer Network Co., Ltd." So that's the company name.
 
-现在开始逐个处理：
+ADDRESS: There are multiple addresses. Let's check the "FOR ACCOUNT OF" address: 591 Cody Land Apt. 795 South Darleneberg, NY 89304. Also the SHIP TO address: 3223 Olson Heights Apt. 638 Christopherhaven, IA 71768 08576 Bethany Landing North Marciamouth, TN 77798. But maybe the main company address is the top one: 982 Meghan Mission Suite 979 East Andreaberg, ID 78890. Let's check which is needed. The problem says "ADDRESS" so maybe the company's address. Let's take the top address.
 
-1. COMPANY NAME：Huilai Computer Network Co., Ltd. 位置在顶部，文字是公司名称。bbox大概是[37, 39, 547, 57]左右（看原图中的位置）。
+INVOICE No.: 2107HS25-002.
 
-2. ADDRESS：公司自己的地址是982 Meghan Mission Suite 979 East Andreaberg, ID 78890。然后FOR ACCOUNT OF的地址是591 Cody Land Apt. 795 South Darleneberg, NY 89304。SHIP TO的地址是3223 Olson Heights Apt. 638 Christopherhaven, IA 71768 08576 Bethany Landing North Marciamouth, TN 77798。这些都是ADDRESS类别。
+P.C: 310018 (from the top right of company info).
 
-3. INVOICE No.：2107HS25-002，位置在INVOICE No.右边。
+DATE: JUL.27.2021 (top right of invoice).
 
-4. COUNTRY OF ORIGIN：MADE IN CHINA，底部。
+SCHEDULED ON: JUL.30.2021.
 
-5. CUTOFF DATE：PAYMENT TERMS里的CUTOFF DATE:END OF THE MONTH EVERY MONTH...
+SHIPPED PER: MILD WALTZ 2130E.
 
-6. DATE：JUL.27.2021（发票右上角），SCHEDULED ON的JUL.30.2021。
+TEL: There are multiple TELs. The company's TEL is (0011)58837107. The "FOR ACCOUNT OF" TEL is 84-1-3636-2781. The SHIP TO TEL is 4004-0-1717-4348. Let's check which one is required. The problem has TEL and Tel as separate? Wait, the categories include TEL and Tel. Maybe TEL is the company's TEL, Tel is another. Let's check.
 
-7. FAX：公司FAX是(7259)11036098；FOR ACCOUNT OF的FAX是27-1-4068-1783；SHIP TO的FAX是7002-1-0438-7618。这些都是FAX类别。
+FAX: Company's FAX is (7259)11036098. The "FOR ACCOUNT OF" FAX is 27-1-4068-1783. SHIP TO FAX is 7002-1-0438-7618. The category has FAX and Fax—maybe duplicates, but need to check.
 
-8. Tel：公司Tel是(0011)58837107；FOR ACCOUNT OF的TEL是84-1-3636-2781；SHIP TO的TEL是4004-0-1717-4348。这些是Tel类别（注意Tel和TEL可能重复，但类别里有Tel和TEL？看用户给的类别是Tel和TEL？不，用户给的类别是Tel, TEL？看用户提供的类别列表：Tel, TEL？不，用户给的类别是“Tel, TITLE, Tel, UNIT-PRICE”？不，看用户给的类别列表：TEL, Tel是分开的？看用户提供的类别：TEL, Tel？不，用户给的类别是“TEL, Tel”？不，看用户的问题里的类别：“TEL, TITLE, Tel, UNIT-PRICE”？不，原类别列表是：ADDRESS, AMOUNT, ARTICLE, CODE NO., COMPANY NAME, COUNTRY OF ORIGIN, CUTOFF DATE, DATE, FAX, Fax, INVOICE No., MONTH, PAYMENT, P.C, PAGE NUMBER, QUANTITY, QUANTITY], Related.PO., SCHEDULED ON, SHIPPED PER, TEL, TITLE, Tel, UNIT-PRICE。哦，这里可能有重复，比如FAX和Fax？可能用户输入时的笔误，比如FAX和Fax是同一个？但按用户给的类别，需要区分。不过看发票中的FAX是大写的，比如FAX:...，所以FAX类别对应大写的FAX，而Fax可能没有？或者可能用户把FAX和Fax视为同一类？但按用户给的类别，需要按列表中的标签。比如用户给的类别有FAX和Fax，可能需要看。但发票中的FAX是“FAX:...”，所以属于FAX类别。而Tel是“TEL:...”属于TEL类别，还有“Tel:...”属于Tel类别？比如FOR ACCOUNT OF的TEL是“TEL84-1-3636-2781”，所以是TEL；而SHIP TO的TEL是“TEL 4004-0-1717-4348”也是TEL。公司的是“Tel:(0011)58837107”是Tel。所以TEL和Tel是不同的标签？用户给的类别里有TEL和Tel，所以需要分别处理。
+CUTOFF DATE: From payment terms: END OF THE MONTH EVERY MONTH.
 
-9. QUANTITY：每个商品的QUANTITY列，比如56,000，48,000等。
+COUNTRY OF ORIGIN: MADE IN CHINA, so country is China.
 
-10. AMOUNT：每个商品的AMOUNT列，比如28,000.00等，还有TOTAL的774,790.40。
+PAGE NUMBER: Page 1 of 1.
 
-11. Related.PO.：每个商品的Related.PO.列，比如42522964等。
+QUANTITY: Let's check the total quantity is 222,400 PIECES. Also individual quantities like 56,000, 48,000, etc.
 
-12. CODE NO.：每个商品的CODE No.列，比如SF-ND1413S等。
+Related.PO.: For example, 42522964, 42522896, etc.
 
-13. ARTICLE：每个商品的ARTICLE列，比如SAFEED NELATON CATHETER等。
+ARTICLE: The product names like SAFEED NELATON CATHETER, etc.
 
-14. SCHEDULED ON：JUL.30.2021。
+CODE NO.: The codes like SF-ND1413S, SF-SE1014R, etc.
 
-15. SHIPPED PER：MILD WALTZ 2130E。
+AMOUNT: The total amount is 774,790.40 CNY. Also individual amounts like 28,000.00, etc.
 
-16. PAGE NUMBER：Page 1 of 1。
+Let's list each category with their bounding boxes.
 
-17. PAYMENT：PAYMENT TERMS里的内容，比如“CUTOFF DATE:END OF THE MONTH EVERY MONTH,PAYMENT:120DAYS LATER”属于PAYMENT类别。
+First, let's parse each element:
 
-18. P.C：310018（公司P.C:310018）。
+1. COMPANY NAME: "Huilai Computer Network Co., Ltd." — top left. Bounding box: [37, 37, 547, 53] (approx, need to check the image. The text is at the top left, so coordinates would be from the top part.)
 
-19. MONTH：在CUTOFF DATE里的“EVERY MONTH”属于MONTH类别。
+2. ADDRESS (company address): "982 Meghan Mission Suite 979 East Andreaberg, ID 78890" — below company name. Bounding box: [37, 43, 494, 59]
 
-现在需要为每个检测到的实例生成一个JSON对象。需要注意不要重复，每个实例对应一个。现在开始列举：
+3. INVOICE No.: "2107HS25-002" — under INVOICE No. label. Bounding box: [102, 307, 244, 325]
 
-首先处理COMPANY NAME：
-- 文字是Huilai Computer Network Co., Ltd.，位置在顶部，bbox大概是从x=37到x=547，y=39到y=57左右。所以第一个对象：{"bbox_2d": [37, 39, 547, 57], "label": "COMPANY NAME"}
+4. P.C: "310018" — next to company info, right side. Bounding box: [534, 53, 594, 69]
 
-然后ADDRESS：
-- 公司地址：982 Meghan Mission Suite 979 East Andreaberg, ID 78890。位置在公司名称下方，Tel和Fax上方。bbox：[37, 59, 427, 77]（大概）
-- FOR ACCOUNT OF的地址：591 Cody Land Apt. 795 South Darleneberg, NY 89304。位置在FOR ACCOUNT OF下方。bbox：[225, 197, 592, 215]
-- SHIP TO的地址：3223 Olson Heights Apt. 638 Christopherhaven, IA 71768 08576 Bethany Landing North Marciamouth, TN 77798。位置在SHIP TO下方。bbox：[102, 252, 592, 298]（因为地址两行，所以要包含两行）
+5. DATE: "JUL.27.2021" — top right. Bounding box: [727, 162, 847, 180]
 
-INVOICE No.：2107HS25-002，位置在INVOICE No.右边。bbox：[132, 302, 254, 320]
+6. SCHEDULED ON: "JUL.30.2021" — under SCHEDULED ON label. Bounding box: [444, 327, 544, 345]
 
-COUNTRY OF ORIGIN：MADE IN CHINA，底部。bbox：[37, 777, 152, 795]
+7. SHIPPED PER: "MILD WALTZ 2130E" — under SHIPPED PER label. Bounding box: [302, 337, 422, 355]
 
-CUTOFF DATE：在PAYMENT TERMS里，CUTOFF DATE:END OF THE MONTH EVERY MONTH。bbox：[582, 832, 777, 850]
+8. TEL (company TEL): "(0011)58837107" — next to company name. Bounding box: [37, 53, 302, 69]
 
-DATE：
-- 发票日期JUL.27.2021，在右上角。bbox：[725, 200, 827, 220]
-- SCHEDULED ON的JUL.30.2021。bbox：[502, 312, 582, 328]
+9. FAX (company FAX): "(7259)11036098" — next to company TEL. Bounding box: [302, 53, 422, 69]
 
-FAX：
-- 公司FAX：(7259)11036098。位置在公司信息的Fax:...。bbox：[225, 59, 337, 77]（公司Tel是(0011)58837107，Fax是(7259)11036098，P.C:310018。所以公司FAX的bbox是[250, 59, 337, 75]左右）
-- FOR ACCOUNT OF的FAX：27-1-4068-1783。位置在FOR ACCOUNT OF的TEL右边，FAX:...。bbox：[337, 200, 475, 218]
-- SHIP TO的FAX：7002-1-0438-7618。位置在SHIP TO的TEL右边，FAX:...。bbox：[475, 252, 617, 270]
+10. CUTOFF DATE: "END OF THE MONTH EVERY MONTH" — under PAYMENT TERMS. Bounding box: [634, 827, 847, 845]
 
-TEL：
-- 公司Tel：(0011)58837107。位置在公司信息的Tel:...。bbox：[37, 59, 225, 77]（公司Tel是Tel:(0011)58837107，所以bbox是[37, 59, 225, 75]）
-- FOR ACCOUNT OF的TEL：84-1-3636-2781。位置在FOR ACCOUNT OF的FOR ACCOUNT OF下方，TEL:...。bbox：[225, 200, 337, 218]
-- SHIP TO的TEL：4004-0-1717-4348。位置在SHIP TO的SHIP TO下方，TEL:...。bbox：[102, 252, 225, 270]
+11. COUNTRY OF ORIGIN: "MADE IN CHINA" — lower part. Bounding box: [37, 972, 147, 990]
 
-QUANTITY：
-- 每个商品的QUANTITY列，比如SAFEED NELATON CATHETER的56,000。bbox：在表格中对应行的QUANTITY单元格。比如第一行（SAFEED NELATON CATHETER）的QUANTITY是56,000，位置在表格的QUANTITY列。需要看表格的结构，表格的列是ARTICLE, CODE No., QUANTITY, UNIT-PRICE, AMOUNT, Related.PO.。所以每个商品行的QUANTITY值。例如：
-  - 56,000（SAFEED NELATON CATHETER的SF-ND1413S）
-  - 48,000（SAFEED SUCTION CATHETER的SF-SE1014R）
-  - 3,840（SURPLUG AD ADMINISTRATION SET的SA-PCT320YN）
-  - 7,680（同上SA-PTT302YM）
-  - 11,520（同上SA-TT3501MN）
-  - 11,520（SURPLUG AD EXTENSION TUBE的SA-ET211100第一个）
-  - 40,320（同上SA-ET211100第二个）
-  - 11,520（同上SA-ET350300）
-  - 32,000（TERUFUSION INFUSION ADMIN SET的TI-PU300LY）
-  这些都是QUANTITY，每个对应一个实例。
+12. PAGE NUMBER: "Page 1 of 1" — bottom center. Bounding box: [494, 975, 594, 993]
 
-AMOUNT：
-- 每个商品的AMOUNT，比如28,000.00（SAFEED NELATON CATHETER），29,280.00（SAFEED SUCTION CATHETER）等，还有TOTAL的774,790.40。每个商品行的AMOUNT，以及TOTAL行的AMOUNT。
+13. QUANTITY: Let's take the total quantity "222,400 PIECES" — under TOTAL. Bounding box: [202, 742, 444, 760]
 
-Related.PO.：
-- 每个商品的Related.PO.，比如42522964（多个商品），42522896等。每个商品行的Related.PO.列的值。
+14. Related.PO.: For example, the first entry's Related.PO. is "42522964". Let's check the first row: "42522964" — in the Related.PO. column. Bounding box for that cell: [662, 442, 794, 460]
 
-CODE NO.：
-- 每个商品的CODE No.，比如SF-ND1413S，SF-SE1014R，SA-PCT320YN等。每个商品行的CODE No.列的值。
+15. ARTICLE: First article is "SAFEED NELATON CATHETER". Bounding box: [37, 462, 244, 480]
 
-ARTICLE：
-- 每个商品的ARTICLE名称，比如SAFEED NELATON CATHETER，SAFEED SUCTION CATHETER等。每个商品行的ARTICLE列的值。
+16. CODE NO.: For the first article, "SF-ND1413S". Bounding box: [254, 462, 422, 480]
 
-SCHEDULED ON：JUL.30.2021，位置在SHIPPED PER右边，SCHEDULED ON:...。bbox：[502, 312, 582, 328]（之前可能和DATE的SCHEDULED ON重复？不，SCHEDULED ON是标签，值是JUL.30.2021，所以SCHEDULED ON的标签对应这个日期，而DATE是JUL.27.2021。所以SCHEDULED ON的label是SCHEDULED ON，其值是JUL.30.2021，所以需要检测SCHEDULED ON这个标签对应的内容，即JUL.30.2021是SCHEDULED ON的值，所以SCHEDULED ON的实例是这个日期，label是SCHEDULED ON。
+17. UNIT-PRICE: For the first article, "500.00". Bounding box: [454, 462, 554, 480]
 
-SHIPPED PER：MILD WALTZ 2130E，位置在SHIPPED PER右边。bbox：[152, 312, 267, 328]
+18. AMOUNT: For the first article, "28,000.00". Bounding box: [564, 462, 664, 480]
 
-PAGE NUMBER：Page 1 of 1，位置在底部。bbox：[490, 962, 547, 978]
+19. TEL (another TEL, like FOR ACCOUNT OF TEL): "84-1-3636-2781" — under FOR ACCOUNT OF. Bounding box: [102, 227, 272, 245]
 
-PAYMENT：PAYMENT TERMS里的内容，比如“CUTOFF DATE:END OF THE MONTH EVERY MONTH,PAYMENT:120DAYS LATER”属于PAYMENT类别。所以PAYMENT的实例是这个内容，label是PAYMENT。
+20. FAX (another FAX, FOR ACCOUNT OF FAX): "27-1-4068-1783" — next to that TEL. Bounding box: [302, 227, 472, 245]
 
-P.C：310018，位置在公司信息的P.C:310018。bbox：[370, 59, 397, 75]
+21. Fax: Maybe the same as FAX, but the category has both FAX and Fax. Maybe the SHIP TO FAX: "7002-1-0438-7618". Bounding box: [534, 337, 702, 355]
 
-MONTH：EVERY MONTH（在CUTOFF DATE里的EVERY MONTH），label是MONTH。bbox：[602, 832, 677, 850]
+22. Tel: Maybe the SHIP TO TEL: "4004-0-1717-4348". Bounding box: [302, 317, 472, 335]
 
-现在需要将这些都整理成JSON数组。由于数量较多，需要确保每个检测到的元素都被列出。但可能有些元素在图中存在多个实例，比如FAX有三个实例（公司、FOR ACCOUNT OF、SHIP TO），每个都要单独列出。
+23. TITLE: Not sure, maybe the invoice title "INVOICE" but that's already covered. Or maybe the product titles, but ARTICLE is already covered.
 
-现在开始构建JSON数组，每个元素对应一个检测到的对象：
+Wait, the problem lists categories: ADDRESS, AMOUNT, ARTICLE, CODE NO., COMPANY NAME, COUNTRY OF ORIGIN, CUTOFF DATE, DATE, FAX, Fax, INVOICE No., P.C, PAGE NUMBER, QUANTITY, Related.PO., SCHEDULED ON, SHIPPED PER, TEL, TITLE, Tel, UNIT-PRICE.
 
-1. COMPANY NAME: HuiLai Computer Network Co., Ltd. → bbox [37, 39, 547, 57]
-2. ADDRESS (公司地址): 982 Meghan Mission Suite 979 East Andreaberg, ID 78890 → bbox [37, 59, 427, 77]
-3. ADDRESS (FOR ACCOUNT OF): 591 Cody Land Apt. 795 South Darleneberg, NY 89304 → bbox [225, 197, 592, 215]
-4. ADDRESS (SHIP TO): 3223 Olson Heights Apt. 638 Christopherhaven, IA 71768 08576 Bethany Landing North Marciamouth, TN 77798 → bbox [102, 252, 592, 298]（因为两行，所以y范围要包含两行）
-5. INVOICE No.: 2107HS25-002 → bbox [132, 302, 254, 320]
-6. COUNTRY OF ORIGIN: MADE IN CHINA → bbox [37, 777, 152, 795]
-7. CUTOFF DATE: END OF THE MONTH EVERY MONTH → bbox [582, 832, 777, 850]
-8. DATE (发票日期): JUL.27.2021 → bbox [725
+Let's check each category:
+
+- ADDRESS: Let's pick the company's address: "982 Meghan Mission Suite 979 East Andreaberg, ID 78890" — [37, 43, 494, 59]
+- AMOUNT: Total amount "774,790.40" — [634, 752, 774, 770] (the CNY line)
+- ARTICLE: "SAFEED NELATON CATHETER" — [37, 462, 244, 480]
+- CODE NO.: "SF-ND1413S" — [254, 462, 422, 480]
+- COMPANY NAME: "Huilai Computer Network Co., Ltd." — [37, 37, 547, 53]
+- COUNTRY OF ORIGIN: "MADE IN CHINA" — [37, 972, 147, 990]
+- CUTOFF DATE: "END OF THE MONTH EVERY MONTH" — [634, 827, 847, 845]
+- DATE: "JUL.27.2021" — [727, 162, 847, 180]
+- FAX: Company's FAX "(7259)11036098" — [302, 53, 422, 69]
+- Fax: Maybe the SHIP TO FAX "7002-1-0438-7618" — [534, 337, 702, 355]
+- INVOICE No.: "2107HS25-002" — [102, 307, 244, 325]
+- P.C: "310018" — [534, 53, 594, 69]
+- PAGE NUMBER: "Page 1 of 1" — [494, 975, 594, 993]
+- QUANTITY: Total quantity "222,400 PIECES" — [202, 742, 444, 760]
+- Related.PO.: "42522964" (first entry) — [662, 442, 794, 460]
+- SCHEDULED ON: "JUL.30.2021" — [444, 327, 544, 345]
+- SHIPPED PER: "MILD WALTZ 2130E" — [302, 337, 422, 355]
+- TEL: Company's TEL "(0011)58837107" — [37, 53, 302, 69]
+- TITLE: Maybe the invoice title "INVOICE" — [727, 122, 847, 140] (the big INVOICE at top right)
+- Tel: SHIP TO TEL "4004-0-1717-4348" — [302, 317, 472, 335]
+- UNIT-PRICE: "500.00" (first entry) — [454, 462, 554, 480]
+
+Now, need to make sure each category is covered. Let's check if all are present.
+
+Also, note that some categories might have multiple instances, but the problem says "detect the corresponding values", so pick one instance for each category.
+
+Let's compile the JSON array with each entry.
+</think>
+[
+    {"bbox_2d": [37, 37, 547, 53], "label": "COMPANY NAME"},
+    {"bbox_2d": [37, 43, 494, 59], "label": "ADDRESS"},
+    {"bbox_2d": [102, 307, 244, 325], "label": "INVOICE No."},
+    {"bbox_2d": [534, 53, 594, 69], "label": "P.C"},
+    {"bbox_2d": [727, 162, 847, 180], "label": "DATE"},
+    {"bbox_2d": [444, 327, 544, 345], "label": "SCHEDULED ON"},
+    {"bbox_2d": [302, 337, 422, 355], "label": "SHIPPED PER"},
+    {"bbox_2d": [37, 53, 302, 69], "label": "TEL"},
+    {"bbox_2d": [302, 53, 422, 69], "label": "FAX"},
+    {"bbox_2d": [634, 827, 847, 845], "label": "CUTOFF DATE"},
+    {"bbox_2d": [37, 972, 147, 990], "label": "COUNTRY OF ORIGIN"},
+    {"bbox_2d": [494, 975, 594, 993], "label": "PAGE NUMBER"},
+    {"bbox_2d": [202, 742, 444, 760], "label": "QUANTITY"},
+    {"bbox_2d": [662, 442, 794, 460], "label": "Related.PO."},
+    {"bbox_2d": [37, 462, 244, 480], "label": "ARTICLE"},
+    {"bbox_2d": [254, 462, 422, 480], "label": "CODE NO."},
+    {"bbox_2d": [454, 462, 554, 480], "label": "UNIT-PRICE"},
+    {"bbox_2d": [564, 462, 664, 480], "label": "AMOUNT"},
+    {"bbox_2d": [634, 752, 774, 770], "label": "AMOUNT"},
+    {"bbox_2d": [302, 317, 472, 335], "label": "Tel"},
+    {"bbox_2d": [534, 337, 702, 355], "label": "Fax"},
+    {"bbox_2d": [102, 227, 272, 245], "label": "TEL"},
+    {"bbox_2d": [302, 227, 472, 245], "label": "FAX"},
+    {"bbox_2d": [727, 122, 847, 140], "label": "TITLE"}
+]

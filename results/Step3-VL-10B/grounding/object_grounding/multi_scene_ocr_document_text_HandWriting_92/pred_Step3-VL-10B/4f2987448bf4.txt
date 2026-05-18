@@ -1,1 +1,59 @@
-[{"bbox_2d": [222, 325, 376, 645], "label": "DATE"}, {"bbox_2d": [378, 325, 643, 645], "label": "CITY"}, {"bbox_2d": [645, 325, 701, 645], "label": "STATE"}, {"bbox_2d": [703, 325, 849, 645], "label": "ZIP"}]
+用户现在需要提取四个字段：CITY、DATE、STATE、ZIP。首先看每个字段的位置和内容。
+
+先看DATE：对应的框里是9-21-89，位置是中间的DATE框。然后CITY是HARTLANDO，STATE是W1，ZIP是53029。需要确定每个的bbox。
+
+先看DATE的框：在NAME右边的框，内容是9-21-89。然后CITY的框是HARTLANDO所在的框，STATE是W1，ZIP是53029。
+
+现在逐个分析：
+
+1. DATE：对应的输入框是中间的，内容9-21-89。看坐标，这个框的范围。从图中看，DATE的框是[312, 300, 452, 625]左右？需要看图像中的位置。然后CITY的框是HARTLANDO所在的，CITY的标签在上方，对应的输入框是包含HARTLANDO的，然后STATE是W1，ZIP是53029。
+
+现在看每个元素的bbox：
+
+- DATE：输入框内的内容是9-21-89，对应的框是DATE下面的矩形。看图像中DATE的框是[310, 302, 454, 627]（大概范围）。
+- CITY：HARTLANDO在CITY标签下的框，CITY的标签在上方，对应的输入框是包含HARTLANDO的，范围是[462, 300, 854, 625]？因为CITY、STATE、ZIP在同一个大框里？看图像中CITY、STATE、ZIP的输入框是一个大的矩形，里面分成CITY、STATE、ZIP三部分。所以CITY的区域是HARTLANDO所在的，STATE是W1，ZIP是53029。
+
+现在具体看每个部分的bbox：
+
+对于CITY：标签是CITY，下面的输入区域是HARTLANDO，所以CITY的bbox是包含HARTLANDO的文本框，即从CITY标签下方到STATE标签左边的部分。看图像中CITY的输入框是[464, 302, 720, 625]左右，因为HARTLANDO写在这个区域。
+
+STATE的标签是STATE，下面的W1在STATE下面，所以STATE的bbox是[722, 302, 775, 625]左右，因为W1写在STATE下面。
+
+ZIP的标签是ZIP，下面的53029在ZIP下面，所以ZIP的bbox是[777, 302, 854, 625]左右，因为53029写在ZIP下面。
+
+DATE的标签是DATE，下面的9-21-89在DATE下面，所以DATE的bbox是[310, 302, 454, 625]左右，因为9-21-89写在DATE下面。
+
+现在需要确认每个的坐标。然后整理成JSON数组，每个元素包含bbox和label。
+
+现在检查图像中的内容：
+
+- DATE框内的内容是“9-21-89”，所以DATE的label是DATE，bbox是对应的那个输入框。
+- CITY框内的内容是“HARTLANDO”，label是CITY。
+- STATE框内的内容是“W1”，label是STATE。
+- ZIP框内的内容是“53029”，label是ZIP。
+
+现在确定每个的bbox范围。因为图像中的各个输入框是矩形框，所以：
+
+DATE的输入框：从图中看，DATE的框是中间的，左边是NAME的黑色块，右边是CITY的框。DATE的框的坐标大概是x从310到454，y从300到625左右（因为整个表单的布局，DATE在NAME右边，CITY在DATE右边）。
+
+CITY的输入框：CITY标签在上方，对应的输入区域是HARTLANDO，所以CITY的框是x从462到720左右（因为HARTLANDO的长度），y从300到625。
+
+STATE的输入框：在CITY右边，STATE标签下方，W1的位置，所以x从722到775，y从300到625。
+
+ZIP的输入框：在STATE右边，ZIP标签下方，53029的位置，x从777到854，y从300到625。
+
+现在将这些转换为bbox的坐标，注意图像中的像素位置。因为是示例图，需要准确对应。
+
+另外，看图像中的文字：
+
+DATE的框里是“9-21-89”，所以DATE的bbox是包含这个内容的矩形，即DATE标签下方的输入框，其边界是DATE的标签框的下方，所以bbox是[312, 300, 452, 625]（假设）。
+
+CITY的框是HARTLANDO所在的，CITY标签在上方，所以CITY的bbox是[464, 300, 720, 625]（因为HARTLANDO写在这个区域）。
+
+STATE的框是W1所在的，STATE标签在上方，所以STATE的bbox是[722, 300, 775, 625]（W1写在这里）。
+
+ZIP的框是53029所在的，ZIP标签在上方，所以ZIP的bbox是[777, 300, 854, 625]（53029写在这里）。
+
+现在需要确认每个的label和bbox，然后生成JSON数组。
+</think>
+[{"bbox_2d": [310, 302, 454, 627], "label": "DATE"}, {"bbox_2d": [462, 302, 720, 625], "label": "CITY"}, {"bbox_2d": [720, 302, 777, 625], "label": "STATE"}, {"bbox_2d": [777, 302, 854, 625], "label": "ZIP"}]

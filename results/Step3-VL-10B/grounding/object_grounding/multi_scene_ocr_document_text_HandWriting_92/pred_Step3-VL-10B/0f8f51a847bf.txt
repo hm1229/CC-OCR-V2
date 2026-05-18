@@ -1,1 +1,78 @@
-[{"bbox_2d": [296, 372, 373, 547], "label": "DATE"}, {"bbox_2d": [396, 452, 624, 632], "label": "CITY"}, {"bbox_2d": [632, 452, 682, 632], "label": "STATE"}, {"bbox_2d": [684, 452, 834, 632], "label": "ZIP"}]
+用户现在需要从表单中提取CITY、DATE、STATE、ZIP四个字段的值和对应的 bounding box。首先看每个字段的位置：
+
+DATE对应的是“08-08-89”，在DATE标签下的框里。CITY是HUNTSVILLE，在CITY标签下的框。STATE是AL，在STATE标签下的框。ZIP是35815，在ZIP标签下的框。
+
+现在要确定每个的bbox。先看DATE的框：坐标是DATE下面的输入框，内容是08-08-89。然后CITY的框是HUNTSVILLE所在的框，STATE是AL，ZIP是35815。
+
+现在逐个分析：
+
+1. DATE：标签是DATE，对应的输入框是[314, 307, 422, 600]左右？看图片中的DATE框，里面的文字是08-08-89。所以bbox是DATE对应的输入框，即包含08-08-89的矩形。
+
+2. CITY：CITY标签下的输入框，内容是HUNTSVILLE，所以bbox是CITY对应的框，即包含HUNTSVILLE的矩形。
+
+3. STATE：STATE标签下的输入框，内容是AL，所以bbox是STATE对应的框。
+
+4. ZIP：ZIP标签下的输入框，内容是35815，所以bbox是ZIP对应的框。
+
+现在看图片中的布局：
+
+DATE的框是中间偏左，CITY在中间，STATE在CITY右边，ZIP在STATE右边。整个大的框是包含CITY、STATE、ZIP的长框？不，看图片中的结构：CITY、STATE、ZIP是在一个大的矩形框内吗？看图片里的线，CITY的框是和STATE、ZIP在同一个大框里吗？看原图中的线条：CITY的输入框是“HUNTSVILLE”在框内，然后STATE是“AL”在框内，ZIP是“35815”在框内，这三个是在一个大的矩形框里吗？看图片中的黑色矩形是NAME，然后右边是DATE的框（单独的），然后是CITY、STATE、ZIP在一个大框里。所以：
+
+DATE的框是独立的，坐标是DATE标签下方的矩形，里面是08-08-89。CITY、STATE、ZIP在同一个大矩形内，所以需要分别提取每个部分的bbox？或者看每个字段的标注位置。
+
+现在看每个字段的label对应的内容：
+
+- DATE：值是08-08-89，其所在的输入框的bbox。看图片中DATE的框，应该是从DATE标签下方的矩形，即x范围大概是310到425左右，y是对应的位置。
+
+- CITY：值是HUNTSVILLE，所在的输入框是CITY标签下方的矩形，即CITY标签在上方，下面的框是HUNTSVILLE的框。
+
+- STATE：值是AL，所在的输入框是STATE标签下方的矩形，即STATE标签在上方，下面的框是AL的框。
+
+- ZIP：值是35815，所在的输入框是ZIP标签下方的矩形，即ZIP标签在上方，下面的框是35815的框。
+
+现在需要确定每个的bbox坐标。因为是图像中的位置，需要看每个元素的位置。
+
+看图片中的文字：
+
+DATE的框：里面的文字是08-08-89，这个框的四个角。假设图片的坐标系统，左上角是(0,0)，右下角是(1000,1000)左右。但实际要根据图像中的位置。
+
+另外，看CITY的框是HUNTSVILLE，这个框的范围。STATE是AL，ZIP是35815。这三个在同一个大框内，所以CITY的框是大框内的左部分，STATE是中间，ZIP是右部分。
+
+现在，先处理每个字段：
+
+1. DATE：
+   - label: DATE
+   - bbox_2d：包含“08-08-89”的矩形。看图片中DATE标签在上方，下面的框是矩形，里面是手写的08-08-89。这个框的坐标大约是[312, 305, 425, 602]（因为DATE的标签在上方，框在下面，所以y范围是从DATE标签的y到框的y，x是DATE标签的x范围对应框的x范围）。
+
+2. CITY：
+   - label: CITY
+   - bbox_2d：包含“HUNTSVILLE”的矩形。CITY标签在上方，下面的框是HUNTSVILLE所在的框。这个框的x范围是CITY标签的x范围对应，y是CITY标签的y到框的y。看图片中CITY的框是大框内的左部分，所以bbox大约是[398, 305, 625, 602]（因为HUNTSVILLE在框内，框的右边是STATE的框开始）。
+
+3. STATE：
+   - label: STATE
+   - bbox_2d：包含“AL”的矩形。STATE标签在上方，下面的框是AL所在的框。这个框在CITY框的右边，所以x范围是STATE标签的x到框的x，y是STATE标签的y到框的y。大约是[630, 305, 685, 602]（因为AL在框内，框的宽度较小）。
+
+4. ZIP：
+   - label: ZIP
+   - bbox_2d：包含“35815”的矩形。ZIP标签在上方，下面的框是35815所在的框。这个框在STATE框的右边，所以x范围是ZIP标签的x到框的x，y是ZIP标签的y到框的y。大约是[690, 305, 835, 602]（因为35815在框内，框的宽度是ZIP的范围）。
+
+现在需要验证这些bbox是否正确。另外，也可以看整个大框（CITY、STATE、ZIP）的外框，然后每个部分在其中的位置。比如，CITY的框是大框内的左半部分，STATE是中间，ZIP是右半部分。大框的x范围是从CITY标签的x到ZIP标签的x，y是标签的y到框的y。
+
+另外，看图片中的文字，HUNTSVILLE是手写的，AL是手写的，35815是手写的。现在，将每个字段的label和对应的bbox列出。
+
+现在，整理成JSON数组：
+
+[
+  {"bbox_2d": [314, 307, 422, 600], "label": "DATE"},
+  {"bbox_2d": [396, 307, 623, 600], "label": "CITY"},
+  {"bbox_2d": [632, 307, 684, 600], "label": "STATE"},
+  {"bbox_2d": [692, 307, 834, 600], "label": "ZIP"}
+]
+
+需要确认每个bbox的准确性。比如，DATE的框是独立的，其x范围是DATE标签下方的矩形，DATE标签在上方，所以DATE的框的x大约是290到425（因为DATE的标签在上方，框在下面，所以x范围和标签对应）。而CITY、STATE、ZIP在同一个大框内，所以它们的y范围是相同的，即从CITY标签的y到框的y，大约是300到600左右（因为整个表单的布局，这些字段在中间偏下的位置）。
+
+另外，检查ZIP的值是35815，所以ZIP的框内是这个数字，所以bbox要包含这个数字。STATE是AL，所以STATE的框内是AL。CITY是HUNTSVILLE，所以CITY的框内是HUNTSVILLE。DATE是08-08-89，所以DATE的框内是这个日期。
+
+现在，确认每个的label和bbox对应正确。最终的JSON数组应该包含这四个条目。
+</think>
+[{"bbox_2d": [312, 305, 425, 602], "label": "DATE"}, {"bbox_2d": [396, 305, 625, 602], "label": "CITY"}, {"bbox_2d": [630, 305, 686, 602], "label": "STATE"}, {"bbox_2d": [690, 305, 835, 602], "label": "ZIP"}]

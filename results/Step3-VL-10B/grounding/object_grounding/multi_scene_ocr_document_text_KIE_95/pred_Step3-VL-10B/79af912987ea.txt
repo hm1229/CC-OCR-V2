@@ -1,10 +1,68 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: Looking at the invoice, there's a "Date: 24/05/2017" section. So that's the date.
+
+doc_no_receipt_no: The invoice number is "INV NO: CS-SA-0086778". So that's the document number.
+
+seller_address: The shop's address is "NO. 31G833G, JALAN SETIA IND AH X, U13/X 40170 SETIA ALAM". Let me check the top part: "SANYU STATIONERY SHOP NO. 31G833G, JALAN SETIA IND AH X, U13/X 40170 SETIA ALAM". So that's the address.
+
+seller_gst_id: The GST ID No is "001531760640". Found in the top section.
+
+seller_name: The shop name is "SANYU STATIONERY SHOP", and the owned by is "SANYU SUPPLY SDN BHD (1135772-K)". But the seller name for the invoice is probably the shop name. Wait, the "Owned By" is the company, so seller_name might be "SANYU STATIONERY SHOP" or the owned by. Let me check. The invoice is from the cash sales counter of the shop, so the seller is SANYU STATIONERY SHOP. But the "Owned By" is SANYU SUPPLY SDN BHD. Maybe the seller_name is the shop name. Let's confirm.
+
+seller_phone: The mobile/WhatsApp is +6012-918 7937, and Tel: +603-3362 4137. So the phone number can be either, but probably the main contact. Let's take the Tel: +603-3362 4137.
+
+total_amount: The final total is 5.80 RM. Look at "Final Total 5.80".
+
+total_tax: In the GST Summary, Tax(RM) is 0.33. Because SR @6% has Tax(RM) 0.33.
+
+Now, let's map each:
+
+date: "24/05/2017" – find the bounding box for that line.
+
+doc_no_receipt_no: "CS-SA-0086778" from INV NO.
+
+seller_address: The address lines: "NO. 31G833G, JALAN SETIA IND AH X, U13/X 40170 SETIA ALAM"
+
+seller_gst_id: "001531760640"
+
+seller_name: "SANYU STATIONERY SHOP" (the shop name at the top)
+
+seller_phone: "Tel: +603-3362 4137" (or the mobile, but let's check the receipt. The Mobile/WhatsApp is +6012-918 7937, Tel is +603-3362 4137. Either could be, but maybe the Tel is the main.
+
+total_amount: "5.80" from Final Total.
+
+total_tax: "0.33" from GST Summary Tax(RM).
+
+Now, let's check each element's position on the receipt.
+
+Let's list each:
+
+1. date: The line "Date : 24/05/2017" – so the text is there. Bounding box around that.
+
+2. doc_no_receipt_no: "INV NO: CS-SA-0086778" – the number is CS-SA-0086778.
+
+3. seller_address: The address is in the top part: "NO. 31G833G, JALAN SETIA IND AH X, U13/X 40170 SETIA ALAM"
+
+4. seller_gst_id: "GST ID No: 001531760640"
+
+5. seller_name: "SANYU STATIONERY SHOP" (the shop name at the top, before the address)
+
+6. seller_phone: "Tel: +603-3362 4137" (the telephone number)
+
+7. total_amount: "5.80" in the Final Total line.
+
+8. total_tax: "0.33" in the GST Summary, Tax(RM) column.
+
+Now, let's create the JSON entries for each.
+</think>
 [
-    {"bbox_2d": [229, 607, 384, 626], "label": "date"},
-    {"bbox_2d": [244, 610, 787, 627], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [101, 109, 407, 128], "label": "seller_address"},
-    {"bbox_2d": [134, 147, 327, 164], "label": "seller_gst_id"},
-    {"bbox_2d": [101, 70, 494, 92], "label": "seller_name"},
-    {"bbox_2d": [101, 112, 277, 129], "label": "seller_phone"},
-    {"bbox_2d": [508, 332, 582, 349], "label": "total_amount"},
-    {"bbox_2d": [664, 622, 696, 639], "label": "total_tax"}
+    {"bbox_2d": [234, 640, 384, 657], "label": "date"},
+    {"bbox_2d": [144, 640, 284, 657], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [101, 102, 492, 122], "label": "seller_address"},
+    {"bbox_2d": [125, 152, 325, 168], "label": "seller_gst_id"},
+    {"bbox_2d": [101, 70, 447, 92], "label": "seller_name"},
+    {"bbox_2d": [101, 112, 275, 128], "label": "seller_phone"},
+    {"bbox_2d": [325, 332, 375, 348], "label": "total_amount"},
+    {"bbox_2d": [664, 612, 696, 628], "label": "total_tax"}
 ]

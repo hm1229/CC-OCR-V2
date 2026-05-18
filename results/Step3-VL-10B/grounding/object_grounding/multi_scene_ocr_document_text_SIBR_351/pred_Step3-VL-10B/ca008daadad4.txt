@@ -1,217 +1,216 @@
-用户现在需要识别文档中的各个指定类别。首先得逐个看每个类别在图中的位置。
+用户现在需要从采购合同中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-先看Add：图中顶部有Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429，所以Add的bbox是这个区域。
+首先看ADDRESS，可能有两个地址？比如公司地址和订单地址。先看顶部的Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429，这是Add（地址）。然后订单的Address是Unit 3364 Box 0413 DPO AE 75250，属于Order的Address。另外Beneficiary Bank的Address是392 Herrera Trafficway East Jamesmouth, AK 15493。需要区分每个标签对应的。
 
-ADDRESS：可能有多个地址，比如公司地址Lingyun Information Co., Ltd.的地址，还有ORDER TO的地址02696 Powers Port...，Beneficiary Bank的地址392 Herrera...。需要确认每个ADDRESS。不过先看每个类别。
+然后AMOUNT：表格中的Amount是$2,950.00，Total也是$2,950.00，还有TOTAL AMOUNT: SAY U.S. DOLLARS:... 这里的金额是Two thousand nine hundred and fifty only。
 
-先列出来每个要检测的类别，然后找对应的元素。
+Account No.：Beneficiary Bank的Account No.是77122025000000753。
 
-首先处理每个类别：
+Add：顶部的Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429。
 
-1. ADDRESS：比如公司抬头的地址Add:... 是Add类别？不，Add是单独的类别。看类别中的Address（注意有Add和Address两个类别？看用户给的类别列表里有Add和Address。看用户给的类别：Add, Address。所以Add是单独的，Address是另一个。比如ORDER TO里的地址是Address？或者Beneficiary Bank的地址是Address？
+Address：订单的Address是Unit 3364 Box 0413 DPO AE 75250；Beneficiary Bank的Address是392 Herrera Trafficway East Jamesmouth, AK 15493。需要看哪个对应。可能订单的Address是Order TO下面的地址，即02696 Powers Port Bethf... Unit 3364 Box 0413 DPO AE 75250，所以这个是Address（订单地址）。
 
-先看用户给的类别列表中的每个项：
+Authorized Signature(s)：底部的Authorized Signature(s)区域。
 
-- ADDRESS：可能指公司地址？比如Lingyun Information Co., Ltd.的地址是Add:...？不，Add是单独的类别。看用户给的类别里有Add和Address，所以Add是“Add:7949...”，而Address可能是指其他地址，比如Beneficiary Bank的Address:392 Herrera...。
+BANK INFORMATION：Beneficiary部分的BANK INFORMATION: Beneficiary Name: Lingyun Information Co., Ltd. 所以BANK INFORMATION是这个标题下的内容。
 
-现在逐个分析：
+Beneficiary Bank：BANK OF NINGBO。
 
-- Add：图中顶部“Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429” → 标签Add。
-- Address：比如Beneficiary Bank的Address:392 Herrera Trafficway East Jamesmouth, AK 15493 → 标签Address。
-- Authorized Signature(s)：图中底部有“Authorized Signature(s)” → 标签Authorized Signature(s)。
-- BANK INFORMATION：图中有“BANK INFORMATION: Beneficiary”和“BANK INFORMATION: Beneficiary”（可能重复？看原文中的BANK INFORMATION部分，有两个BANK INFORMATION？不，看原文：“BANK INFORMATION: Beneficiary”然后下面是“BANK INFORMATION: Beneficiary”？不，看原文：
+COMPANY NAME：Lingyun Information Co., Ltd.（出现多次，比如顶部和订单的公司名，以及签名处）。
 
-原文中“BANK INFORMATION: Beneficiary”然后下一行是“Name: Lingyun Information Co., Ltd.”，然后“Beneficiary Bank: BANK OF NINGBO”等。所以BANK INFORMATION是这个部分的标题，所以标签BANK INFORMATION。
-- Beneficiary Bank：Beneficiary Bank: BANK OF NINGBO → 标签Beneficiary Bank。
-- COMPANY NAME：比如“Lingyun Information Co., Ltd.”出现多次，比如ORDER TO的公司，标题的公司，底部的公司。所以COMPANY NAME是“Lingyun Information Co., Ltd.”。
-- DELIVERY：图中有“DELIVERY 10 DAYS AFTER RECEIVING THE DOWN PAYMENT” → 标签DELIVERY。
-- Date：Date: 31/Dec/21 → 标签Date。
-- Desc：表格中的Desc列，比如“Paint Baking System” → 标签Desc。
-- Fax：图中顶部“Fax:+681896086118” → 标签Fax。
-- For and on behalf of：图中有“For and on behalf of” → 标签For and on behalf of。
-- IEC CODE：IEC CODE:3211006869 GST → 标签IEC CODE。
-- Item No.：表格中的Item No.列，比如“3DA/LAMP”是Item No.？不，Item No.是列标题，然后内容是“3DA/LAMP”？看表格第一行Item No.是“3DA/LAMP”？不，表格第一行Item No.列的单元格是“3DA/LAMP”吗？看表格：
+DELIVERY：10 DAYS AFTER RECEIVING THE DOWN PAYMENT。
 
-表格的列是Item No., Desc, Qty, U.PRICE, AMOUNT, REMARK。第一行Item No.是“3DA/LAMP”，所以Item No.是这个单元格的内容？或者Item No.是列标题？不，用户要检测的是对象，即文档中的元素，所以Item No.作为类别，对应的是列标题“Item No.”？或者对应的是内容？看用户给的类别是“Item No.”，所以需要找文档中“Item No.”这个文本，即表格的列标题“Item No.”。
-- NO.：比如“NO.:33AABCO4731G1ZS” → 标签NO.。
-- Name：BANK INFORMATION下的Name: Lingyun Information Co., Ltd. → 标签Name。
-- P/C No：P/C No: JF213121610 → 标签P/C No。
-- PAN NO：PAN NO: AABCO4731G → 标签PAN NO。
-- PAYMENT：PAYMENT 100% BY T/T → 标签PAYMENT。
-- PRICE TERMS：PRICE TERMS: EXW with delivery to ShangHai Port → 标签PRICE TERMS。
-- Qty：表格中的Qty列，比如“10” sets → 标签Qty。
-- REMARK：表格中的REMARK列，比如“220V, India plug” → 标签REMARK。
-- SAY U.S. DOLLARS：TOTAL AMOUNT: SAY U.S. DOLLARS:... → 标签SAY U.S. DOLLARS。
-- SWIFT Address：SWIFT Address: BNKBCN2N → 标签SWIFT Address。
-- TITLE：图中的“PURCHASE CONTRACT”是TITLE → 标签TITLE。
-- Tel：Tel:+457612081280/3/8/9 → 标签Tel。
-- U.PRICE：表格中的U.PRICE列，比如$295.00 → 标签U.PRICE。
+Date：31/Dec/21。
 
-现在需要逐个确定每个类别的bbox。需要看每个元素在图中的位置。
+Desc：Paint Baking System（在Item的Desc列）。
 
-现在开始逐个处理：
+Fax：顶部的Fax:+681896086118。
 
-1. Add: 文本是“Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429” → 位置在顶部，公司信息下方。bbox大概是从Add开始的文本，坐标需要估计。图中顶部右侧是Lingyun Information Co., Ltd.，然后Add在中间偏上。看原图的Add行：“Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429” → 所以bbox是包含这个文本的区域。
+For and on behalf of：图中有“For and on behalf of 凌云信息有限公司”，所以这个是For and on behalf of。
 
-2. Address：Beneficiary Bank的Address:392 Herrera Trafficway East Jamesmouth, AK 15493 → 找到这个地址，标签Address。
+IEC CODE：3211006869 GST。
 
-3. Authorized Signature(s)：图中底部有“Authorized Signature(s)” → 标签。
+Item No.：3DA/LAMP（第一行的Item No.）。
 
-4. BANK INFORMATION：图中有“BANK INFORMATION: Beneficiary”（第一次）和“BANK INFORMATION: Beneficiary”（第二次？不，看原文：
+NO.：33AABCO4731G1ZS（IEC下面的NO.）。
 
-原文中“BANK INFORMATION: Beneficiary”然后下一行是“Name: Lingyun Information Co., Ltd.”，然后“Beneficiary Bank: BANK OF NINGBO”等。所以“BANK INFORMATION:”是标题，所以有两个BANK INFORMATION？不，看原文中的“BANK INFORMATION: Beneficiary”和“BANK INFORMATION: Beneficiary”？不，看用户提供的原文：
+Name：Lingyun Information Co., Ltd.（Beneficiary Name）。
 
-“BANK INFORMATION: Beneficiary
-Name: Lingyun Information Co., Ltd.
-Beneficiary Bank: BANK OF NINGBO
-Address: 392 Herrera Trafficway East Jamesmouth, AK 15493
-Account No.: 771220250000000753
-SWIFT Address: BNKBCN2N”
+P/C No：JF213121610（P/C No: JF213121610）。
 
-然后下面还有“BANK INFORMATION: Beneficiary”？不，看用户提供的原文中，在“BANK INFORMATION:”下面还有吗？看用户提供的原文：
+PAN NO：AABCO4731G（PAN NO: AABCO4731G）。
 
-“BANK INFORMATION: Beneficiary
-Lingyun Information Co., Ltd.
-Beneficiary Bank: BANK OF NINGBO
-Address: 392 Herrera Trafficway East Jamesmouth, AK 15493
-Account No.: 771220250000000753
-SWIFT Address: BNKBCN2N”
+PAYMENT：100% BY T/T。
 
-哦，可能我之前看错了。原文中“BANK INFORMATION: Beneficiary”是第一个，然后下面的“BANK INFORMATION: Beneficiary”是重复？不，看用户提供的原文中的“BANK INFORMATION:”出现两次吗？看用户提供的原文：
+PRICE TERMS：EXW with delivery to ShangHai Port。
 
-在“TOTAL AMOUNT:...”之后是：
+Qty：10 sets（第一行的Qty）。
 
-“BANK INFORMATION: Beneficiary
-Lingyun Information Co., Ltd.
-Beneficiary Bank: BANK OF NINGBO
-Address: 392 Herrera Trafficway East Jamesmouth, AK 15493
-Account No.: 771220250000000753
-SWIFT Address: BNKBCN2N”
+REMARK：220V, India plug（第一行的REMARK）。
 
-然后下面还有“BANK INFORMATION: Beneficiary”？不，看用户提供的原文中，在“BANK INFORMATION:”下面还有吗？看用户提供的原文中的“BANK INFORMATION:”部分，可能只有一个。然后“For and on behalf of”在签名上方。
+SAY U.S. DOLLARS：TWO THOUSAND NINE HUNDRED AND FIFTY ONLY（TOTAL AMOUNT后的文字）。
 
-现在继续，每个类别对应的元素：
+SWIFT Address：BNKBCN2N（SWIFT Address: BNKBCN2N）。
 
-- Add: [Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429] → 标签Add
-- Address（Beneficiary Bank的地址）: [Address: 392 Herrera Trafficway East Jamesmouth, AK 15493] → 标签Address
-- Authorized Signature(s): [Authorized Signature(s)] → 标签
-- BANK INFORMATION: [BANK INFORMATION: Beneficiary] → 标签BANK INFORMATION
-- Beneficiary Bank: [Beneficiary Bank: BANK OF NINGBO] → 标签Beneficiary Bank
-- COMPANY NAME: [Lingyun Information Co., Ltd.]（比如ORDER TO的公司，或者标题的公司）→ 标签COMPANY NAME，需要选一个，比如标题的Lingyun Information Co., Ltd.在顶部右侧。
-- DELIVERY: [DELIVERY 10 DAYS AFTER RECEIVING THE DOWN PAYMENT] → 标签DELIVERY
-- Date: [Date: 31/Dec/21] → 标签Date
-- Desc: [Paint Baking System]（表格中的Desc列内容）→ 标签Desc
-- Fax: [Fax:+681896086118] → 标签Fax
-- For and on behalf of: [For and on behalf of] → 标签
-- IEC CODE: [IEC CODE:3211006869 GST] → 标签IEC CODE
-- Item No.: [Item No.]（表格的列标题）→ 标签Item No.
-- NO.: [NO.:33AABCO4731G1ZS] → 标签NO.
-- Name: [Name: Lingyun Information Co., Ltd.] → 标签Name
-- P/C No: [P/C No: JF213121610] → 标签P/C No
-- PAN NO: [PAN NO: AABCO4731G] → 标签PAN NO
-- PAYMENT: [PAYMENT 100% BY T/T] → 标签PAYMENT
-- PRICE TERMS: [PRICE TERMS: EXW with delivery to ShangHai Port] → 标签PRICE TERMS
-- Qty: [Qty]（表格的列标题，或者内容中的10 sets的Qty列）→ 标签Qty，比如表格中Qty列的“10”是内容，但类别是Qty，所以列标题“Qty”是标签对象。
-- REMARK: [REMARK]（列标题）或者内容“220V, India plug” → 标签REMARK，列标题是“REMARK”。
-- SAY U.S. DOLLARS: [SAY U.S. DOLLARS: TWO THOUSAND NINE HUNDRED AND FIFTY ONLY] → 标签SAY U.S. DOLLARS
-- SWIFT Address: [SWIFT Address: BNKBCN2N] → 标签SWIFT Address
-- TITLE: [PURCHASE CONTRACT] → 标签TITLE
-- Tel: [Tel:+457612081280/3/8/9] → 标签Tel
-- U.PRICE: [U.PRICE]（列标题）或者内容$295.00 → 标签U.PRICE，列标题是“U.PRICE”。
+TITLE：PURCHASE CONTRACT（标题）。
 
-现在需要为每个类别确定一个实例，因为可能有多个，但用户要求“detect all objects”，所以每个出现的都要？不过可能每个类别至少一个。现在需要把每个类别对应的元素找出来，然后生成bbox。
+Tel：+457612081280/3/8/9（顶部的Tel:...）。
 
-现在开始逐个列出：
+U.PRICE：$295.00（第一行的U.PRICE）。
 
-1. Add: 文本“Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429” → 位置在顶部，公司信息下方。bbox大概是从Add开始，覆盖该行。假设坐标是x1=330, y1=10, x2=620, y2=30（大概，因为图中Add在中间偏上，公司名称在右上角，Add在公司名称下方）。
+现在需要逐个对应每个标签，找到它们的bbox。需要看每个元素在图中的位置。
 
-2. Address（Beneficiary Bank的Address）: “Address: 392 Herrera Trafficway East Jamesmouth, AK 15493” → 在BANK INFORMATION部分，Address行。bbox是该行的范围。
+先列出来每个标签对应的元素：
 
-3. Authorized Signature(s): 图中底部有“Authorized Signature(s)” → 位置在签名栏，底部。
+1. ADDRESS：订单的地址是“Unit 3364 Box 0413 DPO AE 75250”，位于ORDER TO下面。bbox需要看这个文本的位置。另外Beneficiary Bank的Address是“392 Herrera Trafficway East Jamesmouth, AK 15493”，属于BANK INFORMATION下的Address。但标签是ADDRESS，可能需要看哪个。可能用户需要的是订单的地址，即Order TO的地址。看原文中“ORDER TO: Lingyun Information Co., Ltd. 02696 Powers Port Bethf... Unit 3364 Box 0413 DPO AE 75250” 这里的Unit...是地址，所以这个是Address。
 
-4. BANK INFORMATION: “BANK INFORMATION: Beneficiary” → 第一次出现的BANK INFORMATION。
+2. AMOUNT：表格中的Amount列，比如“$2,950.00”在第一行的Amount，以及Total行的Amount。还有TOTAL AMOUNT: SAY U.S. DOLLARS:... 这里的金额是文字。需要确定哪个。可能AMOUNT对应表格中的Amount数值，比如$2,950.00。
 
-5. Beneficiary Bank: “Beneficiary Bank: BANK OF NINGBO” → 对应的行。
+3. Account No.：Beneficiary Bank的Account No.是“77122025000000753”，在BANK INFORMATION部分。
 
-6. COMPANY NAME: “Lingyun Information Co., Ltd.”（比如顶部右侧的公司名称，或者ORDER TO的公司名称，或者底部的公司名称。选一个，比如顶部右侧的“Lingyun Information Co., Ltd.”）。
+4. Add：顶部的“Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429”。
 
-7. DELIVERY: “DELIVERY 10 DAYS AFTER RECEIVING THE DOWN PAYMENT” → 对应的行。
+5. Address：可能重复，比如订单的地址和Beneficiary Bank的地址。但标签是Address，可能需要看订单的地址，即Unit 3364...。
 
-8. Date: “Date: 31/Dec/21” → 对应的行。
+6. Authorized Signature(s)：底部的“Authorized Signature(s)”文字，以及签名区域。
 
-9. Desc: 表格中的“Paint Baking System”（Desc列的内容）。
+7. BANK INFORMATION：标题“BANK INFORMATION: Beneficiary”下面的内容，即“BANK INFORMATION: Beneficiary Name: Lingyun Information Co., Ltd.” 这个标题。
 
-10. Fax: “Fax:+681896086118” → 顶部的Fax信息。
+8. Beneficiary Bank：BANK OF NINGBO。
 
-11. For and on behalf of: “For and on behalf of” → 签名上方的文本。
+9. COMPANY NAME：Lingyun Information Co., Ltd.（顶部的公司名，或者订单的公司名，或者签名处的公司名）。
 
-12. IEC CODE: “IEC CODE:3211006869 GST” → 对应的行。
+10. DELIVERY：10 DAYS AFTER RECEIVING THE DOWN PAYMENT。
 
-13. Item No.: 表格中的“Item No.”列标题。
+11. Date：31/Dec/21。
 
-14. NO.: “NO.:33AABCO4731G1ZS” → 对应的行。
+12. Desc：Paint Baking System（Item的Desc列）。
 
-15. Name: “Name: Lingyun Information Co., Ltd.” → BANK INFORMATION下的Name行。
+13. Fax：+681896086118（顶部的Fax）。
 
-16. P/C No: “P/C No: JF213121610” → 对应的行。
+14. For and on behalf of：图中的“For and on behalf of 凌云信息有限公司”。
 
-17. PAN NO: “PAN NO: AABCO4731G” → 对应的行。
+15. IEC CODE：3211006869 GST（IEC CODE:3211006869 GST）。
 
-18. PAYMENT: “PAYMENT 100% BY T/T” → 对应的行。
+16. Item No.：3DA/LAMP（第一行的Item No.）。
 
-19. PRICE TERMS: “PRICE TERMS: EXW with delivery to ShangHai Port” → 对应的行。
+17. NO.：33AABCO4731G1ZS（NO.:33AABCO4731G1ZS）。
 
-20. Qty: 表格中的“Qty”列标题（或者内容中的“10” sets，但类别是Qty，所以列标题是“Qty”）。
+18. Name：Lingyun Information Co., Ltd.（Beneficiary Name: Lingyun Information Co., Ltd.）。
 
-21. REMARK: 表格中的“REMARK”列标题（或者内容“220V, India plug”）。
+19. P/C No：JF213121610（P/C No: JF213121610）。
 
-22. SAY U.S. DOLLARS: “SAY U.S. DOLLARS: TWO THOUSAND NINE HUNDRED AND FIFTY ONLY” → 对应的行。
+20. PAN NO：AABCO4731G（PAN NO: AABCO4731G）。
 
-23. SWIFT Address: “SWIFT Address: BNKBCN2N” → 对应的行。
+21. PAYMENT：100% BY T/T。
 
-24. TITLE: “PURCHASE CONTRACT” → 标题。
+22. PRICE TERMS：EXW with delivery to ShangHai Port。
 
-25. Tel: “Tel:+457612081280/3/8/9” → 顶部的Tel信息。
+23. Qty：10（第一行的Qty，sets是单位）。
 
-26. U.PRICE: 表格中的“U.PRICE”列标题（或者内容$295.00）。
+24. REMARK：220V, India plug（第一行的REMARK）。
 
-现在需要为每个类别生成一个条目，确保覆盖所有类别。现在检查用户提供的类别列表，确保没有遗漏：
+25. SAY U.S. DOLLARS：TWO THOUSAND NINE HUNDRED AND FIFTY ONLY（TOTAL AMOUNT后的文字）。
 
-用户提供的类别列表：
+26. SWIFT Address：BNKBCN2N（SWIFT Address: BNKBCN2N）。
 
-ADDRESS, AMOUNT, Account No., Add, Address, Authorized Signature(s), BANK INFORMATION, Beneficiary Bank, COMPANY NAME, DELIVERY, Date, Desc, Fax, For and on behalf of, IEC CODE, Item No., NO., Name, P/C No, PAN NO, PAYMENT, PRICE TERMS, Qty, REMARK, SAY U.S. DOLLARS, SWIFT Address, TITLE, Tel, U.PRICE.
+27. TITLE：PURCHASE CONTRACT（标题）。
 
-现在检查每个类别是否都处理了：
+28. Tel：+457612081280/3/8/9（顶部的Tel）。
 
-- ADDRESS：Beneficiary Bank的Address → 已处理。
-- AMOUNT：表格中的AMOUNT列，比如$2,950.00 → 标签AMOUNT。
-- Account No.：Account No.: 771220250000000753 → 标签Account No.
-- Add：已处理。
-- Address：已处理（Beneficiary Bank的Address）。
-- Authorized Signature(s)：已处理。
-- BANK INFORMATION：已处理。
-- Beneficiary Bank：已处理。
-- COMPANY NAME：已处理。
-- DELIVERY：已处理。
-- Date：已处理。
-- Desc：已处理。
-- Fax：已处理。
-- For and on behalf of：已处理。
-- IEC CODE：已处理。
-- Item No.：已处理。
-- NO.：已处理。
-- Name：已处理。
-- P/C No：已处理。
-- PAN NO：已处理。
-- PAYMENT：已处理。
-- PRICE TERMS：已处理。
-- Qty：已处理。
-- REMARK：已处理。
-- SAY U.S. DOLLARS：已处理。
-- SWIFT Address：已处理。
-- TITLE：已处理。
-- Tel：已处理。
-- U.PRICE：已处理。
-- AMOUNT：之前漏了AMOUNT，表格中的AMOUNT列，比如$2,950.00，所以需要添加AMOUNT的条目。
+29. U.PRICE：$295.00（第一行的U.PRICE）。
 
-现在补充AMOUNT：表格中的“AMOUNT”列标题，或者内容$2,950.00。比如“AMOUNT: $
+现在需要为每个标签找到对应的bbox。需要看图像中的位置，比如：
+
+- TITLE: "PURCHASE CONTRACT" 是大标题，位于中间上方。
+- Add: 顶部的Add:7949... 位置在右上角，公司名下面。
+- Tel: 顶部的Tel:... 和Fax:... 一起。
+- Fax: 同上。
+- COMPANY NAME: 顶部的"Lingyun Information Co., Ltd." 以及订单的"ORDER TO: Lingyun Information Co., Ltd."，还有签名处的公司名。
+- P/C No: "P/C No: JF213121610" 在订单信息里。
+- Date: "Date: 31/Dec/21" 在订单信息里。
+- ORDER TO: 下面的公司名是Lingyun Information Co., Ltd.，所以COMPANY NAME对应这个。
+- Address（订单的）: "02696 Powers Port Bethf... Unit 3364 Box 0413 DPO AE 75250"。
+- IEC CODE: "IEC CODE:3211006869 GST"。
+- NO.: "NO.:33AABCO4731G1ZS"。
+- PAN NO: "PAN NO: AABCO4731G"。
+- PRICE TERMS: "EXW with delivery to ShangHai Port"。
+- SHIPMENT: "FROM TO" 这里可能没填，但标签是SHIPMENT？不，用户给的标签里没有SHIPMENT，用户给的标签是列出的那些，所以看用户提供的标签列表。
+- PAYMENT: "100% BY T/T"。
+- DELIVERY: "10 DAYS AFTER RECEIVING THE DOWN PAYMENT"。
+- Item No.: "3DA/LAMP"。
+- Desc: "Paint Baking System"。
+- Qty: "10 sets" 中的10。
+- U.PRICE: "$295.00"。
+- AMOUNT: "$2,950.00"（第一行的Amount）。
+- TOTAL AMOUNT: "TWO THOUSAND NINE HUNDRED AND FIFTY ONLY" 对应SAY U.S. DOLLARS。
+- BANK INFORMATION: "BANK INFORMATION: Beneficiary Name: Lingyun Information Co., Ltd."。
+- Beneficiary Bank: "BANK OF NINGBO"。
+- Account No.: "77122025000000753"。
+- SWIFT Address: "BNKBCN2N"。
+- For and on behalf of: "For and on behalf of 凌云信息有限公司"。
+- Authorized Signature(s): 底部的"Authorized Signature(s)"文字。
+- Address（Beneficiary Bank的）: "392 Herrera Trafficway East Jamesmouth, AK 15493"。
+- Add（顶部的）: "Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429"。
+
+现在需要将每个标签对应到具体的bbox。由于是图像，需要估计每个文本的位置。例如：
+
+1. ADDRESS（订单地址）: 文本是“Unit 3364 Box 0413 DPO AE 75250”，位于ORDER TO下面，对应bbox大概在订单信息部分。
+2. AMOUNT: 表格中第一行的Amount是$2,950.00，bbox在表格的Amount列。
+3. Account No.: “77122025000000753”在BANK INFORMATION下的Account No.行。
+4. Add: “Add:7949 Katherine Crossing Suite 415 Jeffreychester, AL 01429”在顶部公司信息下方。
+5. Address（Beneficiary Bank的）: “392 Herrera Trafficway East Jamesmouth, AK 15493”在BANK INFORMATION下的Address行。
+6. Authorized Signature(s): 底部的“Authorized Signature(s)”文字，以及签名区域。
+7. BANK INFORMATION: 标题“BANK INFORMATION: Beneficiary”。
+8. Beneficiary Bank: “BANK OF NINGBO”。
+9. COMPANY NAME: 顶部的“Lingyun Information Co., Ltd.”（公司抬头）。
+10. DELIVERY: “10 DAYS AFTER RECEIVING THE DOWN PAYMENT”。
+11. Date: “31/Dec/21”。
+12. Desc: “Paint Baking System”在Item的Desc列。
+13. Fax: “+681896086118”在顶部Tel和Fax部分。
+14. For and on behalf of: “For and on behalf of 凌云信息有限公司”在签名上方。
+15. IEC CODE: “3211006869 GST”在IEC CODE行。
+16. Item No.: “3DA/LAMP”在Item No.列。
+17. NO.: “33AABCO4731G1ZS”在NO.行。
+18. Name: “Lingyun Information Co., Ltd.”在Beneficiary Name行。
+19. P/C No: “JF213121610”在P/C No.行。
+20. PAN NO: “AABCO4731G”在PAN NO.行。
+21. PAYMENT: “100% BY T/T”。
+22. PRICE TERMS: “EXW with delivery to ShangHai Port”。
+23. Qty: “10”在Qty列。
+24. REMARK: “220V, India plug”在REMARK列。
+25. SAY U.S. DOLLARS: “TWO THOUSAND NINE HUNDRED AND FIFTY ONLY”在TOTAL AMOUNT行。
+26. SWIFT Address: “BNKBCN2N”在SWIFT Address行。
+27. TITLE: “PURCHASE CONTRACT”。
+28. Tel: “+457612081280/3/8/9”在顶部Tel部分。
+29. U.PRICE: “$295.00”在U.PRICE列。
+
+现在需要将这些对应起来，生成JSON数组。每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。由于是示例，需要大致确定每个的bbox。比如：
+
+- TITLE: "PURCHASE CONTRACT" 的bbox是中间上方，比如x1=440, y1=190, x2=750, y2=210（假设）。
+- Add: 顶部的Add文本，x1=450, y1=30, x2=620, y2=45。
+- Tel: x1=630, y1=30, x2=780, y2=45。
+- Fax: x1=790, y1=30, x2=920, y2=45。
+- COMPANY NAME（顶部）: x1=650, y1=10, x2=920, y2=25。
+- ORDER TO的COMPANY NAME: x1=140, y1=200, x2=490, y2=220。
+- P/C No: x1=500, y1=225, x2=650, y2=240。
+- Date: x1=660, y1=225, x2=740, y2=240。
+- Address（订单）: x1=140, y1=230, x2=490, y2=245。
+- IEC CODE: x1=140, y1=250, x2=490, y2=265。
+- NO.: x1=140, y1=265, x2=490, y2=280。
+- PAN NO: x1=140, y1=280, x2=490, y2=295。
+- PRICE TERMS: x1=140, y1=300, x2=490, y2=315。
+- SHIPMENT: x1=140, y1=315, x2=490, y2=330（但用户标签没有SHIPMENT，所以忽略）。
+- PAYMENT: x1=140, y1=330, x2=490, y2=345。
+- DELIVERY: x1=140, y1=345, x2=490, y2=360。
+- Item No.: x1=70, y1=370, x2=180, y2=390。
+- Desc: x1=200, y1=370, x2=350, y2=390。
+- Qty: x1=370, y1=370, x2=450, y2=390。
+- U.PRICE: x1=470, y1=370, x2=550, y2=390。
+- AMOUNT: x1=570, y1=370, x2=650, y2=390。
+- REMARK: x1=670, y1=370, x2=750, y2=390。
+- Total行的Total: x1=70, y1=395, x2=180, y2=415。
+- Total的Amount: x1=570, y1=395, x2=650, y2=415。
+- TOTAL AMOUNT: x1=70, y1=420, x2=850, y2=440。
+- SAY U.S. DOLLARS: x1=70, y1=440, x2=850, y2=455。
+- BANK INFORMATION: x1=140

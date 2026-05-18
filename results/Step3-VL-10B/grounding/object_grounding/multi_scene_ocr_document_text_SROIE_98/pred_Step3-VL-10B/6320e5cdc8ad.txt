@@ -1,6 +1,167 @@
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The company name is "MR. D.I.Y. (M) SDN BHD". Let's check the text. The line starts with that.
+- Address: The address details are "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (GST ID No :000306020352) (IOI PUCHONG)". Need to capture the address part.
+- Date: The date is "22-04-18" from the timestamp line.
+- Total: The total amount is "RM 27.20" under "Total Incl. GST@6%".
+
+Now, find the bounding boxes for each.
+
+Let's check each element:
+
+Company: The line "MR. D.I.Y. (M) SDN BHD (CO.REG :860671-D)" – so the company name is there.
+
+Address: The block starting with LOT 1851-A... up to the GST ID.
+
+Date: The timestamp "22-04-18 18:37 SHO1 ZJ86" – the date part is 22-04-18.
+
+Total: The line "Total Incl. GST@6% RM 27.20" – the total value is RM 27.20.
+
+Now, map each to their bounding boxes.
+
+First, company: The text "MR. D.I.Y. (M) SDN BHD" is in the upper part. Let's check the coordinates.
+
+Looking at the image, the company line is:
+
+"MR. D.I.Y. (M) SDN BHD
+(CO.REG :860671-D)"
+
+So the bounding box for company would be the area containing that line.
+
+Address: The next lines: "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (GST ID No :000306020352) (IOI PUCHONG)"
+
+Date: The line "22-04-18 18:37 SHO1 ZJ86 T3 R000064116 OPERATOR TRAINEE CASHIER" – the date is 22-04-18.
+
+Total: The line "Total Incl. GST@6% RM 27.20" and "CASH RM 27.20" – the total is RM 27.20.
+
+Now, let's structure each entry.
+
+For company:
+bbox_2d: Let's see the text starts after the top number. The company is in the second line of the receipt content. Let's estimate the coordinates. The image's text area, the company line is from the top part. Let's check the vertical position.
+
+Alternatively, look at the exact text positions.
+
+But maybe better to check each element's location.
+
+Let me list each:
+
+1. Company: "MR. D.I.Y. (M) SDN BHD" – the bounding box would cover that line. Let's check the coordinates. The text is in the upper section, below the top number 31804045.
+
+2. Address: The block from "LOT 1851-A..." to "(IOI PUCHONG)".
+
+3. Date: "22-04-18" in the timestamp line.
+
+4. Total: "RM 27.20" in the Total Incl. GST line.
+
+Now, create the JSON array.
+
+First, company:
+
+{
+  "bbox_2d": [let's check the image. The company line is:
+
+"MR. D.I.Y. (M) SDN BHD
+(CO.REG :860671-D)"
+
+So the bounding box for company is the area containing these lines. Let's approximate the coordinates. The image's text is left-aligned. Let's assume the x1 is around where the text starts, y1 is after the top number.
+
+But maybe more precise: the company name is in the line starting with "MR. D.I.Y. (M) SDN BHD". Let's check the vertical position. The top number is 31804045 at the top. Then the next lines are the company info.
+
+Alternatively, use the exact text spans.
+
+But since this is a text extraction, the key is to identify each category's text.
+
+Now, let's proceed.
+
+For the company:
+
+Label: company
+
+Text: MR. D.I.Y. (M) SDN BHD
+
+Bounding box: Let's see the image. The company is in the second block. Let's check the coordinates. The image's width is the whole receipt. Let's assume the bounding box for company is [109, 250, 897, 275] (approximate, since the text is centered? No, the receipt is left-aligned. Let's check the actual text positions.
+
+Alternatively, maybe the exact bounding box can be determined by the lines.
+
+But perhaps the answer expects the main parts.
+
+Let me check each category:
+
+- address: The address lines are from "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR (GST ID No :000306020352) (IOI PUCHONG)". So the bounding box covers that block.
+
+- company: "MR. D.I.Y. (M) SDN BHD (CO.REG :860671-D)"
+
+- date: "22-04-18" (from the timestamp "22-04-18 18:37 SHO1 ZJ86...")
+
+- total: "RM 27.20" (from "Total Incl. GST@6% RM 27.20")
+
+Now, let's create the JSON entries.
+
+First, company:
+
+{
+  "bbox_2d": [101, 262, 897, 287],
+  "label": "company"
+}
+
+Address:
+
+{
+  "bbox_2d": [101, 290, 897, 345],
+  "label": "address"
+}
+
+Date:
+
+{
+  "bbox_2d": [22, 920, 176, 945],
+  "label": "date"
+}
+
+Total:
+
+{
+  "bbox_2d": [325, 675, 897, 695],
+  "label": "total"
+}
+
+Wait, let's check the total line: "Total Incl. GST@6% RM 27.20" – that's the line. The cash line is "CASH RM 27.20", but the total is the same as cash here. The total amount is RM 27.20.
+
+Now, verify the date: the timestamp is "22-04-18 18:37 SHO1 ZJ86 T3 R000064116 OPERATOR TRAINEE CASHIER". The date part is "22-04-18".
+
+So the date's bounding box is around that date.
+
+Now, let's make sure each entry is correct.
+
+Another way: check the image's text.
+
+The receipt has:
+
+At the bottom part:
+
+22-04-18 18:37 SHO1 ZJ86 T3 R000064116
+OPERATOR TRAINEE CASHIER
+
+So the date is 22-04-18.
+
+Total is in the line:
+
+Total Incl. GST@6% RM 27.20
+CASH RM 27.20
+
+So the total is RM 27.20.
+
+Company is MR. D.I.Y. (M) SDN BHD.
+
+Address is the block with LOT, JALAN, etc.
+
+Now, let's structure the JSON array with these four entries.
+</think>
 [
-    {"bbox_2d": [109, 257, 590, 279], "label": "company"},
-    {"bbox_2d": [109, 282, 590, 338], "label": "address"},
-    {"bbox_2d": [222, 922, 292, 942], "label": "date"},
-    {"bbox_2d": [650, 672, 720, 690], "label": "total"}
+    {"bbox_2d": [101, 262, 897, 287], "label": "company"},
+    {"bbox_2d": [101, 290, 897, 345], "label": "address"},
+    {"bbox_2d": [22, 920, 176, 945], "label": "date"},
+    {"bbox_2d": [325, 675, 897, 695], "label": "total"}
 ]

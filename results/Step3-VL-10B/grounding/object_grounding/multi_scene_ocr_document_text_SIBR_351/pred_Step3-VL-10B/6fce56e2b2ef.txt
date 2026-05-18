@@ -1,243 +1,163 @@
-用户现在需要从商业发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从商业发票中提取各个字段的值和对应的标签。首先得逐个分析每个标签在图中的位置。
 
-首先看Company Name：公司名称是Shang Soft Guanlian Technology Co., Ltd.，在顶部。然后Address是公司地址43723 Kathleen Freeway Suite 861 Burchburgh, MO 02700。Email是danie152@roberts.com。Tel是34-988-53866882 46188096。Fax是78-388-16353601。Date有两个，发货日期October 8, 2021，日期October 14, 2021。Invoice No是KL09211245A。MID#是CNJIAUNI40JIA。Factory Name是Shang Soft Guanlian Technology Co., Ltd.。Factory Address是PSC 8457, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242。L/C #是By W/T Payment。Gross weight是432.900 kg。Net Weight是399.800 kg。Volume是3.11 M3。Total # of CTNS是20 CTNS。Total Amount是1950prs对应的金额？看Total Amount那里是$4,465.50？不，看下面的Total Amount: 1950prs，然后总金额是$4,465.50。PO# Codes这里看表格里的PO#列，可能S11是PO#？看S11在PO No那里。Style No是各个Style #比如L00359等。Stylen#可能和Style #重复？看用户给的类别里有=Stylen#和Stylen#，可能需要注意。Description是各个颜色描述，比如BLACK等。Amount是每行的Amount，比如$1,832.00等。At是333 Morris street Phillipsburg, New Jersey 08865 USA。by是by (by Sea)。Quantity是数量，比如800等。Quantity (PRS)是总数量1950 PRS。Unit Price @USD是$2.29等。还有PO# Codes，看表格里的PO#列，可能S11是PO#？因为PO No在上方是空的，但表格里PO#列是S11。现在需要逐个对应。
+首先看Company Name：顶部的Shang Soft Guanlian Technology Co., Ltd.，地址是43723 Kathleen Freeway Suite 861 Burchburgh, MO 02700。所以Company Name的bbox是公司名称的文本区域。
 
-现在开始列每个类别：
+然后Address：可能有多个地址，比如发货地址At那里的333 Morris street Phillipsburg, New Jersey 08865 USA，还有工厂地址Factory Address是PSC 847, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242。需要确认每个Address对应的标签。不过用户给的标签里有Address，可能需要看主要的地址，比如公司地址是顶部的，发货地址是At那里的。
 
-1. Company Name：顶部的Shang Soft Guanlian Technology Co., Ltd.，bbox是[22, 6, 922, 32]（大概，看图片顶部）。
-2. Address：43723 Kathleen Freeway Suite 861 Burchburgh, MO 02700，对应公司地址，bbox在Company Name下面。
-3. Email：danie152@roberts.com，在Tel和Fax旁边。
-4. Tel：34-988-53866882 46188096，在顶部联系方式。
-5. Fax：78-388-16353601，同上。
-6. Invoice No：KL09211245A，在Invoice No标签右边。
-7. MID#：CNJIAUNI40JIA，在MID#标签右边。
-8. Factory Name：Shang Soft Guanlian Technology Co., Ltd.，在Factory Name标签右边。
-9. Factory Address：PSC 8457, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242，对应Factory Address标签右边。
-10. Date（发货日期）：October 8, 2021，在Date标签右边。
-11. Date（日期）：October 14, 2021，在发票右上角。
-12. L/C #：By W/T Payment，在L/C #标签右边。
-13. Gross weight：432.900 kg，在Gross Weight标签右边。
-14. Net Weight：399.800 kg，在Net Weight标签右边。
-15. Volume：3.11 M3，在Volume标签右边。
-16. Total # of CTNS：20 CTNS，在Total # of CTNS标签右边。
-17. Total Amount：$4,465.50（看表格底部Total的Amount），或者Total Amount: 1950prs？看“** SAY TOTAL AMOUNT U.S. DOLLARS: **”下面的Total Amount是$4,465.50。
-18. Amount（每行的）：比如$1,832.00等，每个行的Amount列。
-19. At：333 Morris street Phillipsburg, New Jersey 08865 USA，在At标签右边。
-20. by：by (by Sea)，在by标签右边。
-21. Quantity：每个Style #对应的数量，比如800、300等。
-22. Quantity (PRS)：1950 PRS，在Quantity: 1950 PRS那里。
-23. Style No：S11（在PO No: S11那里？看PO No: S11，所以Style No是S11？或者看表格里的Style #是L00359等，而Style No在上方是空的？可能Style No是S11？因为PO No: S11，而表格里PO#列是S11，所以Style No对应S11。
-24. Description：BLACK、OFF WHITE等，每个Style #对应的颜色描述。
-25. PO# Codes：S11（表格里的PO#列是S11）。
-26. =Stylen#：可能和Stylen#重复？看用户给的类别里有=Stylen#和Stylen#，可能需要检查。比如S11是Stylen#？或者看S11在左侧的S11，是Stylen#？因为左侧有S11，然后下面是L00359等，所以S11是Stylen#（可能PO#对应的样式编号？）。
-27. Title：COMMERCIAL INVOICE，是标题。
-28. Stylen#：可能和=Stylen#是同一个？或者看是否有重复。比如S11是Stylen#，而=Stylen#可能也是S11？需要看用户给的类别，用户列了=Stylen#和Stylen#，可能是输入时的重复，或者有区别。但根据发票，S11是PO No，可能Stylen#是S11，而=Stylen#可能也是S11？或者可能=Stylen#是另一个字段，但图中可能S11是Stylen#。
+Invoice No：Invoice No: KL09211245A，所以这个是Invoice No的标签。
 
-现在需要逐一对应，确保每个类别都找到。
+MID#：MID#是CNJIAUNI40JIA，对应MID#标签。
 
-现在开始构建JSON数组：
+Factory Name：Factory Name是Shang Soft Guanlian Technology Co., Ltd.，和公司名一样？看发票里的Factory Name: Shang Soft Guanlian Technology Co., Ltd.，所以这个是Factory Name。
 
-首先，Company Name：
-bbox：[22, 10, 922, 34]（公司名称在顶部，大字体）
-label: "Company Name"
+Factory Address：Factory Address: PSC 847, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242，对应Factory Address标签。
 
-Address：
-公司地址是43723 Kathleen Freeway Suite 861 Burchburgh, MO 02700，在Company Name下面，Tel上面。
-bbox：[437, 12, 622, 28]
-label: "Address"
+Fax：Fax: 78-388-16353601，对应Fax标签。
 
-Email：
-danie152@roberts.com，在Fax旁边。
-bbox：[632, 14, 857, 28]
-label: "Email"
+Tel：Tel: 34-988-53866882 46188096，对应Tel标签。
 
-Tel：
-34-988-53866882 46188096，在顶部联系方式。
-bbox：[332, 14, 464, 28]
-label: "Tel"
+Email：Email: daniel152@roberts.com，对应Email标签。
 
-Fax：
-78-388-16353601，在Email旁边。
-bbox：[632, 16, 777, 28]
-label: "Fax"
+Date：Date: October 8, 2021（发票日期），还有Shipped的日期是October 14, 2021（by后面的日期）。需要看哪个Date。用户给的Date标签，可能有两个？但看问题中的Date，可能指发票日期，即Date: October 8, 2021。
 
-Invoice No：
-KL09211245A，在Invoice No标签右边。
-bbox：[114, 32, 236, 46]
-label: "Invoice No"
+L/C #：L/C #: By W/T Payment，对应L/C #标签。
 
-MID#：
-CNJIAUNI40JIA，在MID#标签右边。
-bbox：[496, 32, 618, 46]
-label: "MID#"
+Style No：S11是Style No？看PO No: Style No: 后面是空？不，看S11是S11，然后下面的Style #列是L00359等，而S11是上面的S11，可能S11是Style No？看发票中S11在PO No: Style No: 旁边？不，看左边的S11是单独的，然后下面的Style #列是L00359等。可能S11是另一个Style No？或者看表格中的Style #是L00359等，而S11是上面的S11，可能S11是Style No的分类？需要再看。原发票中：
 
-Factory Name：
-Shang Soft Guanlian Technology Co., Ltd.，在Factory Name标签右边。
-bbox：[500, 38, 922, 52]
-label: "Factory Name"
+S11
+L00359
+L00456
+L00713
+L02941
+L02992
 
-Factory Address：
-PSC 8457, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242，在Factory Address标签右边。
-bbox：[500, 48, 777, 62]
-label: "Factory Address"
+这些是S11下的款式，所以S11是Style No？或者S11是另一个字段。可能用户给的Style No标签对应S11？或者看表格中的Style #列，比如L00359是Style #，而S11是上面的S11，可能S11是Style No的分组。不过先处理明确的。
 
-Date（发货日期）：
-October 8, 2021，在Date标签右边。
-bbox：[114, 54, 236, 68]
-label: "Date"
+PO# Codes：表格中的PO#列是空？看表格里的PO#// HTS列，可能PO# Codes对应这个列，但图中PO#// HTS下面都是空？或者看PO No: 后面是空？原发票中PO No: 是空的？看PO No: 后面没有内容，而表格中的PO#// HTS列也没有内容，所以可能PO# Codes是空？但需要看。
 
-Date（日期）：
-October 14, 2021，在发票右上角。
-bbox：[756, 300, 864, 318]
-label: "Date"
+Description：表格中的Desiction: 后面是颜色，比如BLACK等，所以Description对应颜色描述，比如BLACK是L00359的Description。
 
-L/C #：
-By W/T Payment，在L/C #标签右边。
-bbox：[114, 170, 236, 186]
-label: "L/C #"
+At：At 333 Morris street Phillipsburg, New Jersey 08865 USA，对应At标签。
 
-Gross weight：
-432.900 kg，在Gross Weight标签右边。
-bbox：[332, 680, 430, 696]
-label: "Gross weight"
+by：by (by Sea) 后面是运输方式，所以by对应(by Sea)。
 
-Net Weight：
-399.800 kg，在Net Weight标签右边。
-bbox：[332, 696, 430, 712]
-label: "Net Weight"
+Total # of CTNS：Total # of CTNS: 20 CTNS，对应Total # of CTNS标签。
 
-Volume：
-3.11 M3，在Volume标签右边。
-bbox：[332, 712, 406, 728]
-label: "volume"
+Total Amount：Total Amount: 1950prs 和 $4,465.50，所以Total Amount对应$4,465.50。
 
-Total # of CTNS：
-20 CTNS，在Total # of CTNS标签右边。
-bbox：[332, 728, 420, 744]
-label: "Total # of CTNS"
+Unit Price USD：Unit Price @USD列是$2.29等，所以Unit Price USD对应$2.29（每个行的单价）。
 
-Total Amount：
-$4,465.50，在表格底部Total的Amount列。
-bbox：[500, 750, 664, 766]
-label: "Total Amount"
+Gross weight：Gross Weight: 432.900 kg，对应Gross weight标签。
 
-Amount（每行的，比如第一行$1,832.00）：
-看表格中的Amount列，比如L00359对应的Amount是$1,832.00。
-bbox：[664, 520, 777, 536]（对应L00359的Amount）
-label: "Amount"
+Net Weight：Net Weight: 399.800 kg，对应Net Weight标签。
 
-At：
-333 Morris street Phillipsburg, New Jersey 08865 USA，在At标签右边。
-bbox：[114, 320, 500, 336]
-label: "At"
+Volume：Volume: 3.11 M3，对应volume标签。
 
-by：
-by (by Sea)，在by标签右边。
-bbox：[332, 320, 420, 336]
-label: "by"
+Quantity：表格中的Quantity (PRS)列是800,300等，所以Quantity对应这些数值，比如800是L00359的Quantity。
 
-Quantity（比如L00359的数量800）：
-在Quantity (PRS)列，L00359对应的数量是800。
-bbox：[440, 520, 500, 536]
-label: "Quantity"
+Quantity (PRS)：和Quantity可能重复？看用户给的标签有Quantity和Quantity (PRS)，可能Quantity是总数量？比如Total Quantity: 1950 PRS，而Quantity (PRS)是每个款式的数量，比如800是L00359的Quantity (PRS)。所以需要区分。
 
-Quantity (PRS)：
-1950 PRS，在Quantity: 1950 PRS那里。
-bbox：[332, 744, 420, 760]
-label: "Quantity (PRS)"
+现在逐个处理：
 
-Style No：
-S11，在PO No: S11那里。
-bbox：[114, 180, 154, 196]
-label: "Style No"
+1. Company Name：顶部的公司名称，bbox是[21, 6, 979, 32]（因为公司名称在最上方，大字体）。
 
-Description（比如BLACK）：
-在Description列，L00359对应的是BLACK。
-bbox：[440, 520, 590, 536]
-label: "Description"
+2. Address：公司地址是43723 Kathleen Freeway Suite 861 Burchburgh, MO 02700，位于公司名称下方，所以Address的bbox是[437, 12, 627, 28]。
 
-PO# Codes：
-S11，在表格里的PO#列。
-bbox：[332, 520, 390, 536]
-label: "PO# Codes"
+3. Amount：Total Amount是$4,465.50，对应Total Amount标签，bbox是表格下方的Total Amount: $4,465.50，即在Total行的Amount列。
 
-=Stylen#：
-S11，可能和Style No是同一个，或者看左侧的S11，是Stylen#？因为左侧有S11，然后下面是L00359等，所以S11是Stylen#（可能PO#对应的样式编号）。
-bbox：[114, 180, 154, 196]（和Style No可能重复？但用户列了=Stylen#和Stylen#，可能需要确认。或者可能=Stylen#是另一个，比如S11是=Stylen#，而Stylen#是其他？但图中可能S11是Stylen#，而=Stylen#也是S11？或者可能用户输入时的笔误，比如=Stylen#是Stylen#。这里可能S11是Stylen#，所以：
+4. At：At 333 Morris street Phillipsburg, New Jersey 08865 USA，对应At标签，bbox是“At 333 Morris street Phillipsburg, New Jersey 08865 USA”这部分。
 
-label: "=Stylen#" 对应S11的bbox。
+5. Company Name：已经处理过，是顶部的公司名。
 
-Title：
-COMMERCIAL INVOICE，是标题。
-bbox：[496, 120, 632, 136]
-label: "Title"
+6. Date：发票日期是Date: October 8, 2021，bbox是“Date: October 8, 2021”。
 
-Stylen#：
-可能和=Stylen#是同一个，或者看是否有其他Stylen#。比如S11是Stylen#，所以：
+7. Description：表格中的Desiction列，比如L00359的Description是BLACK，L00456是OFF WHITE等，所以每个行的Description对应颜色。
 
-bbox：[114, 180, 154, 196]
-label: "Stylen#"
+8. Email：Email: daniel152@roberts.com，bbox是“Email: daniel152@roberts.com”。
 
-现在需要检查所有类别是否都覆盖：
+9. Factory Address：Factory Address: PSC 847, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242，bbox是“Factory Address: PSC 847, Box 5992 APO AE 79097 USNS Hatfield FPO AA 95242”。
 
-用户提供的类别列表：
+10. Factory Name：Factory Name: Shang Soft Guanlian Technology Co., Ltd.，bbox是“Factory Name: Shang Soft Guanlian Technology Co., Ltd.”。
 
-=Stylen#, Address, Amount, At, Company Name, Date, Description, Email, Factory Address, Factory Name, Fax, Gross weight, Invoice No, L/C #, MID#, Net Weight, PO# Codes, Quantity, Quantity (PRS), Style No, Stylen#, Tel, Title, Total # of CTNS, Total Amount, Unit Price USD, by, volume.
+11. Fax：Fax: 78-388-16353601，bbox是“Fax: 78-388-16353601”。
 
-现在检查每个类别：
+12. Gross weight：Gross Weight: 432.900 kg，bbox是“Gross Weight: 432.900 kg”。
 
-- =Stylen#：需要找到，比如S11是=Stylen#？
-- Address：有
-- Amount：有（每行的Amount和Total Amount）
-- At：有
-- Company Name：有
-- Date：有两个Date，都算
-- Description：有
-- Email：有
-- Factory Address：有
-- Factory Name：有
-- Fax：有
-- Gross weight：有
-- Invoice No：有
-- L/C #：有
-- MID#：有
-- Net Weight：有
-- PO# Codes：有（S11在表格PO#列）
-- Quantity：有（每行的数量）
-- Quantity (PRS)：有
-- Style No：有（S11在PO No: S11）
-- Stylen#：有（S11？或者可能Stylen#是其他？比如L00359等是Style #，而Stylen#是S11？）
-- Tel：有
-- Title：COMMERCIAL INVOICE
-- Total # of CTNS：有
-- Total Amount：有
-- Unit Price USD：$2.29等，每个行的Unit Price @USD
-- by：有（by (by Sea)）
-- volume：有（3.11 M3）
+13. Invoice No：Invoice No: KL09211245A，bbox是“Invoice No: KL09211245A”。
 
-现在补充Unit Price USD：
+14. L/C #：L/C #: By W/T Payment，bbox是“L/C #: By W/T Payment”。
 
-比如L00359的Unit Price @USD是$2.29，bbox在表格中的Unit Price列，对应L00359的行。
-bbox：[590, 520, 664, 536]
-label: "Unit Price USD"
+15. MID#：MID#: CNJIAUNI40JIA，bbox是“MID#: CNJIAUNI40JIA”。
 
-现在需要确保每个类别都有对应的条目。现在开始整理所有条目：
+16. Net Weight：Net Weight: 399.800 kg，bbox是“Net Weight: 399.800 kg”。
 
-1. Company Name: [22, 10, 922, 34], "Company Name"
-2. Address: [437, 12, 622, 28], "Address"
-3. Email: [632, 14, 857, 28], "Email"
-4. Tel: [332, 14, 464, 28], "Tel"
-5. Fax: [632, 16, 777, 28], "Fax"
-6. Invoice No: [114, 32, 236, 46], "Invoice No"
-7. MID#: [496, 32, 618, 46], "MID#"
-8. Factory Name: [500, 38, 922, 52], "Factory Name"
-9. Factory Address: [500, 48, 777, 62], "Factory Address"
-10. Date（发货）: [114, 54, 236, 68], "Date"
-11. Date（日期）: [756, 300, 864, 318], "Date"
-12. L/C #: [114, 170, 236, 186], "L/C #"
-13. Gross weight: [332, 680, 430, 696], "Gross weight"
-14. Net Weight: [332, 696, 430, 712], "Net Weight"
-15. Volume: [332, 712, 406, 728], "volume"
-16. Total # of CTNS: [332, 728, 420, 744], "Total # of CTNS"
-17. Total Amount: [500, 750, 664, 766], "Total Amount"
-18. Amount
+17. PO# Codes：表格中的PO#// HTS列，可能对应PO# Codes，但图中该列内容为空？或者看PO No: 后面的内容，PO No: 后面是空，所以可能PO# Codes是空？但需要看是否有内容。或者可能PO# Codes是S11？不，S11是上面的S11，而表格中的PO#// HTS列没有内容，所以可能PO# Codes对应表格中的PO#列，即空。但可能用户指的是PO No，不过标签是PO# Codes，可能需要再检查。
+
+18. Quantity：表格中的Quantity (PRS)列，比如L00359的Quantity是800，L00456是300等，所以Quantity对应这些数值，比如800的bbox是表格中Quantity列的800。
+
+19. Quantity (PRS)：可能和Quantity重复？或者Total Quantity是1950 PRS，对应“Total Quantity: 1950 PRS”。
+
+20. Style No：S11是上面的S11，对应Style No标签，bbox是“S11”。
+
+21. Stylen#：可能没有，或者S11是Style No，而Stylen#可能不存在？看用户给的标签有Stylen#，可能是指Style No的另一种？或者可能S11是Style No，而其他是Style #。可能Stylen#是笔误，或者没有对应内容。暂时先处理明确的。
+
+22. Tel：Tel: 34-988-53866882 46188096，bbox是“Tel: 34-988-53866882 46188096”。
+
+23. Title：可能没有明确的Title，或者公司名称是Title？不，Title可能是指“COMMERCIAL INVOICE”这个标题，所以Title是“COMMERCIAL INVOICE”。
+
+24. Total # of CTNS：Total # of CTNS: 20 CTNS，bbox是“Total # of CTNS: 20 CTNS”。
+
+25. Total Amount：$4,465.50，对应Total Amount标签，bbox是“Total Amount: $4,465.50”。
+
+26. Unit Price USD：$2.29，对应Unit Price @USD列的数值，比如L00359的Unit Price是$2.29，bbox是“$2.29”。
+
+27. by：by (by Sea) 后面的运输方式，bbox是“by (by Sea)”。
+
+28. volume：Volume: 3.11 M3，bbox是“Volume: 3.11 M3”。
+
+现在需要将每个标签对应到具体的bbox。需要注意每个元素的位置，比如：
+
+- Company Name: [21, 6, 979, 32] （公司名称的大标题）
+- Address: [437, 12, 627, 28] （公司地址行）
+- Amount: [459, 707, 540, 723] （Total Amount的$4,465.50，看表格下方的Total行的Amount列）
+- At: [33, 607, 527, 623] （At 333...）
+- Date: [58, 147, 227, 163] （Date: October 8, 2021）
+- Description: 比如L00359的Description是BLACK，对应表格中Desiction列的BLACK，bbox是表格中Desiction列的单元格，比如L00359行的Desiction是BLACK，所以bbox是该单元格。
+- Email: [637, 22, 857, 38] （Email: daniel152@roberts.com）
+- Factory Address: [507, 163, 925, 179] （Factory Address: PSC 847...）
+- Factory Name: [495, 153, 925, 169] （Factory Name: Shang Soft...）
+- Fax: [347, 22, 617, 38] （Fax: 78-388-16353601）
+- Gross weight: [307, 737, 437, 753] （Gross Weight: 432.900 kg）
+- Invoice No: [58, 102, 238, 118] （Invoice No: KL09211245A）
+- L/C #: [33, 337, 257, 353] （L/C #: By W/T Payment）
+- MID#: [495, 132, 637, 148] （MID#: CNJIAUNI40JIA）
+- Net Weight: [307, 753, 437, 769] （Net Weight: 399.800 kg）
+- PO# Codes: 可能表格中的PO#// HTS列，比如L00359行的PO#// HTS是空，所以可能没有内容，或者看PO No: 后面的内容，PO No: 后面是空，所以可能PO# Codes对应空，但需要确认。或者可能PO# Codes是S11？不，S11是Style No。可能PO# Codes在表格中的PO#列，即每个行的PO#，但图中该列是空，所以可能没有值，但标签存在。
+- Quantity: 表格中Quantity (PRS)列的数值，比如L00359的800，bbox是该单元格，比如[427, 667, 490, 683]（假设位置）
+- Quantity (PRS): 可能和Quantity重复，或者Total Quantity是1950 PRS，对应“Total Quantity: 1950 PRS”，bbox是“1950 PRS”所在的位置。
+- Style No: S11，bbox是[58, 227, 82, 243] （S11行）
+- Stylen#: 可能没有，或者S11是Style No，Stylen#可能不存在，暂时忽略或标记无。
+- Tel: [347, 24, 617, 40] （Tel: 34-988-53866882 46188096）
+- Title: “COMMERCIAL INVOICE”，bbox是[445, 112, 695, 130] （标题部分）
+- Total # of CTNS: [307, 769, 437, 785] （Total # of CTNS: 20 CTNS）
+- Total Amount: [459, 707, 540, 723] （Total Amount: $4,465.50）
+- Unit Price USD: $2.29，比如L00359行的Unit Price是$2.29，bbox是该单元格，比如[540, 667, 625, 683]
+- by: [333, 597, 406, 613] （by (by Sea)）
+- volume: [307, 785, 392, 801] （Volume: 3.11 M3）
+
+现在需要将这些整理成JSON数组，每个元素是bbox和label。需要注意有些标签可能没有对应内容，比如Stylen#可能不存在，或者PO# Codes可能没有内容，但需要尽量提取。
+
+现在开始逐个列出：
+
+1. Company Name: bbox是公司名称的区域，即顶部大字体，[21, 6, 979, 32]
+2. Address: 公司地址行，[437, 12, 627, 28]
+3. Amount: 总金额$4,465.50，[459, 707, 540, 723]
+4. At: 发货地址的At部分，[33, 607, 527, 623]
+5. Date: 发票日期October 8, 2021，[58, 147, 227, 163]
+6. Description: 以L00359的BLACK为例，[307, 667, 427, 683]（Desiction列的BLACK）
+7. Email: 邮箱daniel152@roberts.com，[637, 22, 857, 38]
+8. Factory Address: 工厂地址，[507, 163, 925, 179]
+9. Factory Name: 工厂名称，[495, 153, 925, 169]
+10. Fax: 传真号，[347, 22, 617, 38]
+11. Gross weight: 毛重，[307, 737, 437, 753]
+12

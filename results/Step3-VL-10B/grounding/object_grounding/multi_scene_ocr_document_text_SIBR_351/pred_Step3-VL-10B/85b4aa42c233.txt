@@ -1,132 +1,209 @@
-用户现在需要检测图像中的各个指定对象，先逐个看。首先看酒店名称，图里最上面“酒店名称:新宇龙信息网络酒店”，所以酒店名称的bbox。然后Arrival date 抵店时间，对应“Arrival date 抵店时间 2020-11-09 20:53:50”。Departure date 离店时间是“Departure date 离店时间 2020-11-12 07:32:15”。Guest Name 客人姓名是“Guest Name 客人姓名 周志强”。Member No. 会员号是“Member No. 会员号 0”。Res No. 预订号是“Res No. 预订号 603177”。Room No. 房间号是“Room No. 房间号 1313”。Date 日期列，看表格里的日期列，比如11-09等。DESCRIPTION 项目是“标准房租【1002】”这些项目。DEBIT 消费是每行的DEBIT列数值，比如558.00等。CREDIT 付款是CREDIT列的0.00。TOTAL DEBIT消费总计是“TOTAL DEBIT消费总计 1674.00”。TOTAL CREDIT付款总计是“TOTAL CREDIT付款总计 0.00”。BALANCE 余额是“BALANCE 余额 1674.00”。住宿详单-第2行-DEBIT 消费，看表格里的第二行（11-10那行）的DEBIT列，数值558.00。标题可能是指最上面的“不运庄酒店 The Mulian Hotel”？不过看用户给的类别里有标题，需要确认。现在逐个对应：
+用户现在需要从图片中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-1. 酒店名称：文字“酒店名称:新宇龙信息网络酒店”，位置在上方。
-2. Arrival date 抵店时间：“Arrival date 抵店时间 2020-11-09 20:53:50”
-3. Departure date 离店时间：“Departure date 离店时间 2020-11-12 07:32:15”
-4. Guest Name 客人姓名：“Guest Name 客人姓名 周志强”
-5. Member No. 会员号：“Member No. 会员号 0”
-6. Res No. 预订号：“Res No. 预订号 603177”
-7. Room No. 房间号：“Room No. 房间号 1313”
-8. Date 日期：表格中的“Date 日期”列，比如11-09、11-10、11-11这些行的日期。
-9. DESCRIPTION 项目：表格中的“DESCRIPTION 项目”列，内容是“标准房租【1002】”等。
-10. DEBIT 消费：表格中“DEBIT 消费”列，比如11-09行的558.00，11-10行的558.00，11-11行的558.00，以及总计的1674.00。
-11. CREDIT 付款：表格中“CREDIT 付款”列，比如各天的0.00，总计的0.00。
-12. TOTAL DEBIT消费总计：“TOTAL DEBIT消费总计 1674.00”
-13. TOTAL CREDIT付款总计：“TOTAL CREDIT付款总计 0.00”
-14. BALANCE 余额：“BALANCE 余额 1674.00”
-15. 住宿详单-第2行-DEBIT 消费：表格中第2行（11-10那行）的DEBIT列，数值558.00。
-16. 标题：最上方的“不运庄酒店 The Mulian Hotel”？看图片最上面有“不运庄酒店 The Mulian Hotel”，所以标题是这个。
+首先看酒店名称：图中左上角“酒店名称: 新宇龙信息网络酒店”，所以酒店名称的bbox要覆盖这个区域。
 
-现在需要确定每个的bbox。先看图像中的元素位置：
+然后标题，可能是指文档的标题？不过图中顶部有“不笼驻酒店 The Mulian Hotel”？不对，看图片最上方是“不笼驻酒店 The Mulian Hotel”？不，原图片顶部是“不笼驻酒店”？不对，看用户提供的图片，顶部是“不笼驻酒店 The Mulian Hotel”？不，看图片里的文字，第一行是“不笼驻酒店 The Mulian Hotel”？不对，看用户给的图片，第一行是“不笼驻酒店”？不，看图片中的文字，最上方是“不笼驻酒店 The Mulian Hotel”？可能标题是酒店的名称部分？或者标题是整个文档的标题？不过先看各个字段。
 
-- 酒店名称：在“酒店名称:新宇龙信息网络酒店”，对应文字区域。
-- Arrival date 抵店时间：在右上角，Arrival date 抵店时间 2020-11-09 20:53:50。
-- Departure date 离店时间：在Arrival date下面，Departure date 离店时间 2020-11-12 07:32:15。
-- Guest Name 客人姓名：在Room No.右边，Guest Name 客人姓名 周志强。
-- Member No. 会员号：在Guest Name下面，Member No. 会员号 0。
-- Res No. 预订号：在Member No.右边，Res No. 预订号 603177。
-- Room No. 房间号：在左上角，Room No. 房间号 1313。
-- Date 日期：表格的表头“Date 日期”。
-- DESCRIPTION 项目：表格的表头“DESCRIPTION 项目”。
-- DEBIT 消费：表格的表头“DEBIT 消费”。
-- CREDIT 付款：表格的表头“CREDIT 付款”。
-- TOTAL DEBIT消费总计：在表格下方，“TOTAL DEBIT消费总计 1674.00”。
-- TOTAL CREDIT付款总计：在TOTAL DEBIT下面，“TOTAL CREDIT付款总计 0.00”。
-- BALANCE 余额：在TOTAL CREDIT下面，“BALANCE 余额 1674.00”。
-- 住宿详单-第2行-DEBIT 消费：表格中第二行（11-10）的DEBIT列，数值558.00。
-- 标题：最上方的“不运庄酒店 The Mulian Hotel”。
+现在逐个处理：
 
-现在需要为每个类别生成bbox。注意图像中的坐标是相对的，需要看每个元素的位置。
+1. Arrival date 抵店时间：图中Arrival date 对应的值是2020-11-09 20:53:50。看位置在右上角，Arrival date 抵店时间这一行。
 
-先处理标题：“不运庄酒店 The Mulian Hotel”在图像最上方，所以bbox是[33, 0, 293, 37]左右（因为图片里最上面的文字）。
+2. BALANCE 余额：图中BALANCE 余额对应的是1674.00，在总计部分下面。
 
-酒店名称：“酒店名称:新宇龙信息网络酒店”在标题下面，所以bbox是[25, 25, 975, 45]左右。
+3. CREDIT 付款：图中CREDIT 付款列，比如每行的CREDIT列，还有TOTAL CREDIT付款总计是0.00。需要看对应的标签是CREDIT 付款，可能指的是列的标题或者总计？不过看用户要求的类别是CREDIT 付款，对应图中的CREDIT列的标题，或者总计？看用户给的类别列表里有CREDIT 付款，TOTAL CREDIT付款总计。所以CREDIT 付款是列的标题，而TOTAL CREDIT付款总计是下面的总计行。
 
-Arrival date 抵店时间：在右上角，Arrival date 抵店时间 2020-11-09 20:53:50，对应bbox是[667, 37, 975, 62]。
+4. DEBIT 消费：列的标题，以及每行的DEBIT列，还有TOTAL DEBIT消费总计是1674.00。
 
-Departure date 离店时间：在Arrival date下面，Departure date 离店时间 2020-11-12 07:32:15，bbox是[667, 62, 975, 87]。
+5. DESCRIPTION 项目：列的标题，比如“标准房租【1002】”是项目内容。
 
-Guest Name 客人姓名：在Room No.右边，Guest Name 客人姓名 周志强，Room No.是左上方，Guest Name在中间上方，所以bbox是[400, 37, 667, 62]（因为Room No.在左，Guest Name在中，Arrival在右，所以Guest Name的区域是中间列）。
+6. Date 日期：列的标题，比如11-09等日期。
 
-Member No. 会员号：在Guest Name下面，Member No. 会员号 0，所以bbox是[25, 87, 400, 112]（因为Member No.在左列，Res No.在右列，对应下面的行）。
+7. Departure date 离店时间：图中Departure date 离店时间是2020-11-12 07:32:15。
 
-Res No. 预订号：在Member No.右边，Res No. 预订号 603177，所以bbox是[400, 87, 667, 112]。
+8. Guest Name 客人姓名：周志强，在Guest Name 对应的位置。
 
-Room No. 房间号：在左上方，Room No. 房间号 1313，bbox是[25, 37, 400, 62]。
+9. Member No. 会员号：0，在Member No. 对应的位置。
 
-Date 日期：表格的表头，第一行的Date列，对应“Date 日期”文字，bbox是[25, 137, 150, 162]（因为表格的表头行，Date是第一列的表头）。
+10. Res No. 预订号：603177，在Res No. 对应的位置。
 
-DESCRIPTION 项目：表格的表头，第二列，DESCRIPTION 项目，bbox是[162, 137, 400, 162]。
+11. Room No. 房间号：1313，在Room No. 对应的位置。
 
-DEBIT 消费：表格的表头，第三列，DEBIT 消费，bbox是[412, 137, 637, 162]。
+12. TOTAL CREDIT付款总计：图中TOTAL CREDIT付款 总计是0.00。
 
-CREDIT 付款：表格的表头，第四列，CREDIT 付款，bbox是[647, 137, 872, 162]。
+13. TOTAL DEBIT消费总计：图中TOTAL DEBIT消费 总计是1674.00。
 
-TOTAL DEBIT消费总计：在表格下方，TOTAL DEBIT消费总计 1674.00，bbox是[412, 297, 872, 322]（因为TOTAL DEBIT在DEBIT列下方，总计行）。
+14. 住宿详单-第2行-DEBIT 消费：看日期列，第2行是11-10，对应的DEBIT消费是558.00。因为日期行是11-09（第1行）、11-10（第2行）、11-11（第3行）。所以第2行的DEBIT是558.00。
 
-TOTAL CREDIT付款总计：在TOTAL DEBIT下面，TOTAL CREDIT付款总计 0.00，bbox是[412, 322, 872, 347]。
+15. 标题：可能是指文档的标题，比如最上方的“不笼驻酒店 The Mulian Hotel”？看图片最上方的文字，第一行是“不笼驻酒店 The Mulian Hotel”，所以标题是这个。
 
-BALANCE 余额：在TOTAL CREDIT下面，BALANCE 余额 1674.00，bbox是[412, 347, 872, 372]。
+16. 酒店名称：图中“酒店名称: 新宇龙信息网络酒店”，所以酒店名称是这个内容。
 
-住宿详单-第2行-DEBIT 消费：表格中第二行（11-10）的DEBIT列，数值558.00。表格的行是11-09（第一行）、11-10（第二行）、11-11（第三行）。所以第二行的DEBIT列是11-10对应的DEBIT值，即558.00。该单元格的bbox是[412, 167, 637, 192]（因为11-10行的DEBIT列）。
+现在需要为每个类别找到对应的bbox。需要看每个元素在图中的位置。
 
-现在需要确认每个类别的存在，然后整理成JSON数组。注意有些类别可能重复，比如DEBIT 消费在多个地方，但需要按类别列出每个实例？不，用户要求是“detect all objects matching these categories”，每个类别可能有多个实例？但看用户给的类别列表，比如“住宿详单-第2行-DEBIT 消费”是特定的，而“DEBIT 消费”是表头和各列的数值。但需要看用户给的类别中的每个标签，每个标签对应一个对象。比如“DEBIT 消费”作为表头是一个对象，各天的DEBIT数值是该类别下的不同对象？但用户可能希望每个出现的该类别元素都检测。不过可能更简单的是，每个类别在文档中出现的所有实例都列出。但需要仔细看用户的要求：“For each detected object, provide: 1. bbox_2d... 2. label: one of (category_name)”。所以每个匹配类别的对象都要列，不管重复。
+现在开始逐个分析：
 
-现在逐一处理：
+- 酒店名称：文字是“酒店名称: 新宇龙信息网络酒店”，位置在左上方，所以bbox大概是[25, 24, 225, 42]左右？需要看图片中的实际位置。图中第一行是“不笼驻酒店 The Mulian Hotel”，然后下一行是“酒店名称: 新宇龙信息网络酒店”。所以酒店名称的行是“酒店名称: 新宇龙信息网络酒店”，所以bbox是包含这行的区域。
 
-1. 标题：“不运庄酒店 The Mulian Hotel” → label: 标题
-2. 酒店名称：“酒店名称:新宇龙信息网络酒店” → label: 酒店名称
-3. Arrival date 抵店时间 → label: Arrival date 抵店时间
-4. Departure date 离店时间 → label: Departure date 离店时间
-5. Guest Name 客人姓名 → label: Guest Name 客人姓名
-6. Member No. 会员号 → label: Member No. 会员号
-7. Res No. 预订号 → label: Res No. 预订号
-8. Room No. 房间号 → label: Room No. 房间号
-9. Date 日期（表头）→ label: Date 日期
-10. DESCRIPTION 项目（表头）→ label: DESCRIPTION 项目
-11. DEBIT 消费（表头）→ label: DEBIT 消费
-12. CREDIT 付款（表头）→ label: CREDIT 付款
-13. TOTAL DEBIT消费总计 → label: TOTAL DEBIT消费总计
-14. TOTAL CREDIT付款总计 → label: TOTAL CREDIT付款总计
-15. BALANCE 余额 → label: BALANCE 余额
-16. 住宿详单-第2行-DEBIT 消费（11-10行的DEBIT列）→ label: 住宿详单-第2行-DEBIT 消费
-另外，DEBIT 消费在各天的行（11-09、11-10、11-11）的数值也是DEBIT 消费类别，所以需要检查用户给的类别中是否有“DEBIT 消费”作为类别，是的，用户给的类别有“DEBIT 消费”，所以每个DEBIT列的数值都是该类别。比如11-09行的DEBIT 558.00，11-10行的558.00，11-11行的558.00，以及总计的1674.00。但用户给的类别中“DEBIT 消费”是一个类别，所以这些都要算。但可能用户希望的是每个出现的该类别元素，所以需要列出所有DEBIT 消费的实例。不过可能我之前误解了，用户给的类别列表中的“DEBIT 消费”是表头，而“住宿详单-第2行-DEBIT 消费”是特定行的DEBIT。现在需要明确每个类别：
+- 标题：最上方的“不笼驻酒店 The Mulian Hotel”，所以标题是这个，bbox是图片最顶部的文字。
 
-用户提供的类别列表：
+- Arrival date 抵店时间：在右上角，Arrival date 抵店时间 2020-11-09 20:53:50，所以对应的bbox是Arrival date 所在的单元格，即右侧的Arrival date 到抵店时间的内容。
 
-Arrival date 抵店时间, BALANCE 余额, CREDIT 付款, DEBIT 消费, DESCRIPTION 项目, Date 日期, Departure date 离店时间, Guest Name 客人姓名, Member No. 会员号, Res No. 预订号, Room No. 房间号, TOTAL CREDIT付款总计, TOTAL DEBIT消费总计, 住宿详单-第2行-DEBIT 消费, 标题, 酒店名称
+- Departure date 离店时间：在Arrival date 下方，Departure date 离店时间 2020-11-12 07:32:15。
 
-现在逐个处理每个类别在文档中的出现：
+- Guest Name 客人姓名：在中间上方，Guest Name 客人姓名 周志强。
 
-- 标题：存在，最上方的酒店名称上方的“不运庄酒店 The Mulian Hotel”
-- 酒店名称：存在，“新宇龙信息网络酒店”
-- Arrival date 抵店时间：存在，“2020-11-09 20:53:50”对应Arrival date
-- Departure date 离店时间：存在，“2020-11-12 07:32:15”对应Departure date
-- Guest Name 客人姓名：存在，“周志强”
-- Member No. 会员号：存在，“0”
-- Res No. 预订号：存在，“603177”
-- Room No. 房间号：存在，“1313”
-- Date 日期：存在，表格中的“Date 日期”列（表头）
-- DESCRIPTION 项目：存在，表格中的“DESCRIPTION 项目”列（表头）
-- DEBIT 消费：存在，表格中的“DEBIT 消费”列（表头），以及11-09、11-10、11-11行的DEBIT数值，还有总计的DEBIT数值。但用户可能需要所有DEBIT 消费的实例，不过可能表头是一个，各数值是多个。但需要看用户需求，可能每个DEBIT 消费的单元格都是该类别。比如11-09行的DEBIT 558.00是一个DEBIT 消费对象，11-10行的也是，11-11行的也是，总计的1674.00也是。但用户给的类别中“DEBIT 消费”是其中一个类别，所以这些都要列出。
-- CREDIT 付款：存在，表格中的“CREDIT 付款”列（表头），以及各天的CREDIT数值（0.00），总计的CREDIT数值（0.00）。同样，每个CREDIT的单元格都是该类别。
-- TOTAL DEBIT消费总计：存在，“1674.00”
-- TOTAL CREDIT付款总计：存在，“0.00”
-- BALANCE 余额：存在，“1674.00”
-- 住宿详单-第2行-DEBIT 消费：存在，11-10行的DEBIT列（因为11-09是第1行，11-10是第2行，11-11是第3行）
-- 另外，用户给的类别中还有“住宿详单-第2行-DEBIT 消费”，这是特定的，所以需要确认第2行是哪一行。表格中的行是：
+- Room No. 房间号：在左上方，Room No. 房间号 1313。
 
-第一行（11-09）：标准房租【1002】，DEBIT 558.00
+- Member No. 会员号：在Room No. 下方，Member No. 会员号 0。
 
-第二行（11-10）：标准房租【1002】，DEBIT 558.00
+- Res No. 预订号：在Member No. 右侧，Res No. 预订号 603177。
 
-第三行（11-11）：标准房租【1002】，DEBIT 558.00
+- Date 日期：列标题，在表格的Date列，比如11-09等。
 
-所以第2行是11-10的行，其DEBIT列的数值是558.00，所以这个对象是“住宿详单-第2行-DEBIT 消费”，对应这个单元格。
+- DESCRIPTION 项目：列标题，比如“标准房租【1002】”是项目内容。
 
-现在需要为每个类别生成对应的bbox，可能有些类别有多个实例，比如DEBIT 消费有多个，CREDIT 付款有多个，Date 日期是表头，DESCRIPTION 项目是表头等。
+- REFERENCE 备注：列标题，可能图中有这个列，但用户没要求，不过用户要求的类别里没有这个，所以不管。
 
-现在开始整理每个对象：
+- DEBIT 消费：列标题，每行的DEBIT列数值，比如11-09的DEBIT是558.00，11-10是558.00，11-11是558.00，总计1674.00。
 
-1. 标题：“不运庄酒店 The Mulian Hotel” → bbox大概在[35, 0, 290, 35]（因为图片最上方）
-2. 酒店名称：“酒店名称:新宇龙信息网络酒店” → bbox[25, 27, 9
+- CREDIT 付款：列标题，每行的CREDIT列数值都是0.00，总计0.00。
+
+- TOTAL DEBIT消费总计：在表格下方，TOTAL DEBIT消费 总计 1674.00。
+
+- TOTAL CREDIT付款总计：在TOTAL DEBIT下面，TOTAL CREDIT付款 总计 0.00。
+
+- BALANCE 余额：在TOTAL CREDIT下面，BALANCE 余额 1674.00。
+
+- 住宿详单-第2行-DEBIT 消费：第2行是日期11-10，对应的DEBIT列数值是558.00。需要确定哪一行是第2行。看表格中的行：
+
+第一行（日期11-09）是第1行；
+
+第二行（日期11-10）是第2行；
+
+第三行（日期11-11）是第3行；
+
+所以第2行的DEBIT消费是558.00，对应的是11-10那一行的DEBIT列。
+
+现在需要为每个类别生成对应的bbox和label。
+
+现在开始整理每个条目：
+
+1. 酒店名称：文字“酒店名称: 新宇龙信息网络酒店”，bbox是该行的区域。看图片中，酒店名称在第二行（最上面是酒店logo，然后是酒店名称）。所以bbox大概是[25, 26, 220, 44]（假设坐标是图片内的相对位置，需要估计）。
+
+2. 标题：最上方的“不笼驻酒店 The Mulian Hotel”，bbox是[25, 10, 225, 30]。
+
+3. Arrival date 抵店时间：内容是“Arrival date 抵店时间 2020-11-09 20:53:50”，对应的bbox是右侧的Arrival date 到抵店时间的单元格，比如在图中右上角，Arrival date 所在的行，所以bbox是[660, 26, 925, 44]（大概）。
+
+4. Departure date 离店时间：“Departure date 离店时间 2020-11-12 07:32:15”，在Arrival date 下方，所以bbox是[660, 46, 925, 64]。
+
+5. Guest Name 客人姓名：“Guest Name 客人姓名 周志强”，在中间上方，对应bbox是[330, 26, 595, 44]。
+
+6. Room No. 房间号：“Room No. 房间号 1313”，在左上方，bbox是[25, 46, 330, 64]。
+
+7. Member No. 会员号：“Member No. 会员号 0”，在Room No. 下方，bbox是[25, 66, 330, 84]。
+
+8. Res No. 预订号：“Res No. 预订号 603177”，在Member No. 右侧，bbox是[330, 66, 595, 84]。
+
+9. Date 日期：列标题，在表格的Date列，比如表头的Date，bbox是[100, 120, 150, 140]（表格的表头行，Date列）。
+
+10. DESCRIPTION 项目：列标题，表头的DESCRIPTION，bbox是[250, 120, 400, 140]。
+
+11. DEBIT 消费：列标题，表头的DEBIT，bbox是[500, 120, 600, 140]；另外每行的DEBIT数值，比如11-09的DEBIT是558.00，对应bbox是[500, 140, 600, 160]（第一行数据的DEBIT列）。
+
+12. CREDIT 付款：列标题，表头的CREDIT，bbox是[650, 120, 750, 140]；每行的CREDIT数值都是0.00，比如第一行数据的CREDIT列是[650, 140, 750, 160]。
+
+13. TOTAL DEBIT消费总计：“TOTAL DEBIT消费 总计 1674.00”，在表格下方，bbox是[450, 280, 650, 300]（大概位置）。
+
+14. TOTAL CREDIT付款总计：“TOTAL CREDIT付款 总计 0.00”，在TOTAL DEBIT下面，bbox是[450, 300, 650, 320]。
+
+15. BALANCE 余额：“BALANCE 余额 1674.00”，在TOTAL CREDIT下面，bbox是[450, 320, 650, 340]。
+
+16. 住宿详单-第2行-DEBIT 消费：第2行是日期11-10，对应的DEBIT列数值是558.00。看表格中第二行（日期11-10）的DEBIT列，bbox是[500, 180, 600, 200]（假设每行的高度，第一行11-09是140-160，第二行11-10是160-180，第三行11-11是180-200？需要看行的间隔。或者看表格中的行，11-09是第一行数据，11-10是第二行，所以第二行的DEBIT列是558.00，对应bbox是该单元格的位置。
+
+现在需要将每个类别对应到具体的bbox和label。需要注意的是，有些类别是列标题，有些是具体数值。比如“住宿详单-第2行-DEBIT 消费”是具体某一行的DEBIT数值，而“DEBIT 消费”是列标题。
+
+现在开始列出所有需要的类别，然后对应：
+
+类别列表：
+
+- Arrival date 抵店时间
+
+- BALANCE 余额
+
+- CREDIT 付款
+
+- DEBIT 消费
+
+- DESCRIPTION 项目
+
+- Date 日期
+
+- Departure date 离店时间
+
+- Guest Name 客人姓名
+
+- Member No. 会员号
+
+- Res No. 预订号
+
+- Room No. 房间号
+
+- TOTAL CREDIT付款总计
+
+- TOTAL DEBIT消费总计
+
+- 住宿详单-第2行-DEBIT 消费
+
+- 标题
+
+- 酒店名称
+
+现在逐个处理：
+
+1. 标题：最上方的“不笼驻酒店 The Mulian Hotel”，bbox是图片顶部的文字，比如[25, 8, 225, 30]（假设图片的坐标，x从左到右，y从上到下）。
+
+2. 酒店名称：“酒店名称: 新宇龙信息网络酒店”，bbox是[25, 28, 225, 48]。
+
+3. Room No. 房间号：“Room No. 房间号 1313”，bbox是[25, 50, 330, 70]。
+
+4. Guest Name 客人姓名：“Guest Name 客人姓名 周志强”，bbox是[335, 50, 595, 70]。
+
+5. Member No. 会员号：“Member No. 会员号 0”，bbox是[25, 72, 330, 92]。
+
+6. Res No. 预订号：“Res No. 预订号 603177”，bbox是[335, 72, 595, 92]。
+
+7. Arrival date 抵店时间：“Arrival date 抵店时间 2020-11-09 20:53:50”，bbox是[660, 50, 925, 70]。
+
+8. Departure date 离店时间：“Departure date 离店时间 2020-11-12 07:32:15”，bbox是[660, 72, 925, 92]。
+
+9. Date 日期：表格的Date列标题，比如在表头行，Date列的标题，bbox是[100, 120, 150, 140]（表头的Date）。
+
+10. DESCRIPTION 项目：表头的DESCRIPTION列标题，bbox是[250, 120, 400, 140]。
+
+11. DEBIT 消费：表头的DEBIT列标题，bbox是[500, 120, 600, 140]；另外，每行的DEBIT数值，比如11-09的DEBIT是558.00，对应bbox是[500, 140, 600, 160]（第一行数据的DEBIT）。
+
+12. CREDIT 付款：表头的CREDIT列标题，bbox是[650, 120, 750, 140]；每行的CREDIT数值（都是0.00），比如第一行数据的CREDIT是[650, 140, 750, 160]。
+
+13. TOTAL DEBIT消费总计：“TOTAL DEBIT消费 总计 1674.00”，在表格下方，bbox是[450, 280, 650, 300]（假设位置）。
+
+14. TOTAL CREDIT付款总计：“TOTAL CREDIT付款 总计 0.00”，bbox是[450, 300, 650, 320]。
+
+15. BALANCE 余额：“BALANCE 余额 1674.00”，bbox是[450, 320, 650, 340]。
+
+16. 住宿详单-第2行-DEBIT 消费：第2行是日期11-10，对应的DEBIT列数值是558.00。看表格中第二行（日期11-10）的DEBIT列，该行的DEBIT是558.00，所以bbox是[500, 180, 600, 200]（假设第二行数据的DEBIT列位置）。
+
+现在需要确认每个类别的对应。例如，“住宿详单-第2行-DEBIT 消费”对应的是日期11-10那一行的DEBIT列，数值是558.00。而“DEBIT 消费”是列标题，不是具体数值。所以要区分。
+
+现在将所有类别整理成JSON数组，每个元素包含bbox和label。
+
+需要注意的是，bbox的坐标是相对图片的，需要估计每个元素的位置。由于图片是实际的，可能需要更准确的估计，但这里只能大致估计。
+
+现在开始编写每个条目：
+
+1. 标题：label是“标题”，bbox是[25, 8, 225, 30]
+
+2. 酒店名称：label是“酒店名称”，bbox是[25, 28, 225, 48]
+
+3. Room No. 房间号：label是“Room No. 房间号”，bbox是[25, 50, 330, 70]
+
+4. Guest Name 客

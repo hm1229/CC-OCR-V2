@@ -1,6 +1,54 @@
-[
-    {"bbox_2d": [62, 77, 920, 98], "label": "company"},
-    {"bbox_2d": [62, 98, 920, 117], "label": "address"},
-    {"bbox_2d": [62, 190, 920, 209], "label": "date"},
-    {"bbox_2d": [165, 330, 920, 349], "label": "total"}
-]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The company name is "Segi Cash & Carry Sdn. Bhd.(317041-W)". Let's check the text.
+- Address: The address is "Pt17920 Sek U9, Shah Alam".
+- Date: The date is "12 Mar 2018 08:51am".
+- Total: The total amount is "145.10" (from "Total Incl. GST:RM 145.10" and also the "Master xxxxxxxxxx0000: 145.10" and the served by line has 145-10 which matches).
+
+Now, find the bounding boxes for each.
+
+Company: The line starts with "Segi Cash & Carry Sdn. Bhd.(317041-W)". Let's check the coordinates.
+
+Address: The next line is "Pt17920 Sek U9, Shah Alam".
+
+Date: The "Date :" line is "12 Mar 2018 08:51am".
+
+Total: The total is in the "Total Incl. GST:RM 145.10" line, and also the amount paid (145-10) but the total amount is 145.10.
+
+Let's map each:
+
+1. Company: "Segi Cash & Carry Sdn. Bhd.(317041-W)" – find its bounding box.
+2. Address: "Pt17920 Sek U9, Shah Alam" – next line.
+3. Date: "12 Mar 2018 08:51am" – under Date :.
+4. Total: "145.10" – from Total Incl. GST.
+
+Now, check the positions.
+
+For the company, the text is in the upper part. Let's check the coordinates.
+
+Also, the "Total Incl. GST:RM 145.10" is a key line.
+
+Let's list each entry:
+
+- Company: [x1, y1, x2, y2] around the company name line.
+- Address: the line with Pt17920...
+- Date: the line with Date :...
+- Total: the line with Total Incl. GST:RM 145.10.
+
+Now, let's extract the bounding boxes.
+
+First, company: The text "Segi Cash & Carry Sdn. Bhd.(317041-W)" is in the top section. Let's check the image.
+
+The address is "Pt17920 Sek U9, Shah Alam" – next line.
+
+Date: "12 Mar 2018 08:51am" – under Date :.
+
+Total: The total amount is 145.10, which is in the "Total Incl. GST:RM 145.10" line.
+
+Also, the "Master xxxxxxxxxx0000: 145.10" confirms the total.
+
+Now, let's structure the JSON.
+</think>
+[{"bbox_2d": [69, 64, 925, 87], "label": "company"}, {"bbox_2d": [104, 87, 646, 107], "label": "address"}, {"bbox_2d": [69, 197, 925, 217], "label": "date"}, {"bbox_2d": [325, 337, 925, 357], "label": "total"}]

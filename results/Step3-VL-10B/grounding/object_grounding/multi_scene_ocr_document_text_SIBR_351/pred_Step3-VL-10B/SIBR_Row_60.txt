@@ -1,0 +1,145 @@
+用户现在需要从销售合同里提取指定类别的对象，每个对象要带bbox和label。首先得逐个分析每个类别在图中的位置。
+
+首先看Company Name：顶部的Huilai Computer Technology Co., Ltd. 是公司名，还有Buyer里的Huilai Computer Technology Co., Ltd. 也是。不过先找主要的，顶部的公司名。然后Address：顶部的4576 Greene Turnpike Apt. 380 Gonzalezview, AR 47894，还有Buyer的地址Unit 4274 Box 8478 DPO AP 96641 USNS Lee FPO AP 20517，Supplier的地址PSC 3532, Box 3004 APO AA 46931 USS Waters FPO AP 93369 USNV Stafford FPO AP 57569。需要把所有地址都找出来吗？看类别是Address，所以每个地址都要列。
+
+Contract No：4095820-1。
+
+Date：2022-7-13。
+
+Email：jessica06@cummings.com（Buyer的Email）。
+
+FAX：有多个FAX，比如顶部的FAX:+1092589866513，Supplier的FAX:+0126836581599，还有Buyer的TEL是+01n02083256（注意TEL和Tel可能重复？看类别里有TEL和Tel，可能TEL是Buyer的Tel，Tel可能其他？不过先看每个出现的。
+
+HS Code：8507600090。
+
+Item No：321001730。
+
+Net Weight(KG)：6440。
+
+PO.NO：4095820（在表格里的PO.NO列对应的是4095820）。
+
+Product Name：Rechargeable Lithium ion Cell, Model INR18650-25PG。
+
+Quantity：140000。
+
+Unit price(USD)：US$1.780。
+
+Title：SALES CONTRACT。
+
+现在逐个定位：
+
+1. Company Name（顶部）：Huilai Computer Technology Co., Ltd. 的bbox是顶部大标题，坐标大概是[133, 12, 866, 47]左右？看图片里的第一行文字。
+
+然后Buyer的Company Name也是Huilai Computer Technology Co., Ltd.，所以可能有两个Company Name？但类别是Company Name，所以需要确认。不过可能主要的是顶部的公司名，作为公司信息。
+
+Address：顶部的地址是4576 Greene Turnpike Apt. 380 Gonzalezview, AR 47894，对应bbox是[117, 47, 882, 68]左右。然后Buyer的地址是Unit 4274 Box 8478 DPO AP 96641 USNS Lee FPO AP 20517，对应位置在Buyer下方，bbox大概是[112, 202, 464, 247]。Supplier的地址是PSC 3532, Box 3004 APO AA 46931 USS Waters FPO AP 93369 USNV Stafford FPO AP 57569，对应Supplier下方，bbox是[692, 202, 957, 267]。
+
+Contract No：4095820-1，位置在Contract No: 右边，bbox是[410, 152, 496, 169]。
+
+Date：2022-7-13，在Date: 右边，bbox是[728, 152, 837, 169]。
+
+Email：jessica06@cummings.com，在Buyer的Email: 右边，bbox是[272, 267, 477, 284]。
+
+FAX：顶部的FAX:+1092589866513，对应TEL右边的FAX，bbox是[320, 47, 666, 68]。Supplier的FAX:+0126836581599，在Supplier的FAX: 右边，bbox是[692, 302, 957, 319]。还有Buyer的Tel是+01n02083256，属于TEL类别。
+
+TEL：Buyer的Tel:+01n02083256，bbox是[112, 272, 302, 289]。另外顶部的TEL:+6209581195897，属于TEL吗？看类别里有TEL和Tel，可能TEL是顶部的，Tel是Buyer的？需要看类别中的TEL和Tel是两个类别吗？看用户给的类别列表里有TEL和Tel，所以可能区分。比如顶部的TEL是公司（Huilai）的电话，属于TEL；Buyer的Tel是+01n02083256，属于Tel？或者可能重复，需要看。
+
+Title：SALES CONTRACT，大标题，bbox是[333, 227, 666, 262]。
+
+Unit price(USD)：US$1.780，在表格里的Jnit price(US$列，注意可能是Unit price(USD)的笔误，对应单元格是US$1.780，bbox是[602, 447, 692, 464]。
+
+PO.NO：4095820，在表格里的PO.NO列，对应单元格是4095820，bbox是[442, 447, 502, 464]。
+
+Item No：321001730，在表格里的Item No列，对应单元格是321001730，bbox是[292, 447, 352, 464]。
+
+Net Weight(KG)：6440，在表格里的Net Weight(KG)列，对应单元格是6440，bbox是[382, 447, 426, 464]。
+
+Quantity：140000，在表格里的Quantity列，对应单元格是140000，bbox是[472, 447, 526, 464]。
+
+Product Name：Rechargeable Lithium ion Cell, Model INR18650-25PG，在Description of Goods列，对应单元格，bbox是[112, 467, 292, 502]。
+
+Amount(USD)：US$249,200.00，在表格里的Amount (USD)列，对应单元格是US$249,200.00，bbox是[702, 447, 872, 464]。还有Total里的US$249,200.00，也是Amount(USD)。
+
+现在需要把所有类别都列出来，确保每个类别都覆盖。
+
+现在开始整理每个对象：
+
+1. Company Name（顶部）：Huilai Computer Technology Co., Ltd. → bbox [133, 12, 866, 47]，label Company Name
+2. Address（顶部）：4576 Greene Turnpike Apt. 380 Gonzalezview, AR 47894 → bbox [117, 47, 882, 68]，label Address
+3. TEL（顶部）：+6209581195897 → bbox [152, 60, 320, 77]，label TEL
+4. FAX（顶部）：+1092589866513 → bbox [340, 60, 666, 77]，label FAX
+5. Title：SALES CONTRACT → bbox [333, 227, 666, 262]，label Title
+6. Contract No：4095820-1 → bbox [410, 152, 496, 169]，label Contract No
+7. Date：2022-7-13 → bbox [728, 152, 837, 169]，label Date
+8. Buyer Company Name：Huilai Computer Technology Co., Ltd. → bbox [202, 167, 577, 184]，label Company Name（因为Buyer也是该公司，可能重复，但需要确认是否算两个？不过可能用户需要所有出现的，所以保留）
+9. Address（Buyer）：Unit 4274 Box 8478 DPO AP 96641 USNS Lee FPO AP 20517 → bbox [112, 202, 464, 247]，label Address
+10. TEL（Buyer）：+01n02083256 → bbox [112, 272, 302, 289]，label Tel（因为类别里有Tel，可能区分TEL是公司总机，Tel是Buyer的联系）
+11. Email（Buyer）：jessica06@cummings.com → bbox [272, 267, 477, 284]，label Email
+12. Supplier Company Name？不，Supplier是PSC等，但Company Name可能指Huilai是买家，供应商是另一个，但类别是Company Name，可能Huilai是Company Name，供应商的公司名可能不是Huilai，所以Supplier的地址里的PSC等是地址，不是Company Name。所以Company Name主要是Huilai的两个出现（顶部和Buyer）。
+13. Supplier Address：PSC 3532, Box 3004 APO AA 46931 USS Waters FPO AP 93369 USNV Stafford FPO AP 57569 → bbox [692, 202, 957, 267]，label Address
+14. FAX（Supplier）：+0126836581599 → bbox [692, 302, 957, 319]，label FAX
+15. TEL（Supplier）：+2910789698155 → bbox [692, 292, 957, 309]，label TEL（因为Supplier的TEL是+2910789698155，属于TEL类别）
+16. HS Code：8507600090 → bbox [72, 447, 232, 464]，label HS Code（在表格上方的HS Code: 后面）
+17. Item No：321001730 → bbox [292, 447, 352, 464]，label Item No
+18. Net Weight(KG)：6440 → bbox [382, 447, 426, 464]，label Net Weight(KG)
+19. Quantity：140000 → bbox [472, 447, 526, 464]，label Quantity
+20. PO.NO：4095820 → bbox [442, 447, 502, 464]，label PO.NO
+21. Product Name：Rechargeable Lithium ion Cell, Model INR18650-25PG → bbox [112, 467, 292, 502]，label Product Name
+22. Unit price(USD)：US$1.780 → bbox [602, 447, 692, 464]，label Unit price(USD)
+23. Amount(USD)：US$249,200.00（表格里的）→ bbox [702, 447, 872, 464]，label Amount(USD)
+24. Amount(USD)（Total里的）：US$249,200.00 → bbox [702, 667, 872, 684]，label Amount(USD)
+25. Total里的Quantity：140000 PCS → bbox [472, 667, 532, 684]，label Quantity（因为Total行的Quantity是140000 PCS，属于Quantity类别？看Total行的列，Quantity是140000，单位PCS，所以Quantity是140000，这里可能重复，但需要看。不过Total行的Quantity是140000，和之前的Quantity一致，所以可能算一个？或者Total行的Quantity是汇总，所以需要包含。）
+
+现在需要检查每个类别是否都覆盖：
+
+Address：顶部地址、Buyer地址、Supplier地址 → 三个Address。
+
+Amount(USD)：表格中的Amount和Total中的Amount → 两个。
+
+Company Name：顶部Huilai，Buyer的Huilai → 两个。
+
+Contract No：一个。
+
+Date：一个。
+
+Email：一个（Buyer的）。
+
+FAX：顶部FAX、Supplier FAX → 两个。
+
+HS Code：一个。
+
+Item No：一个。
+
+Net Weight(KG)：一个（表格中的6440，Total里没有Net Weight，因为是汇总，所以Net Weight只有一个）。
+
+PO.NO：一个（表格中的4095820）。
+
+Product Name：一个。
+
+Quantity：表格中的140000，Total中的140000 PCS → 两个？但Quantity是数量，Total里的数量是汇总，所以算一个？或者都算，因为是不同的位置。
+
+TEL：顶部TEL、Buyer Tel、Supplier TEL → 三个？顶部的TEL是+6209581195897（Huilai的总机），Buyer的Tel是+01n02083256，Supplier的TEL是+2910789698155 → 三个TEL。
+
+Tel：可能和TEL重复？看用户给的类别里有TEL和Tel，所以可能TEL是公司总机，Tel是Buyer的联系，而Supplier的TEL属于TEL。所以Tel可能只有Buyer的Tel是+01n02083256，而其他是TEL。
+
+Title：SALES CONTRACT → 一个。
+
+Unit price(USD)：表格中的US$1.780 → 一个。
+
+现在需要把每个检测到的对象列出来，确保每个类别都有对应的bbox和label。
+
+现在开始逐个列出：
+
+1. Company Name（顶部）：Huilai Computer Technology Co., Ltd. → bbox [133, 12, 866, 47]，label Company Name
+2. Address（顶部）：4576 Greene Turnpike Apt. 380 Gonzalezview, AR 47894 → bbox [117, 47, 882, 68]，label Address
+3. TEL（顶部）：+6209581195897 → bbox [152, 60, 320, 77]，label TEL
+4. FAX（顶部）：+1092589866513 → bbox [340, 60, 666, 77]，label FAX
+5. Title：SALES CONTRACT → bbox [333, 227, 666, 262]，label Title
+6. Contract No：4095820-1 → bbox [410, 152, 496, 169]，label Contract No
+7. Date：2022-7-13 → bbox [728, 152, 837, 169]，label Date
+8. Company Name（Buyer）：Huilai Computer Technology Co., Ltd. → bbox [202, 167, 577, 184]，label Company Name
+9. Address（Buyer）：Unit 4274 Box 8478 DPO AP 96641 USNS Lee FPO AP 20517 → bbox [112, 202, 464, 247]，label Address
+10. Tel（Buyer）：+01n02083256 → bbox [112, 272, 302, 289]，label Tel
+11. Email（Buyer）：jessica06@cummings.com → bbox [272, 267, 477, 284]，label Email
+12. Address（Supplier）：PSC 3532, Box 3004 APO AA 46931 USS Waters FPO AP 93369 USNV Stafford FPO AP 57569 → bbox [692, 202, 957, 267]，label Address
+13. TEL（Supplier）：+2910789698155 → bbox [692, 292, 957, 309

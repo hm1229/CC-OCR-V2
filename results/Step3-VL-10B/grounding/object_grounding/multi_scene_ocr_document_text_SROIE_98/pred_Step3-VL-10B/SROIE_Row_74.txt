@@ -1,0 +1,289 @@
+Got it, let's go through the document and identify each category.
+
+First, company: The company name is "SYARIKAT PERNIAGAAN GIN KEE" along with the registration number (81109-A). Let's check the bounding box for that.
+
+Address: The address lines are "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR." So that's the address.
+
+Date: The date on the invoice is "31/01/2018" from the Doc No. section.
+
+Total: There are multiple totals. Let's check the main total sales inclusive of GST: 101.76, and total sales excluding GST: 96.00, total GST: 5.76. Also, the total in GST summary is 96.00. Let's pick the main total sales inclusive of GST as the total.
+
+Now, let's map each:
+
+Company: The header with the company name. Bounding box would be around "SYARIKAT PERNIAGAAN GIN KEE (81109-A)".
+
+Address: The lines below the company name: NO 290... KUALA LUMPUR.
+
+Date: The date field "31/01/2018".
+
+Total: Let's check the "Total Sales (Inclusive of GST) : 101.76" and maybe the Total in GST summary. But the question says "total" category, so any total value. Let's check the Total Sales (Inclusive of GST) is a key total.
+
+Let me check each element:
+
+1. Company: The text "SYARIKAT PERNIAGAAN GIN KEE" and the (81109-A) part. The bounding box for the company name is from the top part.
+
+2. Address: The address lines: "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR."
+
+3. Date: "31/01/2018" in the Doc No. section.
+
+4. Total: Let's take "Total Sales (Inclusive of GST) : 101.76" as the total. Also, the Total in GST summary is 96.00, but maybe the main total is 101.76.
+
+Now, let's define the bounding boxes.
+
+First, company:
+
+The company name is in the upper part. Let's see the coordinates. The text "SYARIKAT PERNIAGAAN GIN KEE" is centered. The bounding box would cover that line and the (81109-A) below it.
+
+Address: The lines below the company name: NO 290... up to KUALA LUMPUR.
+
+Date: The date is in the section with Doc No.: CS00013065, Date: 31/01/2018.
+
+Total: Let's check the line "Total Sales (Inclusive of GST) : 101.76" — that's a total.
+
+Also, the Total in GST summary: "Total : 96.00" — that's another total. But maybe the question expects the main total amount paid, which is CASH: 101.76, which matches the inclusive total.
+
+Let me list each:
+
+- Company: [140, 102, 859, 132] (approx, since the text is "SYARIKAT PERNIAGAAN GIN KEE" and (81109-A) is below)
+Wait, the image's text:
+
+"SYARIKAT PERNIAGAAN GIN KEE
+(81109-A)
+NO 290, JALAN AIR PANAS,
+SETAPAK,
+53200, KUALA LUMPUR."
+
+So company is the first line: "SYARIKAT PERNIAGAAN GIN KEE" — bounding box for that line.
+
+Address is the next lines: from "NO 290..." to "KUALA LUMPUR."
+
+Date is "31/01/2018" in the Doc No. section.
+
+Total: Let's check the "Total Sales (Inclusive of GST) : 101.76" — the amount 101.76 is the total.
+
+Also, the Total in GST summary is 96.00 (the amount before tax). But the question says "total" — maybe any total. Let's check the required categories: address, company, date, total.
+
+Now, let's create the JSON entries.
+
+First, company:
+
+The company name is "SYARIKAT PERNIAGAAN GIN KEE" — the bounding box for that text. Let's estimate the coordinates. The image's top part, the company name is centered. Let's say the bounding box is [142, 104, 857, 130] (since the text is in that area).
+
+Address: The address lines: "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR." — the bounding box would cover these lines. Let's check the lines:
+
+"NO 290, JALAN AIR PANAS,"
+"SETAPAK,"
+"53200, KUALA LUMPUR."
+
+So the address is from the line after the company name down to the GST ID. Let's take the bounding box as [200, 140, 798, 190] (approx).
+
+Date: The date is "31/01/2018" in the section labeled "Date: 31/01/2018" — the bounding box for that text. Let's see, the Doc No. and Date are on the same line. The date is part of that line. So the bounding box for the date value is around "31/01/2018".
+
+Total: Let's take the "Total Sales (Inclusive of GST) : 101.76" — the total amount is 101.76. The bounding box for that line's total value.
+
+Alternatively, the "Total" in the GST summary: "Total : 96.00" — that's also a total.
+
+But let's check the problem statement: "Detect all objects matching these categories in this document image: address, company, date, total."
+
+So each category can have multiple instances? But probably, for each category, identify the main instance.
+
+Let me check each:
+
+- Company: The company's name and registration. The text "SYARIKAT PERNIAGAAN GIN KEE (81109-A)" — that's the company identifier.
+
+- Address: The physical address of the company: NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR.
+
+- Date: The transaction date: 31/01/2018.
+
+- Total: The total amount of the transaction, which is the total sales inclusive of GST: 101.76, or the cash paid: 101.76. Also, the total GST amount is 5.76, but the main total is the inclusive amount.
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text "SYARIKAT PERNIAGAAN GIN KEE" is in the upper part. Let's check the coordinates. The image's top section:
+
+The company name is the first line after the top number. Let's assume the bounding box is [140, 102, 860, 128] (since the text is centered and that's the line).
+
+For address:
+
+The address lines are below the company name. Let's take the lines:
+
+"NO 290, JALAN AIR PANAS,"
+"SETAPAK,"
+"53200, KUALA LUMPUR."
+
+So the bounding box would cover these lines. Let's say [202, 142, 796, 188] (approx).
+
+For date:
+
+The date is in the section: "Date: 31/01/2018". The value is "31/01/2018". Let's find the bounding box for that text. The line is "Doc No. : CS00013065 Date: 31/01/2018". So the date text is part of that line. Let's estimate the coordinates for "31/01/2018" — maybe [500, 220, 630, 240] (approx).
+
+For total:
+
+Let's take the "Total Sales (Inclusive of GST) : 101.76". The total amount is 101.76. Let's find the bounding box for that line. The line is "Total Sales (Inclusive of GST) : 101.76". So the total value is 101.76. Let's check the coordinates. Alternatively, the "Total" in the GST summary: "Total : 96.00". Let's pick the main total, which is the cash amount: "CASH : 101.76". But the question says "total", which could refer to the total sales amount.
+
+Alternatively, the "Total Qty: 13" is a total, but that's quantity. The problem says "total" — likely the monetary total.
+
+Let's check the line "Total Sales (Inclusive of GST) : 101.76" — that's a clear total. The bounding box for that line's total value.
+
+Now, let's compile the JSON.
+
+First, company:
+
+{
+  "bbox_2d": [142, 104, 857, 130],
+  "label": "company"
+}
+
+Address:
+
+{
+  "bbox_2d": [200, 142, 798, 190],
+  "label": "address"
+}
+
+Date:
+
+{
+  "bbox_2d": [510, 222, 632, 242],
+  "label": "date"
+}
+
+Total:
+
+Let's take the total sales inclusive of GST: "Total Sales (Inclusive of GST) : 101.76". The amount is 101.76. Let's find the bounding box for that line. The line is in the middle section. Let's check the coordinates. The line "Total Sales (Inclusive of GST) : 101.76" — the total value is 101.76. Let's estimate the bounding box for the total amount.
+
+Alternatively, the "Total" in the GST summary: "Total : 96.00" — that's the total amount before tax. Let's check which one is more appropriate. The problem says "total", which could be any total, but the main transaction total is the inclusive amount.
+
+Let's check the line:
+
+"Total Sales (Inclusive of GST) : 101.76"
+
+So the bounding box for the text "101.76" in that line.
+
+Alternatively, the cash amount: "CASH : 101.76" — that's the amount paid, which equals the total sales inclusive of GST.
+
+Let's pick the "Total Sales (Inclusive of GST) : 101.76" as the total.
+
+The bounding box for that line's total value. Let's assume the coordinates for that line are around the middle of the invoice.
+
+Another total is the "Total GST : 5.76" — but that's a tax total, not the main total.
+
+So the main total is 101.76 (inclusive).
+
+Now, let's define the total's bounding box.
+
+Looking at the image, the line "Total Sales (Inclusive of GST) : 101.76" is present. Let's estimate the coordinates.
+
+The line is below the item list. Let's say the bounding box for the total amount is [420, 330, 540, 350] (approx, since the amount is 101.76).
+
+Alternatively, the "Total" in the GST summary: "Total : 96.00" — the amount 96.00 is the total before tax. Let's check if that's a total. The problem says "total", which could include both, but maybe the question expects the main transaction total.
+
+Alternatively, the problem might consider any total, so let's include the main one.
+
+Now, let's list all four categories with their bounding boxes.
+
+Wait, the problem says "Detect all objects matching these categories" — so each occurrence. But in this document, there's one company, one address, one date, and multiple totals (total sales excl GST, total GST, total sales incl GST, total in GST summary, cash, etc.). But the category is "total", so any of these totals count as "total". But maybe the question expects the primary total, like the total amount paid.
+
+Let me check the example. The user wants all objects of those categories. So for each category, list all instances.
+
+But let's check:
+
+- Company: 1 instance (the company name and registration)
+- Address: 1 instance (the company's address)
+- Date: 1 instance (the transaction date)
+- Total: multiple instances (total sales excl GST, total GST, total sales incl GST, total quantity, etc.). But the category is "total", so any of the monetary totals.
+
+But the problem says "total" — likely the main total amount of the transaction, which is the total sales inclusive of GST, or the cash paid.
+
+Let's proceed to create the JSON entries.
+
+First, company:
+
+The company name is "SYARIKAT PERNIAGAAN GIN KEE" with GST ID. Let's take the bounding box for the company name line.
+
+In the image, the company name is the first line after the top number. Let's check the coordinates. The text is centered, so the bounding box is from the left to right, covering that line.
+
+Address: The address lines are below the company name, including the street, city, and postal code.
+
+Date: The date is "31/01/2018" in the header section of the invoice.
+
+Total: Let's take the "Total Sales (Inclusive of GST) : 101.76" — the total amount.
+
+Another total is the "Total" in the GST summary: "Total : 96.00" — that's the total taxable amount.
+
+Also, the "Total Qty: 13" is a total of quantity, but the category is "total" — maybe monetary.
+
+Let's include the main total (inclusive) and the GST total, but the problem says "total" — perhaps the most prominent total.
+
+Alternatively, the problem might expect the total amount paid (CASH: 101.76) as the total.
+
+Let's check the image:
+
+"CASH : 101.76"
+
+That's the amount paid, which is equal to the total sales inclusive of GST.
+
+So the total can be represented by that.
+
+Now, let's define the bounding boxes.
+
+For company:
+
+The text "SYARIKAT PERNIAGAAN GIN KEE" is in the upper part. Let's assume the bounding box is [140, 102, 860, 128].
+
+For address:
+
+The address is "NO 290, JALAN AIR PANAS, SETAPAK, 53200, KUALA LUMPUR." — bounding box [202, 142, 796, 188].
+
+For date:
+
+The date is "31/01/2018" — in the line "Date: 31/01/2018". Let's find the coordinates. The line is "Doc No. : CS00013065 Date: 31/01/2018". So the date text is part of that line. Let's estimate the bounding box for "31/01/2018" as [515, 220, 635, 240].
+
+For total:
+
+Let's take the "Total Sales (Inclusive of GST) : 101.76" — the amount 101.76. Let's find the bounding box for that. The line is in the middle section. Let's say the coordinates for the amount are [425, 332, 540, 352].
+
+Alternatively, the "CASH : 101.76" — the amount paid. Let's check that line: "CASH : 101.76". The bounding box for "101.76" there.
+
+Let's check the image's lower part:
+
+"Total Sales (Inclusive of GST) : 101.76
+CASH : 101.76
+Change : 0.00"
+
+So the total sales inclusive of GST and the cash are both 101.76. So either can be the total.
+
+Let's pick the "Total Sales (Inclusive of GST) : 101.76" as the total.
+
+Now, compiling all:
+
+[
+  {
+    "bbox_2d": [142, 104, 857, 130],
+    "label": "company"
+  },
+  {
+    "bbox_2d": [200, 142, 798, 190],
+    "label": "address"
+  },
+  {
+    "bbox_2d": [510, 222, 632, 242],
+    "label": "date"
+  },
+  {
+    "bbox_2d": [420, 330, 540, 350],
+    "label": "total"
+  }
+]
+
+Wait, but the address includes multiple lines. Let's check the exact text:
+
+The address lines are:
+
+NO 290, JALAN AIR PANAS,
+SETAPAK,
+53200, KUALA LUMPUR.
+
+So the bounding box should cover all these lines. Let's adjust the address's bounding box to include all

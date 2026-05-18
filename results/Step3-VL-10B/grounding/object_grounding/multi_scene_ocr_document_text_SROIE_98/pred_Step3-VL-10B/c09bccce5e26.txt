@@ -1,8 +1,86 @@
-[
-    {"bbox_2d": [222, 127, 772, 147], "label": "company"},
-    {"bbox_2d": [222, 155, 772, 225], "label": "address"},
-    {"bbox_2d": [222, 252, 325, 272], "label": "date"},
-    {"bbox_2d": [222, 302, 772, 322], "label": "total"},
-    {"bbox_2d": [222, 342, 772, 362], "label": "total"},
-    {"bbox_2d": [222, 382, 772, 402], "label": "total"},
-    {"bbox_2d": [222, 472, 772, 492], "
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+1. Company: The company name is "LIAN HING STATIONERY SDN BHD" along with the (162761-M) part. Let's check the text.
+2. Address: The address lines are "NO.32 & 33, JALAN SR 1/9. SEKSYEN 9, TAMAN SERDANG RAYA, 43300 SERI KEMBANGAN, SELANGOR DARUL EHSAN".
+3. Date: The date on the invoice is "27/03/2018".
+4. Total: The total amount payable is "79.50" (Total Amt Payable) or the total in GST summary is 75.00. Wait, the question says "total" which likely refers to the total amount payable. Let's check the invoice: "Total Amt Payable : 79.50".
+
+Now, find the bounding boxes for each.
+
+First, company: The company name is in the upper part. Let's check the coordinates. The text "LIAN HING STATIONERY SDN BHD" is the company.
+
+Address: The address block is below the company name.
+
+Date: The date is "27/03/2018" below the invoice number.
+
+Total: The total amount payable is 79.50, which is in the section "Total Amt Payable : 79.50".
+
+Let's map each:
+
+- Company: [209, 137, 776, 160] (approx, need to check the text)
+Wait, the image has the company name as:
+
+"LIAN HING STATIONERY SDN BHD
+(162761-M)
+NO.32 & 33, JALAN SR 1/9. SEKSYEN 9.
+TAMAN SERDANG RAYA,
+43300 SERI KEMBANGAN. SELANGOR
+DARUL EHSAN"
+
+So company is the first line: "LIAN HING STATIONERY SDN BHD" with (162761-M) next line.
+
+Address is the rest of the lines after company.
+
+Date is "27/03/2018" which is under the invoice number line.
+
+Total: The total amount payable is 79.50, which is in the line "Total Amt Payable : 79.50".
+
+Now, let's define each entry.
+
+For company: The bounding box should cover "LIAN HING STATIONERY SDN BHD" and the GST ID line? No, company is the name. Let's check the text.
+
+Looking at the image, the company name is clearly "LIAN HING STATIONERY SDN BHD" with the (162761-M) below it. So the company's bbox is around that text.
+
+Address: The address lines are from "NO.32 & 33..." down to "DARUL EHSAN".
+
+Date: "27/03/2018" is on the line below the invoice number.
+
+Total: The total amount is "79.50" in "Total Amt Payable".
+
+Now, let's create the JSON entries.
+
+First, company:
+
+{"bbox_2d": [210, 137, 775, 159], "label": "company"} — need to check the exact position. Alternatively, the text is centered, so the coordinates can be estimated.
+
+Address: The address spans multiple lines. Let's take the block from "NO.32 & 33..." to "DARUL EHSAN". So the bbox would cover that area.
+
+Date: The date is "27/03/2018" which is in the line below "No : CS-20242".
+
+Total: The total amount payable is 79.50, which is in the line "Total Amt Payable : 79.50".
+
+Let me check each element:
+
+1. Company: The text "LIAN HING STATIONERY SDN BHD" is the company name. The bounding box for this line is [209, 137, 776, 159] (approx).
+
+2. Address: The address is the lines starting from "NO.32 & 33, JALAN SR 1/9. SEKSYEN 9." down to "DARUL EHSAN". So the bbox would be from the line after company to the line before GST ID. Let's see:
+
+The lines are:
+
+NO.32 & 33, JALAN SR 1/9. SEKSYEN 9.
+
+TAMAN SERDANG RAYA,
+
+43300 SERI KEMBANGAN. SELANGOR
+
+DARUL EHSAN
+
+So the address block's bbox is covering these lines.
+
+3. Date: "27/03/2018" is on the line below the invoice number (No : CS-20242). So the date is at that position.
+
+4. Total: The total amount payable is 79.50, which is in the "Total Amt Payable : 79.50" line.
+
+Now, let's structure the JSON array with each entry.
+</think>
+[{"bbox_2d": [210, 137, 775, 159], "label": "company"}, {"bbox_2d": [210, 161, 775, 240], "label": "address"}, {"bbox_2d": [210, 244, 295, 264], "label": "date"}, {"bbox_2d": [325, 300, 765, 322], "label": "total"}]

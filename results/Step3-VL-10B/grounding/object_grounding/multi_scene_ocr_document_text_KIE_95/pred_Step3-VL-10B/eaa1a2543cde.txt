@@ -1,10 +1,87 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The bill date is 20/11/2017. Let's check where that is. The "Bill Date: 20/11/2017" line.
+
+doc_no_receipt_no: The C/N No. is LCN00211, and the receipt number might be that. Let's check the credit note section: "C/N No: LCN00211". Also, the bill start has a time, but the doc number is likely the C/N No.
+
+seller_address: The address of the company is "No: 28, JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA". Let's find that section.
+
+seller_gst_id: The GST No. is 00584089600. Look for "GST No.: 00584089600".
+
+seller_name: The company name is "LIGHTROOM GALLERY SDN BHD".
+
+seller_phone: The Tel: 03-3362 4395.
+
+total_amount: The TOTAL is RM 39.80. Look for "TOTAL : RM 39.80".
+
+total_tax: The GST/TAX 6% is RM 2.25. Let's check the GST Summary: SR @ 6% has tax 2.25.
+
+Now, let's map each:
+
+1. date: "20/11/2017" from Bill Date.
+2. doc_no_receipt_no: C/N No. LCN00211.
+3. seller_address: The address block.
+4. seller_gst_id: GST No. 00584089600.
+5. seller_name: LIGHTROOM GALLERY SDN BHD.
+6. seller_phone: Tel:03-3362 4395.
+7. total_amount: RM 39.80 (from TOTAL line).
+8. total_tax: RM 2.25 (from GST/TAX 6% line or GST Summary).
+
+Now, find the bounding boxes for each.
+
+Let's check each element's position on the receipt.
+
+- seller_name: The top part, "LIGHTROOM GALLERY SDN BHD" is the company name. Bounding box around that line.
+- seller_address: The lines below the name: No: 28... up to MALAYSIA.
+- seller_gst_id: "GST No.: 00584089600" line.
+- seller_phone: "Tel:03-3362 4395" line.
+- date: "Bill Date: 20/11/2017" line.
+- doc_no_receipt_no: "C/N No: LCN00211" line (in credit note section).
+- total_amount: "TOTAL : RM 39.80" line.
+- total_tax: "GST/TAX 6% : RM 2.25" line, or the GST Summary's tax column.
+
+Let's list each with their bounding boxes.
+
+First, extract each:
+
+1. date: The text "20/11/2017" is in the line "Bill Date: 20/11/2017". Let's find the coordinates. The receipt's bill date is in the credit note section, left side.
+
+2. doc_no_receipt_no: "C/N No: LCN00211" — the credit note has "C/N No: LCN00211" on the right side of the station line.
+
+3. seller_address: The address lines: "No: 28, JALAN ASTANA 1C, BANDAR BUKIT RAJA, 41050 KLANG SELANGOR D.E, MALAYSIA". This is under the company name.
+
+4. seller_gst_id: "GST No.: 00584089600" — below the ROC No.
+
+5. seller_name: "LIGHTROOM GALLERY SDN BHD" — top of the receipt.
+
+6. seller_phone: "Tel:03-3362 4395" — below GST No.
+
+7. total_amount: "TOTAL : RM 39.80" — in the subtotal section.
+
+8. total_tax: "GST/TAX 6% : RM 2.25" — the line showing the tax amount.
+
+Now, let's define the bounding boxes. Since the image is a receipt, each line's position can be approximated.
+
+For example:
+
+- seller_name: The first line, "LIGHTROOM GALLERY SDN BHD" — bounding box covers that line.
+- seller_address: The next few lines (No: 28... up to MALAYSIA).
+- seller_gst_id: The line with "GST No.: 00584089600".
+- seller_phone: The line with "Tel:03-3362 4395".
+- date: The line "Bill Date: 20/11/2017".
+- doc_no_receipt_no: The line "C/N No: LCN00211".
+- total_amount: The line "TOTAL : RM 39.80".
+- total_tax: The line "GST/TAX 6% : RM 2.25".
+
+Now, let's create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [142, 137, 857, 156], "label": "seller_name"},
-    {"bbox_2d": [140, 160, 859, 210], "label": "seller_address"},
-    {"bbox_2d": [142, 212, 857, 230], "label": "seller_gst_id"},
-    {"bbox_2d": [142, 234, 857, 252], "label": "seller_phone"},
-    {"bbox_2d": [442, 272, 625, 289], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [142, 294, 337, 311], "label": "date"},
-    {"bbox_2d": [142, 534, 337, 551], "label": "total_amount"},
-    {"bbox_2d": [142, 556, 337, 573], "label": "total_tax"}
+    {"bbox_2d": [144, 334, 322, 352], "label": "date"},
+    {"bbox_2d": [427, 314, 546, 330], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [144, 157, 594, 202], "label": "seller_address"},
+    {"bbox_2d": [156, 227, 334, 244], "label": "seller_gst_id"},
+    {"bbox_2d": [144, 114, 525, 134], "label": "seller_name"},
+    {"bbox_2d": [156, 250, 322, 266], "label": "seller_phone"},
+    {"bbox_2d": [144, 534, 322, 550], "label": "total_amount"},
+    {"bbox_2d": [234, 557, 334, 573], "label": "total_tax"}
 ]

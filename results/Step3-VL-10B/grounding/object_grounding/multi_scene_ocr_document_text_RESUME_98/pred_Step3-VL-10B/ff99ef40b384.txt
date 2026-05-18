@@ -1,1 +1,59 @@
-[{"bbox_2d": [444, 112, 555, 140], "label": "name"}, {"bbox_2d": [234, 162, 442, 182], "label": "email"}, {"bbox_2d": [452, 162, 622, 182], "label": "phone"}]
+用户现在需要提取email、name、phone。先看页面里的信息。name是陆远山，看标题部分。email是yuanshanshan.lu@starsea-cloud.io？不对，看联系方式里的yuanshanshan.lu@starsea-cloud.io？看原文联系方式：yuanshanshan.lu@starsea-cloud.io | +86 138-1111-2222 | 星海 | github... 所以email是yuanshanshan.lu@starsea-cloud.io，phone是+86 138-1111-2222，name是陆远山。
+
+现在找每个的bbox。先看name：标题“陆远山”在页面上方，大标题。然后email在联系方式行，phone也是同一行。
+
+先定位name的bbox：页面上方“陆远山”是大标题，看坐标。然后email是yuanshanshan.lu@starsea-cloud.io，phone是+86 138-1111-2222。
+
+现在逐个分析：
+
+name：陆远山，对应标题，位置在页面上方，文字是“陆远山”，所以bbox要覆盖这个文字。
+
+email：yuanshanshan.lu@starsea-cloud.io，看联系方式里的第一个部分。
+
+phone：+86 138-1111-2222，同联系方式里的第二个部分。
+
+现在看页面中的联系方式行：“联系方式：yuanshanshan.lu@starsea-cloud.io | +86 138-1111-2222 | 星海 | github.com/starsea-Hu | yuanshan.dev” 所以email是yuanshanshan.lu@starsea-cloud.io，phone是+86 138-1111-2222。
+
+现在确定每个的bbox。假设页面的布局，name是“陆远山”在页面顶部，大标题，所以bbox大概是[445, 58, 554, 90]左右？需要看实际位置。然后email在联系方式里的第一个，phone是第二个。
+
+现在整理：
+
+name的label是name，对应“陆远山”；
+
+email是yuanshanshan.lu@starsea-cloud.io；
+
+phone是+86 138-1111-2222。
+
+现在要确定每个的bbox。比如name的位置：页面上方，标题，所以bbox是[443, 56, 557, 88]（假设）。然后email在“联系方式：”后面，所以bbox是[343, 110, 527, 132]左右？phone是[585, 110, 737, 132]左右。
+
+现在需要准确提取。看原文中的联系方式行：
+
+“联系方式：yuanshanshan.lu@starsea-cloud.io | +86 138-1111-2222 | 星海 | github.com/starsea-Hu | yuanshan.dev”
+
+所以email是“yuanshanshan.lu@starsea-cloud.io”，phone是“+86 138-1111-2222”。
+
+name是“陆远山”，在页面上方的大标题，所以是“陆远山”这个文字。
+
+现在构建JSON数组：
+
+第一个元素是name：陆远山，bbox对应标题的位置；
+
+第二个是email：yuanshanshan.lu@starsea-cloud.io；
+
+第三个是phone：+86 138-1111-2222。
+
+现在确定每个的坐标。假设页面的布局，name在顶部，居中，所以bbox的x1是445，y1是58，x2是554，y2是88（大概）。email在联系方式行，y坐标是110左右，x从343开始。phone在email右边，用|分隔。
+
+现在具体看图片中的文字位置：
+
+“陆远山”是大标题，字体较大，位于页面上方偏中。联系方式在“职业称号”下面，所以联系方式的y坐标比职业称号低。职业称号是“资深基础平台工程师 / 分布式系统架构”，然后是联系方式。
+
+所以name的bbox：[442, 56, 557, 86]（假设）。
+
+email的bbox：在“联系方式：”之后，即“yuanshanshan.lu@starsea-cloud.io”这部分，所以x范围是342到526，y是110到132。
+
+phone的bbox：“+86 138-1111-2222”这部分，x从584到736，y是110到132。
+
+现在将这些信息整理成JSON数组。
+</think>
+[{"bbox_2d": [443, 56, 557, 86], "label": "name"}, {"bbox_2d": [342, 110, 527, 132], "label": "email"}, {"bbox_2d": [584, 110, 737, 132], "label": "phone"}]

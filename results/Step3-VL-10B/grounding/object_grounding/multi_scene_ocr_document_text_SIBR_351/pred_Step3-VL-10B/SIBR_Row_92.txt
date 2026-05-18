@@ -1,0 +1,144 @@
+用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+
+首先看Title，图中最上面是INVOICE，所以Title是“INVOICE”，位置在顶部中间。
+
+Page Number是PAGE 1，在右上角。
+
+Order No.：看Order No.对应的内容，是SO-POHH170335,So-POHH170345,SO-POHH169432,SO-POHH169428，这部分在左上方。
+
+Date是2021-11-05，在Order No.下面。
+
+Invoice to是ASSA ABLOY Global Solutions AB等，属于Company Name？不，Company Name可能是指开票公司？不过看下面Huangshi Jincheng Information Co., Ltd.是开票公司，而Invoice to是客户，所以Company Name可能需要看。不过先按类别来。
+
+Delivery to是Rico LogisticsHorsterveweg 20 6199 AC等，对应Delivery to类别。
+
+Shipped By是BY SEA，在Shipping Date上面。
+
+Shipping Date这里图中可能没显示具体日期？看Shipping Date: 后面可能空？不过图中Shipping Date: 后面没有内容？不，看原文Shipping Date: 后面可能没有，但先看其他。
+
+Terms of Payment是Net 30 Days。
+
+Goods Descriptions是Safe，在表格里的Goods Descriptions列。
+
+Quantity (PC)是963，在表格里的Quantity (PC)列。
+
+Unit Price是253.6，表格里的Unit Price列。
+
+Amount是244216.11，表格里的Amount列，还有Total也是CNY 244216.11，所以Amount可能有两个？但看Total是总金额，所以Amount列的数值是244216.11，Total也是这个数，所以Amount类别对应表格里的Amount单元格。
+
+Account NO.：在底部Account NO.: 455959249486。
+
+Account Name: ASSA ABLOY Hospitality (Shanghai) Ltd.
+
+Address：开票公司的地址是Huangshi Jincheng Information Co., Ltd.的Address: 6613 Schneider Bypass Apt. 337 North Sherrystad, NM 81355，还有Invoice to的Address是BOX 47112 SE-100 74 STOCKHOLM Sweden，Delivery to的地址是Rico Logistics...的地址。但需要看每个Address类别。不过可能用户需要的是开票公司的Address？或者所有Address？需要看每个出现的Address。比如Invoice to的Address是BOX 47112 SE-100 74 STOCKHOLM Sweden，Delivery to的地址是Rico Logistics...的地址，还有开票公司的Address。但可能需要分别处理。不过先看每个类别。
+
+Post Code：开票公司的Post Code是201602，Invoice to的Post Code？Invoice to的地址是SE-100 74 STOCKHOLM，Sweden，可能没有Post Code？Delivery to的地址里也没有Post Code？看开票公司的Post Code是201602，在Address下面。
+
+Fax：开票公司的Fax是+866673721146。
+
+Tel：开票公司的Tel是+161176673248。
+
+SWIFT：BKCICNBJ300，在Bank下面的SWIFT。
+
+Bank：BANK OF CHINA SHANGHAI BRANCH SONGJIANG SUB-BRANCH，属于Bank信息，但类别里没有Bank，所以不考虑。
+
+现在逐个列出来：
+
+1. Title: "INVOICE"，位置在顶部，bbox大概是[444, 25, 555, 55]左右？看图片中INVOICE在上方中间，所以bbox是[445, 23, 554, 53]。
+
+2. Page Number: "PAGE 1"，在右上角，bbox是[725, 105, 775, 125]左右。
+
+3. Order No.: 对应的内容是SO-POHH170335,So-POHH170345,SO-POHH169432,SO-POHH169428，bbox是[105, 105, 495, 165]（因为Order No.标签在左边，内容在右边）。
+
+4. Date: "2021-11-05"，在Order No.下面，bbox是[110, 170, 235, 188]。
+
+5. Invoice to: "ASSA ABLOY Global Solutions AB..."，属于Company Name？或者Invoice to是客户，所以Company Name可能是指Invoice to的公司，即ASSA ABLOY Global Solutions AB，而开票公司是Huangshi Jincheng Information Co., Ltd.，所以Company Name可能有两个？但类别里有Company Name，所以需要看。不过可能Company Name是开票公司的名称？Huangshi Jincheng Information Co., Ltd.是开票公司，所以Company Name是这个。而Invoice to是客户，属于另一个实体。但类别里没有Customer，所以可能Company Name是开票公司的名称。看底部Huangshi Jincheng Information Co., Ltd.是Company Name，所以Company Name的bbox是[25, 892, 445, 909]。
+
+6. Delivery to: "Rico LogisticsHorsterveweg 20 6199 AC..."，bbox是[105, 335, 445, 355]（看Delivery to标签下面的内容）。
+
+7. Shipped By: "BY SEA"，在Shipping Date上面，bbox是[445, 240, 545, 258]。
+
+8. Shipping Mark: "N/M"，在表格的Shipping Mark列，bbox是[55, 475, 155, 495]（表格第一行的Shipping Mark单元格）。
+
+9. Goods Descriptions: "Safe"，表格里的Goods Descriptions列，bbox是[175, 475, 325, 495]。
+
+10. Quantity (PC): "963"，表格里的Quantity (PC)列，bbox是[345, 475, 415, 495]。
+
+11. Unit Price: "253.6"，表格里的Unit Price列，bbox是[455, 475, 525, 495]。
+
+12. Amount: "244216.11"，表格里的Amount列，bbox是[575, 475, 695, 495]；另外Total也是CNY 244216.11，所以Total属于Amount吗？可能Total是总金额，所以Amount类别对应表格中的Amount，而Total是总和，可能也属于Amount。但看类别里有Amount，所以表格中的Amount是244216.11，Total也是这个数，所以可能需要包含Total的Amount？不过先看表格中的Amount单元格。
+
+13. Terms of Payment: "Net 30 Days"，在Delivery to右边，bbox是[445, 335, 575, 353]。
+
+14. Account NO.: "455959249486"，在底部Account NO.标签下面，bbox是[455, 935, 595, 953]。
+
+15. Account Name: "ASSA ABLOY Hospitality (Shanghai) Ltd."，在Account NO.下面，bbox是[455, 955, 735, 973]。
+
+16. Address: 开票公司的Address是"6613 Schneider Bypass Apt. 337 North Sherrystad, NM 81355"，在Huangshi Jincheng Information Co., Ltd.下面，bbox是[105, 905, 445, 923]；另外Invoice to的Address是"BOX 47112 SE-100 74 STOCKHOLM Sweden"，bbox是[105, 200, 375, 240]；Delivery to的地址是"Rico LogisticsHorsterveweg 20 6199 AC Unit 7102 Box 4162 DPO AA 27890"，bbox是[105, 335, 445, 355]（可能Delivery to的地址和Delivery to标签下的内容是同一个？需要看。其实Delivery to是送货地址，所以Delivery to的地址就是那个内容，而Invoice to的地址是Invoice to下面的地址。所以Address类别可能有多个，比如Invoice to的地址、Delivery to的地址、开票公司的地址。但需要看每个Address的标签。比如Invoice to的地址是“BOX 47112 SE-100 74 STOCKHOLM Sweden”，属于Address；Delivery to的地址是“Rico Logistics...”，也属于Address；开票公司的Address是“6613 Schneider...”。所以需要分别处理。但可能用户需要的是所有Address出现的地方，所以每个Address都要列。
+
+不过可能更简单的是，先看每个类别在图中的唯一或主要出现。比如：
+
+- Address（Invoice to的）：[105, 202, 375, 240]（因为Invoice to:下面的地址是BOX 47112...）
+- Address（Delivery to的）：[105, 337, 445, 355]（Delivery to:下面的内容）
+- Address（开票公司的）：[105, 907, 445, 923]（Huangshi Jincheng...的Address）
+
+但类别里是Address，所以每个Address都要作为单独的条目吗？可能需要，因为每个地址都是Address类别。
+
+17. Post Code：开票公司的Post Code是“201602”，在Address下面，bbox是[275, 925, 325, 943]；Invoice to的地址中没有Post Code（SE-100 74 STOCKHOLM是瑞典的邮编？但可能图中没有明确Post Code，Delivery to的地址也没有Post Code。所以Post Code是开票公司的Post Code，即201602，bbox是[275, 925, 325, 943]。
+
+18. Fax：开票公司的Fax是“+866673721146”，在Tel下面，bbox是[105, 965, 275, 983]。
+
+19. Tel：开票公司的Tel是“+161176673248”，在Fax上面，bbox是[105, 945, 275, 963]。
+
+20. SWIFT：开票公司的SWIFT是“BKCICNBJ300”，在Bank下面，bbox是[455, 965, 595, 983]。
+
+现在需要把所有类别列出来，确保没有遗漏。类别列表是：Account NO., Account Name, Address, Amount, Company Name, Date, Delivery to, Fax, Goods Descriptions, Order No., Page Number, Post Code, Quantity (PC), SWIFT, Shipped By, Shipping Mark, Tel, Terms of Payment, Title, Unit Price。
+
+现在逐个检查：
+
+- Title: INVOICE ✔️
+- Page Number: PAGE 1 ✔️
+- Order No.: ✔️
+- Date: ✔️
+- Delivery to: ✔️
+- Shipped By: ✔️
+- Shipping Mark: ✔️
+- Goods Descriptions: ✔️
+- Quantity (PC): ✔️
+- Unit Price: ✔️
+- Amount: ✔️（表格中的Amount和Total？但Total是总和，可能Amount是表格中的Amount，Total也是金额，所以可能Total属于Amount？但类别里有Amount，所以表格中的Amount是244216.11，Total也是CNY 244216.11，所以Total的Amount也可以算。但看Total在底部，Total: CNY 244216.11，所以Total的Amount是这个，所以Amount有两个？但可能只需要表格中的Amount，因为Total是总和，属于Amount的总和。不过先处理表格中的Amount。
+- Terms of Payment: ✔️
+- Account NO.: ✔️
+- Account Name: ✔️
+- Company Name: 开票公司的Huangshi Jincheng Information Co., Ltd. ✔️
+- Address: 三个地址？Invoice to的地址、Delivery to的地址、开票公司的地址。需要都列吗？比如Invoice to的地址是Address，Delivery to的地址是Address，开票公司的地址是Address。所以三个Address条目。
+- Post Code: 开票公司的Post Code ✔️
+- Fax: ✔️
+- Tel: ✔️
+- SWIFT: ✔️
+
+现在开始构建每个的bbox和label：
+
+1. Title: "INVOICE" → bbox大概在顶部中间，比如x1=440, y1=20, x2=560, y2=50 → [440, 20, 560, 50], label: Title
+
+2. Page Number: "PAGE 1" → 右上角，x1=720, y1=100, x2=780, y2=125 → [720, 100, 780, 125], label: Page Number
+
+3. Order No.: 内容是SO-POHH170335,So-POHH170345,SO-POHH169432,SO-POHH169428 → x1=100, y1=105, x2=490, y2=165 → [100, 105, 490, 165], label: Order No.
+
+4. Date: "2021-11-05" → x1=110, y1=170, x2=235, y2=188 → [110, 170, 235, 188], label: Date
+
+5. Invoice to: "ASSA ABLOY Global Solutions AB..." → x1=105, y1=200, x2=375, y2=240 → [105, 200, 375, 240], label: Invoice to（但类别里没有Invoice to？哦，类别里有Delivery to，而Invoice to属于哪个？看类别列表里没有Invoice to，类别里有Company Name？可能Invoice to是客户，属于Company Name？不，类别里有Company Name，而Invoice to的公司是ASSA ABLOY Global Solutions AB，所以Company Name可以是这个。但之前的Company Name是开票公司的Huangshi Jincheng...，所以可能需要区分。但类别里有Company Name，所以可能Company Name是开票公司的名称，即Huangshi Jincheng Information Co., Ltd.，而Invoice to的公司是客户，可能不属于Company Name类别？或者可能我搞错了。看类别列表中的Company Name，应该是指开票公司的名称，因为发票底部有Huangshi Jincheng Information Co., Ltd.，所以Company Name是这个。而Invoice to是“Invoice to:”后面的内容，属于客户信息，但类别里没有Customer，所以可能Invoice to不作为Company Name，而是Delivery to是送货地址，Invoice to是收货地址？不，Invoice to是发票开具给的公司，即客户。可能类别中的Company Name是指开票公司，所以Huangshi Jincheng Information Co., Ltd.是Company Name。
+
+6. Delivery to: "Rico LogisticsHorsterveweg 20 6199 AC..." → x1=105, y1=335, x2=445, y2=355 → [105, 335, 445, 355], label: Delivery to
+
+7. Shipped By: "BY SEA" → x1=445, y1=240, x2=545, y2=258 → [445, 240, 545, 258], label: Shipped By
+
+8. Shipping Mark: "N/M" → 表格中Shipping Mark列，x1=55, y1=475, x2=155, y2=495 → [55, 475, 155, 495], label: Shipping Mark
+
+9. Goods Descriptions: "Safe" → x1=175, y1=475, x2=325, y2=495 → [175, 475, 325, 495], label: Goods Descriptions
+
+10. Quantity (PC): "963" → x1=345, y1=475, x2=415, y2=495 → [345, 475, 415, 495], label: Quantity (PC)
+
+11. Unit Price: "253.6" → x1=455, y1=475, x2=525, y2=495 → [455, 475, 525, 495], label: Unit Price
+
+12. Amount: "244216.11"（表格中的Amount）→ x1=575, y1=475, x2

@@ -1,10 +1,228 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The bizdate is 17/04/2017. Let me check where that is. The line "BIZDATE: 17/04/2017" so that's the date.
+
+doc_no_receipt_no: The bill no is 00133885 / POS01. So the receipt number is 00133885.
+
+seller_address: The address is NO.12, JALAN SS4C/5, PETALING JAYA SELANGOR DARUL EHSAN. Let's find that line.
+
+seller_gst_id: GST NO. : 001800839168. That's the GST number.
+
+seller_name: B & BEST RESTAURANT (001610235-P). The top part has the restaurant name.
+
+seller_phone: TEL : 012-2060 778. That's the phone number.
+
+total_amount: The net total is 14.85. Let's check the "NET TOTAL" line, which is 14.85.
+
+total_tax: GST 6% is 0.84. So the tax amount is 0.84.
+
+Now, let's map each to their bounding boxes.
+
+1. date: BIZDATE line. The text is "BIZDATE: 17/04/2017". So the bbox around that line.
+
+2. doc_no_receipt_no: BILL NO: 00133885 / POS01. So the bill number part.
+
+3. seller_address: The address lines: "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN"
+
+4. seller_gst_id: "GST NO. : 001800839168"
+
+5. seller_name: "B & BEST RESTAURANT (001610235-P)"
+
+6. seller_phone: "TEL : 012-2060 778"
+
+7. total_amount: "NET TOTAL" is 14.85. The line shows "NET TOTAL" and the amount is 14.85.
+
+8. total_tax: "GST 6%" which is 0.84. So the tax amount is 0.84.
+
+Now, let's check each element's position on the image.
+
+Let's list each:
+
+- date: The BIZDATE is on the left, line "BIZDATE: 17/04/2017". Let's get the coordinates.
+
+- doc_no_receipt_no: BILL NO: 00133885 / POS01. The line starts with BILL NO.
+
+- seller_address: The address is below GST NO., so "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN"
+
+- seller_gst_id: "GST NO. : 001800839168" — that's a line.
+
+- seller_name: The top part, "B & BEST RESTAURANT (001610235-P)" — that's the header.
+
+- seller_phone: "TEL : 012-2060 778" — below the address.
+
+- total_amount: The NET TOTAL line, which is "NET TOTAL" and the amount is 14.85. The value is 14.85.
+
+- total_tax: The GST 6% line, which is 0.84. So the tax amount is 0.84.
+
+Now, let's create the JSON array with each entry.
+
+First, identify each label and their corresponding bbox.
+
+Let's go step by step.
+
+1. date: The BIZDATE is "17/04/2017". The line is "BIZDATE: 17/04/2017". Let's find the bounding box for that text.
+
+Looking at the image, the BIZDATE line is in the middle section. Let's estimate the coordinates. The text is left-aligned.
+
+2. doc_no_receipt_no: "BILL NO: 00133885 / POS01" — the receipt number is 00133885.
+
+3. seller_address: The address lines: "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN" — this is a multi-line address.
+
+4. seller_gst_id: "GST NO. : 001800839168" — the GST number.
+
+5. seller_name: "B & BEST RESTAURANT (001610235-P)" — the top header.
+
+6. seller_phone: "TEL : 012-2060 778" — the phone number.
+
+7. total_amount: The NET TOTAL is 14.85. The line "NET TOTAL" and the amount on the right.
+
+8. total_tax: The GST 6% is 0.84. The line "GST 6%" and the amount.
+
+Now, let's check each in the image.
+
+For example, seller_name: The text "B & BEST RESTAURANT" is at the top, with the GST number below it. So the bounding box for seller_name is the line "B & BEST RESTAURANT (001610235-P)".
+
+seller_gst_id: The line "GST NO. : 001800839168" — that's the GST ID.
+
+seller_address: The address is "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN" — that's the address.
+
+seller_phone: "TEL : 012-2060 778" — phone.
+
+date: "BIZDATE: 17/04/2017" — the date of the bill.
+
+doc_no_receipt_no: "BILL NO: 00133885 / POS01" — the receipt number.
+
+total_amount: "NET TOTAL" is 14.85. The value is 14.85.
+
+total_tax: "GST 6%" is 0.84. So the tax amount is 0.84.
+
+Now, let's map each to their bounding boxes.
+
+Let's list all:
+
+1. date: [x1, y1, x2, y2] for "17/04/2017" in BIZDATE line.
+
+2. doc_no_receipt_no: "00133885" from BILL NO.
+
+3. seller_address: the address text.
+
+4. seller_gst_id: "001800839168" from GST NO.
+
+5. seller_name: "B & BEST RESTAURANT (001610235-P)".
+
+6. seller_phone: "012-2060 778" from TEL.
+
+7. total_amount: "14.85" from NET TOTAL.
+
+8. total_tax: "0.84" from GST 6%.
+
+Now, let's check the image for each.
+
+For example, the NET TOTAL line: "NET TOTAL" is on the left, and the amount is 14.85 on the right. So the total_amount is 14.85.
+
+The GST line: "GST 6%" and the amount is 0.84. So total_tax is 0.84.
+
+Now, let's create the JSON entries.
+
+Each entry is a dictionary with "bbox_2d" and "label".
+
+Let's go through each category:
+
+- date: The BIZDATE is 17/04/2017. Let's find the bounding box of that text. The line is "BIZDATE: 17/04/2017". Let's assume the coordinates. Let's check the image: the BIZDATE is in the section after BILL NO. Let's estimate the bounding box.
+
+- doc_no_receipt_no: The BILL NO is 00133885 / POS01. So the number is 00133885.
+
+- seller_address: The address lines: "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN". Let's check the image: that's the line below GST NO.
+
+- seller_gst_id: "GST NO. : 001800839168" — the GST number.
+
+- seller_name: "B & BEST RESTAURANT (001610235-P)" — top of the receipt.
+
+- seller_phone: "TEL : 012-2060 778" — below the address.
+
+- total_amount: "14.85" — from NET TOTAL.
+
+- total_tax: "0.84" — from GST 6%.
+
+Now, let's define the bounding boxes. Since the image is a receipt, the text is left-aligned, and each line is a row.
+
+Let's list each with their approximate bounding boxes (since exact coordinates are hard without pixel data, but we can refer to the text positions).
+
+For example:
+
+- seller_name: The text "B & BEST RESTAURANT" is at the top, so the bounding box is around that line. Let's say [100, 100, 500, 125] (approximate).
+
+But maybe better to look at the key elements.
+
+Alternatively, let's check each label:
+
+1. date: The value is 17/04/2017. The line is "BIZDATE: 17/04/2017". So the bbox for this line.
+
+2. doc_no_receipt_no: "00133885" from "BILL NO: 00133885 / POS01".
+
+3. seller_address: "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN".
+
+4. seller_gst_id: "001800839168" from "GST NO. : 001800839168".
+
+5. seller_name: "B & BEST RESTAURANT (001610235-P)".
+
+6. seller_phone: "012-2060 778" from "TEL : 012-2060 778".
+
+7. total_amount: "14.85" from "NET TOTAL" line (the amount on the right).
+
+8. total_tax: "0.84" from "GST 6%" line (the amount on the right).
+
+Now, let's create the JSON array.
+
+Each entry:
+
+- For date: label "date", bbox around the BIZDATE line's date.
+
+- doc_no_receipt_no: label "doc_no_receipt_no", bbox around the BILL NO number.
+
+- seller_address: label "seller_address", bbox around the address text.
+
+- seller_gst_id: label "seller_gst_id", bbox around the GST NO number.
+
+- seller_name: label "seller_name", bbox around the restaurant name.
+
+- seller_phone: label "seller_phone", bbox around the phone number.
+
+- total_amount: label "total_amount", bbox around the NET TOTAL amount (14.85).
+
+- total_tax: label "total_tax", bbox around the GST amount (0.84).
+
+Now, let's write the JSON.
+
+Assuming the coordinates are approximate, but the key is to map each label to the correct text.
+
+Let's list them:
+
+1. date: The text "17/04/2017" in the BIZDATE line. Let's take the line "BIZDATE: 17/04/2017" as the bbox.
+
+2. doc_no_receipt_no: The text "00133885" in the BILL NO line.
+
+3. seller_address: The address lines: "NO.12,JALAN SS4C/5,PETALING JAYA SELANGOR DARUL EHSAN".
+
+4. seller_gst_id: The text "001800839168" in the GST NO line.
+
+5. seller_name: The text "B & BEST RESTAURANT (001610235-P)".
+
+6. seller_phone: The text "012-2060 778" in the TEL line.
+
+7. total_amount: The text "14.85" in the NET TOTAL line.
+
+8. total_tax: The text "0.84" in the GST 6% line.
+
+Now, let's structure the JSON array.
+</think>
 [
-    {"bbox_2d": [105, 92, 895, 122], "label": "seller_name"},
-    {"bbox_2d": [102, 142, 900, 168], "label": "seller_gst_id"},
-    {"bbox_2d": [100, 172, 900, 202], "label": "seller_address"},
-    {"bbox_2d": [100, 207, 900, 232], "label": "seller_phone"},
-    {"bbox_2d": [100, 242, 900, 267], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [100, 272, 900, 297], "label": "date"},
-    {"bbox_2d": [200, 352, 900, 377], "label": "total_tax"},
-    {"bbox_2d": [200, 422, 900, 447], "label": "total_amount"}
+    {"bbox_2d": [144, 334, 322, 356], "label": "date"},
+    {"bbox_2d": [100, 375, 246, 396], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [150, 232, 590, 254], "label": "seller_address"},
+    {"bbox_2d": [164, 256, 336, 277], "label": "seller_gst_id"},
+    {"bbox_2d": [100, 142, 376, 163], "label": "seller_name"},
+    {"bbox_2d": [164, 284, 316, 305], "label": "seller_phone"},
+    {"bbox_2d": [322, 612, 396, 633], "label": "total_amount"},
+    {"bbox_2d": [322, 598, 384, 619], "label": "total_tax"}
 ]

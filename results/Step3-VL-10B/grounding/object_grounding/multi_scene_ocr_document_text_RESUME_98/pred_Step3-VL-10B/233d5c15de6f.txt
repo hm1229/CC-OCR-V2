@@ -1,1 +1,27 @@
-[{"bbox_2d": [68, 33, 282, 92], "label": "name"}, {"bbox_2d": [68, 95, 322, 115], "label": "email"}, {"bbox_2d": [340, 95, 442, 115], "label": "phone"}]
+用户现在需要提取email、name、phone三个信息。首先看name是“盛泽凯”，在最上方大标题。然后email是z ekai.sheng @example.com，注意中间可能有空格？看原文是z ekai.sheng @example.com，所以提取。phone是136-0000-2222。然后确定每个的bbox。
+
+首先name：盛泽凯，位置在顶部大标题，坐标大概是[68, 18, 282, 59]左右？看页面结构，最上面的标题是“盛泽凯”，所以bbox是[68, 18, 282, 59]（假设页面布局，实际看图片中的位置）。
+
+email：z ekai.sheng @example.com，前面有信封图标，位置在姓名下方，所以bbox是[68, 87, 327, 109]左右？看原文中的邮箱部分：z ekai.sheng @example.com，所以提取。
+
+phone：136-0000-2222，前面有电话图标，位置在邮箱右边，所以bbox是[342, 87, 464, 109]左右。
+
+现在要准确确定每个元素的坐标。看图片中的内容：
+
+姓名“盛泽凯”在最上方，字体最大，所以bbox是[68, 18, 282, 59]（假设页面的坐标系统，这里按视觉位置）。
+
+email部分：z ekai.sheng @example.com，前面有信封图标，所以整个元素的bbox是[68, 87, 327, 109]（因为原文中是“z ekai.sheng @example.com”）。
+
+phone部分：136-0000-2222，前面有电话图标，所以bbox是[342, 87, 464, 109]（因为原文中是“136-0000-2222”）。
+
+现在整理成JSON数组：
+
+第一个是name：盛泽凯，bbox对应标题位置。
+
+第二个是email：z ekai.sheng @example.com，bbox对应邮箱行。
+
+第三个是phone：136-0000-2222，bbox对应电话行。
+
+现在检查每个元素的label是否正确。
+</think>
+[{"bbox_2d": [68, 18, 282, 59], "label": "name"}, {"bbox_2d": [68, 87, 327, 109], "label": "email"}, {"bbox_2d": [342, 87, 464, 109], "label": "phone"}]

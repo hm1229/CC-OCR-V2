@@ -1,6 +1,30 @@
-[
-    {"bbox_2d": [60, 42, 880, 122], "label": "company"},
-    {"bbox_2d": [60, 127, 880, 172], "label": "address"},
-    {"bbox_2d": [320, 607, 520, 625], "label": "date"},
-    {"bbox_2d": [320, 747, 520, 765], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part has "KEDAI BUKU NEW ACHIEVERS" which is the company name.
+- Address: The lines below the company, like NO. 12 & 14, JALAN JINJANG 27/54, TAMAN ALAM MEGAH, SEKSYEN 27, 40400 SHAH ALAM, SELANGOR D. E.
+- Date: On the invoice, "Date: 15/09/2017"
+- Total: The total amount is 48.00 (from the "Total :" line)
+
+Now, find the bounding boxes for each.
+
+Company: The header text "KEDAI BUKU NEW ACHIEVERS" and the CO NO line. Let's check the coordinates.
+
+Address: The address lines from NO. 12 & 14... to SELANGOR D. E.
+
+Date: The line with "Date: 15/09/2017"
+
+Total: The "Total :" which is 48.00, or the summary total 45.28? Wait, the question says "total". Let's check the invoice. The total amount paid is CASH 48.00, and the total after GST is 48.00. Also, the summary has Total: 45.28 (which is Sub Total) and GST 2.72, so total amount is 45.28 + 2.72 = 48.00. So the total amount is 48.00.
+
+Now, map each:
+
+1. Company: The top part, "KEDAI BUKU NEW ACHIEVERS (CO NO. SA0345444-K)..." So the bounding box for company is the header section.
+
+2. Address: The address lines: "NO. 12 & 14, JALAN JINJANG 27/54 TAMAN ALAM MEGAH, SEKSYEN 27 40400 SHAH ALAM, SELANGOR D. E."
+
+3. Date: "Date: 15/09/2017" which is in the section with ot# and person.
+
+4. Total: The "Total :" line which is 48.00. Let's check the line "Total : 48.00" in the payment section.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [101, 46, 896, 193], "label": "company"}, {"bbox_2d": [101, 194, 896, 247], "label": "address"}, {"bbox_2d": [625, 600, 741, 617], "label": "date"}, {"bbox_2d": [325, 732, 396, 749], "label": "total"}]

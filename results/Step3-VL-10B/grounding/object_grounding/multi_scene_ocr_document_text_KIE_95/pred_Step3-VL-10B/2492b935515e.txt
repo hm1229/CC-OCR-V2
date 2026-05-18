@@ -1,1 +1,200 @@
-[{"bbox_2d": [108, 12, 592, 32], "label": "seller_name"}, {"bbox_2d": [225, 147, 437, 166], "label": "seller_gst_id"}, {"bbox_2d": [225, 172, 592, 227], "label": "seller_address"}, {"bbox_2d": [108, 202, 592, 221], "label": "seller_phone"}, {"bbox_2d": [144, 232, 242, 251], "label": "date"}, {"bbox_2d": [425, 247, 575, 266], "label": "doc_no_receipt_no"}, {"bbox_2d": [225, 327, 425, 346], "label": "total_amount"}, {"bbox_2d": [350, 447, 425, 466], "label": "total_tax"}]
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: The invoice has "14/04/2018" which is the date. Let's check where that is. On the invoice, above "Tax Invoice", it's written 14/04/2018.
+
+doc_no_receipt_no: The receipt number is "No. CS00233521". Let's confirm. The line says "No. CS00233521" next to "Tax Invoice".
+
+seller_address: The address is "No: G3, Blk G, Jln PJU 1A/3, Ara Damansara, 47301 Petaling Jaya, Selangor Darul Ehsan." Let's check the top part of the invoice.
+
+seller_gst_id: The GST Reg. No. is "0000155453440". Look at the top section: "GST Reg. No. : 0000155453440".
+
+seller_name: The company name is "ENW Hardware Centre (M) Sdn. Bhd." at the top.
+
+seller_phone: There are two phone numbers: TEL: 03-7832 6929 and H/P: 012-659 9829. But the main seller phone might be the TEL line. Let's check the top: "TEL: 03-7832 6929 , 012-659 9829". Also, in the Cash Sale section, Tel: 03-7832 6929. So the seller's phone is that.
+
+total_amount: The total amount payable is "156.00" as per "Total Amt Payable : 156.00".
+
+total_tax: The GST amount is 8.83, from the GST Summary: "GST (RM) 8.83". Let's check the GST Summary section: "Amount (RM) 147.17" and "GST (RM) 8.83". The total GST is 8.83.
+
+Now, let's map each to their bounding boxes.
+
+1. date: "14/04/2018" is in the upper part, left of the date line. Let's find the coordinates. The text is "14/04/2018" which is above "Tax Invoice". So the bounding box for date is around that text.
+
+2. doc_no_receipt_no: "No. CS00233521" is next to "Tax Invoice". So the text is "No. CS00233521".
+
+3. seller_address: The address lines from "No: G3..." down to "Selangor Darul Ehsan.".
+
+4. seller_gst_id: "GST Reg. No. : 0000155453440" — the number part is the GST ID.
+
+5. seller_name: "ENW Hardware Centre (M) Sdn. Bhd." at the top.
+
+6. seller_phone: The TEL line: "TEL: 03-7832 6929 , 012-659 9829" — maybe the main phone is 03-7832 6929, but the invoice lists both. Let's check the top section's TEL.
+
+7. total_amount: "Total Amt Payable : 156.00" — the amount is 156.00.
+
+8. total_tax: The GST amount is 8.83, from the GST Summary's GST (RM) column.
+
+Now, let's extract each with their bounding boxes.
+
+Let's check each element:
+
+- seller_name: The top line "ENW Hardware Centre (M) Sdn. Bhd." — bounding box covers that text.
+
+- seller_gst_id: The line "GST Reg. No. : 0000155453440" — the number is the GST ID.
+
+- seller_address: The address block: "No: G3, Blk G, Jln PJU 1A/3, Ara Damansara, 47301 Petaling Jaya, Selangor Darul Ehsan."
+
+- seller_phone: The TEL line: "TEL: 03-7832 6929 , 012-659 9829" — this is in the top section.
+
+- date: "14/04/2018" — located above "Tax Invoice".
+
+- doc_no_receipt_no: "No. CS00233521" — next to "Tax Invoice".
+
+- total_amount: "Total Amt Payable : 156.00" — the value is 156.00.
+
+- total_tax: The GST amount is 8.83, from the GST Summary row where GST (RM) is 8.83.
+
+Now, let's define each entry with their bounding boxes.
+
+For example, the seller_name is the first line: "ENW Hardware Centre (M) Sdn. Bhd." — the bounding box would be the area containing that text.
+
+Let's go step by step.
+
+1. date: The text "14/04/2018" is in the section above "Tax Invoice". Let's check the coordinates. The invoice has:
+
+14/04/2018 Tax Invoice
+
+So the date is left-aligned, above the invoice number.
+
+2. doc_no_receipt_no: "No. CS00233521" is on the same line as "Tax Invoice", right side.
+
+3. seller_address: The address is from "No: G3..." down to "Selangor Darul Ehsan." — that's a block of text.
+
+4. seller_gst_id: "GST Reg. No. : 0000155453440" — the number is the GST ID.
+
+5. seller_name: "ENW Hardware Centre (M) Sdn. Bhd." — top of the invoice.
+
+6. seller_phone: "TEL: 03-7832 6929 , 012-659 9829" — top section, below the address.
+
+7. total_amount: "Total Amt Payable : 156.00" — in the middle section, below the item list.
+
+8. total_tax: The GST amount is 8.83, which is in the GST Summary: "GST (RM) 8.83".
+
+Now, let's create the JSON array with each entry.
+
+First, identify each element's bounding box.
+
+Let's check the image:
+
+- seller_name: The topmost text: "ENW Hardware Centre (M) Sdn. Bhd." — bounding box [109, 12, 891, 32] (approx, since the image's top part has that line).
+
+- seller_gst_id: "GST Reg. No. : 0000155453440" — the line below the company name. So the text is there.
+
+- seller_address: The address lines: "No: G3, Blk G, Jln PJU 1A/3, Ara Damansara, 47301 Petaling Jaya, Selangor Darul Ehsan." — this is a multi-line text.
+
+- seller_phone: "TEL: 03-7832 6929 , 012-659 9829" — below the address.
+
+- date: "14/04/2018" — above "Tax Invoice".
+
+- doc_no_receipt_no: "No. CS00233521" — next to "Tax Invoice".
+
+- total_amount: "Total Amt Payable : 156.00" — in the section after the items.
+
+- total_tax: The GST (RM) value is 8.83, from the GST Summary table.
+
+Now, let's map each:
+
+1. date: "14/04/2018" — label "date"
+2. doc_no_receipt_no: "CS00233521" (the number part) — label "doc_no_receipt_no"
+3. seller_address: the address block — label "seller_address"
+4. seller_gst_id: "0000155453440" — label "seller_gst_id"
+5. seller_name: "ENW Hardware Centre (M) Sdn. Bhd." — label "seller_name"
+6. seller_phone: "03-7832 6929" (or the full TEL line) — label "seller_phone"
+7. total_amount: "156.00" — label "total_amount"
+8. total_tax: "8.83" — label "total_tax"
+
+Now, need to get the bounding boxes for each.
+
+Let's check the positions:
+
+- seller_name: The first line of the invoice, so top part. Bounding box covers that text.
+
+- seller_gst_id: The line with "GST Reg. No. : 0000155453440" — the number is the value.
+
+- seller_address: The lines starting with "No: G3..." down to "Selangor Darul Ehsan."
+
+- seller_phone: The line "TEL: 03-7832 6929 , 012-659 9829" — which is below the address.
+
+- date: The line "14/04/2018" — above "Tax Invoice".
+
+- doc_no_receipt_no: The line "No. CS00233521" — next to "Tax Invoice".
+
+- total_amount: The line "Total Amt Payable : 156.00" — in the middle right.
+
+- total_tax: The GST (RM) value in the GST Summary, which is 8.83.
+
+Now, let's write the JSON entries.
+
+For example:
+
+{
+  "bbox_2d": [105, 14, 890, 34], 
+  "label": "seller_name"
+},
+{
+  "bbox_2d": [150, 155, 440, 175], 
+  "label": "seller_gst_id"
+},
+... and so on.
+
+But since we need to be precise, let's check each element's location.
+
+Alternatively, since the problem says "detect the corresponding values", we can identify the text and their positions.
+
+Let's list each:
+
+1. date: "14/04/2018" — located at the left, above "Tax Invoice". The bounding box would be around that text.
+
+2. doc_no_receipt_no: "CS00233521" — the receipt number, next to "Tax Invoice". The text is "No. CS00233521".
+
+3. seller_address: The address is "No: G3, Blk G, Jln PJU 1A/3, Ara Damansara, 47301 Petaling Jaya, Selangor Darul Ehsan." — this is a block of text.
+
+4. seller_gst_id: "0000155453440" — from "GST Reg. No. : 0000155453440".
+
+5. seller_name: "ENW Hardware Centre (M) Sdn. Bhd." — top of the invoice.
+
+6. seller_phone: "03-7832 6929" (the TEL number) — from "TEL: 03-7832 6929 , 012-659 9829".
+
+7. total_amount: "156.00" — from "Total Amt Payable : 156.00".
+
+8. total_tax: "8.83" — from the GST Summary where GST (RM) is 8.83.
+
+Now, let's create the JSON array with each entry's bounding box and label.
+
+Assuming the image's coordinates, but since we can't measure exactly, we can describe the approximate regions.
+
+But in the context of the problem, the key is to map each category to the correct text on the invoice.
+
+Let's proceed to list each:
+
+- date: "14/04/2018" — label date
+- doc_no_receipt_no: "CS00233521" — label doc_no_receipt_no
+- seller_address: the address block — label seller_address
+- seller_gst_id: "0000155453440" — label seller_gst_id
+- seller_name: "ENW Hardware Centre (M) Sdn. Bhd." — label seller_name
+- seller_phone: "03-7832 6929" — label seller_phone (or the full TEL line)
+- total_amount: "156.00" — label total_amount
+- total_tax: "8.83" — label total_tax
+
+Now, let's write the JSON array.
+</think>
+[
+    {"bbox_2d": [144, 210, 232, 230], "label": "date"},
+    {"bbox_2d": [407, 232, 540, 252], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [105, 255, 890, 305], "label": "seller_address"},
+    {"bbox_2d": [210, 260, 440, 278], "label": "seller_gst_id"},
+    {"bbox_2d": [109, 12, 891, 32], "label": "seller_name"},
+    {"bbox_2d": [144, 285, 325, 305], "label": "seller_phone"},
+    {"bbox_2d": [325, 600, 425, 620], "label": "total_amount"},
+    {"bbox_2d": [650, 615, 705, 635], "label": "total_tax"}
+]

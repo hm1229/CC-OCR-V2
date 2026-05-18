@@ -1,0 +1,200 @@
+Got it, let's go through each category and find the corresponding elements in the image.
+
+First, list all the categories:
+
+Address, Amount, BC110 PO No., China, Company Name, Country, Date, Description, Email, Europe, Fax., HS Code, IBAN, ISO 14001, ISO 45001, ISO 9001, Invoice No., Model Code, Notify Party, PO No., Payment Terms, Ph., Quantity, Ship To, Swift BIC, Title, USA, Unit Price, Website.
+
+Now, check each one:
+
+1. Address: Let's look for addresses. There are multiple addresses. For example, the Shipper's address: "Unit 4723 Box 0601 DPO AE 21951 423 Daniel Unions Saraview, ND 06539". Also Consignee's address: "PSC 1028, Box 4073 APO AP 53755 701 Jones Route Nashland, NJ 68275". Customer's address: "USNS Duncan FPO AP 37612 2000 Switerland". Let's pick one, maybe the Shipper's address.
+
+2. Amount: The amount is "¥1,845,155.20" in the Materials section.
+
+3. BC110 PO No.: The value is "PO#4538722/4538726/4538730" (from the invoice details).
+
+4. China: In the bottom section, "China+6833815685960" (under the phone numbers).
+
+5. Company Name: The company is "Chuangyi Network Co., Ltd." which appears multiple times (title, customer, shipper, consignee).
+
+6. Country: "Switerland" (customer's country), "USA" (in the bottom section), "Europe" (also there). Let's check "Switerland" (note: typo, should be Switzerland) in customer's address.
+
+7. Date: "23/Jan/22" in the invoice details.
+
+8. Description: "Torque Converters" in the Materials section.
+
+9. Email: "sarahdavis@johnson-ruiz.org" at the bottom right.
+
+10. Europe: "Europe +71494716026" in the bottom section.
+
+11. Fax.: "Fax. 66 (385) 18983060" in the Shipper's info.
+
+12. HS Code: "8483409090" in the invoice details.
+
+13. IBAN: "IBAN: CH95 0076 6000 1017 24405" in the bottom section.
+
+14. ISO 14001: "ISO 14001:2015 - NQA E5411" in the Certifications section.
+
+15. ISO 45001: "ISO 45001:2018 - NQA H2396" in Certifications.
+
+16. ISO 9001: "ISO 9001:2015 - NQA 42799" in Certifications.
+
+17. Invoice No.: "I22012308094&096&097&098-PRC-BC110" (from the invoice details).
+
+18. Model Code: "HE8C-61MHD-25MRC-132SS-BC110-A1-REV.I" in Materials.
+
+19. Notify Party: "SAME AS CONSIGNEE" in Shipping section.
+
+20. PO No.: "PO#388/390/392" (from invoice details).
+
+21. Payment Terms: "FCA Shanghai / T/T net 90 days" in invoice details.
+
+22. Ph.: "Ph. 66 (851) 39886035" in Shipper's info.
+
+23. Quantity: "1440" in Materials section.
+
+24. Ship To: "SAME AS CONSIGNEE" in Shipping section.
+
+25. Swift BIC: "Swift BIC: BCNNCH22" in the bottom section (Bank info).
+
+26. Title: "COMMERCIAL INVOICE" at the top right.
+
+27. USA: "USA +10348274698" in the bottom section.
+
+28. Unit Price: "¥1,281.36" in Materials section.
+
+29. Website: "www.kinehmaticsmfg.com" at the top.
+
+Now, need to map each of these to their bounding boxes. Let's go step by step.
+
+First, identify each element's location.
+
+Let's start with Website: top part, below company name. The website is "www.kinehmaticsmfg.com" with a line above. Bounding box: [114, 207, 304, 226] (approx, need to check image).
+
+Title: "COMMERCIAL INVOICE" is top right. Bounding box: [657, 57, 927, 84].
+
+Company Name: The main company name at top: "Chuangyi Network Co., Ltd." Bounding box: [102, 57, 527, 84].
+
+Address: Let's take Shipper's address. The Shipper section has address: "Unit 4723 Box 0601 DPO AE 21951 423 Daniel Unions Saraview, ND 06539". Bounding box: [102, 322, 302, 367] (approx).
+
+Amount: The amount is in Materials section, rightmost column. "¥1,845,155.20". Bounding box: [657, 687, 827, 707].
+
+BC110 PO No.: The value is "PO#4538722/4538726/4538730". Let's check where that is. In the invoice details, under "BC110 PO No." label. Bounding box: [657, 237, 927, 254].
+
+China: In the bottom section, "China+6833815685960". Bounding box: [502, 947, 682, 964].
+
+Country: Customer's country is "Switerland" (note typo). The customer address has "Switerland". Bounding box: [102, 227, 202, 246] (customer's address line: "2000 Switerland").
+
+Date: "23/Jan/22" in the invoice details. Bounding box: [657, 277, 747, 294].
+
+Description: "Torque Converters" in Materials. Bounding box: [337, 647, 477, 664].
+
+Email: "sarahdavis@johnson-ruiz.org" at bottom right. Bounding box: [657, 964, 827, 981].
+
+Europe: "Europe +71494716026" in bottom section. Bounding box: [502, 947, 627, 964].
+
+Fax.: "Fax. 66 (385) 18983060" in Shipper's info. Bounding box: [102, 377, 302, 394].
+
+HS Code: "8483409090" in invoice details. Bounding box: [657, 307, 777, 324].
+
+IBAN: "IBAN: CH95 0076 6000 1017 24405" in bottom bank info. Bounding box: [337, 947, 537, 964].
+
+ISO 14001: "ISO 14001:2015 - NQA E5411" in Certifications. Bounding box: [102, 974, 277, 991].
+
+ISO 45001: "ISO 45001:2018 - NQA H2396" in Certifications. Bounding box: [102, 989, 277, 999].
+
+ISO 9001: "ISO 9001:2015 - NQA 42799" in Certifications. Bounding box: [102, 964, 277, 981].
+
+Invoice No.: "I22012308094&096&097&098-PRC-BC110" in invoice details. Bounding box: [657, 217, 927, 234].
+
+Model Code: "HE8C-61MHD-25MRC-132SS-BC110-A1-REV.I" in Materials. Bounding box: [257, 647, 477, 664].
+
+Notify Party: "SAME AS CONSIGNEE" in Shipping. Bounding box: [657, 337, 827, 354].
+
+PO No.: "PO#388/390/392" in invoice details. Bounding box: [657, 247, 777, 264].
+
+Payment Terms: "FCA Shanghai / T/T net 90 days" in invoice details. Bounding box: [657, 317, 827, 334].
+
+Ph.: "Ph. 66 (851) 39886035" in Shipper's info. Bounding box: [102, 357, 277, 374].
+
+Quantity: "1440" in Materials. Bounding box: [102, 647, 142, 664].
+
+Ship To: "SAME AS CONSIGNEE" in Shipping. Bounding box: [457, 337, 627, 354].
+
+Swift BIC: "Swift BIC: BCNNCH22" in bank info. Bounding box: [337, 964, 477, 981].
+
+Title: "COMMERCIAL INVOICE" as above.
+
+USA: "USA +10348274698" in bottom. Bounding box: [502, 947, 627, 964] (wait, no, USA is separate. Let's check: "USA +10348274698" is one line. Bounding box: [502, 937, 627, 954]).
+
+Unit Price: "¥1,281.36" in Materials. Bounding box: [502, 647, 627, 664].
+
+Now, let's compile all these into the JSON array. Need to make sure each entry has the correct bbox and label.
+
+Let's list each:
+
+1. Website: [114, 207, 304, 226], label: Website
+2. Title: [657, 57, 927, 84], label: Title
+3. Company Name: [102, 57, 527, 84], label: Company Name
+4. Invoice No.: [657, 217, 927, 234], label: Invoice No.
+5. PO No.: [657, 247, 777, 264], label: PO No.
+6. BC110 PO No.: [657, 237, 927, 254], label: BC110 PO No.
+7. JKM I REF. C.N. (but not in list, ignore)
+8. Date: [657, 277, 747, 294], label: Date
+9. Payment Terms: [657, 317, 827, 334], label: Payment Terms
+10. HS Code: [657, 307, 777, 324], label: HS Code
+11. Customer Address (Country): [102, 227, 202, 246], label: Country (Switerland)
+12. Amount: [657, 687, 827, 707], label: Amount
+13. Materials Section: Quantity [102, 647, 142, 664], label: Quantity
+14. Model Code: [257, 647, 477, 664], label: Model Code
+15. Description: [337, 647, 477, 664], label: Description
+16. Unit Price: [502, 647, 627, 664], label: Unit Price
+17. Shipper Address: [102, 322, 302, 367], label: Address
+18. Consignee Address: [337, 337, 537, 354], label: Address (but maybe pick one, but the problem says "Address" category, so any address)
+19. Notify Party: [657, 337, 827, 354], label: Notify Party
+20. Ship To: [457, 337, 627, 354], label: Ship To
+21. Ph.: [102, 357, 277, 374], label: Ph.
+22. Fax.: [102, 377, 302, 394], label: Fax.
+23. Email: [657, 964, 827, 981], label: Email
+24. Europe: [502, 947, 627, 964], label: Europe
+25. China: [502, 947, 682, 964] (wait, China is "China+6833815685960", so [502, 964, 682, 981]? Let's check the image: bottom right has "USA +10348274698 Europe +71494716026 China+6833815685960". So China's line is "China+6833815685960", so bounding box for China: [502, 964, 682, 981]
+26. USA: [502, 937, 627, 954], label: USA
+27. Swift BIC: [337, 964, 477, 981], label: Swift BIC
+28. IBAN: [337, 947, 537, 964], label: IBAN
+29. ISO 9001: [102, 964, 277, 981], label: ISO 9001
+30. ISO 14001: [102, 974, 277, 991], label: ISO 14001
+31. ISO 45001: [102, 989, 277, 999], label: ISO 45001
+
+Now, let's check if all categories are covered. The list has 29 categories. Let's count:
+
+Address, Amount, BC110 PO No., China, Company Name, Country, Date, Description, Email, Europe, Fax., HS Code, IBAN, ISO 14001, ISO 45001, ISO 9001, Invoice No., Model Code, Notify Party, PO No., Payment Terms, Ph., Quantity, Ship To, Swift BIC, Title, USA, Unit Price, Website. That's 29.
+
+Now, let's make sure each is included.
+
+Let's list each label and check:
+
+- Address: yes (Shipper's address)
+- Amount: yes
+- BC110 PO No.: yes
+- China: yes
+- Company Name: yes
+- Country: yes (Switerland)
+- Date: yes
+- Description: yes
+- Email: yes
+- Europe: yes
+- Fax.: yes
+- HS Code: yes
+- IBAN: yes
+- ISO 14001: yes
+- ISO 45001: yes
+- ISO 9001: yes
+- Invoice No.: yes
+- Model Code: yes
+- Notify Party: yes
+- PO No.: yes
+- Payment Terms: yes
+- Ph.: yes
+- Quantity: yes
+- Ship To: yes
+- Swift BIC: yes
+-

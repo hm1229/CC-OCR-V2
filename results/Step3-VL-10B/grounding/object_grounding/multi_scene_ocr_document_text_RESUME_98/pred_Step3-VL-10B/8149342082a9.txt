@@ -1,1 +1,31 @@
-[{"bbox_2d": [44, 64, 302, 102], "label": "name"}, {"bbox_2d": [816, 85, 983, 103], "label": "email"}, {"bbox_2d": [826, 107, 962, 125], "label": "phone"}]
+用户现在需要提取email、name、phone三个信息。首先看name是张伟琪，对应顶部大标题。email是weiqizhang_dev@example.com，带信封图标。phone是+86 137-0000-9999，带电话图标。然后确定每个的bbox。
+
+先看name：张伟琪，位置在左上方大标题，文字是“张伟琪”，所以bbox要覆盖这个文字。然后email是右侧的weiqizhang_dev@example.com，phone是旁边的电话号码。
+
+现在逐个分析：
+
+1. name：张伟琪，对应文本在页面上方，大字体。看坐标的话，页面中“张伟琪”是主要标题，所以bbox大概是[44, 56, 300, 92]左右？需要看原图的布局。原图中张伟琪是大标题，所以确定其位置。
+
+2. email：weiqizhang_dev@example.com，位于右上角，信封图标旁边。所以bbox是包含信封和邮箱地址的部分，比如[816, 85, 983, 102]左右。
+
+3. phone：+86 137-0000-9999，电话图标旁边，位于email下方。所以bbox是包含电话图标和号码的部分，比如[822, 107, 990, 124]左右。
+
+现在要准确提取每个元素的bbox。需要看图片中的位置：
+
+- name：张伟琪，文字在页面上方，左侧大标题，所以bbox是[44, 56, 300, 92]（假设页面的坐标，因为是简历，通常name在顶部左侧，大字号）。
+
+- email：weiqizhang_dev@example.com，右侧，信封图标（✉️）旁边，所以对应的元素是“✉️ weiqizhang_dev@example.com”，所以bbox是[816, 85, 983, 102]。
+
+- phone：+86 137-0000-9999，电话图标（📞）旁边，位于email下方，所以是“📞 +86 137-0000-9999”，bbox是[822, 107, 990, 124]。
+
+现在确认每个标签：
+
+name对应“张伟琪”，label是name；
+
+email对应邮箱地址，label是email；
+
+phone对应电话号码，label是phone。
+
+现在整理成JSON数组。
+</think>
+[{"bbox_2d": [44, 56, 300, 92], "label": "name"}, {"bbox_2d": [816, 85, 983, 102], "label": "email"}, {"bbox_2d": [822, 107, 990, 124], "label": "phone"}]

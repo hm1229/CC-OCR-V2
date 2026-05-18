@@ -1,9 +1,91 @@
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date is "03 Jun 2016". Let's check where that is. On the receipt, under "Date" it's listed. So the bounding box for that line.
+
+doc_no_receipt_no: The invoice number is 44795. Let's check "Invoice No : 44795". Also, the Ref No at the bottom is 00500055998044795, but the question says doc_no_receipt_no. Wait, the invoice number is the document number. Let's confirm. The invoice number is 44795, so that's the doc_no.
+
+seller_address: The address is "NO.2, JALAN UDANG SIAR 2, TAMAN SRI SEGAMBU, 52000 KUALA LUMPUR." Let's find that section.
+
+seller_gst_id: The GST Reg No is :000119906304. So that's the GST ID.
+
+seller_name: The top line is "YIN MA (M) SDN.BHD.(974306-T)". Also, "Served by YINMA SEGAMBU" — but the main seller name is the top one. Let's check the top.
+
+total_amount: The total incl. GST is RM 32.70. Let's check "Total Incl. GST:RM 32.70".
+
+total_tax: From the GST Summary, the Tax(RM) is 1.86. Let's check that section.
+
+Now, let's map each:
+
+1. date: The line "Date : 03 Jun 2016 12:26pm" — so the date part is 03 Jun 2016.
+
+2. doc_no_receipt_no: Invoice No is 44795. Let's check the line "Invoice No : 44795".
+
+3. seller_address: The address lines: "NO.2, JALAN UDANG SIAR 2, TAMAN SRI SEGAMBU, 52000 KUALA LUMPUR."
+
+4. seller_gst_id: "GST REG NO.:000119906304"
+
+5. seller_name: "YIN MA (M) SDN.BHD.(974306-T)" — the top line.
+
+6. total_amount: "Total Incl. GST:RM 32.70" — the total amount including tax.
+
+7. total_tax: In the GST Summary, "Tax(RM) 1.86" — that's the total tax.
+
+Now, let's find the bounding boxes for each.
+
+Let's check each element's position.
+
+First, date: The line is "Date : 03 Jun 2016 12:26pm". Let's get the coordinates. The text is in the middle section.
+
+doc_no_receipt_no: Invoice No line: "Invoice No : 44795" — that's the document number.
+
+seller_address: The address is from "NO.2, JALAN UDANG SIAR 2," down to "52000 KUALA LUMPUR."
+
+seller_gst_id: "GST REG NO.:000119906304" — right after the address.
+
+seller_name: The top line: "YIN MA (M) SDN.BHD.(974306-T)" — first line of the receipt.
+
+total_amount: "Total Incl. GST:RM 32.70" — in the middle, after the items.
+
+total_tax: In the GST Summary section, the Tax(RM) is 1.86. Let's check the line "S @6.0% ... Tax(RM) 1.86".
+
+Now, let's structure each as a JSON object with bbox and label.
+
+Need to make sure the bounding boxes are accurate. Let's estimate the coordinates based on the image.
+
+The image is a receipt, so let's parse each line.
+
+1. seller_name: The first line. Bounding box would be the top part. Let's say [140, 14, 860, 36] (approx, since the text is centered).
+
+2. seller_gst_id: The line "GST REG NO.:000119906304" — below the address. Let's check the line: "GST REG NO.:000119906304" — coordinates around the middle top.
+
+3. seller_address: The address lines: "NO.2, JALAN UDANG SIAR 2, TAMAN SRI SEGAMBU, 52000 KUALA LUMPUR." — that's a block of text.
+
+4. date: "Date : 03 Jun 2016 12:26pm" — below Invoice No.
+
+5. doc_no_receipt_no: "Invoice No : 44795" — above Date.
+
+6. total_amount: "Total Incl. GST:RM 32.70" — below the items count.
+
+7. total_tax: The GST Summary's Tax(RM) value, which is 1.86. Let's check the line in GST Summary: "Tax(RM) 1.86".
+
+Now, let's list each:
+
+- date: label "date", bbox around the date line.
+- doc_no_receipt_no: label "doc_no_receipt_no", bbox around Invoice No.
+- seller_address: label "seller_address", bbox around the address block.
+- seller_gst_id: label "seller_gst_id", bbox around GST Reg No.
+- seller_name: label "seller_name", bbox around the top company name.
+- total_amount: label "total_amount", bbox around "Total Incl. GST:RM 32.70".
+- total_tax: label "total_tax", bbox around the tax value in GST Summary.
+
+Let's create each entry.
+</think>
 [
-    {"bbox_2d": [100, 38, 899, 62], "label": "seller_name"},
-    {"bbox_2d": [100, 70, 899, 100], "label": "seller_address"},
-    {"bbox_2d": [100, 102, 899, 128], "label": "seller_gst_id"},
-    {"bbox_2d": [100, 200, 899, 222], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [100, 224, 899, 246], "label": "date"},
-    {"bbox_2d": [100, 300, 899, 322], "label": "total_amount"},
-    {"bbox_2d": [450, 650, 899, 672], "label": "total_tax"}
+    {"bbox_2d": [144, 244, 322, 266], "label": "date"},
+    {"bbox_2d": [156, 292, 236, 314], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [156, 108, 842, 162], "label": "seller_address"},
+    {"bbox_2d": [156, 166, 842, 188], "label": "seller_gst_id"},
+    {"bbox_2d": [144, 14, 860, 36], "label": "seller_name"},
+    {"bbox_2d": [234, 592, 446, 614], "label": "total_amount"},
+    {"bbox_2d": [556, 664, 636, 686], "label": "total_tax"}
 ]

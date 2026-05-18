@@ -1,8 +1,100 @@
+Got it, let's extract the information from the tax invoice. First, identify each category.
+
+1. Date: Look for the date field. The invoice has "Date: 29-Apr-2018 04:19 PM". So the date is 29-Apr-2018.
+
+2. Doc_no_receipt_no: The tax invoice no is "C4004290047". That's the document number.
+
+3. Seller_address: The address section is "Foodelico Sdn. Bhd. (1268140-H) Lot LG10, AEON Taman Universiti Shopping Center, No. 4, Jalan Pendidikan, Taman Universiti 81300 Skudai, Johor".
+
+4. Seller_name: The company name is "Foodelico Sdn. Bhd." and the store name is "KEK SPAN OREE". Wait, the seller_name here is probably the business name, which is Foodelico Sdn. Bhd. But let's check. The top has KEK SPAN OREE as the brand, and the company is Foodelico Sdn. Bhd. So seller_name is Foodelico Sdn. Bhd.
+
+5. Total_amount: The grand total is 113.00.
+
+6. Total_tax: The GST is 0.00, so total_tax is 0.00.
+
+Now, find the bounding boxes for each.
+
+Let's check each element's position.
+
+- Date: The line "Date: 29-Apr-2018 04:19 PM Cashier: Ng Wei Cong" — the date part is there.
+
+- Doc_no_receipt_no: "Tax invoice no: C4004290047" — that's the receipt number.
+
+- Seller_address: The block starting with "Foodelico Sdn. Bhd. (1268140-H)..." down to "81300 Skudai, Johor".
+
+- Seller_name: The company name is "Foodelico Sdn. Bhd." which is part of the address section, but also the brand is KEK SPAN OREE. Wait, the problem says "seller_name" — the business entity. The address line has "Foodelico Sdn. Bhd." so that's the seller name.
+
+- Total_amount: "Grand Total: 113.00" — the amount is 113.00.
+
+- Total_tax: "GST: 0.00" — so total_tax is 0.00.
+
+Now, map each to their bounding boxes.
+
+Let's go step by step.
+
+1. Date: The text "Date: 29-Apr-2018 04:19 PM" is in the section below the tax invoice header. Let's find the coordinates.
+
+Looking at the image, the date line is:
+
+"Date: 29-Apr-2018 04:19 PM Cashier: Ng Wei Cong"
+
+So the date part is from "Date: " to "2018 04:19 PM".
+
+2. Doc_no_receipt_no: "Tax invoice no: C4004290047" — the number is C4004290047.
+
+3. Seller_address: The address block is:
+
+"Foodelico Sdn. Bhd. (1268140-H)
+Lot LG10, AEON Taman Universiti
+Shopping Center, No. 4,
+Jalan Pendidikan, Taman Universiti
+81300 Skudai, Johor"
+
+4. Seller_name: The company name is "Foodelico Sdn. Bhd." which is the first line of the address.
+
+5. Total_amount: The grand total is 113.00, found in "Grand Total: 113.00".
+
+6. Total_tax: The GST amount is 0.00, from "GST: 0.00".
+
+Now, create the JSON array with each entry's bbox and label.
+
+Need to estimate the bounding boxes. Since the image is a receipt, let's assume the coordinates are relative.
+
+For example:
+
+- Date: The line is in the middle section. Let's say the bounding box covers the date text.
+
+- Doc_no_receipt_no: The tax invoice no line.
+
+- Seller_address: The block of address text.
+
+- Seller_name: The line "Foodelico Sdn. Bhd. (1268140-H)".
+
+- Total_amount: The line with "Grand Total: 113.00".
+
+- Total_tax: The line with "GST: 0.00".
+
+Let's define each:
+
+1. Date: [x1, y1, x2, y2] — the area where "Date: 29-Apr-2018 04:19 PM" is printed.
+
+2. Doc_no_receipt_no: [x1, y1, x2, y2] — around "C4004290047".
+
+3. Seller_address: The entire address block.
+
+4. Seller_name: The company name line.
+
+5. Total_amount: The grand total line.
+
+6. Total_tax: The GST line.
+
+Now, let's write the JSON.
+</think>
 [
-    {"bbox_2d": [122, 392, 472, 410], "label": "date"},
-    {"bbox_2d": [322, 395, 482, 413], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [295, 242, 705, 258], "label": "seller_name"},
-    {"bbox_2d": [290, 265, 710, 320], "label": "seller_address"},
-    {"bbox_2d": [552, 442, 622, 458], "label": "total_amount"},
-    {"bbox_2d": [550, 612, 620, 626], "label": "total_tax"}
+    {"bbox_2d": [37, 427, 927, 444], "label": "date"},
+    {"bbox_2d": [100, 427, 482, 444], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [295, 297, 703, 360], "label": "seller_address"},
+    {"bbox_2d": [300, 297, 475, 314], "label": "seller_name"},
+    {"bbox_2d": [556, 477, 622, 494], "label": "total_amount"},
+    {"bbox_2d": [545, 527, 570, 543], "label": "total_tax"}
 ]

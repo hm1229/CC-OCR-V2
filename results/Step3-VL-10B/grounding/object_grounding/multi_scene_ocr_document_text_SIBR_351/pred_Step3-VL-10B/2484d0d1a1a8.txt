@@ -1,162 +1,140 @@
-用户现在需要从销售合同中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从销售合同中提取各个字段的值和对应的bbox。首先得逐个分析每个类别在图中的位置。
 
-首先看Title，标题是Sales Contract，所以先找这个。然后Supplier是Hengcong Baihui Media Co., Ltd.，Buyer也是Hengcong Baihui Media Co., Ltd.。Contract No是TTL2021246，Date是10th OCT. 2021。Destination port是Jakarta, Indonesia。Inspection standard是According to standard TTL-QB-01-08。Loading port是Shanghai, China。Manufactory Code是9126411（在表格里的Manufactory Code列）。Name是GRANULATED CHICKEN BOUILLON。Price term是CIF Jakatra。Quantity是200（表格里的Quantity列，还有Total amount里的200）。Remark是下面的6条备注。Shipment time是25/10/2021。Total price (RMB)是53,600.00（表格里的Total price列，还有Total amount里的53,600.00）。Unit Price (RMB)是268.00（表格里的Unit Pirce列）。
+首先看Title，标题是Sales Contract，所以找这个。然后Supplier是Hengcong Baihui Media Co., Ltd.，看Supplier那栏。Buyer也是Hengcong Baihui Media Co., Ltd.。Address里的Contract No是TTL2021246，Date是10th OCT. 2021。Destination port是Jakarta, Indonesia。Inspection standard是According to standard TTL-QB-01-08。Loading port是Shanghai, China。Manufactory Code是9126411（看表格里的Manufactory Code列）。Name是GRANULATED CHICKEN BOUILLON。Price term是CIF Jakatra。Quantity是200（表格里的Quantity列，总数量也是200）。Remark是下面的6条说明。Shipment time是25/10/2021。Total price (RMB)是53,600.00（表格里的Total price列，总金额也是这个）。Unit Price (RMB)是268.00。Terms of payment是T/T within 30 days after on ship。
 
-现在要逐个确定每个元素的bbox。需要看图片中的位置，比如：
-
-Title: "Sales Contract"在顶部中间，所以bbox大概是[333, 1, 666, 50]左右？需要看原图的布局。原图中Sales Contract是标题，所以先确定。
-
-然后Supplier: 左上角Supplier: 后面的内容，bbox是[37, 72, 252, 88]左右？看原文Supplier: Hengcong Baihui Media Co., Ltd. 所以Supplier的label对应这个区域。
-
-Buyer: 同样位置，Buyer: 后面的内容，bbox是[117, 92, 357, 110]左右？
-
-Contract No: 右上角Contract No. 后面的内容，bbox是[537, 152, 662, 170]？
-
-Date: 右上角Date: 后面的内容，bbox是[537, 174, 625, 192]？
-
-Destination port: 文本“Destination port: Jakarta, Indonesia”，bbox是[373, 336, 547, 354]？
-
-Inspection standard: “Inspection standard: According to standard TTL-QB-01-08”，bbox是[373, 292, 547, 310]？
-
-Loading port: “Loading port: Shanghai, China”，bbox是[37, 372, 197, 390]？
-
-Manufactory Code: 表格中的Manufactory Code列，对应GRANULATED CHICKEN BOUILLON行的9126411，bbox是[212, 292, 302, 310]（表格里的列）。
-
-Name: 表格中的Name列，GRANULATED CHICKEN BOUILLON，bbox是[57, 292, 157, 310]？
-
-Price term: “Price term: CIF Jakatra”，bbox是[373, 402, 477, 420]？
-
-Quantity: 表格中的Quantity列，200，bbox是[357, 292, 417, 310]（表格里的单元格）。
-
-Remark: 下面的6条备注，从“Remark:”开始到“6. Need certificate”，bbox是[37, 442, 547, 622]（因为Remark包含多条内容）。
-
-Shipment time: “Shipment time: 25/10/2021”，bbox是[37, 322, 197, 340]？
-
-Total price (RMB): 表格中的Total price列，53,600.00，还有Total amount里的53,600.00，bbox是[577, 292, 667, 310]（表格单元格）和[407, 342, 537, 360]（Total amount行）。
-
-Unit Price (RMB): 表格中的Unit Pirce列，268.00，bbox是[437, 292, 517, 310]（表格单元格）。
-
-Title: “Sales Contract”在最上方，bbox是[333, 1, 666, 50]。
-
-现在需要把每个类别对应起来，确保没有遗漏。现在列出所有需要的类别：
-
-Buyer, Commodity, Contract No, Date, Destination port, Inspection standard, Loading port, Manufactory Code, Name, Price term, Quantity, Remark, Shipment time, Supplier, Terms of payment, Title, Total price (RMB), Unit Price (RMB)。
+现在要确定每个元素的bbox。需要看图片中的位置，比如Supplier的文本位置，Buyer的位置，Contract No在Address下面，Date在Contract No下面。表格里的各个列对应Name、Manufactory Code、Commodity、Quantity、Unit Price、Total price。然后其他部分比如Shipment time、Loading port等在表格下面。
 
 现在逐个处理：
 
-1. Supplier: 对应Supplier: Hengcong Baihui Media Co., Ltd. 的区域。看原文中Supplier: 后面的内容，bbox是[117, 72, 333, 88]（因为Supplier: 是标签，内容是Hengcong...）。
+1. Title: "Sales Contract"，在页面顶部中间，所以bbox大概是[333, 1, 666, 50]左右？看图片里的标题是居中的，所以坐标要确定。
 
-2. Buyer: Buyer: Hengcong Baihui Media Co., Ltd. 的区域，bbox是[117, 92, 357, 110]（Buyer: 后面的内容，可能有下划线，所以范围是Buyer: 到下划线后的部分）。
+2. Supplier: 左上角Supplier: 后面的内容，Hengcong Baihui Media Co., Ltd.，所以bbox是[37, 72, 252, 89]左右？看原文Supplier: 后面的公司名，所以范围是Supplier标签到公司名。
 
-3. Title: "Sales Contract"，bbox是[333, 1, 666, 50]（顶部居中）。
+3. Buyer: Buyer: 后面的内容，Hengcong Baihui Media Co., Ltd.，下面有横线，所以bbox是[37, 92, 622, 115]？因为Buyer: 后面是公司名，然后有横线。
 
-4. Contract No: Contract No. TTL2021246，bbox是[537, 152, 662, 170]（Contract No. 后面的内容）。
+4. Contract No: Address: 下面的Contract No. TTL2021246，所以bbox是[537, 157, 747, 175]左右，看原文Contract No. 后面的编号。
 
-5. Date: Date: 10th OCT. 2021，bbox是[537, 174, 625, 192]（Date: 后面的内容）。
+5. Date: Date: 10th OCT. 2021，bbox是[537, 180, 747, 198]。
 
-6. Destination port: Destination port: Jakarta, Indonesia，bbox是[373, 336, 547, 354]（标签和内容）。
+6. Destination port: Jakarta, Indonesia，看Destination port: 后面的内容，bbox是[320, 335, 497, 353]。
 
-7. Inspection standard: Inspection standard: According to standard TTL-QB-01-08，bbox是[373, 292, 547, 310]（标签和内容）。
+7. Inspection standard: According to standard TTL-QB-01-08，看Inspection standard: 后面的内容，bbox是[400, 305, 697, 323]。
 
-8. Loading port: Loading port: Shanghai, China，bbox是[37, 372, 197, 390]（标签和内容）。
+8. Loading port: Shanghai, China，Loading port: 后面的内容，bbox是[320, 365, 425, 383]。
 
-9. Manufactory Code: 表格中Manufactory Code列的值9126411，对应单元格，bbox是[212, 292, 302, 310]（表格里的Manufactory Code列，行是GRANULATED CHICKEN BOUILLON）。
+9. Manufactory Code: 9126411，表格里的Manufactory Code列，对应GRANULATED CHICKEN BOUILLON那一行，所以bbox是[212, 275, 307, 302]（看表格中的Manufactory Code单元格）。
 
-10. Name: 表格中Name列的GRANULATED CHICKEN BOUILLON，bbox是[57, 292, 157, 310]（表格Name列的单元格）。
+10. Name: GRANULATED CHICKEN BOUILLON，表格里的Name列，bbox是[48, 280, 197, 307]（表格第一行Name单元格）。
 
-11. Price term: Price term: CIF Jakatra，bbox是[373, 402, 477, 420]（标签和内容）。
+11. Price term: CIF Jakatra，看Price term: 后面的内容，bbox是[320, 388, 447, 406]。
 
-12. Quantity: 表格中Quantity列的200，bbox是[357, 292, 417, 310]（表格Quantity列的单元格，行是GRANULATED...）。
+12. Quantity: 200，表格里的Quantity列，总数量也是200，看表格中的Quantity单元格（第一行）和总行的Quantity，这里取总行的200？或者看第一行的Quantity是200，总行也是200。所以bbox可以是表格中Quantity列的总行，比如[332, 310, 387, 337]（总行的Quantity）。
 
-13. Remark: 备注部分，从“Remark:”到“6. Need certificate”，bbox是[37, 442, 547, 622]（包含所有备注条目）。
+13. Remark: 下面的6条说明，从1到6的内容，所以bbox是[320, 425, 697, 635]左右，因为Remark: 后面是6条内容。
 
-14. Shipment time: Shipment time: 25/10/2021，bbox是[37, 322, 197, 340]（标签和内容）。
+14. Shipment time: 25/10/2021，Shipment time: 后面的内容，bbox是[320, 300, 425, 318]。
 
-15. Terms of payment: Terms of payment: T/T within 30 days after on ship，bbox是[37, 402, 297, 420]（标签和内容）。
+15. Supplier: 再确认Supplier是Hengcong Baihui Media Co., Ltd.，在左上角，bbox是[117, 72, 347, 89]（Supplier: 后面的公司名）。
 
-16. Total price (RMB): 表格中Total price列的53,600.00，以及Total amount行的53,600.00。先看表格中的Total price单元格，bbox是[577, 292, 667, 310]（GRANULATED行的Total price），还有Total amount行的Total price是53,600.00，bbox是[407, 342, 537, 360]（Total amount行的Total price列）。
+16. Terms of payment: T/T within 30 days after on ship，Terms of payment: 后面的内容，bbox是[320, 445, 505, 463]。
 
-17. Unit Price (RMB): 表格中Unit Pirce列的268.00，bbox是[437, 292, 517, 310]（GRANULATED行的Unit Pirce）。
+17. Title: Sales Contract，页面顶部，bbox是[333, 2, 666, 50]（居中）。
 
-18. Commodity: 表格中Commodity列的40g*200bags，bbox是[307, 292, 407, 310]（GRANULATED行的Commodity列）。
+18. Total price (RMB): 53,600.00，表格里的Total price列，总行的Total price是53,600.00，bbox是[587, 310, 697, 337]（总行的Total price）。
 
-现在检查是否所有类别都覆盖了。用户要求的类别包括Commodity，所以Commodity是表格中的Commodity列，值是40g*200bags，所以需要添加这个。
+19. Unit Price (RMB): 268.00，表格里的Unit Price列，第一行的Unit Price是268.00，总行的Unit Price是空？不，总行的Unit Price可能没有，看表格第一行的Unit Price (RMB)是268.00，所以bbox是[437, 280, 505, 307]（第一行的Unit Price）。
 
-现在重新整理所有类别：
+现在需要把每个类别对应到正确的bbox和label。需要确保每个字段都被覆盖。
 
-- Buyer
-- Commodity
-- Contract No
-- Date
-- Destination port
-- Inspection standard
-- Loading port
-- Manufactory Code
-- Name
-- Price term
-- Quantity
-- Remark
-- Shipment time
-- Supplier
-- Terms of payment
-- Title
-- Total price (RMB)
-- Unit Price (RMB)
+现在整理每个条目：
 
-现在逐个确认每个类别的存在：
+- Title: "Sales Contract" → bbox是页面顶部的标题，比如[333, 1, 666, 50]
+- Supplier: Hengcong Baihui Media Co., Ltd. → Supplier: 后面的内容，bbox [117, 72, 347, 89]
+- Buyer: Hengcong Baihui Media Co., Ltd. → Buyer: 后面的内容，bbox [117, 92, 622, 115]（因为Buyer: 后面是公司名，然后有横线，所以范围是Buyer标签到横线前）
+- Contract No: TTL2021246 → Contract No. 后面的内容，bbox [537, 157, 747, 175]
+- Date: 10th OCT. 2021 → Date: 后面的内容，bbox [537, 180, 747, 198]
+- Destination port: Jakarta, Indonesia → Destination port: 后面的内容，bbox [320, 335, 497, 353]
+- Inspection standard: According to standard TTL-QB-01-08 → Inspection standard: 后面的内容，bbox [400, 305, 697, 323]
+- Loading port: Shanghai, China → Loading port: 后面的内容，bbox [320, 365, 425, 383]
+- Manufactory Code: 9126411 → 表格中Manufactory Code列的单元格，对应GRANULATED CHICKEN BOUILLON行，bbox [212, 275, 307, 302]
+- Name: GRANULATED CHICKEN BOUILLON → 表格中Name列的单元格，bbox [48, 280, 197, 307]
+- Price term: CIF Jakatra → Price term: 后面的内容，bbox [320, 388, 447, 406]
+- Quantity: 200 → 表格中Quantity列的总行（Total amount行）的Quantity，bbox [332, 310, 387, 337]
+- Remark: 1-6的说明 → Remark: 后面的所有内容，bbox [320, 425, 697, 635]
+- Shipment time: 25/10/2021 → Shipment time: 后面的内容，bbox [320, 300, 425, 318]
+- Terms of payment: T/T within 30 days after on ship → Terms of payment: 后面的内容，bbox [320, 445, 505, 463]
+- Total price (RMB): 53,600.00 → 表格中Total price列的总行，bbox [587, 310, 697, 337]
+- Unit Price (RMB): 268.00 → 表格中Unit Price列的第一行（GRANULATED CHICKEN BOUILLON行）的Unit Price，bbox [437, 280, 505, 307]
 
-1. Supplier: 存在，标签Supplier: 后面的内容。
-2. Buyer: 存在，Buyer: 后面的内容。
-3. Title: 存在，Sales Contract。
-4. Contract No: 存在，TTL2021246。
-5. Date: 存在，10th OCT. 2021。
-6. Destination port: 存在，Jakarta, Indonesia。
-7. Inspection standard: 存在，According to standard TTL-QB-01-08。
-8. Loading port: 存在，Shanghai, China。
-9. Manufactory Code: 存在，9126411（表格中）。
-10. Name: 存在，GRANULATED CHICKEN BOUILLON（表格中）。
-11. Price term: 存在，CIF Jakatra。
-12. Quantity: 存在，200（表格中）。
-13. Remark: 存在，6条备注。
-14. Shipment time: 存在，25/10/2021。
-15. Terms of payment: 存在，T/T within 30 days after on ship。
-16. Total price (RMB): 存在，53,600.00（表格和Total amount）。
-17. Unit Price (RMB): 存在，268.00（表格中）。
-18. Commodity: 存在，40g*200bags（表格中Commodity列）。
+现在需要检查每个类别是否都覆盖，然后生成JSON数组。注意每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
 
-现在需要为每个类别确定准确的bbox。由于是图片，需要根据布局估计。例如：
+现在逐个列出：
 
-- Title: "Sales Contract" 位于页面顶部中央，所以bbox是[330, 2, 670, 55]（假设页面宽度，标题的范围）。
-- Supplier: 左侧“Supplier:”后面的内容，bbox是[115, 70, 335, 90]（包含Supplier:和公司名）。
-- Buyer: 左侧“Buyer:”后面的内容，bbox是[115, 90, 355, 115]（包含Buyer:和公司名，可能有下划线）。
-- Contract No: 右侧“Contract No.”后面的内容，bbox是[535, 150, 665, 175]（Contract No.和编号）。
-- Date: 右侧“Date:”后面的内容，bbox是[535, 175, 625, 200]（Date:和日期）。
-- Destination port: 右侧“Destination port:”后面的内容，bbox是[370, 330, 550, 355]（标签和港口）。
-- Inspection standard: 右侧“Inspection standard:”后面的内容，bbox是[370, 285, 550, 310]（标签和标准）。
-- Loading port: 左侧“Loading port:”后面的内容，bbox是[35, 365, 200, 390]（标签和港口）。
-- Manufactory Code: 表格中“Manufactory Code”列对应行的值，bbox是[210, 285, 305, 310]（表格单元格，Manufactory Code列）。
-- Name: 表格中“Name”列对应行的值，bbox是[55, 285, 160, 310]（表格Name列单元格）。
-- Price term: 右侧“Price term:”后面的内容，bbox是[370, 400, 480, 425]（标签和CIF Jakatra）。
-- Quantity: 表格中“Quantity”列对应行的值，bbox是[355, 285, 420, 310]（表格Quantity列单元格）。
-- Remark: 左侧“Remark:”下面的所有备注，bbox是[35, 435, 550, 620]（包含6条备注）。
-- Shipment time: 左侧“Shipment time:”后面的内容，bbox是[35, 315, 200, 340]（标签和日期）。
-- Terms of payment: 左侧“Terms of payment:”后面的内容，bbox是[35, 400, 300, 425]（标签和支付条款）。
-- Total price (RMB): 表格中“Total price”列对应行的值，以及Total amount行的Total price，bbox是[575, 285, 670, 310]（GRANULATED行的Total price）和[405, 340, 540, 365]（Total amount行的Total price）。
-- Unit Price (RMB): 表格中“Unit Pirce”列对应行的值，bbox是[435, 285, 520, 310]（GRANULATED行的Unit Pirce）。
-- Commodity: 表格中“Commodity”列对应行的值，bbox是[305, 285, 410, 310]（GRANULATED行的Commodity列，40g*200bags）。
+1. Title: 销售合同的标题，bbox大概在页面顶部，比如x1=333, y1=2, x2=666, y2=50 → label: Title
+2. Supplier: Hengcong Baihui Media Co., Ltd. → bbox是Supplier: 后面的公司名，x1=117, y1=72, x2=347, y2=89 → label: Supplier
+3. Buyer: Hengcong Baihui Media Co., Ltd. → x1=117, y1=92, x2=622, y2=115 → label: Buyer
+4. Contract No: TTL2021246 → x1=537, y1=157, x2=747, y2=175 → label: Contract No
+5. Date: 10th OCT. 2021 → x1=537, y1=180, x2=747, y2=198 → label: Date
+6. Destination port: Jakarta, Indonesia → x1=320, y1=335, x2=497, y2=353 → label: Destination port
+7. Inspection standard: According to standard TTL-QB-01-08 → x1=400, y1=305, x2=697, y2=323 → label: Inspection standard
+8. Loading port: Shanghai, China → x1=320, y1=365, x2=425, y2=383 → label: Loading port
+9. Manufactory Code: 9126411 → x1=212, y1=275, x2=307, y2=302 → label: Manufactory Code
+10. Name: GRANULATED CHICKEN BOUILLON → x1=48, y1=280, x2=197, y2=307 → label: Name
+11. Price term: CIF Jakatra → x1=320, y1=388, x2=447, y2=406 → label: Price term
+12. Quantity: 200 → x1=332, y1=310, x2=387, y2=337 → label: Quantity
+13. Remark: 1-6的说明 → x1=320, y1=425, x2=697, y2=635 → label: Remark
+14. Shipment time: 25/10/2021 → x1=320, y1=300, x2=425, y2=318 → label: Shipment time
+15. Terms of payment: T/T within 30 days after on ship → x1=320, y1=445, x2=505, y2=463 → label: Terms of payment
+16. Total price (RMB): 53,600.00 → x1=587, y1=310, x2=697, y2=337 → label: Total price (RMB)
+17. Unit Price (RMB): 268.00 → x1=437, y1=280, x2=505, y2=307 → label: Unit Price (RMB)
 
-现在需要将这些整理成JSON数组，每个元素是bbox和label。注意有些类别可能有多个实例（比如Total price有两个位置，但用户可能只需要一个？不过根据表格，Total amount行的Total price也是总金额，所以可能需要包含。但先看用户要求是“detect all objects matching these categories”，所以每个类别出现的实例都要检测？不过可能每个类别在文档中出现一次，比如Total price (RMB)在表格中有一个单元格，Total amount行也有一个，但可能视为同一个总金额，所以取其中一个？或者都算。但先看示例中的表格，Total amount行的Total price是53,600.00，和表格中该行的Total price一致，所以可能Total price (RMB)的实例是表格中的Total price列和Total amount行的Total price，但可能合并。不过为了准确，先处理每个可见的实例。
+现在需要确认这些bbox在图中的位置是否正确。比如表格中的各个列，Name对应第一列，Manufactory Code是第二列，Commodity是第三列，Quantity是第四列，Unit Price是第五列，Total price是第六列。总行（Total amount）在表格底部，所以Total amount行的Quantity是200，Total price是53,600.00。
 
-现在开始构建JSON数组：
+另外，Commodity这个类别在题目中要求检测，所以需要找到Commodity的值。看表格中的Commodity列，对应GRANULATED CHICKEN BOUILLON行的Commodity是40g*200bags，所以Commodity的label是Commodity，bbox是表格中Commodity列的单元格，x1=320, y1=275, x2=437, y2=302（因为第三列是Commodity，对应40g*200bags）。
 
-1. Title: bbox [330, 2, 670, 55], label "Title"
-2. Supplier: bbox [115, 70, 335, 90], label "Supplier"
-3. Buyer: bbox [115, 90, 355, 115], label "Buyer"
-4. Contract No: bbox [535, 150, 665, 175], label "Contract No"
-5. Date: bbox [535, 175, 625, 200], label "Date"
-6. Destination port: bbox [370, 330, 550, 355], label "Destination port"
-7. Inspection standard: bbox [370, 285, 550, 310], label "Inspection standard"
-8. Loading port: bbox [35, 365, 200, 390], label "Loading port"
-9. Manufactory Code: bbox [210, 285, 305, 310], label "Manufactory Code"
-10. Name: bbox [55, 285, 160, 310], label "Name"
-11. Price term: bbox [370, 400
+哦，刚才漏了Commodity这个类别！题目中的类别包括Commodity，所以必须包含。现在检查题目中的类别列表：
+
+题目要求检测的类别有：Buyer, Commodity, Contract No, Date, Destination port, Inspection standard, Loading port, Manufactory Code, Name, Price term, Quantity, Remark, Shipment time, Supplier, Terms of payment, Title, Total price (RMB), Unit Price (RMB)。共18个类别，刚才列了17个，漏了Commodity。
+
+所以需要添加Commodity的条目。Commodity是40g*200bags，对应表格中Commodity列的单元格，即第三列，GRANULATED CHICKEN BOUILLON行的Commodity值。所以bbox是x1=320, y1=275, x2=437, y2=302（因为表格中Commodity列在Manufactory Code右边，所以该单元格的内容是40g*200bags）。
+
+现在修正，添加Commodity：
+
+18. Commodity: 40g*200bags → bbox是表格中Commodity列的单元格，x1=320, y1=275, x2=437, y2=302 → label: Commodity
+
+现在检查所有18个类别：
+
+1. Title
+2. Supplier
+3. Buyer
+4. Contract No
+5. Date
+6. Destination port
+7. Inspection standard
+8. Loading port
+9. Manufactory Code
+10. Name
+11. Price term
+12. Quantity
+13. Remark
+14. Shipment time
+15. Terms of payment
+16. Total price (RMB)
+17. Unit Price (RMB)
+18. Commodity → 现在全部覆盖。
+
+现在重新整理所有条目：
+
+- Title: [333, 2, 666, 50], Title
+- Supplier: [117, 72, 347, 89], Supplier
+- Buyer: [117, 92, 622, 115], Buyer
+- Contract No: [537, 157, 747, 175], Contract No
+- Date: [537, 180, 747, 198], Date
+- Destination port: [320, 335, 497, 353], Destination port
+- Inspection standard: [400, 305, 697, 323], Inspection standard
+- Loading port: [320, 365, 425, 383], Loading port
+- Manufactory Code: [212, 275, 307, 302], Manufactory Code
+- Name: [48, 280, 197, 307], Name
+- Commodity: [320, 275, 437, 302], Commodity
+- Price term: [320, 388, 447, 406], Price term
+- Quantity: [332, 31

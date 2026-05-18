@@ -1,12 +1,12 @@
-用户现在需要从发票中提取指定类别的对象，每个对象要标注bbox和label。首先得逐个识别每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在发票中的位置。
 
-首先看A/C NO：图中底部有A/C NO:35014951100229922027，所以找到这个位置。
+首先看A/C NO：在底部有A/C NO:35014951100229922027，所以找到这个位置。
 
-ADD：可能是指地址中的部分？看NAME下面的ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418，这里的ADD是地址。
+ADD：看NAME下面的ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418，这里的ADD是地址部分。
 
-ADDRESS：可能和ADD类似？或者看其他地址，比如TO部分的地址？不过先看各个字段。
+ADDRESS：可能和ADD类似？或者看其他部分。不过先继续。
 
-AMOUNT USD：表格里的AMOUNT列是USD，还有TOTAL的13722.56 USD。
+AMOUNT USD：表格里的AMOUNT列，总金额是13722.56 USD，还有TOTAL行的13722.56。
 
 ATTN：TO部分的ATTN: Heidi Alvarez /DUNG.PHAM@KLF-GROUP.COM
 
@@ -14,61 +14,61 @@ BANK ADD：BANK ADD: NO.1865 BAQI ROAD SHISHI CITY FUJIAN PROVINCE CHINA
 
 BANK NAME：BANK NAME: CHINA CONSTRUCTION BANK CORP.FUJIAN BRANCH
 
-COMPANY NAME：顶部Liangnuo Network Co., Ltd.，还有底部的NAME也是这个公司。
+COMPANY NAME：顶部和底部的Liangnuo Network Co., Ltd.
 
-DATE：COMMERCIAL INVOICE右边DATE:2022-05-16
+DATE：COMMERCIAL INVOICE右边的DATE:2022-05-16
 
 DELIVER TO：DELIVER TO: VIET NAM
 
-EXT：TEL: (31)8021.748.342 EXT:56110，所以EXT是56110
+EXT：TEL后面的EXT:56110
 
-Fax：顶部Fax:8302-99558528，还有可能其他Fax？比如ATTN那里的Fax:（可能没有，看顶部的Fax）
+Fax：顶部的Fax:8302-99558528，还有可能其他Fax？比如ATTN那里的Fax:（可能没有，看顶部的Fax是公司的传真）
 
 INV.NO：INV.NO: SF20220510A1
 
-MARKS&NOS. ORDER BY：表格上方的MARKS&NOS. ORDER BY: ROLL
+MARKS&NOS. ORDER BY：表格的MARKS&NOS. ORDER BY列，内容是ROLL
 
-NAME：底部NAME:Liangnuo Network Co., Ltd.
+NAME：底部的NAME:Liagnuo Network Co., Ltd.（注意拼写可能是Liangnuo？看图片里的NAME是Liangnuo Network Co., Ltd.）
 
 ON/ABOUT：ON/ABOUT:2022.05.21
 
-ORIGIN：SHIPPED FROM: PER S.S，所以ORIGIN是PER S.S？
+ORIGIN：SHIPPED FROM: PER S.S.（可能ORIGIN是SHIPPED FROM对应的内容？看SHIPPED FROM: PER S.S. BY Sea，所以ORIGIN是PER S.S.
 
 PAYMENT：PAYMENT: 100%T/T AGAINST SHIPMENT DOCUMENTS
 
-QUANTITY M：表格中的M列，比如5143
+QUANTITY M：表格中QUANTITY M列，对应PRC6663-NFC的M是5143
 
-QUANTITY Y：Y列，比如5624
+QUANTITY Y：表格中QUANTITY Y列，对应PRC6663-NFC的Y是5624
 
-ROLL：ORDER BY: ROLL
+ROLL：表格中ORDER BY是ROLL，所以ROLL是这个值
 
-SHIPPED FROM：SHIPPED FROM: PER S.S
+SHIPPED FROM：SHIPPED FROM: PER S.S.
 
 SHIPPING METHOD：BY Sea
 
-SWIFT CODE：SWIFT CODE: PCBCCNB BJFX（图中是PCBCCNB BJFX？看原文是SWIFT CODE: PCBCCNB BJFX？原文是SWIFT CODE: PCBCCNB BJFX？看图片中的SWIFT CODE: PCBCCNB BJFX？不，原文是SWIFT CODE: PCBCCNB BJFX？看图片里的SWIFT CODE: PCBCCNB BJFX？不，看图片中的SWIFT CODE: PCBCCNB BJFX？哦，图中是SWIFT CODE: PCBCCNB BJFX？不，原文是“SWIFT CODE: PCBCCNB BJFX”？看图片中的内容：SWIFT CODE: PCBCCNB BJFX？不，看图片里的SWIFT CODE: PCBCCNB BJFX？可能我看错了，原文是“SWIFT CODE: PCBCCNB BJFX”？不，图中是“SWIFT CODE: PCBCCNB BJFX”？不管，按图中的内容。
+SWIFT CODE：SWIFT CODE: PCBCCNBJFJX
 
 TAX ID：TAX ID: 1800156167
 
-TEL：顶部Tel:50668892058，还有ATTN那里的TEL: (31)8021.748.342
+TEL：顶部的Tel:50668892058，还有ATTN那里的TEL: (31)8021.748.342
 
-TITLE：可能没有明确的TITLE？或者看是否有TITLE字段，图中可能没有，暂时忽略？
+TITLE：可能没有明确的TITLE？看发票顶部是Liangnuo Network Co., Ltd.作为公司名称，可能TITLE是公司名称？或者看是否有其他TITLE。可能这里没有单独的TITLE，或者看“COMMERCIAL INVOICE”是标题？但用户给的类别里有TITLE，可能需要检查。不过可能用户给的类别中的TITLE可能对应公司名称？或者可能没有，先看其他。
 
-Tel：和上面的TEL重复？比如顶部的Tel是Tel:50668892058，ATTN那里的TEL是(31)8021.748.342
+Tel：有两个Tel，顶部的Tel和ATTN的TEL。需要分别处理？比如顶部的Tel是公司电话，ATTN的TEL是联系人电话。
 
-UNIT PRICE：表格中的UNIT PRICE列，比如2.44
+UNIT PRICE：表格中的UNIT PRICE列，对应PRC6663-NFC的是2.44
 
-现在需要逐个确认每个类别，然后找对应的bbox。
+现在需要逐个确认每个类别在发票中的位置，然后生成对应的bbox和label。
 
-现在开始列每个类别：
+现在开始逐个处理：
 
-1. A/C NO：在底部，A/C NO:35014951100229922027。bbox需要看位置，大概在底部偏左。
+1. A/C NO：在底部，A/C NO:35014951100229922027。看位置，底部的A/C NO行。bbox需要看该行的位置。图片中底部有“A/C NO:35014951100229922027”，所以bbox是包含这个文本的区域。
 
-2. ADD：看NAME下面的ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418。这里的ADD是地址部分。
+2. ADD：看“ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418”（在NAME下面的ADD行）。
 
-3. ADDRESS：可能和ADD是同一个？或者看TO部分的地址，比如TO的地址是824 Megan Groves Stoneview, WA 10482等，但可能ADD是其中一个地址。不过可能需要区分，比如ADD是NAME下面的地址，而ADDRESS可能指其他？不过可能用户中的ADDRESS是指公司地址，比如顶部的地址：82522 Mark Ford Apt. 996 North Williambury, TN 33542。需要看。
+3. ADDRESS：可能和ADD是同一个？或者看TO部分的地址？比如TO的地址是824 Megan Groves Stoneview, WA 10482等，但用户给的类别有ADDRESS，可能需要看。不过可能用户中的ADDRESS对应的是公司地址？比如底部的NAME下面的ADD就是公司地址，所以可能ADDRESS是这个。或者可能用户中的ADDRESS是TO的地址？需要再看。不过先按现有信息处理。
 
-4. AMOUNT USD：表格中的AMOUNT列，比如13722.56 USD，还有TOTAL行的13722.56。
+4. AMOUNT USD：表格中的AMOUNT列，每个行的AMOUNT是13722.56 USD，TOTAL行也是13722.56。所以AMOUNT USD对应的是这个数值。
 
 5. ATTN：TO部分的ATTN: Heidi Alvarez /DUNG.PHAM@KLF-GROUP.COM
 
@@ -76,149 +76,144 @@ UNIT PRICE：表格中的UNIT PRICE列，比如2.44
 
 7. BANK NAME：BANK NAME: CHINA CONSTRUCTION BANK CORP.FUJIAN BRANCH
 
-8. COMPANY NAME：顶部Liangnuo Network Co., Ltd.，以及底部NAME:Li...，所以两个位置？但可能取一个，比如顶部的公司名称。
+8. COMPANY NAME：顶部的Liangnuo Network Co., Ltd. 和底部的NAME也是这个，所以取顶部或底部。
 
-9. DATE：COMMERCIAL INVOICE右侧DATE:2022-05-16
+9. DATE：COMMERCIAL INVOICE右侧的DATE:2022-05-16
 
 10. DELIVER TO：DELIVER TO: VIET NAM
 
-11. EXT：TEL: (31)8021.748.342 EXT:56110，所以EXT是56110，位置在ATTN的TEL行。
+11. EXT：TEL: (31)8021.748.342 EXT:56110 中的EXT:56110
 
-12. Fax：顶部Fax:8302-99558528，还有可能其他Fax？比如ATTN那里的Fax:（可能没有，看顶部的Fax）
+12. Fax：顶部的Fax:8302-99558528
 
-13. INV.NO：INV.NO: SF20220510A1，在COMMERCIAL INVOICE右侧。
+13. INV.NO：INV.NO: SF20220510A1
 
-14. MARKS&NOS. ORDER BY：表格上方的MARKS&NOS. ORDER BY: ROLL
+14. MARKS&NOS. ORDER BY：表格的MARKS&NOS. ORDER BY列，内容是ROLL
 
-15. NAME：底部NAME:Liangnuo Network Co., Ltd.
+15. NAME：底部的NAME:Liagnuo Network Co., Ltd.（注意图片中是Liangnuo，可能拼写错误，但按图片内容）
 
-16. ON/ABOUT：ON/ABOUT:2022.05.21，在SHIPPED FROM行右侧。
+16. ON/ABOUT：ON/ABOUT:2022.05.21
 
-17. ORIGIN：SHIPPED FROM: PER S.S，所以ORIGIN是PER S.S
+17. ORIGIN：SHIPPED FROM: PER S.S.（因为SHIPPED FROM对应的是起运地，即ORIGIN）
 
 18. PAYMENT：PAYMENT: 100%T/T AGAINST SHIPMENT DOCUMENTS
 
-19. QUANTITY M：表格中M列的数值，比如5143
+19. QUANTITY M：表格中QUANTITY M列，对应PRC6663-NFC的M是5143
 
-20. QUANTITY Y：Y列的数值，比如5624
+20. QUANTITY Y：表格中QUANTITY Y列，对应PRC6663-NFC的Y是5624
 
-21. ROLL：ORDER BY: ROLL
+21. ROLL：表格中ORDER BY是ROLL，所以ROLL是这个值
 
-22. SHIPPED FROM：SHIPPED FROM: PER S.S
+22. SHIPPED FROM：SHIPPED FROM: PER S.S.
 
 23. SHIPPING METHOD：BY Sea
 
-24. SWIFT CODE：SWIFT CODE: PCBCCNB BJFX（图中是PCBCCNB BJFX？看原文是“SWIFT CODE: PCBCCNB BJFX”？不，图中是“SWIFT CODE: PCBCCNB BJFX”？看图片中的内容：SWIFT CODE: PCBCCNB BJFX？不，原文是“SWIFT CODE: PCBCCNB BJFX”？可能我之前看错了，图中是“SWIFT CODE: PCBCCNB BJFX”？不管，按图中的内容提取。
+24. SWIFT CODE：SWIFT CODE: PCBCCNBJFJX
 
-25. TAX ID：TAX ID: 1800156167，在TO部分的TAX ID行。
+25. TAX ID：TAX ID: 1800156167
 
-26. TEL：顶部Tel:50668892058，以及ATTN那里的TEL: (31)8021.748.342
+26. TEL：顶部的Tel:50668892058（公司电话）和ATTN的TEL: (31)8021.748.342（联系人电话）。需要看用户给的TEL类别，可能有两个，但需要分别处理？或者看哪个是主要的。不过用户给的类别是TEL，可能包含两个？但先看发票中的TEL，顶部有一个Tel，ATTN有一个TEL。需要确定每个的bbox。
 
-27. TITLE：可能没有，图中没有明确的TITLE字段，可能忽略？
+27. TITLE：可能“COMMERCIAL INVOICE”是标题，所以TITLE对应这个。看发票中的“COMMERCIAL INVOICE”是大标题，所以TITLE的bbox是这个部分。
 
-28. Tel：和上面的TEL重复，比如顶部的Tel是Tel:50668892058，ATTN的Tel是(31)8021.748.342
+28. UNIT PRICE：表格中的UNIT PRICE列，对应PRC6663-NFC的是2.44
 
-29. UNIT PRICE：表格中的UNIT PRICE列，比如2.44
+现在需要为每个类别找到对应的bbox。由于是图片，需要估计每个文本的位置。以下是逐个的分析：
 
-现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个元素的位置。这里可能需要大致划分。
+- COMPANY NAME：顶部的Liangnuo Network Co., Ltd.，bbox是顶部公司名称的区域。坐标大概是[210, 12, 789, 32]左右（因为顶部公司信息在上方）。
 
-现在开始逐个处理：
+- DATE：在COMMERCIAL INVOICE右侧，DATE:2022-05-16，bbox是该行的右侧部分。
 
-- A/C NO：在底部，A/C NO:35014951100229922027。bbox大概是从底部偏左，包含该行。坐标估计：x1≈25, y1≈920, x2≈275, y2≈935（假设图像的坐标，需要看实际布局，但这里只能大致估计）。
+- INV.NO：在DATE下方，INV.NO: SF20220510A1，bbox是该行。
 
-- ADD：NAME下面的ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418。bbox：x1≈25, y1≈880, x2≈480, y2≈895。
+- TO: Liangnuo Network Co., Ltd. 下面的地址，包括824 Megan Groves...等，这些是收货地址，但用户给的类别中没有RECEIVER ADDRESS，所以可能不需要。但ATTN是联系人，所以ATTN的bbox是TO部分的ATTN行。
 
-- ADDRESS：顶部的公司地址：82522 Mark Ford Apt. 996 North Williambury, TN 33542。bbox：x1≈250, y1≈30, x2≈550, y2≈45。
+- SHIPPED FROM: PER S.S. BY Sea，bbox是SHIPPED FROM行。
 
-- AMOUNT USD：表格中的AMOUNT列，比如第一行的13722.56 USD。bbox：在表格的AMOUNT列，对应行。比如x1≈850, y1≈550, x2≈950, y2≈570（假设表格位置）。
+- DELIVER TO: VIET NAM，bbox是DELIVER TO行。
 
-- ATTN：TO部分的ATTN: Heidi Alvarez /DUNG.PHAM@KLF-GROUP.COM。bbox：x1≈25, y1≈220, x2≈450, y2≈235。
+- ON/ABOUT:2022.05.21，bbox是ON/ABOUT行。
 
-- BANK ADD：BANK ADD: NO.1865 BAQI ROAD SHISHI CITY FUJIAN PROVINCE CHINA。bbox：x1≈25, y1≈950, x2≈550, y2≈965。
+- TOTAL AMOUNT: MADE IN CHINA，bbox是TOTAL AMOUNT行。
 
-- BANK NAME：BANK NAME: CHINA CONSTRUCTION BANK CORP.FUJIAN BRANCH。bbox：x1≈25, y1≈925, x2≈450, y2≈940。
+- PAYMENT: 100%T/T AGAINST SHIPMENT DOCUMENTS，bbox是PAYMENT行。
 
-- COMPANY NAME：顶部Liangnuo Network Co., Ltd.。bbox：x1≈300, y1≈20, x2≈600, y2≈35。
+- MARKS&NOS. ORDER BY: ROLL，表格的列标题，对应内容是ROLL。
 
-- DATE：COMMERCIAL INVOICE右侧DATE:2022-05-16。bbox：x1≈750, y1≈140, x2≈900, y2≈155。
+- QUANTITY Y: 对应Y列的数值，比如5624。
 
-- DELIVER TO：DELIVER TO: VIET NAM。bbox：x1≈550, y1≈240, x2≈750, y2≈255。
+- QUANTITY M: 对应M列的数值，比如5143。
 
-- EXT：TEL: (31)8021.748.342 EXT:56110中的EXT:56110。bbox：x1≈350, y1≈250, x2≈400, y2≈265。
+- UNIT PRICE: 2.44。
 
-- Fax：顶部Fax:8302-99558528。bbox：x1≈550, y1=30, x2≈650, y2=45。
+- TOTAL: 13722.56。
 
-- INV.NO：INV.NO: SF20220510A1。bbox：x1≈750, y1=140, x2≈850, y2=155（和DATE同一行）。
+- NAME: 底部的NAME:Liagnuo Network Co., Ltd.，bbox是底部的NAME行。
 
-- MARKS&NOS. ORDER BY：表格上方的MARKS&NOS. ORDER BY: ROLL。bbox：x1≈25, y1=480, x2≈200, y2=500。
+- ADD: 底部的ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418，bbox是ADD行。
 
-- NAME：底部NAME:Liangnuo Network Co., Ltd.。bbox：x1≈25, y1=860, x2≈300, y2=875。
+- BANK ADD: BANK ADD: NO.1865 BAQI ROAD SHISHI CITY FUJIAN PROVINCE CHINA，bbox是BANK ADD行。
 
-- ON/ABOUT：ON/ABOUT:2022.05.21。bbox：x1≈500, y1=260, x2≈650, y2=275。
+- BANK NAME: BANK NAME: CHINA CONSTRUCTION BANK CORP.FUJIAN BRANCH，bbox是BANK NAME行。
 
-- ORIGIN：SHIPPED FROM: PER S.S。bbox：x1≈25, y1=300, x2≈150, y2=315。
+- SWIFT CODE: SWIFT CODE: PCBCCNBJFJX，bbox是SWIFT CODE行。
 
-- PAYMENT：PAYMENT: 100%T/T AGAINST SHIPMENT DOCUMENTS。bbox：x1≈25, y1=460, x2≈500, y2=475。
+- A/C NO: A/C NO:35014951100229922027，bbox是A/C NO行。
 
-- QUANTITY M：表格中M列，比如5143。bbox：x1≈450, y1=540, x2≈500, y2=560（对应M列的单元格）。
+- TAX ID: TAX ID: 1800156167，bbox是TAX ID行（在TO部分的TAX ID行）。
 
-- QUANTITY Y：表格中Y列，比如5624。bbox：x1≈350, y1=540, x2≈400, y2=560（对应Y列的单元格）。
+- TEL: 有两个TEL，一个是顶部的Tel:50668892058，另一个是ATTN的TEL: (31)8021.748.342。需要分别处理。比如顶部的Tel是公司电话，ATTN的TEL是联系人电话。用户给的类别是TEL，可能需要两个条目？但看用户给的类别列表中有TEL和Tel？不，用户给的类别是TEL和Tel？看用户提供的类别列表：“TEL, TITLE, Tel, UNIT PRICE”——哦，用户给的类别里有TEL和Tel？不，看用户的问题中的类别列表：
 
-- ROLL：ORDER BY: ROLL。bbox：x1≈250, y1=485, x2≈300, y2=500（在MARKS&NOS. ORDER BY行的ROLL）。
+用户提供的类别是：A/C NO, ADD, ADDRESS, AMOUNT USD, ATTN, BANK ADD, BANK NAME, COMPANY NAME, DATE, DELIVER TO, EXT, Fax, INV.NO, MARKS&NOS. ORDER BY, NAME, ON/ABOUT, ORIGIN, PAYMENT, QUANTITY M, QUANTITY Y, ROLL, SHIPPED FROM, SHIPPING METHOD, SWIFT CODE, TAX ID, TEL, TITLE, Tel, UNIT PRICE。
 
-- SHIPPED FROM：SHIPPED FROM: PER S.S。bbox：x1≈25, y1=300, x2≈150, y2=315（和ORIGIN同一行？不，SHIPPED FROM是PER S.S，ON/ABOUT是2022.05.21，所以SHIPPED FROM的bbox是x1≈25, y1=300, x2≈150, y2=315）。
+哦，这里有TEL和Tel两个类别？可能是重复或者笔误？比如可能一个是公司电话（Tel）和联系人电话（TEL）？需要看发票中的内容。发票顶部有“Tel:50668892058”（公司电话），然后在ATTN行有“TEL: (31)8021.748.342 EXT:56110”（联系人电话）。所以可能TEL是联系人电话，Tel是公司电话？或者用户可能输入错误，比如“Tel”是公司电话，“TEL”是联系人电话？需要按发票中的标注。
 
-- SHIPPING METHOD：BY Sea。bbox：x1≈250, y1=305, x2≈300, y2=320（在SHIPPED FROM行的BY Sea）。
+现在，先处理每个类别：
 
-- SWIFT CODE：SWIFT CODE: PCBCCNB BJFX。bbox：x1≈25, y1=970, x2≈450, y2=985。
+现在开始构建每个条目的bbox和label。由于是文本提取，需要大致确定每个文本的位置。以下是关键部分的识别：
 
-- TAX ID：TAX ID: 1800156167。bbox：x1≈25, y1=210, x2≈200, y2=225。
+1. COMPANY NAME: 顶部的“Liangnuo Network Co., Ltd.”，bbox大约是[212, 14, 787, 30]（因为公司名称在发票顶部，包含地址和电话）。
 
-- TEL：顶部Tel:50668892058。bbox：x1≈450, y1=30, x2≈550, y2=45。
+2. DATE: “DATE:2022-05-16”在COMMERCIAL INVOICE右侧，bbox是[720, 125, 847, 142]（假设位置）。
 
-- Tel：ATTN那里的TEL: (31)8021.748.342。bbox：x1≈25, y1=225, x2≈250, y2=240。
+3. INV.NO: “INV.NO: SF20220510A1”在DATE下方，bbox是[720, 145, 847, 162]。
 
-- UNIT PRICE：表格中的UNIT PRICE列，比如2.44。bbox：x1≈550, y1=540, x2≈650, y2=560（对应UNIT PRICE列的单元格）。
+4. ATTN: “ATTN: Heidi Alvarez /DUNG.PHAM@KLF-GROUP.COM”在TO部分，bbox是[25, 220, 490, 240]（大概）。
 
-现在需要将这些整理成JSON数组，每个元素是bbox和label。注意有些类别可能重复，比如TEL有两个（顶部和ATTN的），但需要都检测吗？用户要求“detect all objects matching these categories”，所以每个出现的都要检测？不过可能有些是同一个字段的不同部分，比如TEL在顶部和ATTN处都有，所以需要两个条目？
+5. TAX ID: “TAX ID: 1800156167”在TO部分，bbox是[25, 245, 225, 262]。
 
-不过可能更准确的是，每个类别在图中出现的所有实例。比如TEL在顶部有一个，ATTN处有一个，所以两个TEL的实例？
+6. TEL: “TEL: (31)8021.748.342 EXT:56110”在ATTN行下方，bbox是[25, 265, 490, 282]。
 
-现在开始构建每个条目：
+7. SHIPPED FROM: “SHIPPED FROM: PER S.S. BY Sea”在SHIPPED FROM行，bbox是[25, 290, 490, 310]。
 
-1. A/C NO: bbox对应底部的A/C NO行。
-2. ADD: NAME下面的ADD行。
-3. ADDRESS: 顶部公司地址。
-4. AMOUNT USD: 表格中AMOUNT列的数值（比如13722.56）。
-5. ATTN: TO部分的ATTN行。
-6. BANK ADD: BANK ADD行。
-7. BANK NAME: BANK NAME行。
-8. COMPANY NAME: 顶部公司名称。
-9. DATE: COMMERCIAL INVOICE右侧的DATE。
-10. DELIVER TO: DELIVER TO行。
-11. EXT: TEL行中的EXT部分。
-12. Fax: 顶部的Fax。
-13. INV.NO: INV.NO行。
-14. MARKS&NOS. ORDER BY: 表格上方的MARKS&NOS. ORDER BY。
-15. NAME: 底部的NAME行。
-16. ON/ABOUT: ON/ABOUT行。
-17. ORIGIN: SHIPPED FROM行。
-18. PAYMENT: PAYMENT行。
-19. QUANTITY M: 表格中M列的数值（比如5143）。
-20. QUANTITY Y: 表格中Y列的数值（比如5624）。
-21. ROLL: ORDER BY: ROLL。
-22. SHIPPED FROM: SHIPPED FROM行。
-23. SHIPPING METHOD: BY Sea。
-24. SWIFT CODE: SWIFT CODE行。
-25. TAX ID: TAX ID行。
-26. TEL: 顶部的Tel。
-27. TEL: ATTN行的Tel。
-28. UNIT PRICE: 表格中的UNIT PRICE列（比如2.44）。
+8. DELIVER TO: “DELIVER TO: VIET NAM”在SHIPPED FROM行右侧，bbox是[500, 290, 720, 310]。
 
-现在需要为每个确定bbox。由于是示例，可能需要大致估计，但实际中需要看图像的像素。这里假设图像的坐标系统，左上角是(0,0)，右下角是(1000,1000)左右。
+9. ON/ABOUT: “ON/ABOUT:2022.05.21”在SHIPPED FROM行下方，bbox是[25, 315, 490, 332]。
 
-现在开始编写每个条目：
+10. TOTAL AMOUNT: “TOTAL AMOUNT: MADE IN CHINA”在ON/ABOUT下方，bbox是[25, 335, 490, 352]。
 
-例如：
+11. PAYMENT: “PAYMENT: 100%T/T AGAINST SHIPMENT DOCUMENTS”在TOTAL AMOUNT下方，bbox是[25, 355, 490, 372]。
 
-- COMPANY NAME: 顶部的Liangnuo Network Co., Ltd.，bbox大概x1=30
+12. MARKS&NOS. ORDER BY: 表格的列标题“MARKS&NOS. ORDER BY”和“ROLL”，bbox是表格的列标题行，比如[25, 380, 150, 400]（MARKS&NOS. ORDER BY列）和[350, 380, 400, 400]（ROLL列）。
+
+13. QUANTITY Y: 表格中Y列的数值，比如PRC6663-NFC行的Y是5624，bbox是[300, 410, 350, 430]（Y列的单元格）。
+
+14. QUANTITY M: 表格中M列的数值，比如PRC6663-NFC行的M是5143，bbox是[400, 410, 450, 430]（M列的单元格）。
+
+15. UNIT PRICE: 表格中UNIT PRICE列的数值2.44，bbox是[450, 410, 500, 430]（UNIT PRICE列的单元格）。
+
+16. AMOUNT USD: 表格中AMOUNT列的数值13722.56，bbox是[550, 410, 650, 430]（AMOUNT列的单元格）。
+
+17. TOTAL: 表格底部的TOTAL行，数值13722.56，bbox是[25, 450, 490, 470]（TOTAL行的总和）。
+
+18. NAME: 底部的“NAME:Liagnuo Network Co., Ltd.”，bbox是[25, 500, 490, 520]。
+
+19. ADD: 底部的“ADD:6836 Williams Cove Apt. 566 Port Jameschester, NJ 77418”，bbox是[25, 520, 490, 540]。
+
+20. BANK ADD: 底部的“BANK ADD: NO.1865 BAQI ROAD SHISHI CITY FUJIAN PROVINCE CHINA”，bbox是[25, 540, 490, 560]。
+
+21. BANK NAME: 底部的“BANK NAME: CHINA CONSTRUCTION BANK CORP.FUJIAN BRANCH”，bbox是[25, 560, 490, 580]。
+
+22. SWIFT CODE: 底部的“SWIFT CODE: PCBCCNBJFJX”，bbox是[25, 580, 490, 600]。
+
+23. A/C NO: 底部的“A/C NO:35014951100229

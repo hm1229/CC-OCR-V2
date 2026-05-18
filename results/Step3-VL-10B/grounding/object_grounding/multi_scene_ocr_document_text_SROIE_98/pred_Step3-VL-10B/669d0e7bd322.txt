@@ -1,1 +1,48 @@
-[{"bbox_2d": [24, 52, 577, 77], "label": "company"}, {"bbox_2d": [24, 78, 577, 140], "label": "address"}, {"bbox_2d": [24, 230, 174, 252], "label": "date"}, {"bbox_2d": [24, 330, 324, 352], "label": "total"}]
+Got it, let's extract the required information. First, identify each category: address, company, date, total.
+
+1. Company: The company name is "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)". Let's check the text. The top part has that.
+
+2. Address: The address lines are "PASARAYA BORONG SUPER SEVEN NO. 1 Jalan Euro 1 Off Jalan Batu Tiga Sungai Buloh Seksyen U3 Shah Alam,40150". Need to find the bounding box for that.
+
+3. Date: The date on the invoice is "01-02-2018". Let's check where that is.
+
+4. Total: The net total is RM42.10, which is marked as "Net Total 42.10" and also in payment method. Let's check the total sales and net total.
+
+Now, let's map each:
+
+- Company: The line "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)" is the company. Bounding box around that text.
+
+- Address: The address block includes the store name, number, street, etc. Let's take the lines from "PASARAYA BORONG SUPER SEVEN" down to the postal code.
+
+- Date: The date is "01-02-2018" which is in the section with time.
+
+- Total: The net total is "RM42.10" which is in the "Net Total" line.
+
+Let's check each part's coordinates.
+
+First, company: The text "SUPER SEVEN CASH & CARRY SDN BHD (590150-A)" is at the top. Let's find its bounding box.
+
+Address: The address lines are:
+
+PASARAYA BORONG SUPER SEVEN
+
+NO. 1 Jalan Euro 1
+
+Off Jalan Batu Tiga
+
+Sungai Buloh Seksyen U3 Shah Alam,40150
+
+So the bounding box for address would cover these lines.
+
+Date: "01-02-2018" is present in the line with the time "09:52:50 AM (RM)".
+
+Total: The net total is "RM42.10" which is in the "Net Total" line, and also the payment amount. Let's check the "Total Sales (Incl. GST @6%)" is RM42.10, and "Net Total" is also RM42.10. So the total value is RM42.10.
+
+Now, let's structure each entry.
+</think>
+[
+    {"bbox_2d": [24, 103, 527, 197], "label": "company"},
+    {"bbox_2d": [24, 114, 527, 200], "label": "address"},
+    {"bbox_2d": [32, 537, 184, 555], "label": "date"},
+    {"bbox_2d": [24, 657, 322, 677], "label": "total"}
+]

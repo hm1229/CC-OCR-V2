@@ -1,10 +1,147 @@
+Got it, let's extract each required field from the invoice.
+
+First, find the date. On the invoice, the date is "27/10/2018" next to the receipt number. Let's check the location.
+
+Then doc_no_receipt_no: the receipt number is "CS1801/27175". 
+
+Seller address: The address is "NO.53, JALAN BESAR, 45600 BATANG BERUNTAI SELANGOR DARULHSAN". Let's check the top part of the invoice.
+
+Seller GST ID: "GST No.: 000689913856" — that's the GST number.
+
+Seller name: "TEO HENG STATIONERY & BOOKS" at the top.
+
+Seller phone: "TEL : 03-3271 9872" — the telephone number.
+
+Total amount: The total cash is 27.35, which is the total amount paid. Let's check the "TOTAL" section, it's 27.35.
+
+Total tax: In the GST SUMMARY, the total tax is 1.55. Let's check the GST section, the total tax is 1.55.
+
+Now, map each to their bounding boxes.
+
+Let's go step by step.
+
+1. date: The date is on the receipt line, "Date : 27/10/2018". So the text is there. Bounding box around that area.
+
+2. doc_no_receipt_no: "Receipt No. : CS1801/27175" — so the receipt number is CS1801/27175.
+
+3. seller_address: The address lines: "NO.53, JALAN BESAR, 45600 BATANG BERUNTAI SELANGOR DARULHSAN". Let's check the top part.
+
+4. seller_gst_id: "GST No. : 000689913856" — that's the GST number.
+
+5. seller_name: "TEO HENG STATIONERY & BOOKS" — the main title.
+
+6. seller_phone: "TEL : 03-3271 9872" — the telephone.
+
+7. total_amount: The total cash is 27.35, which is the total amount. The "TOTAL" line shows 27.35.
+
+8. total_tax: The GST summary shows total tax as 1.55.
+
+Now, need to find the bounding boxes for each. Let's check the image.
+
+For seller_name: The top part, "TEO HENG STATIONERY & BOOKS" is in a box. Bounding box would be around that text.
+
+Seller_address: Below the name, the address lines.
+
+Seller_gst_id: Below the address, "GST No. : 000689913856".
+
+Seller_phone: "TEL : 03-3271 9872" and FAX line, but we need phone, so TEL.
+
+Date: On the right side of the receipt number line.
+
+Doc_no_receipt_no: The receipt number is CS1801/27175.
+
+Total_amount: The "TOTAL" line, which is 27.35.
+
+Total_tax: The GST SUMMARY's total tax, which is 1.55.
+
+Let's define each:
+
+- date: The text "27/10/2018" is in the line "Receipt No. : CS1801/27175 Date : 27/10/2018". So the date is there.
+
+- doc_no_receipt_no: "CS1801/27175" is the receipt number.
+
+- seller_address: The address block: "NO.53, JALAN BESAR, 45600 BATANG BERUNTAI SELANGOR DARULHSAN".
+
+- seller_gst_id: "000689913856" (from GST No. : ...).
+
+- seller_name: "TEO HENG STATIONERY & BOOKS".
+
+- seller_phone: "03-3271 9872" (from TEL : ...).
+
+- total_amount: "27.35" (from the TOTAL line).
+
+- total_tax: "1.55" (from the GST SUMMARY total tax).
+
+Now, create the JSON array with each entry's bbox and label.
+
+Need to estimate the bounding boxes. Let's check the image structure.
+
+The top section has the seller info:
+
+- seller_name: top center, large text.
+
+- seller_address: below name, multiple lines.
+
+- seller_gst_id: below address, GST No.
+
+- seller_phone: TEL and FAX, TEL is the phone.
+
+Then the receipt details:
+
+- Receipt No. and Date: on the right side of the receipt header.
+
+Then the items, then total, etc.
+
+For total_amount, the "TOTAL" is in the middle right, value 27.35.
+
+Total_tax is in the GST SUMMARY, total tax is 1.55.
+
+Let's assign approximate coordinates. Since the image is a standard invoice, the bounding boxes can be estimated.
+
+But since the problem says "provide the corresponding values" with bbox, we need to identify each element's location.
+
+Alternatively, maybe the key is to extract the text and label, but the question asks for bbox_2d and label.
+
+Let's proceed:
+
+1. date: The date is "27/10/2018". Let's find its position. In the receipt header, next to Receipt No. So the line is "Receipt No. : CS1801/27175 Date : 27/10/2018". So the date text is there. Bounding box around "27/10/2018".
+
+2. doc_no_receipt_no: "CS1801/27175" — the receipt number.
+
+3. seller_address: The address lines: "NO.53, JALAN BESAR, 45600 BATANG BERUNTAI SELANGOR DARULHSAN".
+
+4. seller_gst_id: "000689913856" — from "GST No. : 000689913856".
+
+5. seller_name: "TEO HENG STATIONERY & BOOKS".
+
+6. seller_phone: "03-3271 9872" — from "TEL : 03-3271 9872".
+
+7. total_amount: "27.35" — from the "TOTAL" line.
+
+8. total_tax: "1.55" — from the GST SUMMARY's total tax.
+
+Now, for each, create the entry.
+
+Let's list them:
+
+- date: bbox around "27/10/2018"
+- doc_no_receipt_no: bbox around "CS1801/27175"
+- seller_address: bbox around the address text
+- seller_gst_id: bbox around "000689913856"
+- seller_name: bbox around "TEO HENG STATIONERY & BOOKS"
+- seller_phone: bbox around "03-3271 9872"
+- total_amount: bbox around "27.35" in the TOTAL line
+- total_tax: bbox around "1.55" in the GST SUMMARY total tax
+
+Now, write the JSON array.
+</think>
 [
-    {"bbox_2d": [462, 87, 627, 106], "label": "seller_name"},
-    {"bbox_2d": [462, 113, 627, 144], "label": "seller_address"},
-    {"bbox_2d": [462, 153, 627, 165], "label": "seller_gst_id"},
-    {"bbox_2d": [462, 133, 627, 145], "label": "seller_phone"},
-    {"bbox_2d": [402, 246, 544, 262], "label": "doc_no_receipt_no"},
-    {"bbox_2d": [602, 246, 695, 262], "label": "date"},
-    {"bbox_2d": [652, 316, 722, 332], "label": "total_amount"},
-    {"bbox_2d": [722, 676, 762, 692], "label": "total_tax"}
+    {"bbox_2d": [364, 277, 447, 292], "label": "date"},
+    {"bbox_2d": [314, 277, 447, 292], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [447, 114, 697, 157], "label": "seller_address"},
+    {"bbox_2d": [454, 157, 625, 172], "label": "seller_gst_id"},
+    {"bbox_2d": [447, 96, 697, 119], "label": "seller_name"},
+    {"bbox_2d": [454, 174, 547, 189], "label": "seller_phone"},
+    {"bbox_2d": [734, 334, 800, 350], "label": "total_amount"},
+    {"bbox_2d": [825, 677, 867, 692], "label": "total_tax"}
 ]

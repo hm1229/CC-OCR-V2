@@ -1,248 +1,274 @@
-用户现在需要检测图像中的各个指定对象，首先得逐一识别每个类别。先看每个标签对应的位置。
+用户现在需要从发票中提取各个字段的值和对应的标签。首先得逐个分析每个类别在图中的位置。
 
-首先，先处理各个类别：
+首先看ACCOMMODATION Details-第1行-CHARGES/CREDIT/费用/可用余额：对应日期11/03/20的Room Charge，费用是514.58。看表格里的第一行CHARGES列，数值是514.58。
 
-1. ACCOMMODATION Details-第1行-CHARGES/CREDIT|费用/可用余额：看表格里的第一行费用列，对应11/03/20 Room Charge的CHARGES/CREDIT列是514.58？不对，看表格里的CHARGES/CREDIT列，第一行（11/03/20 Room Charge）的费用是514.58？不，看表格里的行，DATE列是11/03/20，REFERENCE是Room Charge，CHARGES/CREDIT是514.58？然后看Total那里的Total是600.00，Balance是0.00 RMB。然后看各个字段：
+然后ACCOMMODATION Details-第2行-CHARGES/CREDIT/费用/可用余额：是Room Service Charge，费用51.46，对应第二行的CHARGES列。
 
-先列出来所有需要检测的类别，然后找每个的bbox。
+ACCOMMODATION Details-第4行-CHARGES/CREDIT/费用/可用余额：是PPP，费用33.96，对应第四行的CHARGES列。
 
-首先，ADDRESS：看上面的地址部分，“香港特别行政区玉英市门头沟南昌路1座 678400” 还有邮政编码“邮政编码: 310030”。所以ADDRESS应该包含地址信息，比如“香港特别行政区玉英市门头沟南昌路1座 678400” 这个是ADDRESS。
+ADDRESS：看上面的地址部分，香港特别行政区玉英市门头沟南昌路1座 678400，还有邮政编码310030？不对，看原文“香港特别行政区玉英市门头沟南昌路1座 678400 邮政编码：310030”？不对，图中“邮政编码：310030”在上方，地址是“香港特别行政区玉英市门头沟南昌路1座 678400”。
 
-然后，ARRIVAL|入住日期：对应ARRIVAL|入住日期是11/03/20，看右侧的ARRIVAL|入住日期字段，值是11/03/20。
+ARRIVAL/入住日期：是11/03/20，看ARRIVAL那栏。
 
-DEPARTURE|离店日期：是11/04/20，对应DEPARTURE|离店日期字段。
+Balance：图中有“Balance”对应0.00 RMB。
 
-CASHIER|收银员：是Emily Perry，对应CASHIER|收银员字段。
+CASHIER/收银员：是Emily Perry，看CASHIER那栏。
 
-COMPANY 公司：是Huilai Computer Network Hotel，还有GUEST 客人是Lisa Cook，Beijing是公司所在？不，GUEST/COMPANY下的Lisa Cook是客人，Huilai Computer Network Hotel是公司。
+CHARGES/CREDIT/费用/可用余额：这个可能是指总费用？或者看表格里的列，不过可能需要看各个行的该列。不过先处理其他。
 
-CONF.NO|确认号：是16060913，对应CONF.NO|确认号字段。
+COMPANY 公司：是Huilai Computer Network Hotel，还有Beijing？看GUEST/COMPANY下的Lisa Cook是客人，公司是Huilai Computer Network Hotel。
 
-DATE|日期：表格里的DATE列，比如11/03/20等，是DATE|日期。
+CONF.NO/确认号：是16060913，看CONF.NO那栏。
 
-E-MAIL|邮件地址：是YF.YIFENG@ALIBABA-INC.COM，对应E-MAIL|邮件地址。
+DATE/日期：表格里的DATE列，比如11/03/20等。
 
-F&B VAT Rate 16%：在Net Amount下面的F&B VAT Rate 16%那一行。
+DEPARTURE/离店日期：是11/04/20，看DEPARTURE那栏。
 
-F&B VAT Rate 6%：对应F&B VAT Rate 6%。
+E-MAIL/邮件地址：是YF.YIFENG@ALIBABA-INC.COM。
 
-GUEST 客人：是Lisa Cook，对应GUEST/COMPANY下的Lisa Cook。
+F&B VAT Rate 16%：图中有“F&B VAT Rate 16%”对应0.00 CNY。
 
-Marriott Bonvoy#|万豪旅享家号码：是957746961，对应Marriott Bonvoy#|万豪旅享家号码。
+F&B VAT Rate 6%：对应33.96 CNY。
 
-Net Amount：是554.95 CNY，对应Net Amount字段。
+GUEST 客人：是Lisa Cook。
 
-OTHER VAT Rate 10%：是0.00 CNY，对应OTHER VAT Rate 10%。
+Marriott Bonvoy#/万豪旅享家号码：是957746961。
 
-OTHER VAT Rate 16%：是0.00 CNY，对应OTHER VAT Rate 16%。
+Net Amount：是0.00 RMB？不对，看Net Amount对应的是0.00 RMB？或者看下面的Net Amount是0.00 RMB？不，图中Net Amount右边是0.00 RMB？不对，看“Net Amount”下面的数值，可能看“Net Amount”对应的数值是0.00 RMB？或者看其他部分。另外ROOM VAT Rate 6%是554.95 CNY，F&B VAT Rate 6%是33.96 CNY。
 
-OTHER VAT Rate 6%：是0.00 CNY，对应OTHER VAT Rate 6%。
+OTHER VAT Rate 10%：0.00 CNY。
 
-PAGE|账单页数：是1 of 1，对应PAGE|账单页数。
+OTHER VAT Rate 16%：0.00 CNY。
 
-RATE|房价：是514.58，对应RATE|房价。
+OTHER VAT Rate 6%：0.00 CNY。
 
-REFERENCE|项目：表格里的REFERENCE列，比如Room Charge等，是REFERENCE|项目。
+PAGE/账单页数：是1 of 1。
 
-ROOM VAT Rate 6%：是51.46？不，看ROOM VAT Rate 6%在Net Amount下面的ROOM VAT Rate 6%是554.95 CNY？不，看Net Amount下面的ROOM VAT Rate 6%是554.95 CNY？不对，看图像中的Net Amount部分：
+RATE/房价：是514.58。
 
-Net Amount
-ROOM VAT Rate 6% 554.95 CNY
-F&B VAT Rate 6% 33.96 CNY
-OTHER VAT Rate 10% 0.00 CNY
-OTHER VAT Rate 16% 0.00 CNY
-F&B VAT Rate 16% 0.00 CNY
+REFERENCE/项目：比如Room Charge等。
 
-所以ROOM VAT Rate 6%是其中一个类别。
+ROOM VAT Rate 6%：554.95 CNY。
 
-ROOM|房号：是4101，对应ROOM|房号。
+ROOM/房号：4101。
 
-邮政编码：是310030，对应邮政编码。
+邮政编码：310030（图中“邮政编码：310030”）。
 
-现在需要逐个找到每个类别的bbox。先看图像中的各个部分：
+现在需要逐个对应每个类别，找到它们的bbox和label。
 
-首先，邮政编码：在最上方“邮政编码: 310030”，所以bbox是包含这个文字的区域。
+现在开始整理每个条目：
 
-ADDRESS：包含“香港特别行政区玉英市门头沟南昌路1座 678400” 这个地址，以及可能的其他地址？看图像上方的地址部分，应该是这个。
+1. ACCOMMODATION Details-第1行-CHARGES/CREDIT/费用/可用余额：对应日期11/03/20，项目Room Charge，费用514.58。看表格中第一行的CHARGES列，数值514.58。bbox需要看该单元格的位置。表格的列是DATE, REFERENCE, DESCRIPTION, CHARGES。第一行的CHARGES是514.58，所以bbox是该单元格。
 
-然后，GUEST 客人：是“Lisa Cook”在GUEST/COMPANY下面。
+2. ACCOMMODATION Details-第2行-CHARGES/CREDIT/费用/可用余额：第二行项目Room Service Charge，费用51.46。对应第二行CHARGES列。
 
-COMPANY 公司：是“Huilai Computer Network Hotel”在GUEST/COMPANY下面，还有“Beijing”？不，Beijing是Lisa Cook所在的？看原文：
+3. ACCOMMODATION Details-第4行-CHARGES/CREDIT/费用/可用余额：第四行项目PPP，费用33.96。对应第四行CHARGES列。
 
-GUEST/COMPANY
-客户/公司
-Lisa Cook
-Huilai Computer Network Hotel
-Beijing
+4. ADDRESS：地址是“香港特别行政区玉英市门头沟南昌路1座 678400”，看上方的地址部分。bbox是包含该地址的区域。
 
-所以GUEST是Lisa Cook，COMPANY是Huilai Computer Network Hotel，Beijing是城市？
+5. ARRIVAL/入住日期：值是11/03/20，看ARRIVAL那栏的数值。
 
-现在开始逐个处理：
+6. Balance：值是0.00 RMB，看“Balance”对应的数值。
 
-1. ACCOMMODATION Details-第1行-CHARGES/CREDIT|费用/可用余额：看表格中的第一行（11/03/20 Room Charge）的CHARGES/CREDIT列，值是514.58？不，看表格里的CHARGES/CREDIT列，第一行（11/03/20 Room Charge）的费用是514.58？然后第二行（11/03/20 Room Service Charge）是51.46，第三行（11/03/20 Room VAT 6%）是33.96？不，看表格中的CHARGES/CREDIT列：
+7. CASHIER/收银员：值是Emily Perry，看CASHIER那栏。
 
-DATE|日期 | REFERENCE|项目 | DESCRIPTION|详细 | CHARGES/CREDIT|费用/可用余额
-11/03/20 | Room Charge | （详细） | 514.58
-11/03/20 | Room Service Charge | （详细） | 51.46
-11/03/20 | Room VAT 6% | （详细） | 33.96？不，看图像中的表格：
+8. CHARGES/CREDIT/费用/可用余额：可能是指总费用？或者看Total是600.00，不过可能需要看其他。或者可能这个标签是重复的，比如表格中的CHARGES列整体？不过先处理其他。
 
-看图像中的表格部分：
+9. COMPANY 公司：值是Huilai Computer Network Hotel，看GUEST/COMPANY下的公司名称。
 
-11/03/20 Room Charge → CHARGES/CREDIT是514.58？
+10. CONF.NO/确认号：值是16060913，看CONF.NO那栏。
 
-然后11/03/20 Room Service Charge → 51.46
+11. DATE/日期：比如表格中的DATE列，比如11/03/20等，这里可能需要看每个DATE行，但用户需要的是类别，可能取其中一个？不过可能需要看所有DATE行，但可能用户需要的是该字段的存在，比如取第一个DATE值11/03/20。
 
-11/03/20 Room VAT 6% → 33.96？不，看图像中的数值：
+12. DEPARTURE/离店日期：值是11/04/20，看DEPARTURE那栏。
 
-在图像中，表格里的CHARGES/CREDIT列：
+13. E-MAIL/邮件地址：值是YF.YIFENG@ALIBABA-INC.COM，看E-MAIL那栏。
 
-第一行（11/03/20 Room Charge）：514.58
+14. F&B VAT Rate 16%：值是0.00 CNY，看对应行。
 
-第二行（11/03/20 Room Service Charge）：51.46
+15. F&B VAT Rate 6%：值是33.96 CNY，看对应行。
 
-第三行（11/03/20 Room VAT 6%）：？不，看图像中的第三行是11/04/20 PPP → 33.96？不，看图像中的表格：
+16. GUEST 客人：值是Lisa Cook，看GUEST/COMPANY下的客人姓名。
 
-看图像中的表格：
+17. Marriott Bonvoy#/万豪旅享家号码：值是957746961，看Marriott Bonvoy#那栏。
 
-11/03/20 Room Charge → CHARGES/CREDIT是514.58
+18. Net Amount：值是0.00 RMB，看Net Amount对应的数值。
 
-11/03/20 Room Service Charge → 51.46
+19. OTHER VAT Rate 10%：值是0.00 CNY，看对应行。
 
-11/03/20 Room VAT 6% → ？不，图像中的第三行是11/03/20 Room VAT 6%？不，看图像中的日期列：
+20. OTHER VAT Rate 16%：值是0.00 CNY，看对应行。
 
-11/03/20
+21. OTHER VAT Rate 6%：值是0.00 CNY，看对应行。
 
-11/03/20
+22. PAGE/账单页数：值是1 of 1，看PAGE那栏。
 
-11/03/20
+23. RATE/房价：值是514.58，看RATE那栏。
 
-11/04/20
+24. REFERENCE/项目：比如Room Charge等，看REFERENCE列。
 
-对应的项目：
+25. ROOM VAT Rate 6%：值是554.95 CNY，看对应行。
 
-Room Charge
+26. ROOM/房号：值是4101，看ROOM/房号那栏。
 
-Room Service Charge
+27. 邮政编码：值是310030，看“邮政编码：310030”那栏。
 
-Room VAT 6%
-
-PPP
-
-对应的CHARGES/CREDIT：
-
-514.58
-
-51.46
-
-33.96？不，看图像中的数值，第三行（11/03/20 Room VAT 6%）的费用是？不，看图像中的“Total”是600.00，然后下面的Balance是0.00 RMB。然后看各个费用相加：514.58 +51.46 +33.96 = 599.99？接近600。所以第三行（Room VAT 6%）的费用是33.96？然后第四行（11/04/20 PPP）是？不，图像中的第四行是11/04/20 PPP，费用是？看图像中的CHARGES/CREDIT列，第四行是33.96？不，看图像中的数值：
-
-在图像中，表格里的CHARGES/CREDIT列：
-
-第一行（11/03/20 Room Charge）：514.58
-
-第二行（11/03/20 Room Service Charge）：51.46
-
-第三行（11/03/20 Room VAT 6%）：？不，看图像中的“Room VAT 6%”对应的费用是51.46？不，可能我看错了。不管怎样，现在需要找到“ACCOMMODATION Details-第1行-CHARGES/CREDIT|费用/可用余额”对应的是表格中第一行的CHARGES/CREDIT列，即11/03/20 Room Charge那一行的费用列。
-
-然后“ACCOMMODATION Details-第2行-CHARGES/CREDIT|费用/可用余额”是第二行（Room Service Charge）的费用列。
-
-“ACCOMMODATION Details-第4行-CHARGES/CREDIT|费用/可用余额”是第四行（11/04/20 PPP）的费用列，即33.96？
-
-然后“CHARGES/CREDIT|费用/可用余额”可能是指表格中的该列标题？不，用户给的类别中“CHARGES/CREDIT|费用/可用余额”是其中一个类别，可能是指该列的标题？不，看用户给的类别列表，有“CHARGES/CREDIT|费用/可用余额”作为一个类别，另外还有带行号的。可能需要明确每个实例。
-
-现在，先处理每个需要检测的类别，逐个找：
-
-1. ACCOMMODATION Details-第1行-CHARGES/CREDIT|费用/可用余额：对应表格中第一行（11/03/20 Room Charge）的CHARGES/CREDIT单元格，值为514.58。需要找到这个单元格的bbox。
-
-2. ACCOMMODATION Details-第2行-CHARGES/CREDIT|费用/可用余额：对应第二行（11/03/20 Room Service Charge）的CHARGES/CREDIT单元格，值为51.46。
-
-3. ACCOMMODATION Details-第4行-CHARGES/CREDIT|费用/可用余额：对应第四行（11/04/20 PPP）的CHARGES/CREDIT单元格，值为33.96。
-
-4. ADDRESS：包含“香港特别行政区玉英市门头沟南昌路1座 678400” 这个地址，位于图像上方，邮政编码旁边。
-
-5. ARRIVAL|入住日期：对应“ARRIVAL|入住日期”字段，值为11/03/20，位于右侧信息区。
-
-6. Balance：对应“Balance”字段，值为0.00 RMB，位于Total下方。
-
-7. CASHIER|收银员：对应“CASHIER|收银员”字段，值为Emily Perry，位于右侧信息区。
-
-8. CHARGES/CREDIT|费用/可用余额：可能是指表格的列标题？或者总费用？不，看用户给的类别中有“CHARGES/CREDIT|费用/可用余额”作为一个类别，可能是指该列的标题，或者某个总项？但可能更可能是表格中的列，不过需要看是否有单独的项。或者可能用户中的“CHARGES/CREDIT|费用/可用余额”是指某个特定的条目，比如Total行的费用？不，Total是600.00，属于Total的CHARGES/CREDIT。但用户给的类别中“CHARGES/CREDIT|费用/可用余额”是单独的一个类别，可能是指列标题？但列标题是“CHARGES/CREDIT|费用/可用余额”，所以需要找到该列标题的bbox。
-
-9. COMPANY 公司：对应“Huilai Computer Network Hotel”在GUEST/COMPANY下面。
-
-10. CONF.NO|确认号：对应“CONF.NO|确认号”字段，值为16060913，位于右侧信息区。
-
-11. DATE|日期：对应表格中的“DATE|日期”列标题，以及表格中的日期值（如11/03/20等）。
-
-12. DEPARTURE|离店日期：对应“DEPARTURE|离店日期”字段，值为11/04/20，位于右侧信息区。
-
-13. E-MAIL|邮件地址：对应“E-MAIL|邮件地址”字段，值为YF.YIFENG@ALIBABA-INC.COM，位于右侧信息区。
-
-14. F&B VAT Rate 16%：对应“F&B VAT Rate 16%”行，值为0.00 CNY，位于Net Amount下方。
-
-15. F&B VAT Rate 6%：对应“F&B VAT Rate 6%”行，值为33.96 CNY，位于Net Amount下方。
-
-16. GUEST 客人：对应“Lisa Cook”在GUEST/COMPANY下面。
-
-17. Marriott Bonvoy#|万豪旅享家号码：对应“Marriott Bonvoy#|万豪旅享家号码”字段，值为957746961，位于右侧信息区。
-
-18. Net Amount：对应“Net Amount”字段，值为0.00 RMB？不，看图像中的Net Amount是0.00 RMB？不，看图像中的Net Amount下面的ROOM VAT Rate 6%是554.95 CNY，所以Net Amount可能是指总净额？看图像中的“Net Amount”行是0.00 RMB？不，看图像中的“Net Amount”下面是“0.00 RMB”？不，看图像中的部分：
-
-在Total下面，Balance是0.00 RMB，然后Net Amount是0.00 RMB？不，看图像中的文字：
-
-Net Amount
-0.00 RMB
-
-然后下面是ROOM VAT Rate 6% 554.95 CNY等。所以Net Amount的值是0.00 RMB？
-
-19. OTHER VAT Rate 10%：对应“OTHER VAT Rate 10%”行，值为0.00 CNY，位于下方。
-
-20. OTHER VAT Rate 16%：对应“OTHER VAT Rate 16%”行，值为0.00 CNY，位于下方。
-
-21. OTHER VAT Rate 6%：对应“OTHER VAT Rate 6%”行，值为0.00 CNY，位于下方。
-
-22. PAGE|账单页数：对应“PAGE|账单页数”字段，值为1 of 1，位于右侧信息区。
-
-23. RATE|房价：对应“RATE|房价”字段，值为514.58，位于右侧信息区。
-
-24. REFERENCE|项目：对应表格中的“REFERENCE|项目”列标题，以及列中的项目（如Room Charge等）。
-
-25. ROOM VAT Rate 6%：对应“ROOM VAT Rate 6%”行，值为554.95 CNY，位于Net Amount下方。
-
-26. ROOM|房号：对应“ROOM|房号”字段，值为4101，位于右侧信息区。
-
-27. 邮政编码：对应“邮政编码: 310030”，位于图像上方。
-
-现在需要为每个类别找到对应的bbox。由于是图像，需要估计每个元素的位置。
+现在需要为每个类别找到对应的bbox。由于是图片，需要估计每个元素的位置。
 
 例如：
 
-- 邮政编码：在图像上方，文字“邮政编码: 310030”，bbox大概是从上方偏左的位置，包含该文字。
+- 邮政编码：图中上方“邮政编码：310030”，bbox大概在上方偏左，包含该文字。
 
-- ADDRESS：包含“香港特别行政区玉英市门头沟南昌路1座 678400”，在邮政编码下方，所以bbox是该地址行。
+- ADDRESS：包含“香港特别行政区玉英市门头沟南昌路1座 678400”的区域，bbox在上方，GUEST/COMPANY上方。
 
-- GUEST 客人：Lisa Cook，在GUEST/COMPANY下面，所以bbox是“Lisa Cook”所在的位置。
+- GUEST 客人：Lisa Cook，位于GUEST/COMPANY下方，第一行。
 
-- COMPANY 公司：Huilai Computer Network Hotel，在Lisa Cook下面，所以bbox是该公司名称。
+- COMPANY 公司：Huilai Computer Network Hotel，Lisa Cook下面。
 
-- CASHIER|收银员：Emily Perry，在右侧信息区，ARRIVAL和DEPARTURE之间，所以bbox是“CASHIER|收银员”和“Emily Perry”。
+- CASHIER/收银员：Emily Perry，位于RATE/房价右边的CASHIER那栏。
 
-- CONF.NO|确认号：16060913，在ROOM|房号下面，所以bbox是该确认号。
+- CONF.NO/确认号：16060913，位于ROOM/房号右边的CONF.NO那栏。
 
-- RATE|房价：514.58，在CONF.NO下面，所以bbox是该房价。
+- ROOM/房号：4101，位于ROOM|房号标签右边。
 
-- PAGE|账单页数：1 of 1，在RATE下面，所以bbox是该页数。
+- RATE/房价：514.58，位于RATE|房价标签右边。
 
-- E-MAIL|邮件地址：YF.YIFENG@ALIBABA-INC.COM，在E-MAIL字段下面，所以bbox是该邮箱。
+- PAGE/账单页数：1 of 1，位于PAGE|账单页数标签右边。
 
-- Marriott Bonvoy#|万豪旅享家号码：957746961，在E-MAIL下面，所以bbox是该号码。
+- ARRIVAL/入住日期：11/03/20，位于ARRIVAL|入住日期标签右边。
 
-- ARRIVAL|入住日期：11/03/20，在CASHIER下面，所以bbox是该日期。
+- DEPARTURE/离店日期：11/04/20，位于DEPARTURE|离店日期标签右边。
 
-- DEPARTURE|离店日期：11/04/20，在ARRIVAL下面，所以bbox是该日期。
+- E-MAIL/邮件地址：YF.YIFENG@ALIBABA-INC.COM，位于E-MAIL|邮件地址标签右边。
 
-- DATE|日期：表格中的DATE列，包含11/03/20等日期，所以bbox是表格的DATE列标题和内容。
+- Marriott Bonvoy#/万豪旅享家号码：957746961，位于Marriott Bonvoy#...标签右边。
 
-- REFERENCE|项目：表格中的REFERENCE列，包含Room Charge等项目，所以bbox是该列标题和内容。
+- Balance：0.00 RMB，位于“Balance”标签右边。
 
-- CHARGES/CREDIT|费用/可用余额：表格中的该列，包含各费用数值，所以bbox是该列标题和内容。另外，ACCOMMODATION Details-第1行-CHARGES/CREDIT是该列第一行的数值，第2行是第二行数值，第4行
+- Net Amount：0.00 RMB，位于“Net Amount”标签右边。
+
+- F&B VAT Rate 6%：33.96 CNY，位于F&B VAT Rate 6%标签右边。
+
+- F&B VAT Rate 16%：0.00 CNY，位于F&B VAT Rate 16%标签右边。
+
+- OTHER VAT Rate 6%：0.00 CNY，位于OTHER VAT Rate 6%标签右边。
+
+- OTHER VAT Rate 10%：0.00 CNY，位于OTHER VAT Rate 10%标签右边。
+
+- OTHER VAT Rate 16%：0.00 CNY，位于OTHER VAT Rate 16%标签右边。
+
+- ACCOMMODATION Details-第1行-CHARGES/CREDIT/费用/可用余额：对应表格中11/03/20 Room Charge的CHARGES列，数值514.58，该单元格的bbox。
+
+- ACCOMMODATION Details-第2行-CHARGES/CREDIT/费用/可用余额：11/03/20 Room Service Charge的CHARGES列，51.46。
+
+- ACCOMMODATION Details-第4行-CHARGES/CREDIT/费用/可用余额：11/04/20 PPP的CHARGES列，33.96。
+
+- REFERENCE/项目：比如Room Charge等，对应REFERENCE列的内容。
+
+- ROOM VAT Rate 6%：554.95 CNY，对应该标签右边的数值。
+
+现在需要将这些整理成JSON数组，每个元素包含bbox和label。
+
+由于图片中的坐标需要估计，这里假设每个元素的bbox大致范围，比如：
+
+邮政编码的bbox：[10, 50, 200, 70]（假设上方的邮政编码文字区域）
+
+ADDRESS的bbox：[10, 20, 600, 40]（包含地址的区域）
+
+GUEST 客人：[100, 100, 250, 120]（Lisa Cook的位置）
+
+COMPANY 公司：[100, 120, 350, 140]（Huilai Computer Network Hotel）
+
+CASHIER/收银员：[550, 250, 650, 270]（Emily Perry的位置）
+
+CONF.NO/确认号：[400, 250, 500, 270]（16060913的位置）
+
+ROOM/房号：[400, 220, 450, 240]（4101的位置）
+
+RATE/房价：[400, 240, 450, 260]（514.58的位置）
+
+PAGE/账单页数：[300, 260, 350, 280]（1 of 1的位置）
+
+ARRIVAL/入住日期：[400, 280, 450, 300]（11/03/20的位置）
+
+DEPARTURE/离店日期：[400, 300, 450, 320]（11/04/20的位置）
+
+E-MAIL/邮件地址：[400, 320, 550, 340]（YF.YIFENG@ALIBABA-INC.COM的位置）
+
+Marriott Bonvoy#/万豪旅享家号码：[400, 340, 550, 360]（957746961的位置）
+
+Balance：[500, 400, 600, 420]（0.00 RMB的位置）
+
+Net Amount：[500, 420, 600, 440]（0.00 RMB的位置）
+
+F&B VAT Rate 6%：[500, 440, 600, 460]（33.96 CNY的位置）
+
+F&B VAT Rate 16%：[500, 460, 600, 480]（0.00 CNY的位置）
+
+OTHER VAT Rate 6%：[500, 480, 600, 500]（0.00 CNY的位置）
+
+OTHER VAT Rate 10%：[500, 500, 600, 520]（0.00 CNY的位置）
+
+OTHER VAT Rate 16%：[500, 520, 600, 540]（0.00 CNY的位置）
+
+ACCOMMODATION Details-第1行-CHARGES/CREDIT/费用/可用余额：[650, 300, 750, 320]（514.58的位置，对应第一行CHARGES）
+
+ACCOMMODATION Details-第2行-CHARGES/CREDIT/费用/可用余额：[650, 320, 750, 340]（51.46的位置，第二行CHARGES）
+
+ACCOMMODATION Details-第4行-CHARGES/CREDIT/费用/可用余额：[650, 340, 750, 360]（33.96的位置，第四行CHARGES）
+
+REFERENCE/项目：[100, 300, 300, 320]（Room Charge等项目列）
+
+ROOM VAT Rate 6%：[500, 540, 600, 560]（554.95 CNY的位置）
+
+现在需要将这些整理成JSON数组，每个元素对应一个类别。
+
+注意：有些类别可能在图中没有对应值，比如“CHARGES/CREDIT/费用/可用余额”可能重复，需要确保每个标签对应正确的元素。
+
+现在开始构建每个条目：
+
+1. 邮政编码：
+   - bbox：假设图中“邮政编码：310030”在上方，坐标大概[15, 55, 250, 75]
+   - label：邮政编码
+
+2. ADDRESS：
+   - bbox：包含“香港特别行政区玉英市门头沟南昌路1座 678400”的区域，比如[15, 25, 650, 45]
+   - label：ADDRESS
+
+3. GUEST 客人：
+   - bbox：Lisa Cook的位置，比如[105, 105, 250, 125]
+   - label：GUEST 客人
+
+4. COMPANY 公司：
+   - bbox：Huilai Computer Network Hotel的位置，比如[105, 125, 350, 145]
+   - label：COMPANY 公司
+
+5. CASHIER/收银员：
+   - bbox：Emily Perry的位置，比如[555, 255, 650, 275]
+   - label：CASHIER/收银员
+
+6. CONF.NO/确认号：
+   - bbox：16060913的位置，比如[405, 255, 500, 275]
+   - label：CONF.NO/确认号
+
+7. ROOM/房号：
+   - bbox：4101的位置，比如[405, 225, 450, 245]
+   - label：ROOM/房号
+
+8. RATE/房价：
+   - bbox：514.58的位置，比如[405, 245, 450, 265]
+   - label：RATE/房价
+
+9. PAGE/账单页数：
+   - bbox：1 of 1的位置，比如[305, 265, 350, 285]
+   - label：PAGE/账单页数
+
+10. ARRIVAL/入住日期：
+    - bbox：11/03/20的位置，比如[405, 285, 450, 305]
+    - label：ARRIVAL/入住日期
+
+11. DEPARTURE/离店日期：
+    - bbox：11/04/20的位置，比如[405, 305, 450, 325]
+    - label：DEPARTURE/离店日期
+
+12. E-MAIL/邮件地址：
+    - bbox：YF

@@ -1,1 +1,37 @@
-[{"bbox_2d": [92, 105, 897, 128], "label": "company"}, {"bbox_2d": [92, 130, 897, 175], "label": "address"}, {"bbox_2d": [92, 200, 897, 220], "label": "date"}, {"bbox_2d": [92, 260, 897, 280], "label": "total"}]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The company name is "LIM SENG THO HARDWARE TRADING". Let's find its bounding box.
+- Address: The address lines are "No 7, Simpang Off Batu Village, Jalan Ipoh Batu 5. 51200 Kuala Lumpur MALAYSIA". Need to capture that.
+- Date: The date is "09/02/2018 10:05" from the invoice.
+- Total: The total incl of GST is 8.40, so that's the total amount.
+
+Now, check each part's location on the image.
+
+Company: The text "LIM SENG THO HARDWARE TRADING" is in the upper part. Bounding box should cover that line.
+
+Address: The lines below the company name: "No 7, Simpang Off Batu Village, Jalan Ipoh Batu 5. 51200 Kuala Lumpur MALAYSIA". So that's the address.
+
+Date: The line with "Date" and the value "09/02/2018 10:05".
+
+Total: The line "Total incl of GST" which is 8.40.
+
+Let's map each:
+
+1. Company: [107, 102, 893, 127] (approx, since the text is centered)
+2. Address: [107, 140, 893, 182] (combining the address lines)
+3. Date: [107, 225, 376, 244] (the date value is there)
+4. Total: [252, 305, 325, 323] (the total incl of GST is 8.40, so the value is in that line)
+
+Wait, need to check the exact positions. Let's look at the image:
+
+- Company: "LIM SENG THO HARDWARE TRADING" is the second line from top (after the number 31802013). So the bounding box for company is the line containing that text.
+
+- Address: The next lines: "No 7, Simpang Off Batu Village, Jalan Ipoh Batu 5. 51200 Kuala Lumpur MALAYSIA" — that's the address.
+
+- Date: The line labeled "Date" with value "09/02/2018 10:05".
+
+- Total: The line "Total incl of GST" which shows 8.40. So the total amount is 8.40.
+
+Now, create the JSON array with each entry.
+</think>
+[{"bbox_2d": [107, 102, 893, 127], "label": "company"}, {"bbox_2d": [107, 140, 893, 182], "label": "address"}, {"bbox_2d": [107, 225, 376, 244], "label": "date"}, {"bbox_2d": [252, 305, 325, 323], "label": "total"}]

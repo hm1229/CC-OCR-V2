@@ -1,1 +1,114 @@
-[{"bbox_2d": [140, 320, 928, 342], "label": "date"}, {"bbox_2d": [200, 293, 339, 317], "label": "doc_no_receipt_no"}, {"bbox_2d": [125, 180, 875, 244], "label": "seller_address"}, {"bbox_2d": [128, 256, 872, 278], "label": "seller_gst_id"}, {"bbox_2d": [125, 155, 875, 177], "label": "seller_name"}, {"bbox_2d": [130, 282, 870, 298], "label": "seller_phone"}, {"bbox_2d": [672, 370, 877, 394], "label": "total_amount"}, {"bbox_2d": [162, 834, 229, 856], "label": "total_tax"}]
+Got it, let's go through each category and find the corresponding values on the receipt.
+
+First, date: The date is on the invoice, "03/06/2017 5:02:54 PM". Let's check the location.
+
+doc_no_receipt_no: The Bill No is BM-161113. That's the receipt number.
+
+seller_address: The address lines are "No. 9-G, Jalan Dinar D U3/D Taman Subang Perdana, Sek. U3, 40150 Shah Alam, Selangor D.E."
+
+seller_gst_id: The GST Reg No is 000203587584.
+
+seller_name: Broadview Marketing Sdn Bhd (728364-M)
+
+seller_phone: 03-78459183
+
+total_amount: Total Sales Inclusive GST is 18.00. Also, Cash Received is 18.00, so total amount is 18.00.
+
+total_tax: The GST amount is 1.02. Let's check the GST Summary section, GST is 1.02.
+
+Now, let's map each to their bounding boxes.
+
+1. date: The line with "Date : 03/06/2017 5:02:54 PM" — find the coordinates.
+
+2. doc_no_receipt_no: "Bill No : BM-161113" — that's the receipt number.
+
+3. seller_address: The address block from "No. 9-G..." to "Selangor D.E."
+
+4. seller_gst_id: "GST Reg No: 000203587584"
+
+5. seller_name: "Broadview Marketing Sdn Bhd (728364-M)"
+
+6. seller_phone: "03-78459183"
+
+7. total_amount: "Total Sales Inclusive GST : 18.00" or "Cash Received : 18.00" — the total amount is 18.00.
+
+8. total_tax: "GST : 1.02" in the GST Summary.
+
+Now, let's extract each with their bounding boxes.
+
+Let's check each element:
+
+- seller_name: The line "Broadview Marketing Sdn Bhd (728364-M)" — coordinates.
+
+- seller_address: The address lines below the name.
+
+- seller_gst_id: The line with "GST Reg No: 000203587584"
+
+- seller_phone: The line "03-78459183" below the address.
+
+- date: "Date : 03/06/2017 5:02:54 PM"
+
+- doc_no_receipt_no: "Bill No : BM-161113"
+
+- total_amount: The "Total Sales Inclusive GST : 18.00" line.
+
+- total_tax: The "GST : 1.02" line in GST Summary.
+
+Now, let's define each bounding box.
+
+For example, the seller_name is in the top part:
+
+"Broadview Marketing Sdn Bhd (728364-M)" — let's see the coordinates. The text is centered, so the bounding box would cover that line.
+
+Similarly, the address is the next few lines.
+
+Let's list each:
+
+1. date: [109, 237, 925, 257] (approx, since the line is "Date : 03/06/2017 5:02:54 PM")
+
+2. doc_no_receipt_no: [125, 247, 925, 265] (Bill No : BM-161113)
+
+3. seller_address: The lines from "No. 9-G, Jalan Dinar D U3/D" to "40150 Shah Alam, Selangor D.E." — so the bounding box covers those lines.
+
+4. seller_gst_id: [125, 287, 925, 305] (GST Reg No: 000203587584)
+
+5. seller_name: [109, 157, 925, 177] (Broadview Marketing Sdn Bhd (728364-M))
+
+6. seller_phone: [125, 315, 925, 333] (03-78459183)
+
+7. total_amount: [125, 347, 925, 365] (Total Sales Inclusive GST : 18.00) — or check the "Total : 18.00" but the inclusive GST is the total amount including tax, so that's the total amount.
+
+8. total_tax: [125, 447, 925, 465] (GST : 1.02) — in the GST Summary section.
+
+Wait, let's check the GST Summary part. The line "GST : 1.02" is there.
+
+Now, let's confirm each label:
+
+- date: correct.
+
+- doc_no_receipt_no: Bill No is the receipt number.
+
+- seller_address: the address block.
+
+- seller_gst_id: GST Reg No.
+
+- seller_name: company name.
+
+- seller_phone: phone number.
+
+- total_amount: total sales inclusive GST is 18.00.
+
+- total_tax: GST amount is 1.02.
+
+Now, let's create the JSON array with each entry.
+</think>
+[
+    {"bbox_2d": [125, 247, 925, 265], "label": "doc_no_receipt_no"},
+    {"bbox_2d": [109, 157, 925, 177], "label": "seller_name"},
+    {"bbox_2d": [125, 315, 925, 333], "label": "seller_phone"},
+    {"bbox_2d": [125, 287, 925, 305], "label": "seller_gst_id"},
+    {"bbox_2d": [125, 237, 925, 257], "label": "date"},
+    {"bbox_2d": [125, 347, 925, 365], "label": "total_amount"},
+    {"bbox_2d": [125, 447, 925, 465], "label": "total_tax"},
+    {"bbox_2d": [125, 367, 925, 385], "label": "seller_address"}
+]

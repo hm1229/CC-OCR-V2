@@ -1,8 +1,80 @@
+Got it, let's go through each category and find the corresponding values on the invoice.
+
+First, date: Looking at the bottom part, there's "11-01-16 14:00". So that's the date.
+
+Seller_address: The address is "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR". Let's check the text.
+
+Seller_gst_id: The GST ID is given as "(GST ID No :000473792512)". So that's the GST ID.
+
+Seller_name: The top part says "MR. D.I.Y. (KUCHAI) SDN BHD".
+
+Total_amount: The total incl. GST is RM 7.00. Let's check the line "TOTAL INCL. GST@6% RM 7.00".
+
+Total_tax: The GST included is RM 0.40, which is the tax amount. The line "GST @6% included in total RM 0.40".
+
+Now, let's map each to their bounding boxes.
+
+1. date: The text "11-01-16 14:00" is in the lower part. Let's find its coordinates.
+
+2. seller_address: The address lines from LOT... to SELANGOR.
+
+3. seller_gst_id: The line with (GST ID No :000473792512).
+
+4. seller_name: The top line "MR. D.I.Y. (KUCHAI) SDN BHD".
+
+5. total_amount: The line "TOTAL INCL. GST@6% RM 7.00".
+
+6. total_tax: The line "GST @6% included in total RM 0.40".
+
+Now, let's extract each with their bounding boxes.
+
+First, seller_name: The top part, "MR. D.I.Y. (KUCHAI) SDN BHD" — let's check the coordinates. The text is in the upper section.
+
+seller_address: The address block: "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR".
+
+seller_gst_id: "(GST ID No :000473792512)" — note the colon and numbers.
+
+date: "11-01-16 14:00" — in the timestamp line.
+
+total_amount: "TOTAL INCL. GST@6% RM 7.00" — the total line.
+
+total_tax: "GST @6% included in total RM 0.40" — the tax line.
+
+Now, let's define each bounding box.
+
+For seller_name: The text is at the top, so the bounding box would cover that line.
+
+Let's check the image's text positions.
+
+The invoice has:
+
+MR. D.I.Y. (KUCHAI) SDN BHD — this is the seller name.
+
+Co-REG:750441-W — maybe not needed.
+
+Then the address lines.
+
+So, let's list each:
+
+1. date: "11-01-16 14:00" — the line starts with that. Let's check the coordinates. The line is "11-01-16 14:00 SHO1 B003 T1 R000375723". So the date part is the first part.
+
+2. seller_address: The block from "LOT 1851-A & 1851-B, JALAN KPB 6, KAWASAN PERINDUSTRIAN BALAKONG, 43300 SERI KEMBANGAN, SELANGOR".
+
+3. seller_gst_id: "(GST ID No :000473792512)" — note the colon and the number.
+
+4. seller_name: "MR. D.I.Y. (KUCHAI) SDN BHD"
+
+5. total_amount: "TOTAL INCL. GST@6% RM 7.00"
+
+6. total_tax: "GST @6% included in total RM 0.40"
+
+Now, let's create the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [102, 107, 897, 132], "label": "seller_name"},
-    {"bbox_2d": [102, 232, 897, 257], "label": "seller_gst_id"},
-    {"bbox_2d": [102, 155, 897, 222], "label": "seller_address"},
-    {"bbox_2d": [102, 852, 227, 877], "label": "date"},
-    {"bbox_2d": [102, 442, 897, 467], "label": "total_amount"},
-    {"bbox_2d": [102, 482, 897, 507], "label": "total_tax"}
+    {"bbox_2d": [92, 944, 322, 963], "label": "date"},
+    {"bbox_2d": [92, 202, 602, 257], "label": "seller_address"},
+    {"bbox_2d": [100, 277, 346, 296], "label": "seller_gst_id"},
+    {"bbox_2d": [92, 147, 477, 166], "label": "seller_name"},
+    {"bbox_2d": [92, 537, 908, 556], "label": "total_amount"},
+    {"bbox_2d": [92, 617, 610, 636], "label": "total_tax"}
 ]

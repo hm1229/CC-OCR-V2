@@ -1,6 +1,20 @@
-[
-    {"bbox_2d": [142, 187, 856, 220], "label": "company"},
-    {"bbox_2d": [144, 232, 854, 254], "label": "address"},
-    {"bbox_2d": [144, 272, 326, 294], "label": "date"},
-    {"bbox_2d": [144, 342, 426, 364], "label": "total"}
-]
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part has "BIZ LINK SECURITY & OA TRADING" along with the GST number and address details. The company name is BIZ LINK SECURITY & OA TRADING.
+- Address: The address is "Lot TC007 & 008, 3rd Floor, SG. Wang Plaza".
+- Date: The date is "7/6/2016" (from Date: 7/6/2016 Time: 2:47:04 PM).
+- Total: Looking at the total amount payable, which is 399.00, but also check the GST summary total. Wait, the "Total Amt Payable" is 399.00, and the GST summary total amount is 376.42. But maybe the total amount of the invoice. Let's check the fields. The "Total Amt Payable" is 399.00. Let's confirm.
+
+Now, map each:
+
+Company: The company name is in the header. Let's find the bounding box for the company. The text "BIZ LINK" is the main title, then "SECURITY & OA TRADING" below. So the company is that line.
+
+Address: The line with Lot TC007 & 008, 3rd Floor, SG. Wang Plaza.
+
+Date: The date line is "Date : 7/6/2016 Time : 2:47:04 PM" so the date part is 7/6/2016.
+
+Total: The total amount payable is 399.00, which is in "Total Amt Payable : 399.00". Also, the GST summary total is 376.42, but the question says "total" which might refer to the total amount of the invoice. Let's check the invoice's total. The "Total Amt Payable" is the amount to pay, which is 399.00. Let's check the elements.
+
+Now, create the JSON entries for each category.
+</think>
+[{"bbox_2d": [101, 207, 898, 232], "label": "company"}, {"bbox_2d": [101, 240, 898, 262], "label": "address"}, {"bbox_2d": [125, 302, 302, 322], "label": "date"}, {"bbox_2d": [325, 342, 405, 362], "label": "total"}]

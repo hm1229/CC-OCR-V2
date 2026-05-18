@@ -1,1 +1,23 @@
-[{"bbox_
+Got it, let's extract the required information from the invoice.
+
+First, address: The shop's address is listed as "NO. 31G833G, JALAN SETIA INDAH X, U13/X 40170 SETIA ALAM". Let's check the text.
+
+Company: The "Owned By" section says "SANYU SUPPLY SDN BHD (1135772-K)". So that's the company.
+
+Date: The invoice date is "06/10/2017" as per "Date : 06/10/2017".
+
+Total: The final total is 8.70 RM, which is in the "Final Total" line.
+
+Now, let's map each to their bounding boxes.
+
+For address: The address lines are in the top part. Let's find the exact text. The address is "NO. 31G833G, JALAN SETIA INDAH X, U13/X 40170 SETIA ALAM". Let's check the coordinates.
+
+Company: "SANYU SUPPLY SDN BHD (1135772-K)" is under "Owned By :".
+
+Date: "06/10/2017" is next to INV NO.
+
+Total: The final total is 8.70, which is in the "Final Total" row.
+
+Now, let's structure each entry.
+</think>
+[{"bbox_2d": [101, 49, 527, 70], "label": "address"}, {"bbox_2d": [52, 302, 527, 322], "label": "company"}, {"bbox_2d": [577, 637, 727, 656], "label": "date"}, {"bbox_2d": [52, 477, 527, 496], "label": "total"}]

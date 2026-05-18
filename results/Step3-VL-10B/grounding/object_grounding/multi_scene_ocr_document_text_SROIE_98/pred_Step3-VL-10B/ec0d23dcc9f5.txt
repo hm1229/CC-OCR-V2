@@ -1,1 +1,24 @@
-[{"bbox_2d": [92, 107, 502, 128], "label": "company"}, {"bbox_2d": [92, 132, 525, 192], "label": "address"}, {"bbox_2d": [275, 262, 362, 282], "label": "date"}, {"bbox_2d": [25, 540, 975, 565], "label": "total"}]
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: Look for the business name. The receipt has "URBAN IDEA SDN BHD (417940-M)". That's the company.
+- Address: The address lines are "A-G-06, DATARAN GLOMAC, JALAN SS6/5A, PUSAT BANDAR KELANA JAYA, 47301 PETALING JAYA, SELANGOR, Malaysia".
+- Date: The served by line has "14/02/2018".
+- Total: The total amount is RM11.90, which is in the "Total (Eat In)" section.
+
+Now, find the bounding boxes for each.
+
+Check each part:
+
+Company: The line "URBAN IDEA SDN BHD (417940-M)" is the company. Let's get its coordinates.
+
+Address: The multiple lines starting from "A-G-06..." down to "Malaysia".
+
+Date: "14/02/2018" in the "Served by: JOSEPH 14/02/2018 11:13:31" line.
+
+Total: The "Total (Eat In)" line shows RM11.90, and the cash is also RM11.90, so the total amount is RM11.90.
+
+Now, map each to the required format.
+</think>
+[{"bbox_2d": [92, 117, 905, 159], "label": "company"}, {"bbox_2d": [92, 159, 905, 202], "label": "address"}, {"bbox_2d": [275, 302, 382, 322], "label": "date"}, {"bbox_2d": [24, 547, 905, 567], "label": "total"}]

@@ -1,6 +1,23 @@
-[
-    {"bbox_2d": [109, 447, 892, 472], "label": "company"},
-    {"bbox_2d": [105, 484, 890, 525], "label": "address"},
-    {"bbox_2d": [113, 617, 887, 638], "label": "date"},
-    {"bbox_2d": [325, 727, 890, 748], "label": "total"}
-]
+Got it, let's extract the information. First, identify each category.
+
+Company: The company name is "KEDAI UEAT & RUNCIT HONG NING SDN. BHD." Let's find its bounding box.
+
+Address: The address is "NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR." 
+
+Date: The date is "21/12/16 9:29:44 AM"
+
+Total: Let's check the total amount. The Net Amt is 8.00, and Cash Paid is 8.00, so total should be the net amount or cash paid. Let's see the GST Summary, but the total amount paid is 8.00. Let's check the "Net Amt @ GST6% : 8.00" so total is 8.00.
+
+Now, map each to their labels.
+
+First, company: the text "KEDAI UEAT & RUNCIT HONG NING SDN. BHD." is in the middle top.
+
+Address: the lines below the GST ID: "NO.8, JALAN LANG KUNING, KEPONG BARU, 52100 KUALA LUMPUR."
+
+Date: "21/12/16 9:29:44 AM" under Date:.
+
+Total: The Net Amt is 8.00, which is the total amount. Let's check the Cash Paid is 8.00, so total is 8.00. Let's find where that is. The line "Net Amt @ GST6% : 8.00" so that's the total.
+
+Now, create the JSON entries.
+</think>
+[{"bbox_2d": [109, 447, 890, 470], "label": "company"}, {"bbox_2d": [125, 482, 874, 527], "label": "address"}, {"bbox_2d": [132, 617, 866, 636], "label": "date"}, {"bbox_2d": [447, 527, 532, 547], "label": "total"}]

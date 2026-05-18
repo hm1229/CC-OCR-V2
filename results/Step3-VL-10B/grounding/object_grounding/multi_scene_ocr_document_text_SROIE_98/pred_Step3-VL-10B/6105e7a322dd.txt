@@ -1,1 +1,38 @@
+Got it, let's extract the required information from the receipt.
+
+First, identify each category:
+
+- Company: The restaurant name is "RESTORAN WAN SHENG". Let's check the text. The top part has that.
+- Address: The address lines are "No.2, Jalan Temenggung 19/9, Seksyen 9, Bandar Mahkota Cheras, 43200 Cheras, Selangor".
+- Date: The date is "21-06-2018 18:54:22".
+- Total: The total amount is "4.60" under "TOTAL:".
+
+Now, find the bounding boxes for each.
+
+For company: The line "RESTORAN WAN SHENG" is the company name. Let's check the coordinates. The text is in the upper part.
+
+Address: The address spans multiple lines from "No.2..." to "Selangor".
+
+Date: The line "Date : 21-06-2018 18:54:22".
+
+Total: The "TOTAL: 4.60" line.
+
+Let's map each:
+
+1. Company: "RESTORAN WAN SHENG" – bbox around that line.
+2. Address: The address block.
+3. Date: The date line.
+4. Total: The total amount line.
+
+Now, check the exact positions.
+
+Looking at the image:
+
+- Company: The first line after the number is "RESTORAN WAN SHENG". So the bounding box for company is the text "RESTORAN WAN SHENG".
+- Address: The lines starting from "No.2, Jalan Temenggung 19/9," down to "43200 Cheras, Selangor".
+- Date: The line "Date : 21-06-2018 18:54:22".
+- Total: The line "TOTAL: 4.60".
+
+Now, create the JSON entries.
+</think>
 [{"bbox_2d": [21, 140, 979, 162], "label": "company"}, {"bbox_2d": [21, 172, 979, 244], "label": "address"}, {"bbox_2d": [21, 292, 979, 314], "label": "date"}, {"bbox_2d": [21, 528, 979, 550], "label": "total"}]

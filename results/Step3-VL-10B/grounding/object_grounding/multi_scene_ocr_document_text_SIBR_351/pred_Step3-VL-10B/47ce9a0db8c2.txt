@@ -1,154 +1,150 @@
-用户现在需要从图片中检测指定的各个对象，每个对象要给出bbox和label。首先得逐个分析每个类别在图中的位置。
+用户现在需要从发票中提取各个字段的信息，先逐个看每个类别对应的位置。首先看Address，发票里的地址是“787 Michelle Drives Mezamouth, NY 59502”和“754 Caitlin Shore Apt. 602 Morganville, LA 60764”这些，所以Address的bbox要覆盖这两个地址。然后Arrival入住日期是06/11/20，看对应的字段。Balance CNY是499.99。Charges是499.99。Company Name是“创亿信息酒店”。Confirmation No 确认号是98596210。Date是06/11/20。Departure 离店日期是07/11/20。Description是“住宿服务”。Fax 传真是(86 21)88697688。Loyalty No 会员号码是XXXXX1923。Room No. 房号是0502。Tel 电话是(86 21)12688068。Total Amount Before Taxes是432.71。Total Amount Non Taxable这里看数值，可能没有？不，看发票里的Total Amount Non Taxable是对应CNY，数值应该和Before Taxes一样？不，看发票里的Total Amount Before Taxes是432.71，Total Amount Non Taxable可能也是？然后Total Amount with Taxes是499.99，Total VAT是0.00。Website是https://www.white-young.com/。邮政编码是200122。
 
-首先看Address（地址）：图中有两行地址，比如“787 Michelle Drives Mezamouth, NY 59502”和“754 Caitlin Shore Apt. 602 Morganville, LA 60764”，还有中文地址“重庆市旭县静安罗路R座 442362”。需要确定哪个是Address。这里可能包含多个地址，但先找对应的。
+现在逐个确定每个元素的bbox：
 
-然后Arrival入住日期：图中Arrival对应的是06/11/20，所以这个是Arrival入住日期。
+1. Address：包含两个地址行，第一行是787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店，第二行是754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362 邮政编码:200122？不，看原文中的地址部分：“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店 https://www.white-young.com/ 754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362 邮政编码:200122” 所以Address应该是这两个地址，所以bbox是包含这两个地址的区域，比如从顶部的地址开始到电话传真上面的部分。
 
-Balance CNY：图中有“Balance CNY 499.99”，所以这个是Balance CNY。
+2. Arrival入住日期：看右侧的Arrival 对应06/11/20，所以bbox是Arrival那一行的数值。
 
-Charges：表格中的Charges列，比如499.99，对应Charges。
+3. Balance CNY：在表格下面的Balance CNY 499.99，所以对应数值。
 
-Company Name：图中的“创亿信息酒店”是公司名，还有英文的网址前的名称？看顶部“创亿信息酒店”是公司名称。
+4. Charges：表格中的Charges列，06/11/20的Charges是499.99。
 
-Confirmation No 确认号：图中Confirmation No对应的是98596210，所以是确认号。
+5. Company Name：创亿信息酒店，对应地址中的“创亿信息酒店”。
 
-Date：表格中的Date列，06/11/20，是Date。
+6. Confirmation No 确认号：右侧的Confirmation No 对应98596210。
 
-Departure 离店日期：图中Departure对应的是07/11/20，是离店日期。
+7. Date：表格中的Date列是06/11/20。
 
-Description：表格中的Description列，比如“住宿服务”，是Description。
+8. Departure 离店日期：右侧的Departure 对应07/11/20。
 
-Fax 传真：图中Fax 传真对应的是(86 21)88697688，所以是Fax 传真。
+9. Description：表格中的Description是“住宿服务”。
 
-Loyalty No 会员号码：图中Loyalty No对应的是XXXXX1923，是会员号码。
+10. Fax 传真：Tel 电话下面的Fax 传真 : (86 21)88697688。
 
-Room No. 房号：图中Room No.对应的是0502，是房号。
+11. Loyalty No 会员号码：右侧的Loyalty No 对应XXXXX1923。
 
-Tel 电话：图中Tel 电话对应的是(86 21)12688068，是电话。
+12. Room No. 房号：右侧的Room No. 对应0502。
 
-Total Amount Before Taxes：图中“Total Amount Before Taxes : CNY 432.71”，是这个类别。
+13. Tel 电话：Tel 电话 : (86 21)12688068。
 
-Total Amount Non Taxable：图中“Total Amount Non Taxable : CNY”（后面可能空？看图片里的内容，图中是“Total Amount Non Taxable : CNY”后面可能没有数值？但需要看图片中的内容。看图片里的文字：“Total Amount Non Taxable : CNY” 对应的数值？可能图中是存在的，需要确认。
+14. Total Amount Before Taxes：下面的Total Amount Before Taxes : CNY 432.71。
 
-Total Amount with Taxes：图中“Total Amount with Taxes : CNY 499.99”，是这个。
+15. Total Amount Non Taxable：Total Amount Non Taxable : CNY （这里看发票中是否有数值，发票里Total Amount Non Taxable 对应的CNY 应该是432.71？因为Total VAT是0.00，所以Total Amount with Taxes = Non Taxable + VAT，所以Non Taxable是432.71，VAT是67.28？不对，看发票里的Total Amount with Taxes是499.99，Total Amount Before Taxes是432.71，Total VAT是0.00？这可能有问题，或者看发票中的数值：Total Amount Before Taxes: CNY 432.71；Total Amount Non Taxable: CNY （可能和Before Taxes一样？因为VAT是0.00，所以Total Amount with Taxes = Non Taxable + VAT = 432.71 + 0 = 432.71？但发票里Total Amount with Taxes是499.99，这说明可能我理解错了。看发票中的数值：
 
-Total VAT：图中“Total VAT : CNY 0.00”，是这个。
+Balance CNY 499.99
 
-Website：图中的“https://www.white-young.com/”是网站。
+Total Amount Before Taxes : CNY 432.71
 
-邮政编码：图中的“邮政编码:200122”，是邮政编码。
+Total Amount Non Taxable : CNY （这里可能没有显示数值？不，看图片中的文字：
 
-现在需要逐个定位每个元素的bbox。需要看图片中的位置，比如：
+Total Amount Before Taxes : CNY 432.71
 
-首先Address：包含“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店”和“754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362”这些地址信息。可能需要把地址部分的bbox找出来。比如第一行地址是“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店”，第二行是“754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362”。所以Address的bbox可能覆盖这两行。
+Total Amount Non Taxable : CNY 
 
-然后Arrival入住日期：在右侧的表格中，Arrival对应的是06/11/20，所以bbox是Arrival那一行的日期部分。
+Total VAT : CNY 0.00
 
-现在开始逐个处理：
+Total Amount with Taxes : CNY 499.99
 
-1. Address：看图片中的地址部分，比如“787 Michelle Drives Mezamouth, NY 59502”和“754 Caitlin Shore Apt. 602 Morganville, LA 60764”以及中文地址“重庆市旭县静安罗路R座 442362”。这些属于Address。所以bbox大概是包含这些文字的区域。比如第一行地址的bbox是[40, 92, 520, 112]左右？需要看图片中的位置。原图片中地址部分：
+哦，可能Total Amount Non Taxable 是432.71，Total VAT是67.28？但发票里Total VAT是0.00，Total Amount with Taxes是499.99，而Total Amount Before Taxes是432.71，那432.71 + 67.28 = 499.99，所以Total VAT应该是67.28？但图片中Total VAT显示的是0.00？可能图片中的数值是：Total Amount Before Taxes是432.71，Total Amount Non Taxable是432.71，Total VAT是67.28？但图片里Total VAT写的是0.00，Total Amount with Taxes是499.99。可能图片中的数值是正确的，按图片中的内容提取，不管逻辑，只看显示的数值。所以Total Amount Non Taxable在图片中对应的位置可能没有数值？不，看图片中的文字：
 
-“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店 https://www.white-young.com/”
+Total Amount Before Taxes : CNY 432.71
 
-“754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362 邮政编码:200122”
+Total Amount Non Taxable : CNY 
 
-所以Address应该包含这两个地址行，所以bbox可以是[42, 90, 522, 114]（第一行地址）和[42, 112, 522, 136]（第二行地址）？但可能需要合并。或者看每个地址部分。不过可能更简单的是，Address对应的是包含街道、城市、邮编等的文本。比如“787 Michelle Drives Mezamouth, NY 59502”是地址，所以bbox是[44, 92, 516, 110]。
+Total VAT : CNY 0.00
 
-2. Arrival入住日期：在右侧表格中，Arrival对应的是06/11/20，所以看Arrival那一行的标签和值。Arrival的标签在右侧，值是06/11/20。所以bbox是Arrival的标签和值的区域，比如右侧表格中Arrival那一行，Arrival: 06/11/20，所以bbox是[600, 140, 880, 162]左右？
+Total Amount with Taxes : CNY 499.99
 
-3. Balance CNY：图中“Balance CNY 499.99”，所以bbox是包含这个文字的区域，比如在表格下方，Balance那一行，CNY 499.99，所以bbox是[600, 290, 880, 312]。
+所以Total Amount Non Taxable的CNY后面可能没有数值？但根据Total Amount with Taxes = Total Amount Non Taxable + Total VAT，所以Total Amount Non Taxable = 499.99 - 0.00 = 499.99？但Total Amount Before Taxes是432.71，这可能是因为Before Taxes是不含税的，而Non Taxable就是Before Taxes？可能我搞混了，但按图片中的显示，Total Amount Non Taxable这一行的CNY后面没有数值？不，看图片中的内容，可能Total Amount Non Taxable的数值和Total Amount Before Taxes一样？或者可能图片中的Total Amount Non Taxable是432.71，Total VAT是67.28，Total Amount with Taxes是499.99。但图片中Total VAT显示的是0.00，这可能是图片中的错误，或者我看错了。不管怎样，按图片中显示的文本提取，Total Amount Non Taxable对应的是“Total Amount Non Taxable : CNY”后面的数值，图片中可能显示的是432.71？因为Total Amount Before Taxes是432.71，而Total Amount Non Taxable可能和Before Taxes相同，因为VAT是另外的。但图片中Total VAT是0.00，Total Amount with Taxes是499.99，所以Total Amount Non Taxable应该是499.99 - 0.00 = 499.99？这显然矛盾，可能图片中的Total Amount Before Taxes是432.71，Total Amount Non Taxable是432.71，Total VAT是67.28，Total Amount with Taxes是499.99。但图片中Total VAT写的是0.00，可能是OCR错误。但作为任务，只需要提取图片中显示的每个标签对应的内容，不管数值是否合理。所以看图片中的文字：
 
-4. Charges：表格中的Charges列，比如06/11/20那一行的Charges是499.99，所以Charges的列标题是Charges，对应的数值列。Charges的列标题在表格的表头，比如“Charges”是表头，所以bbox是表格中Charges列的表头，比如[540, 292, 680, 314]（表头）。
+Total Amount Before Taxes : CNY 432.71 → 提取这个。
 
-5. Company Name：图中的“创亿信息酒店”是公司名称，所以bbox是包含“创亿信息酒店”的文字，比如在地址行中的“创亿信息酒店”，所以bbox是[314, 92, 422, 110]。
+Total Amount Non Taxable : CNY （这里图片中可能没有数值？不，看图片中的内容，用户提供的图片中“Total Amount Non Taxable : CNY”后面是否有数值？看用户提供的图片描述中的文字：
 
-6. Confirmation No 确认号：图中“Confirmation No 确认号 : 98596210”，所以bbox是这个标签和值的区域，比如右侧表格中Confirmation No那一行，所以bbox是[600, 180, 880, 202]。
+“Total Amount Before Taxes : CNY 432.71
 
-7. Date：表格中的Date列，比如06/11/20，是Date的值，所以Date列的表头是Date，对应的数值是06/11/20，所以Date的表头是[40, 300, 150, 322]（表头），而Date的值是06/11/20在第一行。
+Total Amount Non Taxable : CNY 
 
-8. Departure 离店日期：图中“Departure 离店日期 : 07/11/20”，所以bbox是Departure那一行的标签和值，比如右侧表格中Departure对应的是07/11/20，所以bbox是[600, 150, 880, 172]。
+Total VAT : CNY 0.00
 
-9. Description：表格中的Description列，比如“住宿服务”，所以Description的表头是[160, 300, 300, 322]（表头），而值是“住宿服务”在第一行。
+Total Amount with Taxes : CNY 499.99”
 
-10. Fax 传真：图中“Fax 传真 : (86 21)88697688”，所以bbox是这个标签和值的区域，比如在地址下方，Tel和Fax那一行，Tel 电话 : (86 21)12688068 Fax 传真 : (86 21)88697688，所以Fax的bbox是[300, 140, 520, 162]。
+所以Total Amount Non Taxable这一行的CNY后面没有数值？但可能我漏看了。或者可能Total Amount Non Taxable的数值是432.71，因为Before Taxes就是Non Taxable。所以按图片中的显示，Total Amount Non Taxable的CNY后面可能没有显示，但根据上下文，可能和Before Taxes一样。不过任务是检测对应的值，所以每个类别对应一个值，所以需要看每个标签在图片中的位置。
 
-11. Loyalty No 会员号码：图中“Loyalty No 会员号码 : XXXXX1923”，所以bbox是右侧表格中Loyalty No那一行，比如[600, 160, 880, 182]。
+继续其他类别：
 
-12. Room No. 房号：图中“Room No. 房号 : 0502”，所以bbox是右侧表格中Room No.那一行，比如[600, 120, 880, 142]。
+Total Amount with Taxes：CNY 499.99
 
-13. Tel 电话：图中“Tel 电话 : (86 21)12688068”，所以bbox是Tel那一行，比如[40, 140, 300, 162]。
+Total VAT：CNY 0.00
 
-14. Total Amount Before Taxes：图中“Total Amount Before Taxes : CNY 432.71”，所以bbox是这个文字的区域，比如在Balance下方，Total Amount Before Taxes那一行，所以bbox是[540, 330, 880, 352]。
+Website：https://www.white-young.com/
 
-15. Total Amount Non Taxable：图中“Total Amount Non Taxable : CNY”（可能后面没有数值？看图片中的内容，图中是“Total Amount Non Taxable : CNY” 对应的数值？看图片里的文字，图中“Total Amount Non Taxable : CNY” 后面可能没有显示，但存在这个标签，所以bbox是[540, 354, 880, 376]。
+邮政编码：200122（在地址部分的“邮政编码:200122”）
 
-16. Total Amount with Taxes：图中“Total Amount with Taxes : CNY 499.99”，所以bbox是[540, 378, 880, 400]。
+现在开始逐个构建每个条目的bbox和label：
 
-17. Total VAT：图中“Total VAT : CNY 0.00”，所以bbox是[540, 402, 880, 424]。
+1. Address：包含地址信息，比如“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店”和“754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362 邮政编码:200122”？不，看原文中的地址行是：
 
-18. Website：图中的“https://www.white-young.com/”是网站，所以bbox是地址行中的网址，比如[530, 92, 720, 110]。
+“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店 https://www.white-young.com/
 
-19. 邮政编码：图中“邮政编码:200122”，所以bbox是地址行中的邮政编码部分，比如[530, 112, 660, 134]（第二行地址中的“邮政编码:200122”）。
+754 Caitlin Shore Apt. 602 Morganville, LA 60764 重庆市旭县静安罗路R座 442362 邮政编码:200122”
 
-现在需要将每个类别对应到正确的bbox和label。需要注意有些元素可能在图片中的位置，需要准确识别。
+所以Address的bbox是这两个地址行，即从顶部的地址开始到电话传真上面的部分。所以bbox大概是[44, 89, 684, 132]（假设坐标，需要看图片中的位置，但这里用相对位置，可能需要估计。不过更准确的是看每个元素的位置。
 
-现在开始整理每个对象：
+2. Arrival入住日期：右侧的Arrival 对应06/11/20，所以bbox是Arrival那一行的数值，比如在右侧信息区，Arrival: 06/11/20，所以bbox是[600, 300, 880, 325]左右。
 
-1. Address：包含两个地址行，比如第一行地址“787 Michelle Drives Mezamouth, NY 59502”和第二行“754 Caitlin Shore Apt. 602 Morganville, LA 60764”以及中文地址。可以取第一行地址的bbox：[42, 90, 520, 112]（因为包含街道、城市、邮编等）。
+3. Balance CNY：在表格下方，Balance CNY 499.99，所以bbox是[500, 590, 650, 615]。
 
-2. Arrival入住日期：右侧表格中Arrival对应的是06/11/20，所以bbox是Arrival的标签和值，比如[602, 142, 878, 164]（Arrival: 06/11/20）。
+4. Charges：表格中的Charges列，06/11/20的Charges是499.99，所以bbox是[600, 450, 750, 475]（表格中的Charges列）。
 
-3. Balance CNY：图中“Balance CNY 499.99”，bbox是[602, 292, 878, 314]。
+5. Company Name：创亿信息酒店，在地址行中，所以bbox是[338, 105, 438, 125]。
 
-4. Charges：表格中Charges列的表头，比如[542, 294, 678, 316]（Charges列的标题）。
+6. Confirmation No 确认号：右侧的Confirmation No 对应98596210，所以bbox是[600, 340, 880, 360]。
 
-5. Company Name：创亿信息酒店，bbox是[316, 92, 420, 110]。
+7. Date：表格中的Date列是06/11/20，所以bbox是[40, 470, 150, 490]。
 
-6. Confirmation No 确认号：右侧表格中Confirmation No : 98596210，bbox是[602, 182, 878, 204]。
+8. Departure 离店日期：右侧的Departure 对应07/11/20，所以bbox是[600, 360, 880, 380]。
 
-7. Date：表格中Date列的表头，比如[42, 302, 152, 324]（Date列标题），或者Date的值06/11/20在第一行，对应bbox是[42, 326, 152, 348]（Date列的值）。
+9. Description：表格中的Description是“住宿服务”，所以bbox是[150, 470, 350, 490]。
 
-8. Departure 离店日期：右侧表格中Departure : 07/11/20，bbox是[602, 152, 878, 174]。
+10. Fax 传真：Tel 电话下面的Fax 传真 : (86 21)88697688，所以bbox是[44, 140, 320, 160]。
 
-9. Description：表格中Description列的表头，比如[162, 302, 302, 324]（Description列标题），值是“住宿服务”在第一行，bbox是[162, 326, 302, 348]。
+11. Loyalty No 会员号码：右侧的Loyalty No 对应XXXXX1923，所以bbox是[600, 380, 880, 400]。
 
-10. Fax 传真：图中Fax 传真 : (86 21)88697688，bbox是[302, 142, 520, 164]（Fax的标签和值）。
+12. Room No. 房号：右侧的Room No. 对应0502，所以bbox是[600, 290, 880, 310]。
 
-11. Loyalty No 会员号码：右侧表格中Loyalty No : XXXXX1923，bbox是[602, 162, 878, 184]。
+13. Tel 电话：Tel 电话 : (86 21)12688068，所以bbox是[44, 120, 320, 140]。
 
-12. Room No. 房号：右侧表格中Room No. : 0502，bbox是[602, 122, 878, 144]。
+14. Total Amount Before Taxes：下面的Total Amount Before Taxes : CNY 432.71，所以bbox是[500, 620, 880, 640]。
 
-13. Tel 电话：图中Tel 电话 : (86 21)12688068，bbox是[42, 142, 302, 164]。
+15. Total Amount Non Taxable：Total Amount Non Taxable : CNY （假设数值是432.71？因为Before Taxes是432.71，可能Non Taxable和Before Taxes相同），所以bbox是[500, 640, 880, 660]。
 
-14. Total Amount Before Taxes：图中“Total Amount Before Taxes : CNY 432.71”，bbox是[542, 332, 878, 354]。
+16. Total Amount with Taxes：Total Amount with Taxes : CNY 499.99，所以bbox是[500, 660, 880, 680]。
 
-15. Total Amount Non Taxable：图中“Total Amount Non Taxable : CNY”，bbox是[542, 354, 878, 376]。
+17. Total VAT：Total VAT : CNY 0.00，所以bbox是[500, 680, 880, 700]。
 
-16. Total Amount with Taxes：图中“Total Amount with Taxes : CNY 499.99”，bbox是[542, 376, 878, 398]。
+18. Website：https://www.white-young.com/，在地址行中，所以bbox是[340, 105, 600, 125]。
 
-17. Total VAT：图中“Total VAT : CNY 0.00”，bbox是[542, 400, 878, 422]。
+19. 邮政编码：200122，在地址行的最后，“邮政编码:200122”，所以bbox是[600, 130, 880, 150]。
 
-18. Website：图中的“https://www.white-young.com/”，bbox是[532, 92, 720, 110]。
+现在需要将这些整理成JSON数组，每个元素包含bbox_2d和label。需要注意bbox的坐标是相对图片的，这里可能需要根据图片的大致布局来确定，但因为是示例，尽量准确。
 
-19. 邮政编码：图中“邮政编码:200122”，在第二行地址的末尾，bbox是[532, 112, 662, 134]。
+现在开始列出每个条目：
 
-现在需要检查每个类别是否都覆盖，并且没有重复或遗漏。然后将这些整理成JSON数组，每个元素是{"bbox_2d": [x1,y1,x2,y2], "label": "category"}。
-
-需要注意坐标是相对的，基于图片的宽度和高度。假设图片的宽度是比如1000像素，高度是比如1500像素，但实际需要根据图片中的位置估算。不过可能更简单的是根据图中的大致位置，比如：
-
-例如，Address的bbox：第一行地址是“787 Michelle Drives Mezamouth, NY 59502 创亿信息酒店”，所以x1大约是40，y1是90，x2是520，y2是110。
-
-现在开始逐个列出：
-
-1. Address: [40, 90, 520, 112]
-2. Arrival入住日期: [600, 140, 880, 162]
-3. Balance CNY: [600, 290, 880, 312]
-4. Charges: [540, 292, 680, 314] （Charges列的表头）
-5. Company Name: [314, 92, 422, 110]
-6. Confirmation No 确认号: [600, 180, 880, 202]
-7. Date: [40, 300, 150, 322] （Date列的表头）
-8. Departure 离店日期: [600, 150, 880, 172]
-9. Description: [160, 300, 300, 322] （Description列的表头）
-10. Fax 传真: [300, 140, 520, 162]
-11. Loyalty No 会员号码: [600, 160, 880, 182]
-12. Room No. 房号: [
+1. Address: 包含两个地址行，所以bbox是[40, 85, 680, 135]（覆盖地址和网址等）
+2. Arrival入住日期: [605, 305, 875, 325]（Arrival: 06/11/20）
+3. Balance CNY: [505, 595, 645, 615]（Balance CNY 499.99）
+4. Charges: [605, 455, 745, 475]（Charges列的499.99）
+5. Company Name: [335, 105, 435, 125]（创亿信息酒店）
+6. Confirmation No 确认号: [605, 345, 875, 365]（确认号: 98596210）
+7. Date: [45, 475, 145, 495]（06/11/20）
+8. Departure 离店日期: [605, 365, 875, 385]（离店日期: 07/11/20）
+9. Description: [155, 475, 345, 495]（住宿服务）
+10. Fax 传真: [45, 145, 315, 165]（Fax 传真 : (86 21)88697688）
+11. Loyalty No 会员号码: [605, 385, 875, 405]（会员号码: XXXXX1923）
+12. Room No. 房号: [605, 295, 875, 315]（房号: 0502）
+13. Tel 电话: [45, 125, 315, 145]（Tel 电话 : (86 21)12688068）
+14. Total Amount Before Taxes: [505, 625, 875, 645]（Total Amount Before Taxes : CNY 432.71）
+15. Total Amount Non Taxable: [505, 645, 875, 665]（Total Amount Non Taxable : CNY 432.71？假设和Before Taxes相同，因为VAT是0.00的话可能不对，但按图片显示，可能Total Amount Non Taxable的数值是432.71，因为Before Taxes是不含税的，Non Taxable就是Before Taxes）
+16. Total Amount with Taxes: [505, 665, 875

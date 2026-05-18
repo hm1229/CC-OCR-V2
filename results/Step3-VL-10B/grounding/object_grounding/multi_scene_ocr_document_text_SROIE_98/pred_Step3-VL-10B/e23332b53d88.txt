@@ -1,8 +1,158 @@
+Got it, let's extract the required information. First, identify each category:
+
+- Company: The top part has "CROSS CHANNEL NETWORK SDN. BHD."
+- Address: The address lines below the company name.
+- Date: The bottom part has "31/12/2017 10:33:59 AM"
+- Total: Look for the total amount. In the GST Summary, Total is 7.50 (RM) for amount, but also check Total Amt Payable is 7.95. Wait, the question says "total" — need to check which total. Let's check the invoice. The "Total Amt Payable" is 7.95, and the "Total" in GST Summary is 7.50. But maybe the total amount paid? Wait, the problem says "total" category. Let's check the elements.
+
+First, company: [CROSS CHANNEL NETWORK SDN. BHD.] is the company name. Let's find its bounding box.
+
+Address: The address lines: "47, JALAN MERANTI 1, SEK. 3, BANDAR UTAMA BATANG KALI, 44300 BATANG KALI, SELANGOR."
+
+Date: "31/12/2017 10:33:59 AM"
+
+Total: Let's check the "Total Amt Payable" is 7.95, and the "Total" in GST Summary is 7.50. But maybe the total amount tendered? Wait, the problem says "total" — perhaps the total amount payable. Let's check the invoice. The "Total Amt Payable" is 7.95. Let's confirm.
+
+Now, let's map each:
+
+1. Company: The text "CROSS CHANNEL NETWORK SDN. BHD." — find its coordinates.
+2. Address: The address block.
+3. Date: The timestamp at the bottom.
+4. Total: The total amount, which is likely the "Total Amt Payable" (7.95) or the "Total" in GST Summary (7.50). Let's check the invoice's "Total Amt Payable" is 7.95, which is the amount to pay. Let's check the elements.
+
+Let's look at the image:
+
+- Company: "CROSS CHANNEL NETWORK SDN. BHD." — top center.
+- Address: The lines below company: "47, JALAN MERANTI 1, SEK. 3, BANDAR UTAMA BATANG KALI, 44300 BATANG KALI, SELANGOR."
+- Date: "31/12/2017 10:33:59 AM" at the bottom.
+- Total: Let's check the "Total Amt Payable" is 7.95. Also, in GST Summary, "Total" amount is 7.50. But maybe the problem refers to the total amount paid? Wait, the question says "total" — perhaps the total amount of the invoice. Let's check the invoice's total amount incl GST is 7.95. Let's confirm.
+
+Now, let's extract each with bounding boxes.
+
+First, company:
+
+The company name is in the top part. Let's check the coordinates. The text is "CROSS CHANNEL NETWORK SDN. BHD." — the bounding box would be around that line.
+
+Address: The address lines are below the company, so the block from "47, JALAN..." to "SELANGOR."
+
+Date: The bottom line "31/12/2017 10:33:59 AM"
+
+Total: Let's check the "Total Amt Payable" is 7.95. Let's find where that is. In the invoice, "Total Amt Payable : 7.95" — so that's the total amount payable.
+
+Now, let's structure each entry.
+
+For company:
+
+{"bbox_2d": [229, 117, 770, 140], "label": "company"} — approximate, since the text is centered.
+
+Address: The address spans multiple lines. Let's check the lines:
+
+"47, JALAN MERANTI 1, SEK. 3,"
+
+"BANDAR UTAMA BATANG KALI,"
+
+"44300 BATANG KALI, SELANGOR."
+
+So the bounding box would cover these lines.
+
+Date: The line at the bottom: "31/12/2017 10:33:59 AM"
+
+Total: The "Total Amt Payable" is 7.95. Let's check the text "Total Amt Payable : 7.95" — so the value is 7.95, but the category is "total", so the label is total, and the bbox is around that line.
+
+Wait, the problem says "detect the corresponding values to the following categories: address, company, date, total." So for each category, find the element.
+
+Let's list each:
+
+- company: the company name text.
+- address: the address text block.
+- date: the date and time stamp.
+- total: the total amount (likely Total Amt Payable or Total in GST Summary; need to check which is the main total. The invoice has "Total Amt Payable" as 7.95, which is the amount to pay, so that's the total for the transaction.)
+
+Now, let's define the bounding boxes.
+
+First, company:
+
+The company name is "CROSS CHANNEL NETWORK SDN. BHD." — in the image, it's the first line after the top. Let's check the coordinates. The image's top part:
+
+CROSS CHANNEL NETWORK SDN. BHD.
+
+Then the address lines. So the company's bbox is around that line.
+
+Address: The lines from "47, JALAN..." to "SELANGOR." — that's a block.
+
+Date: The last line "31/12/2017 10:33:59 AM"
+
+Total: The line "Total Amt Payable : 7.95" — the value is 7.95, so the total is that amount.
+
+Now, let's check the exact positions.
+
+Alternatively, maybe the "Total" in the GST Summary is also a total, but the problem says "total" — probably the overall total of the invoice, which is Total Amt Payable (7.95).
+
+Now, let's create the JSON array.
+
+First, company:
+
+{"bbox_2d": [225, 115, 775, 138], "label": "company"}
+
+Address:
+
+The address is multiple lines. Let's check the bounding box covering all address lines:
+
+"47, JALAN MERANTI 1, SEK. 3,"
+
+"BANDAR UTAMA BATANG KALI,"
+
+"44300 BATANG KALI, SELANGOR."
+
+So the bbox would be from the start of "47..." to the end of "SELANGOR." Let's estimate the coordinates.
+
+Date:
+
+The date line is at the bottom: "31/12/2017 10:33:59 AM" — bbox around that.
+
+Total:
+
+The line "Total Amt Payable : 7.95" — the total amount is 7.95, so the bbox for that line.
+
+Let's check the image:
+
+- Company: top, centered.
+- Address: below company, multiple lines.
+- Date: bottom, timestamp.
+- Total: in the middle section, "Total Amt Payable : 7.95"
+
+Now, let's write the JSON entries.
+
+For company:
+
+The text "CROSS CHANNEL NETWORK SDN. BHD." is in the upper part. Let's check the y-coordinates. The image's top part, so the bbox is [229, 117, 770, 140] (approx).
+
+Address: The address lines are from y ~150 to y ~190. Let's check:
+
+"47, JALAN MERANTI 1, SEK. 3," — line 1
+
+"BANDAR UTAMA BATANG KALI," — line 2
+
+"44300 BATANG KALI, SELANGOR." — line 3
+
+So the bbox for address would cover these three lines.
+
+Date: The last line "31/12/2017 10:33:59 AM" is at the bottom, so y ~950 (approx).
+
+Total: The line "Total Amt Payable : 7.95" is in the middle section, below the item list.
+
+Now, let's confirm each:
+
+1. company: "CROSS CHANNEL NETWORK SDN. BHD." — correct.
+2. address: the address block — correct.
+3. date: "31/12/2017 10:33:59 AM" — correct.
+4. total: "Total Amt Payable : 7.95" — the total amount payable is the total for the invoice.
+
+Now, let's structure the JSON array with each entry.
+</think>
 [
-    {"bbox_2d": [212, 117, 785, 138], "label": "company"},
-    {"bbox_2d": [205, 142, 790, 193], "label": "address"},
-    {"bbox_2d": [205, 955, 790, 975], "label": "date"},
-    {"bbox_2d": [205, 307, 790, 327], "label": "total"},
-    {"bbox_2d": [205, 332, 790, 352], "label": "total"},
-    {"bbox_2d": [205, 657, 790, 677], "label": "total"}
+    {"bbox_2d": [229, 117, 770, 140], "label": "company"},
+    {"bbox_2d": [225, 150, 775, 200], "label": "address"},
+    {"bbox_2d": [310, 945, 689, 965], "label": "date"},
+    {"bbox_2d": [325, 830, 445, 850], "label": "total"}
 ]

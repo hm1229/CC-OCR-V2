@@ -6,7 +6,9 @@ import sys
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
+import numpy as np
 from PIL import Image
+from scipy.optimize import linear_sum_assignment
 
 
 def iou_box_xyxy(a, b):
@@ -166,13 +168,23 @@ def get_image_size(gt_path, ccocr_grounding, task):
     return None
 
 
-def pred_to_pixel(bbox, w, h):
-    """将 pred 的 0-1000 相对坐标转为像素坐标"""
+def detect_coord_scale(boxes):
+    """检测坐标范围：0-1 归一化 vs 0-1000 归一化。返回 scale factor。"""
+    if not boxes:
+        return 1000
+    max_val = max(v for box in boxes for v in box[:4])
+    if max_val <= 1.0:
+        return 1
+    return 1000
+
+
+def pred_to_pixel(bbox, w, h, scale=1000):
+    """将 pred 的归一化坐标转为像素坐标"""
     return [
-        bbox[0] * w / 1000,
-        bbox[1] * h / 1000,
-        bbox[2] * w / 1000,
-        bbox[3] * h / 1000,
+        bbox[0] * w / scale,
+        bbox[1] * h / scale,
+        bbox[2] * w / scale,
+        bbox[3] * h / scale,
     ]
 
 
@@ -187,10 +199,10 @@ def score_text_sample(gt_path, pred_path, ccocr_grounding, task):
     pred = parse_text_pred(raw)
     if pred is None:
         return 0.0, "no_pred_box"
-    # pred 是 0-1000，GT 是像素坐标，需先转换
     size = get_image_size(gt_path, ccocr_grounding, task)
     if size:
-        pred = pred_to_pixel(pred, size[0], size[1])
+        scale = detect_coord_scale([pred])
+        pred = pred_to_pixel(pred, size[0], size[1], scale)
     return iou_box_xyxy(pred, gt[:4]), None
 
 
@@ -205,23 +217,30 @@ def score_object_sample(gt_path, pred_path, ccocr_grounding, task):
     pred_list = parse_object_list(pred_path.read_text(encoding="utf-8", errors="replace"))
     if pred_list is None:
         return 0.0, "bad_pred_json"
-    # pred 是 0-1000，GT 是像素坐标，需先转换
+    if len(pred_list) == 0:
+        return 0.0, None
     size = get_image_size(gt_path, ccocr_grounding, task)
-    pred_by_label = {}
-    for p in pred_list:
-        k = p["label"].upper()
-        bbox = p["bbox"]
+    raw_pred_boxes = [p["bbox"] for p in pred_list]
+    scale = detect_coord_scale(raw_pred_boxes)
+    pred_boxes = []
+    for bbox in raw_pred_boxes:
         if size:
-            bbox = pred_to_pixel(bbox, size[0], size[1])
-        pred_by_label[k] = bbox
-    ious = []
-    for g in gt_list:
-        k = g["label"].upper()
-        if k not in pred_by_label:
-            ious.append(0.0)
-        else:
-            ious.append(iou_box_xyxy(pred_by_label[k], g["bbox"]))
-    return sum(ious) / len(ious), None
+            bbox = pred_to_pixel(bbox, size[0], size[1], scale)
+        pred_boxes.append(bbox)
+    gt_boxes = [g["bbox"] for g in gt_list]
+    n_gt = len(gt_boxes)
+    n_pred = len(pred_boxes)
+    # 构建 IoU 代价矩阵，用匈牙利算法做最优一对一匹配
+    iou_matrix = np.zeros((n_gt, n_pred))
+    for i, gb in enumerate(gt_boxes):
+        for j, pb in enumerate(pred_boxes):
+            iou_matrix[i, j] = iou_box_xyxy(gb, pb)
+    # 匈牙利算法求最大匹配（转为最小化问题）
+    row_ind, col_ind = linear_sum_assignment(-iou_matrix)
+    matched_ious = [iou_matrix[r, c] for r, c in zip(row_ind, col_ind)]
+    # 未匹配的 GT 框 IoU 记为 0
+    total_iou = sum(matched_ious)
+    return total_iou / n_gt, None
 
 
 def collect_pairs(ccocr_grounding, eval_grounding, task, pred_folder_name):
